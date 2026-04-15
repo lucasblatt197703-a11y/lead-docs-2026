@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lilian Garcia-Roig</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ivory: #F5F1E8;
+    --brown: #2C2215;
+    --sienna: #8B4513;
+    --green: #3D5C38;
+    --ochre: #D4A574;
+  }
+  html { scroll-behavior: smooth; background: var(--ivory); color: var(--brown); }
+  body { font-family: 'Work Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 48px;
+    background: transparent;
+  }
+  nav .nav-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--brown);
+    text-decoration: none;
+  }
+  nav .nav-links { display: flex; gap: 36px; }
+  nav .nav-links a {
+    font-family: 'Work Sans', sans-serif; font-size: 12px; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--brown);
+    text-decoration: none; opacity: 0.7; transition: opacity 0.2s;
+  }
+  nav .nav-links a:hover { opacity: 1; }
+
+  /* HERO */
+  #top {
+    padding-top: 140px;
+    padding-bottom: 0;
+  }
+  .hero-text {
+    padding: 0 48px 48px;
+  }
+  .hero-text h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7.5vw, 108px);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    line-height: 1.0;
+    color: var(--brown);
+    margin-bottom: 20px;
+  }
+  .hero-text .subtitle {
+    font-family: 'Work Sans', sans-serif; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.25em; text-transform: uppercase; color: var(--sienna);
+    margin-bottom: 28px;
+  }
+  .hero-rule {
+    width: 38%; height: 1px; background: var(--sienna);
+    margin: 0 48px 0;
+  }
+  .hero-image {
+    margin-top: 48px;
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+  }
+  .hero-image img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+  }
+
+  /* SECTION SHARED */
+  .section-label {
+    font-family: 'Work Sans', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.4em; text-transform: uppercase; color: var(--sienna);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 40px);
+    font-weight: 600; color: var(--brown); margin-bottom: 0;
+  }
+  .divider {
+    width: 38%; height: 1px; background: var(--sienna);
+    margin: 80px auto;
+    opacity: 0.4;
+  }
+
+  /* GALLERY */
+  #work { padding: 100px 48px; }
+  .work-header { margin-bottom: 56px; }
+  .gallery-masonry {
+    columns: 3; column-gap: 8px;
+  }
+  .gallery-item {
+    break-inside: avoid; margin-bottom: 8px; position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+  .gallery-item img {
+    width: 100%; display: block; border-radius: 0;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.02); }
+  .gallery-item .img-title {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px 14px 14px;
+    background: linear-gradient(transparent, rgba(44,34,21,0.65));
+    color: var(--ivory); font-size: 12px; font-weight: 300;
+    letter-spacing: 0.08em;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .gallery-item:hover .img-title { opacity: 1; transform: translateY(0); }
+
+  /* ABOUT */
+  #about { padding: 80px 48px 100px; background: var(--ivory); }
+  .about-inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .pull-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 2.8vw, 36px);
+    font-style: italic; font-weight: 300; color: var(--sienna);
+    line-height: 1.4; margin-bottom: 48px;
+  }
+  .bio-text {
+    font-size: 17px; font-weight: 300; line-height: 1.8;
+    color: var(--brown); margin-bottom: 36px;
+  }
+  .credentials {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px;
+  }
+  .cred-item {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--sienna);
+  }
+
+  /* CONTACT */
+  #contact { padding: 80px 48px 100px; background: #FAF7F2; }
+  .contact-inner { max-width: 560px; }
+  .contact-inner h2 {
+    font-family: 'Cormorant Garamond', serif; font-size: 40px;
+    font-weight: 300; color: var(--brown); margin-bottom: 36px;
+  }
+  .contact-inner p {
+    font-size: 15px; font-weight: 300; line-height: 1.8;
+    color: var(--brown); opacity: 0.8; margin-bottom: 28px;
+  }
+  .contact-link {
+    display: inline-block; color: var(--sienna); font-size: 16px;
+    font-weight: 400; text-decoration: none; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--sienna);
+    padding-bottom: 2px; margin-bottom: 12px;
+  }
+  .contact-link:hover { opacity: 0.7; }
+  .contact-social { font-size: 14px; font-weight: 300; color: var(--brown); opacity: 0.6; }
+  .contact-galleries { margin-top: 40px; font-size: 13px; font-weight: 300; color: var(--brown); opacity: 0.7; line-height: 2; }
+
+  /* FOOTER */
+  footer {
+    background: var(--brown); color: var(--ivory);
+    padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer span { font-size: 12px; font-weight: 300; opacity: 0.7; letter-spacing: 0.06em; }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav .nav-name { display: none; }
+    #top { padding-top: 100px; }
+    .hero-text { padding: 0 24px 32px; }
+    .hero-rule { margin: 0 24px; width: 50%; }
+    .hero-image { height: 50vh; }
+    #work { padding: 60px 24px; }
+    .gallery-masonry { columns: 2; }
+    #about, #contact { padding: 60px 24px; }
+    footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero-text h1 { font-size: 44px; }
+    .gallery-masonry { columns: 1; }
+    nav .nav-links { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-name">Lilian Garcia-Roig</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section id="top">
+  <div class="hero-text">
+    <h1>Lilian<br>Garcia-Roig</h1>
+    <p class="subtitle">Landscape Painter &nbsp;·&nbsp; Tallahassee, FL</p>
+  </div>
+  <div class="hero-rule"></div>
+  <div class="hero-image">
+    <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/4bce8679-76f4-420b-a37a-219b2d4f4bfb/01_OrlPLprizeBanyanLil+copy.jpg" alt="Hyperbolic Nature – Banyan" loading="eager">
+  </div>
+</section>
+
+<section id="work" class="fade-in">
+  <div class="work-header">
+    <p class="section-label">Selected Works</p>
+    <h2 class="section-title">Paintings</h2>
+  </div>
+  <div class="gallery-masonry">
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/c2367bd4-7d73-445a-85a4-fecfa16b5797/01_CumulativeNaturePalmMenagerieDiptych+copy.jpg" alt="Cumulative Nature — Palm Menagerie Diptych" loading="lazy">
+      <span class="img-title">Cumulative Nature — Palm Menagerie Diptych</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/1f6f6130-006c-49f2-9419-7dc65d78f849/01_Hyphenated_Nature_NorthernFloridaCuban_Painting_Relations+2.jpeg" alt="Hyphenated Nature — Northern Florida/Cuban Painting Relations" loading="lazy">
+      <span class="img-title">Hyphenated Nature</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/b9f33e15-0b8c-4fc2-98a4-5f29a2bc86d4/01_Hecho_con_Cuba_Homage_to_Vinales9.jpg" alt="Hecho con Cuba — Homage to Viñales #9" loading="lazy">
+      <span class="img-title">Hecho con Cuba — Homage to Viñales #9</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/30aec3ef-3057-49b5-9c1b-303e1327e909/01_MillayFallDip4x6.jpg" alt="Millay Fall Diptych" loading="lazy">
+      <span class="img-title">Millay Fall Diptych</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/9baffe13-7938-41d5-b239-838ecf7e49fb/15_HechoEnCubaMogoteDiptych22x60.jpg" alt="Hecho en Cuba — Mogote Diptych" loading="lazy">
+      <span class="img-title">Hecho en Cuba — Mogote Diptych</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/e2baf39c-3b46-45f0-bf0c-bd93978f7a28/01_FarmersStCemCest+copy.jpeg" alt="Plein Aired Histories — Farmers St Cemetery" loading="lazy">
+      <span class="img-title">Plein Aired Histories — Farmers St Cemetery</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/f440a2b9-59f2-48fd-9f3c-2435078496e3/01_WIP_ReCollectingRoig_SpecimenImages.jpg" alt="ReCollecting Roig — Specimen Images" loading="lazy">
+      <span class="img-title">ReCollecting Roig</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/685eff55c135f6246d2618dc/b7c2629d-754b-4657-a2aa-fcb099ae094e/01_WA_AnchorRiverRock3x4.jpg" alt="Waters — Anchor River Rock" loading="lazy">
+      <span class="img-title">Waters — Anchor River Rock</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="about" class="fade-in">
+  <div class="about-inner">
+    <p class="section-label">About</p>
+    <blockquote class="pull-quote">"You must live in the present, launch yourself on every wave, find your eternity in each moment."</blockquote>
+    <p class="bio-text">Lilian Garcia-Roig paints landscapes — not as documentation, but as inquiry. Working en plein air across Florida, Cuba, and the Hudson Valley, her paintings explore the paradox of a nature that is both intoxicatingly near and unreachable. Her Hecho con Cuba series uses pigments ground from Viñales Valley Cuban soil, embedding identity into the land itself.</p>
+    <p class="bio-text">Her work is held in the permanent collections of the Pérez Art Museum Miami and the Frost Art Museum, and is represented by Cernuda Arte (Coral Gables), Valley House Gallery (Dallas), and Thomas Deans Fine Art (Atlanta).</p>
+    <div class="credentials">
+      <span class="cred-item">Guggenheim Fellow 2021</span>
+      <span class="cred-item">Pérez Art Museum Miami</span>
+      <span class="cred-item">FSU Distinguished Professor</span>
+      <span class="cred-item">Blackwell Prize in Painting</span>
+      <span class="cred-item">Joan Mitchell Foundation</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact" class="fade-in">
+  <div class="contact-inner">
+    <p class="section-label">Studio</p>
+    <h2>Inquiries</h2>
+    <p>For studio inquiries, commissions, and exhibition questions:</p>
+    <a href="mailto:GarciaRoigStudio@gmail.com" class="contact-link">GarciaRoigStudio@gmail.com</a><br>
+    <span class="contact-social">Instagram: @liliangarciaroig</span>
+    <div class="contact-galleries">
+      Works available through<br>
+      Cernuda Arte, Coral Gables &nbsp;·&nbsp; Valley House Gallery, Dallas &nbsp;·&nbsp; Thomas Deans Fine Art, Atlanta
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Lilian Garcia-Roig © 2026</span>
+  <span>Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
