@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dara Krovetz — Maternity & Newborn Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F8F4EE;
+      --dark: #2C2215;
+      --darker: #1A1208;
+      --accent: #E8B89A;
+      --gold: #D4A574;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    #hero {
+      display: flex;
+      height: 100vh;
+      min-height: 600px;
+    }
+
+    .hero-image {
+      flex: 0 0 60%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .hero-text {
+      flex: 0 0 40%;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 48px 40px 52px;
+      position: relative;
+    }
+
+    .hero-nav {
+      position: absolute;
+      top: 36px;
+      right: 48px;
+      display: flex;
+      gap: 28px;
+    }
+
+    .hero-nav a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dark);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .hero-nav a:hover { color: var(--accent); }
+
+    .hero-eyebrow {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 88px;
+      line-height: 0.95;
+      color: var(--dark);
+      letter-spacing: 0.4em; /* animated to 0.08em */
+      transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hero-name.compress { letter-spacing: 0.08em; }
+
+    .hero-subtitle {
+      margin-top: 28px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dark);
+      opacity: 0.65;
+      max-width: 240px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: inline-block;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 3px;
+      transition: opacity 0.25s;
+    }
+
+    .hero-cta:hover { opacity: 0.6; }
+
+    /* ─── GALLERY ───────────────────────────────────────────── */
+    #gallery {
+      padding: 120px 60px 80px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 36px;
+      letter-spacing: 0.06em;
+      color: var(--dark);
+      margin-bottom: 52px;
+      /* clip-path reveal */
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.revealed { clip-path: inset(0 0% 0 0); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(0.25);
+      transition: filter 0.4s ease, transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      filter: grayscale(0);
+      transform: scale(1.02);
+    }
+
+    /* ─── DIVIDER LINE ──────────────────────────────────────── */
+    .accent-divider {
+      width: 40%;
+      height: 1px;
+      background: var(--accent);
+      margin: 100px auto 100px 60px;
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────────────── */
+    #about {
+      padding: 0 60px 140px;
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+    }
+
+    .about-image {
+      flex: 0 0 50%;
+      padding-right: 60px;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .about-text {
+      flex: 0 0 50%;
+      padding-top: 24px;
+    }
+
+    .about-label {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      /* stagger animation item 1 */
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease 0ms, transform 0.7s ease 0ms;
+    }
+
+    .about-label.risen { opacity: 1; transform: translateY(0); }
+
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 26px;
+      line-height: 1.45;
+      color: var(--accent);
+      margin-bottom: 32px;
+      /* stagger animation item 2 */
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease 120ms, transform 0.7s ease 120ms;
+    }
+
+    .about-pull.risen { opacity: 1; transform: translateY(0); }
+
+    .about-bio {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--dark);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease 240ms, transform 0.7s ease 240ms;
+    }
+
+    .about-bio.risen { opacity: 1; transform: translateY(0); }
+
+    /* ─── CONTACT ───────────────────────────────────────────── */
+    #contact {
+      background: var(--dark);
+      padding: 120px 60px;
+      text-align: center;
+    }
+
+    #contact .section-title {
+      color: var(--cream);
+      margin-bottom: 40px;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 22px;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      transition: opacity 0.25s;
+      margin-bottom: 32px;
+    }
+
+    .contact-email:hover { opacity: 0.65; }
+
+    .contact-social {
+      display: block;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      opacity: 0.55;
+      transition: opacity 0.25s;
+    }
+
+    .contact-social:hover { opacity: 1; }
+
+    .contact-location {
+      margin-top: 28px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.35;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: var(--darker);
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(248,244,238,0.35);
+    }
+
+    .footer-credit {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(248,244,238,0.2);
+    }
+
+    /* ─── MOBILE ────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #hero {
+        flex-direction: column;
+        height: auto;
+        min-height: auto;
+      }
+
+      .hero-image {
+        flex: none;
+        width: 100%;
+        height: 56vw;
+        min-height: 300px;
+      }
+
+      .hero-text {
+        flex: none;
+        width: 100%;
+        padding: 48px 32px 40px;
+      }
+
+      .hero-nav {
+        position: static;
+        margin-bottom: 28px;
+        justify-content: flex-end;
+      }
+
+      .hero-name { font-size: 56px; }
+
+      #gallery { padding: 80px 24px 60px; }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .accent-divider { margin: 72px 24px; width: 40%; }
+
+      #about {
+        flex-direction: column;
+        padding: 0 24px 100px;
+      }
+
+      .about-image { padding-right: 0; margin-bottom: 40px; flex: none; width: 100%; }
+      .about-text { flex: none; width: 100%; padding-top: 0; }
+
+      #contact { padding: 80px 32px; }
+
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 42px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      #gallery { padding: 60px 16px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-image">
+      <img
+        src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/pregnancyphotography-darasblingphotography_1.jpg"
+        alt="Dara's Bling Photography — maternity portrait"
+      />
+    </div>
+    <div class="hero-text">
+      <nav class="hero-nav">
+        <a href="#gallery">Gallery</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="hero-eyebrow">Fort Lauderdale · South Florida</p>
+      <h1 class="hero-name" id="heroName">
+        Dara<br />Krovetz
+      </h1>
+      <p class="hero-subtitle">Maternity &amp; Newborn<br />Photography</p>
+      <a href="#gallery" class="hero-cta">View Portfolio</a>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <h2 class="section-title js-reveal">Portfolio</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img
+          loading="lazy"
+          src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-21-of-97.jpg"
+          alt="Maternity — Khloe"
+        />
+      </div>
+      <div class="gallery-item">
+        <img
+          loading="lazy"
+          src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webfinaldarasblingphotography-khloe-11-of-31.jpg"
+          alt="Maternity — Khloe II"
+        />
+      </div>
+      <div class="gallery-item">
+        <img
+          loading="lazy"
+          src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-3-of-31.jpg"
+          alt="Maternity — Khloe III"
+        />
+      </div>
+      <div class="gallery-item">
+        <img
+          loading="lazy"
+          src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-18-of-31.jpg"
+          alt="Maternity — Khloe IV"
+        />
+      </div>
+      <div class="gallery-item">
+        <img
+          loading="lazy"
+          src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-22-of-31.jpg"
+          alt="Maternity — Khloe V"
+        />
+      </div>
+      <div class="gallery-item">
+        <img
+          loading="lazy"
+          src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/web5x7darasblingphotography-khloe-95-of-97.jpg"
+          alt="Newborn — Khloe VI"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCENT DIVIDER -->
+  <div class="accent-divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image">
+      <img
+        loading="lazy"
+        src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-25-of-31.jpg"
+        alt="Dara Krovetz — portrait session"
+      />
+    </div>
+    <div class="about-text js-stagger">
+      <p class="about-label js-stagger-child">About</p>
+      <blockquote class="about-pull js-stagger-child">&ldquo;Every session is styled from the ground up.&rdquo;</blockquote>
+      <p class="about-bio js-stagger-child">
+        Dara Krovetz has been photographing maternity and newborn sessions across South Florida since 2012.
+        With a studio stocked with 200+ gowns and props and professional hair and makeup available,
+        every session is styled from the ground up. Based in Fort Lauderdale,
+        serving Miami to Palm Beach.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="section-title js-reveal" style="color:var(--cream);">Inquiries</h2>
+    <a href="mailto:dlkrovetz@gmail.com" class="contact-email">dlkrovetz@gmail.com</a>
+    <a href="https://www.instagram.com/darasbling/" target="_blank" rel="noopener" class="contact-social">@darasbling</a>
+    <p class="contact-location">Fort Lauderdale · Miami · Palm Beach</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">Dara Krovetz Photography &copy; 2026</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // 1. Hero name letter-spacing compress
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('compress');
+    }, 100);
+
+    // 2. Clip-path title reveal + 3. Staggered about rise
+    const titleObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          titleObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.js-reveal').forEach(el => titleObs.observe(el));
+
+    const staggerObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.js-stagger-child').forEach(child => {
+            child.classList.add('risen');
+          });
+          staggerObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.js-stagger').forEach(el => staggerObs.observe(el));
+  </script>
+
+</body>
+</html>
