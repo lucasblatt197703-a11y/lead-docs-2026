@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michelle Davis Photography — Jacksonville, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #F5F0E8;
+      color: #2C2215;
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: absolute;
+      top: 0; right: 0;
+      z-index: 100;
+      padding: 28px 40px;
+      display: flex;
+      gap: 32px;
+    }
+    nav a {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #C4A878; }
+
+    /* ─── HERO — Cinematic Letterbox ─── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/9258699.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      will-change: transform;
+    }
+    .letterbox-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 90px;
+      background: #1A1208;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      gap: 32px;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 52px;
+      letter-spacing: 0.05em;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .hero-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(196,168,120,0.5);
+      flex-shrink: 0;
+    }
+    .hero-subtitle {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ─── SECTION NUMBERS ─── */
+    .section-number {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 140px;
+      line-height: 1;
+      opacity: 0.04;
+      position: absolute;
+      top: -20px;
+      left: -10px;
+      color: #2C2215;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* ─── SECTION TITLE ANIMATION ─── */
+    .reveal-title {
+      overflow: hidden;
+      display: inline-block;
+    }
+    .reveal-title span {
+      display: inline-block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+    .reveal-title.is-visible span {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 100px 0 60px;
+      position: relative;
+    }
+    .gallery-header {
+      padding: 0 48px 60px;
+      position: relative;
+    }
+    .gallery-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: #2C2215;
+    }
+    .gallery-editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .gallery-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    .gallery-row.full figure {
+      width: 100%;
+    }
+    .gallery-row.offset figure {
+      width: 62%;
+      margin-left: auto;
+      margin-top: 30px;
+    }
+    .gallery-row.offset-left figure {
+      width: 62%;
+      margin-right: auto;
+      margin-top: -20px;
+    }
+    figure {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+    }
+    figure img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    figure.is-visible img {
+      clip-path: inset(0 0 0 0);
+    }
+    .gallery-row.full figure img { height: 62vw; max-height: 680px; }
+    .gallery-row.offset figure img { height: 52vw; max-height: 560px; }
+    .gallery-row.offset-left figure img { height: 48vw; max-height: 520px; }
+    figcaption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 24px 18px;
+      background: linear-gradient(transparent, rgba(26,18,8,0.6));
+      color: rgba(255,255,255,0.85);
+      font-family: 'Libre Franklin', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    figure:hover figcaption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden;
+      background: #2C2215;
+      padding: 18px 0;
+      margin: 80px 0 0;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+      will-change: transform;
+    }
+    .marquee-track span {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #C4A878;
+      padding: 0 40px;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 48px 120px;
+      position: relative;
+    }
+    .about-header {
+      margin-bottom: 60px;
+      position: relative;
+    }
+    .about-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+    }
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: flex-start;
+      position: relative;
+    }
+    .about-portrait {
+      position: relative;
+      z-index: 1;
+    }
+    .about-portrait img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 560px;
+    }
+    .about-text-block {
+      position: relative;
+      z-index: 2;
+      background: #F5F0E8;
+      padding: 48px;
+      margin-top: auto;
+      margin-left: -60px;
+      align-self: flex-end;
+      box-shadow: 0 4px 40px rgba(44,34,21,0.08);
+    }
+    .about-text-block p {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #2C2215;
+    }
+    .about-pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #C4A878;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid #E8D4B8;
+      line-height: 1.5;
+    }
+
+    /* ─── STAGGERED FADE+RISE ─── */
+    .fade-rise {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      will-change: opacity, transform;
+    }
+    .fade-rise.delay-1 { transition-delay: 0ms; }
+    .fade-rise.delay-2 { transition-delay: 120ms; }
+    .fade-rise.delay-3 { transition-delay: 240ms; }
+    .fade-rise.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: #1A1208;
+      padding: 100px 48px;
+      position: relative;
+    }
+    .contact-section-number {
+      color: #F5F0E8;
+    }
+    .contact-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      color: #F5F0E8;
+      margin-bottom: 48px;
+    }
+    .contact-email {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: 28px;
+      color: #C4A878;
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: opacity 0.2s;
+    }
+    .contact-email:hover { opacity: 0.75; }
+    .contact-social {
+      display: flex;
+      gap: 32px;
+    }
+    .contact-social a {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-social a:hover { color: #C4A878; }
+    .contact-tagline {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: rgba(245,240,232,0.45);
+      margin-top: 48px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #1A1208;
+      border-top: 1px solid rgba(196,168,120,0.15);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    footer span, footer a {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(245,240,232,0.35);
+      text-decoration: none;
+    }
+    footer a:hover { color: #C4A878; }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; gap: 20px; }
+      .hero-name { font-size: 30px; }
+      .letterbox-bar { height: 80px; padding: 0 24px; gap: 16px; }
+      .hero-divider { display: none; }
+
+      .gallery-header { padding: 0 24px 40px; }
+      .gallery-row.offset figure,
+      .gallery-row.offset-left figure {
+        width: 100%;
+        margin: 0;
+      }
+      .gallery-row.full figure img { height: 75vw; }
+      .gallery-row.offset figure img,
+      .gallery-row.offset-left figure img { height: 70vw; }
+
+      #about { padding: 80px 24px; }
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+      .about-portrait img { height: 360px; }
+      .about-text-block {
+        margin-left: 0;
+        margin-top: -40px;
+        padding: 32px 24px;
+      }
+
+      #contact { padding: 80px 24px; }
+      .contact-email { font-size: 22px; }
+      footer { padding: 16px 24px; flex-direction: column; height: auto; gap: 8px; padding-bottom: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 22px; letter-spacing: 0.02em; }
+      .gallery-label, .about-label, .contact-label { font-size: 28px; }
+      nav { gap: 16px; }
+      nav a { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#gallery">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- HERO — Cinematic Letterbox -->
+  <section id="hero">
+    <div class="hero-image" id="heroImg"></div>
+    <div class="letterbox-bar">
+      <span class="hero-name">Michelle Davis Photography</span>
+      <div class="hero-divider"></div>
+      <span class="hero-subtitle">Jacksonville, FL</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <div class="section-number">01</div>
+      <h2 class="gallery-label reveal-title"><span>Selected Work</span></h2>
+    </div>
+    <div class="gallery-editorial">
+      <div class="gallery-row full">
+        <figure>
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/8734878.jpg" alt="Celebration" loading="lazy" />
+          <figcaption>Celebration</figcaption>
+        </figure>
+      </div>
+      <div class="gallery-row offset">
+        <figure>
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/8324146.jpg" alt="Together" loading="lazy" />
+          <figcaption>Together</figcaption>
+        </figure>
+      </div>
+      <div class="gallery-row offset-left">
+        <figure>
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/615224.jpg" alt="Moment" loading="lazy" />
+          <figcaption>Moment</figcaption>
+        </figure>
+      </div>
+      <div class="gallery-row full">
+        <figure>
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/2717432.jpg" alt="Warmth" loading="lazy" />
+          <figcaption>Warmth</figcaption>
+        </figure>
+      </div>
+      <div class="gallery-row offset">
+        <figure>
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/7048722.jpg" alt="Golden Hour" loading="lazy" />
+          <figcaption>Golden Hour</figcaption>
+        </figure>
+      </div>
+      <div class="gallery-row offset-left">
+        <figure>
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/3648724.jpg" alt="Family" loading="lazy" />
+          <figcaption>Family</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Wedding Photography &middot; Jacksonville, FL &middot; Available 2026 &middot;</span>
+      <span>Portraits &middot; Families &middot; Seniors &middot; Newborns &middot;</span>
+      <span>Wedding Photography &middot; Jacksonville, FL &middot; Available 2026 &middot;</span>
+      <span>Portraits &middot; Families &middot; Seniors &middot; Newborns &middot;</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-header">
+      <div class="section-number">02</div>
+      <h2 class="about-label reveal-title"><span>About</span></h2>
+    </div>
+    <div class="about-layout">
+      <div class="about-portrait">
+        <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/3398123.jpg" alt="Michelle Davis" loading="lazy" />
+      </div>
+      <div class="about-text-block">
+        <p class="fade-rise delay-1">
+          Michelle Davis has photographed hundreds of weddings and family moments across Northeast Florida since 2012.
+          Listed on The Knot and WeddingWire with a 100% positive review rate, her work is candid, warm, and entirely unpretentious.
+        </p>
+        <p class="fade-rise delay-2" style="margin-top: 16px;">
+          Serving Jacksonville, St. Johns, Daytona, and Orlando. Military discounts available.
+        </p>
+        <blockquote class="about-pull-quote fade-rise delay-3">
+          "Every family deserves photographs that feel like them."
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-number contact-section-number" style="opacity:0.05; color:#F5F0E8;">03</div>
+    <h2 class="contact-label reveal-title"><span>Inquiries</span></h2>
+    <a href="mailto:MDavisPGY@gmail.com" class="contact-email">MDavisPGY@gmail.com</a>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/michelle.davis.photographyy" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.weddingwire.com" target="_blank" rel="noopener">WeddingWire</a>
+      <a href="https://www.theknot.com" target="_blank" rel="noopener">The Knot</a>
+    </div>
+    <p class="contact-tagline">Northeast Florida &nbsp;&middot;&nbsp; Weddings &middot; Families &middot; Seniors &middot; Babies</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Michelle Davis Photography &copy; 2026</span>
+    <a href="https://lucasblatt.com" target="_blank" rel="noopener">Design by Lucas Blatt</a>
+  </footer>
+
+  <script>
+    // Hero parallax
+    const heroImg = document.getElementById('heroImg');
+    window.addEventListener('scroll', () => {
+      heroImg.style.backgroundPositionY = `calc(30% + ${window.scrollY * 0.35}px)`;
+    }, { passive: true });
+
+    // IntersectionObserver for title reveals + image reveals + fade-rise
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    const imgObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('is-visible');
+          }, i * 100);
+          imgObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.reveal-title').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-rise').forEach(el => observer.observe(el));
+    document.querySelectorAll('figure').forEach(el => imgObserver.observe(el));
+  </script>
+</body>
+</html>
