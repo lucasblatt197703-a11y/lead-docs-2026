@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AJR Photography — Aniyah Ross</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #0D0D0D;
+      --bg2: #141414;
+      --text: #F7EDD8;
+      --accent: #E8356A;
+      --gold: #C8855A;
+      --muted: rgba(247,237,216,0.45);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(247,237,216,0.06);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO — Mosaic grid with overlapping name */
+    #hero {
+      min-height: 100vh;
+      padding-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mosaic {
+      position: relative;
+      display: grid;
+      grid-template-rows: 55% 45%;
+      grid-template-columns: 58% 42%;
+      height: 100vh;
+      gap: 3px;
+    }
+    .mosaic-img {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .mosaic-img.is-visible { clip-path: inset(0 0 0 0); }
+    .mosaic-img:nth-child(1) {
+      grid-column: 1; grid-row: 1;
+      transition-delay: 0ms;
+    }
+    .mosaic-img:nth-child(2) {
+      grid-column: 2; grid-row: 1 / 3;
+      transition-delay: 150ms;
+    }
+    .mosaic-img:nth-child(3) {
+      grid-column: 1; grid-row: 2;
+      transition-delay: 100ms;
+    }
+    .mosaic-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 56px 80px 48px;
+    }
+    .hero-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 80px;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 32px;
+      letter-spacing: 0.4em; /* will animate */
+      will-change: letter-spacing;
+    }
+    .hero-name .accent-word { color: var(--accent); }
+    .hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 380px;
+      margin-bottom: 48px;
+    }
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 16px 36px;
+      text-decoration: none;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .hero-cta:hover { background: #c41f52; }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(247,237,216,0.08);
+      border-bottom: 1px solid rgba(247,237,216,0.08);
+      padding: 14px 0;
+      background: var(--bg2);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* GALLERY */
+    #gallery {
+      padding: 100px 0 80px;
+      position: relative;
+    }
+    .section-header {
+      padding: 0 48px 56px;
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 120px;
+      line-height: 1;
+      color: var(--text);
+      opacity: 0.03;
+      flex-shrink: 0;
+      margin-top: -20px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    /* Tight grid gallery — uniform 4:5, edge-to-edge */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.85);
+      transition: filter 0.4s, transform 0.5s;
+      clip-path: inset(100% 0 0 0);
+      will-change: clip-path;
+      transition: clip-path 0.9s ease-out, filter 0.4s, transform 0.5s;
+    }
+    .gallery-item.is-visible img { clip-path: inset(0 0 0 0); }
+    .gallery-item:hover img {
+      filter: saturate(1);
+      transform: scale(1.04);
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+    }
+    .about-portrait {
+      position: relative;
+    }
+    .about-portrait img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 600px;
+    }
+    .about-accent-line {
+      width: 40%;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 40px;
+    }
+    .about-content {}
+    .about-content .section-title {
+      font-size: 38px;
+      margin-bottom: 32px;
+    }
+    .about-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.85;
+      color: rgba(247,237,216,0.75);
+    }
+    .about-text + .about-text { margin-top: 20px; }
+    .about-pull {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--accent);
+      margin-top: 36px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(247,237,216,0.1);
+      line-height: 1.5;
+    }
+
+    /* Fade+rise */
+    .fade-rise {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      will-change: opacity, transform;
+    }
+    .fade-rise.d1 { transition-delay: 0ms; }
+    .fade-rise.d2 { transition-delay: 120ms; }
+    .fade-rise.d3 { transition-delay: 240ms; }
+    .fade-rise.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* CONTACT */
+    #contact {
+      padding: 100px 48px;
+      background: var(--bg2);
+      border-top: 1px solid rgba(247,237,216,0.06);
+    }
+    .contact-inner {
+      max-width: 700px;
+    }
+    .contact-email {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      color: var(--text);
+      text-decoration: none;
+      margin: 32px 0;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .contact-email:hover { color: var(--accent); }
+    .contact-social {
+      display: flex;
+      gap: 32px;
+      margin-top: 8px;
+    }
+    .contact-social a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-social a:hover { color: var(--accent); }
+    .contact-location {
+      margin-top: 40px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: rgba(247,237,216,0.3);
+      text-transform: uppercase;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #080808;
+      border-top: 1px solid rgba(247,237,216,0.05);
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 68px;
+    }
+    footer span, footer a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(247,237,216,0.2);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { gap: 20px; }
+      #hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-mosaic { height: 55vw; grid-template-rows: 1fr; grid-template-columns: 1fr 1fr; }
+      .mosaic-img:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .mosaic-img:nth-child(2) { grid-column: 2; grid-row: 1; }
+      .mosaic-img:nth-child(3) { display: none; }
+      .hero-text { padding: 40px 24px 60px; }
+      .hero-name { font-size: 52px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      .about-portrait img { height: 360px; }
+      #contact { padding: 80px 24px; }
+      .contact-email { font-size: 26px; }
+      .section-header { padding: 0 24px 40px; }
+      footer { padding: 16px 24px; flex-direction: column; height: auto; gap: 8px; padding-bottom: 20px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 38px; }
+      .gallery-grid { gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">AJR</a>
+    <div class="nav-links">
+      <a href="#gallery">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Book</a>
+    </div>
+  </nav>
+
+  <!-- HERO — Mosaic grid left, text right -->
+  <section id="hero">
+    <div class="hero-mosaic">
+      <div class="mosaic-img is-visible">
+        <img src="https://static.wixstatic.com/media/09c789_9aa8543d2d084beaa4af1640ea7dce83~mv2_d_1200_1800_s_2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_9aa8543d2d084beaa4af1640ea7dce83~mv2_d_1200_1800_s_2.jpg" alt="Portrait" loading="eager" />
+      </div>
+      <div class="mosaic-img is-visible">
+        <img src="https://static.wixstatic.com/media/09c789_1dc01e3d69c14e9e983d16c1c11f8d5f~mv2_d_3300_4950_s_4_2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_1dc01e3d69c14e9e983d16c1c11f8d5f~mv2_d_3300_4950_s_4_2.jpg" alt="Portrait" loading="eager" />
+      </div>
+      <div class="mosaic-img is-visible">
+        <img src="https://static.wixstatic.com/media/09c789_c95a2ea7eabd44d9a8667c910edc6cb5~mv2.jpg/v1/fit/w_480,h_719,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_c95a2ea7eabd44d9a8667c910edc6cb5~mv2.jpg" alt="Portrait" loading="eager" />
+      </div>
+    </div>
+    <div class="hero-text">
+      <div class="hero-eyebrow">Orlando, FL · Studio + On-Location</div>
+      <h1 class="hero-name" id="heroName">AJR<br><span class="accent-word">Photo</span></h1>
+      <p class="hero-sub">Studio portrait photography for the moments that define you. Graduation. Family. Creative. Fashion. Serving Orlando & Central Florida.</p>
+      <a href="#contact" class="hero-cta">Book a Session</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Studio Portraits · Graduation · Family · Fashion · Creative · Orlando FL · 2026 ·</span>
+      <span>BeYourself Studios · Available Year-Round · Book Now ·</span>
+      <span>Studio Portraits · Graduation · Family · Fashion · Creative · Orlando FL · 2026 ·</span>
+      <span>BeYourself Studios · Available Year-Round · Book Now ·</span>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_700a5f0b5e9848ffbb11014a2621a237~mv2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_700a5f0b5e9848ffbb11014a2621a237~mv2.jpg" alt="Portrait Session" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_08bb50084d6f4ed0a30848533e82d294~mv2.jpg/v1/fit/w_480,h_719,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_08bb50084d6f4ed0a30848533e82d294~mv2.jpg" alt="Studio Session" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_35224acd7c3149cc8e8587fec2ede528~mv2.jpg/v1/fit/w_480,h_719,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_35224acd7c3149cc8e8587fec2ede528~mv2.jpg" alt="Fashion Editorial" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_0315640d744d476db0818937b15b3240~mv2.jpg/v1/fit/w_480,h_719,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_0315640d744d476db0818937b15b3240~mv2.jpg" alt="Creative Session" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_1d2887aea4d24d188db8a8e8a447e189~mv2_d_2400_3600_s_4_2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_1d2887aea4d24d188db8a8e8a447e189~mv2_d_2400_3600_s_4_2.jpg" alt="Graduation" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_a84563b2f5a44f86863a3b460a359605~mv2_d_3572_5358_s_4_2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_a84563b2f5a44f86863a3b460a359605~mv2_d_3572_5358_s_4_2.jpg" alt="Studio Portrait" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_ac187a5e746847f0b9a85b19293d0262~mv2_d_2400_3600_s_4_2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_ac187a5e746847f0b9a85b19293d0262~mv2_d_2400_3600_s_4_2.jpg" alt="Portrait" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/09c789_c5d16e486e1c433b9581d422ecac7c5c~mv2_d_3000_4500_s_4_2.jpg/v1/fit/w_480,h_721,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_c5d16e486e1c433b9581d422ecac7c5c~mv2_d_3000_4500_s_4_2.jpg" alt="Fashion" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-portrait fade-rise d1">
+      <img src="https://static.wixstatic.com/media/09c789_cefa5da077d3431c9a7e958d1cddbf27~mv2_d_4200_2800_s_4_2.jpg/v1/fit/w_960,h_640,q_90,usm_4.80_0.39_0.19,enc_avif,quality_auto/09c789_cefa5da077d3431c9a7e958d1cddbf27~mv2_d_4200_2800_s_4_2.jpg" alt="Aniyah Ross" loading="lazy" />
+    </div>
+    <div class="about-content">
+      <div class="about-accent-line"></div>
+      <div class="section-num" style="font-size:80px; display:inline-block; margin-bottom:8px;">02</div>
+      <h2 class="section-title" style="margin-bottom: 32px;">About</h2>
+      <p class="about-text fade-rise d1">Aniyah Ross is the founder of AJR Photography and BeYourself Studios, a creative portrait studio in Orlando's metro area. With over 27,000 followers and a client list that spans graduation portraits to school yearbooks to fashion editorials, her work is defined by bold color, directional lighting, and subjects who look exactly like themselves.</p>
+      <p class="about-text fade-rise d2">Based in Apopka, FL. Available for studio sessions, events, and on-location work throughout Central Florida.</p>
+      <p class="about-pull fade-rise d3">"The goal is always the same — you leave looking like the best version of you."</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-num" style="font-size:80px; display:inline-block; margin-bottom:8px; opacity:0.03;">03</div>
+      <h2 class="section-title" style="margin-bottom: 0;">Book a Session</h2>
+      <a href="tel:4076358451" class="contact-email">@ajrphotography21</a>
+      <div class="contact-social">
+        <a href="https://www.instagram.com/ajrphotography21" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@ajrphotography21" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://arielledornellas.wixsite.com/photographer" target="_blank" rel="noopener">Current Site</a>
+      </div>
+      <p class="contact-location">Apopka · Orlando, FL · BeYourself Studios</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>AJR Photography &copy; 2026</span>
+    <a href="https://lucasblatt.com" target="_blank" rel="noopener">Design by Lucas Blatt</a>
+  </footer>
+
+  <script>
+    // Hero name letter-spacing compress
+    const heroName = document.getElementById('heroName');
+    setTimeout(() => {
+      heroName.style.transition = 'letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      heroName.style.letterSpacing = '-0.02em';
+    }, 100);
+
+    // IntersectionObserver for titles, fade-rise, gallery items
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+
+    const imgObserver = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('is-visible'), i * 80);
+          imgObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-rise').forEach(el => observer.observe(el));
+    document.querySelectorAll('.gallery-item').forEach(el => imgObserver.observe(el));
+  </script>
+</body>
+</html>
