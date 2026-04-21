@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greg Rubin — Wedding Photography, South Florida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #F5F0EA;
+      --text: #2C2C2C;
+      --accent: #8A6A3A;
+      --muted: rgba(44,44,44,0.45);
+      --light: #EDE8E0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 56px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: rgba(255,255,255,1); }
+
+    /* ─── HERO — Full-bleed image, text pinned bottom-left ─── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/c00698_cffeca578e304604975b458d161ea5a1.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(30,25,18,0.72) 0%, rgba(30,25,18,0.1) 60%, transparent 100%);
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 64px;
+      left: 56px;
+      right: 56px;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 96px;
+      line-height: 0.9;
+      letter-spacing: 0.4em;
+      color: #fff;
+      display: block;
+      margin-bottom: 20px;
+      will-change: letter-spacing;
+    }
+    .hero-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ─── ACCENT LINE (signature detail) ─── */
+    .accent-rule {
+      width: 35%;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 56px;
+    }
+
+    /* ─── SECTION TITLES ─── */
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 42px;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+      display: inline-block;
+    }
+    .section-label.is-visible { clip-path: inset(0 0% 0 0); }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 16px 0;
+      background: var(--text);
+      margin: 80px 0 0;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,0.55);
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── GALLERY — Masonry 3-col ─── */
+    #gallery { padding: 100px 56px 80px; }
+    .gallery-header { margin-bottom: 56px; }
+    .masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .masonry-item.is-visible img { clip-path: inset(0 0 0 0); }
+    .masonry-item:hover img { transform: scale(1.02); transition: clip-path 0.9s ease-out, transform 0.5s ease; }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 56px;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: 0;
+      align-items: start;
+    }
+    .about-img-wrap { position: relative; padding-right: 64px; }
+    .about-img-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 580px;
+    }
+    .about-text-wrap { padding-top: 40px; }
+    .about-eyebrow {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .about-body {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.85;
+      color: rgba(44,44,44,0.8);
+      margin-top: 28px;
+    }
+    .about-body + .about-body { margin-top: 18px; }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--accent);
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(138,106,58,0.25);
+    }
+
+    /* ─── FADE+RISE ─── */
+    .fade-rise {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      will-change: opacity, transform;
+    }
+    .fade-rise.d1 { transition-delay: 0ms; }
+    .fade-rise.d2 { transition-delay: 120ms; }
+    .fade-rise.d3 { transition-delay: 240ms; }
+    .fade-rise.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--text);
+      padding: 100px 56px;
+    }
+    .contact-eyebrow {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,0.45);
+      margin-bottom: 20px;
+    }
+    .contact-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 42px;
+      color: var(--bg);
+      margin-bottom: 40px;
+    }
+    .contact-email {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 30px;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 32px;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+    .contact-email:hover { opacity: 0.75; }
+    .contact-phone {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: rgba(245,240,234,0.55);
+      margin-bottom: 32px;
+    }
+    .contact-social { display: flex; gap: 32px; }
+    .contact-social a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-social a:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #1a1712;
+      padding: 20px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 68px;
+      border-top: 1px solid rgba(138,106,58,0.15);
+    }
+    footer span, footer a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(245,240,234,0.2);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 24px; }
+      .nav-logo { font-size: 15px; }
+      .nav-links { gap: 20px; }
+      .hero-name { font-size: 52px; }
+      .hero-content { bottom: 40px; left: 24px; right: 24px; }
+      .accent-rule { margin: 0 24px; width: 50%; }
+      #gallery { padding: 80px 24px; }
+      .masonry { columns: 2; }
+      #about { grid-template-columns: 1fr; padding: 80px 24px; }
+      .about-img-wrap { padding-right: 0; margin-bottom: 40px; }
+      .about-img-wrap img { height: 360px; }
+      #contact { padding: 80px 24px; }
+      footer { padding: 16px 24px; flex-direction: column; height: auto; gap: 8px; padding-bottom: 20px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 38px; letter-spacing: 0.15em; }
+      .masonry { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Greg Rubin</a>
+    <div class="nav-links">
+      <a href="#gallery">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO — Full-bleed, text bottom-left -->
+  <section id="hero">
+    <div class="hero-img" id="heroImg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-name" id="heroName">Greg Rubin</span>
+      <span class="hero-sub">Wedding Photography &nbsp;&middot;&nbsp; South Florida</span>
+    </div>
+  </section>
+
+  <!-- ACCENT RULE -->
+  <div class="accent-rule" style="margin-top: 64px;"></div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <h2 class="section-label">Selected Work</h2>
+    </div>
+    <div class="masonry">
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_6960f7a51816414bab2f78db90e82fa1.jpg" alt="Wedding reception" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_b30f1486dfca4bfaa327ac8d3c74f1c4.jpg" alt="Dance floor" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_b3676e19b844438d8a8946894f34cedb.jpg" alt="Couple" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_06ba3bd4db014c1f859e25598b14cafd.jpg" alt="Wedding" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_e4a17149f50b44278067cfd935b05063.jpg" alt="Portrait" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_8c7d2be742ae4d469e38fa96aa32d863.jpg" alt="Ceremony" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_23006201c407487ebe36f40c03ed7f60.jpg" alt="Couple portrait" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_fb06a99e1bab47239a8bf2a28a0e9f50.jpg" alt="Reception" loading="lazy" />
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/c00698_b74707d3a355493e811cb86c6c6121d5.jpg" alt="Wedding moment" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCENT RULE -->
+  <div class="accent-rule" style="margin: 0 56px;"></div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Wedding Photography &middot; South Florida &middot; 8+ Years &middot; Available 2026 &middot;</span>
+      <span>Broward County &middot; Miami &middot; Palm Beach &middot; Destination Weddings &middot;</span>
+      <span>Wedding Photography &middot; South Florida &middot; 8+ Years &middot; Available 2026 &middot;</span>
+      <span>Broward County &middot; Miami &middot; Palm Beach &middot; Destination Weddings &middot;</span>
+    </div>
+  </div>
+
+  <!-- ABOUT — Magazine spread -->
+  <section id="about">
+    <div class="about-img-wrap fade-rise d1">
+      <img src="https://static.wixstatic.com/media/c00698_a7117db0b98b4e08a3440068505b1f62.jpg" alt="Wedding by Greg Rubin" loading="lazy" />
+    </div>
+    <div class="about-text-wrap">
+      <span class="about-eyebrow fade-rise d1">About</span>
+      <h2 class="section-label">Eight years.<br>Every moment.</h2>
+      <p class="about-body fade-rise d2">Greg Rubin has photographed and filmed weddings across South Florida for over eight years — from intimate backyard ceremonies to ballroom celebrations in Broward, Miami, and Palm Beach counties.</p>
+      <p class="about-body fade-rise d3">A native New Yorker who found his home in South Florida, Greg works with a documentary instinct: quiet observation, real light, and a camera that disappears into the room.</p>
+      <p class="about-quote fade-rise d3">"The best wedding photos aren't posed. They happen in the five seconds before and after the pose."</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="contact-eyebrow">Get in touch</p>
+    <h2 class="contact-label">Let's talk about your day.</h2>
+    <a href="mailto:Grrubin20@gmail.com" class="contact-email">Grrubin20@gmail.com</a>
+    <p class="contact-phone">(954) 657-3011</p>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/thegregrubin" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://gregrubin20.wixsite.com/greg" target="_blank" rel="noopener">Current Site</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Greg Rubin Photography &copy; 2026</span>
+    <a href="https://lucasblatt.com" target="_blank" rel="noopener">Design by Lucas Blatt</a>
+  </footer>
+
+  <script>
+    // Hero parallax
+    const heroImg = document.getElementById('heroImg');
+    window.addEventListener('scroll', () => {
+      heroImg.style.backgroundPositionY = `calc(40% + ${window.scrollY * 0.4}px)`;
+    }, { passive: true });
+
+    // Hero name letter-spacing compress
+    const heroName = document.getElementById('heroName');
+    setTimeout(() => {
+      heroName.style.transition = 'letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      heroName.style.letterSpacing = '0.08em';
+    }, 100);
+
+    // IntersectionObserver
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+
+    const imgObs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('is-visible'), i * 100);
+          imgObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.section-label, .fade-rise').forEach(el => obs.observe(el));
+    document.querySelectorAll('.masonry-item').forEach(el => imgObs.observe(el));
+  </script>
+</body>
+</html>
