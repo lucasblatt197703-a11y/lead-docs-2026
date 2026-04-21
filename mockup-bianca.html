@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bianca Roman-Stumpff — Fantasy Acrylic Painter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F5F0E8;
+    --text: #2C2D3A;
+    --accent: #5BBFA8;
+    --red: #E8352A;
+    --gold: #D4B896;
+    --dark: #1A1B24;
+  }
+
+  html { scroll-behavior: smooth; background: var(--bg); }
+
+  body {
+    font-family: 'Libre Franklin', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 48px;
+    mix-blend-mode: multiply;
+  }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav ul li a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+    transition: color 0.3s;
+  }
+  nav ul li a:hover { color: var(--accent); }
+
+  /* HERO — Stacked editorial */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-name-block {
+    padding: 80px 48px 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: 0.25em;
+    color: var(--text);
+    opacity: 0;
+    animation: nameReveal 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+    text-transform: uppercase;
+  }
+
+  .hero-tagline {
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeIn 1s 0.9s forwards;
+  }
+
+  .hero-image-strip {
+    margin-top: 40px;
+    width: 100%;
+    height: 55vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-image-strip img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+    transform: scale(1.05);
+    animation: imageReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--dark);
+    color: #F5F0E8;
+    padding: 14px 0;
+    overflow: hidden;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 400;
+    position: relative;
+  }
+  .marquee-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span { margin-right: 80px; }
+  .marquee-inner .dot { color: var(--accent); }
+
+  /* SECTION DIVIDER */
+  .accent-rule {
+    width: 35%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 48px;
+  }
+
+  /* GALLERY */
+  #work {
+    padding: 100px 0 120px;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    padding: 0 48px;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .section-label.is-visible { opacity: 1; transform: none; }
+
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 400;
+    color: var(--text);
+    opacity: 0.06;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+  }
+  .section-label.is-visible .section-title { clip-path: inset(0 0% 0 0); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    padding: 0 48px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, opacity 0.3s;
+    cursor: pointer;
+  }
+  .gallery-item.is-visible {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.3s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.05s; }
+  .gallery-item:nth-child(6) { transition-delay: 0.15s; }
+  .gallery-item:nth-child(7) { transition-delay: 0.25s; }
+  .gallery-item:nth-child(8) { transition-delay: 0.35s; }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    loading: lazy;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  /* ACCENT RULE */
+  .section-accent-rule {
+    width: 35%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 48px 100px;
+  }
+
+  /* ABOUT */
+  #about {
+    padding: 0 48px 120px;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1100px;
+  }
+
+  .about-image {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.9s, transform 0.9s;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .about-image.is-visible { opacity: 1; transform: none; }
+  .about-image img { width: 100%; height: 100%; object-fit: cover; }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s 0.2s, transform 0.9s 0.2s;
+  }
+  .about-text.is-visible { opacity: 1; transform: none; }
+
+  .about-text .section-label {
+    padding: 0;
+    margin-bottom: 36px;
+  }
+
+  .about-pullquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+
+  .about-bio {
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .about-meta {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.5;
+    font-weight: 500;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--dark);
+    padding: 100px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-bg-name {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    font-weight: 900;
+    color: white;
+    opacity: 0.03;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    text-transform: uppercase;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s, transform 0.9s;
+  }
+  .contact-inner.is-visible { opacity: 1; transform: none; }
+
+  .contact-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 400;
+    color: #F5F0E8;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+
+  .contact-email {
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+  .contact-email a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.3s;
+  }
+  .contact-email a:hover { color: #F5F0E8; border-color: #F5F0E8; }
+
+  .contact-socials {
+    margin-top: 48px;
+    display: flex; gap: 32px;
+  }
+  .contact-socials a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #F5F0E8;
+    opacity: 0.4;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+  }
+  .contact-socials a:hover { opacity: 1; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    font-weight: 300;
+  }
+
+  /* ANIMATIONS */
+  @keyframes nameReveal {
+    from { opacity: 0; letter-spacing: 0.45em; }
+    to { opacity: 1; letter-spacing: 0.25em; }
+  }
+  @keyframes imageReveal {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .hero-name-block { padding: 80px 24px 0; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
+    .section-label { padding: 0 24px; }
+    .accent-rule, .section-accent-rule { margin: 0 24px; }
+    #about { padding: 0 24px 80px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    #contact { padding: 60px 24px; }
+    footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+    .hero-name { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">Bianca Roman-Stumpff</span>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-name-block">
+    <h1 class="hero-name">Bianca<br>Roman-<br>Stumpff</h1>
+    <p class="hero-tagline">Acrylic Painting &nbsp;·&nbsp; Fantasy &amp; Illustration &nbsp;·&nbsp; Orlando, FL</p>
+  </div>
+  <div class="hero-image-strip">
+    <img src="https://cdn-01.storenvy.com/product_photos/41834175/glow_20wolf_20copy_1000.jpg"
+         alt="Glow Wolf — Hero artwork" loading="eager">
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Fantasy &amp; Illustration <span class="dot">·</span> Acrylic on Board <span class="dot">·</span> Orlando, Florida <span class="dot">·</span> Open Prints &amp; Originals <span class="dot">·</span> 2026</span>
+    <span>Fantasy &amp; Illustration <span class="dot">·</span> Acrylic on Board <span class="dot">·</span> Orlando, Florida <span class="dot">·</span> Open Prints &amp; Originals <span class="dot">·</span> 2026</span>
+    <span>Fantasy &amp; Illustration <span class="dot">·</span> Acrylic on Board <span class="dot">·</span> Orlando, Florida <span class="dot">·</span> Open Prints &amp; Originals <span class="dot">·</span> 2026</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="work">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Selected Works</h2>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/45139367/reading_20teal_20dragon_20copy_400sq.jpg" alt="Reading Dragon" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/49738636/a_20little_20axolotl_20copy_400sq.jpg" alt="Little Axolotl" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/43070813/little_20witch_20copy_400sq.jpg" alt="Little Witch" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/49519888/Heartstrings_20Body_20copy_400sq.jpg" alt="Heartstrings" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/104239516/file_01ee8bf65f_400sq.jpg" alt="Original painting" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/103820419/file_fbc43f139e_400sq.jpg" alt="Original painting" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/106251578/file_1c53c61ece_400sq.jpg" alt="Original painting" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn-01.storenvy.com/product_photos/106597642/file_c26ad11d26_400sq.jpg" alt="Original painting" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<div class="section-accent-rule"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-image">
+      <img src="https://cdn-01.storenvy.com/product_photos/48024289/aqua_20water_208x10_20copy_400sq.jpg"
+           alt="Bianca Roman-Stumpff — Artist" loading="lazy">
+    </div>
+    <div class="about-text">
+      <div class="section-label">
+        <span class="section-num">02</span>
+        <h2 class="section-title">About</h2>
+      </div>
+      <p class="about-pullquote">"The world is more interesting with a little magic in it."</p>
+      <p class="about-bio">Bianca Roman-Stumpff is an acrylic painter based in Orlando, Florida, whose work explores whimsical fantasy through vibrant, detailed creatures — cryptids, dragons, axolotls, and mythological beings brought to life with warmth and wit.</p>
+      <p class="about-bio">Her work has been shown at art shows and conventions across Florida. Originals, prints, and commissions available.</p>
+      <p class="about-meta">Orlando, FL &nbsp;·&nbsp; @artofbianca &nbsp;·&nbsp; 18K Followers</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg-name">Bianca</div>
+  <div class="contact-inner">
+    <span class="contact-label">03 — Get In Touch</span>
+    <h2 class="contact-heading">Let's talk<br>about your<br>next piece.</h2>
+    <p class="contact-email">
+      <a href="mailto:bianca.romanstumpff@gmail.com">bianca.romanstumpff@gmail.com</a>
+    </p>
+    <div class="contact-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Patreon</a>
+      <a href="#">Store</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Bianca Roman-Stumpff</span>
+  <span>Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section-label, .gallery-item, .about-image, .about-text, .contact-inner').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Hero parallax
+  const heroStrip = document.querySelector('.hero-image-strip img');
+  window.addEventListener('scroll', () => {
+    if (heroStrip) {
+      heroStrip.style.transform = `scale(1) translateY(${window.scrollY * 0.15}px)`;
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
