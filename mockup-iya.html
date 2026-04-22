@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iya Mag Photography — Miami</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: #FDFAF6;
+    color: #2C2420;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─────────────────────────────────────────── */
+  .hero-wrapper {
+    position: relative;
+    height: 100vh;
+  }
+
+  .hero {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .hero-crossfade {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-crossfade img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+
+  .hero-crossfade img.active { opacity: 1; }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(44, 36, 32, 0.18);
+    z-index: 1;
+  }
+
+  .hero-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 60px;
+  }
+
+  .hero-nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    color: #FDFAF6;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .hero-nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .hero-nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #FDFAF6;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  .hero-nav-links a:hover { opacity: 1; }
+
+  .hero-text {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    z-index: 10;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 80px;
+    line-height: 1;
+    letter-spacing: 0.3em;
+    color: #FDFAF6;
+    text-transform: uppercase;
+    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+  }
+
+  .hero-title.compress { letter-spacing: 0.05em; }
+
+  .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: 0.3em;
+    color: #FDFAF6;
+    text-transform: uppercase;
+    margin-top: 8px;
+    display: block;
+  }
+
+  .hero-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: rgba(253, 250, 246, 0.75);
+    margin-top: 16px;
+    display: block;
+  }
+
+  /* ─── SESSIONS BAR ──────────────────────────────────── */
+  #sessions {
+    position: relative;
+    z-index: 2;
+    background: #FDFAF6;
+    padding: 80px 60px;
+    margin-top: 0;
+  }
+
+  .sessions-row {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .session-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .session-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(200, 168, 130, 0.3);
+  }
+
+  .session-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .session-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #C8A882;
+  }
+
+  .sessions-divider {
+    height: 1px;
+    background: #C8A882;
+    margin: 0 60px;
+    opacity: 0.4;
+  }
+
+  /* ─── GALLERY ───────────────────────────────────────── */
+  #gallery {
+    position: relative;
+    z-index: 2;
+    background: #FDFAF6;
+    padding: 80px 60px;
+  }
+
+  .gallery-header {
+    margin-bottom: 40px;
+  }
+
+  .gallery-accent-line {
+    width: 60px;
+    height: 2px;
+    background: #C8A882;
+    margin-bottom: 16px;
+  }
+
+  .gallery-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 48px;
+    color: #2C2420;
+    line-height: 1.1;
+  }
+
+  .gallery-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .gallery-row {
+    display: flex;
+    gap: 4px;
+  }
+
+  .gallery-row.full { height: 500px; }
+  .gallery-row.split { height: 420px; }
+  .gallery-row.triple { height: 360px; }
+
+  .gallery-row img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+
+  .gallery-row.full img { width: 100%; }
+
+  .gallery-row.split .img-60 { flex: 0 0 calc(60% - 2px); }
+  .gallery-row.split .img-40 { flex: 0 0 calc(40% - 2px); }
+
+  .gallery-row.triple img { flex: 1 1 0; }
+
+  /* ─── FEATURED SESSION ──────────────────────────────── */
+  #featured {
+    position: relative;
+    z-index: 2;
+    background: #3A2E28;
+    padding: 80px 60px;
+  }
+
+  .featured-inner {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .featured-image {
+    flex: 0 0 55%;
+    height: 560px;
+    overflow: hidden;
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+  }
+
+  .featured-text {
+    flex: 1;
+    position: relative;
+  }
+
+  .featured-num {
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 140px;
+    line-height: 1;
+    color: #FDFAF6;
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .featured-content { position: relative; z-index: 1; }
+
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 40px;
+    color: #D4B8A5;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .featured-rule {
+    width: 50px;
+    height: 1px;
+    background: #C8A882;
+    margin-bottom: 24px;
+  }
+
+  .featured-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(253, 250, 246, 0.7);
+    margin-bottom: 28px;
+  }
+
+  .featured-price {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #C8A882;
+  }
+
+  /* ─── STATS ─────────────────────────────────────────── */
+  #stats {
+    position: relative;
+    z-index: 2;
+    background: #FDFAF6;
+    padding: 80px 60px;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 80px;
+    line-height: 1;
+    color: #C8A882;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(44, 36, 32, 0.6);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ─── ABOUT ─────────────────────────────────────────── */
+  #about {
+    position: relative;
+    z-index: 2;
+    background: #FDFAF6;
+    padding: 100px 60px;
+    overflow: hidden;
+  }
+
+  .about-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .about-num {
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 200px;
+    line-height: 1;
+    color: #2C2420;
+    opacity: 0.03;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .about-image {
+    flex: 0 0 45%;
+    height: 580px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+  }
+
+  .about-text {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    padding-top: 20px;
+  }
+
+  .about-accent-line {
+    width: 60px;
+    height: 2px;
+    background: #C8A882;
+    margin-bottom: 20px;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 1.2;
+    color: #2C2420;
+    margin-bottom: 24px;
+  }
+
+  .about-bio {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(44, 36, 32, 0.8);
+    margin-bottom: 36px;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.5;
+    color: #C8A882;
+    border-left: 2px solid #C8A882;
+    padding-left: 24px;
+  }
+
+  /* ─── MATERNITY PARALLAX ────────────────────────────── */
+  #maternity-feature {
+    position: relative;
+    z-index: 2;
+    height: 600px;
+    background-image: url('https://static.wixstatic.com/media/f0c639_414892506ab04271a553cc141c8935e2~mv2_d_1500_2250_s_2.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .maternity-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(44, 36, 32, 0.45);
+  }
+
+  .maternity-text {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .maternity-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 64px;
+    letter-spacing: 0.1em;
+    color: #FDFAF6;
+    line-height: 1.1;
+  }
+
+  /* ─── BOLD CTA ──────────────────────────────────────── */
+  #cta {
+    position: relative;
+    z-index: 2;
+    background: #C8A882;
+    padding: 100px 60px;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 80px;
+    line-height: 1.05;
+    color: #FDFAF6;
+    margin-bottom: 20px;
+  }
+
+  .cta-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: rgba(253, 250, 246, 0.8);
+    margin-bottom: 44px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #FDFAF6;
+    border: 1px solid #FDFAF6;
+    padding: 16px 40px;
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  .cta-btn:hover {
+    background: #3A2E28;
+    border-color: #3A2E28;
+    color: #FDFAF6;
+  }
+
+  /* ─── CONTACT ───────────────────────────────────────── */
+  #contact {
+    position: relative;
+    z-index: 2;
+    background: #FDFAF6;
+    padding: 100px 60px;
+    overflow: hidden;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    position: relative;
+  }
+
+  .contact-num {
+    position: absolute;
+    top: -60px;
+    right: -80px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 200px;
+    line-height: 1;
+    color: #2C2420;
+    opacity: 0.03;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .contact-accent-line {
+    width: 60px;
+    height: 2px;
+    background: #C8A882;
+    margin-bottom: 20px;
+  }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 36px;
+    color: #2C2420;
+    margin-bottom: 36px;
+  }
+
+  .contact-line {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(44, 36, 32, 0.7);
+    margin-bottom: 12px;
+  }
+
+  .contact-line a {
+    color: #2C2420;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200, 168, 130, 0.5);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+
+  .contact-line a:hover { border-color: #C8A882; }
+
+  /* ─── FOOTER ────────────────────────────────────────── */
+  footer {
+    position: relative;
+    z-index: 2;
+    background: #2C2420;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+  }
+
+  .footer-left {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: rgba(253, 250, 246, 0.6);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-right {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 10px;
+    color: rgba(253, 250, 246, 0.35);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── ANIMATION CLASSES ─────────────────────────────── */
+  .clip-title {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .clip-title.visible { clip-path: inset(0 0% 0 0); }
+
+  .reveal-img {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.8s ease-out;
+  }
+  .reveal-img.visible { clip-path: inset(0 0 0 0); }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-nav { padding: 24px 24px; }
+    .hero-nav-links { gap: 20px; }
+    .hero-text { left: 24px; bottom: 40px; }
+    .hero-title { font-size: 48px; }
+    .hero-subtitle { font-size: 16px; }
+
+    #sessions { padding: 60px 24px; }
+    .sessions-row { gap: 32px; }
+    .sessions-divider { margin: 0 24px; }
+
+    #gallery { padding: 60px 24px; }
+    .gallery-row.full { height: 300px; }
+    .gallery-row.split { height: 240px; flex-wrap: wrap; }
+    .gallery-row.split .img-60,
+    .gallery-row.split .img-40 { flex: 0 0 100%; height: 240px; }
+    .gallery-row.triple { height: auto; flex-wrap: wrap; }
+    .gallery-row.triple img { flex: 0 0 calc(50% - 2px); height: 180px; }
+
+    #featured { padding: 60px 24px; }
+    .featured-inner { flex-direction: column; gap: 32px; }
+    .featured-image { flex: unset; width: 100%; height: 360px; }
+
+    #stats { padding: 60px 24px; }
+    .stats-row { gap: 40px; }
+
+    #about { padding: 60px 24px; }
+    .about-inner { flex-direction: column; gap: 32px; }
+    .about-image { flex: unset; width: 100%; height: 360px; }
+
+    #maternity-feature {
+      height: 400px;
+      background-attachment: scroll;
+    }
+    .maternity-heading { font-size: 40px; }
+
+    #cta { padding: 80px 24px; }
+    .cta-heading { font-size: 48px; }
+
+    #contact { padding: 60px 24px; }
+
+    footer { padding: 0 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: 36px; }
+    .hero-subtitle { font-size: 13px; }
+    .hero-nav-brand { font-size: 16px; }
+    .hero-nav-links { gap: 14px; }
+    .hero-nav-links a { font-size: 10px; }
+    .gallery-title { font-size: 36px; }
+    .cta-heading { font-size: 36px; }
+    .maternity-heading { font-size: 32px; }
+    .stat-number { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ──────────────────────────────────────────────── -->
+<div class="hero-wrapper">
+  <section class="hero" id="home">
+    <div class="hero-crossfade">
+      <img src="https://static.wixstatic.com/media/f0c639_b721529304fd4b53a3c166d6e47c7818~mv2.jpg" class="active" alt="Newborn photography Miami" loading="eager">
+      <img src="https://static.wixstatic.com/media/f0c639_d4ecf594963f46ed907efe028ac570da~mv2.jpg" alt="Newborn session" loading="eager">
+      <img src="https://static.wixstatic.com/media/f0c639_99d218a76014475b925cb1f1df05f8bf~mv2.jpg" alt="Family photography Miami" loading="eager">
+    </div>
+    <div class="hero-overlay"></div>
+
+    <nav class="hero-nav">
+      <a href="#home" class="hero-nav-brand">iya mag</a>
+      <ul class="hero-nav-links">
+        <li><a href="#sessions">Sessions</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Book</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-text">
+      <span class="hero-title" id="heroTitle">IYA MAG</span>
+      <span class="hero-subtitle">Photography</span>
+      <span class="hero-tagline">Newborn · Maternity · Family · Miami, FL</span>
+    </div>
+  </section>
+</div>
+
+<!-- ─── SESSIONS BAR ──────────────────────────────────────── -->
+<section id="sessions">
+  <div class="sessions-row">
+    <div class="session-item fade-up">
+      <div class="session-circle">
+        <img src="https://static.wixstatic.com/media/f0c639_b721529304fd4b53a3c166d6e47c7818~mv2.jpg" alt="Newborn" loading="lazy">
+      </div>
+      <span class="session-label">Newborn</span>
+    </div>
+    <div class="session-item fade-up" style="transition-delay: 0.1s;">
+      <div class="session-circle">
+        <img src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="Maternity" loading="lazy">
+      </div>
+      <span class="session-label">Maternity</span>
+    </div>
+    <div class="session-item fade-up" style="transition-delay: 0.2s;">
+      <div class="session-circle">
+        <img src="https://static.wixstatic.com/media/f0c639_28e86a889d484ec3af3ef2654fb84146~mv2_d_1500_2250_s_2.jpg" alt="Family" loading="lazy">
+      </div>
+      <span class="session-label">Family</span>
+    </div>
+    <div class="session-item fade-up" style="transition-delay: 0.3s;">
+      <div class="session-circle">
+        <img src="https://static.wixstatic.com/media/f0c639_a57992b89c024d07b0ed076fe427f0f9~mv2.jpg" alt="Milestone" loading="lazy">
+      </div>
+      <span class="session-label">Milestone</span>
+    </div>
+  </div>
+</section>
+<div class="sessions-divider"></div>
+
+<!-- ─── GALLERY ───────────────────────────────────────────── -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="gallery-accent-line"></div>
+    <h2 class="gallery-title clip-title">The Work</h2>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Row 1: Full width -->
+    <div class="gallery-row full">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/f0c639_a7d86e6683af45a4b4e9c7109b80d24c~mv2.jpg" alt="Newborn photography" loading="lazy">
+    </div>
+
+    <!-- Row 2: 60/40 split -->
+    <div class="gallery-row split">
+      <img class="img-60 reveal-img" style="transition-delay: 0.08s;" src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="Maternity session Miami" loading="lazy">
+      <img class="img-40 reveal-img" style="transition-delay: 0.16s;" src="https://static.wixstatic.com/media/f0c639_4fd2d7436aef442eb0bfbb776cbb8c22~mv2_d_1500_1874_s_2.jpg" alt="Newborn session" loading="lazy">
+    </div>
+
+    <!-- Row 3: Full width -->
+    <div class="gallery-row full">
+      <img class="reveal-img" style="transition-delay: 0.08s;" src="https://static.wixstatic.com/media/f0c639_29dcabbe3b79467ab939abdeacf7d613~mv2_d_1500_2250_s_2.jpg" alt="Family photography Miami" loading="lazy">
+    </div>
+
+    <!-- Row 4: Three equal -->
+    <div class="gallery-row triple">
+      <img class="reveal-img" style="transition-delay: 0.0s;" src="https://static.wixstatic.com/media/f0c639_5ee5dde9d28149e79fdc4b80278020a5~mv2_d_1500_2250_s_2.jpg" alt="Maternity" loading="lazy">
+      <img class="reveal-img" style="transition-delay: 0.08s;" src="https://static.wixstatic.com/media/f0c639_de6945847dbf4573b7d1bf432676b248~mv2_d_1500_2250_s_2.jpg" alt="Maternity session" loading="lazy">
+      <img class="reveal-img" style="transition-delay: 0.16s;" src="https://static.wixstatic.com/media/f0c639_82e1da7ecd9e40308d30822f07de49f4~mv2.jpg" alt="Family session Miami" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURED SESSION ──────────────────────────────────── -->
+<section id="featured">
+  <div class="featured-inner">
+    <div class="featured-image reveal-img">
+      <img src="https://static.wixstatic.com/media/f0c639_99d218a76014475b925cb1f1df05f8bf~mv2.jpg" alt="Newborn session Miami" loading="lazy">
+    </div>
+    <div class="featured-text">
+      <span class="featured-num">01</span>
+      <div class="featured-content">
+        <h3 class="featured-title clip-title">Newborn Sessions</h3>
+        <div class="featured-rule"></div>
+        <p class="featured-desc fade-up">Every fleeting yawn, every tiny finger — captured in the first two weeks. Newborn sessions in Miami take place in a warm, calm studio environment where your baby leads the pace.</p>
+        <span class="featured-price fade-up" style="transition-delay: 0.12s;">From $250</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─────────────────────────────────────────────── -->
+<section id="stats">
+  <div class="stats-row">
+    <div class="stat-item" style="transition-delay: 0ms;">
+      <span class="stat-number" data-target="8" data-suffix="+">8+</span>
+      <span class="stat-label">Years in Miami</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 100ms;">
+      <span class="stat-number" data-target="500" data-suffix="+">500+</span>
+      <span class="stat-label">Sessions Captured</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 200ms;">
+      <span class="stat-number">5★</span>
+      <span class="stat-label">Average Rating</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 300ms;">
+      <span class="stat-number">2 wk</span>
+      <span class="stat-label">Booking Lead Time</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─────────────────────────────────────────────── -->
+<section id="about">
+  <div class="about-inner">
+    <span class="about-num">02</span>
+    <div class="about-image reveal-img">
+      <img src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="About Iya Magraner" loading="lazy">
+    </div>
+    <div class="about-text">
+      <div class="about-accent-line"></div>
+      <h2 class="about-heading clip-title">About Iya</h2>
+      <p class="about-bio fade-up">Iya Magraner is a Miami-based photographer specializing in newborn, maternity, and family portraiture. With eight years behind the lens, she brings patience, warmth, and an eye for quiet moments to every session. Babies don't wait — and neither does the light.</p>
+      <blockquote class="about-quote fade-up" style="transition-delay: 0.1s;">"I want you to look back at these photos in 20 years and feel it all over again."</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MATERNITY PARALLAX ────────────────────────────────── -->
+<section id="maternity-feature">
+  <div class="maternity-overlay"></div>
+  <div class="maternity-text">
+    <h2 class="maternity-heading">Before They Arrive</h2>
+  </div>
+</section>
+
+<!-- ─── BOLD CTA ──────────────────────────────────────────── -->
+<section id="cta">
+  <h2 class="cta-heading fade-up">Book Your Session</h2>
+  <p class="cta-sub fade-up" style="transition-delay: 0.1s;">Currently accepting bookings for May–July 2026 · Miami, FL</p>
+  <a href="mailto:iyamagphoto@gmail.com" class="cta-btn fade-up" style="transition-delay: 0.2s;">iyamagphoto@gmail.com</a>
+</section>
+
+<!-- ─── CONTACT ───────────────────────────────────────────── -->
+<section id="contact">
+  <div class="contact-inner">
+    <span class="contact-num">03</span>
+    <div class="contact-accent-line"></div>
+    <h2 class="contact-heading clip-title">Get In Touch</h2>
+    <p class="contact-line fade-up"><a href="mailto:iyamagphoto@gmail.com">iyamagphoto@gmail.com</a></p>
+    <p class="contact-line fade-up" style="transition-delay: 0.08s;"><a href="https://instagram.com/iya_magraner_photography" target="_blank">@iya_magraner_photography</a></p>
+    <p class="contact-line fade-up" style="transition-delay: 0.16s;"><a href="https://iyamagphoto.wixsite.com/iyamagphoto/book-a-session" target="_blank">Book a session →</a></p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <span class="footer-left">Iya Mag Photography · Miami, FL · © 2026</span>
+  <span class="footer-right">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero crossfade
+  const heroImgs = document.querySelectorAll('.hero-crossfade img');
+  let heroIdx = 0;
+  setInterval(() => {
+    heroImgs[heroIdx].classList.remove('active');
+    heroIdx = (heroIdx + 1) % heroImgs.length;
+    heroImgs[heroIdx].classList.add('active');
+  }, 5000);
+
+  // Hero letter-spacing compress
+  setTimeout(() => {
+    document.getElementById('heroTitle').classList.add('compress');
+  }, 200);
+
+  // IntersectionObserver for all animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        if (el.classList.contains('reveal-img')) {
+          const siblings = el.parentElement.querySelectorAll('.reveal-img');
+          siblings.forEach((s, i) => {
+            setTimeout(() => s.classList.add('visible'), i * 80);
+          });
+          siblings.forEach(s => observer.unobserve(s));
+        } else {
+          el.classList.add('visible');
+          observer.unobserve(el);
+        }
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.clip-title, .reveal-img, .fade-up, .stat-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
