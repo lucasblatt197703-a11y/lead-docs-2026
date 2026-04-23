@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michele Powell Beaujardin — Fine Art Portraits · Miami, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #F2EDE4;
+    --near-black: #1A1208;
+    --sienna: #8B5E3C;
+    --mahogany: #2C1810;
+    --forest: #4A6741;
+    --gold: #C4A45A;
+    --cinzel: 'Cinzel', serif;
+    --baskerville: 'Libre Baskerville', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--near-black);
+    font-family: var(--baskerville);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVIGATION ─────────────────────────────────────── */
+  nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+  }
+  .nav-monogram {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(242,237,228,0.7);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: rgba(242,237,228,1); }
+
+  /* ─── HERO ───────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    background: var(--mahogany);
+    overflow: hidden;
+  }
+  .hero-image {
+    position: absolute;
+    right: 0; top: 0;
+    width: 52%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-gradient {
+    position: absolute;
+    top: 0; left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to right, #2C1810 60%, transparent);
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    max-width: 640px;
+  }
+  .hero-label {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero-name {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 1.0;
+    color: var(--parchment);
+    letter-spacing: 0.3em;
+    display: block;
+    will-change: letter-spacing;
+    transition: letter-spacing 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hero-name-bold {
+    font-family: var(--cinzel);
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 1.0;
+    color: var(--parchment);
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 24px;
+  }
+  .hero-rule {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero-sub {
+    font-family: var(--baskerville);
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(242,237,228,0.7);
+    margin-bottom: 16px;
+  }
+  .hero-years {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ─── CREDENTIAL STRIP ───────────────────────────────── */
+  #strip {
+    background: var(--near-black);
+    padding: 24px 60px;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    text-align: center;
+  }
+  .strip-text {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ─── PORTFOLIO GALLERY ──────────────────────────────── */
+  #portfolio {
+    background: var(--parchment);
+    padding: 100px 60px;
+  }
+  .section-number {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 160px;
+    color: var(--near-black);
+    opacity: 0.04;
+    line-height: 1;
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .section-header {
+    position: relative;
+    margin-bottom: 48px;
+    z-index: 1;
+  }
+  .section-rule {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 36px;
+    color: var(--near-black);
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    position: relative;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.02); }
+  .gallery-item:hover { box-shadow: inset 0 0 0 2px var(--gold); }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(26,18,8,0.85));
+    color: var(--parchment);
+    font-family: var(--cinzel);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 32px 16px 14px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s, transform 0.35s;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+  /* ─── FEATURED PORTRAIT ──────────────────────────────── */
+  #featured {
+    background: var(--near-black);
+    padding: 80px 0;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    min-height: 600px;
+  }
+  .featured-image-wrap {
+    overflow: hidden;
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .featured-image-wrap.is-visible { clip-path: inset(0 0 0 0); }
+  .featured-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.04);
+    will-change: transform;
+    transition: transform 1.2s ease;
+  }
+  .featured-image-wrap.is-visible img { transform: scale(1.0); }
+  .featured-content {
+    padding: 60px 60px 60px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .featured-ghost {
+    font-family: var(--cinzel);
+    font-size: 140px;
+    color: var(--gold);
+    opacity: 0.05;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .featured-tag {
+    font-family: var(--cinzel);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .featured-title {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .featured-sub {
+    font-family: var(--baskerville);
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(242,237,228,0.6);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+  .featured-rule { width: 60px; height: 1px; background: var(--gold); margin-bottom: 24px; }
+  .featured-body {
+    font-family: var(--baskerville);
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(242,237,228,0.85);
+    margin-bottom: 32px;
+  }
+  .featured-contact {
+    font-family: var(--cinzel);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .featured-contact a {
+    color: rgba(242,237,228,0.7);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .featured-contact a:hover { color: var(--gold); }
+
+  /* ─── MURALS SECTION ─────────────────────────────────── */
+  #murals {
+    background: var(--mahogany);
+  }
+  .murals-header {
+    text-align: center;
+    padding: 72px 60px 48px;
+  }
+  .murals-title {
+    font-family: var(--cinzel);
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--parchment);
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(28px);
+    will-change: opacity, transform;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .murals-title.is-visible { opacity: 1; transform: translateY(0); }
+  .murals-subtitle {
+    font-family: var(--baskerville);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  }
+  .murals-subtitle.is-visible { opacity: 1; transform: translateY(0); }
+  .murals-strip {
+    display: flex;
+    width: 100%;
+  }
+  .murals-strip img {
+    width: 33.33%;
+    height: 480px;
+    object-fit: cover;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .murals-desc {
+    text-align: center;
+    padding: 36px 60px 60px;
+    font-family: var(--baskerville);
+    font-size: 15px;
+    color: rgba(242,237,228,0.65);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ─── CREDENTIALS ─────────────────────────────────────── */
+  #credentials {
+    background: var(--parchment);
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .cred-header {
+    margin-bottom: 40px;
+    grid-column: 1 / -1;
+  }
+  .cred-list {
+    list-style: none;
+  }
+  .cred-list li {
+    font-family: var(--cinzel);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--near-black);
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(196,164,90,0.25);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(16px);
+    will-change: opacity, transform;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .cred-list li.is-visible { opacity: 1; transform: translateY(0); }
+  .cred-dot { color: var(--gold); font-size: 18px; flex-shrink: 0; }
+  .cred-pull {
+    border-left: 2px solid var(--gold);
+    padding-left: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .cred-pull.is-visible { opacity: 1; transform: translateY(0); }
+  .cred-pull blockquote {
+    font-family: var(--baskerville);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--sienna);
+    margin-bottom: 16px;
+  }
+  .cred-pull cite {
+    font-family: var(--cinzel);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--near-black);
+    opacity: 0.5;
+    font-style: normal;
+  }
+
+  /* ─── STILL LIFE SCROLL ──────────────────────────────── */
+  #still-life {
+    background: var(--near-black);
+    padding: 80px 0 72px;
+  }
+  .still-header {
+    padding: 0 60px 36px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .still-title {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--parchment);
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .still-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .still-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 0 60px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .still-scroll::-webkit-scrollbar { display: none; }
+  .still-scroll img {
+    min-width: 320px;
+    height: 380px;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+    opacity: 0;
+    transform: translateX(20px);
+    will-change: opacity, transform;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .still-scroll img.is-visible { opacity: 1; transform: translateX(0); }
+
+  /* ─── COMMISSION CTA ─────────────────────────────────── */
+  #commission {
+    height: 500px;
+    background-image: url('https://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/556051.JPG');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .commission-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,18,8,0.78);
+  }
+  .commission-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.96);
+    will-change: opacity, transform;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .commission-content.is-visible { opacity: 1; transform: scale(1.0); }
+  .commission-title {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 64px;
+    letter-spacing: 0.08em;
+    color: var(--parchment);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .commission-sub {
+    font-family: var(--baskerville);
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(242,237,228,0.8);
+    margin-bottom: 40px;
+  }
+  .commission-btn {
+    display: inline-block;
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    border: 1px solid var(--parchment);
+    padding: 14px 48px;
+    text-decoration: none;
+    transition: background 0.35s, color 0.35s, border-color 0.35s;
+  }
+  .commission-btn:hover {
+    background: var(--gold);
+    color: var(--mahogany);
+    border-color: var(--gold);
+  }
+
+  /* ─── CONTACT ─────────────────────────────────────────── */
+  #contact {
+    background: var(--parchment);
+    padding: 100px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-ghost {
+    font-family: var(--cinzel);
+    font-size: 160px;
+    color: var(--near-black);
+    opacity: 0.04;
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .contact-inner { max-width: 560px; position: relative; z-index: 1; }
+  .contact-title {
+    font-family: var(--cinzel);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 36px;
+    color: var(--near-black);
+    margin-bottom: 32px;
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .contact-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-line {
+    font-family: var(--cinzel);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    color: var(--near-black);
+  }
+  .contact-line a {
+    color: var(--near-black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    transition: color 0.3s;
+  }
+  .contact-line a:hover { color: var(--sienna); }
+  .contact-body {
+    margin-top: 28px;
+    font-family: var(--baskerville);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(26,18,8,0.65);
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    background: var(--near-black);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+  }
+  .footer-left {
+    font-family: var(--cinzel);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(242,237,228,0.5);
+  }
+  .footer-right {
+    font-family: var(--cinzel);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(242,237,228,0.3);
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    #hero { height: auto; min-height: 100vh; }
+    .hero-image { display: none; }
+    .hero-gradient { width: 100%; }
+    .hero-content { padding: 120px 24px 80px; max-width: 100%; }
+    .hero-name, .hero-name-bold { font-size: 48px; }
+    #portfolio { padding: 60px 24px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    #featured { grid-template-columns: 1fr; padding: 0; }
+    .featured-content { padding: 48px 24px; }
+    #credentials { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+    .cred-header { grid-column: 1; }
+    .murals-header { padding: 48px 24px 32px; }
+    .murals-title { font-size: 32px; }
+    .murals-strip img { height: 220px; }
+    .murals-desc { padding: 24px; }
+    .commission-title { font-size: 36px; }
+    #contact { padding: 60px 24px; }
+    footer { padding: 0 24px; }
+    .still-scroll img { min-width: 240px; height: 280px; }
+    #strip { padding: 20px 24px; }
+    .strip-text { font-size: 9px; }
+  }
+  @media (max-width: 480px) {
+    .hero-name, .hero-name-bold { font-size: 36px; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .commission-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ────────────────────────────────────────── -->
+<nav>
+  <a href="#hero" class="nav-monogram">MBP</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#featured">Portraits</a></li>
+    <li><a href="#murals">Murals</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────── -->
+<section id="hero">
+  <img
+    class="hero-image"
+    src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/zora-03-12_orig.jpg"
+    alt="Zora's Voyage — oil portrait by Michele Powell Beaujardin"
+    loading="eager"
+  >
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <p class="hero-label">Miami, Florida · Oil on Canvas</p>
+    <span class="hero-name" id="heroName">MICHELE POWELL</span>
+    <span class="hero-name-bold">BEAUJARDIN</span>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Fine Art Portraits · Still Lifes · Trompe l'Oeil Murals</p>
+    <p class="hero-years">30 Years in Oil</p>
+  </div>
+</section>
+
+<!-- ─── CREDENTIAL STRIP ──────────────────────────────────── -->
+<div id="strip">
+  <p class="strip-text">· Fine Art Since 1990 · Miami, Florida · Portrait Commissions · Pet Portraits · Trompe l'Oeil Murals · Old Master Re-creations ·</p>
+</div>
+
+<!-- ─── PORTFOLIO GALLERY ─────────────────────────────────── -->
+<section id="portfolio">
+  <div style="position:relative">
+    <span class="section-number">01</span>
+    <div class="section-header">
+      <div class="section-rule"></div>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/619266_1_orig.jpg" alt="Lady of Shalott re-creation" loading="lazy">
+      <div class="gallery-caption">Lady of Shalott</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/8011989_1_orig.jpg" alt="Two Sisters re-creation" loading="lazy">
+      <div class="gallery-caption">Two Sisters</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/z2bis_1_orig.jpg" alt="Child portrait" loading="lazy">
+      <div class="gallery-caption">Portrait Study</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/published/briana_1.jpg" alt="Briana — child portrait" loading="lazy">
+      <div class="gallery-caption">Briana</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/beverly_2.jpg" alt="Beverly — child portrait" loading="lazy">
+      <div class="gallery-caption">Beverly</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/elsa_1.jpg" alt="Elsa — child portrait" loading="lazy">
+      <div class="gallery-caption">Elsa</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/4895185_1_orig.jpg" alt="Pet portrait" loading="lazy">
+      <div class="gallery-caption">Pet Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/8183841_1.jpg" alt="Pet portrait" loading="lazy">
+      <div class="gallery-caption">Pet Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/2451595_1_orig.jpg" alt="Canaletto re-creation" loading="lazy">
+      <div class="gallery-caption">After Canaletto</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURED PORTRAIT ─────────────────────────────────── -->
+<section id="featured">
+  <div class="featured-image-wrap">
+    <img
+      src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/619266_1_orig.jpg"
+      alt="Lady of Shalott — Old Master re-creation"
+      loading="lazy"
+    >
+  </div>
+  <div class="featured-content">
+    <span class="featured-ghost">02</span>
+    <p class="featured-tag">Commission Work</p>
+    <h2 class="featured-title">Portrait Commissions</h2>
+    <p class="featured-sub">Oil on Canvas · Custom Work · People, Pets, Children</p>
+    <div class="featured-rule"></div>
+    <p class="featured-body">
+      Each portrait is painted in traditional oil on canvas — the same medium that has preserved likenesses for five centuries. Working from reference photographs or live sessions, Michele creates finished works that carry the weight and permanence of period originals. Commissions are available for individuals, families, children, and beloved pets.
+    </p>
+    <p class="featured-contact">Commission inquiries: <a href="mailto:mbeaujardin@bellsouth.net">mbeaujardin@bellsouth.net</a></p>
+  </div>
+</section>
+
+<!-- ─── MURALS ────────────────────────────────────────────── -->
+<section id="murals">
+  <div class="murals-header">
+    <h2 class="murals-title">Enchanted Windows</h2>
+    <p class="murals-subtitle">Trompe l'Oeil Mural Paintings</p>
+  </div>
+  <div class="murals-strip">
+    <img src="https://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/556051.JPG" alt="Trompe l'oeil mural" loading="lazy">
+    <img src="https://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_6665354.jpg" alt="Trompe l'oeil mural" loading="lazy">
+    <img src="https://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_555344.jpg" alt="Trompe l'oeil mural" loading="lazy">
+  </div>
+  <p class="murals-desc">
+    Statement trompe l'oeil mural commissions for homes and hospitality spaces throughout South Florida. In collaboration with artist Dominique DuBois.
+  </p>
+</section>
+
+<!-- ─── CREDENTIALS ───────────────────────────────────────── -->
+<section id="credentials">
+  <div class="cred-header section-header" style="margin-bottom:0">
+    <div class="section-rule"></div>
+    <h2 class="section-title">About the Artist</h2>
+  </div>
+  <ul class="cred-list">
+    <li>
+      <span class="cred-dot">·</span>
+      Fine art portraiture since 1990
+    </li>
+    <li>
+      <span class="cred-dot">·</span>
+      Exhibited at ArtWorks DeLand Gallery, Florida
+    </li>
+    <li>
+      <span class="cred-dot">·</span>
+      Author — <em>Enchanted Windows</em> (Blurb Press)
+    </li>
+    <li>
+      <span class="cred-dot">·</span>
+      Old Master re-creations &amp; trompe l'oeil installations
+    </li>
+  </ul>
+  <div class="cred-pull">
+    <blockquote>
+      "The detail in a proper oil portrait cannot be reproduced by photography. It is a different kind of truth."
+    </blockquote>
+    <cite>— Michele Powell Beaujardin</cite>
+  </div>
+</section>
+
+<!-- ─── STILL LIFE SCROLL ─────────────────────────────────── -->
+<section id="still-life">
+  <div class="still-header">
+    <div class="section-rule" style="margin-bottom:0; flex-shrink:0;"></div>
+    <h2 class="still-title">Still Lifes</h2>
+  </div>
+  <div class="still-scroll">
+    <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/4498136_1.jpg" alt="Still life" loading="lazy">
+    <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1869567_1.jpg" alt="Still life" loading="lazy">
+    <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/6869629_1.jpg" alt="Still life" loading="lazy">
+    <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/5888391_1.jpg" alt="Still life" loading="lazy">
+    <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/6899204_1.jpg" alt="Still life" loading="lazy">
+    <img src="https://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/9298192_1_orig.jpg" alt="Café de Paris 1987" loading="lazy">
+  </div>
+</section>
+
+<!-- ─── COMMISSION CTA ────────────────────────────────────── -->
+<section id="commission">
+  <div class="commission-overlay"></div>
+  <div class="commission-content">
+    <h2 class="commission-title">Commission an Original</h2>
+    <p class="commission-sub">Portraits · Pet Portraits · Old Master Re-creations · Trompe l'Oeil Murals</p>
+    <a href="mailto:mbeaujardin@bellsouth.net" class="commission-btn">Inquire</a>
+  </div>
+</section>
+
+<!-- ─── CONTACT ───────────────────────────────────────────── -->
+<section id="contact">
+  <span class="contact-ghost">03</span>
+  <div class="contact-inner">
+    <div class="section-rule"></div>
+    <h2 class="contact-title">Atelier Inquiries</h2>
+    <p class="contact-line">Email: <a href="mailto:mbeaujardin@bellsouth.net">mbeaujardin@bellsouth.net</a></p>
+    <p class="contact-line">Phone: <a href="tel:+17863757901">(786) 375-7901</a></p>
+    <p class="contact-body">Available for portrait commissions, pet portraits, Old Master re-creations, and trompe l'oeil mural installations throughout South Florida.</p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <span class="footer-left">Michele Powell Beaujardin &nbsp;·&nbsp; Miami, FL &nbsp;·&nbsp; © 2026</span>
+  <span class="footer-right">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero letter-spacing compress
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const name = document.getElementById('heroName');
+      if (name) name.style.letterSpacing = '0.04em';
+    }, 100);
+  });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Section titles clip-path
+  document.querySelectorAll('.section-title, .still-title, .contact-title').forEach(el => observer.observe(el));
+
+  // Gallery items — stagger
+  document.querySelectorAll('.gallery-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 90) + 'ms';
+    observer.observe(el);
+  });
+
+  // Featured image wrap
+  document.querySelectorAll('.featured-image-wrap').forEach(el => observer.observe(el));
+
+  // Murals header
+  document.querySelectorAll('.murals-title, .murals-subtitle').forEach(el => observer.observe(el));
+
+  // Commission CTA
+  document.querySelectorAll('.commission-content').forEach(el => observer.observe(el));
+
+  // Credentials
+  document.querySelectorAll('.cred-list li').forEach((el, i) => {
+    el.style.transitionDelay = (i * 150) + 'ms';
+    observer.observe(el);
+  });
+  document.querySelectorAll('.cred-pull').forEach(el => observer.observe(el));
+
+  // Still life stagger
+  document.querySelectorAll('.still-scroll img').forEach((el, i) => {
+    el.style.transitionDelay = (i * 80) + 'ms';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
