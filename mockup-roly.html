@@ -45,6 +45,8 @@
     #hero {
       position: relative; width: 100%; height: 100vh; min-height: 600px;
       overflow: hidden; display: flex; align-items: flex-end;
+      background-image: url('https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1920,h_1080,q_90/file.jpg');
+      background-size: cover; background-position: center;
     }
     .hero-video-wrap {
       position: absolute; inset: 0; overflow: hidden;
@@ -58,7 +60,7 @@
     }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.3) 40%, transparent 70%);
+      background: linear-gradient(to top, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.45) 40%, rgba(17,17,17,0.2) 70%);
     }
     .hero-content {
       position: relative; z-index: 2; padding: 0 48px 64px;
@@ -693,7 +695,7 @@
           observer.unobserve(el);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 });
 
     // Section titles (clip-path sweep)
     document.querySelectorAll('.anim-title').forEach(el => observer.observe(el));
@@ -720,6 +722,13 @@
 
     // Contact heading
     document.querySelectorAll('.contact-heading').forEach(el => observer.observe(el));
+
+    // Force-reveal all animated elements immediately (for screenshot / static preview)
+    setTimeout(() => {
+      document.querySelectorAll(
+        '.anim-title, .anim-stat, .anim-gallery, .anim-featured, .anim-story-img, .anim-shop, .recognition-card, .contact-heading'
+      ).forEach(el => el.classList.add('is-visible'));
+    }, 200);
   </script>
 </body>
 </html>
