@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roly Fernandez — Miami's King of Kustom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #111111;
+      --offwhite: #F5F0EB;
+      --rust: #C4553A;
+      --cobalt: #2B4D8C;
+      --dark: #1A1A1A;
+      --navy: #1A1A2E;
+      --footer: #0D0D0D;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--offwhite); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(17,17,17,0.85) 0%, transparent 100%);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px;
+      letter-spacing: 0.2em; color: var(--offwhite); text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,235,0.7);
+      text-decoration: none; transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--rust); }
+
+    /* ── HERO — VIDEO ── */
+    #hero {
+      position: relative; width: 100%; height: 100vh; min-height: 600px;
+      overflow: hidden; display: flex; align-items: flex-end;
+    }
+    .hero-video-wrap {
+      position: absolute; inset: 0; overflow: hidden;
+    }
+    .hero-video-wrap iframe {
+      width: 177.78vh; height: 100vh;
+      min-width: 100%; min-height: 56.25vw;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.3) 40%, transparent 70%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; padding: 0 48px 64px;
+      max-width: 900px;
+    }
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(64px, 9vw, 120px); line-height: 0.9;
+      color: var(--offwhite); letter-spacing: 0.4em;
+      text-transform: uppercase; display: block;
+      will-change: letter-spacing;
+      transition: letter-spacing 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hero-tagline {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: 16px; letter-spacing: 0.12em; color: rgba(245,240,235,0.75);
+      margin-top: 16px; text-transform: uppercase;
+    }
+    .hero-cta {
+      display: inline-block; margin-top: 32px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--offwhite); border: 1px solid rgba(245,240,235,0.4);
+      padding: 14px 32px; text-decoration: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .hero-cta:hover { border-color: var(--rust); background: var(--rust); }
+
+    /* ── STATS STRIP ── */
+    #stats {
+      background: var(--dark); padding: 56px 48px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(245,240,235,0.06);
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 48px; color: var(--rust); line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(245,240,235,0.6); margin-top: 8px; display: block;
+    }
+    .stat-item.anim-stat { opacity: 0; transform: translateY(24px); will-change: transform, opacity; }
+    .stat-item.anim-stat.is-visible { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--black); padding: 100px 48px; }
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--rust); display: block; margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 40px; color: var(--offwhite); margin-bottom: 4px;
+      clip-path: inset(0 100% 0 0); will-change: clip-path;
+    }
+    .section-title.is-visible {
+      clip-path: inset(0 0% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .title-line {
+      width: 80px; height: 2px; background: var(--rust); margin-bottom: 56px;
+    }
+    .gallery-masonry {
+      column-count: 3; column-gap: 6px;
+    }
+    .gallery-item {
+      break-inside: avoid; position: relative; overflow: hidden;
+      margin-bottom: 6px; cursor: pointer;
+      clip-path: inset(100% 0 0 0); will-change: clip-path, transform;
+    }
+    .gallery-item.is-visible {
+      clip-path: inset(0 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .gallery-item img {
+      width: 100%; display: block; object-fit: cover;
+    }
+    .gallery-hover-overlay {
+      position: absolute; inset: 0; background: rgba(17,17,17,0);
+      display: flex; align-items: flex-end; padding: 20px;
+      transition: background 0.3s ease;
+    }
+    .gallery-hover-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--offwhite); opacity: 0; transform: translateY(12px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .gallery-item:hover .gallery-hover-overlay { background: rgba(17,17,17,0.55); border: 2px solid var(--rust); }
+    .gallery-item:hover .gallery-hover-title { opacity: 1; transform: translateY(0); }
+
+    /* ── FEATURED PIECE ── */
+    #featured { background: var(--dark); padding: 100px 48px; }
+    .featured-grid {
+      display: grid; grid-template-columns: 55% 45%; gap: 80px; align-items: center;
+    }
+    .featured-img-wrap {
+      position: relative; overflow: hidden;
+      clip-path: inset(0 100% 0 0); will-change: clip-path;
+    }
+    .featured-img-wrap.is-visible {
+      clip-path: inset(0 0% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .featured-img-wrap img {
+      width: 100%; display: block; object-fit: cover;
+      transform: scale(0.92); will-change: transform;
+      transition: transform 0.9s ease-out;
+    }
+    .featured-img-wrap.is-visible img { transform: scale(1.0); }
+    .featured-text { position: relative; }
+    .featured-ghost {
+      position: absolute; top: -40px; left: -20px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 160px; color: rgba(245,240,235,0.03);
+      line-height: 1; z-index: 0; pointer-events: none; user-select: none;
+    }
+    .featured-text-inner { position: relative; z-index: 1; }
+    .featured-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 36px; color: var(--offwhite); line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .featured-meta {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: 14px; letter-spacing: 0.08em; color: rgba(245,240,235,0.55);
+      margin-bottom: 28px; text-transform: uppercase;
+    }
+    .featured-body {
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: 17px; line-height: 1.7; color: rgba(245,240,235,0.75);
+      margin-bottom: 36px;
+    }
+    .featured-btn {
+      display: inline-block; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--offwhite); border: 1.5px solid var(--offwhite);
+      padding: 16px 36px; text-decoration: none;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .featured-btn:hover { background: var(--rust); border-color: var(--rust); }
+
+    /* ── MARQUEE ── */
+    .marquee-strip {
+      background: var(--rust); overflow: hidden; white-space: nowrap;
+      padding: 16px 0;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--offwhite); padding: 0 40px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── ARTIST STORY ── */
+    #story { background: var(--navy); padding: 100px 48px; }
+    .story-grid {
+      display: grid; grid-template-columns: 50% 50%; gap: 80px; align-items: center;
+    }
+    .story-img-wrap { position: relative; }
+    .story-img-wrap img {
+      width: 100%; display: block; object-fit: cover;
+      opacity: 0; transform: scale(0.94); will-change: opacity, transform;
+    }
+    .story-img-wrap.is-visible img {
+      opacity: 1; transform: scale(1.0);
+      transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+    }
+    .story-accent-line {
+      position: absolute; left: -32px; top: 10%; width: 3px; height: 60%;
+      background: var(--rust);
+    }
+    .story-subtitle {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rust); margin-bottom: 20px;
+      clip-path: inset(0 100% 0 0); will-change: clip-path;
+    }
+    .story-subtitle.is-visible {
+      clip-path: inset(0 0% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .story-heading {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 48px; color: var(--offwhite); line-height: 1.05;
+      margin-bottom: 28px;
+    }
+    .story-body {
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 1.75; color: rgba(245,240,235,0.72);
+      margin-bottom: 32px;
+    }
+    .story-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(196,85,58,0.12); border: 1px solid rgba(196,85,58,0.3);
+      padding: 10px 20px; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500; font-size: 12px; letter-spacing: 0.1em;
+      color: var(--rust); text-transform: uppercase;
+    }
+
+    /* ── RECOGNITION ── */
+    #recognition { background: var(--offwhite); padding: 100px 48px; }
+    .recognition-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 40px; color: var(--black); margin-bottom: 60px;
+      clip-path: inset(0 100% 0 0); will-change: clip-path;
+    }
+    .recognition-title.is-visible {
+      clip-path: inset(0 0% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .recognition-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .recognition-card {
+      border-left: 3px solid var(--rust); padding: 0 0 0 24px;
+      opacity: 0; transform: translateY(28px); will-change: opacity, transform;
+    }
+    .recognition-card.is-visible {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .rec-icon {
+      font-size: 24px; margin-bottom: 12px; display: block; color: var(--rust);
+    }
+    .rec-title {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      font-size: 16px; color: var(--black); margin-bottom: 6px;
+    }
+    .rec-sub {
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: 14px; color: rgba(17,17,17,0.6);
+    }
+    .rec-date {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 11px; letter-spacing: 0.12em; color: var(--rust);
+      text-transform: uppercase; margin-top: 10px; display: block;
+    }
+
+    /* ── SHOP / CTA ── */
+    #shop {
+      position: relative; height: 500px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      background-image: url('https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1920,h_1080,q_90/file.jpg');
+      background-size: cover; background-position: center;
+      background-attachment: fixed;
+    }
+    .shop-overlay {
+      position: absolute; inset: 0;
+      background: rgba(17,17,17,0.75);
+    }
+    .shop-content { position: relative; z-index: 2; }
+    .shop-heading {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(48px, 7vw, 72px); color: var(--offwhite);
+      letter-spacing: -0.02em; line-height: 1; margin-bottom: 16px;
+      opacity: 0; transform: scale(0.94) translateY(20px); will-change: opacity, transform;
+    }
+    .shop-heading.is-visible {
+      opacity: 1; transform: scale(1) translateY(0);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .shop-sub {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: 18px; color: rgba(245,240,235,0.8); margin-bottom: 36px;
+    }
+    .shop-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-solid {
+      display: inline-block; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+      background: var(--rust); color: var(--offwhite); padding: 16px 36px;
+      text-decoration: none; transition: background 0.3s;
+    }
+    .btn-solid:hover { background: #a8442f; }
+    .btn-outline {
+      display: inline-block; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+      border: 1.5px solid var(--offwhite); color: var(--offwhite); padding: 16px 36px;
+      text-decoration: none; transition: background 0.3s, border-color 0.3s;
+    }
+    .btn-outline:hover { background: rgba(245,240,235,0.1); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--black); padding: 100px 60px; }
+    .contact-inner { max-width: 800px; }
+    .contact-eyebrow {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--rust); display: block; margin-bottom: 16px;
+    }
+    .contact-heading {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 48px; color: var(--offwhite); margin-bottom: 40px; line-height: 1.05;
+      clip-path: inset(0 100% 0 0); will-change: clip-path;
+    }
+    .contact-heading.is-visible {
+      clip-path: inset(0 0% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .contact-email {
+      display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 28px; color: var(--offwhite); text-decoration: none;
+      border-bottom: 1px solid rgba(245,240,235,0.15); padding-bottom: 24px; margin-bottom: 24px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .contact-email:hover { color: var(--rust); border-color: var(--rust); }
+    .contact-row {
+      display: flex; gap: 48px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .contact-item {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .contact-item-label {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(245,240,235,0.4);
+    }
+    .contact-item-val {
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: 16px; color: var(--offwhite); text-decoration: none;
+    }
+    .contact-item-val:hover { color: var(--rust); }
+    .contact-note {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: 15px; color: rgba(245,240,235,0.5); line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--footer); padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(245,240,235,0.05);
+    }
+    .footer-left {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 400;
+      font-size: 11px; letter-spacing: 0.08em; color: rgba(245,240,235,0.5);
+    }
+    .footer-right {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: 9px; color: rgba(245,240,235,0.25);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .hero-content { padding: 0 24px 48px; }
+      #stats { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 48px 24px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-masonry { column-count: 2; }
+      #featured { padding: 80px 24px; }
+      .featured-grid { grid-template-columns: 1fr; gap: 40px; }
+      #story { padding: 80px 24px; }
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      #recognition { padding: 80px 24px; }
+      .recognition-grid { grid-template-columns: 1fr; gap: 32px; }
+      #shop { background-attachment: scroll; }
+      #contact { padding: 80px 24px; }
+      .contact-email { font-size: 20px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .gallery-masonry { column-count: 1; }
+      #stats { grid-template-columns: 1fr; }
+      .hero-name { font-size: 52px; }
+      .story-accent-line { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Roly Fernandez</a>
+    <div class="nav-links">
+      <a href="#gallery">Work</a>
+      <a href="#story">About</a>
+      <a href="#shop">Shop</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO — VIDEO -->
+  <section id="hero">
+    <div class="hero-video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/2CTy03JdUes?autoplay=1&mute=1&loop=1&playlist=2CTy03JdUes&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        title="Roly Fernandez — King of Kustom"
+      ></iframe>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-name" id="heroName">ROLY FERNANDEZ</span>
+      <p class="hero-tagline">Miami's King of Kustom &nbsp;·&nbsp; Abstract Oil Paintings</p>
+      <a href="#gallery" class="hero-cta">View the Collection</a>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section id="stats">
+    <div class="stat-item anim-stat" data-delay="0">
+      <span class="stat-num">6,740</span>
+      <span class="stat-label">Followers</span>
+    </div>
+    <div class="stat-item anim-stat" data-delay="100">
+      <span class="stat-num">Since '10</span>
+      <span class="stat-label">Active Since</span>
+    </div>
+    <div class="stat-item anim-stat" data-delay="200">
+      <span class="stat-num">$650+</span>
+      <span class="stat-label">Originals From</span>
+    </div>
+    <div class="stat-item anim-stat" data-delay="300">
+      <span class="stat-num">Miami</span>
+      <span class="stat-label">Based In</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <span class="section-label">Selected Works</span>
+    <h2 class="section-title anim-title">THE WORK</h2>
+    <div class="title-line"></div>
+    <div class="gallery-masonry">
+      <div class="gallery-item anim-gallery" data-delay="0">
+        <img src="https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Mixed Feelings" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Mixed Feelings</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="80">
+        <img src="https://static.wixstatic.com/media/cd6d14_d16b11c620514a5e92cd5f52507b72e6~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Abstract No. 2" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Velocity</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="160">
+        <img src="https://static.wixstatic.com/media/cd6d14_dac1e23fc77840b8bc1e6a54263d7e38~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Miami Heat" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Miami Heat</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="240">
+        <img src="https://static.wixstatic.com/media/cd6d14_266795e0a0f84549a698d9bdb9513a96~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Kustom Spirit" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Kustom Spirit</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="320">
+        <img src="https://static.wixstatic.com/media/cd6d14_3006c2216e5d42b99bd29eabaf44c146~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Urban Pulse" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Urban Pulse</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="400">
+        <img src="https://static.wixstatic.com/media/cd6d14_421f1f18359646bcaf2d6c9fe2d0d88c~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Chromatic" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Chromatic</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="480">
+        <img src="https://static.wixstatic.com/media/cd6d14_4911f4ca742e4e37a629e2aa3d97dae2~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Tension" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Tension</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="560">
+        <img src="https://static.wixstatic.com/media/cd6d14_b8fd0231e26c47c39d08df9e43bb6d6c~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Collision" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Collision</span></div>
+      </div>
+      <div class="gallery-item anim-gallery" data-delay="640">
+        <img src="https://static.wixstatic.com/media/cd6d14_077b694b09c44b938b2da3b6b3b14ff0~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Displacement" loading="lazy" />
+        <div class="gallery-hover-overlay"><span class="gallery-hover-title">Displacement</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PIECE -->
+  <section id="featured">
+    <span class="section-label">Featured Work</span>
+    <div class="featured-grid">
+      <div class="featured-img-wrap anim-featured">
+        <img src="https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1200,h_900,q_90/file.jpg" alt="Mixed Feelings — Roly Fernandez" loading="lazy" />
+      </div>
+      <div class="featured-text">
+        <div class="featured-ghost">01</div>
+        <div class="featured-text-inner">
+          <h3 class="featured-title">Mixed Feelings</h3>
+          <p class="featured-meta">Oil on Canvas &nbsp;·&nbsp; 46 × 26 in &nbsp;·&nbsp; $3,000</p>
+          <p class="featured-body">Working entirely in oil, Roly captures the raw tension between urban energy and stillness — canvases that hold the same kinetic charge as the custom machines that first taught him color. Each work is an original, signed, and shipped direct from the studio.</p>
+          <a href="mailto:rolythelegend@gmail.com?subject=Inquiry: Mixed Feelings" class="featured-btn">Add to Collection — $3,000</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>ABSTRACT OIL</span><span>·</span>
+      <span>MIAMI KUSTOM</span><span>·</span>
+      <span>ORIGINAL WORKS</span><span>·</span>
+      <span>COLLECT NOW</span><span>·</span>
+      <span>@ROLYTHELEGEND</span><span>·</span>
+      <span>ARTSY EXHIBITION 2024</span><span>·</span>
+      <span>ABSTRACT OIL</span><span>·</span>
+      <span>MIAMI KUSTOM</span><span>·</span>
+      <span>ORIGINAL WORKS</span><span>·</span>
+      <span>COLLECT NOW</span><span>·</span>
+      <span>@ROLYTHELEGEND</span><span>·</span>
+      <span>ARTSY EXHIBITION 2024</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ARTIST STORY -->
+  <section id="story">
+    <div class="story-grid">
+      <div class="story-img-wrap anim-story-img">
+        <div class="story-accent-line"></div>
+        <img src="https://static.wixstatic.com/media/cd6d14_4332660619ad47f6a82da77893096621~mv2.png/v1/fill/w_900,h_900,q_90/file.jpg" alt="Roly Fernandez — Studio" loading="lazy" />
+      </div>
+      <div>
+        <h4 class="story-subtitle anim-title">From the Streets</h4>
+        <h2 class="story-heading">From Custom Paint<br />to Canvas</h2>
+        <p class="story-body">Roly Fernandez spent years transforming vehicles in Miami's custom car scene — where precision, color theory, and visual impact aren't academic concepts, they're survival skills. That same discipline now drives his canvas work: bold abstracts that carry the weight of metal, speed, and Miami heat.</p>
+        <p class="story-body" style="margin-bottom: 28px;">His work has been featured on Artsy and exhibited internationally under the title "Miami's King of Kustoms," running November 2024 through November 2025. Every painting is an original — no prints, no editions.</p>
+        <div class="story-badge">
+          <span>◈</span>
+          <span>@rolythelegend &nbsp;·&nbsp; 6,740 Followers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOGNITION -->
+  <section id="recognition">
+    <h2 class="recognition-title anim-title">RECOGNITION</h2>
+    <div class="recognition-grid">
+      <div class="recognition-card" data-delay="0">
+        <span class="rec-icon">◉</span>
+        <div class="rec-title">Artsy Exhibition</div>
+        <div class="rec-sub">Miami's King of Kustoms — international online exhibition</div>
+        <span class="rec-date">Nov 2024 – Nov 2025</span>
+      </div>
+      <div class="recognition-card" data-delay="150">
+        <span class="rec-icon">◉</span>
+        <div class="rec-title">Telemundo Feature</div>
+        <div class="rec-sub">Recognized as a Miami cultural tastemaker in fine arts</div>
+        <span class="rec-date">2024</span>
+      </div>
+      <div class="recognition-card" data-delay="300">
+        <span class="rec-icon">◉</span>
+        <div class="rec-title">International Collector Base</div>
+        <div class="rec-sub">Originals in private collections across Miami and beyond</div>
+        <span class="rec-date">Ongoing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE 2 -->
+  <div class="marquee-strip">
+    <div class="marquee-inner" style="animation-direction: reverse;">
+      <span>KING OF KUSTOM</span><span>·</span>
+      <span>MIAMI FL</span><span>·</span>
+      <span>OIL ON CANVAS</span><span>·</span>
+      <span>ORIGINAL WORKS</span><span>·</span>
+      <span>COMMISSIONS OPEN</span><span>·</span>
+      <span>ARTBYROLY.COM</span><span>·</span>
+      <span>KING OF KUSTOM</span><span>·</span>
+      <span>MIAMI FL</span><span>·</span>
+      <span>OIL ON CANVAS</span><span>·</span>
+      <span>ORIGINAL WORKS</span><span>·</span>
+      <span>COMMISSIONS OPEN</span><span>·</span>
+      <span>ARTBYROLY.COM</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- SHOP / CTA -->
+  <section id="shop">
+    <div class="shop-overlay"></div>
+    <div class="shop-content">
+      <h2 class="shop-heading anim-shop">Own a Piece<br />of Miami</h2>
+      <p class="shop-sub">Original oil paintings from $650 · Direct from the studio</p>
+      <div class="shop-btns">
+        <a href="mailto:rolythelegend@gmail.com?subject=Shop Inquiry" class="btn-solid">Browse the Collection</a>
+        <a href="mailto:rolythelegend@gmail.com?subject=Commission Inquiry" class="btn-outline">Commission a Painting</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <span class="contact-eyebrow">Get In Touch</span>
+      <h2 class="contact-heading anim-title">Studio Inquiries</h2>
+      <a href="mailto:rolythelegend@gmail.com" class="contact-email">rolythelegend@gmail.com</a>
+      <div class="contact-row">
+        <div class="contact-item">
+          <span class="contact-item-label">Phone</span>
+          <a href="tel:7862055522" class="contact-item-val">786-205-5522</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Instagram</span>
+          <a href="https://instagram.com/rolythelegend" target="_blank" class="contact-item-val">@rolythelegend</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Location</span>
+          <span class="contact-item-val">Miami, FL</span>
+        </div>
+      </div>
+      <p class="contact-note">Available for original commissions, gallery acquisitions, and custom work. All pieces are hand-painted originals — no prints, no limited editions.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-left">Roly Fernandez &nbsp;·&nbsp; Miami, FL &nbsp;·&nbsp; © 2026</span>
+    <span class="footer-right">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // 1. Hero name letter-spacing compress on load
+    const heroName = document.getElementById('heroName');
+    setTimeout(() => { heroName.style.letterSpacing = '0.05em'; }, 100);
+
+    // 2-6. IntersectionObserver for all animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || 0);
+          setTimeout(() => el.classList.add('is-visible'), delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Section titles (clip-path sweep)
+    document.querySelectorAll('.anim-title').forEach(el => observer.observe(el));
+
+    // Stats stagger
+    document.querySelectorAll('.anim-stat').forEach(el => observer.observe(el));
+
+    // Gallery stagger
+    document.querySelectorAll('.anim-gallery').forEach(el => observer.observe(el));
+
+    // Featured image
+    document.querySelectorAll('.anim-featured').forEach(el => observer.observe(el));
+
+    // Story image
+    document.querySelectorAll('.anim-story-img').forEach(el => observer.observe(el));
+
+    // Recognition cards
+    document.querySelectorAll('.recognition-card').forEach(el => {
+      el.classList.add('anim-stat'); observer.observe(el);
+    });
+
+    // Shop heading
+    document.querySelectorAll('.anim-shop').forEach(el => observer.observe(el));
+
+    // Contact heading
+    document.querySelectorAll('.contact-heading').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
