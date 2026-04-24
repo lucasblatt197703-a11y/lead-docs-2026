@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nathan Delinois — Figurative Oil Painter · Miami, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Karla:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #1A1A2E;
+  color: #F0ECE4;
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 28px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(10,8,20,0.7) 0%, transparent 100%);
+}
+.nav-monogram {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: #C4A55A;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(240,236,228,0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: #C4A55A; }
+
+/* ===== HERO ===== */
+#hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.hero-video-fallback {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://upmag.com/wp-content/uploads/2019/07/fluffy-eagle-birds-of-prey-Miami-Nate.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10,8,20,0.75) 0%,
+    rgba(10,8,20,0.2) 40%,
+    rgba(10,8,20,0.05) 100%
+  );
+  z-index: 1;
+}
+.hero-text {
+  position: absolute;
+  bottom: 60px;
+  left: 60px;
+  z-index: 2;
+}
+.hero-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: #C4A55A;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: clamp(60px, 8vw, 110px);
+  color: #F0ECE4;
+  line-height: 0.9;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+  transition: letter-spacing 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: block;
+  margin-bottom: 16px;
+}
+.hero-name.loaded { letter-spacing: 0.06em; }
+.hero-sub {
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  color: rgba(240,236,228,0.65);
+  text-transform: uppercase;
+}
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  right: 60px;
+  z-index: 2;
+  font-family: 'Karla', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(240,236,228,0.35);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+/* ===== CLIENT STRIP ===== */
+#clients {
+  background: #0D1520;
+  padding: 22px 60px;
+  border-top: 1px solid rgba(196,165,90,0.35);
+  border-bottom: 1px solid rgba(196,165,90,0.35);
+  text-align: center;
+}
+#clients p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  color: #C4A55A;
+  letter-spacing: 0.18em;
+}
+
+/* ===== GALLERY ===== */
+#gallery {
+  background: #1A1A2E;
+  padding: 100px 60px;
+}
+.section-header {
+  margin-bottom: 60px;
+  position: relative;
+}
+.section-ghost {
+  position: absolute;
+  top: -40px;
+  left: -10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 160px;
+  color: rgba(240,236,228,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: #F0ECE4;
+  letter-spacing: 0.08em;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.section-title.visible { clip-path: inset(0 0% 0 0); }
+.gold-rule {
+  width: 80px;
+  height: 1px;
+  background: #C4A55A;
+  margin-top: 16px;
+}
+
+/* Editorial scroll gallery */
+.gallery-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gallery-row { display: flex; gap: 8px; }
+.gallery-row.full img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  display: block;
+}
+.gallery-row.half img {
+  width: 50%;
+  height: 420px;
+  object-fit: cover;
+  flex: 1;
+  display: block;
+}
+.gallery-row.third img {
+  flex: 1;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-item {
+  overflow: hidden;
+  position: relative;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.9s ease-out, filter 0.4s ease;
+  filter: saturate(0.4);
+  cursor: pointer;
+}
+.gallery-item.visible { clip-path: inset(0 0 0 0); }
+.gallery-item:hover { filter: saturate(1.0); }
+
+/* ===== FEATURED PIECE ===== */
+#featured {
+  background: #F0ECE4;
+  padding: 100px 60px;
+}
+.featured-inner {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  gap: 0;
+  align-items: center;
+}
+.featured-image-wrap {
+  overflow: hidden;
+  transform: scale(0.92);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.9s ease;
+}
+.featured-image-wrap.visible {
+  transform: scale(1.0);
+  opacity: 1;
+}
+.featured-image-wrap img {
+  width: 100%;
+  height: 580px;
+  object-fit: cover;
+  display: block;
+}
+.featured-content {
+  padding: 0 0 0 70px;
+  position: relative;
+}
+.featured-ghost {
+  position: absolute;
+  top: -20px;
+  left: 60px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 140px;
+  color: rgba(26,26,46,0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+.featured-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 44px;
+  color: #1A1A2E;
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+.featured-title.visible { opacity: 1; transform: translateY(0); }
+.featured-meta {
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: #7B1F6E;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+}
+.featured-meta.visible { opacity: 1; transform: translateY(0); }
+.featured-divider {
+  width: 50px;
+  height: 1px;
+  background: #C4A55A;
+  margin-bottom: 24px;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.45s;
+}
+.featured-divider.visible { opacity: 1; }
+.featured-body {
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #3A3A3A;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease 0.55s, transform 0.7s ease 0.55s;
+}
+.featured-body.visible { opacity: 1; transform: translateY(0); }
+.featured-cta {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: #7B1F6E;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.65s, color 0.3s;
+}
+.featured-cta:hover { color: #1A1A2E; }
+.featured-cta.visible { opacity: 1; }
+
+/* ===== STATS ===== */
+#stats {
+  background: #0D1520;
+  padding: 80px 60px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: clamp(60px, 6vw, 90px);
+  color: #C4A55A;
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(240,236,228,0.55);
+  text-transform: uppercase;
+  margin-top: 8px;
+  display: block;
+}
+
+/* ===== MURAL / PUBLIC ART ===== */
+#murals {
+  background: #1A1A2E;
+  padding: 100px 60px;
+}
+.mural-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 50px;
+}
+.mural-images img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.5);
+  transition: filter 0.4s ease;
+}
+.mural-images img:hover { filter: saturate(1.0); }
+.mural-caption {
+  margin-top: 24px;
+  font-family: 'Karla', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 15px;
+  color: rgba(240,236,228,0.55);
+  letter-spacing: 0.05em;
+}
+
+/* ===== PRESS ===== */
+#press {
+  background: #F0ECE4;
+  padding: 100px 60px;
+}
+#press .section-title { color: #1A1A2E; }
+#press .section-ghost { color: rgba(26,26,46,0.04); }
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 50px;
+}
+.press-item {
+  border-left: 2px solid #C4A55A;
+  padding-left: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.press-item.visible { opacity: 1; transform: translateY(0); }
+.press-item:nth-child(2) { transition-delay: 0.15s; }
+.press-item:nth-child(3) { transition-delay: 0.30s; }
+.press-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 19px;
+  color: #1A1A2E;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.press-source {
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(26,26,46,0.5);
+}
+
+/* ===== MARQUEE ===== */
+#marquee-strip {
+  background: #7B1F6E;
+  padding: 18px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+.marquee-inner span {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: #F0ECE4;
+  padding: 0 20px;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== COMMISSION CTA ===== */
+#commission-cta {
+  position: relative;
+  height: 520px;
+  background-image: url('https://upmag.com/wp-content/uploads/2019/07/hypercolor-caracal-Miami-Nate.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#commission-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10,8,18,0.80);
+}
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.cta-inner.visible {
+  opacity: 1;
+  transform: scale(1.0);
+}
+.cta-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: clamp(48px, 6vw, 76px);
+  color: #F0ECE4;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+.cta-sub {
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 17px;
+  color: rgba(240,236,228,0.70);
+  letter-spacing: 0.04em;
+  margin-bottom: 40px;
+}
+.cta-btn {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C4A55A;
+  border: 1px solid #C4A55A;
+  padding: 18px 56px;
+  text-decoration: none;
+  transition: background 0.35s, color 0.35s, border-color 0.35s;
+}
+.cta-btn:hover {
+  background: #7B1F6E;
+  color: #F0ECE4;
+  border-color: #7B1F6E;
+}
+
+/* ===== CONTACT ===== */
+#contact {
+  background: #1A1A2E;
+  padding: 100px 60px;
+  position: relative;
+}
+.contact-ghost {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 160px;
+  color: rgba(240,236,228,0.025);
+  pointer-events: none;
+}
+.contact-inner {
+  max-width: 680px;
+}
+.contact-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 40px;
+  color: #F0ECE4;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  margin-bottom: 30px;
+}
+.contact-title.visible { clip-path: inset(0 0% 0 0); }
+.contact-email {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: #C4A55A;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+  transition: color 0.3s;
+}
+.contact-email:hover { color: #F0ECE4; }
+.contact-social {
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: rgba(240,236,228,0.5);
+  margin-bottom: 36px;
+  display: block;
+}
+.contact-bio {
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(240,236,228,0.6);
+  border-top: 1px solid rgba(196,165,90,0.2);
+  padding-top: 28px;
+  margin-top: 8px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: #0D1520;
+  padding: 28px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(196,165,90,0.15);
+}
+.footer-left {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: rgba(240,236,228,0.4);
+}
+.footer-right {
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(240,236,228,0.25);
+}
+
+/* ===== ANIMATION BASE STATES ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: transform, opacity;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { gap: 20px; }
+  .hero-text { left: 24px; bottom: 40px; }
+  .hero-name { font-size: clamp(42px, 10vw, 70px); }
+  #clients { padding: 18px 24px; }
+  #gallery, #murals, #press, #contact { padding: 60px 24px; }
+  #featured { padding: 60px 24px; }
+  .featured-inner { grid-template-columns: 1fr; }
+  .featured-content { padding: 40px 0 0 0; }
+  .featured-ghost { display: none; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  #stats { padding: 60px 24px; }
+  .press-grid { grid-template-columns: 1fr; }
+  .mural-images { grid-template-columns: 1fr; }
+  .mural-images img { height: 260px; }
+  .gallery-row.half img, .gallery-row.third img { height: 220px; }
+  .gallery-row.full img { height: 300px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px 24px; }
+  #commission-cta { background-attachment: scroll; height: 420px; }
+}
+@media (max-width: 480px) {
+  .nav-links { display: none; }
+  .hero-name { font-size: 38px; }
+  .gallery-row.half { flex-direction: column; }
+  .gallery-row.half img { width: 100%; }
+  .gallery-row.third { flex-direction: column; }
+  .gallery-row.third img { height: 260px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .stat-num { font-size: 50px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-monogram">ND</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about-featured">Story</a></li>
+    <li><a href="#commission-cta">Commissions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-video-fallback" id="heroFallback"></div>
+  <iframe
+    id="heroVideo"
+    src="https://www.youtube.com/embed/UpO9QA6PFJI?autoplay=1&mute=1&loop=1&playlist=UpO9QA6PFJI&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;z-index:0;pointer-events:none;"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+  ></iframe>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <span class="hero-label">Miami · Oil on Canvas</span>
+    <span class="hero-name" id="heroName">Nathan Delinois</span>
+    <span class="hero-sub">Figurative Paintings &nbsp;·&nbsp; Murals &nbsp;·&nbsp; Commissions</span>
+  </div>
+  <span class="hero-scroll-hint">Scroll</span>
+</section>
+
+<!-- CLIENT STRIP -->
+<div id="clients">
+  <p>· Miami Heat &nbsp;·&nbsp; Miami Dolphins &nbsp;·&nbsp; Adidas &nbsp;·&nbsp; Wynwood Mural Fest ·</p>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-ghost">01</span>
+    <h2 class="section-title" data-reveal>01 — Selected Works</h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="gallery-grid">
+    <!-- Row 1: Full width -->
+    <div class="gallery-row full">
+      <div class="gallery-item" data-stagger="0">
+        <img src="https://upmag.com/wp-content/uploads/2019/07/fluffy-eagle-birds-of-prey-Miami-Nate.jpg" alt="Fluffy Eagle — Birds of Prey" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 2: Two halves -->
+    <div class="gallery-row half">
+      <div class="gallery-item" data-stagger="1">
+        <img src="https://upmag.com/wp-content/uploads/2019/07/hypercolor-caracal-Miami-Nate.jpg" alt="Hypercolor Caracal" loading="lazy">
+      </div>
+      <div class="gallery-item" data-stagger="2">
+        <img src="https://upmag.com/wp-content/uploads/2019/07/le-coq-Miami-Nate.jpg" alt="Le Coq" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 3: Full width -->
+    <div class="gallery-row full">
+      <div class="gallery-item" data-stagger="3">
+        <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/b/cc/bcc9923c-34bb-11eb-9e3d-676ff5743122/5fc7c2d6a7b44.image.jpg" alt="Nathan Delinois — figurative work" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 4: Three -->
+    <div class="gallery-row third">
+      <div class="gallery-item" data-stagger="4">
+        <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/0/31/031d2a72-34bd-11eb-a837-8f62a27a67e4/5fc7c3806683a.image.jpg" alt="Studio work" loading="lazy">
+      </div>
+      <div class="gallery-item" data-stagger="5">
+        <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/0/ad/0adf7ca0-34be-11eb-9dff-0769f56c4ee1/5fc7c53c09e2c.image.jpg" alt="Oil painting detail" loading="lazy">
+      </div>
+      <div class="gallery-item" data-stagger="6">
+        <img src="https://upmag.com/wp-content/uploads/2019/07/Miami-Nate-Halcyon.jpg" alt="Halcyon" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 5: Half -->
+    <div class="gallery-row half">
+      <div class="gallery-item" data-stagger="7">
+        <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/b/45/b4584b36-34be-11eb-b635-a3298a22ef95/5fc7c65312722.image.jpg" alt="Series work" loading="lazy">
+      </div>
+      <div class="gallery-item" data-stagger="8">
+        <img src="https://upmag.com/wp-content/uploads/2019/07/IMG_0745.jpg" alt="Nathan Delinois painting" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PIECE -->
+<section id="about-featured" style="background:#F0ECE4;">
+  <div id="featured">
+    <div class="featured-inner">
+      <div class="featured-image-wrap" data-scale>
+        <img src="https://upmag.com/wp-content/uploads/2019/07/fluffy-eagle-birds-of-prey-Miami-Nate.jpg" alt="Fluffy Eagle — Nathan Delinois" loading="lazy">
+      </div>
+      <div class="featured-content">
+        <span class="featured-ghost">02</span>
+        <h3 class="featured-title" data-fade-child>Fluffy Eagle</h3>
+        <p class="featured-meta" data-fade-child>Oil on Canvas &nbsp;·&nbsp; Figurative Series</p>
+        <div class="featured-divider" data-fade-child></div>
+        <p class="featured-body" data-fade-child>
+          Part of Nathan's ongoing mask series — figures drawn from Haitian ancestral traditions, rendered in saturated oil with geometric precision. The animal mask is not a disguise but a declaration: of origin, lineage, and chosen identity. Each painting in the series operates as both portraiture and ceremony.
+        </p>
+        <a href="mailto:ndelinois@hotmail.com" class="featured-cta" data-fade-child>Inquire about commissions →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="fade-up" data-stat>
+      <span class="stat-num" data-count="15" data-suffix="K">0K</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+    <div class="fade-up" data-stat style="transition-delay:0.1s;">
+      <span class="stat-num" data-count="3" data-suffix="+">0+</span>
+      <span class="stat-label">Major Brand Commissions</span>
+    </div>
+    <div class="fade-up" data-stat style="transition-delay:0.2s;">
+      <span class="stat-num" data-count="10" data-suffix="+">0+</span>
+      <span class="stat-label">Murals Installed</span>
+    </div>
+    <div class="fade-up" data-stat style="transition-delay:0.3s;">
+      <span class="stat-num" style="font-size:clamp(36px,4vw,60px); letter-spacing:0.04em;">Miami</span>
+      <span class="stat-label">Based &amp; Rooted</span>
+    </div>
+  </div>
+</section>
+
+<!-- MURAL / PUBLIC ART -->
+<section id="murals">
+  <div class="section-header">
+    <span class="section-ghost">02</span>
+    <h2 class="section-title" data-reveal>Public Art</h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="mural-images">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/a/ac/aacf1dc0-34bd-11eb-bdc4-8fac26ff7672/5fc7c49c8fad0.image.jpg" alt="Mural Miami" loading="lazy">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/8/a0/8a0b68cc-34be-11eb-9ee0-f373c4609ff7/5fc7c60d67b83.image.jpg" alt="Public installation" loading="lazy">
+    <img src="https://static.wixstatic.com/media/7dce27_2ed803da31a841abb9487bed2ec885a4.jpg/v1/fit/w_2500,h_1330,al_c/7dce27_2ed803da31a841abb9487bed2ec885a4.jpg" alt="Nathan Delinois mural work" loading="lazy">
+  </div>
+  <p class="mural-caption fade-up">Commissioned murals across Miami, Alabama, and the Eastern Seaboard.</p>
+</section>
+
+<!-- PRESS -->
+<section id="press">
+  <div style="padding: 100px 60px; position:relative;">
+    <div class="section-header">
+      <span class="section-ghost" style="color:rgba(26,26,46,0.04);">Press</span>
+      <h2 class="section-title" data-reveal style="color:#1A1A2E;">Recognition</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="press-grid">
+      <div class="press-item" data-press>
+        <p class="press-quote">"One of Miami's essential artists to follow."</p>
+        <span class="press-source">The New York Times</span>
+      </div>
+      <div class="press-item" data-press>
+        <p class="press-quote">"A defining voice in Miami's contemporary art scene."</p>
+        <span class="press-source">Miami New Times</span>
+      </div>
+      <div class="press-item" data-press>
+        <p class="press-quote">"Haitian-American tradition transformed through contemporary oil."</p>
+        <span class="press-source">FIU Arts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div id="marquee-strip">
+  <div class="marquee-inner">
+    <span>OIL ON CANVAS</span><span>·</span>
+    <span>MIAMI, FL</span><span>·</span>
+    <span>FIGURATIVE SERIES</span><span>·</span>
+    <span>COMMISSIONS OPEN</span><span>·</span>
+    <span>@MIAMINATE</span><span>·</span>
+    <span>HAITIAN-AMERICAN HERITAGE</span><span>·</span>
+    <span>WYNWOOD</span><span>·</span>
+    <span>OIL ON CANVAS</span><span>·</span>
+    <span>MIAMI, FL</span><span>·</span>
+    <span>FIGURATIVE SERIES</span><span>·</span>
+    <span>COMMISSIONS OPEN</span><span>·</span>
+    <span>@MIAMINATE</span><span>·</span>
+    <span>HAITIAN-AMERICAN HERITAGE</span><span>·</span>
+    <span>WYNWOOD</span><span>·</span>
+  </div>
+</div>
+
+<!-- COMMISSION CTA -->
+<section id="commission-cta">
+  <div class="cta-inner" data-cta>
+    <h2 class="cta-heading">Commission a Painting</h2>
+    <p class="cta-sub">Original works &nbsp;·&nbsp; Private collections &nbsp;·&nbsp; Large-scale murals</p>
+    <a href="mailto:ndelinois@hotmail.com" class="cta-btn">Begin an Inquiry</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <span class="contact-ghost">03</span>
+  <div class="contact-inner">
+    <h2 class="contact-title" data-reveal>Studio Contact</h2>
+    <div class="gold-rule" style="margin-bottom:36px;"></div>
+    <a href="mailto:ndelinois@hotmail.com" class="contact-email">ndelinois@hotmail.com</a>
+    <span class="contact-social">@miaminate on Instagram &nbsp;&nbsp;·&nbsp;&nbsp; @artistnatedee on X</span>
+    <p class="contact-bio fade-up">
+      Available for portrait commissions, gallery exhibitions, corporate murals, and public art installations. Miami-based, works nationally. Press and partnership inquiries welcome.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">Nathan Delinois &nbsp;·&nbsp; Miami, FL &nbsp;·&nbsp; © 2026</span>
+  <span class="footer-right">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+// === HERO NAME LETTER-SPACING ANIMATION ===
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('heroName').classList.add('loaded');
+  }, 100);
+});
+
+// === INTERSECTION OBSERVER SETUP ===
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+      io.unobserve(el.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+const ioImages = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      const delay = (parseInt(el.target.dataset.stagger) || 0) * 90;
+      setTimeout(() => {
+        el.target.classList.add('visible');
+      }, delay);
+      ioImages.unobserve(el.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+// Section titles (clip-path sweep)
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// Gallery items (staggered clip-path)
+document.querySelectorAll('.gallery-item[data-stagger]').forEach(el => ioImages.observe(el));
+
+// Featured piece scale-in
+document.querySelectorAll('[data-scale]').forEach(el => io.observe(el));
+
+// Featured content children (staggered fade-up)
+document.querySelectorAll('[data-fade-child]').forEach(el => io.observe(el));
+
+// Press items
+document.querySelectorAll('[data-press]').forEach(el => io.observe(el));
+
+// CTA scale-in
+document.querySelectorAll('[data-cta]').forEach(el => io.observe(el));
+
+// General fade-up
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+// === STATS COUNT-UP ===
+const statsIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const nums = entry.target.querySelectorAll('[data-count]');
+      nums.forEach(num => {
+        const target = parseInt(num.dataset.count);
+        const suffix = num.dataset.suffix || '';
+        const duration = 1400;
+        const start = performance.now();
+        function tick(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(eased * target);
+          num.textContent = current + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+      statsIO.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('[data-stat]').forEach(el => statsIO.observe(el));
+
+// === HERO PARALLAX ===
+const hero = document.getElementById('hero');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    const fallback = document.getElementById('heroFallback');
+    if (fallback) {
+      fallback.style.backgroundPositionY = (scrollY * 0.4) + 'px';
+    }
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
