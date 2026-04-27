@@ -624,37 +624,52 @@
   }
 
   /* ─── ANIMATIONS ─── */
-  /* Clip-path title sweep — triggers via .visible class */
+  /* Clip-path title sweep — visible by default, animates if JS sets .animate-ready */
   .clip-title {
-    clip-path: inset(0 100% 0 0);
+    clip-path: inset(0 0% 0 0);
     transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
   }
-  .clip-title.visible { clip-path: inset(0 0% 0 0); }
+  .animate-ready .clip-title {
+    clip-path: inset(0 100% 0 0);
+  }
+  .clip-title.visible { clip-path: inset(0 0% 0 0) !important; }
 
-  /* Images: scale+opacity reveal (no clip-path — degrades gracefully) */
+  /* Images: visible by default, animate when JS adds .animate-ready early enough */
   .reveal-img {
-    opacity: 0;
-    transform: scale(0.96);
+    opacity: 1;
+    transform: scale(1);
     transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     will-change: transform, opacity;
   }
-  .reveal-img.visible { opacity: 1; transform: scale(1); }
+  .animate-ready .reveal-img {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  .reveal-img.visible { opacity: 1 !important; transform: scale(1) !important; }
 
   .scale-in {
-    transform: scale(0.93);
-    opacity: 0;
+    transform: scale(1);
+    opacity: 1;
     transition: transform 1s ease-out, opacity 0.8s ease;
     will-change: transform, opacity;
   }
-  .scale-in.visible { transform: scale(1); opacity: 1; }
+  .animate-ready .scale-in {
+    transform: scale(0.93);
+    opacity: 0;
+  }
+  .scale-in.visible { transform: scale(1) !important; opacity: 1 !important; }
 
   .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.6s ease, transform 0.6s ease;
     will-change: transform, opacity;
   }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .animate-ready .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .fade-up.visible { opacity: 1 !important; transform: translateY(0) !important; }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 768px) {
@@ -738,43 +753,43 @@
 
   <div class="masonry-grid">
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Ibis_Elegance_40x30_1.jpg" alt="Ibis Elegance" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202020/Ibis_Elegance_40x30_1.jpg" alt="Ibis Elegance" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Ibis Elegance</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Love_Sticks_Together_40x30.jpg" alt="Love Sticks Together" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202020/Love_Sticks_Together_40x30.jpg" alt="Love Sticks Together" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Love Sticks Together</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202019/Preening_Perfection_24x30.jpg" alt="Preening Perfection" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202019/Preening_Perfection_24x30.jpg" alt="Preening Perfection" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Preening Perfection</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Sea_Grape_Arbor_40x60.jpg" alt="Sea Grape Arbor" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202020/Sea_Grape_Arbor_40x60.jpg" alt="Sea Grape Arbor" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Sea Grape Arbor</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202019/Sea_Grape_Embrace_36x40.jpg" alt="Sea Grape Embrace" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202019/Sea_Grape_Embrace_36x40.jpg" alt="Sea Grape Embrace" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Sea Grape Embrace</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202018/Light_in_Motion_16x20.jpg" alt="Light in Motion" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202018/Light_in_Motion_16x20.jpg" alt="Light in Motion" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Light in Motion</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202017/Egret_Wings_30x30.jpg" alt="Egret Wings" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202017/Egret_Wings_30x30.jpg" alt="Egret Wings" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Egret Wings</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202016/Classic_Pelican_30x24.jpg" alt="Classic Pelican" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202016/Classic_Pelican_30x24.jpg" alt="Classic Pelican" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Classic Pelican</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Rose_Gold_24x24.jpg" alt="Rose Gold" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202020/Rose_Gold_24x24.jpg" alt="Rose Gold" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Rose Gold</span></div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202016/Turtle_Swirl_30x35.jpg" alt="Turtle Swirl" loading="lazy" class="reveal-img">
+      <img src="https://www.carolsheart.com/i/Paintings%202016/Turtle_Swirl_30x35.jpg" alt="Turtle Swirl" class="reveal-img">
       <div class="img-overlay"><span class="img-title">Turtle Swirl</span></div>
     </div>
   </div>
@@ -900,6 +915,11 @@
 </footer>
 
 <script>
+  // ── Progressive enhancement: add .animate-ready to body immediately
+  // This hides elements for animation ONLY if JS runs fast enough.
+  // If JS is slow/blocked, elements remain visible (default state).
+  document.body.classList.add('animate-ready');
+
   // ── IntersectionObserver — trigger .visible when element enters viewport
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -910,7 +930,7 @@
     });
   }, { threshold: 0.05 });
 
-  // ── Image observer with stagger
+  // ── Image observer with lower threshold
   const imgObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -918,7 +938,7 @@
         imgObserver.unobserve(e.target);
       }
     });
-  }, { threshold: 0.02 });
+  }, { threshold: 0.02, rootMargin: '100px' });
 
   // ── Observe all animated elements
   document.querySelectorAll('.clip-title, .scale-in, .fade-up').forEach(el => observer.observe(el));
@@ -928,15 +948,15 @@
     imgObserver.observe(img);
   });
 
-  // ── Fallback: fire all animations after a short delay if IntersectionObserver hasn't triggered
-  // (handles headless/static environments where IO doesn't fire)
+  // ── Hard fallback: fire everything visible after 600ms regardless
   setTimeout(() => {
+    document.body.classList.remove('animate-ready');
     document.querySelectorAll('.clip-title, .scale-in, .fade-up, .reveal-img').forEach(el => {
       el.classList.add('visible');
     });
-  }, 400);
+  }, 600);
 
-  // ── Hero letter-spacing compress on load
+  // ── Hero letter-spacing on load
   window.addEventListener('load', () => {
     setTimeout(() => {
       const heroName = document.querySelector('.hero-name');
