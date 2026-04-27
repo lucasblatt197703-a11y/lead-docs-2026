@@ -183,7 +183,7 @@
 
   .session-card {
     position: relative;
-    aspect-ratio: 3/4;
+    height: 420px;
     overflow: hidden;
     cursor: pointer;
   }
@@ -915,6 +915,18 @@
     .sessions-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
+
+<style id="screenshot-override">
+  .clip-title { clip-path: inset(0 0% 0 0) !important; }
+  .reveal-img { clip-path: inset(0 0 0 0) !important; }
+  .fade-up { opacity: 1 !important; transform: translateY(0) !important; }
+  .stat-item { opacity: 1 !important; transform: translateY(0) !important; }
+  .scale-in { opacity: 1 !important; transform: scale(1) !important; }
+  .testimonial-item { opacity: 1 !important; transform: translateY(0) !important; }
+  .hero-title { transform: translateY(0) !important; }
+  .hero-subtitle { opacity: 1 !important; transform: translateY(0) !important; }
+  .hero-tagline { opacity: 1 !important; }
+</style>
 </head>
 <body>
 
@@ -953,22 +965,22 @@
   <p class="sessions-label">— What I Offer</p>
   <div class="sessions-grid">
     <div class="session-card scale-in" style="transition-delay:0s">
-      <img src="https://static.wixstatic.com/media/f0c639_b721529304fd4b53a3c166d6e47c7818~mv2.jpg" alt="Newborn sessions Miami" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_b721529304fd4b53a3c166d6e47c7818~mv2.jpg" alt="Newborn sessions Miami" loading="eager">
       <div class="session-card-overlay"></div>
       <span class="session-card-label">Newborn</span>
     </div>
     <div class="session-card scale-in" style="transition-delay:0.1s">
-      <img src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="Maternity sessions Miami" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="Maternity sessions Miami" loading="eager">
       <div class="session-card-overlay"></div>
       <span class="session-card-label">Maternity</span>
     </div>
     <div class="session-card scale-in" style="transition-delay:0.2s">
-      <img src="https://static.wixstatic.com/media/f0c639_28e86a889d484ec3af3ef2654fb84146~mv2_d_1500_2250_s_2.jpg" alt="Family sessions Miami" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_28e86a889d484ec3af3ef2654fb84146~mv2_d_1500_2250_s_2.jpg" alt="Family sessions Miami" loading="eager">
       <div class="session-card-overlay"></div>
       <span class="session-card-label">Family</span>
     </div>
     <div class="session-card scale-in" style="transition-delay:0.3s">
-      <img src="https://static.wixstatic.com/media/f0c639_4fd2d7436aef442eb0bfbb776cbb8c22~mv2_d_1500_1874_s_2.jpg" alt="Milestone sessions Miami" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_4fd2d7436aef442eb0bfbb776cbb8c22~mv2_d_1500_1874_s_2.jpg" alt="Milestone sessions Miami" loading="eager">
       <div class="session-card-overlay"></div>
       <span class="session-card-label">Milestone</span>
     </div>
@@ -1002,19 +1014,19 @@
 
   <div class="gallery-grid">
     <div class="gallery-row full">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/f0c639_a7d86e6683af45a4b4e9c7109b80d24c~mv2.jpg" alt="Newborn photography" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/f0c639_a7d86e6683af45a4b4e9c7109b80d24c~mv2.jpg" alt="Newborn photography" loading="eager">
     </div>
     <div class="gallery-row split">
-      <img class="img-60 reveal-img" style="transition-delay:0.07s" src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="Maternity session Miami" loading="lazy">
-      <img class="img-40 reveal-img" style="transition-delay:0.14s" src="https://static.wixstatic.com/media/f0c639_4fd2d7436aef442eb0bfbb776cbb8c22~mv2_d_1500_1874_s_2.jpg" alt="Newborn session" loading="lazy">
+      <img class="img-60 reveal-img" style="transition-delay:0.07s" src="https://static.wixstatic.com/media/f0c639_554cd5782d3f48e99b8427022ab43269~mv2_d_1500_2250_s_2.jpg" alt="Maternity session Miami" loading="eager">
+      <img class="img-40 reveal-img" style="transition-delay:0.14s" src="https://static.wixstatic.com/media/f0c639_4fd2d7436aef442eb0bfbb776cbb8c22~mv2_d_1500_1874_s_2.jpg" alt="Newborn session" loading="eager">
     </div>
     <div class="gallery-row full">
-      <img class="reveal-img" style="transition-delay:0.07s" src="https://static.wixstatic.com/media/f0c639_29dcabbe3b79467ab939abdeacf7d613~mv2_d_1500_2250_s_2.jpg" alt="Family photography Miami" loading="lazy">
+      <img class="reveal-img" style="transition-delay:0.07s" src="https://static.wixstatic.com/media/f0c639_29dcabbe3b79467ab939abdeacf7d613~mv2_d_1500_2250_s_2.jpg" alt="Family photography Miami" loading="eager">
     </div>
     <div class="gallery-row triple">
-      <img class="reveal-img" style="transition-delay:0s" src="https://static.wixstatic.com/media/f0c639_5ee5dde9d28149e79fdc4b80278020a5~mv2_d_1500_2250_s_2.jpg" alt="Maternity" loading="lazy">
-      <img class="reveal-img" style="transition-delay:0.08s" src="https://static.wixstatic.com/media/f0c639_de6945847dbf4573b7d1bf432676b248~mv2_d_1500_2250_s_2.jpg" alt="Maternity session" loading="lazy">
-      <img class="reveal-img" style="transition-delay:0.16s" src="https://static.wixstatic.com/media/f0c639_82e1da7ecd9e40308d30822f07de49f4~mv2.jpg" alt="Family session" loading="lazy">
+      <img class="reveal-img" style="transition-delay:0s" src="https://static.wixstatic.com/media/f0c639_5ee5dde9d28149e79fdc4b80278020a5~mv2_d_1500_2250_s_2.jpg" alt="Maternity" loading="eager">
+      <img class="reveal-img" style="transition-delay:0.08s" src="https://static.wixstatic.com/media/f0c639_de6945847dbf4573b7d1bf432676b248~mv2_d_1500_2250_s_2.jpg" alt="Maternity session" loading="eager">
+      <img class="reveal-img" style="transition-delay:0.16s" src="https://static.wixstatic.com/media/f0c639_82e1da7ecd9e40308d30822f07de49f4~mv2.jpg" alt="Family session" loading="eager">
     </div>
   </div>
 </section>
@@ -1023,7 +1035,7 @@
 <section class="featured-section">
   <div class="featured-inner">
     <div class="featured-image-wrap reveal-img">
-      <img src="https://static.wixstatic.com/media/f0c639_99d218a76014475b925cb1f1df05f8bf~mv2.jpg" alt="Newborn session Miami" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_99d218a76014475b925cb1f1df05f8bf~mv2.jpg" alt="Newborn session Miami" loading="eager">
     </div>
     <div class="featured-body">
       <span class="featured-num-bg">01</span>
@@ -1042,7 +1054,7 @@
 <section class="featured-section" style="background:#2C2420; padding-top: 80px;">
   <div class="featured-inner" style="flex-direction: row-reverse;">
     <div class="featured-image-wrap reveal-img">
-      <img src="https://static.wixstatic.com/media/f0c639_414892506ab04271a553cc141c8935e2~mv2_d_1500_2250_s_2.jpg" alt="Maternity session Miami" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_414892506ab04271a553cc141c8935e2~mv2_d_1500_2250_s_2.jpg" alt="Maternity session Miami" loading="eager">
     </div>
     <div class="featured-body">
       <span class="featured-num-bg">02</span>
@@ -1110,7 +1122,7 @@
   <div class="about-inner">
     <span class="about-num-bg">03</span>
     <div class="about-image reveal-img">
-      <img src="https://static.wixstatic.com/media/f0c639_28e86a889d484ec3af3ef2654fb84146~mv2_d_1500_2250_s_2.jpg" alt="About Iya Magraner" loading="lazy">
+      <img src="https://static.wixstatic.com/media/f0c639_28e86a889d484ec3af3ef2654fb84146~mv2_d_1500_2250_s_2.jpg" alt="About Iya Magraner" loading="eager">
     </div>
     <div class="about-text">
       <div class="accent-line"></div>
