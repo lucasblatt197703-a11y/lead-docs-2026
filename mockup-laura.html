@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laura Marie Pepsin — Wedding & Commercial Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F8F5F0;
+      --dark: #2C2C2C;
+      --near-black: #1A1A1A;
+      --accent: #C4A882;
+      --sage: #7B9E87;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--dark); font-family: 'Work Sans', sans-serif; overflow-x: hidden; }
+
+    /* ─── SKELETON LOADERS ─── */
+    img:not(.img-loaded) {
+      background: linear-gradient(90deg, #e8e4df 25%, #f2efea 50%, #e8e4df 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.4s ease infinite;
+      min-height: 40px;
+    }
+    @keyframes skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    img.img-loaded { animation: none !important; background: none !important; }
+
+    /* ─── ACCENT RULE ─── */
+    .accent-rule {
+      width: 30%;
+      height: 1px;
+      background: var(--accent);
+      margin: 80px auto;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: absolute;
+      top: 0; right: 0;
+      padding: 36px 60px;
+      z-index: 100;
+      display: flex;
+      gap: 36px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+    nav a:hover { opacity: 1; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background-image: url('https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7271ff.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      will-change: background-position;
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 0 0 60px 60px;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 90px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: white;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.45);
+      line-height: 1;
+      display: block;
+      opacity: 0;
+      transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
+    }
+    .hero-name.is-visible {
+      opacity: 1;
+      letter-spacing: 0.15em;
+    }
+    .hero-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      margin-top: 12px;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      background: var(--cream);
+      border-top: 1px solid rgba(196,168,130,0.25);
+      border-bottom: 1px solid rgba(196,168,130,0.25);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 32px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS STRIP ─── */
+    #stats {
+      background: var(--near-black);
+      padding: 70px 60px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 8px;
+      display: block;
+    }
+    .stat-divider {
+      width: 1px;
+      height: 60px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ─── GALLERY ─── */
+    #work {
+      padding: 100px 0 60px;
+    }
+    .section-header {
+      padding: 0 60px;
+      margin-bottom: 60px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--dark);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .section-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+    .section-sub.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Full-width gallery image */
+    .gallery-full {
+      width: 100%;
+      margin: 6px 0;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .gallery-full.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-full img {
+      width: 100%;
+      height: 75vh;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .gallery-full:hover img { transform: scale(1.02); }
+    .gallery-full .img-caption {
+      position: absolute;
+      bottom: 0; left: 0;
+      padding: 0 0 24px 36px;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: white;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-full { position: relative; }
+    .gallery-full:hover .img-caption { opacity: 1; transform: translateY(0); }
+
+    /* Pair row */
+    .gallery-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin: 6px 0;
+    }
+    .gallery-pair-item {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+      position: relative;
+    }
+    .gallery-pair-item.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-pair-item img {
+      width: 100%;
+      height: 55vh;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .gallery-pair-item:hover img { transform: scale(1.02); }
+    .gallery-pair-item .img-caption {
+      position: absolute;
+      bottom: 0; left: 0;
+      padding: 0 0 20px 24px;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: white;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-pair-item:hover .img-caption { opacity: 1; transform: translateY(0); }
+
+    /* ─── FEATURED WORK ─── */
+    #featured {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      overflow: hidden;
+    }
+    #featured img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .featured-overlay {
+      position: absolute;
+      bottom: 0; left: 0;
+      padding: 0 0 60px 60px;
+    }
+    .featured-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+      max-width: 700px;
+      line-height: 1.2;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .featured-quote.is-visible { opacity: 1; transform: translateY(0); }
+    .featured-byline {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      margin-top: 16px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.2s;
+    }
+    .featured-byline.is-visible { opacity: 1; }
+
+    /* ─── SERVICES ─── */
+    #services {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      margin-top: 70px;
+    }
+    .service-item {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .service-item.is-visible { opacity: 1; transform: translateY(0); }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: rgba(196,168,130,0.35);
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .service-desc {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(44,44,44,0.75);
+    }
+    .service-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 20px 0;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 60px;
+      background: white;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .about-img {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .about-img.is-visible { clip-path: inset(0 0 0 0); }
+    .about-img img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      display: block;
+    }
+    .about-content { padding-top: 20px; }
+    .pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.35;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .pull-quote.is-visible { opacity: 1; transform: translateY(0); }
+    .about-bio {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(44,44,44,0.82);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    }
+    .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+    .about-details {
+      margin-top: 32px;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+    .about-details.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── CTA SECTION ─── */
+    #cta-section {
+      background: var(--near-black);
+      padding: 120px 60px;
+      text-align: center;
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      font-weight: 300;
+      color: white;
+      line-height: 1.1;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.3s;
+    }
+    .cta-sub.is-visible { opacity: 1; }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 44px;
+      padding: 16px 52px;
+      border: 1px solid var(--accent);
+      color: white;
+      text-decoration: none;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: background 0.25s, color 0.25s;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.5s, background 0.25s, color 0.25s;
+    }
+    .cta-btn.is-visible { opacity: 1; }
+    .cta-btn:hover { background: var(--accent); color: var(--near-black); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--near-black);
+      padding: 0 60px 100px;
+      text-align: center;
+    }
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .contact-phone {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      transition: opacity 0.2s;
+    }
+    .contact-phone:hover { opacity: 0.75; }
+    .contact-note {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      margin-top: 24px;
+      margin-bottom: 32px;
+    }
+    .contact-socials {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+    }
+    .contact-socials a {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-socials a:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #111;
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+    }
+    .footer-credit {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 24px 24px; gap: 20px; }
+      nav a { font-size: 10px; }
+      .hero-text { padding: 0 0 40px 24px; }
+      .hero-name { font-size: 52px; }
+      .hero-sub { font-size: 10px; }
+      #stats { flex-direction: column; gap: 40px; padding: 50px 24px; }
+      .stat-divider { display: none; }
+      .stat-num { font-size: 60px; }
+      #work { padding: 70px 0 40px; }
+      .section-header { padding: 0 24px; }
+      .gallery-full img { height: 50vh; }
+      .gallery-pair { grid-template-columns: 1fr; }
+      .gallery-pair-item img { height: 45vh; }
+      #services { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; gap: 40px; }
+      #about { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-img img { height: 400px; }
+      #cta-section { padding: 80px 24px; }
+      .cta-heading { font-size: 44px; }
+      #contact { padding: 0 24px 70px; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+      .accent-rule { margin: 50px auto; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 38px; letter-spacing: 0.08em; }
+      .stat-num { font-size: 50px; }
+      .cta-heading { font-size: 34px; }
+      .pull-quote { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#work">Work</a>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <span class="hero-name">LAURA MARIE PEPSIN</span>
+    <p class="hero-sub">Wedding &amp; Commercial Photography &nbsp;·&nbsp; Brevard County, FL</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Beach Weddings</span><span>·</span>
+    <span>Portraits</span><span>·</span>
+    <span>Commercial Photography</span><span>·</span>
+    <span>Brevard County</span><span>·</span>
+    <span>Sebastian Inlet</span><span>·</span>
+    <span>Grant-Valkaria, FL</span><span>·</span>
+    <span>Beach Weddings</span><span>·</span>
+    <span>Portraits</span><span>·</span>
+    <span>Commercial Photography</span><span>·</span>
+    <span>Brevard County</span><span>·</span>
+    <span>Sebastian Inlet</span><span>·</span>
+    <span>Grant-Valkaria, FL</span><span>·</span>
+    <span>Beach Weddings</span><span>·</span>
+    <span>Portraits</span><span>·</span>
+    <span>Commercial Photography</span><span>·</span>
+    <span>Brevard County</span><span>·</span>
+    <span>Sebastian Inlet</span><span>·</span>
+    <span>Grant-Valkaria, FL</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat">
+    <span class="stat-num">15+</span>
+    <span class="stat-label">Years of Experience</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Weddings &amp; Engagements</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">3</span>
+    <span class="stat-label">Specialties</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">FL</span>
+    <span class="stat-label">East Central Florida</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="work">
+  <div class="section-header">
+    <h2 class="section-title">The Work</h2>
+    <p class="section-sub">Wedding · Portrait · Commercial</p>
+  </div>
+
+  <!-- Full-width image 1 -->
+  <div class="gallery-full">
+    <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7258.jpg"
+         alt="Beach Ceremony" loading="lazy">
+    <span class="img-caption">Beach Ceremony</span>
+  </div>
+
+  <!-- Pair 1 -->
+  <div class="gallery-pair">
+    <div class="gallery-pair-item">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7265.jpg"
+           alt="Wedding Portrait" loading="lazy">
+      <span class="img-caption">Wedding Portrait</span>
+    </div>
+    <div class="gallery-pair-item">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7268bffaq-1.jpg"
+           alt="Ceremony Moment" loading="lazy">
+      <span class="img-caption">Ceremony</span>
+    </div>
+  </div>
+
+  <!-- Full-width image 2 -->
+  <div class="gallery-full">
+    <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture3.jpg"
+         alt="Water Photography" loading="lazy">
+    <span class="img-caption">Water Photography</span>
+  </div>
+
+  <!-- Pair 2 -->
+  <div class="gallery-pair">
+    <div class="gallery-pair-item">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture5.jpg"
+           alt="Splash Series" loading="lazy">
+      <span class="img-caption">Splash Series</span>
+    </div>
+    <div class="gallery-pair-item">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture7.jpg"
+           alt="Coastal Light" loading="lazy">
+      <span class="img-caption">Coastal Light</span>
+    </div>
+  </div>
+
+  <!-- Full-width image 3 -->
+  <div class="gallery-full">
+    <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7274ff.jpg"
+         alt="Golden Hour" loading="lazy">
+    <span class="img-caption">Golden Hour</span>
+  </div>
+
+  <!-- Pair 3 -->
+  <div class="gallery-pair">
+    <div class="gallery-pair-item">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture10.jpg"
+           alt="Nature Series" loading="lazy">
+      <span class="img-caption">Nature Series</span>
+    </div>
+    <div class="gallery-pair-item">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture15.jpg"
+           alt="Water Study" loading="lazy">
+      <span class="img-caption">Water Study</span>
+    </div>
+  </div>
+</section>
+
+<div class="accent-rule"></div>
+
+<!-- FEATURED WORK -->
+<section id="featured">
+  <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7269bffaq-1.jpg"
+       alt="Featured — Beach Ceremony" loading="lazy">
+  <div class="featured-overlay">
+    <p class="featured-quote">"Documenting the moments that matter."</p>
+    <p class="featured-byline">Laura Marie Pepsin &nbsp;·&nbsp; Florida · 2026</p>
+  </div>
+</section>
+
+<div class="accent-rule"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header" style="padding: 0;">
+    <h2 class="section-title">Services</h2>
+    <p class="section-sub">Available throughout Florida &amp; beyond</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <span class="service-num">01</span>
+      <div class="service-line"></div>
+      <span class="service-name">Weddings &amp; Engagements</span>
+      <p class="service-desc">Full-day wedding coverage and engagement sessions along Florida's coast. Beach ceremonies, intimate elopements, and everything in between — all photographed with warmth and patience.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-num">02</span>
+      <div class="service-line"></div>
+      <span class="service-name">Portraits</span>
+      <p class="service-desc">Family portraits, senior sessions, and professional headshots rooted in natural light and genuine connection. Based in Brevard County, serving the Space Coast and surrounding areas.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-num">03</span>
+      <div class="service-line"></div>
+      <span class="service-name">Commercial</span>
+      <p class="service-desc">Product, editorial, and brand photography with a photojournalistic eye. Delivered with the attention to detail that 15+ years of professional work brings.</p>
+    </div>
+  </div>
+</section>
+
+<div class="accent-rule"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header" style="padding: 0;">
+    <h2 class="section-title">About</h2>
+    <p class="section-sub">Grant-Valkaria, Brevard County</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-img">
+      <img src="https://colasoda.wordpress.com/wp-content/uploads/2023/10/cropped-244545990_4715486895180098_6174463238963962463_n.jpg"
+           alt="Laura Marie Pepsin" loading="lazy">
+    </div>
+    <div class="about-content">
+      <p class="pull-quote">"Every frame is a document of something real."</p>
+      <p class="about-bio">Working across weddings, commercial, and documentary work, Laura Marie Pepsin has spent 15 years photographing Florida's coastline and the people who call it home. Based near Sebastian Inlet in Grant-Valkaria, Brevard County, her work is known for its warmth, its light, and its patience — portraits that feel like memory rather than performance.<br><br>With a background in photojournalism and commercial work, every session is approached with the same care: unhurried, observant, and rooted in the particular beauty of East Central Florida.</p>
+      <p class="about-details">Grant-Valkaria, FL &nbsp;·&nbsp; 407-361-2342 &nbsp;·&nbsp; Available 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-section">
+  <h2 class="cta-heading">Book Your Session</h2>
+  <p class="cta-sub">Currently accepting 2026 weddings &amp; portrait bookings</p>
+  <a href="#contact" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <a href="tel:4073612342" class="contact-phone">407-361-2342</a>
+    <a href="mailto:lauramariepepsin@photographer.com" class="contact-phone" style="font-size: 20px; color: rgba(196,168,130,0.7);">Inquire via Email</a>
+    <p class="contact-note">Grant-Valkaria, FL &nbsp;·&nbsp; East Central Florida &amp; Beyond</p>
+    <div class="contact-socials">
+      <a href="https://www.instagram.com/photographerlauramarie/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/lauramariepepsinphotography/" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Laura Marie Pepsin &nbsp;·&nbsp; © 2026</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero name reveal with letter-spacing animation
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const name = document.querySelector('.hero-name');
+      if (name) {
+        name.style.letterSpacing = '0.4em';
+        name.offsetHeight; // force reflow
+        name.classList.add('is-visible');
+        setTimeout(() => { name.style.letterSpacing = '0.15em'; }, 100);
+      }
+    }, 200);
+  });
+
+  // Hero parallax
+  const hero = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    if (hero) {
+      hero.style.backgroundPositionY = (window.scrollY * 0.4) + 'px';
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  // Gallery pair items — staggered reveal
+  const pairItems = document.querySelectorAll('.gallery-pair-item');
+  pairItems.forEach((item, i) => {
+    item.style.transitionDelay = (i % 2 === 0 ? '0ms' : '100ms');
+    observer.observe(item);
+  });
+
+  // All other animated elements
+  document.querySelectorAll(
+    '.section-title, .section-sub, .gallery-full, .about-img, .pull-quote, .about-bio, .about-details, .featured-quote, .featured-byline, .cta-heading, .cta-sub, .cta-btn'
+  ).forEach(el => observer.observe(el));
+
+  // Services — staggered
+  const services = document.querySelectorAll('.service-item');
+  services.forEach((el, i) => {
+    el.style.transitionDelay = (i * 120) + 'ms';
+    observer.observe(el);
+  });
+
+  // Image skeleton loader removal
+  document.querySelectorAll('img').forEach(img => {
+    if (img.complete) {
+      img.classList.add('img-loaded');
+    } else {
+      img.addEventListener('load', () => img.classList.add('img-loaded'));
+      img.addEventListener('error', () => img.classList.add('img-loaded'));
+    }
+  });
+</script>
+</body>
+</html>
