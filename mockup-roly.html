@@ -9,6 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Force all animated elements to their visible end-state when printed or screenshotted */
+    @media print {
+      .anim-title, .section-title, .story-subtitle, .recognition-title,
+      .contact-heading, .anim-stat, .recognition-card,
+      .anim-gallery, .anim-featured, .featured-img-wrap,
+      .anim-story-img, .anim-shop {
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+      }
+    }
     :root {
       --black: #111111;
       --offwhite: #F5F0EB;
@@ -45,21 +56,26 @@
     #hero {
       position: relative; width: 100%; height: 100vh; min-height: 600px;
       overflow: hidden; display: flex; align-items: flex-end;
+      /* Fallback image shows when YouTube iframe hasn't loaded yet */
       background-image: url('https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1920,h_1080,q_90/file.jpg');
-      background-size: cover; background-position: center;
+      background-size: cover; background-position: center top;
     }
     .hero-video-wrap {
       position: absolute; inset: 0; overflow: hidden;
+      z-index: 0;
     }
     .hero-video-wrap iframe {
-      width: 177.78vh; height: 100vh;
-      min-width: 100%; min-height: 56.25vw;
-      position: absolute; top: 50%; left: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
+      /* 16:9 aspect — always fill the container */
+      width: max(100vw, 177.78vh);
+      height: max(56.25vw, 100vh);
       transform: translate(-50%, -50%);
       pointer-events: none;
+      border: none;
     }
     .hero-overlay {
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(to top, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.45) 40%, rgba(17,17,17,0.2) 70%);
     }
     .hero-content {
@@ -317,7 +333,7 @@
       text-align: center;
       background-image: url('https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1920,h_1080,q_90/file.jpg');
       background-size: cover; background-position: center;
-      background-attachment: fixed;
+      background-attachment: scroll;
     }
     .shop-overlay {
       position: absolute; inset: 0;
@@ -458,9 +474,10 @@
   <section id="hero">
     <div class="hero-video-wrap">
       <iframe
-        src="https://www.youtube.com/embed/2CTy03JdUes?autoplay=1&mute=1&loop=1&playlist=2CTy03JdUes&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+        src="https://www.youtube.com/embed/2CTy03JdUes?autoplay=1&mute=1&loop=1&playlist=2CTy03JdUes&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
         frameborder="0"
-        allow="autoplay; fullscreen"
+        allow="autoplay; mute; encrypted-media; picture-in-picture; fullscreen"
+        allowfullscreen
         title="Roly Fernandez — King of Kustom"
       ></iframe>
     </div>
@@ -474,19 +491,19 @@
 
   <!-- STATS STRIP -->
   <section id="stats">
-    <div class="stat-item anim-stat" data-delay="0">
+    <div class="stat-item anim-stat is-visible" data-delay="0">
       <span class="stat-num">6,740</span>
       <span class="stat-label">Followers</span>
     </div>
-    <div class="stat-item anim-stat" data-delay="100">
+    <div class="stat-item anim-stat is-visible" data-delay="100">
       <span class="stat-num">Since '10</span>
       <span class="stat-label">Active Since</span>
     </div>
-    <div class="stat-item anim-stat" data-delay="200">
+    <div class="stat-item anim-stat is-visible" data-delay="200">
       <span class="stat-num">$650+</span>
       <span class="stat-label">Originals From</span>
     </div>
-    <div class="stat-item anim-stat" data-delay="300">
+    <div class="stat-item anim-stat is-visible" data-delay="300">
       <span class="stat-num">Miami</span>
       <span class="stat-label">Based In</span>
     </div>
@@ -495,43 +512,43 @@
   <!-- GALLERY -->
   <section id="gallery">
     <span class="section-label">Selected Works</span>
-    <h2 class="section-title anim-title">THE WORK</h2>
+    <h2 class="section-title anim-title is-visible">THE WORK</h2>
     <div class="title-line"></div>
     <div class="gallery-masonry">
-      <div class="gallery-item anim-gallery" data-delay="0">
-        <img src="https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Mixed Feelings" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="0">
+        <img src="https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Mixed Feelings" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Mixed Feelings</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="80">
-        <img src="https://static.wixstatic.com/media/cd6d14_d16b11c620514a5e92cd5f52507b72e6~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Abstract No. 2" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="80">
+        <img src="https://static.wixstatic.com/media/cd6d14_d16b11c620514a5e92cd5f52507b72e6~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Abstract No. 2" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Velocity</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="160">
-        <img src="https://static.wixstatic.com/media/cd6d14_dac1e23fc77840b8bc1e6a54263d7e38~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Miami Heat" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="160">
+        <img src="https://static.wixstatic.com/media/cd6d14_dac1e23fc77840b8bc1e6a54263d7e38~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Miami Heat" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Miami Heat</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="240">
-        <img src="https://static.wixstatic.com/media/cd6d14_266795e0a0f84549a698d9bdb9513a96~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Kustom Spirit" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="240">
+        <img src="https://static.wixstatic.com/media/cd6d14_266795e0a0f84549a698d9bdb9513a96~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Kustom Spirit" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Kustom Spirit</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="320">
-        <img src="https://static.wixstatic.com/media/cd6d14_3006c2216e5d42b99bd29eabaf44c146~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Urban Pulse" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="320">
+        <img src="https://static.wixstatic.com/media/cd6d14_3006c2216e5d42b99bd29eabaf44c146~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Urban Pulse" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Urban Pulse</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="400">
-        <img src="https://static.wixstatic.com/media/cd6d14_421f1f18359646bcaf2d6c9fe2d0d88c~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Chromatic" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="400">
+        <img src="https://static.wixstatic.com/media/cd6d14_421f1f18359646bcaf2d6c9fe2d0d88c~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Chromatic" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Chromatic</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="480">
-        <img src="https://static.wixstatic.com/media/cd6d14_4911f4ca742e4e37a629e2aa3d97dae2~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Tension" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="480">
+        <img src="https://static.wixstatic.com/media/cd6d14_4911f4ca742e4e37a629e2aa3d97dae2~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Tension" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Tension</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="560">
-        <img src="https://static.wixstatic.com/media/cd6d14_b8fd0231e26c47c39d08df9e43bb6d6c~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Collision" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="560">
+        <img src="https://static.wixstatic.com/media/cd6d14_b8fd0231e26c47c39d08df9e43bb6d6c~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Collision" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Collision</span></div>
       </div>
-      <div class="gallery-item anim-gallery" data-delay="640">
-        <img src="https://static.wixstatic.com/media/cd6d14_077b694b09c44b938b2da3b6b3b14ff0~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Displacement" loading="lazy" />
+      <div class="gallery-item anim-gallery is-visible" data-delay="640">
+        <img src="https://static.wixstatic.com/media/cd6d14_077b694b09c44b938b2da3b6b3b14ff0~mv2.png/v1/fill/w_800,h_800,q_90/file.jpg" alt="Displacement" />
         <div class="gallery-hover-overlay"><span class="gallery-hover-title">Displacement</span></div>
       </div>
     </div>
@@ -541,8 +558,8 @@
   <section id="featured">
     <span class="section-label">Featured Work</span>
     <div class="featured-grid">
-      <div class="featured-img-wrap anim-featured">
-        <img src="https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1200,h_900,q_90/file.jpg" alt="Mixed Feelings — Roly Fernandez" loading="lazy" />
+      <div class="featured-img-wrap anim-featured is-visible">
+        <img src="https://static.wixstatic.com/media/cd6d14_703c6d1eb5ad43fb9182d34731f0b8bb~mv2.png/v1/fill/w_1200,h_900,q_90/file.jpg" alt="Mixed Feelings — Roly Fernandez" />
       </div>
       <div class="featured-text">
         <div class="featured-ghost">01</div>
@@ -577,12 +594,12 @@
   <!-- ARTIST STORY -->
   <section id="story">
     <div class="story-grid">
-      <div class="story-img-wrap anim-story-img">
+      <div class="story-img-wrap anim-story-img is-visible">
         <div class="story-accent-line"></div>
-        <img src="https://static.wixstatic.com/media/cd6d14_4332660619ad47f6a82da77893096621~mv2.png/v1/fill/w_900,h_900,q_90/file.jpg" alt="Roly Fernandez — Studio" loading="lazy" />
+        <img src="https://static.wixstatic.com/media/cd6d14_4332660619ad47f6a82da77893096621~mv2.png/v1/fill/w_900,h_900,q_90/file.jpg" alt="Roly Fernandez — Studio" />
       </div>
       <div>
-        <h4 class="story-subtitle anim-title">From the Streets</h4>
+        <h4 class="story-subtitle anim-title is-visible">From the Streets</h4>
         <h2 class="story-heading">From Custom Paint<br />to Canvas</h2>
         <p class="story-body">Roly Fernandez spent years transforming vehicles in Miami's custom car scene — where precision, color theory, and visual impact aren't academic concepts, they're survival skills. That same discipline now drives his canvas work: bold abstracts that carry the weight of metal, speed, and Miami heat.</p>
         <p class="story-body" style="margin-bottom: 28px;">His work has been featured on Artsy and exhibited internationally under the title "Miami's King of Kustoms," running November 2024 through November 2025. Every painting is an original — no prints, no editions.</p>
@@ -596,21 +613,21 @@
 
   <!-- RECOGNITION -->
   <section id="recognition">
-    <h2 class="recognition-title anim-title">RECOGNITION</h2>
+    <h2 class="recognition-title anim-title is-visible">RECOGNITION</h2>
     <div class="recognition-grid">
-      <div class="recognition-card" data-delay="0">
+      <div class="recognition-card is-visible" data-delay="0">
         <span class="rec-icon">◉</span>
         <div class="rec-title">Artsy Exhibition</div>
         <div class="rec-sub">Miami's King of Kustoms — international online exhibition</div>
         <span class="rec-date">Nov 2024 – Nov 2025</span>
       </div>
-      <div class="recognition-card" data-delay="150">
+      <div class="recognition-card is-visible" data-delay="150">
         <span class="rec-icon">◉</span>
         <div class="rec-title">Telemundo Feature</div>
         <div class="rec-sub">Recognized as a Miami cultural tastemaker in fine arts</div>
         <span class="rec-date">2024</span>
       </div>
-      <div class="recognition-card" data-delay="300">
+      <div class="recognition-card is-visible" data-delay="300">
         <span class="rec-icon">◉</span>
         <div class="rec-title">International Collector Base</div>
         <div class="rec-sub">Originals in private collections across Miami and beyond</div>
@@ -641,7 +658,7 @@
   <section id="shop">
     <div class="shop-overlay"></div>
     <div class="shop-content">
-      <h2 class="shop-heading anim-shop">Own a Piece<br />of Miami</h2>
+      <h2 class="shop-heading anim-shop is-visible">Own a Piece<br />of Miami</h2>
       <p class="shop-sub">Original oil paintings from $650 · Direct from the studio</p>
       <div class="shop-btns">
         <a href="mailto:rolythelegend@gmail.com?subject=Shop Inquiry" class="btn-solid">Browse the Collection</a>
@@ -654,7 +671,7 @@
   <section id="contact">
     <div class="contact-inner">
       <span class="contact-eyebrow">Get In Touch</span>
-      <h2 class="contact-heading anim-title">Studio Inquiries</h2>
+      <h2 class="contact-heading anim-title is-visible">Studio Inquiries</h2>
       <a href="mailto:rolythelegend@gmail.com" class="contact-email">rolythelegend@gmail.com</a>
       <div class="contact-row">
         <div class="contact-item">
@@ -681,11 +698,21 @@
   </footer>
 
   <script>
-    // 1. Hero name letter-spacing compress on load
-    const heroName = document.getElementById('heroName');
-    setTimeout(() => { heroName.style.letterSpacing = '0.05em'; }, 100);
+    // All animated selectors — centralised so force-reveal and observer use the same list
+    const ANIM_SEL = [
+      '.anim-title', '.section-title', '.story-subtitle', '.recognition-title',
+      '.contact-heading', '.anim-stat', '.recognition-card',
+      '.anim-gallery', '.anim-featured', '.featured-img-wrap',
+      '.anim-story-img', '.anim-shop'
+    ].join(', ');
 
-    // 2-6. IntersectionObserver for all animations
+    // Hero name letter-spacing compress on load
+    const heroName = document.getElementById('heroName');
+    if (heroName) setTimeout(() => { heroName.style.letterSpacing = '0.05em'; }, 100);
+
+    // IntersectionObserver for scroll animations — only adds is-visible, never removes it.
+    // Elements start visible (CSS sets them visible by default); the observer adds the
+    // animated transition when they scroll into view in a live browser.
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -695,40 +722,9 @@
           observer.unobserve(el);
         }
       });
-    }, { threshold: 0.05 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
-    // Section titles (clip-path sweep)
-    document.querySelectorAll('.anim-title').forEach(el => observer.observe(el));
-
-    // Stats stagger
-    document.querySelectorAll('.anim-stat').forEach(el => observer.observe(el));
-
-    // Gallery stagger
-    document.querySelectorAll('.anim-gallery').forEach(el => observer.observe(el));
-
-    // Featured image
-    document.querySelectorAll('.anim-featured').forEach(el => observer.observe(el));
-
-    // Story image
-    document.querySelectorAll('.anim-story-img').forEach(el => observer.observe(el));
-
-    // Recognition cards
-    document.querySelectorAll('.recognition-card').forEach(el => {
-      el.classList.add('anim-stat'); observer.observe(el);
-    });
-
-    // Shop heading
-    document.querySelectorAll('.anim-shop').forEach(el => observer.observe(el));
-
-    // Contact heading
-    document.querySelectorAll('.contact-heading').forEach(el => observer.observe(el));
-
-    // Force-reveal all animated elements immediately (for screenshot / static preview)
-    setTimeout(() => {
-      document.querySelectorAll(
-        '.anim-title, .anim-stat, .anim-gallery, .anim-featured, .anim-story-img, .anim-shop, .recognition-card, .contact-heading'
-      ).forEach(el => el.classList.add('is-visible'));
-    }, 200);
+    document.querySelectorAll(ANIM_SEL).forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
