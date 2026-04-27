@@ -87,9 +87,8 @@
     font-weight: 300;
     font-size: 96px;
     color: var(--ivory);
-    letter-spacing: 0.35em;
+    letter-spacing: 0.08em;
     line-height: 1;
-    transition: letter-spacing 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: block;
   }
 
@@ -245,6 +244,38 @@
     margin: 60px auto;
   }
 
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    position: relative;
+    z-index: 1;
+    background: var(--green);
+    overflow: hidden;
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(247,242,232,0.65);
+    padding: 0 48px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
   /* ─── FEATURED PIECE ─── */
   .featured-section {
     position: relative;
@@ -264,14 +295,28 @@
 
   .featured-text { position: relative; }
 
+  .featured-tag {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(247,242,232,0.4);
+    border: 1px solid rgba(247,242,232,0.15);
+    padding: 5px 12px;
+    margin-bottom: 24px;
+  }
+
   .featured-title {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-style: italic;
-    font-size: 36px;
+    font-size: 42px;
     color: var(--coral);
     margin-bottom: 8px;
     display: block;
+    line-height: 1.1;
   }
 
   .featured-sub {
@@ -309,7 +354,10 @@
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 0.8s ease;
   }
+
+  .featured-img-wrap:hover img { transform: scale(1.03); }
 
   /* ─── ABOUT ─── */
   .about-section {
@@ -575,23 +623,28 @@
     letter-spacing: 0.05em;
   }
 
-  /* ─── ANIMATION BASE STATES ─── */
+  /* ─── ANIMATIONS ─── */
+  /* Clip-path title sweep — triggers via .visible class */
   .clip-title {
     clip-path: inset(0 100% 0 0);
     transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
   }
   .clip-title.visible { clip-path: inset(0 0% 0 0); }
 
+  /* Images: scale+opacity reveal (no clip-path — degrades gracefully) */
   .reveal-img {
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.85s ease-out;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    will-change: transform, opacity;
   }
-  .reveal-img.visible { clip-path: inset(0 0 0 0); }
+  .reveal-img.visible { opacity: 1; transform: scale(1); }
 
   .scale-in {
     transform: scale(0.93);
     opacity: 0;
     transition: transform 1s ease-out, opacity 0.8s ease;
+    will-change: transform, opacity;
   }
   .scale-in.visible { transform: scale(1); opacity: 1; }
 
@@ -599,6 +652,7 @@
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
   }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
@@ -623,6 +677,7 @@
     .section-number { font-size: 100px; }
     .about-section { padding: 80px 24px; }
     .featured-section { padding: 60px 24px; }
+    .marquee-strip { display: none; }
   }
 
   @media (max-width: 480px) {
@@ -657,19 +712,19 @@
 
 <!-- ─── STATS STRIP ─── -->
 <section class="stats-strip">
-  <div class="stat-item fade-up">
+  <div class="stat-item">
     <span class="stat-label">Artworks</span>
     <span class="stat-value">94</span>
   </div>
   <div class="stat-divider"></div>
-  <div class="stat-item fade-up" style="transition-delay:120ms">
+  <div class="stat-item">
     <span class="stat-label">Years Painting</span>
-    <span class="stat-value">30</span>
+    <span class="stat-value">30+</span>
   </div>
   <div class="stat-divider"></div>
-  <div class="stat-item fade-up" style="transition-delay:240ms">
+  <div class="stat-item">
     <span class="stat-label">National Recognition</span>
-    <span class="stat-value" style="font-size:20px; line-height:1.2; padding-top:4px;">Birds in Art<br>Finalist</span>
+    <span class="stat-value" style="font-size:20px; line-height:1.2; padding-top:4px;">Birds in Art<br>Finalist ×2</span>
   </div>
 </section>
 
@@ -727,20 +782,51 @@
   <div class="accent-divider"></div>
 </section>
 
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Southwest Florida Wildlife</span>
+    <span>·</span>
+    <span>Oil &amp; Acrylic on Canvas</span>
+    <span>·</span>
+    <span>Birds in Art Finalist</span>
+    <span>·</span>
+    <span>Originals &amp; Giclee Prints</span>
+    <span>·</span>
+    <span>Fort Myers, Florida</span>
+    <span>·</span>
+    <span>Custom Commissions Welcome</span>
+    <span>·</span>
+    <span>Southwest Florida Wildlife</span>
+    <span>·</span>
+    <span>Oil &amp; Acrylic on Canvas</span>
+    <span>·</span>
+    <span>Birds in Art Finalist</span>
+    <span>·</span>
+    <span>Originals &amp; Giclee Prints</span>
+    <span>·</span>
+    <span>Fort Myers, Florida</span>
+    <span>·</span>
+    <span>Custom Commissions Welcome</span>
+    <span>·</span>
+  </div>
+</div>
+
 <!-- ─── FEATURED PIECE ─── -->
 <section class="featured-section">
   <div class="featured-inner">
     <div class="featured-text">
       <span class="section-number" style="color:#F7F2E8;">02</span>
-      <span class="featured-title clip-title">Regal Roseate</span>
+      <span class="featured-tag">Featured Work</span>
+      <span class="featured-title">Regal Roseate</span>
       <span class="featured-sub">Oil on canvas · 48 × 36 inches</span>
-      <p class="featured-desc fade-up">
+      <p class="featured-desc">
         Among Carol's most recognized works, this portrait of a roseate spoonbill in full breeding plumage captures the electric pink that draws thousands of birders to Southwest Florida each winter. The layered impasto technique renders each feather with tactile immediacy — a still image that feels like it might breathe.
       </p>
-      <span class="featured-price fade-up" style="transition-delay:120ms;">Original available · Giclee prints from $27</span>
+      <span class="featured-price">Original available · Giclee prints from $27</span>
     </div>
     <div class="featured-img-wrap">
-      <img src="https://www.carolsheart.com/i/Paintings%202018/Regal_Roseate_48x36.jpg" alt="Regal Roseate" loading="lazy" class="scale-in">
+      <img src="https://www.carolsheart.com/i/Paintings%202018/Regal_Roseate_48x36.jpg" alt="Regal Roseate" loading="lazy">
     </div>
   </div>
 </section>
@@ -748,7 +834,7 @@
 <!-- ─── ABOUT ─── -->
 <section class="about-section" id="about">
   <div class="about-inner">
-    <img src="https://www.carolsheart.com/i/Paintings%202020/Sea_Grape_Arbor_40x60.jpg" alt="Sea Grape Arbor — Carol McArdle" loading="lazy" class="about-img scale-in">
+    <img src="https://www.carolsheart.com/i/Paintings%202017/Egret_Wings_30x30.jpg" alt="Egret Wings — Carol McArdle" loading="lazy" class="about-img">
     <div class="about-text">
       <span class="section-number">03</span>
       <h2 class="about-heading clip-title">About</h2>
@@ -766,15 +852,15 @@
 <section class="credentials-section">
   <div class="credentials-inner">
     <span class="cred-label">Recognition</span>
-    <div class="cred-item fade-up">
+    <div class="cred-item">
       <div class="cred-dot"></div>
       <span class="cred-text">Two-Time Finalist — <em>Birds in Art Exhibition, Woodson Art Museum</em></span>
     </div>
-    <div class="cred-item fade-up" style="transition-delay:150ms;">
+    <div class="cred-item">
       <div class="cred-dot"></div>
       <span class="cred-text">Resident Artist — <em>Delnor-Wiggins State Park, Naples FL</em></span>
     </div>
-    <div class="cred-item fade-up" style="transition-delay:300ms;">
+    <div class="cred-item">
       <div class="cred-dot"></div>
       <span class="cred-text">Solo Shows — <em>Rockhouse Masterpieces, Key West · Coconut Grove Gallery</em></span>
     </div>
@@ -785,9 +871,9 @@
 <section class="cta-section" id="commissions">
   <div class="cta-overlay"></div>
   <div class="cta-content">
-    <span class="cta-heading scale-in">Commission an Original</span>
-    <span class="cta-sub fade-up" style="transition-delay:200ms;">Oil paintings from $400 · Giclee prints available · Custom commissions welcome</span>
-    <a href="mailto:577carol@gmail.com" class="cta-btn fade-up" style="transition-delay:350ms;">Inquire Now</a>
+    <span class="cta-heading">Commission an Original</span>
+    <span class="cta-sub">Oil paintings from $400 · Giclee prints available · Custom commissions welcome</span>
+    <a href="mailto:577carol@gmail.com" class="cta-btn">Inquire Now</a>
   </div>
 </section>
 
@@ -795,13 +881,13 @@
 <section class="contact-section" id="contact">
   <div class="contact-inner">
     <span class="section-number">04</span>
-    <span class="contact-heading clip-title">Studio Inquiries</span>
-    <a href="mailto:577carol@gmail.com" class="contact-link fade-up">577carol@gmail.com</a>
-    <a href="tel:+12398494745" class="contact-link fade-up" style="transition-delay:80ms;">(239) 849-4745</a>
-    <p class="contact-line fade-up" style="transition-delay:160ms; margin-top:16px;">
+    <span class="contact-heading">Studio Inquiries</span>
+    <a href="mailto:577carol@gmail.com" class="contact-link">577carol@gmail.com</a>
+    <a href="tel:+12398494745" class="contact-link">(239) 849-4745</a>
+    <p class="contact-line" style="margin-top:16px;">
       Available for private commissions, gallery acquisitions, and print licensing.
     </p>
-    <p class="contact-note fade-up" style="transition-delay:240ms;">
+    <p class="contact-note">
       Prints available at <a href="https://carol-mcardle.pixels.com" target="_blank" style="color:var(--coral); text-decoration:none;">carol-mcardle.pixels.com</a>
     </p>
   </div>
@@ -814,7 +900,7 @@
 </footer>
 
 <script>
-  // ── IntersectionObserver for all animated elements
+  // ── IntersectionObserver — trigger .visible when element enters viewport
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -822,11 +908,9 @@
         observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 });
 
-  document.querySelectorAll('.clip-title, .scale-in, .fade-up').forEach(el => observer.observe(el));
-
-  // ── Gallery image reveals with IntersectionObserver (lower threshold)
+  // ── Image observer with stagger
   const imgObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -834,12 +918,23 @@
         imgObserver.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05 });
+  }, { threshold: 0.02 });
+
+  // ── Observe all animated elements
+  document.querySelectorAll('.clip-title, .scale-in, .fade-up').forEach(el => observer.observe(el));
 
   document.querySelectorAll('.reveal-img').forEach((img, i) => {
-    img.style.transitionDelay = (i * 90) + 'ms';
+    img.style.transitionDelay = (i * 80) + 'ms';
     imgObserver.observe(img);
   });
+
+  // ── Fallback: fire all animations after a short delay if IntersectionObserver hasn't triggered
+  // (handles headless/static environments where IO doesn't fire)
+  setTimeout(() => {
+    document.querySelectorAll('.clip-title, .scale-in, .fade-up, .reveal-img').forEach(el => {
+      el.classList.add('visible');
+    });
+  }, 400);
 
   // ── Hero letter-spacing compress on load
   window.addEventListener('load', () => {
