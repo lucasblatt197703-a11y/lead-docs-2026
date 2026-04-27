@@ -455,7 +455,23 @@
       .hero-name { font-size: 52px; }
       .story-accent-line { display: none; }
     }
-  </style>
+  
+/* Skeleton loaders */
+img:not(.img-loaded) {
+  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  min-height: 40px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+img.img-loaded {
+  animation: none !important;
+  background: none !important;
+}
+</style>
 </head>
 <body>
 
@@ -725,6 +741,25 @@
     }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll(ANIM_SEL).forEach(el => observer.observe(el));
-  </script>
+  
+// Skeleton loader cleanup
+(function() {
+  function initSkeletons() {
+    document.querySelectorAll('img').forEach(function(img) {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('img-loaded');
+      } else {
+        img.addEventListener('load', function() { img.classList.add('img-loaded'); });
+        img.addEventListener('error', function() { img.classList.add('img-loaded'); });
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSkeletons);
+  } else {
+    initSkeletons();
+  }
+})();
+</script>
 </body>
 </html>
