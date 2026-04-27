@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jamie Roxx — Pop Noir Painter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #1A1A1A;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Skeleton loaders */
+  img:not(.img-loaded) {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease infinite;
+    min-height: 40px;
+  }
+  @keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  img.img-loaded { animation: none !important; background: none !important; }
+
+  /* ==============================
+     HERO — CINEMATIC LETTERBOX
+     ============================== */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .hero-image {
+    position: absolute;
+    inset: 80px 0 60px 0;
+    width: 100%;
+    height: calc(100% - 140px);
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    will-change: transform;
+  }
+  .hero-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 10;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 58px;
+    letter-spacing: 0.1em;
+    color: #fff;
+    line-height: 1;
+    overflow: hidden;
+  }
+  .hero-name-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .hero-name-char.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  nav {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: #FF2D55; }
+
+  .hero-bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 10;
+  }
+  .hero-subtitle {
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* Ghost ROXX text */
+  .hero-ghost {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 420px;
+    color: #fff;
+    opacity: 0.03;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    z-index: 1;
+    line-height: 1;
+  }
+
+  /* ==============================
+     STATS STRIP
+     ============================== */
+  .stats {
+    background: #2C2C2C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 48px 0;
+  }
+  .stat-block {
+    flex: 1;
+    text-align: center;
+    padding: 0 40px;
+    border-right: 1px solid #3a3a3a;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-block:last-child { border-right: none; }
+  .stat-block.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 90px;
+    color: #FF2D55;
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ==============================
+     GALLERY
+     ============================== */
+  .gallery-section {
+    padding: 80px 0 0 0;
+  }
+  .gallery-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #fff;
+    padding-left: 40px;
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .gallery-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+  }
+  .gallery-item:hover .gallery-title { transform: translateY(0); }
+
+  /* ==============================
+     MARQUEE
+     ============================== */
+  .marquee-strip {
+    background: #2C2C2C;
+    height: 50px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin: 80px 0 0 0;
+  }
+  .marquee-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+  .marquee-text {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    padding-right: 60px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ==============================
+     COMMISSIONS
+     ============================== */
+  .commissions {
+    padding: 120px 40px;
+    border-top: 1px solid #FF2D55;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .commissions-left {}
+  .commissions-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .commissions-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .commissions-subtext {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+  .commissions-subtext.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    background: #FF2D55;
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    padding: 14px 48px;
+    text-decoration: none;
+    border-radius: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .cta-btn:hover { background: #e02048; transform: translateY(-2px); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+  .pricing-grid.is-visible { opacity: 1; transform: translateY(0); }
+  .price-block {
+    background: #2C2C2C;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .price-size {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #FFD700;
+    line-height: 1;
+  }
+
+  /* ==============================
+     ABOUT — MAGAZINE SPREAD
+     ============================== */
+  .about {
+    padding: 120px 0;
+    display: grid;
+    grid-template-columns: 45% 55%;
+  }
+  .about-image-col {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .about-image-col.is-visible { clip-path: inset(0 0 0 0); }
+  .about-image-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 500px;
+  }
+  .about-text-col {
+    padding: 60px 60px 60px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .about-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .about-name.is-visible { clip-path: inset(0 0% 0 0); }
+  .about-bio {
+    font-size: 17px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+  .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+  .about-quote {
+    font-size: 20px;
+    font-style: italic;
+    color: #FF2D55;
+    line-height: 1.5;
+    padding-left: 20px;
+    border-left: 3px solid #FF2D55;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+  }
+  .about-quote.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ==============================
+     CONTACT CTA
+     ============================== */
+  .contact {
+    background: #FF2D55;
+    padding: 120px 40px;
+    text-align: center;
+  }
+  .contact-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .contact-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-email {
+    display: block;
+    font-size: 24px;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+  }
+  .contact-email:hover { color: #fff; text-decoration: underline; }
+  .contact-email.is-visible { opacity: 1; transform: translateY(0); }
+  .social-links {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.6s;
+  }
+  .social-links.is-visible { opacity: 1; }
+  .social-links a {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .social-links a:hover { color: #fff; }
+
+  /* ==============================
+     FOOTER
+     ============================== */
+  footer {
+    background: #0D0D0D;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ==============================
+     MOBILE RESPONSIVE
+     ============================== */
+  @media (max-width: 768px) {
+    .hero-name { font-size: 36px; }
+    nav { gap: 16px; }
+    nav a { font-size: 10px; letter-spacing: 0.15em; }
+    .hero-subtitle { font-size: 10px; }
+    .hero-ghost { font-size: 200px; }
+    .stats { flex-direction: column; gap: 0; }
+    .stat-block { border-right: none; border-bottom: 1px solid #3a3a3a; padding: 32px 20px; }
+    .stat-block:last-child { border-bottom: none; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .commissions { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+    .commissions-heading { font-size: 52px; }
+    .about { grid-template-columns: 1fr; }
+    .about-image-col img { min-height: 300px; }
+    .about-text-col { padding: 40px 24px; }
+    .about-name { font-size: 48px; }
+    .contact-heading { font-size: 64px; }
+    .contact-email { font-size: 18px; }
+    .social-links { gap: 20px; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 28px; }
+    nav { gap: 12px; }
+    nav a { display: none; }
+    nav a:first-child, nav a:last-child { display: block; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .stat-number { font-size: 70px; }
+    .contact-heading { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==============================
+     HERO — CINEMATIC LETTERBOX
+     ============================== -->
+<section class="hero" id="home">
+  <div class="hero-ghost">ROXX</div>
+
+  <div class="hero-top-bar">
+    <h1 class="hero-name" id="heroName">JAMIE ROXX</h1>
+    <nav>
+      <a href="#gallery">Gallery</a>
+      <a href="#commissions">Commissions</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <img
+    class="hero-image"
+    src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01fgfgbdfg5rgf-painting11-add-1-7-19-24-zzhhdf7-orig_orig.jpg"
+    alt="Jamie Roxx Pop Noir painting"
+    loading="eager"
+  >
+
+  <div class="hero-bottom-bar">
+    <p class="hero-subtitle">Pop Noir Painter &nbsp;·&nbsp; Deerfield Beach, FL &nbsp;·&nbsp; Full-Time Since 2001</p>
+  </div>
+</section>
+
+<!-- ==============================
+     STATS STRIP
+     ============================== -->
+<div class="stats" id="stats">
+  <div class="stat-block">
+    <span class="stat-number">300+</span>
+    <span class="stat-label">Originals Per Year</span>
+  </div>
+  <div class="stat-block">
+    <span class="stat-number">2001</span>
+    <span class="stat-label">Working Since</span>
+  </div>
+  <div class="stat-block">
+    <span class="stat-number">1,400+</span>
+    <span class="stat-label">Podcast Episodes</span>
+  </div>
+  <div class="stat-block">
+    <span class="stat-number">$800</span>
+    <span class="stat-label">Max Canvas Size</span>
+  </div>
+</div>
+
+<!-- ==============================
+     GALLERY
+     ============================== -->
+<section class="gallery-section" id="gallery">
+  <h2 class="gallery-heading">Selected Works</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-innocence-lost-main.jpg" alt="Innocence Lost" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Innocence Lost</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-scarlet-fever-main.jpg" alt="Scarlet Fever" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Scarlet Fever</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-obsession-main.jpg" alt="Obsession" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Obsession</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-cherry-bombshell-main.jpg" alt="Cherry Bombshell" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Cherry Bombshell</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-hotline-main.jpg" alt="Hotline" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Hotline</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-glamour-main.jpg" alt="Glamour" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Glamour</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-midnight-options-main.jpg" alt="Midnight Options" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Midnight Options</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-cutie-pie-main.jpg" alt="Cutie Pie" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Cutie Pie</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-trouble-in-the-shadows-main.jpg" alt="Trouble in the Shadows" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Trouble in the Shadows</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-are-you-there-main.jpg" alt="Are You There" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Are You There</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-main-ebay-voices-in-the-vaporwave.jpg" alt="Voices in the Vaporwave" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Voices in the Vaporwave</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-venus-in-a-leather-jacket-angle-2.jpg" alt="Venus in a Leather Jacket" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Venus in a Leather Jacket</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     MARQUEE STRIP
+     ============================== -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-text">POP NOIR &nbsp;·&nbsp; DEERFIELD BEACH, FL &nbsp;·&nbsp; COMMISSIONS OPEN &nbsp;·&nbsp; 300+ ORIGINALS PER YEAR &nbsp;·&nbsp; FULL-TIME SINCE 2001 &nbsp;·&nbsp; ACRYLIC + OIL ON CANVAS &nbsp;·&nbsp; CD COVERS &nbsp;·&nbsp; TV COMMERCIALS &nbsp;·&nbsp;</span>
+    <span class="marquee-text">POP NOIR &nbsp;·&nbsp; DEERFIELD BEACH, FL &nbsp;·&nbsp; COMMISSIONS OPEN &nbsp;·&nbsp; 300+ ORIGINALS PER YEAR &nbsp;·&nbsp; FULL-TIME SINCE 2001 &nbsp;·&nbsp; ACRYLIC + OIL ON CANVAS &nbsp;·&nbsp; CD COVERS &nbsp;·&nbsp; TV COMMERCIALS &nbsp;·&nbsp;</span>
+  </div>
+</div>
+
+<!-- ==============================
+     COMMISSIONS
+     ============================== -->
+<section class="commissions" id="commissions">
+  <div class="commissions-left">
+    <h2 class="commissions-heading">Commission a Painting</h2>
+    <p class="commissions-subtext">Every painting is hand-painted in acrylic and oil on gallery-wrapped canvas. Not a print. Not a reproduction. One of a kind.</p>
+    <a href="mailto:JamieRoxxArtist@gmail.com" class="cta-btn">Get In Touch</a>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-block">
+      <div class="price-size">16" × 20"</div>
+      <div class="price-amount">$150</div>
+    </div>
+    <div class="price-block">
+      <div class="price-size">20" × 24"</div>
+      <div class="price-amount">$300</div>
+    </div>
+    <div class="price-block">
+      <div class="price-size">24" × 36"</div>
+      <div class="price-amount">$500</div>
+    </div>
+    <div class="price-block">
+      <div class="price-size">36" × 48"</div>
+      <div class="price-amount">$800</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     ABOUT — MAGAZINE SPREAD
+     ============================== -->
+<section class="about" id="about">
+  <div class="about-image-col">
+    <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzc-update-this-ine-2727h_orig.jpg" alt="Jamie Roxx artist" loading="lazy">
+  </div>
+  <div class="about-text-col">
+    <h2 class="about-name">Jamie Roxx</h2>
+    <p class="about-bio">Working in his signature Pop Noir style since 2001, Jamie Roxx creates bold, graphic portraits of cultural icons — celebrities, rock stars, and movie legends rendered in acrylic and oil on gallery-wrapped canvas. Based in Deerfield Beach, FL, his work has appeared in TV commercials, on CD covers for rock bands, and in private collections worldwide. He also hosts Pop Roxx Radio, a weekly podcast now at over 1,400 episodes.</p>
+    <blockquote class="about-quote">"Every painting is completely hand-painted. Not a print. Not a reproduction."</blockquote>
+  </div>
+</section>
+
+<!-- ==============================
+     CONTACT CTA
+     ============================== -->
+<section class="contact" id="contact">
+  <h2 class="contact-heading">Inquiries</h2>
+  <a href="mailto:JamieRoxxArtist@gmail.com" class="contact-email">JamieRoxxArtist@gmail.com</a>
+  <div class="social-links">
+    <a href="https://www.instagram.com/jamieroxxartist" target="_blank">Instagram</a>
+    <a href="https://www.youtube.com/@PopRoxxRadio" target="_blank">YouTube</a>
+    <a href="https://www.facebook.com/ArtistJamieRoxx" target="_blank">Facebook</a>
+    <a href="https://bsky.app/profile/jamieroxxartist.bsky.social" target="_blank">Bluesky</a>
+  </div>
+</section>
+
+<!-- ==============================
+     FOOTER
+     ============================== -->
+<footer>
+  <span class="footer-copy">Jamie Roxx &nbsp;·&nbsp; Pop Noir Painter &nbsp;·&nbsp; © 2026 Pop Roxx Ltd</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+// Character-by-character hero name reveal
+(function() {
+  var el = document.getElementById('heroName');
+  var text = el.textContent;
+  el.innerHTML = '';
+  for (var i = 0; i < text.length; i++) {
+    var span = document.createElement('span');
+    span.className = 'hero-name-char';
+    span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+    el.appendChild(span);
+  }
+  setTimeout(function() {
+    var chars = el.querySelectorAll('.hero-name-char');
+    chars.forEach(function(c, i) {
+      setTimeout(function() { c.classList.add('visible'); }, i * 60);
+    });
+  }, 200);
+})();
+
+// IntersectionObserver for all animated elements
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Stagger gallery items
+        if (entry.target.classList.contains('gallery-item')) {
+          var items = document.querySelectorAll('.gallery-item');
+          var idx = Array.from(items).indexOf(entry.target);
+          setTimeout(function() {
+            entry.target.classList.add('is-visible');
+          }, (idx % 3) * 100);
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Gallery items, headings, text blocks
+  document.querySelectorAll(
+    '.gallery-item, .gallery-heading, .stat-block, .commissions-heading, ' +
+    '.commissions-subtext, .pricing-grid, .about-image-col, .about-name, ' +
+    '.about-bio, .about-quote, .contact-heading, .contact-email, .social-links'
+  ).forEach(function(el) { observer.observe(el); });
+})();
+
+// Parallax on hero image
+(function() {
+  var heroImg = document.querySelector('.hero-image');
+  window.addEventListener('scroll', function() {
+    heroImg.style.transform = 'translateY(' + (window.scrollY * 0.15) + 'px)';
+  }, { passive: true });
+})();
+
+// Skeleton loader
+(function() {
+  document.querySelectorAll('img').forEach(function(img) {
+    if (img.complete && img.naturalWidth > 0) {
+      img.classList.add('img-loaded');
+    } else {
+      img.addEventListener('load', function() { img.classList.add('img-loaded'); });
+      img.addEventListener('error', function() { img.classList.add('img-loaded'); });
+    }
+  });
+})();
+</script>
+</body>
+</html>
