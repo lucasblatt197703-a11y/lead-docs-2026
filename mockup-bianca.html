@@ -944,6 +944,22 @@
     .shop-heading { font-size: clamp(44px, 13vw, 72px); }
     .work-strip-item { flex: 0 0 calc(100% / 2); }
   }
+
+/* Skeleton loaders */
+img:not(.img-loaded) {
+  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  min-height: 40px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+img.img-loaded {
+  animation: none !important;
+  background: none !important;
+}
 </style>
 </head>
 <body>
@@ -1318,6 +1334,25 @@
 
   // About image via imgObs
   document.querySelectorAll('.about-image-wrap img, .featured-image img').forEach(el => imgObs.observe(el));
+
+// Skeleton loader cleanup
+(function() {
+  function initSkeletons() {
+    document.querySelectorAll('img').forEach(function(img) {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('img-loaded');
+      } else {
+        img.addEventListener('load', function() { img.classList.add('img-loaded'); });
+        img.addEventListener('error', function() { img.classList.add('img-loaded'); });
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSkeletons);
+  } else {
+    initSkeletons();
+  }
+})();
 </script>
 
 </body>
