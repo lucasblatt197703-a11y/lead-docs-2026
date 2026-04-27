@@ -93,10 +93,10 @@
   .hero-name {
     font-family: 'Lora', serif;
     font-weight: 600;
-    font-size: 52px;
-    line-height: 1.1;
+    font-size: 80px;
+    line-height: 1.0;
     color: #3D2B1F;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   .hero-photography {
     font-family: 'Jost', sans-serif;
@@ -600,12 +600,14 @@
     clip-path: inset(0 0% 0 0);
   }
   .reveal-img {
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.8s ease-out;
-    will-change: clip-path;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    will-change: opacity, transform;
   }
   .reveal-img.visible {
-    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform: translateY(0);
   }
   .scale-in {
     transform: scale(0.93);
@@ -649,11 +651,12 @@
     #stats { padding: 60px 32px; }
   }
   @media (max-width: 480px) {
-    .hero-image-panel { display: none; }
-    .hero-text-panel { width: 100%; min-height: 100vh; }
+    #hero { flex-direction: column; height: auto; }
+    .hero-image-panel { display: block; width: 100%; height: 60vw; }
+    .hero-text-panel { width: 100%; min-height: auto; padding: 32px 24px 48px; }
     .sessions-grid { grid-template-columns: 1fr; }
     .gallery-masonry { column-count: 1; }
-    .hero-name { font-size: 38px; }
+    .hero-name { font-size: 52px; }
     .nav-links { display: none; }
     .cta-heading { font-size: 28px; }
     #quote { background-attachment: scroll; }
@@ -708,14 +711,14 @@
   <div class="sessions-grid">
     <div class="session-card">
       <div class="session-card-img-wrap">
-        <img src="https://static.wixstatic.com/media/320d0b_1ce3a9c7c3f94149b222bf7f9a96318b~mv2_d_2848_4272_s_4_2.jpg" alt="Newborn session" loading="lazy">
+        <img src="https://static.wixstatic.com/media/320d0b_87e94f2a8ab1491887b7096a7e3fc687~mv2_d_4272_2848_s_4_2.jpg" alt="Newborn session" loading="lazy">
       </div>
       <p class="session-name">Newborn</p>
       <p class="session-desc">In-studio warmth. The first 14 days.</p>
     </div>
     <div class="session-card">
       <div class="session-card-img-wrap">
-        <img src="https://static.wixstatic.com/media/320d0b_3330cfbcf5444de8b497d7e33db21524~mv2_d_2848_4272_s_4_2.jpg" alt="Maternity session" loading="lazy">
+        <img src="https://static.wixstatic.com/media/320d0b_1ce3a9c7c3f94149b222bf7f9a96318b~mv2_d_2848_4272_s_4_2.jpg" alt="Maternity session" loading="lazy">
       </div>
       <p class="session-name">Maternity</p>
       <p class="session-desc">Celebrate before they arrive.</p>
@@ -745,40 +748,40 @@
   </div>
   <div class="gallery-masonry">
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_7e6e2de3b60640beb6b2e24383839ce6~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 1" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_7e6e2de3b60640beb6b2e24383839ce6~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 1" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_30db888497d14f80ac43bdc31eb0b6d9~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 2" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_30db888497d14f80ac43bdc31eb0b6d9~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 2" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_8138e3e5efe04aa3bacf23da035a454b~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 3" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_8138e3e5efe04aa3bacf23da035a454b~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 3" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_87e94f2a8ab1491887b7096a7e3fc687~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 4" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_87e94f2a8ab1491887b7096a7e3fc687~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 4" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_f996fd8571cd490e9b028c5119d6ef83~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 5" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_f996fd8571cd490e9b028c5119d6ef83~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 5" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_92e58c314bba45448efdd81e104b7542~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 6" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_92e58c314bba45448efdd81e104b7542~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 6" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_7cffe16d95ee4721bc8b42d95fbb863b~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 7" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_7cffe16d95ee4721bc8b42d95fbb863b~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 7" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_fb684ab63bde43518bf3e1b4f707630f~mv2_d_4000_2667_s_4_2.jpg" alt="Gallery 8" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_fb684ab63bde43518bf3e1b4f707630f~mv2_d_4000_2667_s_4_2.jpg" alt="Gallery 8" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_bd1222e13c854c01827b6c1447fc0544~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 9" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_bd1222e13c854c01827b6c1447fc0544~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 9" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_ad1e3e8103894ba8a7a910953526a9ea~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 10" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_ad1e3e8103894ba8a7a910953526a9ea~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 10" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_c4e0f33490e142a78815b55243a90525~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 11" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_c4e0f33490e142a78815b55243a90525~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 11" loading="eager">
     </div>
     <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_5d29fd094a4e4a808f61b4d0890b6d21~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 12" loading="lazy">
+      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_5d29fd094a4e4a808f61b4d0890b6d21~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 12" loading="eager">
     </div>
   </div>
 </section>
@@ -786,7 +789,7 @@
 <!-- FEATURED NEWBORN -->
 <section id="featured">
   <div class="featured-image-wrap scale-in">
-    <img src="https://static.wixstatic.com/media/320d0b_364eeb673b2a4cfc9528a654d2323ee7~mv2_d_2848_4272_s_4_2.jpg" alt="Featured newborn session" loading="lazy">
+    <img src="https://static.wixstatic.com/media/320d0b_5d29fd094a4e4a808f61b4d0890b6d21~mv2_d_4272_2848_s_4_2.jpg" alt="Featured newborn session" loading="lazy">
   </div>
   <div class="featured-text">
     <span class="featured-ghost-num" aria-hidden="true">02</span>
@@ -865,19 +868,20 @@
 </footer>
 
 <script>
-  // IntersectionObserver for all animation classes
+  // IntersectionObserver — threshold 0 fires as soon as ANY pixel is visible
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // fire once
       }
     });
-  }, { threshold: 0.10 });
+  }, { threshold: 0, rootMargin: '0px 0px 60px 0px' });
 
   // Gallery images with stagger
   const galleryImgs = document.querySelectorAll('.reveal-img');
   galleryImgs.forEach((img, i) => {
-    img.style.transitionDelay = (i * 70) + 'ms';
+    img.style.transitionDelay = (i * 60) + 'ms';
     observer.observe(img);
   });
 
