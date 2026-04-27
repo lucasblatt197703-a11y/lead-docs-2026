@@ -828,7 +828,7 @@ footer {
   <div class="mural-grid">
     <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/a/ac/aacf1dc0-34bd-11eb-bdc4-8fac26ff7672/5fc7c49c8fad0.image.jpg" alt="Mural Miami" loading="lazy">
     <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/8/a0/8a0b68cc-34be-11eb-9ee0-f373c4609ff7/5fc7c60d67b83.image.jpg" alt="Public installation" loading="lazy">
-    <img src="https://static.wixstatic.com/media/7dce27_2ed803da31a841abb9487bed2ec885a4.jpg/v1/fit/w_2500,h_1330,al_c/7dce27_2ed803da31a841abb9487bed2ec885a4.jpg" alt="Nathan Delinois mural" loading="lazy">
+    <img src="https://upmag.com/wp-content/uploads/2019/07/DSC_0487-1024x683.jpg" alt="Nathan Delinois mural — on location" loading="lazy">
   </div>
   <p class="mural-caption">Commissioned murals across Miami, Alabama, and the Eastern Seaboard.</p>
 </section>
@@ -862,10 +862,13 @@ footer {
     <span>OIL ON CANVAS</span><span>·</span><span>MIAMI, FL</span><span>·</span>
     <span>FIGURATIVE SERIES</span><span>·</span><span>COMMISSIONS OPEN</span><span>·</span>
     <span>@MIAMINATE</span><span>·</span><span>HAITIAN-AMERICAN HERITAGE</span><span>·</span>
-    <span>WYNWOOD MURAL FEST</span><span>·</span><span>OIL ON CANVAS</span><span>·</span>
-    <span>MIAMI, FL</span><span>·</span><span>FIGURATIVE SERIES</span><span>·</span>
-    <span>COMMISSIONS OPEN</span><span>·</span><span>@MIAMINATE</span><span>·</span>
-    <span>HAITIAN-AMERICAN HERITAGE</span><span>·</span><span>WYNWOOD MURAL FEST</span><span>·</span>
+    <span>WYNWOOD MURAL FEST</span><span>·</span><span>MIAMI HEAT</span><span>·</span>
+    <span>MIAMI DOLPHINS</span><span>·</span><span>ADIDAS</span><span>·</span>
+    <span>OIL ON CANVAS</span><span>·</span><span>MIAMI, FL</span><span>·</span>
+    <span>FIGURATIVE SERIES</span><span>·</span><span>COMMISSIONS OPEN</span><span>·</span>
+    <span>@MIAMINATE</span><span>·</span><span>HAITIAN-AMERICAN HERITAGE</span><span>·</span>
+    <span>WYNWOOD MURAL FEST</span><span>·</span><span>MIAMI HEAT</span><span>·</span>
+    <span>MIAMI DOLPHINS</span><span>·</span><span>ADIDAS</span><span>·</span>
   </div>
 </div>
 
@@ -914,18 +917,18 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-// Gallery images with stagger
+// Gallery images with stagger — observe each row individually
 const ioGallery = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       const items = e.target.querySelectorAll('.reveal-img');
       items.forEach((item, i) => {
-        setTimeout(() => item.classList.add('is-visible'), i * 90);
+        setTimeout(() => item.classList.add('is-visible'), i * 100);
       });
       ioGallery.unobserve(e.target);
     }
   });
-}, { threshold: 0.05 });
+}, { threshold: 0.08 });
 
 // Stats count-up
 const ioStats = new IntersectionObserver((entries) => {
@@ -955,10 +958,11 @@ document.querySelectorAll('.press-item').forEach(el => io.observe(el));
 document.querySelectorAll('.cta-inner').forEach(el => io.observe(el));
 document.querySelectorAll('.contact-title').forEach(el => io.observe(el));
 document.querySelectorAll('.contact-bio').forEach(el => io.observe(el));
-document.querySelectorAll('#gallery').forEach(el => ioGallery.observe(el));
-document.querySelectorAll('.stat-item').forEach(el => { io.observe(el); ioStats.observe(el.closest('#stats') || el); });
+// Observe each gallery row individually for proper scroll stagger
+document.querySelectorAll('#gallery .gallery-row').forEach(el => ioGallery.observe(el));
+document.querySelectorAll('.stat-item').forEach(el => io.observe(el));
 
-// Observe stats section once
+// Stats count-up: observe section once
 ioStats.observe(document.getElementById('stats'));
 
 // Hero parallax
