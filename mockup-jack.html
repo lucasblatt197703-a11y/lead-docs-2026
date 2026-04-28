@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack Casey — Oil Painting · Sculpture · Conservation · Tampa, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5EDD8;
+    --text: #1A1A1A;
+    --accent: #D4A853;
+    --brown: #8B4513;
+    --dark: #2C1810;
+    --near-black: #1A1A1A;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Libre Franklin', sans-serif; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: multiply;
+    background: transparent;
+  }
+  nav .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  nav ul { list-style: none; display: flex; gap: 40px; }
+  nav ul li a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav ul li a:hover { color: var(--brown); }
+
+  /* ── HERO ── */
+  #hero {
+    padding-top: 120px;
+    background: var(--bg);
+  }
+  .hero-name-wrapper {
+    text-align: center;
+    padding: 0 48px 32px;
+    overflow: hidden;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 108px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.3em; /* animated to 0.05em */
+    line-height: 1;
+    display: block;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hero-name.animate { letter-spacing: 0.05em; }
+  .hero-image-full {
+    width: 100%;
+    height: 62vh;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 0;
+  }
+  .hero-tagline {
+    text-align: center;
+    padding: 20px 48px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--brown);
+  }
+
+  /* ── CREDENTIALS STRIP ── */
+  .credentials-strip {
+    background: var(--dark);
+    padding: 18px 48px;
+    text-align: center;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrapper {
+    background: var(--bg);
+    border-top: 1px solid rgba(139,69,19,0.2);
+    border-bottom: 1px solid rgba(139,69,19,0.2);
+    overflow: hidden;
+    padding: 14px 0;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--brown);
+    padding: 0 40px;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS ── */
+  #stats {
+    padding: 100px 48px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .stats-bg-number {
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.025;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .stat-item {
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.12s; border-left: 1px solid rgba(139,69,19,0.2); border-right: 1px solid rgba(139,69,19,0.2); }
+  .stat-item:nth-child(3) { transition-delay: 0.24s; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 88px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ── GALLERY ── */
+  #work {
+    padding: 80px 0 0;
+    background: var(--bg);
+  }
+  .section-header {
+    padding: 0 48px 48px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(44,24,16,0.3);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+  }
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    cursor: pointer;
+  }
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(44,24,16,0);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    transition: background 0.4s ease;
+  }
+  .gallery-item:hover .gallery-overlay { background: rgba(44,24,16,0.6); }
+  .gallery-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 140px 48px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-bg-number {
+    position: absolute;
+    top: 40px;
+    right: -20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.025;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    align-items: start;
+  }
+  .about-image-wrap { position: relative; }
+  .about-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    box-shadow: 8px 8px 0 var(--accent);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .about-image.is-visible { opacity: 1; transform: translateY(0); }
+  .about-content {
+    padding-top: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+  .about-content.is-visible { opacity: 1; transform: translateY(0); }
+  .about-pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--accent);
+    margin-bottom: 40px;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+  }
+  .about-bio {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+  .about-detail {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* ── COMMISSIONS CTA ── */
+  #commissions {
+    background: var(--dark);
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #commissions::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(212,168,83,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 54px;
+    font-weight: 700;
+    color: var(--bg);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 48px;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.3s;
+  }
+  .cta-sub.is-visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-btn:hover { background: var(--accent); color: var(--dark); }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 120px 48px;
+    background: var(--bg);
+  }
+  .contact-inner {
+    max-width: 560px;
+  }
+  .contact-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-bottom: 16px;
+  }
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 48px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .contact-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-line {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .contact-line.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-line:nth-child(3) { transition-delay: 0.1s; }
+  .contact-line:nth-child(4) { transition-delay: 0.2s; }
+  .contact-line:nth-child(5) { transition-delay: 0.3s; }
+  .contact-line:nth-child(6) { transition-delay: 0.4s; }
+  .contact-line a {
+    color: var(--brown);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(139,69,19,0.3);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-line a:hover { color: var(--dark); border-color: var(--dark); }
+  .contact-note {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(26,26,26,0.45);
+    margin-top: 40px;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--near-black);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-left {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(245,237,216,0.45);
+    letter-spacing: 0.1em;
+  }
+  .footer-links {
+    display: flex;
+    gap: 28px;
+  }
+  .footer-links a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,237,216,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(245,237,216,0.7); }
+  .footer-credit {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 10px;
+    color: rgba(245,237,216,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+    .hero-name { font-size: 56px; letter-spacing: 0.08em; }
+    .hero-name.animate { letter-spacing: 0.02em; }
+    .hero-tagline { font-size: 11px; padding: 16px 24px; }
+    .credentials-strip { font-size: 9px; letter-spacing: 0.15em; white-space: normal; text-align: center; padding: 14px 24px; }
+    #stats { padding: 60px 24px; }
+    .stats-grid { grid-template-columns: repeat(3,1fr); gap: 0; }
+    .stat-number { font-size: 52px; }
+    #work { padding: 60px 0 0; }
+    .section-header { padding: 0 24px 32px; }
+    .gallery-grid { grid-template-columns: repeat(2,1fr); }
+    #about { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-image { aspect-ratio: 4/3; }
+    .cta-heading { font-size: 36px; }
+    #contact { padding: 80px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
+  @media (max-width: 480px) {
+    nav ul { display: none; }
+    .hero-name { font-size: 40px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-item:nth-child(2) { border-left: none; border-right: none; border-top: 1px solid rgba(139,69,19,0.2); border-bottom: 1px solid rgba(139,69,19,0.2); }
+    .gallery-grid { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Jack Casey</span>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#commissions">Commissions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-name-wrapper">
+    <span class="hero-name" id="heroName">JACK CASEY</span>
+  </div>
+  <img
+    class="hero-image-full"
+    src="https://static.wixstatic.com/media/7f0923_3d821a2859fc4dc7a8627428af7a6ebb~mv2_d_6000_4000_s_4_2.jpg"
+    alt="Jack Casey oil painting"
+    loading="eager"
+  >
+  <div class="hero-tagline">Oil Painting &nbsp;·&nbsp; Sculpture &nbsp;·&nbsp; Photography &nbsp;·&nbsp; Conservation &nbsp;·&nbsp; Tampa, FL</div>
+</section>
+
+<!-- CREDENTIALS STRIP -->
+<div class="credentials-strip">
+  Permanent Collections &nbsp;·&nbsp; Orlando Museum of Art &nbsp;·&nbsp; City of Tampa &nbsp;·&nbsp; University of South Florida &nbsp;·&nbsp; Hillsborough County &nbsp;·&nbsp; Alachua County
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrapper">
+  <div class="marquee-track">
+    <span>Available for Commissions · Tampa, FL · 35 Years · Museum-Collected · Oil Portraits from Photographs · Art Conservation & Restoration · </span>
+    <span>Available for Commissions · Tampa, FL · 35 Years · Museum-Collected · Oil Portraits from Photographs · Art Conservation & Restoration · </span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <span class="stats-bg-number">01</span>
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">35+</span>
+      <span class="stat-label">Years of Practice</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">5</span>
+      <span class="stat-label">Museum Collections</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Commissions Open</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="work">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7f0923_b08b8a9e60c54532ba885d41256833c1~mv2_d_6000_4000_s_4_2.jpg" alt="Oil Portrait" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Oil Portrait</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7f0923_f1be8b3a2e3b41dca7de586e46352bdc~mv2_d_6000_4000_s_4_2.jpg" alt="Studio Work" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Studio Work</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/ecbe4dbbd5a4ba5c9f9a4f93a846a0b1.jpg" alt="Sculpture" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Sculpture</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7429e40b460d05ee4f3aeae30e13b52f.jpg" alt="Form Study" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Form Study</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/047876e6cb784ddc8451a2172eb21652.jpg" alt="Composition" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Composition</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7adc60c3a0a74b87ad891f04057f5a6f.jpg" alt="Detail" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Detail</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bb0fc9f446e437563f7cd0fa80adb39e.jpg" alt="Restoration Work" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Restoration</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a48677387653477789dc2b539084d7ab.jpg" alt="Studio Portrait" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-label">Studio Portrait</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <span class="about-bg-number">03</span>
+  <div class="section-header" style="padding-left: 0; margin-bottom: 64px;">
+    <span class="section-number">03</span>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-image-wrap">
+      <img
+        class="about-image"
+        src="https://static.wixstatic.com/media/7f0923_c9a776fca1bd4a2e9d39fd66b730a113~mv2_d_3144_2261_s_2.jpg"
+        alt="Jack Casey in his studio"
+        loading="lazy"
+      >
+    </div>
+    <div class="about-content">
+      <blockquote class="about-pull-quote">
+        "Thirty-five years of restoring other people's work taught me what makes paint endure."
+      </blockquote>
+      <p class="about-bio">
+        Casey's practice spans oil painting, sculpture, photography, and conservation — a body of work built over 35 years in Tampa, FL. His figurative oil portraits, painted from photographs with technical precision, are held in permanent collections at the Orlando Museum of Art, the City of Tampa, Hillsborough County, Alachua County, and the University of South Florida.
+      </p>
+      <p class="about-bio">
+        From 1978 to 1984, Casey led the restoration of the historic Tampa Theatre alongside a team of artists and sculptors. His abstract work has been his primary mode of expression since 1985, evolving through sculpture, public art commissions, and portraiture. He works from his Seminole Heights studio and continues to teach oil painting.
+      </p>
+      <div class="about-detail">
+        <span>Seminole Heights, Tampa, FL</span>
+        <span>Studio visits by appointment</span>
+        <span>Tampa University · University of South Florida</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSIONS CTA -->
+<section id="commissions">
+  <h2 class="cta-heading">Commission an Oil Portrait</h2>
+  <p class="cta-sub">Painted from your photographs. Any size. Museum-quality craftsmanship.</p>
+  <a href="https://jackcaseyartist.wixsite.com/artist/contact" class="cta-btn" target="_blank">Begin a Conversation</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="contact-label">Studio</p>
+    <h2 class="contact-heading">Get in Touch</h2>
+    <p class="contact-line">Seminole Heights, Tampa, FL 33614</p>
+    <p class="contact-line"><a href="https://jackcaseyartist.wixsite.com/artist/contact" target="_blank">Contact form →</a></p>
+    <p class="contact-line"><a href="https://instagram.com/jfacasey" target="_blank">@jfacasey on Instagram</a></p>
+    <p class="contact-line"><a href="https://facebook.com/jackcaseyartist" target="_blank">Facebook: Jack Casey Artist</a></p>
+    <p class="contact-note">Studio visits welcome by appointment.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">© 2026 Jack Casey · Tampa, FL</span>
+  <div class="footer-links">
+    <a href="https://instagram.com/jfacasey" target="_blank">Instagram</a>
+    <a href="https://facebook.com/jackcaseyartist" target="_blank">Facebook</a>
+    <a href="#work">Work</a>
+  </div>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+// Hero name letter-spacing animate
+setTimeout(() => {
+  const name = document.getElementById('heroName');
+  if (name) name.classList.add('animate');
+}, 100);
+
+// IntersectionObserver for all animated elements
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+    }
+  });
+}, observerOptions);
+
+// Section titles (clip-path sweep)
+document.querySelectorAll('.section-title, .contact-heading, .cta-heading').forEach(el => observer.observe(el));
+
+// Gallery items (image mask reveal) — stagger
+document.querySelectorAll('.gallery-item').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 100}ms`;
+  observer.observe(el);
+});
+
+// Stats
+document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+// About image and content
+document.querySelectorAll('.about-image, .about-content').forEach(el => observer.observe(el));
+
+// CTA sub text
+document.querySelectorAll('.cta-sub').forEach(el => observer.observe(el));
+
+// Contact lines
+document.querySelectorAll('.contact-line').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
