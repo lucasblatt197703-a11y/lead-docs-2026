@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kassidy Griffin — Portrait & Wedding Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Franklin:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5EDE4;
+    --espresso: #2C1810;
+    --terracotta: #C4846B;
+    --blush: #E8D5C8;
+    --near-black: #1A0F0A;
+    --light-text: #8A6E62;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--espresso);
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; right: 0;
+    z-index: 100;
+    padding: 28px 48px;
+    display: flex;
+    gap: 32px;
+    mix-blend-mode: multiply;
+  }
+  nav a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--espresso);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--terracotta); }
+
+  /* ── HERO ── */
+  #hero {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    height: 100vh;
+    min-height: 680px;
+    position: relative;
+  }
+
+  .hero-image-side {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: brightness(1.04) sepia(0.06) saturate(1.1);
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+
+  /* Thin vertical accent line */
+  .hero-divider {
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: var(--terracotta);
+    opacity: 0.6;
+    z-index: 2;
+  }
+
+  .hero-text-side {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 52px 60px 56px;
+    position: relative;
+  }
+
+  .hero-overline {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease 1.6s, transform 0.6s ease 1.6s;
+  }
+  .hero-overline.loaded { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(58px, 6vw, 96px);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: var(--espresso);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .hero-name .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .hero-name .space { display: inline-block; width: 0.3em; }
+
+  .hero-subtitle {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease 1.8s, transform 0.6s ease 1.8s;
+  }
+  .hero-subtitle.loaded { opacity: 1; transform: translateY(0); }
+
+  .hero-cta {
+    display: inline-block;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--espresso);
+    text-decoration: none;
+    border-bottom: 1px solid var(--terracotta);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease 2s, transform 0.6s ease 2s, color 0.3s, border-color 0.3s;
+  }
+  .hero-cta.loaded { opacity: 1; transform: translateY(0); }
+  .hero-cta:hover { color: var(--terracotta); }
+
+  /* Section number decorators */
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: var(--espresso);
+    opacity: 0.04;
+    position: absolute;
+    left: -20px;
+    top: -40px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip {
+    background: var(--near-black);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-right: 60px;
+  }
+  .marquee-inner .dot {
+    color: var(--terracotta);
+    margin-right: 60px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS SECTION ── */
+  #stats {
+    background: var(--near-black);
+    padding: 80px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(196, 132, 107, 0.2);
+  }
+  .stat-item {
+    padding: 0 40px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-number.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+  }
+
+  /* ── GALLERY SECTION ── */
+  #work {
+    padding: 140px 0 80px;
+    position: relative;
+  }
+  .section-header {
+    padding: 0 80px;
+    margin-bottom: 60px;
+    position: relative;
+    display: inline-block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3vw, 40px);
+    color: var(--espresso);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* Gallery editorial scroll layout */
+  .gallery-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Row 1: Full width */
+  .gallery-row-full {
+    width: 100%;
+    height: 72vh;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.95s ease-out;
+  }
+  .gallery-row-full.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-row-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(1.02) saturate(1.05);
+    transition: transform 8s ease;
+    will-change: transform;
+  }
+  .gallery-row-full:hover img { transform: scale(1.03); }
+
+  /* Row 2: Split 60/40 */
+  .gallery-row-split {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 4px;
+    height: 58vh;
+    overflow: hidden;
+  }
+  .gallery-item {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.95s ease-out;
+    position: relative;
+  }
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1.02) saturate(1.05);
+  }
+  .gallery-item .img-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .gallery-item:hover .img-label { opacity: 1; transform: translateY(0); }
+
+  /* Row 3: Large left + small right with text */
+  .gallery-row-feature {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    gap: 4px;
+    height: 64vh;
+  }
+  .gallery-feature-text {
+    background: var(--blush);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 48px 40px;
+  }
+  .gallery-feature-text p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--espresso);
+    margin-bottom: 16px;
+  }
+  .gallery-feature-text span {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+  }
+
+  /* ── ABOUT SECTION ── */
+  #about {
+    padding: 140px 80px;
+    display: grid;
+    grid-template-columns: 48% 52%;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+  }
+  .about-image {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.1s ease-out;
+    aspect-ratio: 3/4;
+    max-height: 620px;
+  }
+  .about-image.is-visible { clip-path: inset(0 0 0 0); }
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1.02) saturate(1.05);
+  }
+  .about-text {}
+  .about-headline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 3vw, 44px);
+    line-height: 1.15;
+    color: var(--espresso);
+    margin-bottom: 32px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .about-headline.is-visible { clip-path: inset(0 0% 0 0); }
+  .about-bio {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--espresso);
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+  .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+  .about-pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--terracotta);
+    line-height: 1.4;
+    border-left: 2px solid var(--terracotta);
+    padding-left: 24px;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+  }
+  .about-pull-quote.is-visible { opacity: 1; transform: translateY(0); }
+  .about-social {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--espresso);
+    text-decoration: none;
+    border-bottom: 1px solid var(--terracotta);
+    padding-bottom: 3px;
+  }
+  .about-social:hover { color: var(--terracotta); }
+
+  /* ── CTA SECTION ── */
+  #cta {
+    background: var(--terracotta);
+    padding: 120px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 280px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.06);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px);
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    position: relative;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .cta-headline.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(245, 237, 228, 0.85);
+    margin-bottom: 48px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+  .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    background: var(--near-black);
+    color: var(--cream);
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 48px;
+    position: relative;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s, background 0.3s, color 0.3s;
+  }
+  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--cream); color: var(--near-black); }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 100px 80px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+  .contact-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 36px;
+    color: var(--espresso);
+    margin-bottom: 12px;
+  }
+  .contact-location {
+    font-size: 15px;
+    color: var(--light-text);
+    margin-bottom: 32px;
+  }
+  .contact-email-link {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--espresso);
+    text-decoration: none;
+    border-bottom: 1px solid var(--terracotta);
+    padding-bottom: 4px;
+    display: inline-block;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  .contact-email-link:hover { color: var(--terracotta); }
+  .contact-socials {
+    display: flex;
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .contact-socials a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-socials a:hover { color: var(--terracotta); }
+  .contact-right {
+    padding-top: 48px;
+  }
+  .contact-note {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--light-text);
+    max-width: 380px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--near-black);
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(196, 132, 107, 0.15);
+  }
+  .footer-left {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(245, 237, 228, 0.4);
+  }
+  .footer-right {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    color: rgba(245, 237, 228, 0.25);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; height: auto; }
+    .hero-image-side { height: 55vw; min-height: 280px; }
+    .hero-divider { display: none; }
+    .hero-text-side { padding: 48px 32px; }
+    .hero-name { font-size: 52px; }
+    nav { padding: 20px 24px; gap: 20px; }
+    #stats { grid-template-columns: 1fr; padding: 60px 32px; gap: 40px; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 0 40px; }
+    .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .section-header { padding: 0 32px; }
+    .gallery-row-split { grid-template-columns: 1fr; height: auto; }
+    .gallery-row-split .gallery-item { height: 56vw; }
+    .gallery-row-feature { grid-template-columns: 1fr; height: auto; }
+    .gallery-feature-text { padding: 32px; }
+    #about { grid-template-columns: 1fr; padding: 80px 32px; gap: 48px; }
+    #cta { padding: 80px 32px; }
+    #contact { grid-template-columns: 1fr; padding: 80px 32px 60px; gap: 40px; }
+    footer { flex-direction: column; gap: 12px; padding: 24px 32px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 40px; }
+    .gallery-row-full { height: 60vw; }
+    .cta-headline { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#work">Work</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-image-side">
+    <img
+      src="https://static.wixstatic.com/media/e994b3_e674ecd5b34e4ce68f8f9c1cb86cd01d~mv2.jpg"
+      alt="Portrait photography by Kassidy Griffin"
+      id="hero-img"
+      loading="eager"
+      referrerpolicy="no-referrer"
+    >
+    <div class="hero-divider"></div>
+  </div>
+  <div class="hero-text-side">
+    <div class="hero-overline" id="hero-overline">Portrait &amp; Wedding Photography</div>
+    <h1 class="hero-name" id="hero-name" aria-label="Kassidy Griffin">
+      <!-- chars injected by JS -->
+    </h1>
+    <p class="hero-subtitle" id="hero-subtitle">Central Florida &nbsp;·&nbsp; Est. 2018</p>
+    <a href="#work" class="hero-cta" id="hero-cta">View the Work</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Available for Bookings</span><span class="dot">·</span>
+    <span>Portraits</span><span class="dot">·</span>
+    <span>Weddings</span><span class="dot">·</span>
+    <span>Central Florida</span><span class="dot">·</span>
+    <span>2026</span><span class="dot">·</span>
+    <span>Available for Bookings</span><span class="dot">·</span>
+    <span>Portraits</span><span class="dot">·</span>
+    <span>Weddings</span><span class="dot">·</span>
+    <span>Central Florida</span><span class="dot">·</span>
+    <span>2026</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-number">Est.<br>2018</div>
+    <div class="stat-label">In Business</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" style="transition-delay:0.15s">Portraits<br>&amp; Weddings</div>
+    <div class="stat-label">Specialties</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" style="transition-delay:0.3s">Central<br>Florida</div>
+    <div class="stat-label">Based</div>
+  </div>
+</section>
+
+<!-- WORK / GALLERY -->
+<section id="work">
+  <div class="section-header">
+    <div class="section-number">01</div>
+    <h2 class="section-title">The Work</h2>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Row 1: Full width -->
+    <div class="gallery-row-full">
+      <img
+        src="https://static.wixstatic.com/media/e994b3_da7f6d421b0b46d9ab1a1868303e12e0~mv2.jpg"
+        alt="Portrait session"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      >
+    </div>
+
+    <!-- Row 2: 60/40 split -->
+    <div class="gallery-row-split">
+      <div class="gallery-item" style="transition-delay:0s">
+        <img
+          src="https://static.wixstatic.com/media/e994b3_a646041cced04e4e98f8e96762a4c10a~mv2.jpg"
+          alt="Portrait"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        >
+        <div class="img-label">Portraits</div>
+      </div>
+      <div class="gallery-item" style="transition-delay:0.12s">
+        <img
+          src="https://static.wixstatic.com/media/e994b3_836746c392254c42bb933c9f160f89e5~mv2.jpg"
+          alt="Natural light portrait"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        >
+        <div class="img-label">Natural Light</div>
+      </div>
+    </div>
+
+    <!-- Row 3: Feature left + text right -->
+    <div class="gallery-row-feature">
+      <div class="gallery-item" style="transition-delay:0s">
+        <img
+          src="https://static.wixstatic.com/media/e994b3_6f2feaff279244e3b0b19d2ad03cd43b~mv2.jpg"
+          alt="Wedding moments"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        >
+        <div class="img-label">Weddings</div>
+      </div>
+      <div class="gallery-feature-text">
+        <p>"The work is in the quiet moments — in what's real."</p>
+        <span>Kassidy Rae Photography</span>
+      </div>
+    </div>
+
+    <!-- Row 4: Full width -->
+    <div class="gallery-row-full" style="height:62vh">
+      <img
+        src="https://static.wixstatic.com/media/e994b3_7f41cbb67ef64221b83fd42466c123e5~mv2.jpg"
+        alt="Portrait work"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      >
+    </div>
+
+    <!-- Row 5: 40/60 reverse split -->
+    <div class="gallery-row-split" style="grid-template-columns:40% 60%">
+      <div class="gallery-item" style="transition-delay:0s">
+        <img
+          src="https://static.wixstatic.com/media/e994b3_31702d7d74e34d28bd4fdb59f68c4279~mv2.jpg"
+          alt="Session"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        >
+        <div class="img-label">Sessions</div>
+      </div>
+      <div class="gallery-item" style="transition-delay:0.12s">
+        <img
+          src="https://static.wixstatic.com/media/e994b3_ee8051cdbaa9464bbb6ba70b538c79ef~mv2.jpg"
+          alt="Portrait"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        >
+        <div class="img-label">Portraits</div>
+      </div>
+    </div>
+
+    <!-- Row 6: Full width -->
+    <div class="gallery-row-full" style="height:66vh">
+      <img
+        src="https://static.wixstatic.com/media/e994b3_c062fe8c12804a44a4cf1fa032a441c4~mv2.jpg"
+        alt="Photography work"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-number" style="left:-10px;top:-30px">02</div>
+  <div class="about-image">
+    <img
+      src="https://static.wixstatic.com/media/e994b3_9edd871eeaf340d3841131aeedb4fe22~mv2.jpg"
+      alt="Kassidy Griffin, photographer"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+    >
+  </div>
+  <div class="about-text">
+    <div class="section-header" style="padding:0;margin-bottom:40px">
+      <h2 class="section-title">About</h2>
+    </div>
+    <h3 class="about-headline">The person behind the lens</h3>
+    <p class="about-bio">
+      Based in Central Florida, Kassidy Griffin has spent six years crafting portraits and wedding photographs that capture people at their most genuine. Relocating from Illinois in 2020, she built a new client base from scratch — which speaks to the quality of the work. Her approach is unhurried, natural-light-first, and rooted in making subjects feel at ease before the shutter clicks.
+    </p>
+    <blockquote class="about-pull-quote">
+      "Every person deserves photographs that actually look like them."
+    </blockquote>
+    <a href="https://instagram.com/kassidy.rae" class="about-social" target="_blank" rel="noopener">@kassidy.rae on Instagram</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-text">K</div>
+  <h2 class="cta-headline">Let's make something<br>worth keeping.</h2>
+  <p class="cta-sub">Booking portraits and weddings across Central Florida.</p>
+  <a href="#contact" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div>
+    <div class="section-number" style="position:relative;left:0;top:0;font-size:80px;margin-bottom:-20px;opacity:0.04">03</div>
+    <p class="contact-label">Inquiries</p>
+    <h3 class="contact-name">Kassidy Griffin</h3>
+    <p class="contact-location">Central Florida</p>
+    <a href="mailto:kassidyraephotography@gmail.com" class="contact-email-link">kassidyraephotography@gmail.com</a>
+    <div class="contact-socials">
+      <a href="https://instagram.com/kassidy.rae" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://facebook.com/KassidyRaePhotography" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <p class="contact-note">
+      Currently booking portrait sessions and weddings throughout Central Florida. Reach out via email for rates and availability — response time is typically 24 hours.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Kassidy Rae Photography &nbsp;·&nbsp; &copy; 2026</div>
+  <div class="footer-right">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+// Hero name — character by character reveal
+const heroName = document.getElementById('hero-name');
+const nameText = 'Kassidy Griffin';
+nameText.split('').forEach((char, i) => {
+  const span = document.createElement('span');
+  if (char === ' ') {
+    span.className = 'space char';
+    span.innerHTML = '&nbsp;';
+  } else {
+    span.className = 'char';
+    span.textContent = char;
+  }
+  span.style.transitionDelay = (300 + i * 45) + 'ms';
+  heroName.appendChild(span);
+});
+
+// Fire hero animations on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.hero-name .char').forEach(c => {
+      c.style.opacity = '1';
+      c.style.transform = 'translateY(0)';
+    });
+    document.getElementById('hero-overline').classList.add('loaded');
+    document.getElementById('hero-subtitle').classList.add('loaded');
+    document.getElementById('hero-cta').classList.add('loaded');
+  }, 150);
+});
+
+// Hero parallax
+const heroImg = document.getElementById('hero-img');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (heroImg && scrollY < window.innerHeight) {
+    heroImg.style.transform = `translateY(${scrollY * 0.28}px)`;
+  }
+}, { passive: true });
+
+// IntersectionObserver for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      // Stagger children with transition-delay if needed
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe gallery rows
+document.querySelectorAll(
+  '.gallery-row-full, .gallery-item, .section-title, ' +
+  '.stat-number, .about-image, .about-headline, .about-bio, ' +
+  '.about-pull-quote, .cta-headline, .cta-sub, .cta-btn'
+).forEach(el => observer.observe(el));
+
+// Stagger gallery items within split rows
+const splitRows = document.querySelectorAll('.gallery-row-split, .gallery-row-feature');
+splitRows.forEach(row => {
+  const items = row.querySelectorAll('.gallery-item');
+  items.forEach((item, i) => {
+    item.style.transitionDelay = (i * 120) + 'ms';
+  });
+});
+</script>
+</body>
+</html>
