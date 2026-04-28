@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regina Porter — Abstract Expressionist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #1C1A17;
+    --text: #F0EBE1;
+    --accent: #C4553A;
+    --warm: #E3DAC7;
+    --steel: #3D6E8C;
+    --mid: #958971;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; right: 0;
+    z-index: 100;
+    padding: 28px 48px;
+    display: flex;
+    gap: 36px;
+  }
+  nav a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/d238f2_8d7bb00d9cf54a339a7c2fae2b25c443~mv2.jpg/v1/fill/w_1920,h_1080,al_c,q_85/file.jpg');
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(28,26,23,0.55) 0%, rgba(28,26,23,0.1) 60%, transparent 100%);
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 64px;
+    left: 60px;
+    z-index: 2;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(60px, 7vw, 96px);
+    color: var(--text);
+    letter-spacing: 0.4em;
+    line-height: 1;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    will-change: letter-spacing;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+  }
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 16px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+
+  /* ─── STATS STRIP ─── */
+  #stats {
+    background: var(--bg);
+    border-top: 1px solid rgba(240,235,225,0.08);
+    border-bottom: 1px solid rgba(240,235,225,0.08);
+    padding: 64px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .stats-section-num {
+    position: absolute;
+    left: -20px;
+    top: -60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: var(--text);
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 8px;
+    display: block;
+  }
+  .marquee-wrap {
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding: 0 32px;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 120px 0 0;
+    position: relative;
+  }
+  .section-header {
+    padding: 0 60px 48px;
+    position: relative;
+  }
+  .section-num-bg {
+    position: absolute;
+    left: 30px;
+    top: -80px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: var(--text);
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--text);
+    text-transform: uppercase;
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: #111;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px 20px 20px;
+    background: linear-gradient(to top, rgba(28,26,23,0.9) 0%, transparent 100%);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .gallery-item:hover .gallery-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .gallery-caption span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--warm);
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--warm);
+    padding: 140px 60px;
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-section-num {
+    position: absolute;
+    right: -20px;
+    bottom: -80px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: var(--bg);
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .about-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: opacity, transform;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .about-img.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-text { position: relative; }
+  .about-section-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 32px;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+    transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+  }
+  .about-section-label.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.4;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+  .about-pull.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-bio {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--bg);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .about-bio.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-detail {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+  }
+  .about-detail.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: var(--accent);
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section-num {
+    position: absolute;
+    left: 50%;
+    top: -60px;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 400px;
+    font-weight: 300;
+    color: rgba(240,235,225,0.05);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: 0.06em;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(240,235,225,0.7);
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+  .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 44px;
+    border: 1px solid var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-btn:hover {
+    background: var(--text);
+    color: var(--accent);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--bg);
+    padding: 120px 60px 80px;
+    position: relative;
+  }
+  .contact-section-num {
+    position: absolute;
+    right: 40px;
+    top: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: var(--text);
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .contact-inner {
+    max-width: 480px;
+  }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .contact-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-line {
+    display: block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--warm);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    text-decoration: none;
+  }
+  .contact-line a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .contact-line a:hover { opacity: 0.7; }
+  .contact-social {
+    display: flex;
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .contact-social a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-social a:hover { color: var(--text); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #111009;
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(240,235,225,0.06);
+  }
+  footer span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; gap: 20px; }
+    .hero-content { bottom: 40px; left: 28px; }
+    .hero-name { font-size: 52px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    #about { grid-template-columns: 1fr; padding: 80px 28px; gap: 40px; }
+    .stats-row { gap: 40px; flex-wrap: wrap; }
+    .section-header { padding: 0 28px 40px; }
+    #cta { padding: 80px 28px; }
+    #contact { padding: 80px 28px 60px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 40px; }
+    nav { gap: 14px; }
+    nav a { font-size: 10px; }
+    .stat-num { font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#gallery">Work</a>
+  <a href="#about">About</a>
+  <a href="#cta">Collections</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-name" id="heroName">Regina Porter</span>
+    <p class="hero-sub">Abstract Expressionist &nbsp;·&nbsp; Osprey, FL</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-section-num">01</div>
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Countries</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">US &amp; MX</span>
+      <span class="stat-label">Private Collections</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">11+</span>
+      <span class="stat-label">Original Works</span>
+    </div>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Abstract Expressionism</span><span>·</span>
+      <span>Osprey, Florida</span><span>·</span>
+      <span>Private Collections</span><span>·</span>
+      <span>US &amp; Mexico</span><span>·</span>
+      <span>Mixed Media on Canvas</span><span>·</span>
+      <span>2026</span><span>·</span>
+      <span>Abstract Expressionism</span><span>·</span>
+      <span>Osprey, Florida</span><span>·</span>
+      <span>Private Collections</span><span>·</span>
+      <span>US &amp; Mexico</span><span>·</span>
+      <span>Mixed Media on Canvas</span><span>·</span>
+      <span>2026</span><span>·</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <div class="section-num-bg">02</div>
+    <h2 class="section-title">Selected Works</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_ecc84cac244446ce925967b4ae51a341~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/file.jpg" alt="Chaos" loading="lazy">
+      <div class="gallery-caption"><span>Chaos</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_15587861c2d14369acb5664bf1ce2f53~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Stepping Out" loading="lazy">
+      <div class="gallery-caption"><span>Stepping Out</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_215038c9bb4d4b49a4f74fd19f72355a~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Botanical Interest" loading="lazy">
+      <div class="gallery-caption"><span>Botanical Interest</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_438c8a7b3af44601858504855e68387b~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Study I" loading="lazy">
+      <div class="gallery-caption"><span>Study I</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_aac5ab9059124ed39338cb8fdf589b77~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Study II" loading="lazy">
+      <div class="gallery-caption"><span>Study II</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_4d356ac8c55c4479acb0a8ecfd8f65dc~mv2.jpg/v1/crop/x_163,y_0,w_2000,h_1500/file.jpg" alt="Study III" loading="lazy">
+      <div class="gallery-caption"><span>Study III</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_483c13329bdb4e079624533fb38dd47f~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/file.jpg" alt="Movement I" loading="lazy">
+      <div class="gallery-caption"><span>Movement I</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d238f2_3a90b12824fb4592a833f8fdddba760e~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/file.jpg" alt="Movement II" loading="lazy">
+      <div class="gallery-caption"><span>Movement II</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-section-num">03</div>
+  <img
+    class="about-img"
+    src="https://static.wixstatic.com/media/d238f2_be8f896eadf942d7aacc22eb68f6277f~mv2.jpg/v1/fill/w_800,h_900,al_c,q_85/file.jpg"
+    alt="Regina Porter — Abstract Work"
+    loading="lazy"
+  >
+  <div class="about-text">
+    <span class="about-section-label">About the Artist</span>
+    <p class="about-pull">"Multiple layers define depth and movement."</p>
+    <p class="about-bio">Working in oil, acrylic, and mixed media on canvas, Porter's abstract expressionist paintings trace the tension between wild landscape and interior memory. Drawing from the mountains of Colorado and the Gulf Coast shores of her Osprey home, her layered canvases are held in private collections across the US and Mexico.</p>
+    <span class="about-detail">Osprey, Florida &nbsp;·&nbsp; Multi-medium &nbsp;·&nbsp; Private Collections</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-section-num">04</div>
+  <h2 class="cta-heading">Commission a Work</h2>
+  <p class="cta-sub">Original paintings &nbsp;·&nbsp; Custom commissions &nbsp;·&nbsp; Private collection inquiries</p>
+  <a href="#contact" class="cta-btn">Get In Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-section-num">05</div>
+  <div class="contact-inner">
+    <h2 class="contact-title">Inquiries</h2>
+    <span class="contact-line">Osprey, Florida</span>
+    <span class="contact-line">Commissions, acquisitions, and studio visits by appointment.</span>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/reginapaintsabstract/" target="_blank">Instagram</a>
+      <a href="https://reginaporterpaints.wixsite.com/mysite" target="_blank">Current Site</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Regina Porter &nbsp;·&nbsp; © 2026</span>
+  <span>Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero name letter-spacing compress
+  setTimeout(() => {
+    document.getElementById('heroName').style.letterSpacing = '0.12em';
+  }, 100);
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Gallery items with stagger
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  galleryItems.forEach((item, i) => {
+    item.style.transitionDelay = `${i * 100}ms`;
+    observer.observe(item);
+  });
+
+  // Section titles (clip-path)
+  document.querySelectorAll('.section-title, .cta-heading, .contact-title').forEach(el => {
+    observer.observe(el);
+  });
+
+  // About elements
+  document.querySelectorAll('.about-img, .about-section-label, .about-pull, .about-bio, .about-detail').forEach(el => {
+    observer.observe(el);
+  });
+
+  // CTA sub
+  document.querySelectorAll('.cta-sub').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
