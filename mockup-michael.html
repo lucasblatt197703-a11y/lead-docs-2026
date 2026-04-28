@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael Pintar — Plein Air & Landscape Painter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #F7F2E8;
+    --dark: #1C1410;
+    --dark2: #2A1F14;
+    --ochre: #8B6914;
+    --green: #4A6741;
+    --sienna: #B8956A;
+    --muted: rgba(247,242,232,0.6);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--parchment); color: var(--dark); font-family: 'Source Sans 3', sans-serif; overflow-x: hidden; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; right: 0; z-index: 100;
+    padding: 28px 48px;
+    display: flex; gap: 32px;
+  }
+  nav a {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #fff;
+    text-decoration: none; text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    transition: opacity 0.2s;
+  }
+  nav a:hover { opacity: 0.7; }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative; height: 100vh; width: 100%;
+    overflow: hidden;
+  }
+  .hero-img {
+    position: absolute; inset: 0;
+    background-image: url('https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/20250201-112047_orig.jpg');
+    background-size: cover; background-position: center;
+    will-change: transform;
+  }
+  .hero-content {
+    position: absolute; bottom: 60px; left: 60px;
+  }
+  .hero-content h1 {
+    font-family: 'Lora', serif; font-weight: 700;
+    font-size: 100px; line-height: 0.95;
+    letter-spacing: 0.08em; color: #fff;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    opacity: 0;
+    letter-spacing: 0.4em;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
+  }
+  .hero-content h1.loaded {
+    opacity: 1; letter-spacing: 0.08em;
+  }
+  .hero-subtitle {
+    font-family: 'Source Sans 3', sans-serif; font-weight: 400;
+    font-size: 18px; color: rgba(255,255,255,0.9);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    margin-top: 12px; letter-spacing: 0.04em;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 60px; right: 60px;
+    font-family: 'Source Sans 3', sans-serif; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); writing-mode: vertical-rl;
+  }
+
+  /* ─── MARQUEE STRIP ─── */
+  .marquee-strip {
+    background: var(--dark2); height: 52px;
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .marquee-track {
+    display: flex; white-space: nowrap;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+  .marquee-track span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--ochre);
+    padding: 0 40px;
+  }
+  .marquee-track span.sep { color: rgba(139,105,20,0.4); padding: 0 8px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  .section-num {
+    font-family: 'Lora', serif; font-size: 120px; font-weight: 700;
+    color: var(--ochre); opacity: 0.1; line-height: 1;
+    position: absolute; left: -20px; top: -40px;
+    pointer-events: none; user-select: none;
+  }
+  .section-label {
+    position: relative;
+    font-family: 'Lora', serif; font-weight: 600;
+    font-size: 36px; color: var(--dark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-label.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 100px 60px 120px;
+    position: relative;
+  }
+  .gallery-header {
+    position: relative; margin-bottom: 70px; padding-left: 20px;
+  }
+  .gallery-pair {
+    display: grid; gap: 10px; margin-bottom: 10px;
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: transform, opacity;
+  }
+  .gallery-pair.is-visible { opacity: 1; transform: translateY(0); }
+  .gallery-pair:nth-child(odd) { grid-template-columns: 60fr 40fr; }
+  .gallery-pair:nth-child(even) { grid-template-columns: 40fr 60fr; }
+  .gallery-item { position: relative; overflow: hidden; }
+  .gallery-item img {
+    width: 100%; display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+    loading: lazy;
+  }
+  .gallery-item img.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 14px;
+    background: linear-gradient(to top, rgba(28,20,16,0.75) 0%, transparent 100%);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+  .gallery-caption span {
+    font-family: 'Lora', serif; font-size: 14px; font-style: italic;
+    color: #fff; font-weight: 400;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 100px 60px;
+    background: #EFEAD8;
+    position: relative;
+  }
+  .about-header {
+    position: relative; margin-bottom: 60px; padding-left: 20px;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 45fr 55fr;
+    gap: 0; align-items: start;
+  }
+  .about-portrait-wrap {
+    position: relative; padding-right: 0;
+    opacity: 0; transform: translateX(-30px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    will-change: transform, opacity;
+  }
+  .about-portrait-wrap.is-visible { opacity: 1; transform: translateX(0); }
+  .about-portrait-wrap img {
+    width: 100%; display: block; object-fit: cover;
+    max-height: 560px; object-position: top;
+  }
+  .about-divider {
+    width: 1px; background: var(--ochre); opacity: 0.5;
+    position: absolute; right: 0; top: 0; bottom: 0;
+  }
+  .about-text {
+    padding-left: 60px;
+    opacity: 0; transform: translateX(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    will-change: transform, opacity;
+  }
+  .about-text.is-visible { opacity: 1; transform: translateX(0); }
+  .about-pull-quote {
+    font-family: 'Lora', serif; font-style: italic; font-size: 28px;
+    color: var(--ochre); line-height: 1.45;
+    margin-bottom: 36px;
+  }
+  .about-bio {
+    font-size: 17px; font-weight: 300; line-height: 1.8;
+    color: var(--dark); max-width: 520px;
+    margin-bottom: 28px;
+  }
+  .about-credits {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--ochre);
+    line-height: 2.2;
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: var(--dark2); padding: 160px 60px;
+    text-align: center;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: transform, opacity;
+  }
+  #cta.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-heading {
+    font-family: 'Lora', serif; font-weight: 700;
+    font-size: 56px; color: var(--parchment);
+    line-height: 1.15; max-width: 700px; margin: 0 auto 24px;
+  }
+  .cta-sub {
+    font-size: 18px; font-weight: 300; color: rgba(247,242,232,0.6);
+    margin-bottom: 52px;
+  }
+  .cta-link {
+    font-family: 'Lora', serif; font-size: 24px; font-style: italic;
+    color: var(--ochre); text-decoration: none;
+    border-bottom: 1px solid var(--ochre); padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cta-link:hover { color: #B8956A; border-color: #B8956A; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+  }
+  .contact-header {
+    position: relative; margin-bottom: 50px;
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    font-family: 'Lora', serif; font-weight: 600; font-size: 40px;
+  }
+  .contact-header.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-email {
+    display: block; font-family: 'Lora', serif; font-size: 26px;
+    color: var(--ochre); text-decoration: none;
+    margin-bottom: 28px;
+    transition: color 0.2s;
+  }
+  .contact-email:hover { color: var(--sienna); }
+  .contact-social {
+    font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--dark); opacity: 0.5; text-decoration: none;
+  }
+  .contact-social:hover { opacity: 0.85; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark2); padding: 0 60px;
+    height: 72px; display: flex; align-items: center;
+    justify-content: space-between;
+  }
+  footer span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px; color: rgba(247,242,232,0.4); letter-spacing: 0.08em;
+  }
+  footer a {
+    color: rgba(247,242,232,0.4); text-decoration: none;
+    font-size: 12px; letter-spacing: 0.08em;
+  }
+  footer a:hover { color: rgba(247,242,232,0.7); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero-content h1 { font-size: 56px; }
+    .hero-content { bottom: 40px; left: 32px; }
+    nav { padding: 20px 24px; gap: 20px; }
+    #gallery { padding: 60px 24px; }
+    .gallery-pair { grid-template-columns: 1fr !important; }
+    #about { padding: 60px 24px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-text { padding-left: 0; margin-top: 40px; }
+    .about-divider { display: none; }
+    .cta-heading { font-size: 36px; }
+    #cta { padding: 100px 24px; }
+    #contact { padding: 80px 24px; }
+    footer { padding: 0 24px; flex-direction: column; justify-content: center; gap: 6px; height: auto; padding: 20px 24px; }
+    .section-num { display: none; }
+  }
+  @media (max-width: 480px) {
+    .hero-content h1 { font-size: 42px; }
+    .hero-subtitle { font-size: 15px; }
+    nav a { font-size: 10px; }
+    .cta-heading { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#gallery">Work</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img" id="heroImg"></div>
+  <div class="hero-content">
+    <h1 id="heroName">Michael Pintar</h1>
+    <p class="hero-subtitle">Plein Air &amp; Landscape Painter &nbsp;·&nbsp; The Villages, FL</p>
+  </div>
+  <div class="hero-scroll">Scroll ↓</div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track" aria-hidden="true">
+    <span>1st Place · Winter Park Paint Out</span><span class="sep">·</span>
+    <span>Steidel Contemporary Gallery</span><span class="sep">·</span>
+    <span>2025 Art Palm Beach Fair</span><span class="sep">·</span>
+    <span>The Villages Permanent Collection</span><span class="sep">·</span>
+    <span>20+ Juried Festivals</span><span class="sep">·</span>
+    <span>Private Collections · Florida · Wisconsin · Western US</span><span class="sep">·</span>
+    <span>1st Place · Winter Park Paint Out</span><span class="sep">·</span>
+    <span>Steidel Contemporary Gallery</span><span class="sep">·</span>
+    <span>2025 Art Palm Beach Fair</span><span class="sep">·</span>
+    <span>The Villages Permanent Collection</span><span class="sep">·</span>
+    <span>20+ Juried Festivals</span><span class="sep">·</span>
+    <span>Private Collections · Florida · Wisconsin · Western US</span><span class="sep">·</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-num">01</div>
+    <h2 class="section-label">Selected Works</h2>
+  </div>
+
+  <div class="gallery-pair">
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/crash-and-burn.jpg"
+           alt="Crash and Burn" loading="lazy">
+      <div class="gallery-caption"><span>Crash and Burn — Acrylic on canvas, 48×60"</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/blueridgeriver-art.jpg"
+           alt="Blue Ridge River" loading="lazy">
+      <div class="gallery-caption"><span>Blue Ridge River — Oil on canvas, 18×24"</span></div>
+    </div>
+  </div>
+
+  <div class="gallery-pair">
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/firehole-falls.jpg"
+           alt="Firehole Falls" loading="lazy">
+      <div class="gallery-caption"><span>Firehole Falls — Plein Air</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/winter-park-plein-air.jpg"
+           alt="Winter Park Plein Air" loading="lazy">
+      <div class="gallery-caption"><span>Winter Park Plein Air — 1st Place, Winter Park Paint Out</span></div>
+    </div>
+  </div>
+
+  <div class="gallery-pair">
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/brownwood-palms.jpg"
+           alt="Brownwood Palms" loading="lazy">
+      <div class="gallery-caption"><span>Brownwood Palms — Plein Air</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/mtdora-nightlife.jpg"
+           alt="Mt. Dora Nightlife" loading="lazy">
+      <div class="gallery-caption"><span>Mt. Dora Nightlife — Plein Air</span></div>
+    </div>
+  </div>
+
+  <div class="gallery-pair">
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/downer-ave-winner-art.jpg"
+           alt="Downer Avenue" loading="lazy">
+      <div class="gallery-caption"><span>Downer Avenue — Honorable Mention</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/20250202-131026_orig.jpg"
+           alt="Recent Plein Air" loading="lazy">
+      <div class="gallery-caption"><span>Recent Plein Air Study, 2025</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-header">
+    <div class="section-num">02</div>
+    <h2 class="section-label">About the Artist</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-portrait-wrap">
+      <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/art-bio-shot.jpg"
+           alt="Michael Pintar" loading="lazy">
+      <div class="about-divider"></div>
+    </div>
+    <div class="about-text">
+      <p class="about-pull-quote">"Painting what you see,<br>not what you know."</p>
+      <p class="about-bio">
+        Working in oil, acrylic, and pastel, Pintar's landscapes carry the warmth of the field —
+        painted in direct observation across Florida, Wisconsin, and the American West.
+        A former technical illustrator turned full-time painter, his work has been recognized
+        at the Winter Park Paint Out, Mount Dora Plein Air, and Wisconsin State Fair,
+        and is exhibited through Steidel Contemporary Gallery.
+      </p>
+      <p class="about-bio">
+        Based in The Villages, FL, his paintings are held in private collections
+        and in the permanent public collection of Okahumpka Park.
+      </p>
+      <p class="about-credits">
+        Steidel Contemporary Gallery &nbsp;·&nbsp; Art Palm Beach Fair<br>
+        Winter Park Paint Out — 1st Place, 2017<br>
+        Mount Dora "Paint the Town" — 2nd Place, 2023<br>
+        The Villages Permanent Collection
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="cta-heading">Available Originals &amp; Studio Commissions</h2>
+  <p class="cta-sub">Original paintings from $250. Studio commissions and private collections welcome.</p>
+  <a href="mailto:pintar.michael@gmail.com" class="cta-link">Get in Touch →</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="contact-header">Studio Inquiries</h2>
+  <a href="mailto:pintar.michael@gmail.com" class="contact-email">pintar.michael@gmail.com</a>
+  <a href="https://www.instagram.com/michaelpintar" target="_blank" class="contact-social">@michaelpintar</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Michael Pintar &nbsp;·&nbsp; © 2026</span>
+  <a href="https://lucasblatt.com">Design by Lucas Blatt</a>
+</footer>
+
+<script>
+  // Hero name letter-spacing animate on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('loaded');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroImg = document.getElementById('heroImg');
+  window.addEventListener('scroll', () => {
+    heroImg.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Section title clip-path reveals
+  document.querySelectorAll('.section-label, .contact-header').forEach(el => observer.observe(el));
+
+  // Gallery pairs stagger
+  document.querySelectorAll('.gallery-pair').forEach((pair, i) => {
+    pair.style.transitionDelay = `${i * 80}ms`;
+    observer.observe(pair);
+  });
+
+  // Gallery images mask reveal with stagger
+  const imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('is-visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.gallery-item img').forEach(img => imgObserver.observe(img));
+
+  // About section stagger
+  const aboutObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.about-portrait-wrap, .about-text').forEach(el => aboutObserver.observe(el));
+
+  // CTA section
+  observer.observe(document.getElementById('cta'));
+</script>
+</body>
+</html>
