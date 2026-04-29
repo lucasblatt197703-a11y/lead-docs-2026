@@ -198,6 +198,7 @@
     .gallery-row.split-6040 .gallery-item, .gallery-row.split-4060 .gallery-item { height: 50vw; }
     .gallery-row.thirds .gallery-item { height: 55vw; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -260,27 +261,27 @@
     <h2 class="section-title">Selected Work</h2>
   </div>
   <div class="gallery-row full">
-    <div class="gallery-item"><img src="images/annabella/img07.jpg" alt="Wedding portrait" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/annabella/img07.jpg" alt="Wedding portrait" loading="eager"></div>
   </div>
   <div class="gallery-row split-6040">
-    <div class="gallery-item"><img src="images/annabella/img06.jpg" alt="Outdoor session" loading="lazy"></div>
-    <div class="gallery-item"><img src="images/annabella/img01.jpg" alt="Family portrait" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/annabella/img06.jpg" alt="Outdoor session" loading="eager"></div>
+    <div class="gallery-item"><img src="images/annabella/img01.jpg" alt="Family portrait" loading="eager"></div>
   </div>
   <div class="gallery-row split-4060">
-    <div class="gallery-item"><img src="images/annabella/img04.jpg" alt="Graduation photo" loading="lazy"></div>
-    <div class="gallery-item"><img src="images/annabella/img02.jpg" alt="Lifestyle session" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/annabella/img04.jpg" alt="Graduation photo" loading="eager"></div>
+    <div class="gallery-item"><img src="images/annabella/img02.jpg" alt="Lifestyle session" loading="eager"></div>
   </div>
   <div class="gallery-row full">
-    <div class="gallery-item"><img src="images/annabella/img08.jpg" alt="Wedding ceremony" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/annabella/img08.jpg" alt="Wedding ceremony" loading="eager"></div>
   </div>
   <div class="gallery-row thirds">
-    <div class="gallery-item"><img src="images/annabella/img03.jpg" alt="Portrait" loading="lazy"></div>
-    <div class="gallery-item"><img src="images/annabella/img12.jpg" alt="Outdoor portrait" loading="lazy"></div>
-    <div class="gallery-item"><img src="images/annabella/img05.jpg" alt="Family session" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/annabella/img03.jpg" alt="Portrait" loading="eager"></div>
+    <div class="gallery-item"><img src="images/annabella/img12.jpg" alt="Outdoor portrait" loading="eager"></div>
+    <div class="gallery-item"><img src="images/annabella/img05.jpg" alt="Family session" loading="eager"></div>
   </div>
   <div class="gallery-row split-6040">
-    <div class="gallery-item"><img src="images/annabella/img10.jpg" alt="Wedding detail" loading="lazy"></div>
-    <div class="gallery-item"><img src="images/annabella/img11.jpg" alt="Graduation portrait" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/annabella/img10.jpg" alt="Wedding detail" loading="eager"></div>
+    <div class="gallery-item"><img src="images/annabella/img11.jpg" alt="Graduation portrait" loading="eager"></div>
   </div>
 </div>
 
@@ -290,7 +291,7 @@
     "Every photograph is a moment that will never exist again — my job is to make sure you have it forever."
   </blockquote>
   <div class="about-grid">
-    <img class="about-portrait" src="images/annabella/img13.jpg" alt="Annabella Mowry" loading="lazy">
+    <img class="about-portrait" src="images/annabella/img13.jpg" alt="Annabella Mowry" loading="eager">
     <div class="about-text">
       <span class="section-number">02 — About</span>
       <h2 class="section-title" style="margin-bottom:32px;">The Photographer</h2>
@@ -421,6 +422,8 @@
     }, { threshold: 0.1 });
     obs.observe(el);
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

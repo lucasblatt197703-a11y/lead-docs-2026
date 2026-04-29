@@ -215,6 +215,7 @@
     .grid-3col { grid-template-columns: 1fr 1fr; }
     .stats-section { grid-template-columns: 1fr 1fr; padding: 0; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -265,15 +266,15 @@
     <h2 class="section-title">Original Work</h2>
   </div>
   <div class="grid-3col">
-    <div class="grid-item"><img src="images/roly/img01.png" alt="Abstract painting 1" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img05.jpg" alt="Abstract painting 2" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img06.jpg" alt="Abstract painting 3" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img03.jpg" alt="Abstract painting 4" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img09.jpg" alt="Abstract painting 5" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img08.jpg" alt="Abstract painting 6" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img07.jpg" alt="Abstract painting 7" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img04.jpg" alt="Abstract painting 8" loading="lazy"></div>
-    <div class="grid-item"><img src="images/roly/img10.jpg" alt="Abstract painting 9" loading="lazy"></div>
+    <div class="grid-item"><img src="images/roly/img01.png" alt="Abstract painting 1" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img05.jpg" alt="Abstract painting 2" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img06.jpg" alt="Abstract painting 3" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img03.jpg" alt="Abstract painting 4" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img09.jpg" alt="Abstract painting 5" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img08.jpg" alt="Abstract painting 6" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img07.jpg" alt="Abstract painting 7" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img04.jpg" alt="Abstract painting 8" loading="eager"></div>
+    <div class="grid-item"><img src="images/roly/img10.jpg" alt="Abstract painting 9" loading="eager"></div>
   </div>
 </section>
 
@@ -285,7 +286,7 @@
 
 <section class="about-section" id="about">
   <div class="about-image">
-    <img src="images/roly/img02.jpg" alt="Roly Fernandez" loading="lazy">
+    <img src="images/roly/img02.jpg" alt="Roly Fernandez" loading="eager">
   </div>
   <div class="about-text">
     <div class="about-tag">About the Artist</div>
@@ -351,6 +352,8 @@
     });
   }, { threshold: 0.08 });
   document.querySelectorAll('.section-title, .grid-item, .stat-item, blockquote, .quote-attr, .about-image, .about-name, .about-body, .about-detail-item, .exhibitions-section h2, .exhibition-item').forEach(el => observer.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

@@ -137,6 +137,7 @@ footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
 .hero-name{font-size:40px;}
 .masonry{columns:1;}
 }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -173,22 +174,22 @@ footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
     <p class="gallery-subtitle">Proposals · Engagements · Weddings</p>
   </div>
   <div class="masonry">
-    <div class="masonry-item"><img src="images/amy/img05.jpg" alt="Proposal" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img03.jpg" alt="Engagement" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img09.jpg" alt="Wedding" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img13.jpg" alt="Couple" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img06.jpg" alt="Portrait" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img08.jpg" alt="Moment" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img10.jpg" alt="Detail" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img04.jpg" alt="Romance" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/amy/img07.jpg" alt="Ceremony" loading="lazy"></div>
+    <div class="masonry-item"><img src="images/amy/img05.jpg" alt="Proposal" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img03.jpg" alt="Engagement" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img09.jpg" alt="Wedding" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img13.jpg" alt="Couple" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img06.jpg" alt="Portrait" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img08.jpg" alt="Moment" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img10.jpg" alt="Detail" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img04.jpg" alt="Romance" loading="eager"></div>
+    <div class="masonry-item"><img src="images/amy/img07.jpg" alt="Ceremony" loading="eager"></div>
   </div>
 </section>
 
 <section id="stories">
   <h2 class="stories-title">Recent Stories</h2>
   <div class="story-pair">
-    <div class="story-img"><img src="images/amy/img12.jpg" alt="NYC Rooftop Proposal" loading="lazy"></div>
+    <div class="story-img"><img src="images/amy/img12.jpg" alt="NYC Rooftop Proposal" loading="eager"></div>
     <div class="story-text">
       <div class="story-location">NYC Rooftop · 2024</div>
       <h3 class="story-heading">A surprise 40 floors above Manhattan</h3>
@@ -196,7 +197,7 @@ footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
     </div>
   </div>
   <div class="story-pair">
-    <div class="story-img"><img src="images/amy/img11.jpg" alt="Tampa Beach Wedding" loading="lazy"></div>
+    <div class="story-img"><img src="images/amy/img11.jpg" alt="Tampa Beach Wedding" loading="eager"></div>
     <div class="story-text">
       <div class="story-location">Tampa Bay · 2024</div>
       <h3 class="story-heading">Golden hour on the water</h3>
@@ -222,7 +223,7 @@ footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
 
 <section id="about">
   <div class="about-inner">
-    <img class="about-portrait" src="images/amy/img01.jpg" alt="Amy Xie" loading="lazy">
+    <img class="about-portrait" src="images/amy/img01.jpg" alt="Amy Xie" loading="eager">
     <blockquote class="about-quote">"The best photographs happen in between the poses."</blockquote>
     <p class="about-body">Amy Xie is a proposal and wedding photographer based between New York City and Tampa. Specializing in candid, emotionally-driven images that capture the energy of a real moment — not a recreated one.</p>
     <div class="about-tags">
@@ -319,6 +320,8 @@ footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
   document.querySelector('.stats-row') && io_stats.observe(document.querySelector('.stats-row'));
   document.querySelectorAll('.gallery-title, .story-img, .story-text, .about-quote, .stories-title').forEach(function(el){ io.observe(el); });
 })();
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

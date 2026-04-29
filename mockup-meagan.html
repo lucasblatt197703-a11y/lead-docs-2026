@@ -175,7 +175,7 @@
     column-gap: 8px;
   }
 
-  .masonry-item {
+  .masonry-item { min-height: 150px;
     break-inside: avoid;
     margin-bottom: 8px;
     position: relative;
@@ -588,6 +588,7 @@
     .contact-info { padding: 60px 24px; }
     footer { padding: 24px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -636,51 +637,51 @@
   <h2 class="section-title">The Work</h2>
   <div class="masonry-grid">
     <div class="masonry-item">
-      <img src="images/meagan/img10.jpg" alt="Family Portrait" loading="lazy">
+      <img src="images/meagan/img10.jpg" alt="Family Portrait" loading="eager">
       <div class="img-label">Family</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img02.jpg" alt="Newborn" loading="lazy">
+      <img src="images/meagan/img02.jpg" alt="Newborn" loading="eager">
       <div class="img-label">Newborn</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img14.jpg" alt="Family Outdoor" loading="lazy">
+      <img src="images/meagan/img14.jpg" alt="Family Outdoor" loading="eager">
       <div class="img-label">Family</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img05.jpg" alt="Newborn Portrait" loading="lazy">
+      <img src="images/meagan/img05.jpg" alt="Newborn Portrait" loading="eager">
       <div class="img-label">Newborn</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img11.jpg" alt="Family Session" loading="lazy">
+      <img src="images/meagan/img11.jpg" alt="Family Session" loading="eager">
       <div class="img-label">Family</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img08.jpg" alt="Maternity Session" loading="lazy">
+      <img src="images/meagan/img08.jpg" alt="Maternity Session" loading="eager">
       <div class="img-label">Maternity</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img01.jpg" alt="Newborn Sleepy" loading="lazy">
+      <img src="images/meagan/img01.jpg" alt="Newborn Sleepy" loading="eager">
       <div class="img-label">Newborn</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img03.jpg" alt="Family Memory" loading="lazy">
+      <img src="images/meagan/img03.jpg" alt="Family Memory" loading="eager">
       <div class="img-label">Family</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img13.jpg" alt="Newborn Pose" loading="lazy">
+      <img src="images/meagan/img13.jpg" alt="Newborn Pose" loading="eager">
       <div class="img-label">Newborn</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img04.jpg" alt="Maternity Portrait" loading="lazy">
+      <img src="images/meagan/img04.jpg" alt="Maternity Portrait" loading="eager">
       <div class="img-label">Maternity</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img09.jpg" alt="Family Candid" loading="lazy">
+      <img src="images/meagan/img09.jpg" alt="Family Candid" loading="eager">
       <div class="img-label">Family</div>
     </div>
     <div class="masonry-item">
-      <img src="images/meagan/img07.jpg" alt="Family Session 3" loading="lazy">
+      <img src="images/meagan/img07.jpg" alt="Family Session 3" loading="eager">
       <div class="img-label">Family</div>
     </div>
   </div>
@@ -749,7 +750,7 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-image-wrap">
-    <img src="images/meagan/img06.jpg" alt="Meagan Leffel Photography" loading="lazy">
+    <img src="images/meagan/img06.jpg" alt="Meagan Leffel Photography" loading="eager">
   </div>
   <div class="about-text">
     <span class="about-eyebrow">About the Photographer</span>
@@ -855,6 +856,8 @@
     row.style.transitionDelay = (i * 120) + 'ms';
     observer.observe(row);
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

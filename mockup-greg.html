@@ -316,6 +316,7 @@
     .stats { grid-template-columns: 1fr 1fr; }
     .gallery-section, .about-section, .contact-section, .cta-section { padding: 48px 16px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -379,21 +380,21 @@
   <div class="gallery-grid">
     <div class="gallery-col">
       <div class="gallery-item">
-        <img src="images/greg/img03.jpg" alt="Wedding photography South Florida" loading="lazy">
+        <img src="images/greg/img03.jpg" alt="Wedding photography South Florida" loading="eager">
         <div class="gallery-overlay"><span class="gallery-label">Wedding &middot; South Florida</span></div>
       </div>
       <div class="gallery-item">
-        <img src="images/greg/img01.jpg" alt="Event photography Broward" loading="lazy">
+        <img src="images/greg/img01.jpg" alt="Event photography Broward" loading="eager">
         <div class="gallery-overlay"><span class="gallery-label">Event &middot; Broward</span></div>
       </div>
     </div>
     <div class="gallery-col">
       <div class="gallery-item">
-        <img src="images/greg/img02.jpg" alt="Photography by Greg Rubin" loading="lazy">
+        <img src="images/greg/img02.jpg" alt="Photography by Greg Rubin" loading="eager">
         <div class="gallery-overlay"><span class="gallery-label">Portrait &middot; Miami</span></div>
       </div>
       <div class="gallery-item">
-        <img src="images/greg/img03.jpg" alt="Celebration photography" loading="lazy">
+        <img src="images/greg/img03.jpg" alt="Celebration photography" loading="eager">
         <div class="gallery-overlay"><span class="gallery-label">Celebration &middot; Fort Lauderdale</span></div>
       </div>
     </div>
@@ -421,7 +422,7 @@
     <p class="about-detail"><strong>Contact:</strong> 954-657-3011</p>
   </div>
   <div class="about-img-wrap">
-    <img class="about-img" src="images/greg/img01.jpg" alt="Greg Rubin photographer" loading="lazy">
+    <img class="about-img" src="images/greg/img01.jpg" alt="Greg Rubin photographer" loading="eager">
     <p class="about-caption">South Florida &middot; Est. 2015</p>
   </div>
 </section>
@@ -491,6 +492,8 @@
   document.querySelectorAll('.section-title, .stat-number, .quote-text, .about-img').forEach(el => {
     obs.observe(el);
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

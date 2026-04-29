@@ -94,7 +94,7 @@
   /* PORTRAITS GALLERY — 3-column masonry */
   .gallery-portraits { padding: 0 56px 80px; }
   .masonry-grid { columns: 3; column-gap: 12px; }
-  .masonry-item { break-inside: avoid; margin-bottom: 12px; overflow: hidden; opacity: 1;  transition: opacity 0.7s, transform 0.7s; }
+  .masonry-item { min-height: 150px; break-inside: avoid; margin-bottom: 12px; overflow: hidden; opacity: 1;  transition: opacity 0.7s, transform 0.7s; }
   .masonry-item.is-visible { opacity: 1; transform: translateY(0); }
   .masonry-item img { width: 100%; display: block; transition: transform 0.5s ease; }
   .masonry-item:hover img { transform: scale(1.03); }
@@ -178,6 +178,7 @@
     .masonry-grid { columns: 1; }
     .stats-section { grid-template-columns: 1fr; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -235,15 +236,15 @@
   </div>
   <div class="gallery-portraits">
     <div class="masonry-grid">
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/zora-03-12_orig.jpg" alt="Oil portrait" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1965543_1_orig.jpg" alt="Portrait painting" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/916337_1_orig.jpg" alt="Classic portrait" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/4926433_1_orig.jpg" alt="Portrait study" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/9298192_1_orig.jpg" alt="Vintage portrait" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/2451595_1_orig.jpg" alt="Recreation painting" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/6529215_1.jpg" alt="Still life" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/4895185_1_orig.jpg" alt="Pet portrait" loading="lazy"></div>
-      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1508227_1_orig.jpg" alt="Artist portrait" loading="lazy"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/zora-03-12_orig.jpg" alt="Oil portrait" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1965543_1_orig.jpg" alt="Portrait painting" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/916337_1_orig.jpg" alt="Classic portrait" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/4926433_1_orig.jpg" alt="Portrait study" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/9298192_1_orig.jpg" alt="Vintage portrait" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/2451595_1_orig.jpg" alt="Recreation painting" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/6529215_1.jpg" alt="Still life" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/4895185_1_orig.jpg" alt="Pet portrait" loading="eager"></div>
+      <div class="masonry-item"><img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1508227_1_orig.jpg" alt="Artist portrait" loading="eager"></div>
     </div>
   </div>
 </section>
@@ -257,12 +258,12 @@
   </div>
   <div class="gallery-murals">
     <div class="mural-grid">
-      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_1221930.jpg" alt="Trompe l'oeil mural" loading="lazy"></div>
-      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_5431803.jpg" alt="Decorative mural" loading="lazy"></div>
-      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_6665354.jpg" alt="Client home mural" loading="lazy"></div>
-      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_9238146.jpg" alt="Window mural" loading="lazy"></div>
-      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_1773651.jpg" alt="Architectural mural" loading="lazy"></div>
-      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_4007717.jpg" alt="Interior mural" loading="lazy"></div>
+      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_1221930.jpg" alt="Trompe l'oeil mural" loading="eager"></div>
+      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_5431803.jpg" alt="Decorative mural" loading="eager"></div>
+      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_6665354.jpg" alt="Client home mural" loading="eager"></div>
+      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_9238146.jpg" alt="Window mural" loading="eager"></div>
+      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_1773651.jpg" alt="Architectural mural" loading="eager"></div>
+      <div class="mural-item"><img src="http://enchantedwindows.weebly.com/uploads/4/1/1/2/4112395/_4007717.jpg" alt="Interior mural" loading="eager"></div>
     </div>
   </div>
 </section>
@@ -280,7 +281,7 @@
     </ul>
   </div>
   <div class="comm-portrait">
-    <img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/2451595_1_orig.jpg" alt="Commission example" loading="lazy">
+    <img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/2451595_1_orig.jpg" alt="Commission example" loading="eager">
   </div>
 </section>
 
@@ -292,7 +293,7 @@
     <p class="about-detail">Michele Powell Beaujardin is a Miami-based oil painter with over three decades of practice in portraiture, still life, and trompe l'oeil mural work. Operating under two studios — Beaujardin Fine Art and Enchanted Windows — she accepts commissions ranging from intimate family portraits to large-scale architectural murals for private residences and commercial spaces throughout South Florida.</p>
   </div>
   <div class="about-portrait-wrap">
-    <img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1508227_1_orig.jpg" alt="Michele Powell Beaujardin" loading="lazy">
+    <img src="http://beaujardinfineart.weebly.com/uploads/4/1/1/2/4112395/1508227_1_orig.jpg" alt="Michele Powell Beaujardin" loading="eager">
   </div>
 </section>
 
@@ -342,6 +343,8 @@
   }, { threshold: 0.08 });
 
   document.querySelectorAll('.section-title, .masonry-item, .mural-item, .comm-text h2, .comm-types li, .comm-portrait, .about-bio, .about-detail, .about-portrait-wrap, .stat').forEach(el => observer.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

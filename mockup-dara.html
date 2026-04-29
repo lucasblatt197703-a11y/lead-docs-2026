@@ -394,7 +394,8 @@
       .gallery-grid { grid-template-columns: 1fr; }
       #gallery { padding: 60px 16px 40px; }
     }
-  </style>
+    .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
+</style>
 </head>
 <body>
 
@@ -427,42 +428,42 @@
     <div class="gallery-grid">
       <div class="gallery-item">
         <img
-          loading="lazy"
+          loading="eager"
           src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-21-of-97.jpg"
           alt="Maternity — Khloe"
         />
       </div>
       <div class="gallery-item">
         <img
-          loading="lazy"
+          loading="eager"
           src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webfinaldarasblingphotography-khloe-11-of-31.jpg"
           alt="Maternity — Khloe II"
         />
       </div>
       <div class="gallery-item">
         <img
-          loading="lazy"
+          loading="eager"
           src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-3-of-31.jpg"
           alt="Maternity — Khloe III"
         />
       </div>
       <div class="gallery-item">
         <img
-          loading="lazy"
+          loading="eager"
           src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-18-of-31.jpg"
           alt="Maternity — Khloe IV"
         />
       </div>
       <div class="gallery-item">
         <img
-          loading="lazy"
+          loading="eager"
           src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-22-of-31.jpg"
           alt="Maternity — Khloe V"
         />
       </div>
       <div class="gallery-item">
         <img
-          loading="lazy"
+          loading="eager"
           src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/web5x7darasblingphotography-khloe-95-of-97.jpg"
           alt="Newborn — Khloe VI"
         />
@@ -477,7 +478,7 @@
   <section id="about">
     <div class="about-image">
       <img
-        loading="lazy"
+        loading="eager"
         src="http://darasblingphotography.weebly.com/uploads/1/1/9/6/11960282/webcdarasblingphotography-khloe-25-of-31.jpg"
         alt="Dara Krovetz — portrait session"
       />
@@ -538,7 +539,9 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.js-stagger').forEach(el => staggerObs.observe(el));
-  </script>
+    // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+</script>
 
 </body>
 </html>

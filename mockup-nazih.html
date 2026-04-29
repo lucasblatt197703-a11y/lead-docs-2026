@@ -151,6 +151,7 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 .hero-name,.hero-name-accent{font-size:34px;}
 .stat-number{font-size:36px;}
 }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -221,20 +222,20 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
   </div>
   <div class="gallery-pairs">
     <div class="gallery-pair">
-      <div class="gallery-img"><img src="images/nazih/img01.jpg" alt="Wedding ceremony" loading="lazy"></div>
-      <div class="gallery-img"><img src="images/nazih/img02.jpg" alt="Wedding reception" loading="lazy"></div>
+      <div class="gallery-img"><img src="images/nazih/img01.jpg" alt="Wedding ceremony" loading="eager"></div>
+      <div class="gallery-img"><img src="images/nazih/img02.jpg" alt="Wedding reception" loading="eager"></div>
     </div>
     <div class="gallery-pair">
-      <div class="gallery-img"><img src="images/nazih/img06.jpg" alt="Bride portrait" loading="lazy"></div>
-      <div class="gallery-img"><img src="images/nazih/img09.jpg" alt="Couple portrait" loading="lazy"></div>
+      <div class="gallery-img"><img src="images/nazih/img06.jpg" alt="Bride portrait" loading="eager"></div>
+      <div class="gallery-img"><img src="images/nazih/img09.jpg" alt="Couple portrait" loading="eager"></div>
     </div>
     <div class="gallery-pair">
-      <div class="gallery-img"><img src="images/nazih/img04.jpg" alt="Wedding detail" loading="lazy"></div>
-      <div class="gallery-img"><img src="images/nazih/img08.jpg" alt="Bride walking" loading="lazy"></div>
+      <div class="gallery-img"><img src="images/nazih/img04.jpg" alt="Wedding detail" loading="eager"></div>
+      <div class="gallery-img"><img src="images/nazih/img08.jpg" alt="Bride walking" loading="eager"></div>
     </div>
     <div class="gallery-pair">
-      <div class="gallery-img"><img src="images/nazih/img05.jpg" alt="Wedding moments" loading="lazy"></div>
-      <div class="gallery-img"><img src="images/nazih/img03.jpg" alt="Ceremony" loading="lazy"></div>
+      <div class="gallery-img"><img src="images/nazih/img05.jpg" alt="Wedding moments" loading="eager"></div>
+      <div class="gallery-img"><img src="images/nazih/img03.jpg" alt="Ceremony" loading="eager"></div>
     </div>
   </div>
 </section>
@@ -259,7 +260,7 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
     </div>
   </div>
   <div class="about-portrait">
-    <img src="images/nazih/img07.jpg" alt="Wedding portrait" loading="lazy">
+    <img src="images/nazih/img07.jpg" alt="Wedding portrait" loading="eager">
     <div class="about-badge">8+ Years · Nationwide</div>
   </div>
 </section>
@@ -350,6 +351,8 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 
   document.querySelectorAll('.section-title, .testimonial-text, .testimonial-author, .about-text, .about-portrait').forEach(function(el){ io.observe(el); });
 })();
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

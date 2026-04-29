@@ -303,6 +303,7 @@
     nav a { font-size: 10px; }
     .cta-heading { font-size: 28px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -351,12 +352,12 @@
   <div class="gallery-pair">
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/crash-and-burn.jpg"
-           alt="Crash and Burn" loading="lazy">
+           alt="Crash and Burn" loading="eager">
       <div class="gallery-caption"><span>Crash and Burn — Acrylic on canvas, 48×60"</span></div>
     </div>
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/blueridgeriver-art.jpg"
-           alt="Blue Ridge River" loading="lazy">
+           alt="Blue Ridge River" loading="eager">
       <div class="gallery-caption"><span>Blue Ridge River — Oil on canvas, 18×24"</span></div>
     </div>
   </div>
@@ -364,12 +365,12 @@
   <div class="gallery-pair">
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/firehole-falls.jpg"
-           alt="Firehole Falls" loading="lazy">
+           alt="Firehole Falls" loading="eager">
       <div class="gallery-caption"><span>Firehole Falls — Plein Air</span></div>
     </div>
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/winter-park-plein-air.jpg"
-           alt="Winter Park Plein Air" loading="lazy">
+           alt="Winter Park Plein Air" loading="eager">
       <div class="gallery-caption"><span>Winter Park Plein Air — 1st Place, Winter Park Paint Out</span></div>
     </div>
   </div>
@@ -377,12 +378,12 @@
   <div class="gallery-pair">
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/brownwood-palms.jpg"
-           alt="Brownwood Palms" loading="lazy">
+           alt="Brownwood Palms" loading="eager">
       <div class="gallery-caption"><span>Brownwood Palms — Plein Air</span></div>
     </div>
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/mtdora-nightlife.jpg"
-           alt="Mt. Dora Nightlife" loading="lazy">
+           alt="Mt. Dora Nightlife" loading="eager">
       <div class="gallery-caption"><span>Mt. Dora Nightlife — Plein Air</span></div>
     </div>
   </div>
@@ -390,12 +391,12 @@
   <div class="gallery-pair">
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/downer-ave-winner-art.jpg"
-           alt="Downer Avenue" loading="lazy">
+           alt="Downer Avenue" loading="eager">
       <div class="gallery-caption"><span>Downer Avenue — Honorable Mention</span></div>
     </div>
     <div class="gallery-item">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/20250202-131026_orig.jpg"
-           alt="Recent Plein Air" loading="lazy">
+           alt="Recent Plein Air" loading="eager">
       <div class="gallery-caption"><span>Recent Plein Air Study, 2025</span></div>
     </div>
   </div>
@@ -410,7 +411,7 @@
   <div class="about-grid">
     <div class="about-portrait-wrap">
       <img src="https://michaelpintar.weebly.com/uploads/5/9/7/7/5977541/art-bio-shot.jpg"
-           alt="Michael Pintar" loading="lazy">
+           alt="Michael Pintar" loading="eager">
       <div class="about-divider"></div>
     </div>
     <div class="about-text">
@@ -508,6 +509,8 @@
 
   // CTA section
   observer.observe(document.getElementById('cta'));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

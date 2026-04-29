@@ -415,7 +415,8 @@
       nav { gap: 16px; }
       nav a { font-size: 10px; }
     }
-  </style>
+    .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
+</style>
 </head>
 <body>
 
@@ -445,37 +446,37 @@
     <div class="gallery-editorial">
       <div class="gallery-row full">
         <figure>
-          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/8734878.jpg" alt="Celebration" loading="lazy" />
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/8734878.jpg" alt="Celebration" loading="eager" />
           <figcaption>Celebration</figcaption>
         </figure>
       </div>
       <div class="gallery-row offset">
         <figure>
-          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/8324146.jpg" alt="Together" loading="lazy" />
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/8324146.jpg" alt="Together" loading="eager" />
           <figcaption>Together</figcaption>
         </figure>
       </div>
       <div class="gallery-row offset-left">
         <figure>
-          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/615224.jpg" alt="Moment" loading="lazy" />
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/615224.jpg" alt="Moment" loading="eager" />
           <figcaption>Moment</figcaption>
         </figure>
       </div>
       <div class="gallery-row full">
         <figure>
-          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/2717432.jpg" alt="Warmth" loading="lazy" />
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/2717432.jpg" alt="Warmth" loading="eager" />
           <figcaption>Warmth</figcaption>
         </figure>
       </div>
       <div class="gallery-row offset">
         <figure>
-          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/7048722.jpg" alt="Golden Hour" loading="lazy" />
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/7048722.jpg" alt="Golden Hour" loading="eager" />
           <figcaption>Golden Hour</figcaption>
         </figure>
       </div>
       <div class="gallery-row offset-left">
         <figure>
-          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/3648724.jpg" alt="Family" loading="lazy" />
+          <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/3648724.jpg" alt="Family" loading="eager" />
           <figcaption>Family</figcaption>
         </figure>
       </div>
@@ -500,7 +501,7 @@
     </div>
     <div class="about-layout">
       <div class="about-portrait">
-        <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/3398123.jpg" alt="Michelle Davis" loading="lazy" />
+        <img src="http://mdphotos.weebly.com/uploads/2/0/4/8/2048876/3398123.jpg" alt="Michelle Davis" loading="eager" />
       </div>
       <div class="about-text-block">
         <p class="fade-rise delay-1">
@@ -567,6 +568,8 @@
     document.querySelectorAll('.reveal-title').forEach(el => observer.observe(el));
     document.querySelectorAll('.fade-rise').forEach(el => observer.observe(el));
     document.querySelectorAll('figure').forEach(el => imgObserver.observe(el));
-  </script>
+    // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+</script>
 </body>
 </html>

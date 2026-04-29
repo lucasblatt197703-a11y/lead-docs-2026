@@ -369,6 +369,7 @@
     nav .nav-logo { display: none; }
     #cta { padding: 60px 24px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -452,35 +453,35 @@
   </div>
   <div class="gallery-grid">
     <div class="gallery-item wide">
-      <img src="https://www.denniscarbee.com/img/3%20BIRDS%20EYE%20VIEW.jpg" alt="Birds Eye View" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/3%20BIRDS%20EYE%20VIEW.jpg" alt="Birds Eye View" loading="eager">
       <span class="gallery-caption">Birds Eye View</span>
     </div>
     <div class="gallery-item">
-      <img src="https://www.denniscarbee.com/img/GARDIAN%20ANGEL.jpg" alt="Guardian Angel" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/GARDIAN%20ANGEL.jpg" alt="Guardian Angel" loading="eager">
       <span class="gallery-caption">Guardian Angel</span>
     </div>
     <div class="gallery-item">
-      <img src="https://www.denniscarbee.com/img/P4255823.JPG" alt="Studio Detail" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/P4255823.JPG" alt="Studio Detail" loading="eager">
       <span class="gallery-caption">Studio Detail</span>
     </div>
     <div class="gallery-item">
-      <img src="https://www.denniscarbee.com/img/P4255826.JPG" alt="Form Study I" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/P4255826.JPG" alt="Form Study I" loading="eager">
       <span class="gallery-caption">Form Study I</span>
     </div>
     <div class="gallery-item wide">
-      <img src="https://www.denniscarbee.com/img/6%20-%20DOUBLE%20TROUBLE.jpg" alt="Double Trouble" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/6%20-%20DOUBLE%20TROUBLE.jpg" alt="Double Trouble" loading="eager">
       <span class="gallery-caption">Double Trouble</span>
     </div>
     <div class="gallery-item">
-      <img src="https://www.denniscarbee.com/img/P4255828.JPG" alt="Form Study II" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/P4255828.JPG" alt="Form Study II" loading="eager">
       <span class="gallery-caption">Form Study II</span>
     </div>
     <div class="gallery-item">
-      <img src="https://www.denniscarbee.com/img/P4255820.JPG" alt="Surface Study" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/P4255820.JPG" alt="Surface Study" loading="eager">
       <span class="gallery-caption">Surface Study</span>
     </div>
     <div class="gallery-item">
-      <img src="https://www.denniscarbee.com/img/ROUND%20ABOUT%20%282%29.JPG" alt="Round About" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/ROUND%20ABOUT%20%282%29.JPG" alt="Round About" loading="eager">
       <span class="gallery-caption">Round About</span>
     </div>
   </div>
@@ -489,7 +490,7 @@
 <!-- FEATURED PIECE -->
 <section id="featured">
   <div class="featured-image">
-    <img src="https://www.denniscarbee.com/img/ART%20IN%20THE%20SKY.JPG" alt="Art in the Sky" loading="lazy">
+    <img src="https://www.denniscarbee.com/img/ART%20IN%20THE%20SKY.JPG" alt="Art in the Sky" loading="eager">
   </div>
   <div class="featured-text">
     <p class="featured-eyebrow">Feature Work</p>
@@ -503,7 +504,7 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-portrait">
-    <img src="https://www.denniscarbee.com/img/DennisCarbee.png" alt="Dennis Carbee" loading="lazy">
+    <img src="https://www.denniscarbee.com/img/DennisCarbee.png" alt="Dennis Carbee" loading="eager">
   </div>
   <div class="about-text">
     <p class="section-label">About</p>
@@ -581,6 +582,8 @@
   window.addEventListener('scroll', function() {
     heroBg.style.backgroundPositionY = (window.scrollY * 0.35) + 'px';
   }, { passive: true });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

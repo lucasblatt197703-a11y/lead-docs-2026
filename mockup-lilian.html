@@ -196,6 +196,7 @@
     .gallery-masonry { columns: 1; }
     nav .nav-links { gap: 20px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -227,35 +228,35 @@
   </div>
   <div class="gallery-masonry">
     <div class="gallery-item">
-      <img src="images-lilian/g1.jpg" alt="Cumulative Nature — Palm Menagerie Diptych" loading="lazy">
+      <img src="images-lilian/g1.jpg" alt="Cumulative Nature — Palm Menagerie Diptych" loading="eager">
       <span class="img-title">Cumulative Nature — Palm Menagerie Diptych</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g2.jpg" alt="Hyphenated Nature — Northern Florida/Cuban Painting Relations" loading="lazy">
+      <img src="images-lilian/g2.jpg" alt="Hyphenated Nature — Northern Florida/Cuban Painting Relations" loading="eager">
       <span class="img-title">Hyphenated Nature</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g3.jpg" alt="Hecho con Cuba — Homage to Viñales #9" loading="lazy">
+      <img src="images-lilian/g3.jpg" alt="Hecho con Cuba — Homage to Viñales #9" loading="eager">
       <span class="img-title">Hecho con Cuba — Homage to Viñales #9</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g4.jpg" alt="Millay Fall Diptych" loading="lazy">
+      <img src="images-lilian/g4.jpg" alt="Millay Fall Diptych" loading="eager">
       <span class="img-title">Millay Fall Diptych</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g5.jpg" alt="Hecho en Cuba — Mogote Diptych" loading="lazy">
+      <img src="images-lilian/g5.jpg" alt="Hecho en Cuba — Mogote Diptych" loading="eager">
       <span class="img-title">Hecho en Cuba — Mogote Diptych</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g6.jpg" alt="Plein Aired Histories — Farmers St Cemetery" loading="lazy">
+      <img src="images-lilian/g6.jpg" alt="Plein Aired Histories — Farmers St Cemetery" loading="eager">
       <span class="img-title">Plein Aired Histories — Farmers St Cemetery</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g7.jpg" alt="ReCollecting Roig — Specimen Images" loading="lazy">
+      <img src="images-lilian/g7.jpg" alt="ReCollecting Roig — Specimen Images" loading="eager">
       <span class="img-title">ReCollecting Roig</span>
     </div>
     <div class="gallery-item">
-      <img src="images-lilian/g8.jpg" alt="Legacy of Place" loading="lazy">
+      <img src="images-lilian/g8.jpg" alt="Legacy of Place" loading="eager">
       <span class="img-title">Legacy of Place</span>
     </div>
   </div>
@@ -305,6 +306,8 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

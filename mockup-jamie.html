@@ -174,6 +174,7 @@
     .hero-name { font-size: 58px; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -243,35 +244,35 @@
   </div>
   <div class="gallery-grid">
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01-painting11-addhgkgyhjhg65_orig.jpg" alt="Celebrity Portrait" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01-painting11-addhgkgyhjhg65_orig.jpg" alt="Celebrity Portrait" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Celebrity Portrait</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01fgfgbdfg5rgf-painting11-add-1-7-19-24-zzhhdf7-orig_orig.jpg" alt="Pop Noir Series" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01fgfgbdfg5rgf-painting11-add-1-7-19-24-zzhhdf7-orig_orig.jpg" alt="Pop Noir Series" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Pop Noir Series</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-flashplayer-4-orig-orig-orig.jpg" alt="Rock Icon" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-flashplayer-4-orig-orig-orig.jpg" alt="Rock Icon" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Rock Icon</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzx3cddddcdcdcd1-update-1-1-24-zzzzzzzzzzzzzweb-capture-14-10-2023-43721-www-picmonkey-com-orig-orig-orig-orig_orig.jpg" alt="Scarlet Fever Series" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzx3cddddcdcdcd1-update-1-1-24-zzzzzzzzzzzzzweb-capture-14-10-2023-43721-www-picmonkey-com-orig-orig-orig-orig_orig.jpg" alt="Scarlet Fever Series" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Scarlet Fever Series</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzc-update-this-ine-2727h_orig.jpg" alt="Original Painting" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzc-update-this-ine-2727h_orig.jpg" alt="Original Painting" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Original Painting</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/xyz-hghgh3-20-26-origzz8fhfhg8-orig-1-dd8sj3m_orig.png" alt="Pop Art Original" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/xyz-hghgh3-20-26-origzz8fhfhg8-orig-1-dd8sj3m_orig.png" alt="Pop Art Original" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Pop Art Original</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/published/web-capture-4-8-2023-51125-jamieroxx-weebly-com.jpeg" alt="Gallery View" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/published/web-capture-4-8-2023-51125-jamieroxx-weebly-com.jpeg" alt="Gallery View" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Full Collection</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzxs3zaaaaaaa3-39-25aaad2s2edx2-zzssg33gg11qqe-origdd-orig-orig-hh4h4hzzzzz99zzzzzzzzzz-orig-orig-orig-orig_orig.png" alt="Mixed Media" loading="lazy">
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzxs3zaaaaaaa3-39-25aaad2s2edx2-zzssg33gg11qqe-origdd-orig-orig-hh4h4hzzzzz99zzzzzzzzzz-orig-orig-orig-orig_orig.png" alt="Mixed Media" loading="eager">
       <div class="gallery-overlay"><span class="gallery-title">Mixed Media</span></div>
     </div>
   </div>
@@ -386,6 +387,8 @@
     }, { threshold: 0.1 });
     obs.observe(el);
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

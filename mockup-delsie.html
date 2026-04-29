@@ -180,6 +180,7 @@
     .gallery-row-thirds { grid-template-columns: 1fr; }
     .section-num { display: none; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -238,44 +239,44 @@
 
   <!-- Row 1: full-width newborn -->
   <div class="gallery-row-full">
-    <img src="images/delsie/img10.jpg" alt="Newborn portrait" loading="lazy">
+    <img src="images/delsie/img10.jpg" alt="Newborn portrait" loading="eager">
   </div>
 
   <!-- Row 2: large left + smaller right -->
   <div class="gallery-row-split">
     <div class="gallery-split-img">
-      <img src="images/delsie/img01.jpg" alt="Newborn session" loading="lazy">
+      <img src="images/delsie/img01.jpg" alt="Newborn session" loading="eager">
     </div>
     <div class="gallery-split-img">
-      <img src="images/delsie/img02.jpg" alt="Baby portrait" loading="lazy">
+      <img src="images/delsie/img02.jpg" alt="Baby portrait" loading="eager">
     </div>
   </div>
 
   <!-- Row 3: full-width wedding -->
   <div class="gallery-row-full" style="transition-delay: 100ms;">
-    <img src="images/delsie/img11.jpg" alt="Wedding photography" loading="lazy">
+    <img src="images/delsie/img11.jpg" alt="Wedding photography" loading="eager">
   </div>
 
   <!-- Row 4: three images -->
   <div class="gallery-row-thirds">
     <div class="gallery-third-img">
-      <img src="images/delsie/img05.jpg" alt="Family portrait" loading="lazy">
+      <img src="images/delsie/img05.jpg" alt="Family portrait" loading="eager">
     </div>
     <div class="gallery-third-img">
-      <img src="images/delsie/img07.jpg" alt="Newborn close-up" loading="lazy">
+      <img src="images/delsie/img07.jpg" alt="Newborn close-up" loading="eager">
     </div>
     <div class="gallery-third-img">
-      <img src="images/delsie/img09.jpg" alt="Baby details" loading="lazy">
+      <img src="images/delsie/img09.jpg" alt="Baby details" loading="eager">
     </div>
   </div>
 
   <!-- Row 5: side by side reversed -->
   <div class="gallery-row-split" style="grid-template-columns: 2fr 3fr;">
     <div class="gallery-split-img">
-      <img src="images/delsie/img12.jpg" alt="Wedding couple" loading="lazy">
+      <img src="images/delsie/img12.jpg" alt="Wedding couple" loading="eager">
     </div>
     <div class="gallery-split-img">
-      <img src="images/delsie/img04.jpg" alt="Wedding ceremony" loading="lazy">
+      <img src="images/delsie/img04.jpg" alt="Wedding ceremony" loading="eager">
     </div>
   </div>
 </section>
@@ -293,7 +294,7 @@
 <!-- ABOUT — MAGAZINE SPREAD -->
 <section id="about">
   <div class="about-img">
-    <img src="images/delsie/img03.jpg" alt="About Delsie Figueroa" loading="lazy">
+    <img src="images/delsie/img03.jpg" alt="About Delsie Figueroa" loading="eager">
   </div>
   <div class="about-text">
     <div class="about-section-header">
@@ -309,7 +310,7 @@
 <!-- CTA — FULL BLEED WITH OVERLAY -->
 <section id="cta">
   <div class="cta-bg">
-    <img src="images/delsie/img08.jpg" alt="Book a session" loading="lazy">
+    <img src="images/delsie/img08.jpg" alt="Book a session" loading="eager">
   </div>
   <div class="cta-overlay"></div>
   <div class="cta-content">
@@ -368,6 +369,8 @@
     document.querySelector('.hero-tagline').classList.add('is-visible');
     document.querySelector('.hero-scroll').classList.add('is-visible');
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

@@ -587,7 +587,8 @@
       .cta-heading { font-size: 34px; }
       .pull-quote { font-size: 22px; }
     }
-  </style>
+    .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
+</style>
 </head>
 <body>
 
@@ -664,7 +665,7 @@
   <!-- Full-width image 1 -->
   <div class="gallery-full">
     <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7258.jpg"
-         alt="Beach Ceremony" loading="lazy">
+         alt="Beach Ceremony" loading="eager">
     <span class="img-caption">Beach Ceremony</span>
   </div>
 
@@ -672,12 +673,12 @@
   <div class="gallery-pair">
     <div class="gallery-pair-item">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7265.jpg"
-           alt="Wedding Portrait" loading="lazy">
+           alt="Wedding Portrait" loading="eager">
       <span class="img-caption">Wedding Portrait</span>
     </div>
     <div class="gallery-pair-item">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7268bffaq-1.jpg"
-           alt="Ceremony Moment" loading="lazy">
+           alt="Ceremony Moment" loading="eager">
       <span class="img-caption">Ceremony</span>
     </div>
   </div>
@@ -685,7 +686,7 @@
   <!-- Full-width image 2 -->
   <div class="gallery-full">
     <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture3.jpg"
-         alt="Water Photography" loading="lazy">
+         alt="Water Photography" loading="eager">
     <span class="img-caption">Water Photography</span>
   </div>
 
@@ -693,12 +694,12 @@
   <div class="gallery-pair">
     <div class="gallery-pair-item">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture5.jpg"
-           alt="Splash Series" loading="lazy">
+           alt="Splash Series" loading="eager">
       <span class="img-caption">Splash Series</span>
     </div>
     <div class="gallery-pair-item">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture7.jpg"
-           alt="Coastal Light" loading="lazy">
+           alt="Coastal Light" loading="eager">
       <span class="img-caption">Coastal Light</span>
     </div>
   </div>
@@ -706,7 +707,7 @@
   <!-- Full-width image 3 -->
   <div class="gallery-full">
     <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7274ff.jpg"
-         alt="Golden Hour" loading="lazy">
+         alt="Golden Hour" loading="eager">
     <span class="img-caption">Golden Hour</span>
   </div>
 
@@ -714,12 +715,12 @@
   <div class="gallery-pair">
     <div class="gallery-pair-item">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture10.jpg"
-           alt="Nature Series" loading="lazy">
+           alt="Nature Series" loading="eager">
       <span class="img-caption">Nature Series</span>
     </div>
     <div class="gallery-pair-item">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/10/picture15.jpg"
-           alt="Water Study" loading="lazy">
+           alt="Water Study" loading="eager">
       <span class="img-caption">Water Study</span>
     </div>
   </div>
@@ -730,7 +731,7 @@
 <!-- FEATURED WORK -->
 <section id="featured">
   <img src="https://colasoda.wordpress.com/wp-content/uploads/2024/04/dscn7269bffaq-1.jpg"
-       alt="Featured — Beach Ceremony" loading="lazy">
+       alt="Featured — Beach Ceremony" loading="eager">
   <div class="featured-overlay">
     <p class="featured-quote">"Documenting the moments that matter."</p>
     <p class="featured-byline">Laura Marie Pepsin &nbsp;·&nbsp; Florida · 2026</p>
@@ -778,7 +779,7 @@
   <div class="about-grid">
     <div class="about-img">
       <img src="https://colasoda.wordpress.com/wp-content/uploads/2023/10/cropped-244545990_4715486895180098_6174463238963962463_n.jpg"
-           alt="Laura Marie Pepsin" loading="lazy">
+           alt="Laura Marie Pepsin" loading="eager">
     </div>
     <div class="about-content">
       <p class="pull-quote">"Every frame is a document of something real."</p>
@@ -874,6 +875,8 @@
       img.addEventListener('error', () => img.classList.add('img-loaded'));
     }
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

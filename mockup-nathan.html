@@ -139,6 +139,7 @@
     nav { padding: 16px 24px; }
     footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -216,23 +217,23 @@
   </div>
 
   <div class="editorial-row full">
-    <img src="https://upmag.com/wp-content/uploads/2019/07/Miami-Nate-Halcyon.jpg" alt="Halcyon" loading="lazy">
+    <img src="https://upmag.com/wp-content/uploads/2019/07/Miami-Nate-Halcyon.jpg" alt="Halcyon" loading="eager">
   </div>
 
   <div class="editorial-row split-6-4">
-    <img src="https://upmag.com/wp-content/uploads/2019/07/fluffy-eagle-birds-of-prey-Miami-Nate.jpg" alt="Fluffy Eagle — Birds of Prey" loading="lazy">
-    <img src="https://upmag.com/wp-content/uploads/2019/07/hypercolor-caracal-Miami-Nate.jpg" alt="Hypercolor Caracal" loading="lazy">
+    <img src="https://upmag.com/wp-content/uploads/2019/07/fluffy-eagle-birds-of-prey-Miami-Nate.jpg" alt="Fluffy Eagle — Birds of Prey" loading="eager">
+    <img src="https://upmag.com/wp-content/uploads/2019/07/hypercolor-caracal-Miami-Nate.jpg" alt="Hypercolor Caracal" loading="eager">
   </div>
 
   <div class="editorial-row three">
-    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/0/31/031d2a72-34bd-11eb-a837-8f62a27a67e4/5fc7c3806683a.image.jpg" alt="Tigris — Mask Series" loading="lazy">
-    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/b/45/b4584b36-34be-11eb-b635-a3298a22ef95/5fc7c65312722.image.jpg" alt="Thundercat" loading="lazy">
-    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/8/a0/8a0b68cc-34be-11eb-9ee0-f373c4609ff7/5fc7c60d67b83.image.jpg" alt="Make a Splash — Allapattah Mural" loading="lazy">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/0/31/031d2a72-34bd-11eb-a837-8f62a27a67e4/5fc7c3806683a.image.jpg" alt="Tigris — Mask Series" loading="eager">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/b/45/b4584b36-34be-11eb-b635-a3298a22ef95/5fc7c65312722.image.jpg" alt="Thundercat" loading="eager">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/8/a0/8a0b68cc-34be-11eb-9ee0-f373c4609ff7/5fc7c60d67b83.image.jpg" alt="Make a Splash — Allapattah Mural" loading="eager">
   </div>
 
   <div class="editorial-row split-4-6">
-    <img src="https://upmag.com/wp-content/uploads/2019/07/IMG_0745.jpg" alt="Portrait Work" loading="lazy">
-    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/0/ad/0adf7ca0-34be-11eb-9dff-0769f56c4ee1/5fc7c53c09e2c.image.jpg" alt="Know Justice Know Peace — Brownsville Mural" loading="lazy">
+    <img src="https://upmag.com/wp-content/uploads/2019/07/IMG_0745.jpg" alt="Portrait Work" loading="eager">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/0/ad/0adf7ca0-34be-11eb-9dff-0769f56c4ee1/5fc7c53c09e2c.image.jpg" alt="Know Justice Know Peace — Brownsville Mural" loading="eager">
   </div>
 
 </section>
@@ -240,7 +241,7 @@
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="about-painting">
-    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/b/ac/bac1c4ae-34bc-11eb-a51b-137c7be2efde/5fc7c31bc7053.image.jpg" alt="Nathan Delinois in studio" loading="lazy">
+    <img src="https://bloximages.newyork1.vip.townnews.com/miamitimesonline.com/content/tncms/assets/v3/editorial/b/ac/bac1c4ae-34bc-11eb-a51b-137c7be2efde/5fc7c31bc7053.image.jpg" alt="Nathan Delinois in studio" loading="eager">
   </div>
   <div class="about-text fade-up">
     <span class="about-tag">02 — About</span>
@@ -271,7 +272,7 @@
     </div>
   </div>
   <div class="fade-up-2">
-    <img src="https://upmag.com/wp-content/uploads/2019/07/DSC_0487.jpg" alt="Mural detail" loading="lazy">
+    <img src="https://upmag.com/wp-content/uploads/2019/07/DSC_0487.jpg" alt="Mural detail" loading="eager">
   </div>
 </section>
 
@@ -326,6 +327,8 @@ window.addEventListener('scroll', () => {
     heroImg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
   }
 }, { passive: true });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

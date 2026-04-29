@@ -118,7 +118,7 @@
   .gallery-line { flex: 1; height: 1px; background: var(--light); }
 
   .masonry { columns: 3; column-gap: 8px; }
-  .masonry-item { break-inside: avoid; margin-bottom: 8px; overflow: hidden; opacity: 1;  transition: opacity 0.9s ease, clip-path 1s ease; will-change: clip-path; }
+  .masonry-item { min-height: 150px; break-inside: avoid; margin-bottom: 8px; overflow: hidden; opacity: 1;  transition: opacity 0.9s ease, clip-path 1s ease; will-change: clip-path; }
   .masonry-item.is-visible { opacity: 1; clip-path: inset(0 0 0 0); }
   .masonry-item:nth-child(2) { transition-delay: 60ms; }
   .masonry-item:nth-child(3) { transition-delay: 120ms; }
@@ -203,6 +203,7 @@
     .masonry { columns: 1; }
     .hero-name { font-size: 32px; letter-spacing: 0.12em; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -278,13 +279,13 @@
     <div class="gallery-line"></div>
   </div>
   <div class="masonry">
-    <div class="masonry-item"><img src="images/isabel/img04.jpg" alt="Newborn I" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/isabel/img05.jpg" alt="Baby portrait" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/isabel/img01.jpg" alt="Family portrait" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/isabel/img02.jpg" alt="Newborn II" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/isabel/img03.jpg" alt="Maternity" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/isabel/img07.jpg" alt="Family II" loading="lazy"></div>
-    <div class="masonry-item"><img src="images/isabel/img06.jpg" alt="Newborn III" loading="lazy"></div>
+    <div class="masonry-item"><img src="images/isabel/img04.jpg" alt="Newborn I" loading="eager"></div>
+    <div class="masonry-item"><img src="images/isabel/img05.jpg" alt="Baby portrait" loading="eager"></div>
+    <div class="masonry-item"><img src="images/isabel/img01.jpg" alt="Family portrait" loading="eager"></div>
+    <div class="masonry-item"><img src="images/isabel/img02.jpg" alt="Newborn II" loading="eager"></div>
+    <div class="masonry-item"><img src="images/isabel/img03.jpg" alt="Maternity" loading="eager"></div>
+    <div class="masonry-item"><img src="images/isabel/img07.jpg" alt="Family II" loading="eager"></div>
+    <div class="masonry-item"><img src="images/isabel/img06.jpg" alt="Newborn III" loading="eager"></div>
   </div>
 </section>
 
@@ -297,7 +298,7 @@
       <span class="about-section-label">About</span>
     </div>
     <div class="about-portrait">
-      <img src="images/isabel/img02.jpg" alt="Isabel Guerra" loading="lazy">
+      <img src="images/isabel/img02.jpg" alt="Isabel Guerra" loading="eager">
     </div>
   </div>
   <div class="about-right">
@@ -377,6 +378,8 @@
       heroImgWrap.style.transform = `translateY(${scrolled * 0.25}px)`;
     }
   }, { passive: true });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

@@ -180,6 +180,7 @@
   @media (max-width: 480px) {
     .gallery-masonry { columns: 1; } .hero-name { font-size: 40px; } .hero-right { height: 70vw; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -225,47 +226,47 @@
   </div>
   <div class="gallery-masonry">
     <div class="gallery-card">
-      <img src="images/deanna/img02.jpg" alt="Landscape" loading="lazy">
+      <img src="images/deanna/img02.jpg" alt="Landscape" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Landscape Study</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img06.jpg" alt="Animal portrait" loading="lazy">
+      <img src="images/deanna/img06.jpg" alt="Animal portrait" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Animal Portrait</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img05.jpg" alt="Acrylic painting" loading="lazy">
+      <img src="images/deanna/img05.jpg" alt="Acrylic painting" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Acrylic on Canvas</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img09.jpg" alt="Oil portrait" loading="lazy">
+      <img src="images/deanna/img09.jpg" alt="Oil portrait" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Commissioned Portrait</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img03.jpg" alt="Oil on canvas" loading="lazy">
+      <img src="images/deanna/img03.jpg" alt="Oil on canvas" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Oil on Canvas</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img10.jpg" alt="Landscape" loading="lazy">
+      <img src="images/deanna/img10.jpg" alt="Landscape" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">North Florida Study</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img01.jpg" alt="Wildlife painting" loading="lazy">
+      <img src="images/deanna/img01.jpg" alt="Wildlife painting" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Wildlife Series</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img07.jpg" alt="Color study" loading="lazy">
+      <img src="images/deanna/img07.jpg" alt="Color study" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Color Study</span></div>
       <div class="gallery-card-border"></div>
     </div>
     <div class="gallery-card">
-      <img src="images/deanna/img04.jpg" alt="Oil painting" loading="lazy">
+      <img src="images/deanna/img04.jpg" alt="Oil painting" loading="eager">
       <div class="gallery-card-overlay"><span class="gallery-card-title">Original Work</span></div>
       <div class="gallery-card-border"></div>
     </div>
@@ -278,7 +279,7 @@
     "Painting is how I translate the world I see into something others can feel — animals, landscapes, the people who matter."
   </blockquote>
   <div class="about-grid">
-    <img class="about-portrait" src="images/deanna/img07.jpg" alt="Deanna Wheeler at work" loading="lazy">
+    <img class="about-portrait" src="images/deanna/img07.jpg" alt="Deanna Wheeler at work" loading="eager">
     <div class="about-text">
       <span class="section-number">02 — The Artist</span>
       <h2 class="section-title" style="margin-bottom:32px;">Deanna Wheeler</h2>
@@ -417,6 +418,8 @@
     }, { threshold: 0.1 });
     obs.observe(el);
   });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

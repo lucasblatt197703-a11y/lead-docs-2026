@@ -539,6 +539,7 @@
     nav a { font-size: 10px; }
     .stat-num { font-size: 64px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -604,35 +605,35 @@
   </div>
   <div class="gallery-grid">
     <div class="gallery-item">
-      <img src="images/regina/img03.jpg" alt="Chaos" loading="lazy">
+      <img src="images/regina/img03.jpg" alt="Chaos" loading="eager">
       <div class="gallery-caption"><span>Chaos</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://static.wixstatic.com/media/d238f2_15587861c2d14369acb5664bf1ce2f53~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Stepping Out" loading="lazy">
+      <img src="https://static.wixstatic.com/media/d238f2_15587861c2d14369acb5664bf1ce2f53~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Stepping Out" loading="eager">
       <div class="gallery-caption"><span>Stepping Out</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://static.wixstatic.com/media/d238f2_215038c9bb4d4b49a4f74fd19f72355a~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Botanical Interest" loading="lazy">
+      <img src="https://static.wixstatic.com/media/d238f2_215038c9bb4d4b49a4f74fd19f72355a~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Botanical Interest" loading="eager">
       <div class="gallery-caption"><span>Botanical Interest</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://static.wixstatic.com/media/d238f2_438c8a7b3af44601858504855e68387b~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Study I" loading="lazy">
+      <img src="https://static.wixstatic.com/media/d238f2_438c8a7b3af44601858504855e68387b~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Study I" loading="eager">
       <div class="gallery-caption"><span>Study I</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://static.wixstatic.com/media/d238f2_aac5ab9059124ed39338cb8fdf589b77~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Study II" loading="lazy">
+      <img src="https://static.wixstatic.com/media/d238f2_aac5ab9059124ed39338cb8fdf589b77~mv2.jpg/v1/fit/w_1920/file.jpg" alt="Study II" loading="eager">
       <div class="gallery-caption"><span>Study II</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/regina/img08.jpg" alt="Study III" loading="lazy">
+      <img src="images/regina/img08.jpg" alt="Study III" loading="eager">
       <div class="gallery-caption"><span>Study III</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/regina/img01.jpg" alt="Movement I" loading="lazy">
+      <img src="images/regina/img01.jpg" alt="Movement I" loading="eager">
       <div class="gallery-caption"><span>Movement I</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/regina/img09.jpg" alt="Movement II" loading="lazy">
+      <img src="images/regina/img09.jpg" alt="Movement II" loading="eager">
       <div class="gallery-caption"><span>Movement II</span></div>
     </div>
   </div>
@@ -645,7 +646,7 @@
     class="about-img"
     src="images/regina/img10.jpg"
     alt="Regina Porter — Abstract Work"
-    loading="lazy"
+    loading="eager"
   >
   <div class="about-text">
     <span class="about-section-label">About the Artist</span>
@@ -723,6 +724,8 @@
 
   // CTA sub
   document.querySelectorAll('.cta-sub').forEach(el => observer.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

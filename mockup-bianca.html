@@ -149,7 +149,7 @@
   .masonry {
     columns: 3; gap: 16px;
   }
-  .masonry-item {
+  .masonry-item { min-height: 150px;
     break-inside: avoid; margin-bottom: 16px;
     position: relative; overflow: hidden;
     border-radius: 2px;
@@ -330,6 +330,7 @@
     .hero-name { font-size: 38px; }
     .masonry { columns: 1; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -351,7 +352,7 @@
   </h1>
   <p class="hero-tagline">Original paintings &middot; Prints &middot; Commissions</p>
   <div class="hero-banner-wrap">
-    <img class="hero-banner" src="images/bianca/img05.jpg" alt="Fantasy painting by Bianca Roman-Stumpff" loading="lazy">
+    <img class="hero-banner" src="images/bianca/img05.jpg" alt="Fantasy painting by Bianca Roman-Stumpff" loading="eager">
     <div class="hero-banner-overlay"></div>
   </div>
 </section>
@@ -389,39 +390,39 @@
   <h2 class="section-title">The Gallery</h2>
   <div class="masonry">
     <div class="masonry-item">
-      <img src="images/bianca/img01.jpg" alt="Fantasy painting" loading="lazy">
+      <img src="images/bianca/img01.jpg" alt="Fantasy painting" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img04.jpg" alt="Whimsical acrylic painting" loading="lazy">
+      <img src="images/bianca/img04.jpg" alt="Whimsical acrylic painting" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img14.jpg" alt="Original art by Bianca" loading="lazy">
+      <img src="images/bianca/img14.jpg" alt="Original art by Bianca" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img12.jpg" alt="Fantasy acrylic painting" loading="lazy">
+      <img src="images/bianca/img12.jpg" alt="Fantasy acrylic painting" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img03.jpg" alt="Whimsical art" loading="lazy">
+      <img src="images/bianca/img03.jpg" alt="Whimsical art" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img07.jpg" alt="Fantasy illustration painting" loading="lazy">
+      <img src="images/bianca/img07.jpg" alt="Fantasy illustration painting" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img13.jpg" alt="Original acrylic" loading="lazy">
+      <img src="images/bianca/img13.jpg" alt="Original acrylic" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img06.jpg" alt="Fantasy art by Bianca" loading="lazy">
+      <img src="images/bianca/img06.jpg" alt="Fantasy art by Bianca" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
     <div class="masonry-item">
-      <img src="images/bianca/img09.jpg" alt="Whimsical painting" loading="lazy">
+      <img src="images/bianca/img09.jpg" alt="Whimsical painting" loading="eager">
       <div class="masonry-overlay"></div>
     </div>
   </div>
@@ -433,7 +434,7 @@
   <div class="shop-grid">
     <div class="shop-item">
       <div style="overflow:hidden;">
-        <img class="shop-img" src="images/bianca/img10.jpg" alt="Art print for sale" loading="lazy">
+        <img class="shop-img" src="images/bianca/img10.jpg" alt="Art print for sale" loading="eager">
       </div>
       <div class="shop-info">
         <div class="shop-title">Fantasy Print</div>
@@ -442,7 +443,7 @@
     </div>
     <div class="shop-item">
       <div style="overflow:hidden;">
-        <img class="shop-img" src="images/bianca/img08.jpg" alt="Original painting for sale" loading="lazy">
+        <img class="shop-img" src="images/bianca/img08.jpg" alt="Original painting for sale" loading="eager">
       </div>
       <div class="shop-info">
         <div class="shop-title">Original Painting</div>
@@ -451,7 +452,7 @@
     </div>
     <div class="shop-item">
       <div style="overflow:hidden;">
-        <img class="shop-img" src="images/bianca/img11.jpg" alt="Whimsical art print" loading="lazy">
+        <img class="shop-img" src="images/bianca/img11.jpg" alt="Whimsical art print" loading="eager">
       </div>
       <div class="shop-info">
         <div class="shop-title">Whimsical Series</div>
@@ -463,7 +464,7 @@
 </section>
 
 <section class="about-section" id="about">
-  <img class="about-portrait" src="images/bianca/img02.jpg" alt="Bianca Roman-Stumpff" loading="lazy">
+  <img class="about-portrait" src="images/bianca/img02.jpg" alt="Bianca Roman-Stumpff" loading="eager">
   <div>
     <span class="section-label">The Artist</span>
     <h2 class="section-title">About Bianca</h2>
@@ -562,6 +563,8 @@
     obs.observe(el);
   });
   document.querySelectorAll('.section-title, .stat-number').forEach(el => obs.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

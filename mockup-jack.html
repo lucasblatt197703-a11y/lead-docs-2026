@@ -530,6 +530,7 @@
     .stat-item:nth-child(2) { border-left: none; border-right: none; border-top: 1px solid rgba(139,69,19,0.2); border-bottom: 1px solid rgba(139,69,19,0.2); }
     .gallery-grid { grid-template-columns: repeat(2,1fr); }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -599,35 +600,35 @@
   </div>
   <div class="gallery-grid">
     <div class="gallery-item">
-      <img src="images/jack/img04.jpg" alt="Oil Portrait" loading="lazy">
+      <img src="images/jack/img04.jpg" alt="Oil Portrait" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Oil Portrait</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img01.jpg" alt="Studio Work" loading="lazy">
+      <img src="images/jack/img01.jpg" alt="Studio Work" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Studio Work</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img02.jpg" alt="Sculpture" loading="lazy">
+      <img src="images/jack/img02.jpg" alt="Sculpture" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Sculpture</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img07.jpg" alt="Form Study" loading="lazy">
+      <img src="images/jack/img07.jpg" alt="Form Study" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Form Study</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img08.jpg" alt="Composition" loading="lazy">
+      <img src="images/jack/img08.jpg" alt="Composition" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Composition</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img10.jpg" alt="Detail" loading="lazy">
+      <img src="images/jack/img10.jpg" alt="Detail" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Detail</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img05.jpg" alt="Restoration Work" loading="lazy">
+      <img src="images/jack/img05.jpg" alt="Restoration Work" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Restoration</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/jack/img06.jpg" alt="Studio Portrait" loading="lazy">
+      <img src="images/jack/img06.jpg" alt="Studio Portrait" loading="eager">
       <div class="gallery-overlay"><span class="gallery-label">Studio Portrait</span></div>
     </div>
   </div>
@@ -646,7 +647,7 @@
         class="about-image"
         src="images/jack/img09.jpg"
         alt="Jack Casey in his studio"
-        loading="lazy"
+        loading="eager"
       >
     </div>
     <div class="about-content">
@@ -737,6 +738,8 @@ document.querySelectorAll('.cta-sub').forEach(el => observer.observe(el));
 
 // Contact lines
 document.querySelectorAll('.contact-line').forEach(el => observer.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

@@ -133,6 +133,7 @@
   @media (max-width: 480px) {
     .nav-links { display: none; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -178,23 +179,23 @@
     <h2 class="section-title">Portfolio</h2>
   </div>
   <div class="gallery-row">
-    <img src="images/katelyn/img05.jpg" alt="Newborn portrait" loading="lazy">
-    <img src="images/katelyn/img09.jpg" alt="Maternity session" loading="lazy">
+    <img src="images/katelyn/img05.jpg" alt="Newborn portrait" loading="eager">
+    <img src="images/katelyn/img09.jpg" alt="Maternity session" loading="eager">
   </div>
   <div class="gallery-row">
-    <img src="images/katelyn/img07.jpg" alt="Newborn session" loading="lazy">
-    <img src="images/katelyn/img01.jpg" alt="Portrait session" loading="lazy">
+    <img src="images/katelyn/img07.jpg" alt="Newborn session" loading="eager">
+    <img src="images/katelyn/img01.jpg" alt="Portrait session" loading="eager">
   </div>
   <div class="gallery-accent">
-    <img src="images/katelyn/img11.jpg" alt="Newborn wrap portrait" loading="lazy">
+    <img src="images/katelyn/img11.jpg" alt="Newborn wrap portrait" loading="eager">
   </div>
   <div class="gallery-row">
-    <img src="images/katelyn/img06.jpg" alt="Family session" loading="lazy">
-    <img src="images/katelyn/img03.jpg" alt="Newborn close-up" loading="lazy">
+    <img src="images/katelyn/img06.jpg" alt="Family session" loading="eager">
+    <img src="images/katelyn/img03.jpg" alt="Newborn close-up" loading="eager">
   </div>
   <div class="gallery-row">
-    <img src="images/katelyn/img12.jpg" alt="Session photo" loading="lazy">
-    <img src="images/katelyn/img08.jpg" alt="Maternity portrait" loading="lazy">
+    <img src="images/katelyn/img12.jpg" alt="Session photo" loading="eager">
+    <img src="images/katelyn/img08.jpg" alt="Maternity portrait" loading="eager">
   </div>
 </section>
 
@@ -206,7 +207,7 @@
     <span class="nicu-badge">Volunteer Photographer</span>
   </div>
   <div class="nicu-image">
-    <img src="images/katelyn/img04.jpg" alt="NICU newborn session" loading="lazy">
+    <img src="images/katelyn/img04.jpg" alt="NICU newborn session" loading="eager">
   </div>
 </section>
 
@@ -215,7 +216,7 @@
     <span class="section-number">02</span>
     <h2 class="section-title">About</h2>
   </div>
-  <img src="images/katelyn/img10.jpg" alt="Katelyn Michelle" class="about-portrait" loading="lazy">
+  <img src="images/katelyn/img10.jpg" alt="Katelyn Michelle" class="about-portrait" loading="eager">
   <blockquote class="pull-quote">These fleeting moments — a tiny hand, a sleeping face — are gone so fast. I'm here to make sure you never forget them.</blockquote>
   <p class="about-body">Based in Clermont, Florida, Katelyn Michelle specializes in newborn, maternity, and family photography. Known for warm, gentle imagery and genuine care for every family she photographs, Katelyn also volunteers with the Preemie Prints NICU program — offering complimentary sessions to families in hospital intensive care units.</p>
 </section>
@@ -256,6 +257,8 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.section-title, .gallery-row, .gallery-accent img, .nicu-text h2, .nicu-text p, .nicu-image, .about-portrait, .pull-quote, .about-body, .stat').forEach(el => observer.observe(el));
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

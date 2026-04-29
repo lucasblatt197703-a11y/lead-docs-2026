@@ -152,6 +152,7 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 .services-grid{grid-template-columns:1fr;}
 .tight-grid{grid-template-columns:repeat(2,1fr);}
 }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -217,25 +218,25 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
     <span class="gallery-sub">Studio Work</span>
   </div>
   <div class="tight-grid">
-    <div class="tight-img"><img src="images/savannah/img11.jpg" alt="Newborn" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img02.jpg" alt="Baby portrait" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img07.jpg" alt="Newborn wrap" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img13.jpg" alt="Maternity" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img06.jpg" alt="Baby" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img03.jpg" alt="Newborn sleeping" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img12.jpg" alt="Family" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img08.jpg" alt="Newborn detail" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img14.jpg" alt="Baby portrait" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img09.jpg" alt="Newborn hands" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img10.jpg" alt="Baby smile" loading="lazy"></div>
-    <div class="tight-img"><img src="images/savannah/img04.jpg" alt="Maternity portrait" loading="lazy"></div>
+    <div class="tight-img"><img src="images/savannah/img11.jpg" alt="Newborn" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img02.jpg" alt="Baby portrait" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img07.jpg" alt="Newborn wrap" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img13.jpg" alt="Maternity" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img06.jpg" alt="Baby" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img03.jpg" alt="Newborn sleeping" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img12.jpg" alt="Family" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img08.jpg" alt="Newborn detail" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img14.jpg" alt="Baby portrait" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img09.jpg" alt="Newborn hands" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img10.jpg" alt="Baby smile" loading="eager"></div>
+    <div class="tight-img"><img src="images/savannah/img04.jpg" alt="Maternity portrait" loading="eager"></div>
   </div>
 </section>
 
 <section id="about">
   <div class="about-wrap">
     <div class="about-portrait-wrap">
-      <img src="images/savannah/img01.jpg" alt="Savannah Payne" loading="lazy">
+      <img src="images/savannah/img01.jpg" alt="Savannah Payne" loading="eager">
     </div>
     <div class="about-text-overlap">
       <div class="about-eyebrow">The Photographer</div>
@@ -388,6 +389,8 @@ footer{flex-direction:column;gap:16px;padding:32px 24px;text-align:center;}
 
   document.querySelectorAll('.services-heading, .about-portrait-wrap, .about-text-overlap, .gallery-heading').forEach(function(el){ io.observe(el); });
 })();
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>

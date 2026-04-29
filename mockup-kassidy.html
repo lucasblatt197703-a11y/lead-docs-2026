@@ -619,6 +619,7 @@
     .gallery-row-full { height: 60vw; }
     .cta-headline { font-size: 30px; }
   }
+  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
 </style>
 </head>
 <body>
@@ -697,7 +698,7 @@
       <img
         src="images/kassidy/img09.jpg"
         alt="Portrait session"
-        loading="lazy"
+        loading="eager"
         referrerpolicy="no-referrer"
       >
     </div>
@@ -708,7 +709,7 @@
         <img
           src="images/kassidy/img10.jpg"
           alt="Portrait"
-          loading="lazy"
+          loading="eager"
           referrerpolicy="no-referrer"
         >
         <div class="img-label">Portraits</div>
@@ -717,7 +718,7 @@
         <img
           src="images/kassidy/img08.jpg"
           alt="Natural light portrait"
-          loading="lazy"
+          loading="eager"
           referrerpolicy="no-referrer"
         >
         <div class="img-label">Natural Light</div>
@@ -730,7 +731,7 @@
         <img
           src="images/kassidy/img03.jpg"
           alt="Wedding moments"
-          loading="lazy"
+          loading="eager"
           referrerpolicy="no-referrer"
         >
         <div class="img-label">Weddings</div>
@@ -746,7 +747,7 @@
       <img
         src="images/kassidy/img01.jpg"
         alt="Portrait work"
-        loading="lazy"
+        loading="eager"
         referrerpolicy="no-referrer"
       >
     </div>
@@ -757,7 +758,7 @@
         <img
           src="images/kassidy/img04.jpg"
           alt="Session"
-          loading="lazy"
+          loading="eager"
           referrerpolicy="no-referrer"
         >
         <div class="img-label">Sessions</div>
@@ -766,7 +767,7 @@
         <img
           src="images/kassidy/img06.jpg"
           alt="Portrait"
-          loading="lazy"
+          loading="eager"
           referrerpolicy="no-referrer"
         >
         <div class="img-label">Portraits</div>
@@ -778,7 +779,7 @@
       <img
         src="images/kassidy/img02.jpg"
         alt="Photography work"
-        loading="lazy"
+        loading="eager"
         referrerpolicy="no-referrer"
       >
     </div>
@@ -792,7 +793,7 @@
     <img
       src="images/kassidy/img07.jpg"
       alt="Kassidy Griffin, photographer"
-      loading="lazy"
+      loading="eager"
       referrerpolicy="no-referrer"
     >
   </div>
@@ -909,6 +910,8 @@ splitRows.forEach(row => {
     item.style.transitionDelay = (i * 120) + 'ms';
   });
 });
+  // Show everything immediately on load
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
 </script>
 </body>
 </html>
