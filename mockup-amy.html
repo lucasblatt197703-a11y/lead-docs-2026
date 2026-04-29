@@ -3,921 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amy Xie Photography — Proposals · Weddings · NYC + Tampa</title>
+<title>Amy Xie Photography — Proposal & Wedding Photographer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #1A1614;
-    --bg-deep: #0F0C0B;
-    --text: #F5EDE3;
-    --amber: #C4885A;
-    --brown: #8B6E5A;
-    --white: #FFFFFF;
-  }
-
-  html { scroll-behavior: smooth; overflow-x: hidden; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 1.75;
-    overflow-x: hidden;
-  }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 48px;
-    background: transparent;
-    mix-blend-mode: normal;
-  }
-
-  nav .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 18px;
-    color: var(--white);
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
-  }
-
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 36px;
-  }
-
-  nav ul li a {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--white);
-    text-decoration: none;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.7);
-    transition: color 0.3s ease;
-  }
-
-  nav ul li a:hover { color: var(--amber); }
-
-  /* ─── HERO ─── */
-  #hero {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    z-index: 0;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://static.wixstatic.com/media/62cd9c_c0ed374f67e84b3c958f2f444178407f~mv2.jpg');
-    background-size: cover;
-    background-position: center 30%;
-    will-change: transform;
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(15,12,11,0.7) 0%,
-      rgba(15,12,11,0.1) 50%,
-      transparent 100%
-    );
-  }
-
-  .hero-text {
-    position: absolute;
-    bottom: 72px;
-    left: 64px;
-    z-index: 2;
-  }
-
-  .hero-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 108px;
-    color: var(--white);
-    letter-spacing: 0.4em;
-    line-height: 1;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.4);
-    display: block;
-    will-change: letter-spacing;
-    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .hero-sub {
-    display: block;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: rgba(245, 237, 227, 0.75);
-    margin-top: 16px;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
-  }
-
-  /* ─── MAIN CONTENT (scrolls OVER sticky hero) ─── */
-  .page-body {
-    position: relative;
-    z-index: 1;
-    margin-top: 100vh;
-  }
-
-  /* ─── STATS STRIP ─── */
-  #stats {
-    background: var(--bg-deep);
-    padding: 80px 64px 60px;
-    border-top: 1px solid rgba(196,136,90,0.3);
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    max-width: 900px;
-    margin: 0 auto 48px;
-  }
-
-  .stat-item {
-    text-align: center;
-    padding: 0 32px;
-    border-right: 1px solid rgba(245,237,227,0.1);
-  }
-
-  .stat-item:last-child { border-right: none; }
-
-  .stat-number {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 88px;
-    color: var(--amber);
-    line-height: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .stat-label {
-    display: block;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(245, 237, 227, 0.5);
-    margin-top: 8px;
-  }
-
-  .stat-item.is-visible .stat-number {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .stat-item:nth-child(2).is-visible .stat-number { transition-delay: 0.12s; }
-  .stat-item:nth-child(3).is-visible .stat-number { transition-delay: 0.24s; }
-
-  /* ─── MARQUEE ─── */
-  .marquee-wrap {
-    overflow: hidden;
-    border-top: 1px solid rgba(196,136,90,0.2);
-    border-bottom: 1px solid rgba(196,136,90,0.2);
-    padding: 14px 0;
-    background: var(--bg-deep);
-  }
-
-  .marquee-track {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 40s linear infinite;
-  }
-
-  .marquee-text {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--amber);
-    padding-right: 48px;
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ─── GALLERY ─── */
-  #work {
-    background: var(--bg);
-    padding: 80px 48px 100px;
-  }
-
-  .section-label {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 32px;
-    overflow: hidden;
-  }
-
-  .section-label span {
-    display: block;
-    transform: translateY(100%);
-    transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-
-  .section-label.is-visible span { transform: translateY(0); }
-
-  .gallery-masonry {
-    columns: 3;
-    column-gap: 8px;
-  }
-
-  .gallery-item {
-    break-inside: avoid;
-    margin-bottom: 8px;
-    overflow: hidden;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.9s ease-out;
-    will-change: clip-path;
-  }
-
-  .gallery-item.is-visible { clip-path: inset(0% 0 0 0); }
-  .gallery-item:nth-child(2) { transition-delay: 0.1s; }
-  .gallery-item:nth-child(3) { transition-delay: 0.2s; }
-  .gallery-item:nth-child(4) { transition-delay: 0.05s; }
-  .gallery-item:nth-child(5) { transition-delay: 0.15s; }
-  .gallery-item:nth-child(6) { transition-delay: 0.25s; }
-  .gallery-item:nth-child(7) { transition-delay: 0.08s; }
-  .gallery-item:nth-child(8) { transition-delay: 0.18s; }
-  .gallery-item:nth-child(9) { transition-delay: 0.1s; }
-  .gallery-item:nth-child(10) { transition-delay: 0.2s; }
-
-  .gallery-item img {
-    width: 100%;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  .gallery-item:hover img { transform: scale(1.02); }
-
-  /* ─── FEATURED STORIES ─── */
-  #featured {
-    background: var(--bg-deep);
-    padding: 100px 64px;
-  }
-
-  .story-pair {
-    display: grid;
-    grid-template-columns: 55% 45%;
-    gap: 0;
-    align-items: center;
-    margin-bottom: 80px;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .story-pair.is-visible { opacity: 1; transform: translateY(0); }
-  .story-pair:nth-child(2) { grid-template-columns: 45% 55%; transition-delay: 0.12s; }
-  .story-pair:nth-child(2) .story-img { order: 2; }
-  .story-pair:nth-child(2) .story-text { order: 1; padding-right: 64px; padding-left: 0; }
-
-  .story-img img {
-    width: 100%;
-    display: block;
-  }
-
-  .story-text {
-    padding-left: 64px;
-  }
-
-  .story-caption {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 26px;
-    color: var(--text);
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-
-  .story-location {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--amber);
-  }
-
-  .divider-line {
-    width: 35%;
-    height: 1px;
-    background: rgba(196,136,90,0.3);
-    margin: 0 auto 80px;
-  }
-
-  /* ─── ABOUT ─── */
-  #about {
-    background: var(--bg);
-    padding: 120px 64px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .section-number {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 240px;
-    color: var(--text);
-    opacity: 0.03;
-    line-height: 1;
-    top: 40px;
-    left: 32px;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 42% 58%;
-    gap: 80px;
-    align-items: start;
-    position: relative;
-    z-index: 1;
-  }
-
-  .about-img {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-
-  .about-img.is-visible { opacity: 1; transform: translateY(0); }
-
-  .about-img img {
-    width: 100%;
-    display: block;
-  }
-
-  .about-content {
-    padding-top: 20px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
-  }
-
-  .about-content.is-visible { opacity: 1; transform: translateY(0); }
-
-  .about-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 42px;
-    letter-spacing: 0.06em;
-    color: var(--text);
-    margin-bottom: 32px;
-    overflow: hidden;
-  }
-
-  .about-title span {
-    display: block;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-
-  .about-content.is-visible .about-title span { clip-path: inset(0 0% 0 0); }
-
-  .about-bio {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.85;
-    color: rgba(245, 237, 227, 0.75);
-    margin-bottom: 40px;
-  }
-
-  .about-pull-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 26px;
-    color: var(--amber);
-    line-height: 1.5;
-    border-left: 2px solid var(--amber);
-    padding-left: 24px;
-    margin: 40px 0;
-  }
-
-  /* ─── TESTIMONIAL ─── */
-  #testimonials {
-    background: #0F0C0B;
-    padding: 100px 64px;
-    text-align: center;
-  }
-
-  .testimonial-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 34px;
-    color: var(--text);
-    line-height: 1.55;
-    max-width: 800px;
-    margin: 0 auto 32px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .testimonial-quote.is-visible { opacity: 1; transform: translateY(0); }
-
-  .testimonial-source {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--amber);
-  }
-
-  .testimonial-mark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 80px;
-    color: var(--amber);
-    opacity: 0.3;
-    line-height: 0.5;
-    display: block;
-    margin-bottom: 24px;
-  }
-
-  /* ─── CTA SECTION ─── */
-  #cta {
-    background: var(--bg-deep);
-    padding: 120px 64px;
-    text-align: center;
-    border-top: 1px solid rgba(196,136,90,0.2);
-  }
-
-  .cta-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 58px;
-    color: var(--text);
-    line-height: 1.2;
-    max-width: 700px;
-    margin: 0 auto 24px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
-
-  .cta-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    color: rgba(245, 237, 227, 0.6);
-    margin-bottom: 48px;
-    opacity: 0;
-    transition: opacity 0.9s ease 0.2s;
-  }
-
-  .cta-sub.is-visible { opacity: 1; }
-
-  .cta-btn {
-    display: inline-block;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--amber);
-    border: 1px solid var(--amber);
-    padding: 18px 48px;
-    text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-
-  .cta-btn:hover {
-    background: var(--amber);
-    color: var(--bg-deep);
-  }
-
-  /* ─── CONTACT ─── */
-  #contact {
-    background: var(--bg);
-    padding: 100px 64px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .contact-inner {
-    max-width: 640px;
-  }
-
-  .contact-label {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 40px;
-    overflow: hidden;
-  }
-
-  .contact-label span {
-    display: block;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-
-  .contact-label.is-visible span { clip-path: inset(0 0% 0 0); }
-
-  .contact-email {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 36px;
-    color: var(--text);
-    text-decoration: none;
-    margin-bottom: 24px;
-    transition: color 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s, color 0.3s ease;
-  }
-
-  .contact-email.is-visible { opacity: 1; transform: translateY(0); }
-  .contact-email:hover { color: var(--amber); }
-
-  .contact-socials {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.16em;
-    color: rgba(245, 237, 227, 0.5);
-    margin-bottom: 16px;
-  }
-
-  .contact-socials a {
-    color: rgba(245, 237, 227, 0.5);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .contact-socials a:hover { color: var(--amber); }
-
-  .contact-location {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    color: rgba(245, 237, 227, 0.35);
-    text-transform: uppercase;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--bg-deep);
-    padding: 28px 64px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(245,237,227,0.06);
-  }
-
-  .footer-left {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: rgba(245, 237, 227, 0.45);
-  }
-
-  .footer-center {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(245, 237, 227, 0.25);
-  }
-
-  .footer-right {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    color: rgba(245, 237, 227, 0.2);
-    letter-spacing: 0.04em;
-  }
-
-  /* ─── MOBILE ─── */
-  @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
-    nav ul { gap: 20px; }
-    nav ul li a { font-size: 10px; }
-
-    .hero-name { font-size: 60px; }
-    .hero-text { bottom: 48px; left: 32px; }
-
-    #stats { padding: 60px 24px 48px; }
-    .stats-grid { grid-template-columns: 1fr; gap: 32px; }
-    .stat-item { border-right: none; border-bottom: 1px solid rgba(245,237,227,0.08); padding-bottom: 32px; }
-    .stat-item:last-child { border-bottom: none; }
-    .stat-number { font-size: 64px; }
-
-    #work { padding: 60px 24px 80px; }
-    .gallery-masonry { columns: 2; }
-
-    #featured { padding: 60px 24px; }
-    .story-pair { grid-template-columns: 1fr; gap: 24px; }
-    .story-pair:nth-child(2) .story-img { order: 1; }
-    .story-pair:nth-child(2) .story-text { order: 2; padding-right: 0; padding-left: 0; }
-    .story-text { padding-left: 0; padding-top: 16px; }
-
-    #about { padding: 80px 24px; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-
-    #testimonials { padding: 80px 24px; }
-    .testimonial-quote { font-size: 24px; }
-
-    #cta { padding: 80px 24px; }
-    .cta-heading { font-size: 38px; }
-
-    #contact { padding: 80px 24px; }
-    .contact-email { font-size: 26px; }
-
-    footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px; }
-  }
-
-  @media (max-width: 480px) {
-    .hero-name { font-size: 44px; }
-    .gallery-masonry { columns: 1; }
-    nav ul { display: none; }
-  }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#1A1614;--text:#F5EDE3;--amber:#C4885A;--mid:#221E1C;--subtle:#2E2924;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:flex-end;align-items:center;padding:32px 56px;pointer-events:none;}
+.nav-inner{pointer-events:all;display:flex;gap:44px;}
+.nav-inner a{font-family:'Work Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--text);text-decoration:none;opacity:.55;transition:opacity .3s,color .3s;}
+.nav-inner a:hover{opacity:1;color:var(--amber);}
+.nav-brand{position:fixed;top:32px;left:56px;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:18px;color:var(--text);text-decoration:none;opacity:.75;pointer-events:all;}
+
+/* HERO — FULL BLEED, TEXT PINNED BOTTOM-LEFT */
+#hero{position:relative;height:100vh;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;transform:scale(1.06);transition:transform 8s ease-out;}
+.hero-bg img.loaded{transform:scale(1.0);}
+.hero-content{position:absolute;bottom:72px;left:56px;z-index:2;}
+.hero-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:96px;line-height:1;color:#fff;letter-spacing:.04em;text-shadow:0 2px 40px rgba(0,0,0,.5);letter-spacing:.18em;transition:letter-spacing 1.2s cubic-bezier(.25,.46,.45,.94);}
+.hero-name.compressed{letter-spacing:.04em;}
+.hero-sub{font-family:'Work Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,237,227,.65);margin-top:14px;text-shadow:0 1px 12px rgba(0,0,0,.5);}
+
+/* MARQUEE */
+.marquee-strip{background:transparent;border-top:1px solid rgba(196,136,90,.25);border-bottom:1px solid rgba(196,136,90,.25);padding:12px 0;overflow:hidden;white-space:nowrap;}
+.marquee-inner{display:inline-block;animation:marquee 40s linear infinite;}
+.marquee-inner span{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,237,227,.4);padding:0 48px;}
+.marquee-inner .dot{color:var(--amber);padding:0 16px;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* GALLERY — MASONRY */
+#gallery{padding:100px 56px;background:var(--bg);}
+.gallery-header{margin-bottom:56px;}
+.gallery-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:52px;color:var(--text);clip-path:inset(0 100% 0 0);transition:clip-path .8s cubic-bezier(.76,0,.24,1);will-change:clip-path;}
+.gallery-title.visible{clip-path:inset(0 0% 0 0);}
+.gallery-subtitle{font-family:'Work Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,237,227,.35);margin-top:12px;}
+.masonry{columns:3;column-gap:10px;}
+.masonry-item{break-inside:avoid;margin-bottom:10px;overflow:hidden;clip-path:inset(100% 0 0 0);transition:clip-path .9s ease-out;will-change:clip-path;}
+.masonry-item.visible{clip-path:inset(0 0 0 0);}
+.masonry-item img{width:100%;display:block;transition:transform .7s ease;}
+.masonry-item:hover img{transform:scale(1.03);}
+
+/* FEATURED STORIES */
+#stories{padding:80px 56px 120px;background:var(--bg);}
+.stories-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:44px;color:var(--text);margin-bottom:64px;}
+.story-pair{display:grid;grid-template-columns:60fr 40fr;gap:40px;align-items:center;margin-bottom:80px;}
+.story-pair:nth-child(even){grid-template-columns:40fr 60fr;}
+.story-pair:nth-child(even) .story-img{order:2;}
+.story-pair:nth-child(even) .story-text{order:1;}
+.story-img{overflow:hidden;clip-path:inset(100% 0 0 0);transition:clip-path .9s ease-out;will-change:clip-path;}
+.story-img.visible{clip-path:inset(0 0 0 0);}
+.story-img img{width:100%;height:500px;object-fit:cover;display:block;}
+.story-text{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;will-change:transform,opacity;}
+.story-text.visible{opacity:1;transform:translateY(0);}
+.story-location{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
+.story-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:36px;line-height:1.3;color:var(--text);margin-bottom:20px;}
+.story-body{font-family:'Work Sans',sans-serif;font-size:16px;font-weight:300;line-height:1.85;color:rgba(245,237,227,.55);}
+
+/* ABOUT */
+#about{padding:120px 56px;background:var(--mid);display:flex;justify-content:center;}
+.about-inner{max-width:680px;text-align:center;}
+.about-portrait{width:120px;height:120px;border-radius:50%;object-fit:cover;margin:0 auto 40px;display:block;border:1px solid rgba(196,136,90,.25);}
+.about-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:32px;line-height:1.6;color:var(--text);margin-bottom:36px;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;will-change:transform,opacity;}
+.about-quote.visible{opacity:1;transform:translateY(0);}
+.about-body{font-family:'Work Sans',sans-serif;font-size:16px;font-weight:300;line-height:1.9;color:rgba(245,237,227,.55);max-width:520px;margin:0 auto 36px;}
+.about-tags{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
+.about-tag{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);}
+
+/* STATS MARQUEE AREA */
+.stats-row{background:var(--bg);padding:80px 56px;display:flex;justify-content:center;gap:80px;border-top:1px solid rgba(196,136,90,.12);border-bottom:1px solid rgba(196,136,90,.12);}
+.stat-block{text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
+.stat-block.visible{opacity:1;transform:translateY(0);}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--amber);line-height:1;}
+.stat-lbl{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,237,227,.35);margin-top:8px;}
+
+/* CTA */
+#cta{background:var(--subtle);padding:140px 56px;text-align:center;}
+.cta-eyebrow{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:28px;}
+.cta-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:64px;line-height:1.15;color:var(--text);margin-bottom:36px;}
+.cta-sub{font-family:'Work Sans',sans-serif;font-size:17px;font-weight:300;color:rgba(245,237,227,.5);margin-bottom:52px;max-width:440px;margin-left:auto;margin-right:auto;}
+.cta-btn{display:inline-block;border:1px solid var(--amber);color:var(--amber);font-family:'Work Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;padding:20px 48px;transition:background .3s,color .3s;}
+.cta-btn:hover{background:var(--amber);color:var(--bg);}
+
+/* CONTACT */
+#contact{padding:120px 56px;background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.contact-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:44px;line-height:1.2;color:var(--text);margin-bottom:28px;}
+.contact-info p{font-family:'Work Sans',sans-serif;font-size:16px;font-weight:300;line-height:1.85;color:rgba(245,237,227,.5);}
+.contact-items{padding-top:8px;}
+.contact-item{display:flex;flex-direction:column;gap:6px;margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid rgba(196,136,90,.1);}
+.contact-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.c-label{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);}
+.c-value{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;font-style:italic;color:var(--text);text-decoration:none;}
+.c-value:hover{color:var(--amber);}
+
+/* FOOTER */
+footer{background:#0D0B0A;padding:36px 56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(196,136,90,.08);}
+.footer-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:16px;color:var(--amber);}
+.footer-copy{font-family:'Work Sans',sans-serif;font-size:12px;color:rgba(245,237,227,.2);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-family:'Work Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,237,227,.3);text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--amber);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+nav{padding:20px 24px;}
+.nav-brand{left:24px;top:24px;}
+.nav-inner{display:none;}
+.hero-content{bottom:48px;left:24px;}
+.hero-name{font-size:56px;}
+#gallery{padding:80px 24px;}
+.masonry{columns:2;}
+#stories{padding:80px 24px 80px;}
+.story-pair,.story-pair:nth-child(even){grid-template-columns:1fr;}
+.story-pair:nth-child(even) .story-img,.story-pair:nth-child(even) .story-text{order:unset;}
+.story-img img{height:320px;}
+#about{padding:80px 24px;}
+.stats-row{padding:60px 24px;gap:40px;flex-wrap:wrap;}
+#cta{padding:80px 24px;}
+.cta-heading{font-size:44px;}
+#contact{grid-template-columns:1fr;padding:80px 24px;}
+footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
+}
+@media(max-width:480px){
+.hero-name{font-size:40px;}
+.masonry{columns:1;}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<a href="#" class="nav-brand">Amy Xie</a>
 <nav>
-  <a href="#hero" class="logo">Amy Xie</a>
-  <ul>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Inquire</a></li>
-    <li><a href="https://instagram.com/amyxiephotography" target="_blank">@amyxiephotography</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a href="#gallery">Gallery</a>
+    <a href="#stories">Stories</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<!-- HERO (sticky, behind page-body) -->
 <section id="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-text">
-    <span class="hero-name" id="heroName">Amy Xie</span>
-    <span class="hero-sub">Proposal · Wedding · Engagement · NYC + Tampa</span>
+  <div class="hero-bg">
+    <img id="hero-img" src="https://static.wixstatic.com/media/62cd9c_4e7ba3714b204095b65d615d583ffc61~mv2.jpg" alt="Proposal photography" loading="eager">
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-name" id="hero-name">AMY XIE</h1>
+    <p class="hero-sub">Proposal &amp; Wedding Photography &nbsp;·&nbsp; NYC &amp; Tampa</p>
   </div>
 </section>
 
-<!-- PAGE BODY (scrolls over hero) -->
-<div class="page-body">
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>NYC</span><span class="dot">·</span><span>Tampa</span><span class="dot">·</span><span>Proposals</span><span class="dot">·</span><span>Weddings</span><span class="dot">·</span><span>5,800+ Followers</span><span class="dot">·</span><span>Engagements</span><span class="dot">·</span><span>NYC</span><span class="dot">·</span><span>Tampa</span><span class="dot">·</span><span>Proposals</span><span class="dot">·</span><span>Weddings</span><span class="dot">·</span><span>5,800+ Followers</span><span class="dot">·</span><span>Engagements</span><span class="dot">·</span>
+  </div>
+</div>
 
-  <!-- STATS -->
-  <section id="stats">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <span class="stat-number">5.8K+</span>
-        <span class="stat-label">Instagram Followers</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">7+</span>
-        <span class="stat-label">Years of Experience</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">2</span>
-        <span class="stat-label">Cities: NYC + Florida</span>
-      </div>
-    </div>
-  </section>
+<section id="gallery">
+  <div class="gallery-header">
+    <h2 class="gallery-title">Selected Work</h2>
+    <p class="gallery-subtitle">Proposals · Engagements · Weddings</p>
+  </div>
+  <div class="masonry">
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_296f2cae0f744db8ac5313209b591204~mv2.jpg" alt="Proposal" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_6814cbfc8cee4c8794584c6b3aedd7bc~mv2.jpg" alt="Engagement" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_c0ed374f67e84b3c958f2f444178407f~mv2.jpg" alt="Wedding" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_bb446a865dc1411c9c10b12f18942cc2~mv2.jpg" alt="Couple" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_6c87be7970ae40b48f0d3dfda0ef21ed~mv2.jpg" alt="Portrait" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_134fe12fe60840c781f02dad9a197f9f~mv2.jpg" alt="Moment" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_a11a20dbb89244a1b6e8db9d0fcc8ea1~mv2.jpg" alt="Detail" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_f6eaf89975794a5988451001753c0a52~mv2.jpg" alt="Romance" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/62cd9c_47e15af2fb22480c8f771578d898d27a~mv2.jpg" alt="Ceremony" loading="lazy"></div>
+  </div>
+</section>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span class="marquee-text">Available for Weddings · Proposals · Engagements · NYC · Tampa · Sarasota · Bradenton · Florida · New York City · Available for Weddings · Proposals · Engagements · NYC · Tampa · Sarasota · Bradenton · Florida · New York City · </span>
-      <span class="marquee-text">Available for Weddings · Proposals · Engagements · NYC · Tampa · Sarasota · Bradenton · Florida · New York City · Available for Weddings · Proposals · Engagements · NYC · Tampa · Sarasota · Bradenton · Florida · New York City · </span>
+<section id="stories">
+  <h2 class="stories-title">Recent Stories</h2>
+  <div class="story-pair">
+    <div class="story-img"><img src="https://static.wixstatic.com/media/62cd9c_38599431124b4d49bc3f2f6c1093f66e~mv2.jpg" alt="NYC Rooftop Proposal" loading="lazy"></div>
+    <div class="story-text">
+      <div class="story-location">NYC Rooftop · 2024</div>
+      <h3 class="story-heading">A surprise 40 floors above Manhattan</h3>
+      <p class="story-body">He spent six months planning every detail — the city lights, the timing, the ring. Amy was there to make sure none of it was forgotten.</p>
     </div>
   </div>
-
-  <!-- GALLERY -->
-  <section id="work">
-    <div class="section-label">
-      <span>The Work</span>
+  <div class="story-pair">
+    <div class="story-img"><img src="https://static.wixstatic.com/media/62cd9c_55316144bef4459c872fc2c70ab399da~mv2.jpg" alt="Tampa Beach Wedding" loading="lazy"></div>
+    <div class="story-text">
+      <div class="story-location">Tampa Bay · 2024</div>
+      <h3 class="story-heading">Golden hour on the water</h3>
+      <p class="story-body">When the ceremony ended and the light dropped to amber, the real photographs happened. Barefoot, laughing, completely themselves.</p>
     </div>
-    <div class="gallery-masonry">
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_47e15af2fb22480c8f771578d898d27a~mv2.jpg" alt="Proposal moment" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_55316144bef4459c872fc2c70ab399da~mv2.jpg" alt="Wedding ceremony" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_f6eaf89975794a5988451001753c0a52~mv2.jpg" alt="Couple portraits" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_6983a5d0b8b14c6a8b2421c5abd626e9~mv2.jpg" alt="Reception" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_1739c2c105f44762ace0cb0832c0afbb~mv2.jpg" alt="Candid moment" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_36dbfb42375248c0bacb72b451c03ae5~mv2.jpg" alt="Engagement" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_223303b873904cb7826098b910f997b7~mv2.jpg" alt="NYC shoot" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_699cceb6af1d4689a098d1915e582f12~mv2.jpg" alt="Golden hour" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_bc1700cb954943e39a7e77875a988f35~mv2.jpg" alt="Wedding details" loading="lazy">
-      </div>
-      <div class="gallery-item">
-        <img src="https://static.wixstatic.com/media/62cd9c_7c26ea28378e4c5fb11a75a11ec5336e~mv2.jpg" alt="Couple embrace" loading="lazy">
-      </div>
+  </div>
+</section>
+
+<div class="stats-row">
+  <div class="stat-block">
+    <div class="stat-num">5.8K</div>
+    <div class="stat-lbl">Followers</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">2</div>
+    <div class="stat-lbl">Markets: NYC & Tampa</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">100%</div>
+    <div class="stat-lbl">Candid, Never Staged</div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="about-inner">
+    <img class="about-portrait" src="https://static.wixstatic.com/media/62cd9c_04cf036074bb45d681c868f9df8126fb~mv2.jpg" alt="Amy Xie" loading="lazy">
+    <blockquote class="about-quote">"The best photographs happen in between the poses."</blockquote>
+    <p class="about-body">Amy Xie is a proposal and wedding photographer based between New York City and Tampa. Specializing in candid, emotionally-driven images that capture the energy of a real moment — not a recreated one.</p>
+    <div class="about-tags">
+      <span class="about-tag">Proposals</span>
+      <span class="about-tag">Engagements</span>
+      <span class="about-tag">Weddings</span>
+      <span class="about-tag">NYC & Tampa</span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FEATURED STORIES -->
-  <section id="featured">
-    <div class="section-label">
-      <span>Selected Stories</span>
+<section id="cta">
+  <div class="cta-eyebrow">Ready to Begin</div>
+  <h2 class="cta-heading">Let's make something<br>unforgettable.</h2>
+  <p class="cta-sub">Inquire about your date. Limited sessions available each month.</p>
+  <a href="mailto:amyxiephotography@gmail.com?subject=Photography Inquiry" class="cta-btn">Get in Touch</a>
+</section>
+
+<section id="contact">
+  <div class="contact-info">
+    <h2 class="contact-heading">Start with a message.</h2>
+    <p>Tell me about your date, your vision, and what you're planning. I'll be back within 24 hours.</p>
+  </div>
+  <div class="contact-items">
+    <div class="contact-item">
+      <span class="c-label">Email</span>
+      <a href="mailto:amyxiephotography@gmail.com" class="c-value">amyxiephotography@gmail.com</a>
     </div>
-
-    <div class="story-pair">
-      <div class="story-img">
-        <img src="https://static.wixstatic.com/media/62cd9c_33a46f48a4b24d1cb49b8f8b3489b523~mv2.jpg" alt="Proposal story" loading="lazy">
-      </div>
-      <div class="story-text">
-        <p class="story-caption">The moment before — Central Park, NYC. He'd been carrying the ring for three months. She had no idea.</p>
-        <p class="story-location">Proposal · New York City · 2024</p>
-      </div>
+    <div class="contact-item">
+      <span class="c-label">Instagram</span>
+      <a href="https://instagram.com/amyxiephotography" class="c-value">@amyxiephotography</a>
     </div>
-
-    <div class="divider-line"></div>
-
-    <div class="story-pair">
-      <div class="story-img">
-        <img src="https://static.wixstatic.com/media/62cd9c_04cf036074bb45d681c868f9df8126fb~mv2.jpg" alt="Tampa ceremony" loading="lazy">
-      </div>
-      <div class="story-text">
-        <p class="story-caption">Tampa Riverwalk at sunset. She saw him before he was supposed to be there. That look — that's the one you frame.</p>
-        <p class="story-location">Wedding · Tampa, FL · 2025</p>
-      </div>
+    <div class="contact-item">
+      <span class="c-label">Markets</span>
+      <span class="c-value">New York City &amp; Tampa, FL</span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-number">03</div>
-    <div class="about-grid">
-      <div class="about-img">
-        <img src="https://static.wixstatic.com/media/62cd9c_bb446a865dc1411c9c10b12f18942cc2~mv2.jpg" alt="Amy Xie" loading="lazy">
-      </div>
-      <div class="about-content">
-        <div class="about-title"><span>About Amy</span></div>
-        <p class="about-bio">Amy Xie has been documenting proposals and weddings since 2016, working across New York City and Southwest Florida. Known for capturing the unrehearsed reaction — the split-second of disbelief, the tears before the yes — her work is built on preparation and invisibility. Based in Tampa, available anywhere.</p>
-        <blockquote class="about-pull-quote">
-          "I'm not there to document the day. I'm there to document what the day does to people."
-        </blockquote>
-        <p class="about-bio" style="margin-top: 24px;">Now booking weddings, surprise proposals, and engagements across NYC and Southwest Florida for 2026.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <span class="testimonial-mark">"</span>
-    <p class="testimonial-quote">We hired Amy for our NYC rooftop proposal and the photos looked like they came from a magazine. She was completely invisible until the moment happened — and then somehow she caught everything.</p>
-    <p class="testimonial-source">Rachel & James · NYC Rooftop Proposal · 2024</p>
-  </section>
-
-  <!-- CTA -->
-  <section id="cta">
-    <h2 class="cta-heading">Let's Make Something Unforgettable</h2>
-    <p class="cta-sub">Now booking weddings and proposals in NYC and Southwest Florida for 2026</p>
-    <a href="mailto:amyxiephotography@gmail.com" class="cta-btn">Inquire Now</a>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-number" style="top: 20px; font-size: 200px;">04</div>
-    <div class="contact-inner">
-      <div class="contact-label"><span>Inquiries</span></div>
-      <a href="mailto:amyxiephotography@gmail.com" class="contact-email">amyxiephotography@gmail.com</a>
-      <p class="contact-socials">
-        <a href="https://instagram.com/amyxiephotography" target="_blank">Instagram</a>
-        &nbsp;·&nbsp;
-        <a href="https://facebook.com/amyxiephotography" target="_blank">Facebook</a>
-      </p>
-      <p class="contact-location">Tampa, FL · New York City · Worldwide</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-left">Amy Xie Photography</span>
-    <span class="footer-center">© 2026 Amy Xie Photography · All Rights Reserved</span>
-    <span class="footer-right">Design by Lucas Blatt</span>
-  </footer>
-
-</div><!-- end page-body -->
+<footer>
+  <div class="footer-name">Amy Xie Photography</div>
+  <div class="footer-copy">&#169; 2026 Amy Xie Photography. Design by Lucas Blatt.</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/amyxiephotography">Instagram</a>
+    <a href="mailto:amyxiephotography@gmail.com">Email</a>
+  </div>
+</footer>
 
 <script>
-  // ── HERO: letter-spacing animate on load
-  const heroName = document.getElementById('heroName');
-  setTimeout(() => {
-    heroName.style.letterSpacing = '0.08em';
-  }, 100);
+(function(){
+  // Hero parallax
+  var heroImg = document.getElementById('hero-img');
+  if(heroImg){ heroImg.addEventListener('load', function(){ heroImg.classList.add('loaded'); }); }
 
-  // ── HERO: parallax on scroll
-  const heroBg = document.getElementById('heroBg');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
-  }, { passive: true });
+  // Hero name letter-spacing compress
+  var heroName = document.getElementById('hero-name');
+  if(heroName){ setTimeout(function(){ heroName.classList.add('compressed'); }, 100); }
 
-  // ── INTERSECTION OBSERVER: trigger animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
+  // Hero parallax on scroll
+  var hero = document.getElementById('hero');
+  window.addEventListener('scroll', function(){
+    if(heroImg){ heroImg.style.transform = 'scale(1.0) translateY(' + (window.scrollY * 0.3) + 'px)'; }
+  }, {passive:true});
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, {threshold: 0.1});
+
+  var io_masonry = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.masonry-item').forEach(function(item,i){
+          setTimeout(function(){ item.classList.add('visible'); }, i * 80);
+        });
+        io_masonry.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, {threshold: 0.05});
 
-  // Stats
-  document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
-
-  // Section labels
-  document.querySelectorAll('.section-label').forEach(el => observer.observe(el));
-
-  // Gallery items — observe with lower threshold for earlier trigger
-  const galleryObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
+  var io_stats = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.stat-block').forEach(function(item,i){
+          setTimeout(function(){ item.classList.add('visible'); }, i * 150);
+        });
+        io_stats.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05 });
-  document.querySelectorAll('.gallery-item').forEach(el => galleryObserver.observe(el));
+  }, {threshold: 0.2});
 
-  // Story pairs
-  document.querySelectorAll('.story-pair').forEach(el => observer.observe(el));
-
-  // About
-  document.querySelectorAll('.about-img, .about-content').forEach(el => observer.observe(el));
-
-  // Testimonial
-  document.querySelectorAll('.testimonial-quote').forEach(el => observer.observe(el));
-
-  // CTA
-  document.querySelectorAll('.cta-heading, .cta-sub').forEach(el => observer.observe(el));
-
-  // Contact
-  document.querySelectorAll('.contact-label, .contact-email').forEach(el => observer.observe(el));
+  document.querySelector('.masonry') && io_masonry.observe(document.querySelector('.masonry'));
+  document.querySelector('.stats-row') && io_stats.observe(document.querySelector('.stats-row'));
+  document.querySelectorAll('.gallery-title, .story-img, .story-text, .about-quote, .stories-title').forEach(function(el){ io.observe(el); });
+})();
 </script>
 </body>
 </html>
