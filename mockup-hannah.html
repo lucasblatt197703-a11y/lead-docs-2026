@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hannah Holland Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F2EDE6;
+    --text: #1A1A16;
+    --accent: #C4935A;
+    --forest: #4A5A42;
+    --dark: #1E2419;
+    --deep: #2C3A2A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── VERTICAL EDGE TEXT ─── */
+  .edge-text {
+    position: fixed;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(26,26,22,0.13);
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    background-image: url('https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/panorama2-1-of-1_orig.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+
+  .hero-bar-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: rgba(20,24,18,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    z-index: 10;
+  }
+
+  .hero-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,237,230,0.9);
+  }
+
+  .hero-nav {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .hero-nav a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(242,237,230,0.75);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .hero-nav a:hover { color: var(--accent); }
+
+  .hero-bar-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: rgba(20,24,18,0.92);
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+    z-index: 10;
+    gap: 32px;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 96px);
+    font-weight: 300;
+    color: #F2EDE6;
+    letter-spacing: 0.4em;
+    line-height: 1;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    white-space: nowrap;
+  }
+
+  .hero-name.animate { letter-spacing: 0.18em; }
+
+  .hero-specialty {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(242,237,230,0.6);
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    background: var(--bg);
+    padding: 80px 48px;
+  }
+
+  .section-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 12px;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 48px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-masonry {
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  .gallery-masonry img {
+    width: 100%;
+    margin-bottom: 8px;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, transform 0.4s ease;
+    cursor: crosshair;
+  }
+
+  .gallery-masonry img.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-masonry img:hover { transform: scale(1.02); }
+
+  /* ─── PANORAMA FEATURE ─── */
+  #panorama {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    background-image: url('https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/p7280908-pano_1_orig.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panorama-caption {
+    position: absolute;
+    bottom: 28px;
+    left: 48px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(242,237,230,0.85);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--dark);
+    padding: 100px 48px;
+  }
+
+  .about-accent-line {
+    width: 40%;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .about-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-content .section-heading {
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .about-bio {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(242,237,230,0.8);
+    margin-bottom: 28px;
+  }
+
+  .about-bio + .about-bio {
+    color: rgba(242,237,230,0.65);
+    font-size: 16px;
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--bg);
+    padding: 100px 48px;
+    text-align: center;
+  }
+
+  .stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 120ms; }
+  .stat-item:nth-child(3) { transition-delay: 240ms; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--deep);
+    padding: 18px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── WEDDINGS ─── */
+  #weddings {
+    background: var(--bg);
+    padding: 100px 48px;
+  }
+
+  .wedding-stagger {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .wedding-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .wedding-row:nth-child(1) .wedding-img { width: 58%; margin-left: 0; }
+  .wedding-row:nth-child(1) .wedding-img-sm { width: 40%; margin-top: 80px; }
+  .wedding-row:nth-child(2) .wedding-img-center {
+    width: 52%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .wedding-img, .wedding-img-sm, .wedding-img-center {
+    object-fit: cover;
+    aspect-ratio: 3/4;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .wedding-img.is-visible,
+  .wedding-img-sm.is-visible,
+  .wedding-img-center.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: var(--dark);
+    padding: 120px 48px;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 5vw, 80px);
+    font-weight: 300;
+    color: #F2EDE6;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,237,230,0.5);
+    margin-bottom: 48px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.15s;
+  }
+
+  .cta-sub.is-visible { opacity: 1; }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.25s, background 0.3s ease, color 0.3s ease;
+  }
+
+  .cta-btn.is-visible { opacity: 1; }
+  .cta-btn:hover { background: var(--accent); color: var(--dark); }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--bg);
+    padding: 100px 48px;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #contact .section-heading { clip-path: none; margin-bottom: 32px; }
+  #contact .section-heading.is-visible { clip-path: none; }
+
+  .contact-link {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--text);
+    text-decoration: none;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(26,26,22,0.15);
+    padding-bottom: 16px;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-note {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    color: rgba(26,26,22,0.5);
+    letter-spacing: 0.05em;
+    margin-top: 24px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 28px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(242,237,230,0.6);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 300;
+    color: rgba(242,237,230,0.25);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero-bar-top { padding: 0 24px; }
+    .hero-bar-bottom { padding: 0 24px; gap: 16px; height: 68px; }
+    .hero-name { font-size: 36px; }
+    .hero-specialty { display: none; }
+    .hero-logo { display: none; }
+    #gallery { padding: 60px 24px; }
+    .gallery-masonry { columns: 2; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-image { aspect-ratio: 16/9; }
+    .about-accent-line { width: 60%; }
+    #stats { padding: 72px 24px; }
+    .stats-grid { gap: 40px; }
+    #weddings { padding: 72px 24px; }
+    .wedding-row:nth-child(1) .wedding-img { width: 100%; }
+    .wedding-row:nth-child(1) .wedding-img-sm { width: 100%; margin-top: 0; }
+    .wedding-row { flex-direction: column; }
+    #cta { padding: 80px 24px; }
+    #contact { padding: 72px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .panorama-caption { left: 24px; font-size: 13px; }
+    .edge-text { display: none; }
+    #about { padding: 72px 24px; }
+    .hero-nav { gap: 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-masonry { columns: 1; }
+    .hero-name { font-size: 28px; }
+    .hero-bar-top { height: 56px; }
+    .hero-nav li:not(:first-child) { display: none; }
+    .stats-grid { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Vertical edge text -->
+<div class="edge-text">Portfolio 2026</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bar-top">
+    <span class="hero-logo">Hannah Holland</span>
+    <nav>
+      <ul class="hero-nav">
+        <li><a href="#gallery">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#weddings">Weddings</a></li>
+        <li><a href="#contact">Inquiries</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="hero-bar-bottom">
+    <h1 class="hero-name" id="heroName">Hannah Holland</h1>
+    <span class="hero-specialty">Landscape &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Wedding</span>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section id="gallery">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-heading js-reveal">Photography</h2>
+  <div class="gallery-masonry">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/9882645_orig.jpg" alt="Mountain Vista" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/2388479_orig.jpg" alt="Wild Landscape" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/1771975_orig.jpg" alt="Forest Light" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/2264665_orig.jpg" alt="Morning Fog" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/2867967_orig.jpg" alt="Nature Detail" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/1312380_orig.jpg" alt="Portrait" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/2712224_orig.jpg" alt="Autumn Walk" loading="lazy" class="js-img-reveal">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/4663048_orig.jpg" alt="Panoramic Ridge" loading="lazy" class="js-img-reveal">
+  </div>
+</section>
+
+<!-- ─── PANORAMA FEATURE ─── -->
+<div id="panorama">
+  <span class="panorama-caption">The mountains of Western North Carolina</span>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-accent-line"></div>
+  <div class="about-grid">
+    <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/4254817_orig.jpg" alt="Hannah Holland portrait" class="about-image" loading="lazy">
+    <div class="about-content">
+      <h2 class="section-heading js-reveal">About</h2>
+      <p class="about-bio">
+        Hannah Holland is a documentary and fine-art photographer working across landscape, nature, and portraiture. Based between Green Cove Springs, Florida and the mountains of Western North Carolina, her work spans cinematic panoramas to intimate wedding coverage.
+      </p>
+      <p class="about-bio">
+        Trained at the University of North Florida and with four years of professional experience at Gumps Sports Photography, Holland brings technical discipline to subjects that reward patience — mountain light, forest stillness, and the quiet moments between ceremony and celebration.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item js-stat">
+      <span class="stat-number">4+</span>
+      <span class="stat-label">Years Professional</span>
+    </div>
+    <div class="stat-item js-stat">
+      <span class="stat-number">5</span>
+      <span class="stat-label">Specialties</span>
+    </div>
+    <div class="stat-item js-stat">
+      <span class="stat-number">294+</span>
+      <span class="stat-label">Published Works</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Landscapes &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Panoramas &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Weddings &nbsp;·&nbsp; Green Cove Springs, FL &nbsp;·&nbsp; Brevard, NC &nbsp;·&nbsp; Available for Booking &nbsp;·&nbsp; Landscapes &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Panoramas &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Weddings &nbsp;·&nbsp; Green Cove Springs, FL &nbsp;·&nbsp; Brevard, NC &nbsp;·&nbsp; Available for Booking &nbsp;·&nbsp; </span>
+    <span>Landscapes &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Panoramas &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Weddings &nbsp;·&nbsp; Green Cove Springs, FL &nbsp;·&nbsp; Brevard, NC &nbsp;·&nbsp; Available for Booking &nbsp;·&nbsp; Landscapes &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Panoramas &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Weddings &nbsp;·&nbsp; Green Cove Springs, FL &nbsp;·&nbsp; Brevard, NC &nbsp;·&nbsp; Available for Booking &nbsp;·&nbsp; </span>
+  </div>
+</div>
+
+<!-- ─── WEDDINGS ─── -->
+<section id="weddings">
+  <div class="section-label">Wedding Work</div>
+  <h2 class="section-heading js-reveal">Love Stories</h2>
+  <div class="wedding-stagger">
+    <div class="wedding-row">
+      <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/p8280014-2_orig.jpg" alt="Wedding ceremony" class="wedding-img js-img-reveal" loading="lazy">
+      <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/p8280295-2_orig.jpg" alt="Wedding portraits" class="wedding-img-sm js-img-reveal" loading="lazy">
+    </div>
+    <div class="wedding-row">
+      <img src="https://hannahhollandphotography.weebly.com/uploads/1/1/6/2/11629410/p8280092_orig.jpg" alt="Wedding details" class="wedding-img-center js-img-reveal" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section id="cta">
+  <h2 class="cta-heading js-fade">Let's Make Something</h2>
+  <p class="cta-sub js-fade">Landscape &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Weddings &nbsp;·&nbsp; Available for Travel</p>
+  <a href="https://www.instagram.com/hannahhollandphoto/" class="cta-btn js-fade" target="_blank" rel="noopener">Get In Touch</a>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <h2 class="section-heading" style="clip-path: none; margin-bottom: 32px;">Inquiries</h2>
+  <a href="https://www.instagram.com/hannahhollandphoto/" class="contact-link" target="_blank" rel="noopener">@hannahhollandphoto on Instagram</a>
+  <a href="https://hannahhollandphotography.weebly.com/contact-me.html" class="contact-link" target="_blank" rel="noopener">Contact Form</a>
+  <p class="contact-note">Green Cove Springs, FL &nbsp;·&nbsp; Brevard, NC &nbsp;·&nbsp; Available for Travel</p>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <span class="footer-name">Hannah Holland Photography &nbsp;·&nbsp; © 2026</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+// 1. Hero name letter-spacing animate
+setTimeout(() => {
+  const name = document.getElementById('heroName');
+  if (name) name.classList.add('animate');
+}, 100);
+
+// 2. Parallax on panorama section
+const panoramaEl = document.getElementById('panorama');
+window.addEventListener('scroll', () => {
+  if (!panoramaEl) return;
+  const rect = panoramaEl.getBoundingClientRect();
+  if (rect.bottom > 0 && rect.top < window.innerHeight) {
+    const progress = (window.scrollY - (panoramaEl.offsetTop - window.innerHeight)) / window.innerHeight;
+    panoramaEl.style.backgroundPositionY = `${50 + progress * 20}%`;
+  }
+}, { passive: true });
+
+// 3. Section heading clip-path reveal
+const headings = document.querySelectorAll('.js-reveal');
+const headingObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+}, { threshold: 0.15 });
+headings.forEach(h => headingObserver.observe(h));
+
+// 4. Gallery image mask reveal from bottom
+const imgs = document.querySelectorAll('.js-img-reveal');
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      const delay = Array.from(imgs).indexOf(e.target) * 80;
+      setTimeout(() => e.target.classList.add('is-visible'), Math.min(delay, 600));
+      imgObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+imgs.forEach(img => imgObserver.observe(img));
+
+// 5. Stats staggered fade + rise
+const stats = document.querySelectorAll('.js-stat');
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+}, { threshold: 0.15 });
+stats.forEach(s => statObserver.observe(s));
+
+// 6. CTA fade in
+const fades = document.querySelectorAll('.js-fade');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+}, { threshold: 0.15 });
+fades.forEach(f => fadeObserver.observe(f));
+</script>
+</body>
+</html>
