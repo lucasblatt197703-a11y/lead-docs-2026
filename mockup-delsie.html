@@ -3,810 +3,366 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delsie Figueroa Photography — Tampa, FL</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Delsie Figueroa Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --cream: #FAF6F1;
-    --warm-brown: #2C2218;
-    --sand: #C8A882;
-    --mist: #E8DDD0;
-    --espresso: #1A140E;
-    --light-number: rgba(200,168,130,0.35);
-  }
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #F0EBE3; --text: #1A1210; --accent: #C4896A; --light: #DDD5C8; --muted: #7A6E67; }
   html { scroll-behavior: smooth; }
-  body { background: var(--cream); color: var(--warm-brown); font-family: 'Work Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  body { background: var(--bg); color: var(--text); font-family: 'Work Sans', sans-serif; overflow-x: hidden; }
 
-  /* ===== NAV ===== */
-  nav {
-    position: fixed;
-    top: 0; right: 0;
-    z-index: 100;
-    padding: 28px 48px;
-    display: flex;
-    gap: 36px;
-    mix-blend-mode: multiply;
-  }
-  nav a {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--warm-brown);
-    text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-  }
-  nav a:hover { opacity: 1; }
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 56px; background: rgba(240,235,227,0.92); backdrop-filter: blur(8px); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; letter-spacing: 0.15em; color: var(--text); text-decoration: none; font-style: italic; }
+  nav ul { display: flex; gap: 40px; list-style: none; }
+  nav ul a { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  nav ul a:hover { color: var(--accent); }
 
-  /* ===== HERO ===== */
-  .hero {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    min-height: 100vh;
-    position: sticky;
-    top: 0;
-  }
+  /* HERO — STACKED EDITORIAL */
+  #hero { padding-top: 100px; padding-bottom: 0; }
 
-  .hero-image-wrap {
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-image-wrap img {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.04);
-    transition: transform 8s ease-out;
-  }
-  .hero-image-wrap img.loaded { transform: scale(1.0); }
-
-  .hero-text {
-    background: var(--cream);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 56px 80px 52px;
-    position: relative;
-  }
-  .hero-eyebrow {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--sand);
-    margin-bottom: 28px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-  }
+  .hero-name-block { padding: 30px 56px 20px; position: relative; overflow: hidden; }
   .hero-name {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: clamp(60px, 7vw, 100px);
-    line-height: 0.95;
+    font-size: clamp(72px, 10vw, 140px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: 0.08em;
+    color: var(--text);
     letter-spacing: 0.4em;
-    color: var(--warm-brown);
-    margin-bottom: 36px;
-    opacity: 0;
-    transition: letter-spacing 1.4s cubic-bezier(0.25,0.46,0.45,0.94) 0.1s, opacity 0.9s ease 0.1s;
-  }
-  .hero-name.loaded {
-    letter-spacing: 0.08em;
-    opacity: 1;
-  }
-  .hero-divider {
-    width: 48px;
-    height: 1px;
-    background: var(--sand);
-    margin-bottom: 28px;
-    opacity: 0;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: opacity 0.6s ease 0.8s, transform 0.8s ease 0.8s;
-  }
-  .hero-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: var(--warm-brown);
-    opacity: 0;
-    line-height: 1.9;
-    transition: opacity 0.7s ease 1.0s;
-  }
-  .hero-cta {
-    margin-top: 52px;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.7s ease 1.2s, transform 0.7s ease 1.2s;
-  }
-  .hero-cta a {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--warm-brown);
-    text-decoration: none;
-    border-bottom: 1px solid var(--sand);
-    padding-bottom: 4px;
-    transition: color 0.3s, border-color 0.3s;
-  }
-  .hero-cta a:hover { color: var(--sand); }
-
-  .hero-eyebrow.loaded,
-  .hero-divider.loaded,
-  .hero-sub.loaded,
-  .hero-cta.loaded {
-    opacity: 1;
-    transform: translateY(0) scaleX(1);
-  }
-
-  /* ===== SCROLL INDICATOR ===== */
-  .scroll-hint {
-    position: absolute;
-    bottom: 40px;
-    right: 52px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--warm-brown);
-    opacity: 0.4;
-  }
-  .scroll-hint::before {
-    content: '';
+    will-change: letter-spacing;
+    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: block;
-    width: 32px;
-    height: 1px;
-    background: var(--warm-brown);
-  }
-
-  /* ===== MARQUEE STRIP ===== */
-  .marquee-strip {
-    background: var(--sand);
-    overflow: hidden;
-    padding: 16px 0;
-    position: relative;
-    z-index: 10;
-  }
-  .marquee-inner {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 40s linear infinite;
-  }
-  .marquee-inner span {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--cream);
-    padding-right: 48px;
-    flex-shrink: 0;
-  }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ===== MAIN CONTENT (scrolls over sticky hero) ===== */
-  .page-content {
-    position: relative;
-    z-index: 10;
-    background: var(--cream);
-  }
-
-  /* ===== SECTION SHARED ===== */
-  .section-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 120px;
-    font-weight: 300;
-    color: var(--light-number);
-    position: absolute;
-    left: -20px;
-    top: -40px;
-    line-height: 1;
-    pointer-events: none;
-    z-index: 0;
-    user-select: none;
-  }
-
-  .section-label {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--sand);
-    display: block;
-    margin-bottom: 16px;
-  }
-
-  .section-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: clamp(32px, 4vw, 46px);
-    line-height: 1.1;
-    color: var(--warm-brown);
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
-  }
-  .section-heading.is-visible { clip-path: inset(0 0% 0 0); }
-
-  /* ===== STATS SECTION ===== */
-  .stats {
-    background: var(--mist);
-    padding: 100px 80px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    align-items: center;
-  }
-  .stat-item { text-align: center; }
-  .stat-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(60px, 8vw, 100px);
-    font-weight: 300;
-    color: var(--warm-brown);
-    line-height: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .stat-number.is-visible { opacity: 1; transform: translateY(0); }
-  .stat-label {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--sand);
-    margin-top: 10px;
-    opacity: 0;
-    transition: opacity 0.7s ease 0.2s;
-  }
-  .stat-label.is-visible { opacity: 1; }
-
-  /* ===== GALLERY SECTION ===== */
-  .gallery-section {
-    padding: 140px 80px;
-    position: relative;
-  }
-  .gallery-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 60px;
-    margin-bottom: 72px;
-    position: relative;
-  }
-  .gallery-title-wrap {
-    position: relative;
-    padding-left: 60px;
-  }
-  .gallery-intro {
-    flex: 1;
-    max-width: 400px;
-    margin-top: 8px;
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--warm-brown);
-    opacity: 0.7;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-  }
-  .gallery-intro.is-visible { opacity: 0.65; transform: translateY(0); }
-
-  .masonry-grid {
-    column-count: 3;
-    column-gap: 8px;
-  }
-  .masonry-item {
-    break-inside: avoid;
-    margin-bottom: 8px;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .masonry-item img {
-    width: 100%;
-    display: block;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.9s ease-out, transform 0.6s ease;
-    will-change: clip-path, transform;
-  }
-  .masonry-item img.is-visible { clip-path: inset(0 0 0 0); }
-  .masonry-item:hover img { transform: scale(1.03); }
-  .masonry-caption {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(26,20,14,0.7));
-    padding: 32px 18px 16px;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(250,246,241,0.9);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .masonry-item:hover .masonry-caption { opacity: 1; transform: translateY(0); }
-
-  /* ===== ABOUT SECTION ===== */
-  .about-section {
-    background: var(--mist);
-    padding: 140px 80px;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    gap: 0;
-    align-items: center;
-    position: relative;
-  }
-  .about-image-wrap {
-    position: relative;
-    padding-right: 60px;
-  }
-  .about-image-wrap img {
-    width: 100%;
-    aspect-ratio: 4/5;
-    object-fit: cover;
-    display: block;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 1.0s ease-out;
-    will-change: clip-path;
-  }
-  .about-image-wrap img.is-visible { clip-path: inset(0 0 0 0); }
-  .about-text {
-    padding-left: 60px;
-    position: relative;
-  }
-  .about-pull-quote {
-    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: clamp(24px, 3vw, 34px);
-    font-weight: 300;
-    line-height: 1.4;
-    color: var(--sand);
-    margin: 36px 0;
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
   }
-  .about-pull-quote.is-visible { opacity: 1; transform: translateY(0); }
-  .about-body {
-    font-size: 16px;
-    line-height: 1.85;
-    color: var(--warm-brown);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
-  }
-  .about-body.is-visible { opacity: 0.75; transform: translateY(0); }
+  .hero-name.compressed { letter-spacing: 0.02em; }
 
-  /* ===== CTA SECTION ===== */
-  .cta-section {
-    background: var(--espresso);
-    padding: 160px 80px;
-    text-align: center;
-    position: relative;
+  .hero-specialty { font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); margin-top: 16px; font-weight: 400; }
+
+  .hero-image-full {
+    width: 100%;
+    height: clamp(380px, 60vh, 680px);
     overflow: hidden;
-  }
-  .cta-section::before {
-    content: 'DELSIE';
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 220px;
-    font-weight: 300;
-    color: rgba(200,168,130,0.04);
-    letter-spacing: 0.3em;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-  .cta-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(40px, 6vw, 72px);
-    font-weight: 400;
-    color: var(--cream);
-    line-height: 1.15;
-    margin-bottom: 24px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
     position: relative;
+    margin-top: 16px;
   }
+  .hero-image-full img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .hero-caption { padding: 20px 56px; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--light); padding-bottom: 28px; margin-bottom: 0; }
+  .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; font-weight: 300; color: var(--muted); max-width: 500px; line-height: 1.5; opacity: 0; transform: translateY(16px); transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s; }
+  .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+  .hero-scroll { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); opacity: 0; transition: opacity 0.9s ease 0.6s; }
+  .hero-scroll.is-visible { opacity: 1; }
+
+  /* STATS */
+  #stats { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--light); }
+  .stat-item { padding: 48px 56px; border-right: 1px solid var(--light); opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; position: relative; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 100ms; }
+  .stat-item:nth-child(3) { transition-delay: 200ms; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(60px, 7vw, 96px); font-weight: 600; line-height: 1; color: var(--text); display: block; }
+  .stat-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 8px; display: block; }
+  .stat-num-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Cormorant Garamond', serif; font-size: 200px; font-weight: 700; color: transparent; -webkit-text-stroke: 1px rgba(26,18,16,0.04); pointer-events: none; user-select: none; white-space: nowrap; }
+
+  /* GALLERY — EDITORIAL SCROLL */
+  #gallery { padding: 120px 0 80px; }
+
+  .gallery-section-header { padding: 0 56px; margin-bottom: 60px; display: flex; align-items: baseline; gap: 20px; }
+  .section-num { font-family: 'Cormorant Garamond', serif; font-size: 180px; font-weight: 700; color: transparent; -webkit-text-stroke: 1px rgba(26,18,16,0.04); line-height: 0.8; margin-right: -20px; pointer-events: none; user-select: none; }
+  .section-label { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .section-label.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* Row 1: full-width */
+  .gallery-row-full { width: 100%; height: clamp(320px, 45vw, 600px); overflow: hidden; margin-bottom: 4px; opacity: 0; clip-path: inset(100% 0 0 0); transition: opacity 0.9s ease, clip-path 1s ease; will-change: clip-path; }
+  .gallery-row-full.is-visible { opacity: 1; clip-path: inset(0 0 0 0); }
+  .gallery-row-full img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Row 2: side by side */
+  .gallery-row-split { display: grid; grid-template-columns: 3fr 2fr; gap: 4px; margin-bottom: 4px; }
+  .gallery-split-img { overflow: hidden; height: clamp(260px, 36vw, 480px); opacity: 0; clip-path: inset(100% 0 0 0); transition: opacity 0.9s ease, clip-path 1s ease; will-change: clip-path; }
+  .gallery-split-img.is-visible { opacity: 1; clip-path: inset(0 0 0 0); }
+  .gallery-split-img:nth-child(2) { transition-delay: 120ms; }
+  .gallery-split-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+  .gallery-split-img:hover img { transform: scale(1.02); }
+
+  /* Row 3: 3 equal */
+  .gallery-row-thirds { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-bottom: 4px; }
+  .gallery-third-img { overflow: hidden; height: clamp(200px, 28vw, 380px); opacity: 0; clip-path: inset(100% 0 0 0); transition: opacity 0.9s ease, clip-path 1s ease; will-change: clip-path; }
+  .gallery-third-img.is-visible { opacity: 1; clip-path: inset(0 0 0 0); }
+  .gallery-third-img:nth-child(2) { transition-delay: 100ms; }
+  .gallery-third-img:nth-child(3) { transition-delay: 200ms; }
+  .gallery-third-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+  .gallery-third-img:hover img { transform: scale(1.02); }
+
+  /* MARQUEE */
+  .marquee-section { background: var(--text); padding: 14px 0; overflow: hidden; margin: 80px 0; }
+  .marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+  .marquee-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; letter-spacing: 0.25em; color: rgba(240,235,227,0.6); padding: 0 48px; white-space: nowrap; font-style: italic; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ABOUT — MAGAZINE SPREAD */
+  #about { padding: 80px 56px 120px; display: grid; grid-template-columns: 45% 55%; gap: 0; align-items: start; }
+  .about-img { overflow: hidden; height: clamp(400px, 55vw, 700px); opacity: 0; clip-path: inset(0 100% 0 0); transition: opacity 0.9s ease, clip-path 1s cubic-bezier(0.76, 0, 0.24, 1); will-change: clip-path; }
+  .about-img.is-visible { opacity: 1; clip-path: inset(0 0% 0 0); }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; }
+  .about-text { padding: 40px 0 40px 64px; }
+  .about-section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  .about-num { font-family: 'Cormorant Garamond', serif; font-size: 120px; font-weight: 700; color: transparent; -webkit-text-stroke: 1px rgba(26,18,16,0.05); line-height: 0.8; pointer-events: none; }
+  .about-label { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .about-label.is-visible { clip-path: inset(0 0% 0 0); }
+  .about-pullquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 2.8vw, 36px); font-style: italic; font-weight: 300; color: var(--accent); line-height: 1.4; margin-bottom: 32px; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s; }
+  .about-pullquote.is-visible { opacity: 1; transform: translateY(0); }
+  .about-bio { font-size: 16px; line-height: 1.85; color: var(--muted); font-weight: 300; margin-bottom: 32px; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s; }
+  .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+  .about-detail { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); opacity: 0; transition: opacity 0.9s ease 0.6s; }
+  .about-detail.is-visible { opacity: 1; }
+
+  /* CTA — FULL BLEED IMAGE WITH OVERLAY */
+  #cta { position: relative; min-height: 500px; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
+  .cta-bg { position: absolute; inset: 0; }
+  .cta-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .cta-overlay { position: absolute; inset: 0; background: rgba(26,18,16,0.62); }
+  .cta-content { position: relative; z-index: 2; padding: 80px 48px; }
+  .cta-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 72px); font-weight: 600; color: #fff; margin-bottom: 20px; line-height: 1.1; font-style: italic; clip-path: inset(0 100% 0 0); transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1); }
   .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
-  .cta-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--sand);
-    margin-bottom: 56px;
-    opacity: 0;
-    transition: opacity 0.7s ease 0.4s;
-    position: relative;
-  }
+  .cta-sub { font-size: 15px; color: rgba(255,255,255,0.75); font-weight: 300; margin-bottom: 44px; letter-spacing: 0.05em; opacity: 0; transition: opacity 0.9s ease 0.3s; }
   .cta-sub.is-visible { opacity: 1; }
-  .cta-btn {
-    display: inline-block;
-    background: var(--sand);
-    color: var(--espresso);
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 18px 48px;
-    transition: background 0.3s, color 0.3s;
-    position: relative;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.7s ease 0.6s, transform 0.7s ease 0.6s, background 0.3s, color 0.3s;
-  }
-  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
-  .cta-btn:hover { background: var(--cream); color: var(--espresso); }
+  .cta-btn { display: inline-block; padding: 16px 48px; background: var(--accent); color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; transition: background 0.3s; opacity: 0; transition: opacity 0.9s ease 0.5s, background 0.3s; }
+  .cta-btn.is-visible { opacity: 1; }
+  .cta-btn:hover { background: #a8735a; }
 
-  /* ===== CONTACT SECTION ===== */
-  .contact-section {
-    padding: 120px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-  .contact-heading-wrap { position: relative; }
-  .contact-details { padding-top: 8px; }
-  .contact-item {
-    margin-bottom: 28px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
+  /* CONTACT */
+  #contact { padding: 100px 56px; }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; border-top: 1px solid var(--light); padding-top: 60px; }
+  .contact-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 64px); font-weight: 600; line-height: 1.0; margin-bottom: 24px; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .contact-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-sub { font-size: 15px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .contact-right { padding-top: 16px; }
+  .contact-item { margin-bottom: 28px; opacity: 0; transform: translateY(12px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .contact-item.is-visible { opacity: 1; transform: translateY(0); }
-  .contact-item-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--sand);
-    margin-bottom: 8px;
-  }
-  .contact-item-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--warm-brown);
-  }
-  .contact-item-value a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid var(--sand);
-    padding-bottom: 2px;
-    transition: color 0.3s;
-  }
-  .contact-item-value a:hover { color: var(--sand); }
+  .contact-item:nth-child(2) { transition-delay: 100ms; }
+  .contact-item:nth-child(3) { transition-delay: 200ms; }
+  .c-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+  .c-value a { color: var(--text); text-decoration: none; font-size: 15px; font-weight: 400; transition: color 0.2s; }
+  .c-value a:hover { color: var(--accent); }
+  .c-value span { font-size: 15px; }
 
-  /* ===== FOOTER ===== */
-  footer {
-    background: var(--warm-brown);
-    padding: 40px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .footer-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--cream);
-    letter-spacing: 0.08em;
-  }
-  .footer-copy {
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    color: rgba(250,246,241,0.4);
-  }
-  .footer-credit {
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    color: rgba(250,246,241,0.25);
-  }
+  footer { background: var(--text); padding: 32px 56px; display: flex; justify-content: space-between; align-items: center; }
+  footer .f-name { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: rgba(240,235,227,0.65); font-style: italic; }
+  footer .f-links { display: flex; gap: 28px; }
+  footer .f-links a { font-size: 10px; color: rgba(240,235,227,0.45); text-decoration: none; letter-spacing: 0.18em; text-transform: uppercase; transition: color 0.2s; }
+  footer .f-links a:hover { color: var(--accent); }
+  footer .f-credit { font-size: 11px; color: rgba(240,235,227,0.25); }
 
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; min-height: 100svh; }
-    .hero-image-wrap { height: 55vh; }
-    .hero-image-wrap img { height: 55vh; }
-    .hero-text { padding: 48px 32px; }
-    .hero-name { font-size: 52px; }
-    nav { padding: 20px 24px; gap: 20px; }
-    .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 32px; }
-    .gallery-section { padding: 80px 24px; }
-    .masonry-grid { column-count: 2; }
-    .about-section { grid-template-columns: 1fr; padding: 80px 24px; }
-    .about-image-wrap { padding-right: 0; margin-bottom: 48px; }
-    .about-text { padding-left: 0; }
-    .cta-section { padding: 100px 32px; }
-    .contact-section { grid-template-columns: 1fr; padding: 80px 32px; gap: 48px; }
-    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px; }
-    .section-number { font-size: 80px; left: -10px; }
+    nav { padding: 18px 24px; } nav ul { gap: 20px; }
+    .hero-name-block { padding: 30px 24px 16px; }
+    .hero-caption { padding: 16px 24px 24px; flex-direction: column; gap: 12px; }
+    #stats { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--light); padding: 32px 24px; }
+    #gallery { padding: 60px 0 40px; }
+    .gallery-section-header { padding: 0 24px; }
+    .gallery-row-split { grid-template-columns: 1fr; }
+    .gallery-row-thirds { grid-template-columns: 1fr 1fr; }
+    #about { padding: 60px 24px; grid-template-columns: 1fr; }
+    .about-text { padding: 32px 0 0; }
+    #contact { padding: 60px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
   }
   @media (max-width: 480px) {
-    .masonry-grid { column-count: 1; }
-    .hero-name { font-size: 42px; }
-    .gallery-section { padding: 60px 16px; }
-    .gallery-header { flex-direction: column; gap: 24px; }
+    .gallery-row-thirds { grid-template-columns: 1fr; }
+    .section-num { display: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="#portfolio">Portfolio</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
+  <a href="#hero" class="nav-logo">Delsie Figueroa</a>
+  <ul>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-image-wrap">
-    <img id="heroImg" src="https://static.wixstatic.com/media/b97635_039eef2d53444a7eb403414fa7cc14af~mv2.jpg" alt="Delsie Figueroa Photography — Tampa FL" loading="eager">
+<!-- HERO — STACKED EDITORIAL -->
+<section id="hero">
+  <div class="hero-name-block">
+    <span class="hero-name" id="heroName">DELSIE FIGUEROA</span>
+    <p class="hero-specialty">Newborn &amp; Wedding Photography &middot; Tampa, FL</p>
   </div>
-  <div class="hero-text">
-    <span class="hero-eyebrow">Tampa, Florida</span>
-    <h1 class="hero-name" id="heroName">Delsie<br>Figueroa</h1>
-    <div class="hero-divider"></div>
-    <p class="hero-sub">Newborn &amp; Wedding Photography<br>Tampa Bay · Studio &amp; Location</p>
-    <div class="hero-cta">
-      <a href="#contact">Inquire About Your Session →</a>
+
+  <div class="hero-image-full">
+    <img src="https://static.wixstatic.com/media/b97635_75df64c718854cb8a144054abd2c23f5~mv2.jpg" alt="Newborn photography by Delsie Figueroa" loading="eager">
+  </div>
+
+  <div class="hero-caption">
+    <p class="hero-tagline">Every first moment, preserved with tenderness.</p>
+    <span class="hero-scroll">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-num-bg" aria-hidden="true">500</span>
+    <span class="stat-num">500+</span>
+    <span class="stat-label">Sessions Completed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num-bg" aria-hidden="true">7</span>
+    <span class="stat-num">7+</span>
+    <span class="stat-label">Years Experience</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num-bg" aria-hidden="true">TB</span>
+    <span class="stat-num">Tampa</span>
+    <span class="stat-label">Bay Area, FL</span>
+  </div>
+</section>
+
+<!-- GALLERY — EDITORIAL SCROLL -->
+<section id="gallery">
+  <div class="gallery-section-header">
+    <span class="section-num" aria-hidden="true">01</span>
+    <span class="section-label">Gallery</span>
+  </div>
+
+  <!-- Row 1: full-width newborn -->
+  <div class="gallery-row-full">
+    <img src="https://static.wixstatic.com/media/b97635_6d1bb12da28e49d88e0f33e5d898208e~mv2.jpg" alt="Newborn portrait" loading="lazy">
+  </div>
+
+  <!-- Row 2: large left + smaller right -->
+  <div class="gallery-row-split">
+    <div class="gallery-split-img">
+      <img src="https://static.wixstatic.com/media/b97635_039eef2d53444a7eb403414fa7cc14af~mv2.jpg" alt="Newborn session" loading="lazy">
     </div>
-    <div class="scroll-hint">Scroll</div>
+    <div class="gallery-split-img">
+      <img src="https://static.wixstatic.com/media/b97635_06a91c588d7f4a9e9ef681c055e0aaa1~mv2.jpg" alt="Baby portrait" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row 3: full-width wedding -->
+  <div class="gallery-row-full" style="transition-delay: 100ms;">
+    <img src="https://static.wixstatic.com/media/b97635_0f96ba225b93499c89347425d719beab~mv2.jpg" alt="Wedding photography" loading="lazy">
+  </div>
+
+  <!-- Row 4: three images -->
+  <div class="gallery-row-thirds">
+    <div class="gallery-third-img">
+      <img src="https://static.wixstatic.com/media/b97635_cb2e0e61de20487a8f9363567c4bf230~mv2.jpg" alt="Family portrait" loading="lazy">
+    </div>
+    <div class="gallery-third-img">
+      <img src="https://static.wixstatic.com/media/b97635_0149c63759b34e0ba40cdc5334ed870c~mv2.jpg" alt="Newborn close-up" loading="lazy">
+    </div>
+    <div class="gallery-third-img">
+      <img src="https://static.wixstatic.com/media/b97635_2ed773ac01d8430184091642c825b5b2~mv2.jpg" alt="Baby details" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row 5: side by side reversed -->
+  <div class="gallery-row-split" style="grid-template-columns: 2fr 3fr;">
+    <div class="gallery-split-img">
+      <img src="https://static.wixstatic.com/media/b97635_b03068e98aa7441c908fb9076c9a1962~mv2.jpg" alt="Wedding couple" loading="lazy">
+    </div>
+    <div class="gallery-split-img">
+      <img src="https://static.wixstatic.com/media/b97635_370a4bb32d1148399ea9755b6f96fd5b~mv2.jpg" alt="Wedding ceremony" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-text">Newborn &middot; Wedding &middot; Family &middot; Maternity &middot; Tampa Bay &middot; 2026 &middot;</span>
+    <span class="marquee-text">Newborn &middot; Wedding &middot; Family &middot; Maternity &middot; Tampa Bay &middot; 2026 &middot;</span>
+    <span class="marquee-text">Newborn &middot; Wedding &middot; Family &middot; Maternity &middot; Tampa Bay &middot; 2026 &middot;</span>
+    <span class="marquee-text">Newborn &middot; Wedding &middot; Family &middot; Maternity &middot; Tampa Bay &middot; 2026 &middot;</span>
   </div>
 </div>
 
-<!-- PAGE CONTENT (scrolls over sticky hero) -->
-<div class="page-content">
+<!-- ABOUT — MAGAZINE SPREAD -->
+<section id="about">
+  <div class="about-img">
+    <img src="https://static.wixstatic.com/media/b97635_ef8cd4c0f42243e1b975f3f302d6595b~mv2.jpg" alt="About Delsie Figueroa" loading="lazy">
+  </div>
+  <div class="about-text">
+    <div class="about-section-header">
+      <span class="about-num" aria-hidden="true">02</span>
+      <span class="about-label">About</span>
+    </div>
+    <p class="about-pullquote">"The first days are the ones you'll want to remember forever."</p>
+    <p class="about-bio">Delsie Figueroa is a Tampa Bay-based photographer specializing in newborn, wedding, and family sessions. With more than seven years of experience and over 500 sessions photographed, she brings a gentle, patient approach to every shoot &mdash; creating images that feel honest, warm, and timeless.</p>
+    <p class="about-detail">Tampa Bay, FL &middot; Newborn &middot; Wedding &middot; Family &middot; Maternity</p>
+  </div>
+</section>
 
-  <!-- MARQUEE STRIP -->
-  <div class="marquee-strip" aria-hidden="true">
-    <div class="marquee-inner">
-      <span>Newborn Sessions &nbsp;·&nbsp; Wedding Days &nbsp;·&nbsp; Family Portraits &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Studio &amp; Location &nbsp;·&nbsp; Available for Booking &nbsp;·&nbsp; </span>
-      <span>Newborn Sessions &nbsp;·&nbsp; Wedding Days &nbsp;·&nbsp; Family Portraits &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Studio &amp; Location &nbsp;·&nbsp; Available for Booking &nbsp;·&nbsp; </span>
+<!-- CTA — FULL BLEED WITH OVERLAY -->
+<section id="cta">
+  <div class="cta-bg">
+    <img src="https://static.wixstatic.com/media/b97635_639fab864f3744a88c0cb09875a6fbfb~mv2.jpg" alt="Book a session" loading="lazy">
+  </div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <h2 class="cta-heading">Book Your Session</h2>
+    <p class="cta-sub">Newborn sessions book fast &mdash; inquire early to hold your date.</p>
+    <a href="mailto:delsie.sosa@yahoo.com" class="cta-btn">Inquire Now</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">Let's Work Together</h2>
+      <p class="contact-sub">Ready to book, or just have questions? Send a message and Delsie will be in touch within 24 hours.</p>
+    </div>
+    <div class="contact-right">
+      <div class="contact-item">
+        <span class="c-label">Email</span>
+        <div class="c-value"><a href="mailto:delsie.sosa@yahoo.com">delsie.sosa@yahoo.com</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="c-label">Location</span>
+        <div class="c-value"><span>Tampa Bay, Florida</span></div>
+      </div>
+      <div class="contact-item">
+        <span class="c-label">Availability</span>
+        <div class="c-value"><span>Now Booking 2026</span></div>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- STATS -->
-  <section class="stats" aria-label="Quick facts">
-    <div class="stat-item">
-      <div class="stat-number" data-animate="stat">10+</div>
-      <div class="stat-label" data-animate="stat-label">Years of Experience</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-animate="stat" style="transition-delay:0.1s">100s</div>
-      <div class="stat-label" data-animate="stat-label" style="transition-delay:0.3s">of Families Served</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-animate="stat" style="transition-delay:0.2s">3</div>
-      <div class="stat-label" data-animate="stat-label" style="transition-delay:0.4s">Specialties</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-animate="stat" style="transition-delay:0.3s">Tampa</div>
-      <div class="stat-label" data-animate="stat-label" style="transition-delay:0.5s">Bay Area</div>
-    </div>
-  </section>
-
-  <!-- GALLERY -->
-  <section class="gallery-section" id="portfolio">
-    <div class="gallery-header">
-      <div class="gallery-title-wrap">
-        <span class="section-number">01</span>
-        <span class="section-label">The Work</span>
-        <h2 class="section-heading" data-animate="heading">Portfolio</h2>
-      </div>
-      <p class="gallery-intro" data-animate="fade-rise">Every frame tells a story. From the quiet first hours of a newborn's life to the joy of a wedding day — these are the moments that last forever.</p>
-    </div>
-
-    <div class="masonry-grid">
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_c4148bb76ea3461c8bbe2dc215a84ed3~mv2.jpeg" alt="Newborn Portrait" loading="lazy">
-        <div class="masonry-caption">Newborn Portrait</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_4ec8d9ae3e1b4beea4e851a754cc5ae2~mv2.jpg" alt="Newborn Warmth" loading="lazy">
-        <div class="masonry-caption">Newborn Warmth</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_85025fe1cd514c84b2f2c60634bc6ecc~mv2.jpg" alt="Soft Details" loading="lazy">
-        <div class="masonry-caption">Soft Details</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_1fbaf178efe3423393fa2298fd036882~mv2.jpg" alt="Gentle Moment" loading="lazy">
-        <div class="masonry-caption">Gentle Moment</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_6d1bb12da28e49d88e0f33e5d898208e~mv2.jpg" alt="Wedding Day" loading="lazy">
-        <div class="masonry-caption">Wedding Day</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_a69d5f05e4494f7ba56f98bced654966~mv2.jpg" alt="Wedding Portrait" loading="lazy">
-        <div class="masonry-caption">Wedding Portrait</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_019d13c54e2544b09b70250d02097faa~mv2.jpg" alt="Family Portrait" loading="lazy">
-        <div class="masonry-caption">Family Portrait</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_10db07f4c94648ab88d2457e170c21a5~mv2.jpg" alt="Portrait Session" loading="lazy">
-        <div class="masonry-caption">Portrait Session</div>
-      </div>
-      <div class="masonry-item">
-        <img src="https://static.wixstatic.com/media/b97635_370a4bb32d1148399ea9755b6f96fd5b~mv2.jpg" alt="Studio Session" loading="lazy">
-        <div class="masonry-caption">Studio Session</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about-section" id="about">
-    <div class="about-image-wrap">
-      <span class="section-number" style="left:-10px; top:-30px;">02</span>
-      <img src="https://static.wixstatic.com/media/b97635_fd630bd412db4637ada0b38aa4c9cb89~mv2.jpg" alt="Delsie Figueroa Photography" loading="lazy">
-    </div>
-    <div class="about-text">
-      <span class="section-label">The Photographer</span>
-      <h2 class="section-heading" data-animate="heading">About<br>Delsie</h2>
-      <blockquote class="about-pull-quote" data-animate="fade-rise">
-        "Every family deserves images they'll reach for in thirty years."
-      </blockquote>
-      <p class="about-body" data-animate="fade-rise">
-        Delsie Figueroa documents the moments that matter most — the first breath, the first look, the quiet in-between. Based in Tampa's Carrollwood neighborhood, she brings a warm, unhurried approach to newborn, wedding, and portrait photography across the Tampa Bay area. Her work is defined by natural light, genuine emotion, and an instinct for the details families will want to remember.
-      </p>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <h2 class="cta-heading" data-animate="heading">Ready to Book<br>Your Session?</h2>
-    <p class="cta-sub" data-animate="fade">Newborn &nbsp;·&nbsp; Wedding &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Tampa Bay</p>
-    <a href="mailto:delsie.sosa@yahoo.com" class="cta-btn" data-animate="fade-rise">Get In Touch</a>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact-section" id="contact">
-    <div class="contact-heading-wrap">
-      <span class="section-number" style="top:-20px;">03</span>
-      <span class="section-label">Say Hello</span>
-      <h2 class="section-heading" data-animate="heading">Inquiries</h2>
-    </div>
-    <div class="contact-details">
-      <div class="contact-item" data-animate="fade-rise" style="transition-delay:0.1s">
-        <div class="contact-item-label">Email</div>
-        <div class="contact-item-value"><a href="mailto:delsie.sosa@yahoo.com">delsie.sosa@yahoo.com</a></div>
-      </div>
-      <div class="contact-item" data-animate="fade-rise" style="transition-delay:0.2s">
-        <div class="contact-item-label">Phone</div>
-        <div class="contact-item-value"><a href="tel:8134807800">813.480.7800</a></div>
-      </div>
-      <div class="contact-item" data-animate="fade-rise" style="transition-delay:0.3s">
-        <div class="contact-item-label">Instagram</div>
-        <div class="contact-item-value"><a href="https://instagram.com/delsiefigueroa.photography" target="_blank">@delsiefigueroa.photography</a></div>
-      </div>
-      <div class="contact-item" data-animate="fade-rise" style="transition-delay:0.4s">
-        <div class="contact-item-label">Location</div>
-        <div class="contact-item-value">Tampa, FL · Carrollwood</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-name">Delsie Figueroa Photography</div>
-    <div class="footer-copy">© 2026 · Tampa, FL</div>
-    <div class="footer-credit">Design by Lucas Blatt</div>
-  </footer>
-
-</div><!-- /page-content -->
+<footer>
+  <span class="f-name">Delsie Figueroa Photography &copy; 2026</span>
+  <div class="f-links">
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <span class="f-credit">Design by Lucas Blatt</span>
+</footer>
 
 <script>
-  // Hero entrance animations
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.stat-item, .section-label, .gallery-row-full, .gallery-split-img, .gallery-third-img, .about-img, .about-label, .about-pullquote, .about-bio, .about-detail, .cta-heading, .cta-sub, .cta-btn, .contact-heading, .contact-item').forEach(el => obs.observe(el));
+
+  // Hero letter-spacing compress
   window.addEventListener('load', () => {
-    const heroImg = document.getElementById('heroImg');
-    const heroName = document.getElementById('heroName');
-    const eyebrow = document.querySelector('.hero-eyebrow');
-    const divider = document.querySelector('.hero-divider');
-    const sub = document.querySelector('.hero-sub');
-    const cta = document.querySelector('.hero-cta');
-
-    heroImg.classList.add('loaded');
-    setTimeout(() => { heroName.classList.add('loaded'); }, 100);
-    setTimeout(() => { eyebrow.classList.add('loaded'); }, 300);
-    setTimeout(() => { divider.classList.add('loaded'); }, 800);
-    setTimeout(() => { sub.classList.add('loaded'); }, 1000);
-    setTimeout(() => { cta.classList.add('loaded'); }, 1200);
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('compressed');
+    }, 100);
+    document.querySelector('.hero-tagline').classList.add('is-visible');
+    document.querySelector('.hero-scroll').classList.add('is-visible');
   });
-
-  // Hero parallax
-  const heroImgEl = document.getElementById('heroImg');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (scrollY < window.innerHeight * 1.5) {
-      heroImgEl.style.transform = `scale(1.0) translateY(${scrollY * 0.25}px)`;
-    }
-  }, { passive: true });
-
-  // IntersectionObserver for scroll animations
-  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-
-      if (el.dataset.animate === 'heading') {
-        el.classList.add('is-visible');
-      } else if (el.dataset.animate === 'fade-rise') {
-        el.classList.add('is-visible');
-      } else if (el.dataset.animate === 'fade') {
-        el.classList.add('is-visible');
-      } else if (el.dataset.animate === 'stat') {
-        el.classList.add('is-visible');
-      } else if (el.dataset.animate === 'stat-label') {
-        el.classList.add('is-visible');
-      }
-
-      observer.unobserve(el);
-    });
-  }, observerOptions);
-
-  // Gallery images observer (staggered)
-  const galleryObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (!entry.isIntersecting) return;
-      const img = entry.target;
-      const index = Array.from(document.querySelectorAll('.masonry-item img')).indexOf(img);
-      setTimeout(() => {
-        img.classList.add('is-visible');
-      }, index * 80);
-      galleryObserver.unobserve(img);
-    });
-  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-
-  // About image observer
-  const aboutImgObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      aboutImgObserver.unobserve(entry.target);
-    });
-  }, { threshold: 0.1 });
-
-  // Attach observers
-  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
-  document.querySelectorAll('.masonry-item img').forEach(img => galleryObserver.observe(img));
-  document.querySelectorAll('.about-image-wrap img').forEach(img => aboutImgObserver.observe(img));
-  document.querySelectorAll('.contact-item').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

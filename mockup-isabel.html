@@ -3,782 +3,375 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Isabel Lynn Photography — Tampa Bay</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Isabel Lynn Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --cream: #F8F2EB;
-    --espresso: #2C1A10;
-    --terracotta: #C4896A;
-    --blush: #E8D5C4;
-    --tint: #F0E8DF;
-    --near-black: #1A0F08;
-  }
-
+  :root { --bg: #0D0B09; --text: #F5EDE3; --accent: #C4A882; --light: rgba(196,168,130,0.15); --muted: rgba(245,237,227,0.5); }
   html { scroll-behavior: smooth; }
-  body { background: var(--cream); color: var(--espresso); font-family: 'Work Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  body { background: var(--bg); color: var(--text); font-family: 'Karla', sans-serif; overflow-x: hidden; }
 
-  /* ── HERO ───────────────────────────────────────── */
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 56px; }
+  .nav-logo { font-family: 'Italiana', serif; font-size: 18px; letter-spacing: 0.1em; color: var(--text); text-decoration: none; }
+  nav ul { display: flex; gap: 40px; list-style: none; }
+  nav ul a { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  nav ul a:hover { color: var(--accent); }
+
+  /* HERO — CINEMATIC LETTERBOX */
   #hero {
     position: relative;
     height: 100vh;
-    min-height: 600px;
-    background-image: url('https://static.wixstatic.com/media/25425a_63b13ffa562046dd9902d890019c5f9a~mv2.jpeg');
-    background-size: cover;
-    background-position: center 30%;
-    will-change: background-position;
-  }
-
-  .hero-nav {
-    position: absolute;
-    top: 0; right: 0;
-    padding: 36px 60px;
     display: flex;
-    gap: 40px;
-    z-index: 10;
-  }
-  .hero-nav a {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--cream);
-    text-decoration: none;
-    opacity: 0.85;
-    transition: opacity 0.2s;
-  }
-  .hero-nav a:hover { opacity: 1; border-bottom: 1px solid var(--terracotta); }
-
-  .hero-content {
-    position: absolute;
-    bottom: 60px;
-    left: 80px;
-    z-index: 10;
-  }
-  .hero-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 96px;
-    line-height: 0.92;
-    color: var(--cream);
-    text-shadow: 0 2px 30px rgba(0,0,0,0.35);
-    letter-spacing: 0.4em;
-    display: block;
-    will-change: letter-spacing;
-    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .hero-name.revealed { letter-spacing: 0.12em; }
-  .hero-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--blush);
-    margin-top: 16px;
-    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.8s 1.4s ease, transform 0.8s 1.4s ease;
-  }
-  .hero-sub.revealed { opacity: 1; transform: translateY(0); }
-
-  /* ── MARQUEE STRIP ──────────────────────────────── */
-  .marquee-strip {
-    background: var(--espresso);
-    color: var(--blush);
-    padding: 14px 0;
+    flex-direction: column;
     overflow: hidden;
-    white-space: nowrap;
-  }
-  .marquee-inner {
-    display: inline-block;
-    animation: marquee 40s linear infinite;
-  }
-  .marquee-inner span {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding-right: 60px;
-  }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
   }
 
-  /* ── GALLERY ────────────────────────────────────── */
-  #portfolio {
-    padding: 100px 60px 80px;
-  }
-  .section-header {
+  .letterbox-top {
+    height: 90px;
+    background: var(--bg);
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 24px;
-    margin-bottom: 60px;
+    padding: 0 56px;
+    flex-shrink: 0;
   }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 38px;
-    color: var(--espresso);
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
-    will-change: clip-path;
-  }
-  .section-title.visible { clip-path: inset(0 0% 0 0); }
-  .section-rule {
+  .letterbox-subtitle { font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); font-weight: 400; opacity: 0; transition: opacity 1s ease 0.8s; }
+  .letterbox-subtitle.is-visible { opacity: 1; }
+
+  .letterbox-image {
     flex: 1;
-    height: 1px;
-    background: var(--terracotta);
-    opacity: 0.4;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.9s 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .letterbox-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.05);
+    transition: transform 1.4s ease;
     will-change: transform;
   }
-  .section-rule.visible { transform: scaleX(1); }
+  .letterbox-image img.loaded { transform: scale(1.0); }
 
-  .gallery-editorial {
-    display: grid;
-    gap: 10px;
-  }
-  .gallery-row {
-    display: grid;
-    gap: 10px;
-  }
-  .gallery-row.full { grid-template-columns: 1fr; }
-  .gallery-row.pair { grid-template-columns: 1fr 1fr; }
-  .gallery-row.offset { grid-template-columns: 30% 70%; }
+  /* Parallax via JS */
+  .letterbox-image { will-change: transform; }
 
-  .gallery-item {
-    overflow: hidden;
-    clip-path: inset(100% 0 0 0);
-    will-change: clip-path;
-    transition: clip-path 0.9s ease-out;
-  }
-  .gallery-item.visible { clip-path: inset(0 0 0 0); }
-  .gallery-item img {
-    width: 100%;
-    display: block;
-    transition: transform 0.6s ease;
-    object-fit: cover;
-  }
-  .gallery-row.full .gallery-item { height: 72vh; }
-  .gallery-row.pair .gallery-item { height: 55vh; }
-  .gallery-row.offset .gallery-item { height: 65vh; }
-  .gallery-item:hover img { transform: scale(1.025); }
-
-  /* ── SESSIONS ───────────────────────────────────── */
-  #sessions {
-    padding: 100px 60px;
-    background: var(--tint);
+  .letterbox-bottom {
+    height: 90px;
+    background: var(--bg);
     position: relative;
-  }
-  .section-number {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 160px;
-    font-weight: 300;
-    color: var(--espresso);
-    opacity: 0.04;
-    line-height: 1;
-    user-select: none;
-    pointer-events: none;
-  }
-  .sessions-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    margin-top: 60px;
-  }
-  .session-card {
-    padding: 36px 32px;
-    border-top: 1px solid var(--terracotta);
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: opacity, transform;
-  }
-  .session-card.visible { opacity: 1; transform: translateY(0); }
-  .session-card:nth-child(2) { transition-delay: 0.1s; }
-  .session-card:nth-child(3) { transition-delay: 0.2s; }
-  .session-card:nth-child(4) { transition-delay: 0.3s; }
-  .session-card:nth-child(5) { transition-delay: 0.4s; }
-  .session-card:nth-child(6) { transition-delay: 0.5s; }
-  .session-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--espresso);
-    margin-bottom: 10px;
-  }
-  .session-desc {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--espresso);
-    opacity: 0.7;
-    line-height: 1.7;
-  }
-
-  /* ── STATS ──────────────────────────────────────── */
-  .stats-strip {
-    background: var(--espresso);
-    padding: 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
-  }
-  .stat-item { padding: 20px; }
-  .stat-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 80px;
-    font-weight: 300;
-    color: var(--cream);
-    line-height: 1;
-    display: block;
-  }
-  .stat-label {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--blush);
-    display: block;
-    margin-top: 10px;
-    opacity: 0.7;
-  }
-
-  /* ── ABOUT ──────────────────────────────────────── */
-  #about {
-    padding: 120px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .about-image-wrap {
-    overflow: hidden;
-    clip-path: inset(100% 0 0 0);
-    will-change: clip-path;
-    transition: clip-path 1s ease-out;
-  }
-  .about-image-wrap.visible { clip-path: inset(0 0 0 0); }
-  .about-image-wrap img {
-    width: 100%;
-    height: 70vh;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-  }
-  .about-text-wrap { padding-right: 40px; }
-  .about-eyebrow {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--terracotta);
-    margin-bottom: 24px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    will-change: opacity, transform;
-  }
-  .about-eyebrow.visible { opacity: 1; transform: translateY(0); }
-  .about-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
-    font-weight: 300;
-    line-height: 1.25;
-    color: var(--espresso);
-    margin-bottom: 28px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s 0.15s cubic-bezier(0.76, 0, 0.24, 1);
-    will-change: clip-path;
-  }
-  .about-heading.visible { clip-path: inset(0 0% 0 0); }
-  .about-bio {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.85;
-    color: var(--espresso);
-    opacity: 0.85;
-    margin-bottom: 36px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s 0.3s ease, transform 0.6s 0.3s ease;
-    will-change: opacity, transform;
-  }
-  .about-bio.visible { opacity: 0.85; transform: translateY(0); }
-  .about-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1.6;
-    color: var(--terracotta);
-    border-left: 2px solid var(--terracotta);
-    padding-left: 24px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s 0.45s ease, transform 0.6s 0.45s ease;
-    will-change: opacity, transform;
-  }
-  .about-quote.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── BOLD CTA ────────────────────────────────────── */
-  #book {
-    position: relative;
-    height: 70vh;
-    min-height: 480px;
-    background-image: url('https://static.wixstatic.com/media/25425a_6a8921eb743846de8d0543c37b1bea68~mv2.jpeg');
-    background-size: cover;
-    background-position: center;
+    z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    padding: 0 56px;
+    flex-shrink: 0;
   }
-  #book::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(44, 26, 16, 0.52);
-  }
-  .book-content { position: relative; z-index: 1; padding: 20px; }
-  .book-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 62px;
-    line-height: 1.1;
-    color: var(--cream);
-    margin-bottom: 20px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
-    will-change: clip-path;
-  }
-  .book-heading.visible { clip-path: inset(0 0% 0 0); }
-  .book-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--blush);
-    margin-bottom: 44px;
-    opacity: 0;
-    transition: opacity 0.6s 0.4s ease;
-    will-change: opacity;
-  }
-  .book-sub.visible { opacity: 0.85; }
-  .btn-contact {
-    display: inline-block;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
+  .hero-name {
+    font-family: 'Italiana', serif;
+    font-size: clamp(40px, 5.5vw, 72px);
     letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--cream);
-    border: 1px solid var(--cream);
-    padding: 14px 44px;
-    text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
-    opacity: 0;
-    transition: opacity 0.6s 0.6s ease, background 0.3s ease, color 0.3s ease;
-    will-change: opacity;
-  }
-  .btn-contact.visible { opacity: 1; }
-  .btn-contact:hover { background: var(--cream); color: var(--espresso); }
-
-  /* ── CONTACT ─────────────────────────────────────── */
-  #contact {
-    padding: 100px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-  .contact-left {}
-  .contact-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 300;
-    line-height: 1.1;
-    margin-bottom: 28px;
+    color: var(--text);
+    font-weight: 400;
     clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    transition: clip-path 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
     will-change: clip-path;
   }
-  .contact-heading.visible { clip-path: inset(0 0% 0 0); }
-  .contact-desc {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--espresso);
-    opacity: 0.75;
-    max-width: 420px;
-    margin-bottom: 36px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s 0.2s ease, transform 0.6s 0.2s ease;
-    will-change: opacity, transform;
-  }
-  .contact-desc.visible { opacity: 0.75; transform: translateY(0); }
-  .contact-email {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 400;
-    color: var(--terracotta);
-    text-decoration: none;
-    display: block;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s 0.35s ease, transform 0.6s 0.35s ease, border-color 0.2s;
-    will-change: opacity, transform;
-  }
-  .contact-email.visible { opacity: 1; transform: translateY(0); }
-  .contact-email:hover { border-bottom-color: var(--terracotta); }
-  .contact-image-right {
-    overflow: hidden;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 1s 0.2s cubic-bezier(0.76, 0, 0.24, 1);
-    will-change: clip-path;
-  }
-  .contact-image-right.visible { clip-path: inset(0 0% 0 0); }
-  .contact-image-right img {
-    width: 100%;
-    height: 50vh;
-    object-fit: cover;
-    display: block;
-  }
+  .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
 
-  /* ── FOOTER ──────────────────────────────────────── */
-  footer {
-    background: var(--near-black);
-    padding: 28px 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .footer-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--blush);
-    opacity: 0.7;
-    letter-spacing: 0.08em;
-  }
-  .footer-copy {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 300;
-    color: var(--blush);
-    opacity: 0.4;
-    letter-spacing: 0.05em;
-  }
-  .footer-credit {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    color: var(--blush);
-    opacity: 0.3;
-    letter-spacing: 0.08em;
-  }
+  /* MARQUEE — top of page after hero */
+  .marquee-section { background: var(--accent); padding: 12px 0; overflow: hidden; }
+  .marquee-track { display: flex; width: max-content; animation: marquee 45s linear infinite; }
+  .marquee-text { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bg); padding: 0 48px; white-space: nowrap; font-weight: 500; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ── RESPONSIVE ─────────────────────────────────── */
+  /* SERVICES */
+  #services { padding: 100px 56px; }
+  .services-header { display: flex; align-items: center; gap: 20px; margin-bottom: 60px; }
+  .service-num { font-family: 'Italiana', serif; font-size: 11px; letter-spacing: 0.2em; color: var(--accent); }
+  .service-title { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .service-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .service-line { flex: 1; height: 1px; background: var(--light); }
+
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--light); }
+  .service-card { background: var(--bg); padding: 40px 32px; border: 1px solid var(--light); opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+  .service-card:nth-child(2) { transition-delay: 80ms; }
+  .service-card:nth-child(3) { transition-delay: 160ms; }
+  .service-card:nth-child(4) { transition-delay: 240ms; }
+  .service-icon { font-family: 'Italiana', serif; font-size: 48px; color: var(--accent); opacity: 0.6; display: block; margin-bottom: 20px; line-height: 1; }
+  .service-name { font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); margin-bottom: 12px; font-weight: 400; }
+  .service-desc { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  /* GALLERY — MASONRY */
+  #gallery { padding: 80px 56px; }
+  .gallery-header { display: flex; align-items: center; gap: 20px; margin-bottom: 60px; }
+  .gallery-label { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .gallery-label.is-visible { clip-path: inset(0 0% 0 0); }
+  .gallery-line { flex: 1; height: 1px; background: var(--light); }
+
+  .masonry { columns: 3; column-gap: 8px; }
+  .masonry-item { break-inside: avoid; margin-bottom: 8px; overflow: hidden; opacity: 0; clip-path: inset(100% 0 0 0); transition: opacity 0.9s ease, clip-path 1s ease; will-change: clip-path; }
+  .masonry-item.is-visible { opacity: 1; clip-path: inset(0 0 0 0); }
+  .masonry-item:nth-child(2) { transition-delay: 60ms; }
+  .masonry-item:nth-child(3) { transition-delay: 120ms; }
+  .masonry-item:nth-child(4) { transition-delay: 180ms; }
+  .masonry-item:nth-child(5) { transition-delay: 240ms; }
+  .masonry-item:nth-child(6) { transition-delay: 300ms; }
+  .masonry-item:nth-child(7) { transition-delay: 360ms; }
+  .masonry-item img { width: 100%; display: block; transition: transform 0.6s ease; }
+  .masonry-item:hover img { transform: scale(1.03); }
+
+  /* ABOUT — SIDE BY SIDE WITH VERTICAL LINE */
+  #about { padding: 120px 56px; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+  .about-vline { position: absolute; left: 50%; top: 80px; bottom: 80px; width: 1px; background: var(--accent); opacity: 0.3; }
+  .about-left { padding-right: 64px; }
+  .about-right { padding-left: 64px; }
+  .about-num-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  .about-num { font-family: 'Italiana', serif; font-size: 80px; color: transparent; -webkit-text-stroke: 1px rgba(196,168,130,0.15); line-height: 0.9; user-select: none; }
+  .about-section-label { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .about-section-label.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .about-portrait { width: 100%; aspect-ratio: 3/4; overflow: hidden; opacity: 0; clip-path: inset(0 100% 0 0); transition: opacity 0.9s ease, clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1); }
+  .about-portrait.is-visible { opacity: 1; clip-path: inset(0 0% 0 0); }
+  .about-portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+  .about-right-content { padding-top: 40px; }
+  .about-pullquote { font-family: 'Italiana', serif; font-size: clamp(28px, 3vw, 42px); color: var(--accent); line-height: 1.35; margin-bottom: 36px; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s; }
+  .about-pullquote.is-visible { opacity: 1; transform: translateY(0); }
+  .about-bio { font-size: 16px; line-height: 1.85; color: var(--muted); font-weight: 300; margin-bottom: 32px; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s; }
+  .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; opacity: 0; transition: opacity 0.9s ease 0.6s; }
+  .about-tags.is-visible { opacity: 1; }
+  .tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(196,168,130,0.3); padding: 6px 14px; }
+
+  /* CTA */
+  #cta { background: var(--accent); padding: 100px 56px; text-align: left; }
+  .cta-inner { max-width: 680px; }
+  .cta-heading { font-family: 'Italiana', serif; font-size: clamp(48px, 6vw, 80px); color: var(--bg); line-height: 1.05; margin-bottom: 24px; clip-path: inset(0 100% 0 0); transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1); }
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub { font-size: 16px; color: rgba(13,11,9,0.7); font-weight: 300; margin-bottom: 44px; line-height: 1.6; opacity: 0; transition: opacity 0.9s ease 0.3s; }
+  .cta-sub.is-visible { opacity: 1; }
+  .cta-btn { display: inline-block; padding: 16px 48px; border: 1.5px solid var(--bg); color: var(--bg); text-decoration: none; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; transition: background 0.3s, color 0.3s; opacity: 0; transition: opacity 0.9s ease 0.5s, background 0.3s, color 0.3s; }
+  .cta-btn.is-visible { opacity: 1; }
+  .cta-btn:hover { background: var(--bg); color: var(--accent); }
+
+  /* CONTACT */
+  #contact { padding: 100px 56px; }
+  .contact-heading { font-family: 'Italiana', serif; font-size: clamp(52px, 7vw, 96px); color: var(--text); line-height: 0.9; margin-bottom: 60px; clip-path: inset(0 100% 0 0); transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1); }
+  .contact-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--light); }
+  .contact-card { background: var(--bg); padding: 40px 32px; opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .contact-card.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-card:nth-child(2) { transition-delay: 80ms; }
+  .contact-card:nth-child(3) { transition-delay: 160ms; }
+  .c-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 12px; }
+  .c-val a { color: var(--text); text-decoration: none; font-size: 15px; font-weight: 300; transition: color 0.2s; }
+  .c-val a:hover { color: var(--accent); }
+  .c-val span { font-size: 15px; font-weight: 300; color: var(--muted); }
+
+  footer { background: #080604; padding: 32px 56px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--light); }
+  footer .f-name { font-family: 'Italiana', serif; font-size: 15px; color: var(--muted); }
+  footer .f-links { display: flex; gap: 28px; }
+  footer .f-links a { font-size: 10px; color: rgba(245,237,227,0.3); text-decoration: none; letter-spacing: 0.18em; text-transform: uppercase; transition: color 0.2s; }
+  footer .f-links a:hover { color: var(--accent); }
+  footer .f-credit { font-size: 11px; color: rgba(245,237,227,0.2); }
+
   @media (max-width: 768px) {
-    .hero-name { font-size: 56px; }
-    .hero-content { left: 30px; bottom: 40px; }
-    .hero-nav { padding: 20px 24px; gap: 20px; }
-    #portfolio { padding: 60px 20px; }
-    .gallery-row.pair { grid-template-columns: 1fr; }
-    .gallery-row.offset { grid-template-columns: 1fr; }
-    .gallery-row.full .gallery-item,
-    .gallery-row.pair .gallery-item,
-    .gallery-row.offset .gallery-item { height: 56vw; }
-    #sessions { padding: 60px 20px; }
-    .sessions-grid { grid-template-columns: 1fr 1fr; }
-    .stats-strip { padding: 40px 20px; }
-    .stat-number { font-size: 56px; }
-    #about { grid-template-columns: 1fr; padding: 60px 20px; gap: 40px; }
-    .about-image-wrap img { height: 56vw; }
-    .about-text-wrap { padding-right: 0; }
-    #book { height: 60vh; }
-    .book-heading { font-size: 40px; }
-    #contact { grid-template-columns: 1fr; padding: 60px 20px; }
-    footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+    nav { padding: 18px 24px; } nav ul { gap: 20px; }
+    .letterbox-top, .letterbox-bottom { padding: 0 24px; height: 70px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    #gallery { padding: 60px 24px; } .masonry { columns: 2; }
+    #about { padding: 80px 24px; grid-template-columns: 1fr; gap: 40px; }
+    .about-vline { display: none; }
+    .about-left { padding-right: 0; }
+    .about-right { padding-left: 0; }
+    #cta { padding: 70px 24px; }
+    #contact { padding: 60px 24px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
   }
   @media (max-width: 480px) {
-    .hero-name { font-size: 42px; }
-    .hero-sub { font-size: 10px; }
-    .sessions-grid { grid-template-columns: 1fr; }
-    .stats-strip { grid-template-columns: 1fr; }
-    .book-heading { font-size: 32px; }
-    .contact-heading { font-size: 36px; }
-    .contact-email { font-size: 20px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .masonry { columns: 1; }
+    .hero-name { font-size: 32px; letter-spacing: 0.12em; }
   }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
+<nav>
+  <a href="#hero" class="nav-logo">Isabel Lynn</a>
+  <ul>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — CINEMATIC LETTERBOX -->
 <section id="hero">
-  <nav class="hero-nav">
-    <a href="#portfolio">Work</a>
-    <a href="#about">About</a>
-    <a href="#sessions">Sessions</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <div class="hero-content">
-    <span class="hero-name" id="heroName">Isabel Lynn</span>
-    <p class="hero-sub" id="heroSub">Tampa Bay &nbsp;·&nbsp; Newborn &nbsp;·&nbsp; Maternity &nbsp;·&nbsp; Family</p>
+  <div class="letterbox-top">
+    <span class="letterbox-subtitle is-visible">Newborn &middot; Maternity &middot; Family &middot; Tampa Bay, FL</span>
+  </div>
+  <div class="letterbox-image" id="heroImg">
+    <img src="https://static.wixstatic.com/media/25425a_afbf062694704c989eed3c85cadfea0c~mv2.jpeg" alt="Isabel Lynn Photography" id="heroImgEl" loading="eager">
+  </div>
+  <div class="letterbox-bottom">
+    <h1 class="hero-name" id="heroName">ISABEL LYNN</h1>
   </div>
 </section>
 
 <!-- MARQUEE -->
-<div class="marquee-strip" aria-hidden="true">
-  <div class="marquee-inner">
-    <span>Newborn · Maternity · Family · Couples · Fur Babies · Tampa Bay, FL · 2026 · Capturing Life's Tender Moments · </span>
-    <span>Newborn · Maternity · Family · Couples · Fur Babies · Tampa Bay, FL · 2026 · Capturing Life's Tender Moments · </span>
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-text">Tampa Bay &middot; Newborn &middot; Maternity &middot; Fur Babies &middot; Families &middot; 2026 &middot;</span>
+    <span class="marquee-text">Tampa Bay &middot; Newborn &middot; Maternity &middot; Fur Babies &middot; Families &middot; 2026 &middot;</span>
+    <span class="marquee-text">Tampa Bay &middot; Newborn &middot; Maternity &middot; Fur Babies &middot; Families &middot; 2026 &middot;</span>
+    <span class="marquee-text">Tampa Bay &middot; Newborn &middot; Maternity &middot; Fur Babies &middot; Families &middot; 2026 &middot;</span>
   </div>
 </div>
 
-<!-- GALLERY -->
-<section id="portfolio">
-  <div class="section-header">
-    <h2 class="section-title js-title">Portfolio</h2>
-    <div class="section-rule js-rule"></div>
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <span class="service-num">01</span>
+    <h2 class="service-title">Services</h2>
+    <div class="service-line"></div>
   </div>
-  <div class="gallery-editorial">
-    <div class="gallery-row full">
-      <div class="gallery-item js-gallery">
-        <img src="https://static.wixstatic.com/media/25425a_6a8921eb743846de8d0543c37b1bea68~mv2.jpeg" alt="Newborn Session" loading="lazy">
-      </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">N</span>
+      <div class="service-name">Newborn</div>
+      <p class="service-desc">Gentle, safe sessions for babies in their first 14 days. Studio setting with posing and wraps.</p>
     </div>
-    <div class="gallery-row pair">
-      <div class="gallery-item js-gallery">
-        <img src="https://static.wixstatic.com/media/25425a_0440d05c4e684bf59b40a975ca1e12f0~mv2.jpeg" alt="Family Session" loading="lazy">
-      </div>
-      <div class="gallery-item js-gallery">
-        <img src="https://static.wixstatic.com/media/25425a_afbf062694704c989eed3c85cadfea0c~mv2.jpeg" alt="Maternity Session" loading="lazy">
-      </div>
+    <div class="service-card">
+      <span class="service-icon">M</span>
+      <div class="service-name">Maternity</div>
+      <p class="service-desc">Celebrating the beauty of expectancy with natural light studio and outdoor sessions.</p>
     </div>
-    <div class="gallery-row offset">
-      <div class="gallery-item js-gallery">
-        <img src="https://static.wixstatic.com/media/25425a_3b2dc4f0cfc04e13abb31145e18d780e~mv2.jpeg" alt="Newborn Session 2" loading="lazy">
-      </div>
-      <div class="gallery-item js-gallery">
-        <img src="https://static.wixstatic.com/media/25425a_723a688926cf4b8ca4fccd56c333f459~mv2.jpeg" alt="Family Outdoor" loading="lazy">
-      </div>
+    <div class="service-card">
+      <span class="service-icon">F</span>
+      <div class="service-name">Family</div>
+      <p class="service-desc">Candid and posed family portraits that feel true to who you are, not just how you stand.</p>
     </div>
-    <div class="gallery-row full">
-      <div class="gallery-item js-gallery">
-        <img src="https://static.wixstatic.com/media/25425a_96c5f570e24145c58cbf6cd9bf9d979c~mv2.jpeg" alt="Couples Session" loading="lazy">
-      </div>
+    <div class="service-card">
+      <span class="service-icon">P</span>
+      <div class="service-name">Fur Babies</div>
+      <p class="service-desc">Pet portraits, alone or with the family. Because they're family too.</p>
     </div>
   </div>
 </section>
 
-<!-- SESSIONS -->
-<section id="sessions">
-  <span class="section-number" aria-hidden="true">02</span>
-  <div class="section-header">
-    <h2 class="section-title js-title">Sessions</h2>
-    <div class="section-rule js-rule"></div>
+<!-- GALLERY — MASONRY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <span class="service-num">02</span>
+    <h2 class="gallery-label">Gallery</h2>
+    <div class="gallery-line"></div>
   </div>
-  <div class="sessions-grid">
-    <div class="session-card js-card">
-      <h3 class="session-name">Newborn</h3>
-      <p class="session-desc">Capturing those precious first weeks on earth — soft, warm, and unhurried.</p>
-    </div>
-    <div class="session-card js-card">
-      <h3 class="session-name">Maternity</h3>
-      <p class="session-desc">Celebrating the beauty and anticipation of the journey to motherhood.</p>
-    </div>
-    <div class="session-card js-card">
-      <h3 class="session-name">Family</h3>
-      <p class="session-desc">Real moments, genuine connection — portraits that actually look like your family.</p>
-    </div>
-    <div class="session-card js-card">
-      <h3 class="session-name">Couples</h3>
-      <p class="session-desc">Engagements, anniversaries, or just because — your story, beautifully told.</p>
-    </div>
-    <div class="session-card js-card">
-      <h3 class="session-name">Fur Babies</h3>
-      <p class="session-desc">Because your pets deserve beautiful photos too. Dog mom approved.</p>
-    </div>
-    <div class="session-card js-card">
-      <h3 class="session-name">Self / Modeling</h3>
-      <p class="session-desc">Feeling yourself and want photos that show it? Let's make that happen.</p>
-    </div>
+  <div class="masonry">
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_afbf062694704c989eed3c85cadfea0c~mv2.jpeg" alt="Newborn I" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_6a8921eb743846de8d0543c37b1bea68~mv2.jpeg" alt="Baby portrait" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_96c5f570e24145c58cbf6cd9bf9d979c~mv2.jpeg" alt="Family portrait" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_3b2dc4f0cfc04e13abb31145e18d780e~mv2.jpeg" alt="Newborn II" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_63b13ffa562046dd9902d890019c5f9a~mv2.jpeg" alt="Maternity" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_723a688926cf4b8ca4fccd56c333f459~mv2.jpeg" alt="Family II" loading="lazy"></div>
+    <div class="masonry-item"><img src="https://static.wixstatic.com/media/25425a_0440d05c4e684bf59b40a975ca1e12f0~mv2.jpeg" alt="Newborn III" loading="lazy"></div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="stat-item">
-    <span class="stat-number">6+</span>
-    <span class="stat-label">Session Types</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-number">Tampa</span>
-    <span class="stat-label">Bay Area, FL</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-number">100%</span>
-    <span class="stat-label">Natural Light</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
+<!-- ABOUT — SIDE BY SIDE WITH VERTICAL LINE -->
 <section id="about">
-  <div class="about-image-wrap js-image-reveal">
-    <img src="https://static.wixstatic.com/media/25425a_afbf062694704c989eed3c85cadfea0c~mv2.jpeg" alt="Isabel Lynn Photography" loading="lazy">
+  <div class="about-vline"></div>
+  <div class="about-left">
+    <div class="about-num-header">
+      <span class="about-num" aria-hidden="true">03</span>
+      <span class="about-section-label">About</span>
+    </div>
+    <div class="about-portrait">
+      <img src="https://static.wixstatic.com/media/25425a_3b2dc4f0cfc04e13abb31145e18d780e~mv2.jpeg" alt="Isabel Guerra" loading="lazy">
+    </div>
   </div>
-  <div class="about-text-wrap">
-    <p class="about-eyebrow js-fade">About Isabel</p>
-    <h2 class="about-heading js-title">Photographing life's<br>most tender moments.</h2>
-    <p class="about-bio js-fade-delay-2">Working in the intimate spaces where life begins — nurseries, golden-hour backyards, and the quiet warmth of a family's home — Isabel Guerra documents the tender early moments of Tampa Bay families. Her soft, natural-light approach turns ordinary sessions into photographs families return to for decades.</p>
-    <blockquote class="about-quote js-fade-delay-3">"Oh to see new babies, and to capture photos in their first couple weeks on earth, is such a privilege."</blockquote>
+  <div class="about-right">
+    <div class="about-right-content">
+      <p class="about-pullquote">Every ordinary moment with your family is extraordinary.</p>
+      <p class="about-bio">Isabel Guerra is a Tampa Bay-based photographer specializing in newborn, maternity, and family photography. Known for her warm, unhurried approach and her ability to coax real emotion from every session, Isabel creates images that feel like memory itself &mdash; quiet, intimate, and true.</p>
+      <div class="about-tags">
+        <span class="tag">Tampa Bay</span>
+        <span class="tag">Newborn</span>
+        <span class="tag">Maternity</span>
+        <span class="tag">Family</span>
+        <span class="tag">Fur Babies</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- BOLD CTA -->
-<section id="book">
-  <div class="book-content">
-    <h2 class="book-heading js-title-cta">Your moments deserve to last.</h2>
-    <p class="book-sub js-book-sub">Newborn · Maternity · Family Sessions · Tampa Bay, FL</p>
-    <a href="#contact" class="btn-contact js-btn-contact">Get In Touch</a>
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-heading">Book Your Session</h2>
+    <p class="cta-sub">Newborn sessions are best booked in your third trimester. Don't wait &mdash; spots fill quickly.</p>
+    <a href="mailto:isabelguerra18@yahoo.com" class="cta-btn">Inquire Now</a>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="contact-left">
-    <h2 class="contact-heading js-title">Get In Touch</h2>
-    <p class="contact-desc js-fade">Available for newborn, maternity, family, couples &amp; fur baby sessions throughout Tampa Bay, FL. Reach out to discuss your session.</p>
-    <a href="mailto:isabelguerra18@yahoo.com" class="contact-email js-fade-delay-2">isabelguerra18@yahoo.com</a>
-  </div>
-  <div class="contact-image-right js-image-reveal">
-    <img src="https://static.wixstatic.com/media/25425a_3b2dc4f0cfc04e13abb31145e18d780e~mv2.jpeg" alt="Contact Isabel Lynn Photography" loading="lazy">
+  <h2 class="contact-heading">Get<br>In Touch</h2>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <span class="c-label">Email</span>
+      <div class="c-val"><a href="mailto:isabelguerra18@yahoo.com">isabelguerra18@yahoo.com</a></div>
+    </div>
+    <div class="contact-card">
+      <span class="c-label">Location</span>
+      <div class="c-val"><span>Tampa Bay, Florida</span></div>
+    </div>
+    <div class="contact-card">
+      <span class="c-label">Now Booking</span>
+      <div class="c-val"><span>Newborn &middot; Maternity &middot; Family</span></div>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <span class="footer-name">Isabel Lynn Photography</span>
-  <span class="footer-copy">©2026 Isabel Guerra</span>
-  <span class="footer-credit">Design by Lucas Blatt</span>
+  <span class="f-name">Isabel Lynn Photography &copy; 2026</span>
+  <div class="f-links">
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <span class="f-credit">Design by Lucas Blatt</span>
 </footer>
 
 <script>
-  // Hero name letter-spacing reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.service-title, .gallery-label, .service-card, .masonry-item, .about-portrait, .about-section-label, .about-pullquote, .about-bio, .about-tags, .cta-heading, .cta-sub, .cta-btn, .contact-heading, .contact-card').forEach(el => obs.observe(el));
+
+  // Hero load animations
   window.addEventListener('load', () => {
+    const heroImg = document.getElementById('heroImgEl');
+    heroImg.classList.add('loaded');
     setTimeout(() => {
-      document.getElementById('heroName').classList.add('revealed');
-      document.getElementById('heroSub').classList.add('revealed');
-    }, 100);
+      document.getElementById('heroName').classList.add('is-visible');
+    }, 200);
   });
 
-  // Hero parallax
-  const hero = document.getElementById('hero');
+  // Parallax on hero image
+  const heroImgWrap = document.getElementById('heroImg');
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (scrollY < window.innerHeight) {
-      hero.style.backgroundPositionY = `calc(30% + ${scrollY * 0.4}px)`;
+    const scrolled = window.scrollY;
+    if (scrolled < window.innerHeight) {
+      heroImgWrap.style.transform = `translateY(${scrolled * 0.25}px)`;
     }
   }, { passive: true });
-
-  // IntersectionObserver for all animations
-  const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
-
-  // Section titles + rules
-  const titleObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // Also trigger sibling rule
-        const rule = entry.target.closest('.section-header')?.querySelector('.js-rule');
-        if (rule) rule.classList.add('visible');
-      }
-    });
-  }, observerOptions);
-  document.querySelectorAll('.js-title').forEach(el => titleObs.observe(el));
-
-  // Gallery items staggered
-  const galleryItems = document.querySelectorAll('.js-gallery');
-  const galleryObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const items = entry.target.closest('.gallery-row')?.querySelectorAll('.js-gallery') || [entry.target];
-        items.forEach((item, i) => {
-          setTimeout(() => item.classList.add('visible'), i * 120);
-        });
-        galleryObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.05 });
-  galleryItems.forEach(el => galleryObs.observe(el));
-
-  // Session cards
-  const cardObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, observerOptions);
-  document.querySelectorAll('.js-card').forEach(el => cardObs.observe(el));
-
-  // About image reveal
-  const imgObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        imgObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.js-image-reveal').forEach(el => imgObs.observe(el));
-
-  // Fade elements
-  const fadeObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        fadeObs.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-  document.querySelectorAll('.js-fade, .js-fade-delay-2, .js-fade-delay-3').forEach(el => fadeObs.observe(el));
-
-  // CTA section
-  const ctaObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        const sub = entry.target.closest('section')?.querySelector('.js-book-sub');
-        const btn = entry.target.closest('section')?.querySelector('.js-btn-contact');
-        if (sub) sub.classList.add('visible');
-        if (btn) btn.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.js-title-cta').forEach(el => ctaObs.observe(el));
 </script>
 </body>
 </html>
