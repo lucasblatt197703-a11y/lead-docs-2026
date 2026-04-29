@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashley Howard Photography — Volusia County, Florida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F0EBE1;
+    --text: #1A1A18;
+    --accent: #7B9C6E;
+    --warm: #C4A882;
+    --dark: #2C2C28;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ========= NAV ========= */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 22px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+  }
+
+  nav.scrolled {
+    background: var(--dark);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: #F0EBE1;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(240,235,225,0.85);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--warm); }
+
+  /* ========= HERO ========= */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://static.wixstatic.com/media/7b9356_dfbcb54bc23f4a2689a3d8a370335df4~mv2_d_5184_3456_s_4_2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+
+  .hero-text {
+    position: absolute;
+    bottom: 70px;
+    left: 60px;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 1;
+    color: #F0EBE1;
+    letter-spacing: 0.35em;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+    display: block;
+    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hero-name.animate {
+    letter-spacing: 0.08em;
+  }
+
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-top: 14px;
+    display: block;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(240,235,225,0.5);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* ========= MARQUEE ========= */
+  .marquee-strip {
+    background: var(--dark);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ========= SECTIONS COMMON ========= */
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.5;
+    margin-bottom: 32px;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-label.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* ========= GALLERY ========= */
+  #work {
+    padding: 100px 50px;
+    background: var(--bg);
+  }
+
+  .gallery-grid {
+    columns: 3;
+    column-gap: 6px;
+  }
+
+  .gallery-item {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+    break-inside: avoid;
+    overflow: hidden;
+    cursor: crosshair;
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, opacity 0.4s ease;
+  }
+
+  .gallery-item.is-visible {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .gallery-item img {
+    display: block;
+    width: 100%;
+    transition: filter 0.3s ease;
+    border-radius: 0;
+  }
+
+  .gallery-item:hover img {
+    filter: brightness(0.88);
+  }
+
+  /* ========= ABOUT ========= */
+  #about {
+    padding: 120px 0;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .about-image {
+    width: 45%;
+    flex-shrink: 0;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+  }
+
+  .about-content {
+    width: 55%;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .about-section-num {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 130px;
+    font-weight: 300;
+    color: var(--bg);
+    opacity: 0.12;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .about-pull-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-bio {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    opacity: 0.75;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  }
+
+  .about-bio.is-visible {
+    opacity: 0.75;
+    transform: translateY(0);
+  }
+
+  .about-cta {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s, color 0.2s, border-color 0.2s;
+  }
+
+  .about-cta.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-cta:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ========= STATS ========= */
+  #stats {
+    background: var(--dark);
+    padding: 80px 50px;
+  }
+
+  .stats-grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .stat-block {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-block.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    font-weight: 300;
+    color: var(--warm);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,235,225,0.55);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ========= COMMERCIAL ========= */
+  #commercial {
+    padding: 100px 50px;
+    background: var(--bg);
+  }
+
+  .commercial-images {
+    display: flex;
+    gap: 6px;
+    margin-top: 0;
+  }
+
+  .commercial-images img {
+    width: 50%;
+    object-fit: cover;
+    height: 420px;
+    display: block;
+    border-radius: 0;
+  }
+
+  .commercial-caption {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(26,26,24,0.55);
+    text-align: center;
+    margin-top: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========= CTA SECTION ========= */
+  #cta {
+    position: relative;
+    min-height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background-image: url('https://static.wixstatic.com/media/7b9356_8953521c82a14030b65af9685d0d8fdf.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,26,24,0.62);
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 20px;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: #F0EBE1;
+    line-height: 1.1;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    margin-bottom: 16px;
+  }
+
+  .cta-heading.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 40px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+
+  .cta-sub.is-visible {
+    opacity: 1;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #F0EBE1;
+    text-decoration: none;
+    border: 1px solid #F0EBE1;
+    padding: 14px 44px;
+    border-radius: 0;
+    transition: background 0.25s ease, color 0.25s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.6s, background 0.25s ease, color 0.25s ease;
+  }
+
+  .cta-btn.is-visible {
+    opacity: 1;
+  }
+
+  .cta-btn:hover {
+    background: #F0EBE1;
+    color: var(--dark);
+  }
+
+  /* ========= CONTACT ========= */
+  #contact {
+    padding: 100px 50px;
+    background: var(--bg);
+  }
+
+  .contact-inner {
+    max-width: 520px;
+  }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 48px;
+  }
+
+  .contact-item {
+    margin-bottom: 20px;
+  }
+
+  .contact-item-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.4;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .contact-item a,
+  .contact-item span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item a:hover {
+    color: var(--accent);
+  }
+
+  /* ========= FOOTER ========= */
+  footer {
+    background: var(--dark);
+    padding: 28px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #F0EBE1;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-center {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(240,235,225,0.4);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-right {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(240,235,225,0.3);
+    letter-spacing: 0.15em;
+    text-align: right;
+  }
+
+  .footer-right a {
+    color: rgba(240,235,225,0.35);
+    text-decoration: none;
+  }
+
+  /* ========= RESPONSIVE ========= */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+
+    .hero-name { font-size: 52px; }
+    .hero-text { left: 28px; bottom: 50px; }
+    .hero-scroll { display: none; }
+
+    #work { padding: 60px 24px; }
+    .gallery-grid { columns: 2; }
+
+    #about { flex-direction: column; }
+    .about-image { width: 100%; }
+    .about-image img { min-height: 320px; }
+    .about-content { width: 100%; padding: 50px 28px; }
+    .about-pull-quote { font-size: 22px; }
+
+    #stats { padding: 60px 24px; }
+    .stat-number { font-size: 64px; }
+
+    #commercial { padding: 60px 24px; }
+    .commercial-images { flex-direction: column; }
+    .commercial-images img { width: 100%; height: 260px; }
+
+    .cta-heading { font-size: 44px; }
+
+    #contact { padding: 60px 24px; }
+
+    footer {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      padding: 28px 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { columns: 1; }
+    .hero-name { font-size: 40px; }
+    .hero-text { left: 22px; bottom: 40px; }
+    .stats-grid { flex-direction: column; }
+    .stat-number { font-size: 72px; }
+  }
+
+  /* Section number watermark style */
+  .section-num-watermark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 300;
+    color: var(--bg);
+    opacity: 0.10;
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .section-header {
+    position: relative;
+    margin-bottom: 48px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Ashley Howard</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#commercial">Commercial</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <span class="hero-name" id="hero-name">Ashley Howard</span>
+    <span class="hero-sub">Volusia County &nbsp;·&nbsp; Nature &amp; Portrait Photographer</span>
+  </div>
+  <span class="hero-scroll">Scroll to explore</span>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <span class="marquee-inner">
+    Nature &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Surf &nbsp;·&nbsp; Canine &nbsp;·&nbsp; Commercial &nbsp;·&nbsp; Volusia County, Florida &nbsp;·&nbsp;
+    Nature &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Surf &nbsp;·&nbsp; Canine &nbsp;·&nbsp; Commercial &nbsp;·&nbsp; Volusia County, Florida &nbsp;·&nbsp;
+    Nature &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Surf &nbsp;·&nbsp; Canine &nbsp;·&nbsp; Commercial &nbsp;·&nbsp; Volusia County, Florida &nbsp;·&nbsp;
+    Nature &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Surf &nbsp;·&nbsp; Canine &nbsp;·&nbsp; Commercial &nbsp;·&nbsp; Volusia County, Florida &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- GALLERY -->
+<section id="work">
+  <div class="section-header">
+    <span class="section-num-watermark">01</span>
+    <span class="section-label">Work</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item" data-index="0">
+      <img src="https://static.wixstatic.com/media/7b9356_341aad6ecb24437893843bf9ab4e686b.jpg" alt="Botanical Roots I" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="1">
+      <img src="https://static.wixstatic.com/media/7b9356_74ab6f20604047c4b19d8d6f4f60b1c2.jpg" alt="Canine Portrait" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="2">
+      <img src="https://static.wixstatic.com/media/7b9356_b1a9c14354b444ceab1a4ff0572259c4.jpg" alt="Family Session" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="3">
+      <img src="https://static.wixstatic.com/media/7b9356_5edc05e169594cd2ba8852c773bc76d4.jpg" alt="Florida Landscape" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="4">
+      <img src="https://static.wixstatic.com/media/7b9356_7c34ba5da0d845d1ac8b0eb0c2fa4e2b.jpg" alt="Surf Photography" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="5">
+      <img src="https://static.wixstatic.com/media/7b9356_caaec08b488e4bcbbaaf8a0733b90b7b.jpg" alt="Alternative Portrait" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="6">
+      <img src="https://static.wixstatic.com/media/7b9356_dedb93a8b7ae42669d04ff7d56de2569.jpg" alt="Botanical Detail" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="7">
+      <img src="https://static.wixstatic.com/media/7b9356_fafa1e2ee3bb411bb9f65f247bda2d96.jpg" alt="Roots II" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="8">
+      <img src="https://static.wixstatic.com/media/7b9356_1ed532a81e5f463da68b46435df84a92.jpg" alt="Portrait Study" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="9">
+      <img src="https://static.wixstatic.com/media/7b9356_c9190ef3759b45c48ca6d25b824036aa.jpg" alt="Nature Series" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="10">
+      <img src="https://static.wixstatic.com/media/7b9356_dd9544a7c38040ffb172c670325c8399.jpg" alt="Outdoor Session" loading="lazy">
+    </div>
+    <div class="gallery-item" data-index="11">
+      <img src="https://static.wixstatic.com/media/7b9356_8953521c82a14030b65af9685d0d8fdf.jpg" alt="Florida Coast" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image">
+    <img src="https://static.wixstatic.com/media/7b9356_fafa1e2ee3bb411bb9f65f247bda2d96.jpg" alt="Ashley Howard Photography" loading="lazy">
+  </div>
+  <div class="about-content">
+    <span class="about-section-num">02</span>
+    <div class="section-header" style="margin-bottom: 24px;">
+      <span class="section-label">About</span>
+    </div>
+    <p class="about-pull-quote">
+      "Documenting what Floridians see every day but never stop to look at."
+    </p>
+    <p class="about-bio">
+      Working across nature, portrait, surf, and commercial photography, Ashley Howard documents the overlooked corners of Florida's coast and landscape. Based in Port Orange, she brings macro precision to botanical subjects and cinematic patience to surf and candid portrait work. Her Roots series — close studies of Florida native plants from Jacksonville to Key West — treats the state's flora with the same attention usually reserved for gallery-bound fine art.
+    </p>
+    <a href="#contact" class="about-cta">Get in touch</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-block" data-delay="0">
+      <span class="stat-number">7</span>
+      <span class="stat-label">Gallery Series</span>
+    </div>
+    <div class="stat-block" data-delay="120">
+      <span class="stat-number">100+</span>
+      <span class="stat-label">Images in Portfolio</span>
+    </div>
+    <div class="stat-block" data-delay="240">
+      <span class="stat-number">5+</span>
+      <span class="stat-label">Years Shooting</span>
+    </div>
+    <div class="stat-block" data-delay="360">
+      <span class="stat-number">FL</span>
+      <span class="stat-label">Based in Volusia County</span>
+    </div>
+  </div>
+</section>
+
+<!-- COMMERCIAL -->
+<section id="commercial">
+  <div class="section-header">
+    <span class="section-num-watermark">03</span>
+    <span class="section-label">Commercial</span>
+  </div>
+  <div class="commercial-images">
+    <img src="https://static.wixstatic.com/media/7b9356_c9190ef3759b45c48ca6d25b824036aa.jpg" alt="Commercial Work" loading="lazy">
+    <img src="https://static.wixstatic.com/media/7b9356_dd9544a7c38040ffb172c670325c8399.jpg" alt="Commercial Assignment" loading="lazy">
+  </div>
+  <p class="commercial-caption">
+    Available for commercial assignments — product, brand, and editorial photography.<br>
+    Port Orange and surrounding Volusia County.
+  </p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <h2 class="cta-heading">Let's Work Together</h2>
+    <p class="cta-sub">Commercial &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Nature &nbsp;·&nbsp; Surf</p>
+    <a href="mailto:roxxanne98@gmail.com" class="cta-btn">Start a conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num-watermark">04</span>
+    <span class="section-label">Contact</span>
+  </div>
+  <div class="contact-inner">
+    <h2 class="contact-title">Get In Touch</h2>
+    <div class="contact-item">
+      <span class="contact-item-label">Email</span>
+      <a href="mailto:roxxanne98@gmail.com">roxxanne98@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Phone</span>
+      <a href="tel:3866313487">(386) 631-3487</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Location</span>
+      <span>Port Orange, Florida &mdash; Volusia County</span>
+    </div>
+    <div class="contact-item" style="margin-top: 40px;">
+      <span class="contact-item-label">Follow</span>
+      <a href="https://www.facebook.com/ashleyhowardphoto" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Ashley Howard Photography</span>
+  <span class="footer-center">Port Orange, FL &mdash; Volusia County</span>
+  <div class="footer-right">
+    <span>&copy; 2026</span><br>
+    <a href="#">Design by Lucas Blatt</a>
+  </div>
+</footer>
+
+<script>
+  // 1. Nav scroll behavior
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // 2. Hero name letter-spacing animate
+  const heroName = document.getElementById('hero-name');
+  setTimeout(() => {
+    heroName.classList.add('animate');
+  }, 100);
+
+  // 3. IntersectionObserver for all animated elements
+  const observerOptions = { threshold: 0.08 };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+        if (el.dataset.index !== undefined) {
+          // Gallery items — stagger by index
+          const idx = parseInt(el.dataset.index);
+          setTimeout(() => el.classList.add('is-visible'), idx * 80);
+        } else if (el.dataset.delay !== undefined) {
+          // Stats — stagger by delay
+          setTimeout(() => el.classList.add('is-visible'), delay);
+        } else {
+          el.classList.add('is-visible');
+        }
+        observer.unobserve(el);
+      }
+    });
+  }, observerOptions);
+
+  // Observe gallery items
+  document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+
+  // Observe section labels (clip-path sweep)
+  document.querySelectorAll('.section-label').forEach(el => observer.observe(el));
+
+  // Observe about text elements
+  document.querySelectorAll('.about-pull-quote, .about-bio, .about-cta').forEach(el => observer.observe(el));
+
+  // Observe stats
+  document.querySelectorAll('.stat-block').forEach(el => observer.observe(el));
+
+  // Observe CTA elements
+  document.querySelectorAll('.cta-heading, .cta-sub, .cta-btn').forEach(el => observer.observe(el));
+
+  // 4. Parallax on hero (simple, no jank)
+  const hero = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      hero.style.backgroundPositionY = (scrollY * 0.4) + 'px';
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
