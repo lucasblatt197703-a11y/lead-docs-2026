@@ -3,168 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dennis Carbee</title>
+<title>Dennis Carbee — Sculptor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --dark: #141414;
-    --light: #F2F0EC;
-    --steel: #8A9199;
-    --gold: #B8965A;
-    --navy: #45489A;
+    --black:  #0A0A0A;
+    --dark:   #111111;
+    --mid:    #1A1A1A;
+    --steel:  #8C939A;
+    --chrome: #C8D0D8;
+    --white:  #F0EDE8;
+    --gold:   #A88B5C;
   }
-  html { scroll-behavior: smooth; background: var(--dark); color: var(--light); }
-  body { font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+  html { scroll-behavior: smooth; background: var(--black); color: var(--white); }
+  body { font-family: 'Space Grotesk', sans-serif; font-weight: 300; overflow-x: hidden; }
   img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
 
   /* NAV */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     display: flex; justify-content: space-between; align-items: center;
-    padding: 28px 48px;
+    padding: 32px 60px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, transparent 100%);
   }
-  nav .nav-name {
-    font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--light);
-    text-decoration: none;
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--white);
   }
-  nav .nav-links { display: flex; gap: 36px; }
-  nav .nav-links a {
-    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 300;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--light);
-    text-decoration: none; opacity: 0.55; transition: opacity 0.2s;
+  .nav-links { display: flex; gap: 40px; }
+  .nav-links a {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--chrome); opacity: 0.6;
+    transition: opacity 0.25s;
   }
-  nav .nav-links a:hover { opacity: 1; }
+  .nav-links a:hover { opacity: 1; }
 
   /* HERO */
-  #top { position: relative; height: 100vh; overflow: hidden; }
-  .hero-bg {
+  #hero {
+    position: relative; height: 100vh; min-height: 700px; overflow: hidden;
+    display: flex; align-items: flex-end;
+  }
+  .hero-img {
     position: absolute; inset: 0;
-    background-image: url('images-dennis/hero.jpg');
-    background-size: cover; background-position: center;
-    filter: brightness(0.55);
+    background-image: url('https://www.denniscarbee.com/img/GARDIAN%20ANGEL.jpg');
+    background-size: cover; background-position: center 30%;
+    transform: scale(1.06);
+    transition: transform 8s ease-out;
+    will-change: transform;
+  }
+  .hero-img.loaded { transform: scale(1.0); }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10,10,10,0.2) 0%,
+      rgba(10,10,10,0.1) 40%,
+      rgba(10,10,10,0.7) 80%,
+      rgba(10,10,10,0.95) 100%
+    );
   }
   .hero-content {
-    position: absolute; bottom: 64px; left: 48px; right: 48px;
+    position: relative; z-index: 2;
+    padding: 0 60px 72px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end;
+    width: 100%;
   }
-  .hero-content .overline {
-    font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold);
-    margin-bottom: 16px;
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.7s 0.1s ease, transform 0.7s 0.1s ease;
   }
-  .hero-content h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(52px, 7vw, 96px);
-    font-weight: 700;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    color: var(--light);
-    margin-bottom: 24px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 9vw, 128px);
+    font-weight: 300; line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.9s 0.2s ease, transform 0.9s 0.2s ease;
   }
-  .hero-content .tagline {
-    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300;
-    letter-spacing: 0.08em; color: var(--light); opacity: 0.75;
-    max-width: 420px; line-height: 1.6;
+  .hero-h1 em { font-style: italic; color: var(--chrome); }
+  .hero-tagline {
+    margin-top: 32px; font-size: 14px; font-weight: 300;
+    line-height: 1.7; color: var(--chrome); opacity: 0;
+    max-width: 360px;
+    transform: translateY(16px);
+    transition: opacity 0.8s 0.45s ease, transform 0.8s 0.45s ease;
   }
-  .hero-rule {
-    width: 48px; height: 2px; background: var(--gold); margin: 28px 0;
+  .hero-right {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 24px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.8s 0.55s ease, transform 0.8s 0.55s ease;
+  }
+  .hero-trademark {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 13px; color: var(--gold); letter-spacing: 0.06em;
+  }
+  .hero-cta {
+    display: inline-block; padding: 14px 36px;
+    border: 1px solid rgba(200,208,216,0.35); color: var(--white);
+    font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+    transition: background 0.25s, border-color 0.25s;
+  }
+  .hero-cta:hover { background: rgba(200,208,216,0.12); border-color: var(--chrome); }
+  .hero-rule { width: 40px; height: 1px; background: var(--gold); margin: 28px 0; }
+
+  /* page load entrance */
+  body.ready .hero-eyebrow,
+  body.ready .hero-h1,
+  body.ready .hero-tagline,
+  body.ready .hero-right { opacity: 1; transform: translateY(0); }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--mid); padding: 18px 0; overflow: hidden;
+    border-top: 1px solid rgba(200,208,216,0.08);
+  }
+  .marquee-track {
+    display: flex; white-space: nowrap;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee-track span {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--steel); padding: 0 48px;
+  }
+  .marquee-track span.dot { color: var(--gold); padding: 0 16px; letter-spacing: 0; font-size: 16px; line-height: 0; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* STATS */
+  #stats {
+    background: var(--dark); padding: 80px 60px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(200,208,216,0.07);
+    border-bottom: 1px solid rgba(200,208,216,0.07);
+  }
+  .stat-item {
+    padding: 40px 32px; border-right: 1px solid rgba(200,208,216,0.07);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(56px, 6vw, 88px);
+    font-weight: 300; line-height: 1; color: var(--white); letter-spacing: -0.02em;
+  }
+  .stat-num em { font-style: normal; color: var(--gold); }
+  .stat-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--steel); margin-top: 12px;
   }
 
   /* GALLERY */
-  #work { padding: 100px 0; }
-  .section-header { padding: 0 48px; margin-bottom: 48px; }
-  .section-label {
-    font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold);
-    margin-bottom: 10px;
-  }
-  .section-title {
-    font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 3vw, 40px);
-    font-weight: 700; color: var(--light);
-  }
+  #work { padding: 120px 0; }
+  .section-header { padding: 0 60px; margin-bottom: 60px; display: flex; align-items: baseline; gap: 28px; }
+  .section-num { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 300; color: rgba(200,208,216,0.06); line-height: 1; }
+  .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 400; color: var(--white); }
 
-  /* Tight grid — edge to edge */
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
+    gap: 2px;
   }
   .gallery-item {
-    position: relative; overflow: hidden; aspect-ratio: 1/1; cursor: pointer;
+    position: relative; overflow: hidden; cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease;
   }
-  .gallery-item.tall { aspect-ratio: 3/4; }
-  .gallery-item.wide { grid-column: span 2; aspect-ratio: 16/9; }
+  .gallery-item.is-visible { clip-path: inset(0% 0 0 0); }
+  .gallery-item:nth-child(2) { transition-delay: 80ms; }
+  .gallery-item:nth-child(3) { transition-delay: 160ms; }
+  .gallery-item:nth-child(4) { transition-delay: 240ms; }
+  .gallery-item:nth-child(5) { transition-delay: 80ms; }
+  .gallery-item:nth-child(6) { transition-delay: 160ms; }
+  .gallery-item:nth-child(7) { transition-delay: 240ms; }
+  .gallery-item:nth-child(8) { transition-delay: 320ms; }
+  .gallery-item.wide { grid-column: span 2; }
   .gallery-item img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.5s ease, filter 0.4s ease;
-    filter: grayscale(15%);
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    aspect-ratio: 4/3;
+    transition: transform 0.7s ease, filter 0.5s ease;
+    filter: grayscale(12%) brightness(0.9);
+    will-change: transform;
   }
-  .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
+  .gallery-item.wide img { aspect-ratio: 16/8; }
+  .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%) brightness(1.0); }
   .gallery-caption {
     position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 20px 16px 16px;
-    background: linear-gradient(transparent, rgba(20,20,20,0.8));
-    color: var(--light); font-size: 12px; font-weight: 300;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    opacity: 0; transform: translateY(6px);
-    transition: opacity 0.3s, transform 0.3s;
+    padding: 32px 20px 18px;
+    background: linear-gradient(transparent, rgba(10,10,10,0.85));
+    color: var(--white); font-size: 11px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.35s, transform 0.35s;
   }
   .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
 
+  /* FEATURED PIECE */
+  #featured {
+    display: grid; grid-template-columns: 55% 45%;
+    min-height: 600px;
+    border-top: 2px solid rgba(200,208,216,0.06);
+  }
+  .featured-image { overflow: hidden; position: relative; }
+  .featured-image img {
+    width: 100%; height: 100%; object-fit: cover; min-height: 600px;
+    transition: transform 0.9s ease;
+    will-change: transform;
+    filter: grayscale(10%);
+  }
+  .featured-image:hover img { transform: scale(1.03); }
+  .featured-text {
+    background: var(--mid); padding: 80px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+    opacity: 0; transform: translateX(32px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .featured-text.is-visible { opacity: 1; transform: translateX(0); }
+  .featured-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+  .featured-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 28px; }
+  .featured-body { font-size: 15px; font-weight: 300; line-height: 1.85; color: var(--chrome); opacity: 0.75; margin-bottom: 24px; }
+  .featured-rule { width: 40px; height: 1px; background: var(--gold); margin-top: 12px; }
+
   /* ABOUT */
-  #about { padding: 100px 48px; }
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .about-portrait img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-  .about-text .overline { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
-  .about-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 2.5vw, 36px); font-weight: 700; color: var(--light); margin-bottom: 28px; line-height: 1.2; }
-  .about-text p { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--light); opacity: 0.75; margin-bottom: 20px; }
-  .trademark { font-size: 13px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: 8px; }
+  #about {
+    padding: 140px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+  }
+  .about-portrait {
+    position: relative;
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .about-portrait.is-visible { opacity: 1; transform: translateY(0); }
+  .about-portrait img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.5s;
+  }
+  .about-portrait:hover img { filter: grayscale(0%); }
+  .about-portrait::before {
+    content: ''; position: absolute; top: -20px; left: -20px;
+    width: 60%; height: 60%; border: 1px solid var(--gold);
+    opacity: 0.25; pointer-events: none;
+  }
+  .about-text {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 1s 0.2s ease, transform 1s 0.2s ease;
+  }
+  .about-text.is-visible { opacity: 1; transform: translateY(0); }
+  .about-text .section-label { margin-bottom: 16px; }
+  .about-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 2.8vw, 40px); font-weight: 400; color: var(--white); margin-bottom: 32px; line-height: 1.25; }
+  .about-text p { font-size: 15px; font-weight: 300; line-height: 1.9; color: var(--chrome); opacity: 0.72; margin-bottom: 22px; }
+  .about-trademark { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--gold); margin-top: 12px; letter-spacing: 0.05em; }
+  .about-link { display: inline-block; margin-top: 32px; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--chrome); border-bottom: 1px solid rgba(200,208,216,0.3); padding-bottom: 4px; transition: border-color 0.2s, color 0.2s; }
+  .about-link:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* CTA BAND */
+  #cta {
+    background: var(--mid); padding: 100px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(200,208,216,0.08);
+    border-bottom: 1px solid rgba(200,208,216,0.08);
+    gap: 60px;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  #cta.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-text h2 {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 16px;
+  }
+  .cta-text p { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--steel); max-width: 440px; }
+  .cta-action { flex-shrink: 0; }
+  .cta-btn {
+    display: inline-block; padding: 18px 52px;
+    background: var(--gold); color: var(--black);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .cta-btn:hover { background: #C4A470; transform: translateY(-2px); }
 
   /* CONTACT */
-  #contact { padding: 80px 48px 100px; border-top: 1px solid rgba(242,240,236,0.1); }
-  .contact-inner { max-width: 600px; }
-  .contact-inner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 3vw, 40px); font-weight: 700; color: var(--light); margin-bottom: 16px; }
-  .contact-inner p { font-size: 15px; font-weight: 300; color: var(--light); opacity: 0.65; margin-bottom: 36px; line-height: 1.7; }
-  .contact-email { display: inline-block; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 400; color: var(--gold); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--gold); padding-bottom: 3px; }
-  .contact-email:hover { opacity: 0.7; }
-  .contact-info { margin-top: 32px; font-size: 14px; font-weight: 300; color: var(--light); opacity: 0.5; line-height: 2; }
+  #contact {
+    padding: 100px 60px 120px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .contact-left {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .contact-left.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 400; color: var(--white); margin-bottom: 20px; line-height: 1.15; }
+  .contact-left p { font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--steel); margin-bottom: 36px; }
+  .contact-email-link {
+    display: inline-block; font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 400; color: var(--gold); letter-spacing: 0.02em;
+    border-bottom: 1px solid rgba(168,139,92,0.4); padding-bottom: 4px;
+    transition: border-color 0.2s;
+  }
+  .contact-email-link:hover { border-color: var(--gold); }
+  .contact-meta { margin-top: 32px; font-size: 13px; font-weight: 300; color: var(--steel); line-height: 2.2; letter-spacing: 0.04em; }
+  .contact-right {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s 0.2s ease, transform 0.8s 0.2s ease;
+  }
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-right h3 { font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+  .service-list { list-style: none; }
+  .service-list li {
+    font-size: 14px; font-weight: 300; color: var(--chrome); opacity: 0.65;
+    padding: 16px 0; border-bottom: 1px solid rgba(200,208,216,0.08);
+    display: flex; align-items: center; gap: 16px;
+    transition: opacity 0.2s;
+  }
+  .service-list li:hover { opacity: 1; }
+  .service-list li::before { content: ''; width: 6px; height: 1px; background: var(--gold); flex-shrink: 0; }
+  .service-list li:last-child { border-bottom: none; }
 
   /* FOOTER */
-  footer { background: #0A0A0A; padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
-  footer span { font-size: 12px; font-weight: 300; opacity: 0.4; letter-spacing: 0.08em; color: var(--light); }
-
-  /* FADE IN */
-  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  footer {
+    background: #050505; padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(200,208,216,0.06);
+  }
+  footer .footer-left { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 400; letter-spacing: 0.12em; color: var(--chrome); opacity: 0.45; }
+  footer .footer-right { font-size: 11px; font-weight: 300; color: var(--chrome); opacity: 0.3; letter-spacing: 0.08em; }
 
   /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
-    .hero-content { bottom: 40px; left: 24px; right: 24px; }
-    #work { padding: 60px 0; }
-    .section-header { padding: 0 24px; }
+  @media (max-width: 900px) {
+    nav { padding: 24px 32px; }
+    .hero-content { padding: 0 32px 56px; grid-template-columns: 1fr; }
+    .hero-right { align-items: flex-start; }
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 48px 32px; }
+    .stat-item:nth-child(2) { border-right: none; }
+    #work { padding: 80px 0; }
+    .section-header { padding: 0 32px; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-item.wide { grid-column: span 2; }
-    #about { padding: 60px 24px; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    #contact { padding: 60px 24px; }
-    footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
+    #featured { grid-template-columns: 1fr; }
+    .featured-image img { min-height: 400px; }
+    .featured-text { padding: 60px 40px; }
+    #about { grid-template-columns: 1fr; gap: 48px; padding: 80px 32px; }
+    #cta { flex-direction: column; padding: 72px 32px; gap: 36px; }
+    #contact { grid-template-columns: 1fr; padding: 72px 32px; }
+    footer { padding: 24px 32px; flex-direction: column; gap: 8px; text-align: center; }
   }
   @media (max-width: 480px) {
+    .hero-h1 { font-size: 64px; }
+    #stats { grid-template-columns: 1fr 1fr; padding: 40px 24px; gap: 0; }
+    .stat-num { font-size: 48px; }
     .gallery-grid { grid-template-columns: 1fr; }
     .gallery-item.wide { grid-column: span 1; }
-    nav .nav-name { display: none; }
+    nav .nav-logo { display: none; }
+    #cta { padding: 60px 24px; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="#top" class="nav-name">Dennis Carbee</a>
+  <a href="#hero" class="nav-logo">Dennis Carbee</a>
   <div class="nav-links">
     <a href="#work">Work</a>
     <a href="#about">About</a>
@@ -172,92 +378,204 @@
   </div>
 </nav>
 
-<section id="top">
-  <div class="hero-bg"></div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img" id="heroBg"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="overline">Interactive Stainless Imagery™</p>
-    <h1>Dennis<br>Carbee</h1>
-    <div class="hero-rule"></div>
-    <p class="tagline">Mirror-polished stainless steel sculptures that transform their environment into something you've never seen before.</p>
+    <div class="hero-left">
+      <p class="hero-eyebrow">Fort Lauderdale, Florida</p>
+      <h1 class="hero-h1">Dennis<br><em>Carbee</em></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-tagline">Mirror-polished stainless steel sculptures that absorb and transform their environment — no two views are ever the same.</p>
+    </div>
+    <div class="hero-right">
+      <p class="hero-trademark">Interactive Stainless Imagery&#8482;</p>
+      <a href="#contact" class="hero-cta">Commission a Piece</a>
+    </div>
   </div>
 </section>
 
-<section id="work" class="fade-in">
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Mirror-Polished Stainless Steel</span><span class="dot">&middot;</span>
+    <span>Residential Commissions</span><span class="dot">&middot;</span>
+    <span>Hospitality Installations</span><span class="dot">&middot;</span>
+    <span>Corporate Collections</span><span class="dot">&middot;</span>
+    <span>Fort Lauderdale &middot; Florida</span><span class="dot">&middot;</span>
+    <span>35+ Years Experience</span><span class="dot">&middot;</span>
+    <span>Interactive Stainless Imagery&#8482;</span><span class="dot">&middot;</span>
+    <span>Mirror-Polished Stainless Steel</span><span class="dot">&middot;</span>
+    <span>Residential Commissions</span><span class="dot">&middot;</span>
+    <span>Hospitality Installations</span><span class="dot">&middot;</span>
+    <span>Corporate Collections</span><span class="dot">&middot;</span>
+    <span>Fort Lauderdale &middot; Florida</span><span class="dot">&middot;</span>
+    <span>35+ Years Experience</span><span class="dot">&middot;</span>
+    <span>Interactive Stainless Imagery&#8482;</span><span class="dot">&middot;</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-num">35<em>+</em></div>
+    <div class="stat-label">Years in Sculpture</div>
+  </div>
+  <div class="stat-item" style="transition-delay:120ms;">
+    <div class="stat-num">200<em>+</em></div>
+    <div class="stat-label">Works Completed</div>
+  </div>
+  <div class="stat-item" style="transition-delay:240ms;">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Continents Installed</div>
+  </div>
+  <div class="stat-item" style="transition-delay:360ms;">
+    <div class="stat-num">&#8734;</div>
+    <div class="stat-label">Unique Reflections</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="work">
   <div class="section-header">
-    <p class="section-label">Portfolio</p>
-    <h2 class="section-title">Selected Works</h2>
+    <div class="section-num">01</div>
+    <div class="section-heading-wrap">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
   </div>
   <div class="gallery-grid">
     <div class="gallery-item wide">
-      <img src="images-dennis/g1.jpg" alt="Interactive Stainless Imagery — Detail" loading="lazy">
-      <span class="gallery-caption">Interactive Stainless Imagery — Detail</span>
+      <img src="https://www.denniscarbee.com/img/3%20BIRDS%20EYE%20VIEW.jpg" alt="Birds Eye View" loading="lazy">
+      <span class="gallery-caption">Birds Eye View</span>
     </div>
-    <div class="gallery-item tall">
-      <img src="images-dennis/g2.jpg" alt="Guardian Angel" loading="lazy">
+    <div class="gallery-item">
+      <img src="https://www.denniscarbee.com/img/GARDIAN%20ANGEL.jpg" alt="Guardian Angel" loading="lazy">
       <span class="gallery-caption">Guardian Angel</span>
     </div>
     <div class="gallery-item">
-      <img src="images-dennis/g3.jpg" alt="Polished Steel — Form Study" loading="lazy">
-      <span class="gallery-caption">Form Study</span>
+      <img src="https://www.denniscarbee.com/img/P4255823.JPG" alt="Studio Detail" loading="lazy">
+      <span class="gallery-caption">Studio Detail</span>
     </div>
     <div class="gallery-item">
-      <img src="images-dennis/g4.jpg" alt="Reflective Surface Study" loading="lazy">
-      <span class="gallery-caption">Reflective Surface</span>
+      <img src="https://www.denniscarbee.com/img/P4255826.JPG" alt="Form Study I" loading="lazy">
+      <span class="gallery-caption">Form Study I</span>
     </div>
     <div class="gallery-item wide">
-      <img src="images-dennis/g5.jpg" alt="Double Trouble" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/6%20-%20DOUBLE%20TROUBLE.jpg" alt="Double Trouble" loading="lazy">
       <span class="gallery-caption">Double Trouble</span>
     </div>
     <div class="gallery-item">
-      <img src="images-dennis/g6.jpg" alt="Round About" loading="lazy">
+      <img src="https://www.denniscarbee.com/img/P4255828.JPG" alt="Form Study II" loading="lazy">
+      <span class="gallery-caption">Form Study II</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://www.denniscarbee.com/img/P4255820.JPG" alt="Surface Study" loading="lazy">
+      <span class="gallery-caption">Surface Study</span>
+    </div>
+    <div class="gallery-item">
+      <img src="https://www.denniscarbee.com/img/ROUND%20ABOUT%20%282%29.JPG" alt="Round About" loading="lazy">
       <span class="gallery-caption">Round About</span>
     </div>
-    <div class="gallery-item">
-      <img src="images-dennis/g7.jpg" alt="Light and Form" loading="lazy">
-      <span class="gallery-caption">Light and Form</span>
-    </div>
-    <div class="gallery-item">
-      <img src="images-dennis/g8.jpg" alt="Gallery Installation" loading="lazy">
-      <span class="gallery-caption">Gallery Installation</span>
-    </div>
   </div>
 </section>
 
-<section id="about" class="fade-in">
-  <div class="about-grid">
-    <div class="about-portrait">
-      <img src="images-dennis/portrait.png" alt="Dennis Carbee" loading="lazy">
-    </div>
-    <div class="about-text">
-      <p class="overline">About</p>
-      <h2>Where sculpture becomes a mirror for the world around it.</h2>
-      <p>Dennis Carbee creates mirror-polished stainless steel sculptures that do something most art cannot: they absorb their environment and reflect it back transformed. Every piece changes with the light, the season, and the viewer's position.</p>
-      <p>Based in Fort Lauderdale, Dennis accepts commissions for residential, hospitality, and corporate installations throughout South Florida and beyond. His pieces have found homes in luxury hotels, private estates, and public spaces.</p>
-      <p class="trademark">Interactive Stainless Imagery™</p>
-    </div>
+<!-- FEATURED PIECE -->
+<section id="featured">
+  <div class="featured-image">
+    <img src="https://www.denniscarbee.com/img/ART%20IN%20THE%20SKY.JPG" alt="Art in the Sky" loading="lazy">
+  </div>
+  <div class="featured-text">
+    <p class="featured-eyebrow">Feature Work</p>
+    <h2 class="featured-title">Art in the Sky</h2>
+    <p class="featured-body">Mirror-polished stainless steel captures everything around it&#8212;the light, the sky, the people who stand before it. This large-scale installation demonstrates how Carbee's work doesn't just occupy space. It amplifies it.</p>
+    <p class="featured-body" style="font-size:14px; font-style:italic; color:var(--gold); opacity:0.85;">"Each sculpture is a living mirror for the world it inhabits."</p>
+    <div class="featured-rule"></div>
   </div>
 </section>
 
-<section id="contact" class="fade-in">
-  <div class="contact-inner">
-    <p class="section-label">Get In Touch</p>
-    <h2>Commission a Piece</h2>
-    <p>Available for residential, hospitality, and corporate commissions. Each sculpture is custom-fabricated to the space and the client.</p>
-    <a href="mailto:Dennis@DennisCarbee.com" class="contact-email">Dennis@DennisCarbee.com</a>
-    <div class="contact-info">Fort Lauderdale, FL &nbsp;·&nbsp; 954.554.3977</div>
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-portrait">
+    <img src="https://www.denniscarbee.com/img/DennisCarbee.png" alt="Dennis Carbee" loading="lazy">
+  </div>
+  <div class="about-text">
+    <p class="section-label">About</p>
+    <h2>Where sculpture becomes a mirror for the world around it.</h2>
+    <p>Working exclusively in mirror-polished stainless steel for over three decades, Dennis Carbee has developed a singular body of work he calls Interactive Stainless Imagery&#8482; &#8212; sculptures that transform their environment into something viewers have never seen before.</p>
+    <p>Based in Fort Lauderdale, Florida, Carbee accepts commissions for residential, hospitality, and corporate installations throughout South Florida and internationally. Each piece is custom-fabricated to the space and the client.</p>
+    <p>His work has been installed in luxury hotels, private estates, corporate headquarters, and public spaces across three continents.</p>
+    <p class="about-trademark">Interactive Stainless Imagery&#8482;</p>
+    <a href="#contact" class="about-link">Inquire About a Commission &#8594;</a>
   </div>
 </section>
 
+<!-- CTA BAND -->
+<section id="cta">
+  <div class="cta-text">
+    <h2>Every space deserves<br>a sculpture made for it.</h2>
+    <p>Commissions open for residential, hospitality, and corporate clients. Site visits available throughout South Florida. International installations welcome.</p>
+  </div>
+  <div class="cta-action">
+    <a href="mailto:Dennis@DennisCarbee.com" class="cta-btn">Start a Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <p class="section-label">Commission</p>
+    <h2>Let's Build<br>Something<br>Permanent.</h2>
+    <p>All commissions begin with a site visit and consultation. From concept to installation, each piece is built to the exact specifications of the space.</p>
+    <a href="mailto:Dennis@DennisCarbee.com" class="contact-email-link">Dennis@DennisCarbee.com</a>
+    <div class="contact-meta">
+      Fort Lauderdale, FL 33334<br>
+      954.554.3977<br>
+      denniscarbee.com
+    </div>
+  </div>
+  <div class="contact-right">
+    <h3>Commission Types</h3>
+    <ul class="service-list">
+      <li>Residential &#8212; private homes &amp; estates</li>
+      <li>Hospitality &#8212; hotels, resorts &amp; restaurants</li>
+      <li>Corporate &#8212; headquarters &amp; lobbies</li>
+      <li>Public art &#8212; plazas &amp; civic spaces</li>
+      <li>Gift &amp; memorial &#8212; custom commemorative pieces</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <span>Dennis Carbee © 2026</span>
-  <span>Design by Lucas Blatt</span>
+  <span class="footer-left">Dennis Carbee &copy; 2026</span>
+  <span class="footer-right">Design by Lucas Blatt</span>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  window.addEventListener('load', function() {
+    setTimeout(function() { document.body.classList.add('ready'); }, 80);
+    document.getElementById('heroBg').classList.add('loaded');
+  });
+
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  document.querySelectorAll(
+    '.stat-item, .gallery-item, .featured-text, .about-portrait, .about-text, #cta, .contact-left, .contact-right'
+  ).forEach(function(el) { io.observe(el); });
+
+  var heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', function() {
+    heroBg.style.backgroundPositionY = (window.scrollY * 0.35) + 'px';
+  }, { passive: true });
 </script>
 </body>
 </html>
