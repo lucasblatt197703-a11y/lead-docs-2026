@@ -3,1008 +3,536 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carol McArdle — Wildlife & Nature Painter · Fort Myers, Florida</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<title>Carol McArdle — Wildlife &amp; Nature Oil Paintings</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --ivory: #F7F2E8;
-    --ink: #1C1C1C;
-    --coral: #E85B8A;
-    --green: #2D6B4A;
-    --teal: #1A4A6B;
-    --gold: #D4872E;
+    --linen: #F9F6F1;
+    --linen2: #F2EDE5;
+    --near-black: #1A1007;
+    --green: #2D5A27;
+    --green-light: #3D7035;
+    --gold: #8B6914;
+    --gold-light: #B58A28;
+    --text-dim: #7A6A55;
+    --divider: #E0D8CC;
   }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Work Sans', sans-serif;
-    background: var(--ivory);
-    color: var(--ink);
-    overflow-x: hidden;
-  }
-
-  /* ─── HERO ─── */
-  .hero-wrapper {
-    position: relative;
-    height: 150vh;
-  }
-
-  .hero {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    z-index: 0;
-    background-image: url('https://www.carolsheart.com/i/Paintings%202020/Flamingo_Fire_30x50.jpg');
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 45%);
-    pointer-events: none;
-  }
+  body { background: var(--linen); color: var(--near-black); font-family: 'Source Sans 3', sans-serif; font-weight: 300; overflow-x: hidden; }
 
   nav {
-    position: absolute;
-    top: 32px;
-    right: 48px;
-    z-index: 10;
-    display: flex;
-    gap: 36px;
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    padding: 24px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(249,246,241,0.96);
+    border-bottom: 1px solid var(--divider);
+    backdrop-filter: blur(4px);
   }
-
-  nav a {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(247,242,232,0.70);
-    text-decoration: none;
-    transition: color 0.25s ease;
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 19px; color: var(--near-black); text-decoration: none; letter-spacing: 0.04em;
   }
-
-  nav a:hover { color: rgba(247,242,232,1); }
-
-  .hero-text {
-    position: absolute;
-    bottom: 64px;
-    left: 64px;
-    z-index: 10;
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-dim);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: color 0.3s;
   }
+  .nav-links a:hover { color: var(--green); }
 
+  /* HERO — full-bleed bird painting, name bottom-left italic */
+  .hero {
+    position: relative; height: 100vh; min-height: 680px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://render.pixels.com/images/images-new-artwork/images/artworkimages/medium/3/egret-wings-ii-carol-mcardle.jpg');
+    background-size: cover; background-position: center 20%;
+    will-change: transform;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(26,16,7,0.88) 0%,
+      rgba(26,16,7,0.35) 50%,
+      rgba(26,16,7,0.05) 100%
+    );
+  }
+  .hero-content {
+    position: absolute; bottom: 64px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .hero-left {}
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold-light); display: block; margin-bottom: 16px;
+  }
   .hero-name {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 96px;
-    color: var(--ivory);
-    letter-spacing: 0.08em;
-    line-height: 1;
-    display: block;
+    font-style: italic; font-weight: 600;
+    font-size: 80px; line-height: 0.9; letter-spacing: 0.01em;
+    color: #FFFFFF;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 1s ease, transform 1s ease;
+    will-change: opacity, transform;
+  }
+  .hero-name.is-visible { opacity: 1; transform: translateY(0); }
+  .hero-tagline {
+    margin-top: 20px;
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+  .hero-right {
+    text-align: right;
+  }
+  .hero-awards {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.7;
   }
 
-  .hero-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(247,242,232,0.75);
-    margin-top: 12px;
-    display: block;
+  /* PRICING STRIP */
+  .price-strip {
+    background: var(--green); padding: 18px 56px;
+    display: flex; justify-content: center; align-items: center; gap: 56px;
   }
-
-  /* ─── STATS STRIP ─── */
-  .stats-strip {
-    position: relative;
-    z-index: 1;
-    background: var(--teal);
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 80px;
+  .price-item {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
   }
+  .price-item strong { color: #FFFFFF; font-weight: 500; }
+  .price-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); }
 
+  /* STATS */
+  .stats {
+    padding: 72px 56px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; border-bottom: 1px solid var(--divider);
+  }
   .stat-item {
-    text-align: center;
+    text-align: center; padding: 0 24px;
+    border-left: 1px solid var(--divider);
   }
-
-  .stat-label {
-    display: block;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(247,242,232,0.60);
-    margin-bottom: 2px;
+  .stat-item:first-child { border-left: none; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif; font-size: 52px;
+    color: var(--gold); line-height: 1;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
   }
+  .stat-number.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 10px; }
 
-  .stat-value {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-style: italic;
-    font-size: 36px;
-    color: var(--coral);
-    line-height: 1;
+  /* GALLERY — masonry 2-col, bird paintings breathe */
+  .gallery-section { padding: 100px 56px; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--green); display: block; margin-bottom: 10px;
   }
-
-  .stat-divider {
-    width: 1px;
-    height: 40px;
-    background: rgba(247,242,232,0.2);
-  }
-
-  /* ─── SECTIONS SHARED ─── */
-  .section-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 160px;
-    color: var(--ink);
-    opacity: 0.04;
-    position: absolute;
-    top: -20px;
-    left: -10px;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* ─── GALLERY ─── */
-  .gallery-section {
-    position: relative;
-    z-index: 1;
-    background: var(--ivory);
-    padding: 100px 64px;
-  }
-
-  .section-header {
-    position: relative;
-    margin-bottom: 48px;
-  }
-
-  .section-accent-line {
-    width: 60px;
-    height: 2px;
-    background: var(--coral);
-    margin-bottom: 16px;
-  }
-
   .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 44px;
-    color: var(--ink);
-    letter-spacing: 0.02em;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 44px;
+    color: var(--near-black);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path; margin-bottom: 56px;
   }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
 
-  .masonry-grid {
-    column-count: 3;
-    column-gap: 6px;
+  .masonry {
+    columns: 2; gap: 24px;
   }
-
   .masonry-item {
-    break-inside: avoid;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 6px;
-    cursor: pointer;
+    break-inside: avoid; margin-bottom: 24px;
+    position: relative; overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.85s ease-out;
+    will-change: clip-path;
   }
-
+  .masonry-item.is-visible { clip-path: inset(0 0 0 0); }
   .masonry-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.5s ease;
+    width: 100%; display: block;
+    transition: transform 0.7s ease;
   }
-
-  .masonry-item:hover img { transform: scale(1.03); }
-
-  .img-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
-    padding: 20px 16px 14px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+  .masonry-item:hover img { transform: scale(1.02); }
+  .masonry-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 40px 20px 16px;
+    background: linear-gradient(to top, rgba(26,16,7,0.75) 0%, transparent 100%);
+    opacity: 0; transition: opacity 0.3s ease;
   }
-
-  .masonry-item:hover .img-overlay {
-    opacity: 1;
-    transform: translateY(0);
+  .masonry-item:hover .masonry-caption { opacity: 1; }
+  .masonry-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: rgba(255,255,255,0.9);
   }
+  .masonry-medium { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
 
-  .img-title {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ivory);
-  }
-
-  .accent-divider {
-    height: 1px;
-    background: var(--coral);
-    width: 40%;
-    margin: 60px auto;
-  }
-
-  /* ─── MARQUEE ─── */
-  .marquee-strip {
-    position: relative;
-    z-index: 1;
-    background: var(--green);
-    overflow: hidden;
-    height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  .marquee-track {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 40s linear infinite;
-  }
-
-  .marquee-track span {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(247,242,232,0.65);
-    padding: 0 48px;
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ─── FEATURED PIECE ─── */
-  .featured-section {
-    position: relative;
-    z-index: 1;
-    background: var(--ink);
-    padding: 80px 64px;
-  }
-
-  .featured-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .featured-text { position: relative; }
-
-  .featured-tag {
-    display: inline-block;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(247,242,232,0.4);
-    border: 1px solid rgba(247,242,232,0.15);
-    padding: 5px 12px;
-    margin-bottom: 24px;
-  }
-
-  .featured-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-style: italic;
-    font-size: 42px;
-    color: var(--coral);
-    margin-bottom: 8px;
-    display: block;
-    line-height: 1.1;
-  }
-
-  .featured-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(247,242,232,0.55);
-    margin-bottom: 24px;
-    display: block;
-  }
-
-  .featured-desc {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 1.75;
-    color: rgba(247,242,232,0.85);
-    margin-bottom: 28px;
-  }
-
-  .featured-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 20px;
-    color: var(--gold);
-    letter-spacing: 0.02em;
-  }
-
-  .featured-img-wrap { overflow: hidden; }
-
-  .featured-img-wrap img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.8s ease;
-  }
-
-  .featured-img-wrap:hover img { transform: scale(1.03); }
-
-  /* ─── ABOUT ─── */
-  .about-section {
-    position: relative;
-    z-index: 1;
-    background: var(--ivory);
-    padding: 120px 64px;
-    overflow: hidden;
-  }
-
-  .about-inner {
-    display: grid;
-    grid-template-columns: 45% 55%;
-    gap: 72px;
-    align-items: start;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .about-img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .about-text { position: relative; padding-top: 8px; }
-
-  .about-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 40px;
-    color: var(--ink);
-    margin-bottom: 28px;
-    margin-top: 16px;
-  }
-
-  .about-bio {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 1.8;
-    color: var(--ink);
-    margin-bottom: 36px;
-  }
-
-  .pull-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 22px;
-    line-height: 1.55;
-    color: var(--coral);
-    border-left: 2px solid var(--gold);
-    padding-left: 20px;
-    margin-top: 8px;
-  }
-
-  /* ─── CREDENTIALS ─── */
-  .credentials-section {
-    position: relative;
-    z-index: 1;
-    background: var(--ivory);
-    padding: 80px 64px;
-    border-top: 1px solid rgba(28,28,28,0.08);
-  }
-
-  .credentials-inner {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .cred-label {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink);
-    margin-bottom: 40px;
-    display: block;
-  }
-
-  .cred-item {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-
-  .cred-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--coral);
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-
-  .cred-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 22px;
-    color: var(--ink);
-    line-height: 1.4;
-  }
-
-  .cred-text em {
-    font-style: italic;
-    color: rgba(28,28,28,0.65);
-    font-size: 18px;
-  }
-
-  /* ─── COMMISSIONS CTA ─── */
-  .cta-section {
-    position: relative;
-    z-index: 1;
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('https://www.carolsheart.com/i/Paintings%202017/The_Mother_Tree.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+  /* AWARDS */
+  .awards-section {
+    padding: 80px 56px;
+    background: var(--near-black);
     text-align: center;
   }
+  .awards-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 40px;
+    color: rgba(255,255,255,0.85); margin-bottom: 48px;
+  }
+  .awards-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+    max-width: 800px; margin: 0 auto;
+  }
+  .award-item {}
+  .award-icon {
+    font-family: 'Cormorant Garamond', serif; font-size: 48px; color: var(--gold-light);
+    margin-bottom: 12px; display: block;
+  }
+  .award-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 17px; color: rgba(255,255,255,0.8);
+    margin-bottom: 6px;
+  }
+  .award-desc { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
 
-  .cta-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(26,74,107,0.72);
+  /* ABOUT */
+  .about-section {
+    padding: 112px 56px;
+    display: grid; grid-template-columns: 2fr 1.5fr;
+    gap: 80px; align-items: center;
+    background: var(--linen2);
+  }
+  .about-left {}
+  .about-body {
+    font-size: 17px; line-height: 1.85; color: var(--text-dim); margin-top: 20px;
+  }
+  .about-divider { width: 56px; height: 1px; background: var(--green); margin: 28px 0; }
+  .about-meta { font-size: 13px; color: var(--text-dim); margin-top: 10px; }
+  .about-meta strong { color: var(--near-black); font-weight: 400; }
+  .about-right { position: relative; }
+  .about-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out 0.15s;
+    will-change: clip-path;
+  }
+  .about-img.is-visible { clip-path: inset(0 0 0 0); }
+  .about-img-caption {
+    margin-top: 12px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 13px; color: var(--text-dim);
   }
 
-  .cta-content {
-    position: relative;
-    z-index: 2;
-    padding: 80px 40px;
+  /* CTA */
+  .cta-section {
+    padding: 120px 56px;
+    background: var(--green);
+    text-align: center;
   }
-
-  .cta-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 72px;
-    color: var(--ivory);
-    letter-spacing: 0.08em;
-    line-height: 1.05;
-    margin-bottom: 20px;
-    display: block;
+  .cta-headline {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 60px; color: #FFFFFF; line-height: 1.05; margin-bottom: 16px;
   }
-
   .cta-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 18px;
-    color: rgba(247,242,232,0.85);
-    margin-bottom: 40px;
-    display: block;
-    letter-spacing: 0.02em;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 48px;
   }
-
   .cta-btn {
     display: inline-block;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ivory);
-    border: 1px solid var(--ivory);
-    padding: 14px 40px;
+    padding: 18px 52px;
+    background: var(--near-black); color: rgba(255,255,255,0.85);
     text-decoration: none;
-    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    transition: background 0.3s;
   }
+  .cta-btn:hover { background: #0A0500; }
 
-  .cta-btn:hover {
-    background: var(--coral);
-    border-color: var(--coral);
-    color: #fff;
-  }
-
-  /* ─── CONTACT ─── */
+  /* CONTACT */
   .contact-section {
-    position: relative;
-    z-index: 1;
-    background: var(--ivory);
-    padding: 80px 64px;
-    overflow: hidden;
+    padding: 96px 56px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
   }
-
-  .contact-inner {
-    max-width: 640px;
-    position: relative;
-  }
-
   .contact-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 36px;
-    color: var(--ink);
-    margin-bottom: 32px;
-    margin-top: 12px;
-    display: block;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 44px; color: var(--near-black); margin-top: 14px; line-height: 1.1;
   }
-
-  .contact-line {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--ink);
-    margin-bottom: 8px;
+  .contact-item {
+    display: flex; align-items: baseline; gap: 20px;
+    padding: 18px 0; border-bottom: 1px solid var(--divider);
   }
-
-  .contact-link {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 22px;
-    color: var(--coral);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 6px;
-    transition: color 0.25s;
+  .contact-type {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--green); min-width: 72px;
   }
-
-  .contact-link:hover { color: var(--gold); }
-
-  .contact-note {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 14px;
-    color: rgba(28,28,28,0.55);
-    margin-top: 20px;
-    line-height: 1.6;
+  .contact-value {
+    font-size: 15px; color: var(--near-black); text-decoration: none;
+    transition: color 0.3s;
   }
+  .contact-value:hover { color: var(--green-light); }
 
-  /* ─── FOOTER ─── */
   footer {
-    position: relative;
-    z-index: 1;
-    background: var(--ink);
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 64px;
+    background: var(--near-black); padding: 32px 56px;
+    display: flex; justify-content: space-between; align-items: center;
   }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 16px; color: rgba(255,255,255,0.45);
+  }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+  .footer-credit { font-size: 11px; color: rgba(255,255,255,0.2); }
+  .footer-credit a { color: rgba(255,255,255,0.25); text-decoration: none; }
 
-  .footer-left {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    color: rgba(247,242,232,0.50);
-    letter-spacing: 0.05em;
-  }
-
-  .footer-right {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 10px;
-    color: rgba(247,242,232,0.30);
-    letter-spacing: 0.05em;
-  }
-
-  /* ─── ANIMATIONS ─── */
-  /* Clip-path title sweep — visible by default, animates if JS sets .animate-ready */
-  .clip-title {
-    clip-path: inset(0 0% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-  .animate-ready .clip-title {
-    clip-path: inset(0 100% 0 0);
-  }
-  .clip-title.visible { clip-path: inset(0 0% 0 0) !important; }
-
-  /* Images: visible by default, animate when JS adds .animate-ready early enough */
-  .reveal-img {
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    will-change: transform, opacity;
-  }
-  .animate-ready .reveal-img {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  .reveal-img.visible { opacity: 1 !important; transform: scale(1) !important; }
-
-  .scale-in {
-    transform: scale(1);
-    opacity: 1;
-    transition: transform 1s ease-out, opacity 0.8s ease;
-    will-change: transform, opacity;
-  }
-  .animate-ready .scale-in {
-    transform: scale(0.93);
-    opacity: 0;
-  }
-  .scale-in.visible { transform: scale(1) !important; opacity: 1 !important; }
-
-  .fade-up {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: transform, opacity;
-  }
-  .animate-ready .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  .fade-up.visible { opacity: 1 !important; transform: translateY(0) !important; }
-
-  /* ─── RESPONSIVE ─── */
   @media (max-width: 768px) {
-    nav { gap: 20px; right: 24px; top: 20px; }
-    nav a { font-size: 10px; }
-    .hero-text { bottom: 40px; left: 32px; }
-    .hero-name { font-size: 56px; }
-    .hero-sub { font-size: 11px; }
-    .stats-strip { gap: 32px; height: auto; padding: 20px; flex-wrap: wrap; }
-    .stat-divider { display: none; }
-    .gallery-section { padding: 60px 24px; }
-    .masonry-grid { column-count: 2; }
-    .featured-inner { grid-template-columns: 1fr; gap: 40px; }
-    .featured-text { order: 2; }
-    .featured-img-wrap { order: 1; }
-    .about-inner { grid-template-columns: 1fr; gap: 40px; }
-    .cta-heading { font-size: 48px; }
-    .credentials-section, .contact-section { padding: 60px 24px; }
-    footer { padding: 0 24px; }
-    .section-number { font-size: 100px; }
-    .about-section { padding: 80px 24px; }
-    .featured-section { padding: 60px 24px; }
-    .marquee-strip { display: none; }
+    nav { padding: 18px 20px; }
+    .nav-links { display: none; }
+    .hero-name { font-size: 52px; }
+    .hero-content { left: 24px; right: 24px; bottom: 40px; flex-direction: column; align-items: flex-start; gap: 20px; }
+    .price-strip { flex-direction: column; gap: 8px; padding: 20px; text-align: center; }
+    .price-dot { display: none; }
+    .stats { grid-template-columns: 1fr 1fr; padding: 48px 20px; }
+    .stat-item { padding: 0 12px; }
+    .gallery-section { padding: 64px 20px; }
+    .masonry { columns: 1; }
+    .awards-section { padding: 64px 20px; }
+    .awards-grid { grid-template-columns: 1fr; gap: 24px; max-width: 300px; }
+    .about-section { grid-template-columns: 1fr; padding: 64px 20px; gap: 40px; }
+    .cta-section { padding: 80px 20px; }
+    .cta-headline { font-size: 40px; }
+    .contact-section { grid-template-columns: 1fr; padding: 64px 20px; }
+    footer { flex-direction: column; gap: 12px; padding: 24px 20px; text-align: center; }
   }
-
   @media (max-width: 480px) {
     .hero-name { font-size: 40px; }
-    .hero-text { left: 20px; bottom: 28px; }
-    .masonry-grid { column-count: 1; }
-    nav { display: none; }
-    .stats-strip { gap: 20px; justify-content: space-around; }
-    .cta-heading { font-size: 36px; }
-    .cta-sub { font-size: 15px; }
-    .section-title { font-size: 32px; }
+    .gallery-section, .about-section, .contact-section { padding: 48px 16px; }
   }
-
-/* Skeleton loaders */
-img:not(.img-loaded) {
-  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.4s ease infinite;
-  min-height: 40px;
-}
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-img.img-loaded {
-  animation: none !important;
-  background: none !important;
-}
 </style>
 </head>
 <body>
 
-<!-- ─── HERO ─── -->
-<div class="hero-wrapper">
-  <section class="hero" id="hero">
-    <nav>
-      <a href="#gallery">Works</a>
-      <a href="#about">About</a>
-      <a href="#commissions">Commissions</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="hero-text">
-      <span class="hero-name">CAROL McARDLE</span>
-      <span class="hero-sub">Wildlife &amp; Nature Painter · Fort Myers, Florida</span>
-    </div>
-  </section>
-</div>
+<nav>
+  <a href="#home" class="nav-logo">Carol McArdle</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Paintings</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
 
-<!-- ─── STATS STRIP ─── -->
-<section class="stats-strip">
-  <div class="stat-item">
-    <span class="stat-label">Artworks</span>
-    <span class="stat-value">94</span>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat-item">
-    <span class="stat-label">Years Painting</span>
-    <span class="stat-value">30+</span>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat-item">
-    <span class="stat-label">National Recognition</span>
-    <span class="stat-value" style="font-size:20px; line-height:1.2; padding-top:4px;">Birds in Art<br>Finalist ×2</span>
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <span class="hero-eyebrow">Fort Myers, FL &middot; Wildlife &amp; Nature &middot; Oil on Canvas</span>
+      <h1 class="hero-name" id="heroName">Carol<br>McArdle</h1>
+      <p class="hero-tagline">Florida Wildlife &middot; Birds &middot; Nature Oil Paintings</p>
+    </div>
+    <div class="hero-right">
+      <p class="hero-awards">Two-Time Finalist<br><em>Birds in Art</em> &mdash; Woodson Art Museum<br>Wausau, WI</p>
+    </div>
   </div>
 </section>
 
-<!-- ─── SELECTED WORKS ─── -->
+<div class="price-strip">
+  <span class="price-item"><strong>Original Paintings:</strong> $400 &ndash; $19,000</span>
+  <div class="price-dot"></div>
+  <span class="price-item"><strong>Commission Inquiries:</strong> Welcome</span>
+  <div class="price-dot"></div>
+  <span class="price-item"><strong>Fort Myers, FL</strong></span>
+</div>
+
+<div class="stats" id="stats">
+  <div class="stat-item">
+    <div class="stat-number">2x</div>
+    <div class="stat-label">Birds in Art Finalist</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">30+</div>
+    <div class="stat-label">Years Painting</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">$19K</div>
+    <div class="stat-label">Top Original Price</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">FL</div>
+    <div class="stat-label">Fort Myers Base</div>
+  </div>
+</div>
+
 <section class="gallery-section" id="gallery">
-  <div class="section-header">
-    <span class="section-number">01</span>
-    <div class="section-accent-line"></div>
-    <h2 class="section-title clip-title">Selected Works</h2>
-  </div>
-
-  <div class="masonry-grid">
+  <span class="section-label">Original Paintings</span>
+  <h2 class="section-title">Selected Works</h2>
+  <div class="masonry">
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Ibis_Elegance_40x30_1.jpg" alt="Ibis Elegance" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Ibis Elegance</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Love_Sticks_Together_40x30.jpg" alt="Love Sticks Together" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Love Sticks Together</span></div>
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/2/the-beautiful-stalker-carol-mcardle.jpg" alt="The Beautiful Stalker — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">The Beautiful Stalker</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202019/Preening_Perfection_24x30.jpg" alt="Preening Perfection" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Preening Perfection</span></div>
+      <img src="https://render.pixels.com/images/images-new-artwork/images/artworkimages/medium/3/egret-wings-ii-carol-mcardle.jpg" alt="Egret Wings II — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Egret Wings II</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Sea_Grape_Arbor_40x60.jpg" alt="Sea Grape Arbor" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Sea Grape Arbor</span></div>
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/flying-in-to-paradise-carol-mcardle.jpg" alt="Flying in to Paradise — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Flying into Paradise</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202019/Sea_Grape_Embrace_36x40.jpg" alt="Sea Grape Embrace" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Sea Grape Embrace</span></div>
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/summer-mangrove-melody-carol-mcardle.jpg" alt="Summer Mangrove Melody — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Summer Mangrove Melody</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202018/Light_in_Motion_16x20.jpg" alt="Light in Motion" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Light in Motion</span></div>
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/2/shelter-in-the-cool-shade-carol-mcardle.jpg" alt="Shelter in the Cool Shade — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Shelter in the Cool Shade</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202017/Egret_Wings_30x30.jpg" alt="Egret Wings" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Egret Wings</span></div>
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/preening-with-panache-carol-mcardle.jpg" alt="Preening with Panache — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Preening with Panache</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202016/Classic_Pelican_30x24.jpg" alt="Classic Pelican" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Classic Pelican</span></div>
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/fishing-in-the-mangroves-carol-mcardle.jpg" alt="Fishing in the Mangroves — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Fishing in the Mangroves</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
     <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202020/Rose_Gold_24x24.jpg" alt="Rose Gold" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Rose Gold</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://www.carolsheart.com/i/Paintings%202016/Turtle_Swirl_30x35.jpg" alt="Turtle Swirl" class="reveal-img">
-      <div class="img-overlay"><span class="img-title">Turtle Swirl</span></div>
-    </div>
-  </div>
-
-  <div class="accent-divider"></div>
-</section>
-
-<!-- ─── MARQUEE ─── -->
-<div class="marquee-strip" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Southwest Florida Wildlife</span>
-    <span>·</span>
-    <span>Oil &amp; Acrylic on Canvas</span>
-    <span>·</span>
-    <span>Birds in Art Finalist</span>
-    <span>·</span>
-    <span>Originals &amp; Giclee Prints</span>
-    <span>·</span>
-    <span>Fort Myers, Florida</span>
-    <span>·</span>
-    <span>Custom Commissions Welcome</span>
-    <span>·</span>
-    <span>Southwest Florida Wildlife</span>
-    <span>·</span>
-    <span>Oil &amp; Acrylic on Canvas</span>
-    <span>·</span>
-    <span>Birds in Art Finalist</span>
-    <span>·</span>
-    <span>Originals &amp; Giclee Prints</span>
-    <span>·</span>
-    <span>Fort Myers, Florida</span>
-    <span>·</span>
-    <span>Custom Commissions Welcome</span>
-    <span>·</span>
-  </div>
-</div>
-
-<!-- ─── FEATURED PIECE ─── -->
-<section class="featured-section">
-  <div class="featured-inner">
-    <div class="featured-text">
-      <span class="section-number" style="color:#F7F2E8;">02</span>
-      <span class="featured-tag">Featured Work</span>
-      <span class="featured-title">Regal Roseate</span>
-      <span class="featured-sub">Oil on canvas · 48 × 36 inches</span>
-      <p class="featured-desc">
-        Among Carol's most recognized works, this portrait of a roseate spoonbill in full breeding plumage captures the electric pink that draws thousands of birders to Southwest Florida each winter. The layered impasto technique renders each feather with tactile immediacy — a still image that feels like it might breathe.
-      </p>
-      <span class="featured-price">Original available · Giclee prints from $27</span>
-    </div>
-    <div class="featured-img-wrap">
-      <img src="https://www.carolsheart.com/i/Paintings%202018/Regal_Roseate_48x36.jpg" alt="Regal Roseate" loading="lazy">
+      <img src="https://render.pixels.com/images/images-new-artwork/images/artworkimages/medium/2/ocean-rhythms-carol-mcardle.jpg" alt="Ocean Rhythms — Carol McArdle" loading="lazy">
+      <div class="masonry-caption">
+        <div class="masonry-title">Ocean Rhythms</div>
+        <div class="masonry-medium">Oil on Canvas</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ─── ABOUT ─── -->
+<section class="awards-section" id="awards">
+  <h2 class="awards-title">Recognition &amp; Awards</h2>
+  <div class="awards-grid">
+    <div class="award-item">
+      <span class="award-icon">&#9733;</span>
+      <div class="award-name">Birds in Art Finalist</div>
+      <div class="award-desc">Woodson Art Museum &middot; Wausau, WI &middot; &#215;2</div>
+    </div>
+    <div class="award-item">
+      <span class="award-icon">&#9833;</span>
+      <div class="award-name">Southwest Florida Artist</div>
+      <div class="award-desc">Fort Myers &middot; Est. 1995</div>
+    </div>
+    <div class="award-item">
+      <span class="award-icon">&#9830;</span>
+      <div class="award-name">Solo Exhibition</div>
+      <div class="award-desc">Rockhouse Gallery &middot; Key West, FL</div>
+    </div>
+  </div>
+</section>
+
 <section class="about-section" id="about">
-  <div class="about-inner">
-    <img src="https://www.carolsheart.com/i/Paintings%202017/Egret_Wings_30x30.jpg" alt="Egret Wings — Carol McArdle" loading="lazy" class="about-img">
-    <div class="about-text">
-      <span class="section-number">03</span>
-      <h2 class="about-heading clip-title">About</h2>
-      <p class="about-bio fade-up">
-        Working in oil and acrylic across canvases up to 60 inches, Carol McArdle has spent three decades painting the ecosystems of Southwest Florida — roseate spoonbills in the mangroves, sea grapes along the coast, flamingos in the last wild light. A two-time finalist in the Birds in Art Exhibition at the Woodson Art Museum, her work is held in private collections across the United States.
-      </p>
-      <blockquote class="pull-quote fade-up" style="transition-delay:120ms;">
-        "I want to capture the beauty of the fast disappearing natural Florida."
-      </blockquote>
-    </div>
+  <div class="about-left">
+    <span class="section-label">The Artist</span>
+    <h2 class="section-title">Carol McArdle</h2>
+    <div class="about-divider"></div>
+    <p class="about-body">
+      Carol McArdle moved to Southwest Florida in 1995 and has since become one of the state&rsquo;s most recognized voices in wildlife and nature painting. Working in oil on canvas, she captures the birds, waterscapes, and vanishing landscapes of Florida with a realism that makes you look twice &mdash; roseate spoonbills, great egrets, mangrove shadows at golden hour. She has been named a finalist in the prestigious <em>Birds in Art</em> exhibit at the Woodson Art Museum twice, and her originals have sold for up to $19,000.
+    </p>
+    <div class="about-divider"></div>
+    <p class="about-meta"><strong>Medium:</strong> Oil on Canvas</p>
+    <p class="about-meta"><strong>Based:</strong> Fort Myers, FL</p>
+    <p class="about-meta"><strong>Originals from:</strong> $400 &ndash; $19,000</p>
+    <p class="about-meta"><strong>Phone:</strong> (239) 849-4745</p>
+    <p class="about-meta"><strong>Email:</strong> 577carol@gmail.com</p>
+  </div>
+  <div class="about-right">
+    <img class="about-img" src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/pearl-among-the-oysters-carol-mcardle.jpg" alt="Pearl Among the Oysters — Carol McArdle" loading="lazy">
+    <p class="about-img-caption"><em>Pearl Among the Oysters</em> &mdash; Oil on Canvas</p>
   </div>
 </section>
 
-<!-- ─── CREDENTIALS ─── -->
-<section class="credentials-section">
-  <div class="credentials-inner">
-    <span class="cred-label">Recognition</span>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span class="cred-text">Two-Time Finalist — <em>Birds in Art Exhibition, Woodson Art Museum</em></span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span class="cred-text">Resident Artist — <em>Delnor-Wiggins State Park, Naples FL</em></span>
-    </div>
-    <div class="cred-item">
-      <div class="cred-dot"></div>
-      <span class="cred-text">Solo Shows — <em>Rockhouse Masterpieces, Key West · Coconut Grove Gallery</em></span>
-    </div>
-  </div>
+<section class="cta-section">
+  <h2 class="cta-headline">Commission a Painting</h2>
+  <p class="cta-sub">Original wildlife art &middot; Commissions open</p>
+  <a href="mailto:577carol@gmail.com" class="cta-btn">Inquire About a Commission</a>
 </section>
 
-<!-- ─── COMMISSIONS CTA ─── -->
-<section class="cta-section" id="commissions">
-  <div class="cta-overlay"></div>
-  <div class="cta-content">
-    <span class="cta-heading">Commission an Original</span>
-    <span class="cta-sub">Oil paintings from $400 · Giclee prints available · Custom commissions welcome</span>
-    <a href="mailto:577carol@gmail.com" class="cta-btn">Inquire Now</a>
-  </div>
-</section>
-
-<!-- ─── CONTACT ─── -->
 <section class="contact-section" id="contact">
-  <div class="contact-inner">
-    <span class="section-number">04</span>
-    <span class="contact-heading">Studio Inquiries</span>
-    <a href="mailto:577carol@gmail.com" class="contact-link">577carol@gmail.com</a>
-    <a href="tel:+12398494745" class="contact-link">(239) 849-4745</a>
-    <p class="contact-line" style="margin-top:16px;">
-      Available for private commissions, gallery acquisitions, and print licensing.
-    </p>
-    <p class="contact-note">
-      Prints available at <a href="https://carol-mcardle.pixels.com" target="_blank" style="color:var(--coral); text-decoration:none;">carol-mcardle.pixels.com</a>
-    </p>
+  <div>
+    <span class="section-label">Inquiries</span>
+    <h2 class="contact-heading">Originals,<br>prints &amp;<br>commissions.</h2>
+  </div>
+  <div style="display:flex;flex-direction:column;justify-content:flex-end;">
+    <div class="contact-item">
+      <span class="contact-type">Email</span>
+      <a href="mailto:577carol@gmail.com" class="contact-value">577carol@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-type">Phone</span>
+      <a href="tel:2398494745" class="contact-value">(239) 849-4745</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-type">Pixels</span>
+      <a href="https://carol-mcardle.pixels.com/" target="_blank" class="contact-value">carol-mcardle.pixels.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-type">Location</span>
+      <span class="contact-value">Fort Myers, FL &middot; Southwest Florida</span>
+    </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
 <footer>
-  <span class="footer-left">Carol McArdle · Fort Myers, Florida · &copy; 2026</span>
-  <span class="footer-right">Site design by Lucas Blatt</span>
+  <span class="footer-name">Carol McArdle</span>
+  <span class="footer-copy">&copy; 2026</span>
+  <span class="footer-credit"><a href="#">Design by Lucas Blatt</a></span>
 </footer>
 
 <script>
-  // ── Progressive enhancement: add .animate-ready to body immediately
-  // This hides elements for animation ONLY if JS runs fast enough.
-  // If JS is slow/blocked, elements remain visible (default state).
-  document.body.classList.add('animate-ready');
-
-  // ── IntersectionObserver — trigger .visible when element enters viewport
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.05 });
-
-  // ── Image observer with lower threshold
-  const imgObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        imgObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.02, rootMargin: '100px' });
-
-  // ── Observe all animated elements
-  document.querySelectorAll('.clip-title, .scale-in, .fade-up').forEach(el => observer.observe(el));
-
-  document.querySelectorAll('.reveal-img').forEach((img, i) => {
-    img.style.transitionDelay = (i * 80) + 'ms';
-    imgObserver.observe(img);
-  });
-
-  // ── Hard fallback: fire everything visible after 600ms regardless
-  setTimeout(() => {
-    document.body.classList.remove('animate-ready');
-    document.querySelectorAll('.clip-title, .scale-in, .fade-up, .reveal-img').forEach(el => {
-      el.classList.add('visible');
-    });
-  }, 600);
-
-  // ── Hero letter-spacing on load
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const heroName = document.querySelector('.hero-name');
-      if (heroName) heroName.style.letterSpacing = '0.08em';
-    }, 100);
-  });
-
-  // ── Hero parallax
-  const hero = document.querySelector('.hero');
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
   window.addEventListener('scroll', () => {
-    if (hero) hero.style.backgroundPositionY = (window.scrollY * 0.4) + 'px';
+    heroBg.style.transform = 'translateY(' + (window.scrollY * 0.35) + 'px)';
   }, { passive: true });
 
-// Skeleton loader cleanup
-(function() {
-  function initSkeletons() {
-    document.querySelectorAll('img').forEach(function(img) {
-      if (img.complete && img.naturalWidth > 0) {
-        img.classList.add('img-loaded');
-      } else {
-        img.addEventListener('load', function() { img.classList.add('img-loaded'); });
-        img.addEventListener('error', function() { img.classList.add('img-loaded'); });
+  // Hero name reveal
+  setTimeout(() => {
+    document.getElementById('heroName').classList.add('is-visible');
+  }, 200);
+
+  // IntersectionObserver
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = parseInt(el.dataset.delay || 0);
+        setTimeout(() => el.classList.add('is-visible'), delay);
+        obs.unobserve(el);
       }
     });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSkeletons);
-  } else {
-    initSkeletons();
-  }
-})();
-</script>
+  }, { threshold: 0.08 });
 
+  document.querySelectorAll('.masonry-item').forEach((el, i) => {
+    el.dataset.delay = i * 100;
+    obs.observe(el);
+  });
+  document.querySelectorAll('.section-title, .stat-number, .about-img').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
