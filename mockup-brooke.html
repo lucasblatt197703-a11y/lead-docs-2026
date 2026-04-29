@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brooke Peacock — Peahen Photography | Fort Pierce, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --linen: #F5EFE4;
+    --ink: #1A1714;
+    --amber: #C4884A;
+    --brown: #8B7355;
+    --dark: #2C2420;
+    --dark2: #1E1A17;
+  }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--linen);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-portrait-photographer-psl-ftp-ft-pierce-stuart-jupiter-wpb-fl-bp-2_orig.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    overflow: hidden;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,23,20,0.55) 0%, rgba(26,23,20,0.1) 50%, transparent 100%);
+    pointer-events: none;
+  }
+
+  nav {
+    position: absolute;
+    top: 36px;
+    right: 50px;
+    z-index: 10;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(245,239,228,0.9);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: var(--amber); }
+
+  .hero-text {
+    position: absolute;
+    bottom: 64px;
+    left: 60px;
+    z-index: 10;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    color: var(--linen);
+    line-height: 0.95;
+    letter-spacing: 0.35em; /* starts wide, compresses via JS */
+    text-shadow: 0 2px 30px rgba(0,0,0,0.35);
+    display: block;
+    transition: letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .hero-name.compress { letter-spacing: 0.12em; }
+
+  .hero-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.8);
+    margin-top: 14px;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    right: 50px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.6);
+  }
+
+  .scroll-hint::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: rgba(245,239,228,0.4);
+  }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    background: var(--dark);
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: marquee 60s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 48px;
+  }
+
+  .marquee-item span.num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--amber);
+  }
+
+  .marquee-item span.label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.55);
+  }
+
+  .marquee-sep {
+    color: rgba(196,136,74,0.3);
+    font-size: 20px;
+    padding: 0 16px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── GALLERY ── */
+  #gallery {
+    padding: 70px 40px 40px;
+    background: var(--linen);
+  }
+
+  .section-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .section-label.is-visible { opacity: 1; transform: translateY(0); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 42px;
+    color: var(--ink);
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .masonry-grid {
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .masonry-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, transform 0.6s ease;
+  }
+
+  .masonry-item img.is-visible { clip-path: inset(0 0 0 0); }
+  .masonry-item:hover img { transform: scale(1.03); }
+
+  .masonry-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26,23,20,0.7), transparent);
+    padding: 20px 14px 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--linen);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .masonry-item:hover .masonry-caption { opacity: 1; transform: translateY(0); }
+
+  /* ── PHILOSOPHY / INTRO ── */
+  #philosophy {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    min-height: 600px;
+    background: var(--linen);
+  }
+
+  .philosophy-text {
+    padding: 120px 60px 120px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .philosophy-line {
+    width: 1px;
+    height: 60px;
+    background: var(--amber);
+    margin-bottom: 30px;
+  }
+
+  .philosophy-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 30px;
+  }
+
+  .philosophy-body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #4A3F38;
+  }
+
+  .philosophy-img {
+    overflow: hidden;
+  }
+
+  .philosophy-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+  }
+
+  .philosophy-img img.is-visible { clip-path: inset(0 0 0 0); }
+
+  /* ── SERVICES ── */
+  #services {
+    background: #EDE7DB;
+  }
+
+  .services-header {
+    padding: 80px 80px 50px;
+  }
+
+  .service-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 460px;
+  }
+
+  .service-pair.reverse .service-img { order: 2; }
+  .service-pair.reverse .service-content { order: 1; }
+
+  .service-img {
+    overflow: hidden;
+  }
+
+  .service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+  }
+
+  .service-img:hover img { transform: scale(1.03); }
+
+  .service-content {
+    padding: 60px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #EDE7DB;
+  }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: rgba(196,136,74,0.15);
+    line-height: 1;
+    margin-bottom: -10px;
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 16px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .service-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .service-desc {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #5A4F48;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+  }
+
+  .service-desc.is-visible { opacity: 1; transform: translateY(0); }
+
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .btn-outline {
+    display: inline-block;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    align-self: flex-start;
+  }
+
+  .btn-outline:hover { background: var(--amber); color: var(--linen); }
+
+  /* ── SOCIAL PROOF DARK ── */
+  #proof {
+    background: var(--dark);
+    padding: 100px 80px;
+    text-align: center;
+  }
+
+  .proof-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--linen);
+    margin-bottom: 60px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .proof-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .proof-items {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    margin-bottom: 70px;
+  }
+
+  .proof-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .proof-item.is-visible { opacity: 1; transform: translateY(0); }
+  .proof-item:nth-child(2) { transition-delay: 0.12s; }
+  .proof-item:nth-child(3) { transition-delay: 0.24s; }
+
+  .proof-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .proof-text {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.5);
+  }
+
+  /* ── HORIZONTAL SCROLL STRIP ── */
+  .scroll-strip {
+    height: 480px;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scroll-strip::-webkit-scrollbar { display: none; }
+
+  .strip-img {
+    flex: 0 0 340px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .strip-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .strip-img:hover img { transform: scale(1.04); }
+
+  /* ── ABOUT ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 680px;
+    position: relative;
+  }
+
+  .about-img {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-vertical-text {
+    position: absolute;
+    top: 50%;
+    left: -60px;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--amber);
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  .about-content {
+    padding: 120px 80px;
+    background: var(--linen);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-location {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 30px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .about-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .about-body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.85;
+    color: #4A3F38;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+
+  .about-body.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-coverage {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--brown);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  /* ── CTA ── */
+  #cta {
+    background: linear-gradient(135deg, #C4884A 0%, #8B7355 100%);
+    padding: 140px 80px;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 72px;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .cta-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 48px;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    border: 2px solid white;
+    color: white;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .btn-cta:hover { background: white; color: var(--amber); }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--linen);
+    padding: 100px 80px;
+    text-align: center;
+  }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .contact-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .contact-phone {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--ink);
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+
+  .contact-phone:hover { color: var(--amber); }
+
+  .contact-note {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: #7A6F68;
+    margin-bottom: 30px;
+  }
+
+  .contact-fb {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--amber);
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+
+  .contact-fb:hover { opacity: 0.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark2);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+  }
+
+  footer span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: rgba(245,239,228,0.4);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-name { font-size: 52px; }
+    .hero-text { left: 30px; bottom: 44px; }
+    nav { top: 24px; right: 24px; gap: 20px; font-size: 15px; }
+    .masonry-grid { columns: 2; }
+    #philosophy { grid-template-columns: 1fr; }
+    .philosophy-img { height: 400px; }
+    .philosophy-text { padding: 60px 30px; }
+    .service-pair, .service-pair.reverse { grid-template-columns: 1fr; }
+    .service-pair .service-img, .service-pair.reverse .service-img,
+    .service-pair .service-content, .service-pair.reverse .service-content { order: unset; }
+    .service-img { height: 300px; }
+    #about { grid-template-columns: 1fr; }
+    .about-img { height: 400px; }
+    .about-content { padding: 60px 30px; }
+    .about-vertical-text { display: none; }
+    .cta-title { font-size: 44px; }
+    #cta { padding: 80px 30px; }
+    #contact { padding: 60px 30px; }
+    footer { padding: 0 24px; }
+    .proof-items { gap: 40px; }
+    #proof { padding: 70px 30px; }
+    .services-header { padding: 60px 30px 30px; }
+    .service-content { padding: 40px 30px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 36px; letter-spacing: 0.08em !important; }
+    .hero-sub { font-size: 10px; }
+    .masonry-grid { columns: 1; }
+    .stats-strip { height: 64px; }
+    .scroll-strip { height: 300px; }
+    .strip-img { flex: 0 0 240px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <nav>
+    <a href="#gallery">Portfolio</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="hero-text">
+    <span class="hero-name" id="hero-name">Brooke Peacock</span>
+    <p class="hero-sub">Fort Pierce, FL &nbsp;·&nbsp; Family &nbsp;·&nbsp; Couples &nbsp;·&nbsp; Weddings</p>
+  </div>
+
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- ══ STATS MARQUEE STRIP ══ -->
+<div class="stats-strip">
+  <div class="marquee-track">
+    <!-- First copy -->
+    <div class="marquee-item"><span class="num">5+</span><span class="label">Years</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">100+</span><span class="label">Sessions</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">5</span><span class="label">Counties Served</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">All Photos</span><span class="label">Included</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">∞</span><span class="label">Print Rights</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">Golden Hour</span><span class="label">Specialist</span></div>
+    <span class="marquee-sep">·</span>
+    <!-- Duplicate for seamless loop -->
+    <div class="marquee-item"><span class="num">5+</span><span class="label">Years</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">100+</span><span class="label">Sessions</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">5</span><span class="label">Counties Served</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">All Photos</span><span class="label">Included</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">∞</span><span class="label">Print Rights</span></div>
+    <span class="marquee-sep">·</span>
+    <div class="marquee-item"><span class="num">Golden Hour</span><span class="label">Specialist</span></div>
+    <span class="marquee-sep">·</span>
+  </div>
+</div>
+
+<!-- ══ GALLERY ══ -->
+<section id="gallery">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-title">The Work</h2>
+
+  <div class="masonry-grid">
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-maternity-3.jpg" alt="Maternity — Golden Hour" loading="lazy">
+      <div class="masonry-caption">Maternity · Golden Hour</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-reception-business-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-wedding.jpg" alt="Wedding Day" loading="lazy">
+      <div class="masonry-caption">Wedding Day</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-newborn.jpg" alt="Newborn Session" loading="lazy">
+      <div class="masonry-caption">Newborn · First Days</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-maternity.jpg" alt="Maternity" loading="lazy">
+      <div class="masonry-caption">Maternity · Warm Light</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-graduation-35.jpg" alt="Graduation" loading="lazy">
+      <div class="masonry-caption">Graduation Portrait</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/20231130172607-img-3493.jpg" alt="Couples Session" loading="lazy">
+      <div class="masonry-caption">Couples Session</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-maternity-2.jpg" alt="Maternity Natural Light" loading="lazy">
+      <div class="masonry-caption">Maternity · Natural Light</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/20231130172236-img-3473.jpg" alt="Family Session" loading="lazy">
+      <div class="masonry-caption">Family Session</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PHILOSOPHY ══ -->
+<section id="philosophy">
+  <div class="philosophy-text">
+    <div class="philosophy-line"></div>
+    <p class="philosophy-quote">"Every family has a story worth showing."</p>
+    <p class="philosophy-body">Working with natural Florida light — golden afternoons on the coast, soft window light at home — Brooke captures the quiet moments that become the photos you keep forever.</p>
+    <p class="philosophy-body" style="margin-top:14px;">Sessions are relaxed, candid, and full of laughter. No awkward posing. No stiff smiles. Just your family, your story, your light.</p>
+  </div>
+  <div class="philosophy-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-maternity-5.jpg" alt="Photography philosophy" loading="lazy">
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="services-header">
+    <p class="section-label">Services</p>
+    <h2 class="section-title">What I Offer</h2>
+  </div>
+
+  <div class="service-pair">
+    <div class="service-img">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-portrait-photographer-psl-ftp-ft-pierce-stuart-jupiter-wpb-fl-bp-2_orig.jpg" alt="Couples and Elopements" loading="lazy">
+    </div>
+    <div class="service-content">
+      <span class="service-num">01</span>
+      <h3 class="service-title">Couples &amp; Elopements</h3>
+      <p class="service-desc">Intimate ceremonies and couples sessions for those who want the feeling without the formality. Coverage from the ceremony through golden-hour portraits. You get every photo.</p>
+      <p class="service-price">Starting at $650</p>
+      <a href="#contact" class="btn-outline">Book a Session</a>
+    </div>
+  </div>
+
+  <div class="service-pair reverse">
+    <div class="service-img">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-maternity-3.jpg" alt="Maternity and Newborn" loading="lazy">
+    </div>
+    <div class="service-content">
+      <span class="service-num">02</span>
+      <h3 class="service-title">Maternity &amp; Newborn</h3>
+      <p class="service-desc">The months before and the days after. Warm, gentle sessions that capture the anticipation, the softness, the new. These are the photos you'll show for decades.</p>
+      <p class="service-price">Sessions from $300</p>
+      <a href="#contact" class="btn-outline">Book a Session</a>
+    </div>
+  </div>
+
+  <div class="service-pair">
+    <div class="service-img">
+      <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/20231130172236-img-3473.jpg" alt="Family Sessions" loading="lazy">
+    </div>
+    <div class="service-content">
+      <span class="service-num">03</span>
+      <h3 class="service-title">Family Sessions</h3>
+      <p class="service-desc">Florida light, your family, no awkward posing. Up to 6 people included, with group packages available. Sessions run 1–1.5 hours with your full gallery included.</p>
+      <p class="service-price">Starting at $500</p>
+      <a href="#contact" class="btn-outline">Book a Session</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOCIAL PROOF / DARK BAND ══ -->
+<section id="proof">
+  <h2 class="proof-title">The Details Matter</h2>
+  <div class="proof-items">
+    <div class="proof-item">
+      <div class="proof-icon">✦</div>
+      <div class="proof-text">Every Photo<br>Included</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-icon">✦</div>
+      <div class="proof-text">Unlimited<br>Print Rights</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-icon">✦</div>
+      <div class="proof-text">Private<br>Gallery Delivered</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-icon">✦</div>
+      <div class="proof-text">Professional<br>Editing Included</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HORIZONTAL SCROLL STRIP ══ -->
+<div class="scroll-strip">
+  <div class="strip-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-maternity-4.jpg" alt="Maternity" loading="lazy">
+  </div>
+  <div class="strip-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-graduation-38.jpg" alt="Graduation" loading="lazy">
+  </div>
+  <div class="strip-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/01.jpg" alt="Portrait" loading="lazy">
+  </div>
+  <div class="strip-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/5.jpg" alt="Session" loading="lazy">
+  </div>
+  <div class="strip-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-puppy-business-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-dogs.jpg" alt="Pet Portrait" loading="lazy">
+  </div>
+  <div class="strip-img">
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-events-1.jpg" alt="Events" loading="lazy">
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="about-img">
+    <div class="about-vertical-text">Fort Pierce · Treasure Coast · 2026</div>
+    <img src="https://peahenphotography.weebly.com/uploads/1/0/8/7/108738471/peahen-photography-rn-cna-lpn-photographer-fsu-pcb-psl-ftp-ft-pierce-stuart-wpb-fl-graduation-40.jpg" alt="About Brooke Peacock" loading="lazy">
+  </div>
+  <div class="about-content">
+    <p class="about-location">Fort Pierce, FL · Treasure Coast</p>
+    <h2 class="about-title">About<br>Peahen<br>Photography</h2>
+    <p class="about-body">Peahen Photography was built around one idea: that your real moments deserve more than a posed smile. Brooke Peacock has been photographing Treasure Coast families, couples, and newborns with a style that is warm, candid, and unmistakably Florida.</p>
+    <p class="about-body">From golden-hour elopements on the coast to newborn sessions at home — every gallery tells a story worth keeping. All photos are included with every session, with unlimited print rights.</p>
+    <p class="about-coverage">Serving Indian River, St. Lucie, Okeechobee, Martin, and Palm Beach counties. Travel available throughout South Florida.</p>
+  </div>
+</section>
+
+<!-- ══ BOLD CTA ══ -->
+<section id="cta">
+  <h2 class="cta-title">Let's Make<br>Something Beautiful.</h2>
+  <p class="cta-sub">Currently booking maternity, family, and elopement sessions for 2026.</p>
+  <a href="tel:8504042817" class="btn-cta">Book Your Session</a>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <h2 class="contact-title">Get In Touch</h2>
+  <a href="tel:8504042817" class="contact-phone">(850) 404-2817</a>
+  <p class="contact-note">For the fastest response, text or message on Facebook.</p>
+  <a href="https://www.facebook.com/PeahenPhotography/" class="contact-fb" target="_blank" rel="noopener">Message on Facebook →</a>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span>Peahen Photography · Fort Pierce, FL · © 2026</span>
+  <span>Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // 1. Hero name letter-spacing compress
+  setTimeout(() => {
+    document.getElementById('hero-name').classList.add('compress');
+  }, 100);
+
+  // 2. IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        imgObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Stagger masonry images
+  document.querySelectorAll('.masonry-item img').forEach((img, i) => {
+    img.style.transitionDelay = (i * 100) + 'ms';
+    imgObserver.observe(img);
+  });
+
+  // Philosophy image
+  document.querySelectorAll('.philosophy-img img').forEach(img => {
+    imgObserver.observe(img);
+  });
+
+  // Section titles (clip-path sweep)
+  document.querySelectorAll('.section-title, .proof-title, .about-title, .contact-title, .service-title').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Section labels
+  document.querySelectorAll('.section-label').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Proof items (staggered)
+  document.querySelectorAll('.proof-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Service descriptions
+  document.querySelectorAll('.service-desc, .about-body').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
