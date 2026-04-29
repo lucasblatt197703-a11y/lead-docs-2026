@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meagan Leffel Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F2EC;
+    --walnut: #2C2520;
+    --caramel: #C49A6C;
+    --soft-cream: #F0E8DD;
+    --espresso: #3D2B1F;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--walnut);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── VERTICAL SIDE TEXT ─── */
+  .side-text {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center center;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    opacity: 0.6;
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    padding: 32px 48px;
+    display: flex;
+    gap: 40px;
+  }
+
+  nav a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  nav a:hover { opacity: 1; }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://static.wixstatic.com/media/bdaa7e_1a124ea1b1f846e989d47e050ba140ff~mv2_d_3300_2550_s_4_2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 48px;
+    left: 64px;
+    z-index: 10;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 1.0;
+    color: var(--cream);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    letter-spacing: 0.4em; /* animates to 0.15em */
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+  }
+
+  .hero-name.loaded { letter-spacing: 0.1em; }
+
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(247,242,236,0.85);
+    margin-top: 16px;
+    display: block;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  }
+
+  /* ─── MARQUEE STRIP ─── */
+  .marquee-strip {
+    background: var(--espresso);
+    height: 64px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    padding: 0 32px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── GALLERY SECTION ─── */
+  #gallery {
+    background: var(--soft-cream);
+    padding: 120px 80px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 40px;
+    text-align: center;
+    padding-bottom: 64px;
+    letter-spacing: 0.05em;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .masonry-grid {
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masonry-item img {
+    width: 100%;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, transform 0.6s ease;
+  }
+
+  .masonry-item img.is-visible { clip-path: inset(0 0 0 0); }
+
+  .masonry-item:hover img { transform: scale(1.02); }
+
+  .img-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: linear-gradient(transparent, rgba(44,37,32,0.6));
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .masonry-item:hover .img-label { opacity: 1; transform: translateY(0); }
+
+  /* ─── SERVICES SECTION ─── */
+  #services {
+    background: #fff;
+    padding: 120px 80px;
+  }
+
+  .service-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(44,37,32,0.1);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .service-row.is-visible { opacity: 1; transform: translateY(0); }
+
+  .service-row:first-of-type { border-top: 1px solid rgba(44,37,32,0.1); }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 40px;
+    letter-spacing: 0.03em;
+  }
+
+  .service-detail {
+    text-align: right;
+  }
+
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--caramel);
+    display: block;
+  }
+
+  .service-duration {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(44,37,32,0.5);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── STATS STRIP ─── */
+  .stats-strip {
+    background: var(--caramel);
+    padding: 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 1.0;
+    color: var(--cream);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(247,242,236,0.8);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ─── ABOUT SECTION ─── */
+  #about {
+    background: var(--cream);
+    padding: 140px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-image-wrap img {
+    width: 100%;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out 0.2s;
+  }
+
+  .about-image-wrap img.is-visible { clip-path: inset(0 0 0 0); }
+
+  .about-text { padding-left: 20px; }
+
+  .about-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1.15;
+    margin-bottom: 32px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+  }
+
+  .about-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .about-bio {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(44,37,32,0.75);
+    margin-bottom: 40px;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--caramel);
+    border-left: 2px solid var(--caramel);
+    padding-left: 24px;
+    margin-top: 32px;
+  }
+
+  /* ─── TESTIMONIAL ─── */
+  .testimonial {
+    background: var(--espresso);
+    padding: 140px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 52px;
+    line-height: 1.35;
+    color: var(--cream);
+    max-width: 900px;
+    margin: 0 auto 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .testimonial-quote.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .testimonial-attr {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caramel);
+  }
+
+  /* ─── CTA SECTION ─── */
+  #contact {
+    background: var(--caramel);
+    padding: 160px 80px;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 72px;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(247,242,236,0.85);
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid var(--cream);
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .cta-btn:hover {
+    background: var(--cream);
+    color: var(--espresso);
+  }
+
+  /* ─── CONTACT INFO ─── */
+  .contact-info {
+    background: var(--soft-cream);
+    padding: 100px 80px;
+    text-align: center;
+  }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 48px;
+    margin-bottom: 48px;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link-item {
+    text-align: center;
+  }
+
+  .contact-link-item span {
+    display: block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 10px;
+  }
+
+  .contact-link-item a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--walnut);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(196,154,108,0.4);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-link-item a:hover {
+    color: var(--caramel);
+    border-color: var(--caramel);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--walnut);
+    padding: 32px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: var(--cream);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(247,242,236,0.4);
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 32px;
+  }
+
+  .footer-social a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,242,236,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-social a:hover { color: var(--caramel); }
+
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(247,242,236,0.3);
+    text-align: center;
+    padding: 16px 80px;
+    background: var(--walnut);
+    border-top: 1px solid rgba(247,242,236,0.05);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .side-text { display: none; }
+    nav { padding: 24px 32px; gap: 24px; }
+    .hero-content { left: 32px; bottom: 40px; }
+    .hero-name { font-size: 52px; }
+    #gallery { padding: 80px 32px; }
+    .masonry-grid { columns: 2; }
+    #services { padding: 80px 32px; }
+    .service-name { font-size: 28px; }
+    .service-price { font-size: 24px; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 60px 40px; }
+    .stat-number { font-size: 64px; }
+    #about { grid-template-columns: 1fr; padding: 80px 32px; gap: 48px; }
+    .about-text { padding-left: 0; }
+    .about-heading { font-size: 36px; }
+    .testimonial { padding: 100px 40px; }
+    .testimonial-quote { font-size: 32px; }
+    #contact { padding: 120px 40px; }
+    .cta-heading { font-size: 48px; }
+    .contact-info { padding: 80px 32px; }
+    .contact-links { gap: 40px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 40px; }
+  }
+
+  @media (max-width: 480px) {
+    nav { gap: 16px; padding: 20px 24px; }
+    nav a { font-size: 10px; }
+    .hero-name { font-size: 38px; }
+    .hero-content { left: 24px; bottom: 32px; }
+    .masonry-grid { columns: 1; }
+    #gallery { padding: 60px 24px; }
+    #services { padding: 60px 24px; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 48px 24px; }
+    #about { padding: 60px 24px; }
+    .testimonial { padding: 80px 24px; }
+    .testimonial-quote { font-size: 26px; }
+    #contact { padding: 80px 24px; }
+    .cta-heading { font-size: 36px; }
+    .contact-info { padding: 60px 24px; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Side text -->
+<div class="side-text">Photography · 2026</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#gallery">Portfolio</a>
+  <a href="#services">Packages</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <span class="hero-name" id="heroName">Meagan Leffel<br>Photography</span>
+    <span class="hero-sub">Family · Newborn · Maternity · Eagletown, OK</span>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Family Sessions</span><span>·</span>
+    <span>Newborn Photography</span><span>·</span>
+    <span>Maternity Sessions</span><span>·</span>
+    <span>Fine Art Portraits</span><span>·</span>
+    <span>Smash Cake Sessions</span><span>·</span>
+    <span>Eagletown, Oklahoma</span><span>·</span>
+    <span>Booking 2026</span><span>·</span>
+    <span>Family Sessions</span><span>·</span>
+    <span>Newborn Photography</span><span>·</span>
+    <span>Maternity Sessions</span><span>·</span>
+    <span>Fine Art Portraits</span><span>·</span>
+    <span>Smash Cake Sessions</span><span>·</span>
+    <span>Eagletown, Oklahoma</span><span>·</span>
+    <span>Booking 2026</span><span>·</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h2 class="section-title">The Work</h2>
+  <div class="masonry-grid">
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_45b4473d38e34476996e71301449e79e~mv2_d_2038_3054_s_2.jpg" alt="Family Portrait" loading="lazy">
+      <div class="img-label">Family</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_828237f65eb444d58e600f6ac854a7cf~mv2_d_7360_4912_s_4_2.jpg" alt="Newborn" loading="lazy">
+      <div class="img-label">Newborn</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_ebb8a470fd634364b978da4eb6f3880e~mv2_d_2038_1361_s_2.jpg" alt="Family Outdoor" loading="lazy">
+      <div class="img-label">Family</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_1f61ac8290d24d0d846be89576590060~mv2_d_3300_2550_s_4_2.jpg" alt="Newborn Portrait" loading="lazy">
+      <div class="img-label">Newborn</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_140abe5b7320425282836449799687cc~mv2_d_2038_1575_s_2.jpg" alt="Family Session" loading="lazy">
+      <div class="img-label">Family</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_1c42c74c16f84f06b5fda01d51d44686~mv2_d_4912_7360_s_4_2.jpg" alt="Maternity Session" loading="lazy">
+      <div class="img-label">Maternity</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_2ccd5e1d5232469dbd54307aaf4712fb~mv2.jpg" alt="Newborn Sleepy" loading="lazy">
+      <div class="img-label">Newborn</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_486943e8fc094e4cbe90777fdd23c98e~mv2.jpg" alt="Family Memory" loading="lazy">
+      <div class="img-label">Family</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_7ba205a5265c4628b5825c33a55fe12b~mv2_d_2038_3054_s_2.jpg" alt="Newborn Pose" loading="lazy">
+      <div class="img-label">Newborn</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_6f13a2ccc7884dc3a0cb985ad66a9e91~mv2_d_2550_3300_s_4_2.jpg" alt="Maternity Portrait" loading="lazy">
+      <div class="img-label">Maternity</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_fe96adea97664968911d8c3e972ec743~mv2.jpg" alt="Family Candid" loading="lazy">
+      <div class="img-label">Family</div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/bdaa7e_82bd2f61ce674e7db623c8656e081c05~mv2.jpg" alt="Family Session 3" loading="lazy">
+      <div class="img-label">Family</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES + PRICING -->
+<section id="services">
+  <h2 class="section-title">Sessions &amp; Investment</h2>
+  <div class="service-row">
+    <span class="service-name">Newborn</span>
+    <div class="service-detail">
+      <span class="service-price">$375</span>
+      <span class="service-duration">Up to 2 hours · Studio props &amp; wraps included</span>
+    </div>
+  </div>
+  <div class="service-row">
+    <span class="service-name">Family</span>
+    <div class="service-detail">
+      <span class="service-price">$275</span>
+      <span class="service-duration">Up to 1 hour · 20 digital downloads · Online gallery</span>
+    </div>
+  </div>
+  <div class="service-row">
+    <span class="service-name">Maternity</span>
+    <div class="service-detail">
+      <span class="service-price">$275</span>
+      <span class="service-duration">Up to 1 hour · 20 digital downloads · Online gallery</span>
+    </div>
+  </div>
+  <div class="service-row">
+    <span class="service-name">Smash Cake</span>
+    <div class="service-detail">
+      <span class="service-price">$285</span>
+      <span class="service-duration">Up to 1 hour · Smash cake included · 20 digital downloads</span>
+    </div>
+  </div>
+  <div class="service-row">
+    <span class="service-name">Fine Art Portraits</span>
+    <div class="service-detail">
+      <span class="service-price">$275</span>
+      <span class="service-duration">30 minutes · Magical themed sessions for children</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div>
+    <span class="stat-number">10+</span>
+    <span class="stat-label">Years Experience</span>
+  </div>
+  <div>
+    <span class="stat-number">200+</span>
+    <span class="stat-label">Families Photographed</span>
+  </div>
+  <div>
+    <span class="stat-number">5</span>
+    <span class="stat-label">Session Types</span>
+  </div>
+  <div>
+    <span class="stat-number">800+</span>
+    <span class="stat-label">Instagram Followers</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <img src="https://static.wixstatic.com/media/bdaa7e_304257e620504e78a5d4f12c689e1913~mv2_d_4800_3200_s_4_2.jpg" alt="Meagan Leffel Photography" loading="lazy">
+  </div>
+  <div class="about-text">
+    <span class="about-eyebrow">About the Photographer</span>
+    <h2 class="about-heading">Capturing the moments that matter most.</h2>
+    <p class="about-bio">Meagan Leffel has spent over a decade documenting the smallest, most irreplaceable moments — first breaths, new families, and the quiet tenderness of early parenthood. Based in Eagletown, Oklahoma, she specializes in newborn, family, and maternity photography, bringing genuine warmth and patience to every session.</p>
+    <p class="about-bio">Her goal is not simply to take photographs, but to create art worthy of your walls — images that become heirlooms passed from one generation to the next.</p>
+    <blockquote class="about-quote">"My goal is not only to capture a beautiful picture — but to create art for your home."</blockquote>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<div class="testimonial">
+  <p class="testimonial-quote">"Meagan captured moments I didn't even know were happening. These photos are on our walls and I cry every time I see them."</p>
+  <span class="testimonial-attr">— Happy Client, Eagletown, OK</span>
+</div>
+
+<!-- CTA -->
+<section id="contact">
+  <h2 class="cta-heading">Let's Capture Your Story</h2>
+  <p class="cta-sub">Newborn · Family · Maternity sessions available.<br>Eagletown, OK and surrounding areas. Now booking 2026.</p>
+  <a href="mailto:meagan_shrouder@hotmail.com" class="cta-btn">Book Your Session</a>
+</section>
+
+<!-- CONTACT INFO -->
+<div class="contact-info">
+  <h3 class="contact-heading">Get In Touch</h3>
+  <div class="contact-links">
+    <div class="contact-link-item">
+      <span>Email</span>
+      <a href="mailto:meagan_shrouder@hotmail.com">meagan_shrouder@hotmail.com</a>
+    </div>
+    <div class="contact-link-item">
+      <span>Phone</span>
+      <a href="tel:5803068532">(580) 306-8532</a>
+    </div>
+    <div class="contact-link-item">
+      <span>Instagram</span>
+      <a href="https://www.instagram.com/meaganleffelphotography/" target="_blank">@meaganleffelphotography</a>
+    </div>
+    <div class="contact-link-item">
+      <span>Location</span>
+      <a href="#">Eagletown, OK 74734</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Meagan Leffel Photography</span>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/meaganleffelphotography/" target="_blank">Instagram</a>
+    <a href="mailto:meagan_shrouder@hotmail.com">Email</a>
+    <a href="tel:5803068532">Phone</a>
+  </div>
+  <span class="footer-copy">© 2026 Meagan Leffel Photography</span>
+</footer>
+<div class="footer-credit">Design concept by Lucas Blatt · lucasblatt197703@gmail.com</div>
+
+<script>
+  // 1. Hero name letter-spacing animate on load
+  setTimeout(() => {
+    const heroName = document.getElementById('heroName');
+    if (heroName) heroName.classList.add('loaded');
+  }, 100);
+
+  // 2. Hero parallax
+  const hero = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    if (hero) {
+      hero.style.backgroundPositionY = (window.scrollY * 0.4) + 'px';
+    }
+  }, { passive: true });
+
+  // 3. IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Section titles (clip-path sweep)
+  document.querySelectorAll('.section-title, .about-heading, .cta-heading, .testimonial-quote').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Gallery images (mask reveal from bottom, staggered)
+  const galleryImgs = document.querySelectorAll('.masonry-item img');
+  galleryImgs.forEach((img, i) => {
+    img.style.transitionDelay = (i * 80) + 'ms';
+    observer.observe(img);
+  });
+
+  // About image reveal
+  const aboutImg = document.querySelector('.about-image-wrap img');
+  if (aboutImg) observer.observe(aboutImg);
+
+  // Service rows (staggered fade + rise)
+  const serviceRows = document.querySelectorAll('.service-row');
+  serviceRows.forEach((row, i) => {
+    row.style.transitionDelay = (i * 120) + 'ms';
+    observer.observe(row);
+  });
+</script>
+</body>
+</html>
