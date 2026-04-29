@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savannah Payne Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FDF8F4;
+    --cream-mid: #F5ECE0;
+    --espresso: #2C1A0E;
+    --espresso-dark: #1A0F06;
+    --peach: #D4A882;
+    --brown: #8B5E3C;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--espresso);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--espresso-dark);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    transition: opacity 1.8s ease-in-out;
+  }
+
+  .hero-bg-1 {
+    background-image: url('https://static.wixstatic.com/media/11f86e_3d3bb378abaa43919b6666559ff31ac5~mv2.jpg');
+    opacity: 1;
+    animation: crossfade1 16s ease-in-out infinite;
+  }
+
+  .hero-bg-2 {
+    background-image: url('https://static.wixstatic.com/media/11f86e_538b0fd6b8bf446691c47e67238a74af~mv2.jpg');
+    opacity: 0;
+    animation: crossfade2 16s ease-in-out infinite;
+  }
+
+  @keyframes crossfade1 {
+    0%, 40% { opacity: 1; }
+    50%, 90% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes crossfade2 {
+    0%, 40% { opacity: 0; }
+    50%, 90% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  nav {
+    position: absolute;
+    top: 0; right: 0;
+    padding: 36px 48px;
+    display: flex;
+    gap: 40px;
+    z-index: 10;
+  }
+
+  nav a {
+    color: rgba(253,248,244,0.88);
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  nav a:hover { color: var(--cream); }
+
+  .hero-text {
+    position: absolute;
+    bottom: 60px;
+    left: 48px;
+    z-index: 10;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    color: var(--cream);
+    letter-spacing: 0.45em;
+    line-height: 1;
+    text-shadow: 0 2px 40px rgba(26,15,6,0.5);
+    display: block;
+    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hero-name.loaded { letter-spacing: 0.18em; }
+
+  .hero-subtitle {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(253,248,244,0.82);
+    margin-top: 14px;
+    text-shadow: 0 1px 12px rgba(26,15,6,0.4);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    z-index: 10;
+    writing-mode: vertical-rl;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,248,244,0.5);
+  }
+
+  /* ─── STATS STRIP ─── */
+  #stats {
+    background: var(--cream-mid);
+    padding: 72px 0;
+  }
+
+  .stats-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 0;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 40px;
+    position: relative;
+  }
+
+  .stat-item + .stat-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: var(--peach);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--espresso);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ─── GALLERY ─── */
+  #work {
+    padding: 100px 48px 80px;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-bg-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 300px;
+    font-weight: 300;
+    color: var(--peach);
+    opacity: 0.025;
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+    z-index: 0;
+    user-select: none;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-grid {
+    columns: 3;
+    column-gap: 8px;
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.85s ease-out;
+  }
+
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 16px 16px;
+    background: linear-gradient(transparent, rgba(26,15,6,0.5));
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-caption span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--peach);
+    padding: 18px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--espresso-dark);
+    padding: 0 28px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SERVICES ─── */
+  #sessions {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .services-image {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .services-image.is-visible { clip-path: inset(0 0 0 0); }
+
+  .services-image img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .services-text { }
+
+  .services-text .section-title {
+    text-align: left;
+    margin-bottom: 48px;
+  }
+
+  .service-list { }
+
+  .service-item {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(212,168,130,0.4);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .service-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--espresso);
+  }
+
+  .service-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown);
+    margin-top: 4px;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--cream-mid);
+    padding: 120px 48px;
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .about-image {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.95s ease-out;
+  }
+
+  .about-image.is-visible { clip-path: inset(0 0 0 0); }
+
+  .about-image img {
+    width: 100%;
+    height: 700px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-text { padding-top: 20px; }
+
+  .about-text .section-title {
+    text-align: left;
+    margin-bottom: 32px;
+  }
+
+  .pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--brown);
+    line-height: 1.5;
+    margin-bottom: 32px;
+    padding-left: 24px;
+    border-left: 2px solid var(--peach);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .pull-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-bio {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--espresso);
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+  }
+
+  .about-bio.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-credentials {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+  }
+
+  .about-credentials.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials {
+    background: var(--espresso-dark);
+    padding: 100px 48px;
+    text-align: center;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 auto 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .testimonial-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .testimonial-source {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--peach);
+  }
+
+  .testimonial-stars {
+    font-size: 18px;
+    color: var(--peach);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  /* ─── CTA ─── */
+  #book {
+    background: var(--peach);
+    padding: 120px 48px;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--espresso-dark);
+    line-height: 1;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--espresso);
+    opacity: 0.7;
+    margin-bottom: 48px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1.5px solid var(--espresso-dark);
+    color: var(--espresso-dark);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .cta-btn:hover {
+    background: var(--espresso-dark);
+    color: var(--cream);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--cream);
+    padding: 100px 48px;
+    text-align: center;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-inner .section-title {
+    margin-bottom: 40px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .contact-info a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--espresso);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .contact-info a:hover { color: var(--brown); }
+
+  .contact-info .contact-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .social-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .social-links a:hover { color: var(--espresso); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--espresso-dark);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(253,248,244,0.7);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(253,248,244,0.35);
+  }
+
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(253,248,244,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero-name { font-size: 54px; letter-spacing: 0.25em !important; }
+    .hero-name.loaded { letter-spacing: 0.12em !important; }
+    .hero-text { left: 28px; bottom: 48px; }
+    nav { padding: 24px 28px; gap: 24px; }
+    nav a { font-size: 10px; }
+    .stats-inner { flex-direction: column; gap: 32px; }
+    .stat-item + .stat-item::before { display: none; }
+    .gallery-grid { columns: 2; }
+    #sessions { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
+    .about-inner { grid-template-columns: 1fr; gap: 48px; }
+    #about { padding: 80px 28px; }
+    .about-image img { height: 400px; }
+    .cta-heading { font-size: 52px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    #work { padding: 80px 28px 60px; }
+    .gallery-bg-watermark { font-size: 180px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 38px; }
+    .gallery-grid { columns: 1; }
+    nav { gap: 16px; }
+    .stat-number { font-size: 60px; }
+    .cta-heading { font-size: 38px; }
+    #book { padding: 80px 28px; }
+    #contact { padding: 80px 28px; }
+    #testimonials { padding: 80px 28px; }
+  }
+
+  /* Animation initial states */
+  .anim-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+  }
+  .anim-fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg hero-bg-1"></div>
+  <div class="hero-bg hero-bg-2"></div>
+
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#sessions">Sessions</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="hero-text">
+    <span class="hero-name" id="heroName">Savannah Payne</span>
+    <p class="hero-subtitle">Newborn &nbsp;·&nbsp; Maternity &nbsp;·&nbsp; Family</p>
+  </div>
+
+  <span class="hero-scroll-hint">Scroll</span>
+</section>
+
+<!-- STATS STRIP -->
+<section id="stats">
+  <div class="stats-inner">
+    <div class="stat-item anim-fade-up">
+      <span class="stat-number">14+</span>
+      <span class="stat-label">Years of Experience</span>
+    </div>
+    <div class="stat-item anim-fade-up" style="transition-delay:0.12s">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Sessions Captured</span>
+    </div>
+    <div class="stat-item anim-fade-up" style="transition-delay:0.24s">
+      <span class="stat-number">5★</span>
+      <span class="stat-label">Client Rating</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="work">
+  <div class="gallery-bg-watermark" aria-hidden="true">Savannah</div>
+  <h2 class="section-title">The Work</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_b27529dab25945049b9c2aa206549029~mv2.jpg" alt="Newborn portrait" loading="lazy">
+      <div class="gallery-caption"><span>Newborn</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_1e71ee75fe4f465599d9ca43bfb5f58e~mv2.jpg" alt="Maternity portrait" loading="lazy">
+      <div class="gallery-caption"><span>Maternity</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_42010d4474484adbbe8f3e12582db4c2~mv2.jpg" alt="Baby session" loading="lazy">
+      <div class="gallery-caption"><span>Babies</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_ade6cff09dc9446c8b2ab4711ae8bb84~mv2.jpg" alt="Newborn session" loading="lazy">
+      <div class="gallery-caption"><span>Newborn</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_2a1ce436be98454ca7a7532ac7368e6d~mv2.jpg" alt="Maternity session" loading="lazy">
+      <div class="gallery-caption"><span>Maternity</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_cd411adf01e5419eabd8da1f9c7011a3~mv2.jpg" alt="Baby portrait" loading="lazy">
+      <div class="gallery-caption"><span>Babies</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_e42ae0b2548a4a3daaa65e33bc05d8f6~mv2.jpg" alt="Newborn" loading="lazy">
+      <div class="gallery-caption"><span>Newborn</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_0c258af0db0e407e8f7928f6851dbda7~mv2.jpg" alt="Lifestyle session" loading="lazy">
+      <div class="gallery-caption"><span>Lifestyle</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_8b403f300f5047afa81ebb8dfc830f42~mv2.jpg" alt="Family portrait" loading="lazy">
+      <div class="gallery-caption"><span>Family</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_e2a7908d29e140adae249d563d77bfa6~mv2.jpg" alt="Newborn" loading="lazy">
+      <div class="gallery-caption"><span>Newborn</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_666c7d1f7b36446e9cc4a698cdf099c2~mv2.jpg" alt="Portrait session" loading="lazy">
+      <div class="gallery-caption"><span>Portrait</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/11f86e_127bc0de9b3b4ab98dfb48e98651ae65~mv2.jpg" alt="Baby portrait" loading="lazy">
+      <div class="gallery-caption"><span>Babies</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Available for Booking</span>
+    <span>·</span>
+    <span>Palm Coast, FL</span>
+    <span>·</span>
+    <span>Newborn</span>
+    <span>·</span>
+    <span>Maternity</span>
+    <span>·</span>
+    <span>Family</span>
+    <span>·</span>
+    <span>Jacksonville to Daytona Beach</span>
+    <span>·</span>
+    <span>Studio &amp; On Location</span>
+    <span>·</span>
+    <span>2026</span>
+    <span>·</span>
+    <span>Available for Booking</span>
+    <span>·</span>
+    <span>Palm Coast, FL</span>
+    <span>·</span>
+    <span>Newborn</span>
+    <span>·</span>
+    <span>Maternity</span>
+    <span>·</span>
+    <span>Family</span>
+    <span>·</span>
+    <span>Jacksonville to Daytona Beach</span>
+    <span>·</span>
+    <span>Studio &amp; On Location</span>
+    <span>·</span>
+    <span>2026</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="sessions">
+  <div class="services-image">
+    <img src="https://static.wixstatic.com/media/11f86e_538b0fd6b8bf446691c47e67238a74af~mv2.jpg" alt="Photography session" loading="lazy">
+  </div>
+  <div class="services-text">
+    <h2 class="section-title">Sessions</h2>
+    <div class="service-list">
+      <div class="service-item">
+        <div class="service-name">Newborn</div>
+        <div class="service-desc">First days — posed studio + lifestyle</div>
+      </div>
+      <div class="service-item" style="transition-delay:0.08s">
+        <div class="service-name">Maternity</div>
+        <div class="service-desc">Expecting mothers — studio + outdoor</div>
+      </div>
+      <div class="service-item" style="transition-delay:0.16s">
+        <div class="service-name">Lifestyle</div>
+        <div class="service-desc">Real moments, naturally lit</div>
+      </div>
+      <div class="service-item" style="transition-delay:0.24s">
+        <div class="service-name">Family</div>
+        <div class="service-desc">All ages, all sizes, all stories</div>
+      </div>
+      <div class="service-item" style="transition-delay:0.32s">
+        <div class="service-name">Engagement</div>
+        <div class="service-desc">Before the big day</div>
+      </div>
+      <div class="service-item" style="transition-delay:0.4s">
+        <div class="service-name">Graduation</div>
+        <div class="service-desc">Milestones worth remembering</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-image">
+      <img src="https://static.wixstatic.com/media/11f86e_2d37aa128b044d05b5663d9dce8dca16~mv2.jpg" alt="Savannah Payne, photographer" loading="lazy">
+    </div>
+    <div class="about-text">
+      <h2 class="section-title">About Savannah</h2>
+      <p class="pull-quote">"Every baby deserves to have their first days remembered beautifully."</p>
+      <p class="about-bio">Based in Palm Coast, Florida, Savannah Payne has spent 14 years capturing the moments that matter most — the first breath, the first hold, the quiet mornings of new parenthood. Working from her 1,000-square-foot studio and traveling throughout the Jacksonville to Daytona corridor, her work is guided by patience, warmth, and an obsession with beautiful light.</p>
+      <p class="about-bio">What began as wanting to document her own children's early years became a calling to help families hold onto theirs. Today, Savannah offers studio and on-location sessions across Flagler County and beyond — every image made with care, skill, and heart.</p>
+      <div class="about-credentials">5★ Thumbtack · Background-Checked · Licensed · Insured · Payment Plans Available</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <span class="testimonial-stars">★★★★★</span>
+  <p class="testimonial-quote">"She managed to get it all done very well, within the narrow time frame. The photos came out exactly as we hoped."</p>
+  <p class="testimonial-source">Thumbtack Client &nbsp;·&nbsp; 5-Star Review</p>
+</section>
+
+<!-- CTA -->
+<section id="book">
+  <h2 class="cta-heading">Book Your Session</h2>
+  <p class="cta-sub">Serving Palm Coast · Bunnell · Jacksonville · Daytona Beach</p>
+  <a href="mailto:SavannahPaynePhotography@gmail.com" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-info">
+      <div>
+        <span class="contact-label">Email</span>
+        <a href="mailto:SavannahPaynePhotography@gmail.com">SavannahPaynePhotography@gmail.com</a>
+      </div>
+      <div>
+        <span class="contact-label">Phone</span>
+        <a href="tel:3863467917">386-346-7917</a>
+      </div>
+      <div>
+        <span class="contact-label">Studio Location</span>
+        <a href="#">Palm Coast, Florida</a>
+      </div>
+    </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/_savannah_payne_photography/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/SavannahPaynePhotography/" target="_blank">Facebook</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Savannah Payne Photography</span>
+  <span class="footer-copy">© 2026 · Palm Coast, FL</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero name letter-spacing animate
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('loaded');
+    }, 150);
+  });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Gallery items with staggered delay
+  document.querySelectorAll('.gallery-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 80) + 'ms';
+    observer.observe(el);
+  });
+
+  // Section titles (clip-path sweep)
+  document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+  // Fade-up elements
+  document.querySelectorAll('.anim-fade-up').forEach(el => observer.observe(el));
+
+  // Services image
+  document.querySelectorAll('.services-image, .about-image').forEach(el => observer.observe(el));
+
+  // Service items
+  document.querySelectorAll('.service-item').forEach(el => observer.observe(el));
+
+  // About text elements
+  document.querySelectorAll('.pull-quote, .about-bio, .about-credentials').forEach(el => observer.observe(el));
+
+  // Testimonial quote
+  document.querySelectorAll('.testimonial-quote').forEach(el => observer.observe(el));
+
+  // CTA heading
+  document.querySelectorAll('.cta-heading').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
