@@ -3,755 +3,384 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jamie Roxx — Pop Noir Painter</title>
+<title>Jamie Roxx — Pop Noir Artist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: #1A1A1A;
-    color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    font-size: 17px;
-    line-height: 1.7;
-    overflow-x: hidden;
+  :root {
+    --bg: #111111;
+    --text: #FFFFFF;
+    --accent: #FF2D55;
+    --gold: #FFD700;
+    --dark: #0A0A0A;
+    --surface: #1A1A1A;
+    --muted: #888888;
   }
+  html { scroll-behavior: smooth; background: var(--bg); color: var(--text); }
+  body { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
 
-  /* Skeleton loaders */
-  img:not(.img-loaded) {
-    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
-    background-size: 200% 100%;
-    animation: skeleton-shimmer 1.4s ease infinite;
-    min-height: 40px;
-  }
-  @keyframes skeleton-shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  img.img-loaded { animation: none !important; background: none !important; }
-
-  /* ==============================
-     HERO — CINEMATIC LETTERBOX
-     ============================== */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    overflow: hidden;
-  }
-  .hero-image {
-    position: absolute;
-    inset: 80px 0 60px 0;
-    width: 100%;
-    height: calc(100% - 140px);
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-    will-change: transform;
-  }
-  .hero-top-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    z-index: 10;
-  }
-  .hero-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 58px;
-    letter-spacing: 0.1em;
-    color: #fff;
-    line-height: 1;
-    overflow: hidden;
-  }
-  .hero-name-char {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .hero-name-char.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* NAV */
   nav {
-    display: flex;
-    gap: 28px;
-    align-items: center;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center; padding: 20px 60px;
+    background: rgba(17,17,17,0.95); border-bottom: 1px solid rgba(255,45,85,0.12);
   }
-  nav a {
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  nav a:hover { color: #FF2D55; }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.1em; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+  .nav-links a { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
 
-  .hero-bottom-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: #000;
-    display: flex;
-    align-items: center;
-    padding: 0 40px;
-    z-index: 10;
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding-top: 70px; overflow: hidden; position: relative;
   }
-  .hero-subtitle {
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
-  }
-
-  /* Ghost ROXX text */
-  .hero-ghost {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 420px;
-    color: #fff;
-    opacity: 0.03;
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(255,45,85,0.06) 0%, transparent 60%);
     pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
-    z-index: 1;
-    line-height: 1;
   }
+  .hero-left { padding: 80px 40px 80px 80px; position: relative; z-index: 2; }
+  .hero-tag { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; display: block; opacity: 0; transition: opacity 0.6s ease; }
+  .hero-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(72px, 9vw, 130px); letter-spacing: 0.04em; line-height: 0.9; color: var(--text); margin-bottom: 20px; display: block; }
+  .hero-name-line { display: block; opacity: 0; transform: translateX(-30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .hero-name-line:nth-child(2) { transition-delay: 0.12s; }
+  .hero-style { font-family: 'Bebas Neue', sans-serif; font-size: clamp(20px, 2.5vw, 30px); letter-spacing: 0.12em; color: var(--accent); margin-bottom: 28px; display: block; opacity: 0; transform: translateX(-20px); transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s; }
+  .hero-desc { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.52); max-width: 380px; line-height: 1.75; margin-bottom: 40px; opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s; }
+  .hero.loaded .hero-tag, .hero.loaded .hero-name-line, .hero.loaded .hero-style, .hero.loaded .hero-desc, .hero.loaded .hero-btns { opacity: 1; transform: none; }
+  .btn-primary { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 14px 32px; text-decoration: none; transition: background 0.25s; display: inline-block; }
+  .btn-primary:hover { background: #e01f45; }
+  .btn-secondary { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); border: 1px solid rgba(255,255,255,0.2); padding: 14px 32px; text-decoration: none; transition: border-color 0.25s, color 0.25s; display: inline-block; }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-right { position: relative; height: 100vh; overflow: hidden; }
+  .hero-painting { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; opacity: 0; transition: opacity 0.9s ease 0.3s; }
+  .hero-painting.in { opacity: 1; }
+  .hero-painting-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(17,17,17,0.65) 0%, transparent 45%); }
 
-  /* ==============================
-     STATS STRIP
-     ============================== */
-  .stats {
-    background: #2C2C2C;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    padding: 48px 0;
-  }
-  .stat-block {
-    flex: 1;
-    text-align: center;
-    padding: 0 40px;
-    border-right: 1px solid #3a3a3a;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .stat-block:last-child { border-right: none; }
-  .stat-block.is-visible { opacity: 1; transform: translateY(0); }
-  .stat-number {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 90px;
-    color: #FF2D55;
-    line-height: 1;
-    display: block;
-  }
-  .stat-label {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-top: 6px;
-    display: block;
-  }
+  /* NAME FLICKER */
+  @keyframes flicker { 0%{opacity:1} 8%{opacity:0.7} 12%{opacity:1} 20%{opacity:0.88} 25%{opacity:1} 100%{opacity:1} }
+  .hero-name { animation: flicker 2.5s ease-in-out 0.9s 1; }
 
-  /* ==============================
-     GALLERY
-     ============================== */
-  .gallery-section {
-    padding: 80px 0 0 0;
-  }
-  .gallery-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    color: #fff;
-    padding-left: 40px;
-    margin-bottom: 40px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-  .gallery-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  /* MARQUEE */
+  .marquee-strip { background: var(--accent); padding: 11px 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-block; animation: marquee 28s linear infinite; }
+  .marquee-track span { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.18em; color: #fff; padding: 0 24px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+  /* STATS */
+  .stats-section {
+    background: var(--surface); padding: 60px 80px;
+    display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 30px;
+    border-top: 1px solid rgba(255,45,85,0.1); border-bottom: 1px solid rgba(255,45,85,0.1);
   }
-  .gallery-item {
-    position: relative;
-    aspect-ratio: 1/1;
-    overflow: hidden;
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 0.9s ease-out;
-    will-change: clip-path;
-  }
-  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
+  .stat-item { text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.1s; } .stat-item:nth-child(3) { transition-delay: 0.2s; } .stat-item:nth-child(4) { transition-delay: 0.3s; }
+  .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: clamp(50px, 6vw, 80px); letter-spacing: 0.04em; color: var(--gold); line-height: 1; display: block; }
+  .stat-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
+
+  /* SECTION HELPERS */
+  .section-number { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 12px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: 0.06em; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1); }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* GALLERY — TIGHT 4-COL */
+  .gallery-section { padding: 120px 0; background: var(--dark); }
+  .gallery-header { padding: 0 80px; margin-bottom: 60px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .gallery-item { position: relative; overflow: hidden; aspect-ratio: 1; background: var(--surface); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .gallery-item.visible { opacity: 1; transform: translateY(0); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
   .gallery-item:hover img { transform: scale(1.04); }
-  .gallery-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    align-items: flex-end;
-    padding: 16px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .gallery-item:hover .gallery-overlay { opacity: 1; }
-  .gallery-title {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #fff;
-    transform: translateY(10px);
-    transition: transform 0.3s ease;
-  }
-  .gallery-item:hover .gallery-title { transform: translateY(0); }
+  .gallery-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(17,17,17,0.9); padding: 12px 14px; transform: translateY(100%); transition: transform 0.3s ease; }
+  .gallery-item:hover .gallery-overlay { transform: translateY(0); }
+  .gallery-title { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #fff; letter-spacing: 0.08em; }
 
-  /* ==============================
-     MARQUEE
-     ============================== */
-  .marquee-strip {
-    background: #2C2C2C;
-    height: 50px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    margin: 80px 0 0 0;
+  /* PRICE STRIP */
+  .price-strip {
+    background: var(--surface); padding: 28px 80px;
+    display: flex; justify-content: center; gap: 60px; align-items: center; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,215,0,0.1); border-bottom: 1px solid rgba(255,215,0,0.1);
   }
-  .marquee-inner {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 40s linear infinite;
-    will-change: transform;
-  }
-  .marquee-text {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    padding-right: 60px;
-  }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+  .price-item { font-family: 'Bebas Neue', sans-serif; font-size: clamp(24px, 3vw, 36px); letter-spacing: 0.1em; color: var(--gold); }
+  .price-item span { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-left: 10px; vertical-align: middle; }
 
-  /* ==============================
-     COMMISSIONS
-     ============================== */
-  .commissions {
-    padding: 120px 40px;
-    border-top: 1px solid #FF2D55;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .commissions-left {}
-  .commissions-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 24px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-  .commissions-heading.is-visible { clip-path: inset(0 0% 0 0); }
-  .commissions-subtext {
-    font-size: 16px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.7;
-    margin-bottom: 36px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
-  }
-  .commissions-subtext.is-visible { opacity: 1; transform: translateY(0); }
-  .cta-btn {
-    display: inline-block;
-    background: #FF2D55;
-    color: #fff;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.1em;
-    padding: 14px 48px;
-    text-decoration: none;
-    border-radius: 0;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .cta-btn:hover { background: #e02048; transform: translateY(-2px); }
+  /* ABOUT */
+  .about-section { padding: 120px 80px; background: var(--bg); }
+  .about-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+  .about-gold-quote { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 3vw, 36px); letter-spacing: 0.06em; color: var(--gold); line-height: 1.3; margin-bottom: 40px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .about-gold-quote.visible { opacity: 1; transform: translateY(0); }
+  .about-text p { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.58); line-height: 1.8; margin-bottom: 18px; opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .about-text p.visible { opacity: 1; transform: translateY(0); }
+  .about-text p:nth-child(2) { transition-delay: 0.1s; } .about-text p:nth-child(3) { transition-delay: 0.2s; }
 
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  /* PODCAST */
+  .podcast-section {
+    background: var(--dark); padding: 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    border-top: 1px solid rgba(255,45,85,0.1);
   }
-  .pricing-grid.is-visible { opacity: 1; transform: translateY(0); }
-  .price-block {
-    background: #2C2C2C;
-    padding: 28px 24px;
-    text-align: center;
-  }
-  .price-size {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 8px;
-  }
-  .price-amount {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    color: #FFD700;
-    line-height: 1;
-  }
+  .podcast-number { font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px, 10vw, 130px); letter-spacing: 0.02em; color: rgba(255,215,0,0.07); line-height: 0.9; user-select: none; display: block; }
+  .podcast-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 3.5vw, 44px); letter-spacing: 0.06em; color: var(--text); margin-bottom: 16px; }
+  .podcast-text p { font-size: 15px; color: rgba(255,255,255,0.52); line-height: 1.7; margin-bottom: 28px; }
+  .podcast-link { display: inline-block; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 12px 28px; text-decoration: none; transition: background 0.25s, color 0.25s; }
+  .podcast-link:hover { background: var(--gold); color: var(--bg); }
 
-  /* ==============================
-     ABOUT — MAGAZINE SPREAD
-     ============================== */
-  .about {
-    padding: 120px 0;
-    display: grid;
-    grid-template-columns: 45% 55%;
-  }
-  .about-image-col {
-    overflow: hidden;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.9s ease-out;
-    will-change: clip-path;
-  }
-  .about-image-col.is-visible { clip-path: inset(0 0 0 0); }
-  .about-image-col img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    min-height: 500px;
-  }
-  .about-text-col {
-    padding: 60px 60px 60px 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .about-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 24px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-  .about-name.is-visible { clip-path: inset(0 0% 0 0); }
-  .about-bio {
-    font-size: 17px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.8;
-    margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
-  }
-  .about-bio.is-visible { opacity: 1; transform: translateY(0); }
-  .about-quote {
-    font-size: 20px;
-    font-style: italic;
-    color: #FF2D55;
-    line-height: 1.5;
-    padding-left: 20px;
-    border-left: 3px solid #FF2D55;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
-  }
-  .about-quote.is-visible { opacity: 1; transform: translateY(0); }
+  /* CTA */
+  .cta-section { background: var(--accent); padding: 100px 80px; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: 'COMMISSION'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Bebas Neue', sans-serif; font-size: 20vw; letter-spacing: 0.06em; color: rgba(255,255,255,0.04); white-space: nowrap; pointer-events: none; user-select: none; }
+  .cta-section .section-title { color: #fff; font-size: clamp(36px, 5.5vw, 70px); margin-bottom: 20px; position: relative; z-index: 1; }
+  .cta-section p { font-size: 16px; color: rgba(255,255,255,0.78); max-width: 460px; margin: 0 auto 40px; position: relative; z-index: 1; }
+  .cta-btn { display: inline-block; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); background: #fff; padding: 16px 40px; text-decoration: none; transition: opacity 0.25s; position: relative; z-index: 1; }
+  .cta-btn:hover { opacity: 0.9; }
 
-  /* ==============================
-     CONTACT CTA
-     ============================== */
-  .contact {
-    background: #FF2D55;
-    padding: 120px 40px;
-    text-align: center;
-  }
-  .contact-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 100px;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 24px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-  .contact-heading.is-visible { clip-path: inset(0 0% 0 0); }
-  .contact-email {
-    display: block;
-    font-size: 24px;
-    color: rgba(255,255,255,0.9);
-    text-decoration: none;
-    margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
-  }
-  .contact-email:hover { color: #fff; text-decoration: underline; }
-  .contact-email.is-visible { opacity: 1; transform: translateY(0); }
-  .social-links {
-    display: flex;
-    gap: 32px;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.5s ease 0.6s;
-  }
-  .social-links.is-visible { opacity: 1; }
-  .social-links a {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .social-links a:hover { color: #fff; }
+  /* CONTACT */
+  .contact-section { padding: 100px 80px; background: var(--surface); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 50px; }
+  .contact-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+  .contact-value { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 400; color: var(--text); text-decoration: none; display: block; margin-bottom: 28px; transition: color 0.2s; }
+  .contact-value:hover { color: var(--accent); }
 
-  /* ==============================
-     FOOTER
-     ============================== */
-  footer {
-    background: #0D0D0D;
-    padding: 28px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .footer-copy {
-    font-size: 12px;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 0.08em;
-  }
-  .footer-credit {
-    font-size: 11px;
-    color: rgba(255,255,255,0.2);
-  }
+  /* FOOTER */
+  footer { background: var(--dark); padding: 28px 80px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-top: 1px solid rgba(255,45,85,0.08); }
+  footer p { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+  footer a { color: var(--muted); text-decoration: none; font-size: 11px; transition: color 0.2s; }
+  footer a:hover { color: var(--accent); }
 
-  /* ==============================
-     MOBILE RESPONSIVE
-     ============================== */
+  /* MOBILE */
   @media (max-width: 768px) {
-    .hero-name { font-size: 36px; }
-    nav { gap: 16px; }
-    nav a { font-size: 10px; letter-spacing: 0.15em; }
-    .hero-subtitle { font-size: 10px; }
-    .hero-ghost { font-size: 200px; }
-    .stats { flex-direction: column; gap: 0; }
-    .stat-block { border-right: none; border-bottom: 1px solid #3a3a3a; padding: 32px 20px; }
-    .stat-block:last-child { border-bottom: none; }
+    nav { padding: 16px 24px; } .nav-links { gap: 16px; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { height: 60vw; order: -1; } .hero-left { padding: 60px 24px 40px; }
+    .stats-section { padding: 40px 24px; }
+    .gallery-header { padding: 0 24px; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .commissions { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
-    .commissions-heading { font-size: 52px; }
-    .about { grid-template-columns: 1fr; }
-    .about-image-col img { min-height: 300px; }
-    .about-text-col { padding: 40px 24px; }
-    .about-name { font-size: 48px; }
-    .contact-heading { font-size: 64px; }
-    .contact-email { font-size: 18px; }
-    .social-links { gap: 20px; flex-wrap: wrap; }
-    footer { flex-direction: column; gap: 8px; text-align: center; }
+    .podcast-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 0; }
+    .podcast-number { display: none; }
+    .about-section, .contact-section, .cta-section { padding: 60px 24px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .price-strip { padding: 24px; gap: 24px; }
+    footer { padding: 24px; flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 480px) {
-    .hero-name { font-size: 28px; }
-    nav { gap: 12px; }
-    nav a { display: none; }
-    nav a:first-child, nav a:last-child { display: block; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .stat-number { font-size: 70px; }
-    .contact-heading { font-size: 52px; }
+    .hero-name { font-size: 58px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 
-<!-- ==============================
-     HERO — CINEMATIC LETTERBOX
-     ============================== -->
-<section class="hero" id="home">
-  <div class="hero-ghost">ROXX</div>
+<nav>
+  <a href="#" class="nav-logo">Jamie Roxx</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Paintings</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#podcast">Podcast</a></li>
+    <li><a href="#contact">Commission</a></li>
+  </ul>
+</nav>
 
-  <div class="hero-top-bar">
-    <h1 class="hero-name" id="heroName">JAMIE ROXX</h1>
-    <nav>
-      <a href="#gallery">Gallery</a>
-      <a href="#commissions">Commissions</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Pop Noir &nbsp;·&nbsp; Deerfield Beach, FL</span>
+    <h1 class="hero-name">
+      <span class="hero-name-line">JAMIE</span>
+      <span class="hero-name-line">ROXX</span>
+    </h1>
+    <span class="hero-style">Celebrity &nbsp;·&nbsp; Rock Icons &nbsp;·&nbsp; Pop Art</span>
+    <p class="hero-desc">300+ original paintings a year. Celebrity portraits, rock icons, and the culture that defines us — made bold, made loud, made in South Florida since 2001.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Commission a Portrait</a>
+      <a href="#gallery" class="btn-secondary">See the Work</a>
+    </div>
   </div>
-
-  <img
-    class="hero-image"
-    src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-scarlet-fever-main.jpg"
-    alt="Jamie Roxx Pop Noir painting — Scarlet Fever"
-    loading="eager"
-  >
-
-  <div class="hero-bottom-bar">
-    <p class="hero-subtitle">Pop Noir Painter &nbsp;·&nbsp; Deerfield Beach, FL &nbsp;·&nbsp; Full-Time Since 2001</p>
+  <div class="hero-right">
+    <img class="hero-painting" src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01-painting11-addhgkgyhjhg65_orig.jpg" alt="Jamie Roxx Pop Art Painting" loading="eager">
+    <div class="hero-painting-overlay"></div>
   </div>
 </section>
 
-<!-- ==============================
-     STATS STRIP
-     ============================== -->
-<div class="stats" id="stats">
-  <div class="stat-block">
-    <span class="stat-number">300+</span>
-    <span class="stat-label">Originals Per Year</span>
-  </div>
-  <div class="stat-block">
-    <span class="stat-number">2001</span>
-    <span class="stat-label">Working Since</span>
-  </div>
-  <div class="stat-block">
-    <span class="stat-number">1,400+</span>
-    <span class="stat-label">Podcast Episodes</span>
-  </div>
-  <div class="stat-block">
-    <span class="stat-number">$800</span>
-    <span class="stat-label">Max Canvas Size</span>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Pop Noir</span><span>·</span>
+    <span>Celebrity Portraits</span><span>·</span>
+    <span>Rock Icons</span><span>·</span>
+    <span>Deerfield Beach FL</span><span>·</span>
+    <span>300+ Paintings/Year</span><span>·</span>
+    <span>Since 2001</span><span>·</span>
+    <span>Pop Noir</span><span>·</span>
+    <span>Celebrity Portraits</span><span>·</span>
+    <span>Rock Icons</span><span>·</span>
+    <span>Deerfield Beach FL</span><span>·</span>
+    <span>300+ Paintings/Year</span><span>·</span>
+    <span>Since 2001</span><span>·</span>
   </div>
 </div>
 
-<!-- ==============================
-     GALLERY
-     ============================== -->
-<section class="gallery-section" id="gallery">
-  <h2 class="gallery-heading">Selected Works</h2>
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stat-item"><span class="stat-number">300+</span><span class="stat-label">Paintings Per Year</span></div>
+  <div class="stat-item"><span class="stat-number">1,400+</span><span class="stat-label">Podcast Episodes</span></div>
+  <div class="stat-item"><span class="stat-number">2001</span><span class="stat-label">Painting Since</span></div>
+  <div class="stat-item"><span class="stat-number">$800</span><span class="stat-label">Top Original Price</span></div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <span class="section-number">01 — The Work</span>
+    <h2 class="section-title">Paintings</h2>
+  </div>
   <div class="gallery-grid">
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-innocence-lost-main.jpg" alt="Innocence Lost" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Innocence Lost</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01-painting11-addhgkgyhjhg65_orig.jpg" alt="Celebrity Portrait" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Celebrity Portrait</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-scarlet-fever-main.jpg" alt="Scarlet Fever" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Scarlet Fever</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/01fgfgbdfg5rgf-painting11-add-1-7-19-24-zzhhdf7-orig_orig.jpg" alt="Pop Noir Series" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Pop Noir Series</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-obsession-main.jpg" alt="Obsession" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Obsession</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-flashplayer-4-orig-orig-orig.jpg" alt="Rock Icon" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Rock Icon</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-cherry-bombshell-main.jpg" alt="Cherry Bombshell" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Cherry Bombshell</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzx3cddddcdcdcd1-update-1-1-24-zzzzzzzzzzzzzweb-capture-14-10-2023-43721-www-picmonkey-com-orig-orig-orig-orig_orig.jpg" alt="Scarlet Fever Series" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Scarlet Fever Series</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-hotline-main.jpg" alt="Hotline" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Hotline</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzc-update-this-ine-2727h_orig.jpg" alt="Original Painting" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Original Painting</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-glamour-main.jpg" alt="Glamour" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Glamour</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/xyz-hghgh3-20-26-origzz8fhfhg8-orig-1-dd8sj3m_orig.png" alt="Pop Art Original" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Pop Art Original</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-midnight-options-main.jpg" alt="Midnight Options" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Midnight Options</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/published/web-capture-4-8-2023-51125-jamieroxx-weebly-com.jpeg" alt="Gallery View" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Full Collection</span></div>
     </div>
     <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-cutie-pie-main.jpg" alt="Cutie Pie" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Cutie Pie</span></div>
+      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzxs3zaaaaaaa3-39-25aaad2s2edx2-zzssg33gg11qqe-origdd-orig-orig-hh4h4hzzzzz99zzzzzzzzzz-orig-orig-orig-orig_orig.png" alt="Mixed Media" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-title">Mixed Media</span></div>
     </div>
-    <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-trouble-in-the-shadows-main.jpg" alt="Trouble in the Shadows" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Trouble in the Shadows</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-are-you-there-main.jpg" alt="Are You There" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Are You There</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-main-ebay-voices-in-the-vaporwave.jpg" alt="Voices in the Vaporwave" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Voices in the Vaporwave</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/1-ebay-venus-in-a-leather-jacket-angle-2.jpg" alt="Venus in a Leather Jacket" loading="lazy">
-      <div class="gallery-overlay"><span class="gallery-title">Venus in a Leather Jacket</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ==============================
-     MARQUEE STRIP
-     ============================== -->
-<div class="marquee-strip">
-  <div class="marquee-inner">
-    <span class="marquee-text">POP NOIR &nbsp;·&nbsp; DEERFIELD BEACH, FL &nbsp;·&nbsp; COMMISSIONS OPEN &nbsp;·&nbsp; 300+ ORIGINALS PER YEAR &nbsp;·&nbsp; FULL-TIME SINCE 2001 &nbsp;·&nbsp; ACRYLIC + OIL ON CANVAS &nbsp;·&nbsp; CD COVERS &nbsp;·&nbsp; TV COMMERCIALS &nbsp;·&nbsp;</span>
-    <span class="marquee-text">POP NOIR &nbsp;·&nbsp; DEERFIELD BEACH, FL &nbsp;·&nbsp; COMMISSIONS OPEN &nbsp;·&nbsp; 300+ ORIGINALS PER YEAR &nbsp;·&nbsp; FULL-TIME SINCE 2001 &nbsp;·&nbsp; ACRYLIC + OIL ON CANVAS &nbsp;·&nbsp; CD COVERS &nbsp;·&nbsp; TV COMMERCIALS &nbsp;·&nbsp;</span>
   </div>
 </div>
 
-<!-- ==============================
-     COMMISSIONS
-     ============================== -->
-<section class="commissions" id="commissions">
-  <div class="commissions-left">
-    <h2 class="commissions-heading">Commission a Painting</h2>
-    <p class="commissions-subtext">Every painting is hand-painted in acrylic and oil on gallery-wrapped canvas. Not a print. Not a reproduction. One of a kind.</p>
-    <a href="mailto:JamieRoxxArtist@gmail.com" class="cta-btn">Get In Touch</a>
-  </div>
-  <div class="pricing-grid">
-    <div class="price-block">
-      <div class="price-size">16" × 20"</div>
-      <div class="price-amount">$150</div>
-    </div>
-    <div class="price-block">
-      <div class="price-size">20" × 24"</div>
-      <div class="price-amount">$300</div>
-    </div>
-    <div class="price-block">
-      <div class="price-size">24" × 36"</div>
-      <div class="price-amount">$500</div>
-    </div>
-    <div class="price-block">
-      <div class="price-size">36" × 48"</div>
-      <div class="price-amount">$800</div>
-    </div>
-  </div>
-</section>
+<!-- PRICE STRIP -->
+<div class="price-strip">
+  <div class="price-item">$150 <span>Prints</span></div>
+  <div class="price-item">$250–$800 <span>Originals</span></div>
+  <div class="price-item">Custom <span>Commissions Available</span></div>
+</div>
 
-<!-- ==============================
-     ABOUT — MAGAZINE SPREAD
-     ============================== -->
-<section class="about" id="about">
-  <div class="about-image-col">
-    <img src="https://jamieroxx.weebly.com/uploads/2/5/8/4/25841521/zzzc-update-this-ine-2727h_orig.jpg" alt="Jamie Roxx artist" loading="lazy">
+<!-- ABOUT -->
+<div class="about-section" id="about">
+  <span class="section-number">02 — The Artist</span>
+  <h2 class="section-title" style="margin-bottom:60px;">Jamie Roxx</h2>
+  <div class="about-inner">
+    <div class="about-gold-quote">"Pop art isn't decoration. It's a conversation with culture — I just paint my end of it."</div>
+    <div class="about-text">
+      <p>South Florida-based painter Jamie Roxx has been creating original pop art since 2001. Working across celebrity portraits, rock icons, and the visual language of American pop culture, Roxx produces over 300 original paintings a year — a volume that reflects obsession, not hustle.</p>
+      <p>The Scarlet Fever series — bold, high-contrast portraits of cultural figures — established Roxx as a voice in Florida's contemporary art scene. The work is immediate, unapologetic, and designed to stop you mid-step.</p>
+      <p>Commissions are open for custom portraits of any subject. Originals and prints are available. Based in Deerfield Beach, FL.</p>
+    </div>
   </div>
-  <div class="about-text-col">
-    <h2 class="about-name">Jamie Roxx</h2>
-    <p class="about-bio">Working in his signature Pop Noir style since 2001, Jamie Roxx creates bold, graphic portraits of cultural icons — celebrities, rock stars, and movie legends rendered in acrylic and oil on gallery-wrapped canvas. Based in Deerfield Beach, FL, his work has appeared in TV commercials, on CD covers for rock bands, and in private collections worldwide. He also hosts Pop Roxx Radio, a weekly podcast now at over 1,400 episodes.</p>
-    <blockquote class="about-quote">"Every painting is completely hand-painted. Not a print. Not a reproduction."</blockquote>
-  </div>
-</section>
+</div>
 
-<!-- ==============================
-     CONTACT CTA
-     ============================== -->
-<section class="contact" id="contact">
-  <h2 class="contact-heading">Inquiries</h2>
-  <a href="mailto:JamieRoxxArtist@gmail.com" class="contact-email">JamieRoxxArtist@gmail.com</a>
-  <div class="social-links">
-    <a href="https://www.instagram.com/jamieroxxartist" target="_blank">Instagram</a>
-    <a href="https://www.youtube.com/@PopRoxxRadio" target="_blank">YouTube</a>
-    <a href="https://www.facebook.com/ArtistJamieRoxx" target="_blank">Facebook</a>
-    <a href="https://bsky.app/profile/jamieroxxartist.bsky.social" target="_blank">Bluesky</a>
+<!-- PODCAST -->
+<div class="podcast-section" id="podcast">
+  <span class="podcast-number">1,400+</span>
+  <div class="podcast-text">
+    <span class="section-number">03 — Beyond the Canvas</span>
+    <h3>The Jamie Roxx Podcast</h3>
+    <p>Over 1,400 episodes deep. Art, culture, music, the business of being a working artist, and everything that doesn't fit on a canvas. Subscribe wherever you listen.</p>
+    <a href="#" class="podcast-link">Listen Now</a>
   </div>
-</section>
+</div>
 
-<!-- ==============================
-     FOOTER
-     ============================== -->
+<!-- CTA -->
+<div class="cta-section">
+  <span class="section-number" style="color:rgba(255,255,255,0.5);">04 — Let's Make Something</span>
+  <h2 class="section-title">Commission Your Portrait</h2>
+  <p>Celebrity, pet, person — if it matters to you, I'll paint it. Originals start at $250. Contact below to start.</p>
+  <a href="#contact" class="cta-btn">Start a Commission</a>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <span class="section-number">05 — Contact</span>
+  <h2 class="section-title" style="margin-bottom:50px;">Get in Touch</h2>
+  <div class="contact-grid">
+    <div>
+      <span class="contact-label">Email</span>
+      <a href="mailto:JamieRoxxArtist@gmail.com" class="contact-value">JamieRoxxArtist@gmail.com</a>
+      <span class="contact-label">Location</span>
+      <span class="contact-value" style="cursor:default;">Deerfield Beach, FL</span>
+    </div>
+    <div>
+      <p style="font-size:15px; color:rgba(255,255,255,0.48); line-height:1.82;">
+        Commissions, print orders, and general inquiries — hit the email above. Include the subject you want painted, your timeline, and any reference images. I respond fast.
+      </p>
+    </div>
+  </div>
+</div>
+
 <footer>
-  <span class="footer-copy">Jamie Roxx &nbsp;·&nbsp; Pop Noir Painter &nbsp;·&nbsp; © 2026 Pop Roxx Ltd</span>
-  <span class="footer-credit">Design by Lucas Blatt</span>
+  <p>© 2026 Jamie Roxx &nbsp;·&nbsp; Pop Noir Art &nbsp;·&nbsp; Deerfield Beach, FL</p>
+  <p>Design by <a href="https://lucasblatt.com" target="_blank">Lucas Blatt</a></p>
 </footer>
 
 <script>
-// Character-by-character hero name reveal
-(function() {
-  var el = document.getElementById('heroName');
-  var text = el.textContent;
-  el.innerHTML = '';
-  for (var i = 0; i < text.length; i++) {
-    var span = document.createElement('span');
-    span.className = 'hero-name-char';
-    span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-    el.appendChild(span);
-  }
-  setTimeout(function() {
-    var chars = el.querySelectorAll('.hero-name-char');
-    chars.forEach(function(c, i) {
-      setTimeout(function() { c.classList.add('visible'); }, i * 60);
-    });
-  }, 200);
-})();
+  // Hero entrance
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelector('.hero').classList.add('loaded');
+      document.querySelector('.hero-painting').classList.add('in');
+    }, 80);
+  });
 
-// IntersectionObserver for all animated elements
-(function() {
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
+  // Section titles + about gold quote
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section-title, .about-gold-quote').forEach(el => observer.observe(el));
+
+  // Gallery items stagger
+  const galleryObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Stagger gallery items
-        if (entry.target.classList.contains('gallery-item')) {
-          var items = document.querySelectorAll('.gallery-item');
-          var idx = Array.from(items).indexOf(entry.target);
-          setTimeout(function() {
-            entry.target.classList.add('is-visible');
-          }, (idx % 3) * 100);
-        } else {
-          entry.target.classList.add('is-visible');
-        }
-        observer.unobserve(entry.target);
+        const items = document.querySelectorAll('.gallery-item');
+        const idx = Array.from(items).indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), (idx % 4) * 80);
+        galleryObs.unobserve(entry.target);
       }
     });
   }, { threshold: 0.05 });
+  document.querySelectorAll('.gallery-item').forEach(el => galleryObs.observe(el));
 
-  // Gallery items, headings, text blocks
-  document.querySelectorAll(
-    '.gallery-item, .gallery-heading, .stat-block, .commissions-heading, ' +
-    '.commissions-subtext, .pricing-grid, .about-image-col, .about-name, ' +
-    '.about-bio, .about-quote, .contact-heading, .contact-email, .social-links'
-  ).forEach(function(el) { observer.observe(el); });
-})();
-
-// Parallax on hero image
-(function() {
-  var heroImg = document.querySelector('.hero-image');
-  window.addEventListener('scroll', function() {
-    heroImg.style.transform = 'translateY(' + (window.scrollY * 0.15) + 'px)';
-  }, { passive: true });
-})();
-
-// Skeleton loader
-(function() {
-  document.querySelectorAll('img').forEach(function(img) {
-    if (img.complete && img.naturalWidth > 0) {
-      img.classList.add('img-loaded');
-    } else {
-      img.addEventListener('load', function() { img.classList.add('img-loaded'); });
-      img.addEventListener('error', function() { img.classList.add('img-loaded'); });
-    }
+  // Stats
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { setTimeout(() => el.classList.add('visible'), i * 100); obs.disconnect(); }
+    }, { threshold: 0.2 });
+    obs.observe(el);
   });
-})();
+
+  // About text
+  document.querySelectorAll('.about-text p').forEach((el, i) => {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { setTimeout(() => el.classList.add('visible'), i * 120); obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
 </script>
 </body>
 </html>

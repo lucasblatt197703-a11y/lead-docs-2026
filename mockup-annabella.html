@@ -3,757 +3,419 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Annabella Mowry Photography — Tampa, FL</title>
+<title>Annabella Mowry Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #F7F0E8;
-    --text: #1A1208;
-    --accent: #C89B6E;
-    --champagne: #E8D5B7;
-    --dark: #2C1810;
+    --bg: #0C0A08;
+    --text: #EDE8E0;
+    --accent: #B8925A;
+    --muted: #6B645C;
+    --surface: #161410;
+  }
+  html { scroll-behavior: smooth; background: var(--bg); color: var(--text); }
+  body { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 17px; line-height: 1.7; overflow-x: hidden; background: var(--bg); }
+
+  /* VERTICAL SIDE TEXT */
+  .side-text {
+    position: fixed; left: 20px; top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center center;
+    font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 400;
+    letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase;
+    z-index: 100; white-space: nowrap; opacity: 0.8;
   }
 
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
+  /* NAV */
+  nav {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 60px 28px 80px;
+    background: linear-gradient(to bottom, rgba(12,10,8,0.92) 0%, transparent 100%);
   }
+  .nav-logo { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); text-decoration: none; opacity: 0.65; transition: opacity 0.3s; }
+  .nav-links a:hover { opacity: 1; }
 
-  /* ─── HERO ─── */
-  #hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    overflow: hidden;
+  /* HERO */
+  .hero { position: relative; height: 100vh; min-height: 700px; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://static.wixstatic.com/media/056f87_0083639d61db4e399bee6a9d78cf7637~mv2.jpg');
+    background-size: cover; background-position: center 30%;
+    will-change: transform; transform: scale(1.06);
   }
-
-  .hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(12,10,8,0.78) 0%, rgba(12,10,8,0.38) 55%, rgba(12,10,8,0.1) 100%);
   }
-
-  .hero-nav {
-    position: absolute;
-    top: 40px;
-    right: 60px;
-    display: flex;
-    gap: 40px;
-    z-index: 10;
+  .hero-content { position: absolute; bottom: 80px; left: 80px; max-width: 580px; }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;
   }
-
-  .hero-nav a {
-    color: rgba(247,240,232,0.85);
-    text-decoration: none;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .hero-nav a:hover { color: #F7F0E8; }
-
-  .hero-text {
-    position: absolute;
-    bottom: 60px;
-    left: 80px;
-    z-index: 10;
-  }
-
   .hero-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 90px;
-    color: #F7F0E8;
-    text-shadow: 0 2px 20px rgba(26,18,8,0.4);
-    letter-spacing: 0.4em; /* animated to 0.12em */
-    line-height: 1;
-    display: block;
-    transition: letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+    font-family: 'Outfit', sans-serif; font-size: clamp(52px, 7vw, 92px); font-weight: 700;
+    line-height: 0.95; letter-spacing: -0.01em; color: var(--text); margin-bottom: 16px;
+    opacity: 0; transform: translateY(30px); transition: opacity 1s ease 0.15s, transform 1s ease 0.15s;
   }
-
-  .hero-tagline {
-    display: block;
-    margin-top: 14px;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(247,240,232,0.75);
-    text-shadow: 0 1px 8px rgba(26,18,8,0.5);
+  .hero-name-underline {
+    display: block; width: 60px; height: 2px; background: var(--accent); margin-top: 18px;
+    opacity: 0; transform: scaleX(0); transform-origin: left;
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
   }
-
-  /* ─── MARQUEE ─── */
-  #marquee {
-    background: var(--dark);
-    overflow: hidden;
-    height: 50px;
-    display: flex;
-    align-items: center;
+  .hero-sub {
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; font-style: italic;
+    color: rgba(237,232,224,0.62); margin-top: 22px; letter-spacing: 0.05em;
+    opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s;
   }
-
-  .marquee-track {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 40s linear infinite;
+  .hero-cta {
+    display: inline-block; margin-top: 36px; font-family: 'Outfit', sans-serif; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bg);
+    background: var(--accent); padding: 14px 32px; text-decoration: none;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s ease 0.55s, transform 0.8s ease 0.55s, background 0.3s;
   }
+  .hero-cta:hover { background: #c9a36b; }
+  .hero.loaded .hero-eyebrow, .hero.loaded .hero-name, .hero.loaded .hero-sub, .hero.loaded .hero-cta { opacity: 1; transform: translateY(0); }
+  .hero.loaded .hero-name-underline { opacity: 1; transform: scaleX(1); }
 
-  .marquee-track span {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent);
-    padding-right: 60px;
+  /* MARQUEE */
+  .marquee-strip { background: var(--accent); padding: 12px 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-block; animation: marquee 35s linear infinite; }
+  .marquee-track span { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg); padding: 0 32px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION HELPERS */
+  section, .gallery-section, .about-section, .services-section, .contact-section { padding: 120px 80px; }
+  .section-number { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: block; }
+  .section-title { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 60px; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* STATS */
+  .stats-strip {
+    background: var(--surface); padding: 50px 80px;
+    display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 30px;
+    border-top: 1px solid rgba(184,146,90,0.15); border-bottom: 1px solid rgba(184,146,90,0.15);
   }
+  .stat-item { text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-number { font-family: 'Outfit', sans-serif; font-size: clamp(42px, 5vw, 68px); font-weight: 700; color: var(--accent); line-height: 1; display: block; }
+  .stat-label { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 8px; display: block; }
 
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
+  /* GALLERY — EDITORIAL SCROLL */
+  .gallery-section { padding: 120px 0; background: var(--bg); }
+  .gallery-header { padding: 0 80px; margin-bottom: 70px; }
+  .gallery-row { display: grid; margin-bottom: 6px; }
+  .gallery-row.full { grid-template-columns: 1fr; }
+  .gallery-row.split-6040 { grid-template-columns: 6fr 4fr; gap: 6px; }
+  .gallery-row.split-4060 { grid-template-columns: 4fr 6fr; gap: 6px; }
+  .gallery-row.thirds { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .gallery-item { overflow: hidden; position: relative; background: var(--surface); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; transform: scale(0.95); }
+  .gallery-item img.visible { transform: scale(1.0); }
+  .gallery-row.full .gallery-item { height: 65vh; min-height: 400px; }
+  .gallery-row.split-6040 .gallery-item, .gallery-row.split-4060 .gallery-item { height: 55vh; min-height: 350px; }
+  .gallery-row.thirds .gallery-item { height: 40vh; min-height: 260px; }
 
-  /* ─── GALLERY ─── */
-  #gallery {
-    padding: 80px 80px;
-    background: var(--bg);
-  }
-
-  .gallery-header {
-    display: flex;
-    align-items: baseline;
-    gap: 24px;
-    margin-bottom: 48px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .gallery-header.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .section-overline {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 36px;
-    color: var(--text);
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
-  }
-
-  .section-title.is-visible {
-    clip-path: inset(0 0% 0 0);
-  }
-
-  .masonry-grid {
-    columns: 3;
-    column-gap: 8px;
-  }
-
-  .masonry-item {
-    break-inside: avoid;
-    margin-bottom: 8px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .masonry-item img {
-    width: 100%;
-    display: block;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.9s ease-out, transform 0.5s ease;
-  }
-
-  .masonry-item img.is-visible {
-    clip-path: inset(0 0 0 0);
-  }
-
-  .masonry-item:hover img {
-    transform: scale(1.02);
-  }
-
-  .masonry-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(26,18,8,0.6));
-    padding: 30px 16px 14px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .masonry-item:hover .masonry-caption {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .masonry-caption span {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(247,240,232,0.9);
-  }
-
-  /* ─── DIVIDER ─── */
-  .accent-divider {
-    width: 30%;
-    height: 1px;
-    background: var(--accent);
-    margin: 0 auto;
-  }
-
-  /* ─── STATS ─── */
-  #stats {
-    background: var(--dark);
-    padding: 100px 80px;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    text-align: center;
-  }
-
-  .stat-item {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .stat-item.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .stat-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 72px;
-    color: var(--accent);
-    line-height: 1;
-    display: block;
-  }
-
-  .stat-label {
-    display: block;
-    margin-top: 10px;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(247,240,232,0.55);
-  }
-
-  /* ─── ABOUT ─── */
-  #about {
-    background: var(--champagne);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 600px;
-  }
-
-  .about-image {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .about-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-
-  .about-content {
-    padding: 80px 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .about-content.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .about-overline {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-
-  .about-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 38px;
-    color: var(--text);
-    line-height: 1.25;
-    margin-bottom: 28px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1) 0.2s;
-  }
-
-  .about-heading.is-visible {
-    clip-path: inset(0 0% 0 0);
-  }
-
-  .about-bio {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 1.8;
-    color: var(--text);
-    opacity: 0.8;
-    margin-bottom: 32px;
-  }
-
+  /* ABOUT */
+  .about-section { padding: 120px 80px; background: var(--surface); }
   .about-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 20px;
-    color: var(--accent);
-    line-height: 1.5;
-    border-left: 2px solid var(--accent);
-    padding-left: 20px;
+    font-family: 'DM Sans', sans-serif; font-size: clamp(20px, 2.6vw, 30px); font-style: italic; font-weight: 300;
+    color: var(--text); line-height: 1.5; border-left: 2px solid var(--accent); padding-left: 32px;
+    margin-bottom: 80px; max-width: 780px;
+    opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease;
   }
+  .about-quote.visible { opacity: 1; transform: translateY(0); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-portrait { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s; }
+  .about-portrait.visible { opacity: 1; transform: translateY(0); }
+  .about-text { padding-top: 20px; }
+  .about-text p { font-size: 16px; line-height: 1.85; color: rgba(237,232,224,0.78); margin-bottom: 24px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .about-text p.visible { opacity: 1; transform: translateY(0); }
+  .about-text p:nth-child(2) { transition-delay: 0.1s; }
+  .about-text p:nth-child(3) { transition-delay: 0.2s; }
 
-  /* ─── EDITORIAL IMAGES ─── */
-  #editorial {
-    background: var(--bg);
-  }
+  /* SERVICES */
+  .services-section { padding: 100px 80px; background: var(--bg); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 50px; }
+  .service-item { padding: 40px 0; border-top: 1px solid rgba(184,146,90,0.18); opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .service-item.visible { opacity: 1; transform: translateY(0); }
+  .service-item:nth-child(2) { transition-delay: 0.08s; } .service-item:nth-child(3) { transition-delay: 0.16s; } .service-item:nth-child(4) { transition-delay: 0.24s; } .service-item:nth-child(5) { transition-delay: 0.32s; }
+  .service-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 12px; vertical-align: middle; }
+  .service-name { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .service-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-  .editorial-image {
-    width: 100%;
-    height: 520px;
-    object-fit: cover;
-    display: block;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.9s ease-out;
-  }
+  /* CTA */
+  .cta-section { background: var(--accent); padding: 100px 80px; text-align: center; }
+  .cta-section .section-title { color: var(--bg); font-size: clamp(32px, 5vw, 60px); margin-bottom: 20px; clip-path: inset(0 100% 0 0); }
+  .cta-section .section-title.visible { clip-path: inset(0 0% 0 0); }
+  .cta-section p { font-size: 16px; color: rgba(12,10,8,0.72); max-width: 460px; margin: 0 auto 40px; }
+  .cta-btn { display: inline-block; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); background: var(--bg); padding: 16px 40px; text-decoration: none; transition: opacity 0.3s; }
+  .cta-btn:hover { opacity: 0.82; }
 
-  .editorial-image.is-visible {
-    clip-path: inset(0 0 0 0);
-  }
+  /* CONTACT */
+  .contact-section { padding: 100px 80px; background: var(--bg); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 50px; }
+  .contact-label { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: var(--muted); letter-spacing: 0.05em; display: block; margin-bottom: 8px; }
+  .contact-value { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 400; color: var(--text); text-decoration: none; display: block; margin-bottom: 32px; transition: color 0.3s; }
+  .contact-value:hover { color: var(--accent); }
 
-  .editorial-quote {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 80px 40px;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
+  /* FOOTER */
+  footer { background: #070605; padding: 30px 80px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(184,146,90,0.1); flex-wrap: wrap; gap: 16px; }
+  footer p { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--muted); letter-spacing: 0.08em; }
+  footer a { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; opacity: 0.55; transition: opacity 0.3s; }
+  footer a:hover { opacity: 1; }
 
-  .editorial-quote.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .editorial-quote p {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--text);
-  }
-
-  /* ─── CTA ─── */
-  #cta {
-    background: var(--accent);
-    padding: 140px 80px;
-    text-align: center;
-  }
-
-  .cta-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 72px;
-    color: var(--text);
-    line-height: 1.1;
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .cta-heading.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .cta-sub {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(26,18,8,0.65);
-    margin-bottom: 48px;
-  }
-
-  .cta-btn {
-    display: inline-block;
-    padding: 16px 48px;
-    background: var(--text);
-    color: var(--bg);
-    text-decoration: none;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 400;
-    transition: background 0.2s;
-  }
-
-  .cta-btn:hover {
-    background: var(--dark);
-  }
-
-  /* ─── CONTACT ─── */
-  #contact {
-    padding: 100px 80px;
-    background: var(--bg);
-    text-align: center;
-  }
-
-  .contact-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 36px;
-    color: var(--text);
-    margin-bottom: 32px;
-  }
-
-  .contact-link {
-    display: block;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--text);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    margin-bottom: 12px;
-    transition: color 0.2s;
-  }
-
-  .contact-link:hover {
-    color: var(--accent);
-  }
-
-  .contact-divider {
-    width: 30%;
-    height: 1px;
-    background: var(--accent);
-    margin: 0 auto 48px;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--dark);
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 80px;
-  }
-
-  footer span {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(247,240,232,0.45);
-  }
-
-  /* ─── MOBILE ─── */
+  /* MOBILE */
   @media (max-width: 768px) {
-    .hero-name { font-size: 52px; }
-    .hero-text { left: 30px; bottom: 40px; }
-    .hero-nav { top: 24px; right: 24px; gap: 20px; }
-
-    #gallery { padding: 60px 24px; }
-    .masonry-grid { columns: 2; }
-
-    #stats { padding: 60px 24px; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .stat-number { font-size: 52px; }
-
-    #about { grid-template-columns: 1fr; }
-    .about-image { height: 400px; }
-    .about-content { padding: 50px 30px; }
-    .about-heading { font-size: 30px; }
-
-    .cta-heading { font-size: 48px; }
-    #cta { padding: 80px 30px; }
-
-    #contact { padding: 60px 24px; }
-
-    footer {
-      flex-direction: column;
-      height: auto;
-      padding: 24px;
-      gap: 8px;
-      text-align: center;
-    }
+    nav { padding: 20px 24px; } .nav-links { gap: 20px; } .side-text { display: none; }
+    .stats-strip { padding: 40px 24px; }
+    .gallery-header { padding: 0 24px; }
+    .gallery-row.split-6040, .gallery-row.split-4060, .gallery-row.thirds { grid-template-columns: 1fr; }
+    .about-section, .services-section { padding: 60px 24px; }
+    .contact-section { padding: 60px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+    .hero-content { left: 24px; right: 24px; bottom: 60px; }
+    .hero-name { font-size: 48px; }
+    .cta-section { padding: 60px 24px; }
   }
-
   @media (max-width: 480px) {
-    .hero-name { font-size: 38px; letter-spacing: 0.08em !important; }
-    .masonry-grid { columns: 1; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .hero-nav { display: none; }
-    .cta-heading { font-size: 36px; }
-    .editorial-image { height: 320px; }
+    .hero-name { font-size: 38px; } .services-grid { grid-template-columns: 1fr; }
+    .gallery-row.full .gallery-item { height: 55vw; }
+    .gallery-row.split-6040 .gallery-item, .gallery-row.split-4060 .gallery-item { height: 50vw; }
+    .gallery-row.thirds .gallery-item { height: 55vw; }
   }
 </style>
 </head>
 <body>
 
+<div class="side-text">Photography · Tampa, FL · 2026</div>
+
+<nav>
+  <a href="#" class="nav-logo">Annabella Mowry</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
 <!-- HERO -->
-<section id="hero">
-  <img class="hero-img"
-    src="https://static.wixstatic.com/media/056f87_da5e766758934ba0b83fdb2e07112d19~mv2.jpg"
-    alt="Annabella Mowry Photography Hero"
-    loading="eager">
-
-  <nav class="hero-nav">
-    <a href="#gallery">Work</a>
-    <a href="#about">About</a>
-    <a href="#cta">Investment</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <div class="hero-text">
-    <span class="hero-name" id="heroName">ANNABELLA MOWRY</span>
-    <span class="hero-tagline">Wedding &amp; Family Photography &nbsp;·&nbsp; Tampa, FL</span>
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Tampa, FL &nbsp;·&nbsp; Wedding &amp; Lifestyle Photography</div>
+    <h1 class="hero-name">
+      Annabella<br>Mowry
+      <span class="hero-name-underline"></span>
+    </h1>
+    <p class="hero-sub">Capturing the unguarded moments that matter most.</p>
+    <a href="#contact" class="hero-cta">Book a Session</a>
   </div>
 </section>
 
 <!-- MARQUEE -->
-<div id="marquee">
+<div class="marquee-strip">
   <div class="marquee-track">
-    <span>Weddings &nbsp;·&nbsp; Elopements &nbsp;·&nbsp; Family Sessions &nbsp;·&nbsp; Graduations &nbsp;·&nbsp; Couples &nbsp;·&nbsp; Headshots &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Tuscaloosa, AL &nbsp;·&nbsp; Available 2026 &nbsp;·&nbsp;</span>
-    <span>Weddings &nbsp;·&nbsp; Elopements &nbsp;·&nbsp; Family Sessions &nbsp;·&nbsp; Graduations &nbsp;·&nbsp; Couples &nbsp;·&nbsp; Headshots &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Tuscaloosa, AL &nbsp;·&nbsp; Available 2026 &nbsp;·&nbsp;</span>
+    <span>Wedding Photography</span><span>·</span>
+    <span>Family Sessions</span><span>·</span>
+    <span>Graduation Portraits</span><span>·</span>
+    <span>Engagements</span><span>·</span>
+    <span>Tampa Bay, FL</span><span>·</span>
+    <span>Wedding Photography</span><span>·</span>
+    <span>Family Sessions</span><span>·</span>
+    <span>Graduation Portraits</span><span>·</span>
+    <span>Engagements</span><span>·</span>
+    <span>Tampa Bay, FL</span><span>·</span>
   </div>
 </div>
 
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="gallery-header" id="galleryHeader">
-    <span class="section-overline">Portfolio</span>
-    <h2 class="section-title" id="galleryTitle">Selected Work</h2>
-  </div>
-
-  <div class="masonry-grid">
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_c5f389fdab8145ccb3d5737bde94098b~mv2.jpg" alt="Couples" loading="lazy">
-      <div class="masonry-caption"><span>Couples</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_8f6916923ec64ed6a51154cc0ab8617b~mv2.jpg" alt="Portrait" loading="lazy">
-      <div class="masonry-caption"><span>Portrait</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_933211cdb8074fa4851c32c968b99199~mv2.jpg" alt="Wedding" loading="lazy">
-      <div class="masonry-caption"><span>Wedding</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_a3c02ce0356b4f148663d49278d1fea7~mv2.jpg" alt="Family" loading="lazy">
-      <div class="masonry-caption"><span>Family</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_4f8ae93088854da091d9ed1134048aec~mv2.jpg" alt="Celebration" loading="lazy">
-      <div class="masonry-caption"><span>Celebration</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_02b9ea5c7a0a4d62838dc753b4b5a249~mv2.jpg" alt="Outdoor" loading="lazy">
-      <div class="masonry-caption"><span>Outdoor</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_969dad7eb1c14421af98fd1d2df06845~mv2.jpg" alt="Ceremony" loading="lazy">
-      <div class="masonry-caption"><span>Ceremony</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_55121d44db7c4b419ac8498888603b66~mv2.jpg" alt="Golden Hour" loading="lazy">
-      <div class="masonry-caption"><span>Golden Hour</span></div>
-    </div>
-    <div class="masonry-item">
-      <img src="https://static.wixstatic.com/media/056f87_0083639d61db4e399bee6a9d78cf7637~mv2.jpg" alt="Moments" loading="lazy">
-      <div class="masonry-caption"><span>Moments</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ACCENT DIVIDER -->
-<div class="accent-divider"></div>
-
 <!-- STATS -->
-<section id="stats">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <span class="stat-number">5+</span>
-      <span class="stat-label">Years Shooting</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number">2</span>
-      <span class="stat-label">Cities · Tampa &amp; Tuscaloosa</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number">All</span>
-      <span class="stat-label">Day Coverage Available</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number">∞</span>
-      <span class="stat-label">Natural Light · Always</span>
-    </div>
+<div class="stats-strip">
+  <div class="stat-item"><span class="stat-number">8+</span><span class="stat-label">Years Shooting</span></div>
+  <div class="stat-item"><span class="stat-number">400+</span><span class="stat-label">Sessions Captured</span></div>
+  <div class="stat-item"><span class="stat-number">Tampa</span><span class="stat-label">Based in</span></div>
+  <div class="stat-item"><span class="stat-number">FL</span><span class="stat-label">&amp; Surrounding Areas</span></div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <span class="section-number">01 — Portfolio</span>
+    <h2 class="section-title">Selected Work</h2>
   </div>
-</section>
+  <div class="gallery-row full">
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_02b9ea5c7a0a4d62838dc753b4b5a249~mv2.jpg" alt="Wedding portrait" loading="lazy"></div>
+  </div>
+  <div class="gallery-row split-6040">
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_19a3e064ffa1428ab84a227def4d7bf3~mv2.jpg" alt="Outdoor session" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_55121d44db7c4b419ac8498888603b66~mv2.jpg" alt="Family portrait" loading="lazy"></div>
+  </div>
+  <div class="gallery-row split-4060">
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_87bd148abc9241729dfb3ed7dfcd6dab~mv2.jpg" alt="Graduation photo" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_8c969547c6f24f488b401e30395dc01b~mv2.jpg" alt="Lifestyle session" loading="lazy"></div>
+  </div>
+  <div class="gallery-row full">
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_933211cdb8074fa4851c32c968b99199~mv2.jpg" alt="Wedding ceremony" loading="lazy"></div>
+  </div>
+  <div class="gallery-row thirds">
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_950cbd6a6e0e4fdd84cd17cf3fea63b6~mv2.jpg" alt="Portrait" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_969dad7eb1c14421af98fd1d2df06845~mv2.jpg" alt="Outdoor portrait" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_9e9243af79b144b08b4468eb0e862a71~mv2.jpg" alt="Family session" loading="lazy"></div>
+  </div>
+  <div class="gallery-row split-6040">
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_a0ae7197f1bb482b9144ec5fdc893625~mv2.jpg" alt="Wedding detail" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://static.wixstatic.com/media/056f87_a14852f4582b412cae657c2c30272803~mv2.jpg" alt="Graduation portrait" loading="lazy"></div>
+  </div>
+</div>
 
 <!-- ABOUT -->
-<section id="about">
-  <div class="about-image">
-    <img src="https://static.wixstatic.com/media/056f87_8f6916923ec64ed6a51154cc0ab8617b~mv2.jpg"
-      alt="Annabella Mowry" loading="lazy">
+<div class="about-section" id="about">
+  <blockquote class="about-quote">
+    "Every photograph is a moment that will never exist again — my job is to make sure you have it forever."
+  </blockquote>
+  <div class="about-grid">
+    <img class="about-portrait" src="https://static.wixstatic.com/media/056f87_b6c9ed3788a94f31aa6aa51e5da1fe63~mv2.jpg" alt="Annabella Mowry" loading="lazy">
+    <div class="about-text">
+      <span class="section-number">02 — About</span>
+      <h2 class="section-title" style="margin-bottom:32px;">The Photographer</h2>
+      <p>Annabella Mowry is a Tampa-based photographer whose career began photographing marine wildlife at the Clearwater aquatic rescue — training her eye for fleeting, unrepeatable moments in natural light.</p>
+      <p>That instinct now serves families, couples, and graduates throughout the Tampa Bay area. Annabella brings the same patience and precision to every session, whether it's a beach elopement at golden hour or a child's milestone moment.</p>
+      <p>Her approach is quiet and unobtrusive — she disappears so you can be present, and then you have the images to prove it happened.</p>
+    </div>
   </div>
-  <div class="about-content" id="aboutContent">
-    <p class="about-overline">About</p>
-    <h2 class="about-heading" id="aboutHeading">Capturing connection,<br>not just moments.</h2>
-    <p class="about-bio">
-      Annabella Mowry is a Tampa-based photographer drawn to the unguarded moments — a quiet laugh between ceremony and reception, the way morning light falls across a kitchen table. Her work began photographing marine life at a rescue center in Clearwater, FL, where she first understood what it means to truly see something. Available in Tampa, FL and Tuscaloosa, AL for weddings, family sessions, elopements, and beyond.
-    </p>
-    <blockquote class="about-quote">
-      "I started by photographing marine life. Now I photograph the people who matter most."
-    </blockquote>
-  </div>
-</section>
+</div>
 
-<!-- EDITORIAL IMAGES -->
-<section id="editorial">
-  <img class="editorial-image" id="editorial1"
-    src="https://static.wixstatic.com/media/056f87_bb7020d6667f406bb0c5e6594534acea~mv2.jpg"
-    alt="Wedding Editorial" loading="lazy">
-  <div class="editorial-quote" id="editorialQuote">
-    <p>Every wedding is its own world.<br>Every family has its own light.</p>
+<!-- SERVICES -->
+<div class="services-section" id="services">
+  <span class="section-number">03 — Services</span>
+  <h2 class="section-title">What I Shoot</h2>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-name"><span class="service-dot"></span>Weddings &amp; Elopements</div>
+      <div class="service-desc">Full-day coverage from getting ready to the last dance. Packages available for intimate ceremonies and destination weddings.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-name"><span class="service-dot"></span>Family Portraits</div>
+      <div class="service-desc">Outdoor and in-home sessions that capture how your family actually is — not how you think you should look.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-name"><span class="service-dot"></span>Graduation</div>
+      <div class="service-desc">Senior and grad portraits that reflect who you are, not a generic cap-and-gown template.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-name"><span class="service-dot"></span>Engagements</div>
+      <div class="service-desc">Pre-wedding sessions that help you get comfortable in front of the camera before the big day.</div>
+    </div>
+    <div class="service-item">
+      <div class="service-name"><span class="service-dot"></span>Lifestyle &amp; Brand</div>
+      <div class="service-desc">Personal lifestyle shoots, headshots, and brand photography that don't feel corporate.</div>
+    </div>
   </div>
-  <img class="editorial-image" id="editorial2"
-    src="https://static.wixstatic.com/media/056f87_9879fc85aa254b129be5ae85e0144ce6~mv2.jpg"
-    alt="Golden Hour Portrait" loading="lazy">
-</section>
+</div>
 
 <!-- CTA -->
-<section id="cta">
-  <h2 class="cta-heading" id="ctaHeading">Let's Make Something Beautiful.</h2>
-  <p class="cta-sub">Tampa · Tuscaloosa · Destination Weddings Available</p>
-  <a href="mailto:mowryannabella@gmail.com" class="cta-btn">Get In Touch</a>
-</section>
+<div class="cta-section">
+  <span class="section-number" style="color:rgba(12,10,8,0.5);">04 — Let's Work Together</span>
+  <h2 class="section-title">Ready to Book?</h2>
+  <p>Sessions fill up fast — especially spring and fall. Reach out now to check availability for your date.</p>
+  <a href="#contact" class="cta-btn">Check Availability</a>
+</div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="contact-divider"></div>
-  <h2 class="contact-heading">Inquiries</h2>
-  <a href="mailto:mowryannabella@gmail.com" class="contact-link">mowryannabella@gmail.com</a>
-  <a href="https://www.instagram.com/_amphotography_1/" class="contact-link" target="_blank">@_amphotography_1</a>
-</section>
+<div class="contact-section" id="contact">
+  <span class="section-number">05 — Contact</span>
+  <h2 class="section-title">Get in Touch</h2>
+  <div class="contact-inner">
+    <div>
+      <span class="contact-label">Email</span>
+      <a href="mailto:mowryannabella@gmail.com" class="contact-value">mowryannabella@gmail.com</a>
+      <span class="contact-label">Location</span>
+      <span class="contact-value" style="cursor:default;">Tampa, FL &amp; Surrounding Areas</span>
+    </div>
+    <div>
+      <p style="font-size:15px; color:rgba(237,232,224,0.55); line-height:1.85;">
+        The more detail you give me about what you're looking for, the better I can tell if we're a good fit. I respond to every message within 24 hours.
+      </p>
+    </div>
+  </div>
+</div>
 
-<!-- FOOTER -->
 <footer>
-  <span>Annabella Mowry Photography</span>
-  <span>&copy; 2026</span>
-  <span>Design by Lucas Blatt</span>
+  <p>© 2026 Annabella Mowry Photography &nbsp;·&nbsp; Tampa, FL</p>
+  <p>Design by <a href="https://lucasblatt.com" target="_blank">Lucas Blatt</a></p>
 </footer>
 
 <script>
-  // 1. Hero letter-spacing animate
-  setTimeout(() => {
-    document.getElementById('heroName').style.letterSpacing = '0.12em';
-  }, 100);
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = 'scale(1.06) translateY(' + (window.scrollY * 0.25) + 'px)';
+  }, { passive: true });
 
-  // 2. IntersectionObserver for scroll animations
+  // Hero entrance
+  window.addEventListener('load', () => {
+    document.querySelector('.hero').classList.add('loaded');
+  });
+
+  // IntersectionObserver
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
     });
   }, { threshold: 0.1 });
 
+  document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+  // Gallery images — scale
   const imgObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('is-visible');
-        }, entry.target.dataset.delay || 0);
-        imgObserver.unobserve(entry.target);
-      }
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); imgObserver.unobserve(entry.target); }
     });
   }, { threshold: 0.05 });
 
-  // Gallery header
-  observer.observe(document.getElementById('galleryHeader'));
-  observer.observe(document.getElementById('galleryTitle'));
-
-  // Gallery images with stagger
-  document.querySelectorAll('.masonry-item img').forEach((img, i) => {
-    img.dataset.delay = i * 100;
-    imgObserver.observe(img);
-  });
+  document.querySelectorAll('.gallery-item img').forEach(img => imgObserver.observe(img));
 
   // Stats
   document.querySelectorAll('.stat-item').forEach((el, i) => {
-    el.style.transitionDelay = (i * 120) + 'ms';
-    observer.observe(el);
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { setTimeout(() => el.classList.add('visible'), i * 100); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(el);
   });
 
-  // About
-  observer.observe(document.getElementById('aboutContent'));
-  observer.observe(document.getElementById('aboutHeading'));
+  // About quote, portrait, text
+  document.querySelectorAll('.about-quote, .about-portrait').forEach(el => observer.observe(el));
+  document.querySelectorAll('.about-text p').forEach((el, i) => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { setTimeout(() => el.classList.add('visible'), i * 100); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
 
-  // Editorial
-  imgObserver.observe(document.getElementById('editorial1'));
-  imgObserver.observe(document.getElementById('editorial2'));
-  observer.observe(document.getElementById('editorialQuote'));
-
-  // CTA
-  observer.observe(document.getElementById('ctaHeading'));
+  // Services
+  document.querySelectorAll('.service-item').forEach((el, i) => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { setTimeout(() => el.classList.add('visible'), i * 80); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(el);
+  });
 </script>
 </body>
 </html>
