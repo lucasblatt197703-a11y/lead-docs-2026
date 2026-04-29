@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Nazih — Wedding Photography & Film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --espresso: #1A1410;
+    --dark: #0F0B08;
+    --surface: #231C17;
+    --ivory: #F5EDE0;
+    --gold: #C9A96E;
+    --brown: #8B6B4A;
+    --linen: #F0E8DC;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--espresso);
+    color: var(--ivory);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    background: rgba(26, 20, 16, 0.55);
+    backdrop-filter: blur(8px);
+    display: flex;
+    gap: 36px;
+    align-items: center;
+  }
+  nav a {
+    color: var(--ivory);
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  nav a:hover { opacity: 1; color: var(--gold); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/e581b2_367eb4a227404aee82ff22fcf0a8052e~mv2_d_2048_1365_s_2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/e581b2_367eb4a227404aee82ff22fcf0a8052e~mv2_d_2048_1365_s_2.jpg');
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 52px;
+    left: 60px;
+    z-index: 2;
+  }
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s 0.3s ease, transform 0.8s 0.3s ease;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    letter-spacing: 0.4em;
+    color: var(--ivory);
+    line-height: 1;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.5);
+    will-change: letter-spacing;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s 0.1s ease, transform 0.9s 0.1s ease, letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hero-name.loaded { letter-spacing: 0.12em; }
+  .hero-name.visible { opacity: 1; transform: translateY(0); }
+  .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── CONTENT LAYERS (scroll over sticky hero) ─── */
+  .content-layer {
+    position: relative;
+    z-index: 10;
+    background: var(--espresso);
+    margin-top: 100vh;
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--espresso);
+    padding: 100px 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    border-right: 1px solid rgba(201, 169, 110, 0.2);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    opacity: 0.6;
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 80px 0 0;
+    background: var(--espresso);
+  }
+  .section-header {
+    padding: 0 60px 60px;
+    position: relative;
+  }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: 0.06;
+    position: absolute;
+    top: -30px;
+    left: 40px;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ivory);
+    position: relative;
+    z-index: 1;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* Gallery editorial staggered */
+  .gallery-full {
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .gallery-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .gallery-full img.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-pair {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+  .gallery-pair-item {
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-pair-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.95);
+    transition: filter 0.4s ease, clip-path 0.9s ease-out;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+  }
+  .gallery-pair-item img.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-pair-item:hover img { filter: brightness(1.05); }
+  .gallery-caption {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
+  .gallery-pair-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+  .gallery-offset {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+    align-items: flex-start;
+  }
+  .gallery-offset .left-img {
+    width: 62%;
+    height: 580px;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-offset .right-img {
+    width: 37%;
+    height: 440px;
+    margin-top: 80px;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-offset img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .gallery-offset img.is-visible { clip-path: inset(0 0 0 0); }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--surface);
+    overflow: hidden;
+    padding: 20px 0;
+    border-top: 1px solid rgba(201,169,110,0.12);
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-text {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+    padding-right: 80px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── FEATURED STORY ─── */
+  #story {
+    background: var(--espresso);
+    padding: 120px 0;
+  }
+  .story-inner {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .story-image {
+    width: 50%;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: transform;
+  }
+  .story-image img.is-visible { opacity: 1; transform: scale(1); }
+  .story-text {
+    width: 50%;
+    padding: 80px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .story-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: 0.08;
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .story-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ivory);
+    line-height: 1.2;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.2s ease, transform 0.8s 0.2s ease;
+  }
+  .story-heading.is-visible { opacity: 1; transform: translateY(0); }
+  .story-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--ivory);
+    opacity: 0.75;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.4s ease, transform 0.8s 0.4s ease;
+  }
+  .story-body.is-visible { opacity: 0.75; transform: translateY(0); }
+
+  /* ─── TESTIMONIAL ─── */
+  #testimonial {
+    background: var(--surface);
+    padding: 100px 60px;
+    text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ivory);
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .testimonial-quote.is-visible { clip-path: inset(0 0% 0 0); }
+  .testimonial-attr {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.6s 0.8s ease;
+  }
+  .testimonial-attr.is-visible { opacity: 1; }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--espresso);
+    padding: 140px 0;
+  }
+  .about-inner {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+  }
+  .about-image-wrap {
+    width: 45%;
+    position: relative;
+    padding-top: 40px;
+  }
+  .about-image-wrap img {
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .about-image-wrap img.is-visible { opacity: 1; transform: translateY(0); }
+  .about-text {
+    width: 55%;
+    padding: 60px 80px 60px 80px;
+    position: relative;
+  }
+  .about-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: 0.06;
+    position: absolute;
+    top: 20px;
+    left: 60px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .about-section-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .about-section-label.is-visible { opacity: 1; }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s 0.1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .about-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--ivory);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s 0.3s ease, transform 0.7s 0.3s ease;
+  }
+  .about-body.is-visible { opacity: 0.75; transform: translateY(0); }
+  .about-pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(201,169,110,0.2);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s 0.5s ease, transform 0.7s 0.5s ease;
+  }
+  .about-pull.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── CTA SECTION ─── */
+  #cta {
+    position: relative;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/e581b2_c2d391194a2448e5be7c469cad4c2dc5~mv2_d_2048_1403_s_2.jpg/v1/fit/w_1920,h_1318,q_90,enc_avif,quality_auto/e581b2_c2d391194a2448e5be7c469cad4c2dc5~mv2_d_2048_1403_s_2.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 20, 16, 0.75);
+  }
+  .cta-content { position: relative; z-index: 2; padding: 0 40px; }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 16px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 48px;
+    opacity: 0;
+    transition: opacity 0.7s 0.5s ease;
+  }
+  .cta-sub.is-visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 52px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s 0.7s ease, transform 0.7s 0.7s ease, background 0.3s ease, color 0.3s ease;
+  }
+  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--gold); color: var(--dark); }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--espresso);
+    padding: 120px 60px;
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+  }
+  .contact-left { flex: 1; }
+  .contact-right { flex: 1; padding-top: 16px; }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .contact-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .contact-line {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ivory);
+    opacity: 0.7;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .contact-line.is-visible { opacity: 0.7; transform: translateY(0); }
+  .contact-line span:first-child {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    font-weight: 400;
+  }
+  .contact-line a {
+    color: var(--ivory);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-line a:hover { color: var(--gold); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201,169,110,0.1);
+  }
+  .footer-brand {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    opacity: 0.5;
+  }
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--ivory);
+    opacity: 0.35;
+  }
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; gap: 20px; }
+    nav a { font-size: 10px; letter-spacing: 0.12em; }
+    .hero-content { left: 24px; bottom: 36px; }
+    .hero-name { font-size: 52px; }
+    #stats { flex-direction: column; padding: 60px 24px; gap: 40px; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(201,169,110,0.2); padding-bottom: 40px; }
+    .stat-item:last-child { border-bottom: none; }
+    .stat-num { font-size: 64px; }
+    .section-header { padding: 0 24px 40px; }
+    .gallery-pair { flex-direction: column; }
+    .gallery-offset { flex-direction: column; }
+    .gallery-offset .left-img, .gallery-offset .right-img { width: 100%; height: 320px; margin-top: 0; }
+    .story-inner { flex-direction: column; }
+    .story-image { width: 100%; height: 400px; min-height: unset; }
+    .story-text { width: 100%; padding: 50px 24px; }
+    .about-inner { flex-direction: column; }
+    .about-image-wrap { width: 100%; }
+    .about-image-wrap img { height: 380px; }
+    .about-text { width: 100%; padding: 50px 24px; }
+    #contact { flex-direction: column; padding: 80px 24px; gap: 40px; }
+    .cta-heading { font-size: 42px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 40px; }
+    .section-title { font-size: 32px; }
+    .story-heading { font-size: 32px; }
+    .about-heading { font-size: 32px; }
+    .contact-title { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#gallery">Work</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <p class="hero-tagline visible" id="heroTag">Wedding Photography &amp; Film &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Worldwide</p>
+    <h1 class="hero-name" id="heroName">STUDIO NAZIH</h1>
+  </div>
+</section>
+
+<!-- CONTENT LAYERS -->
+<div class="content-layer">
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item" data-stagger="0">
+      <span class="stat-num">8+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat-item" data-stagger="1">
+      <span class="stat-num">12K</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+    <div class="stat-item" data-stagger="2">
+      <span class="stat-num">50</span>
+      <span class="stat-label">States Served</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">The Work</h2>
+    </div>
+
+    <!-- Full-width 1 -->
+    <div class="gallery-full">
+      <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_eb0e95f09e494a9dbd0c65e7279beb3d~mv2_d_2002_1336_s_2.jpg/v1/fit/w_1920,h_1284,q_90,enc_avif,quality_auto/e581b2_eb0e95f09e494a9dbd0c65e7279beb3d~mv2_d_2002_1336_s_2.jpg" alt="Wedding landscape">
+    </div>
+
+    <!-- Pair 1 -->
+    <div class="gallery-pair">
+      <div class="gallery-pair-item" style="width:40%; height:560px;">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_fbbe2e612a7a41c28132c33eb9c333a3~mv2_d_1365_2048_s_2.jpg/v1/fit/w_1363,h_2050,q_90,enc_avif,quality_auto/e581b2_fbbe2e612a7a41c28132c33eb9c333a3~mv2_d_1365_2048_s_2.jpg" alt="Ceremony">
+        <span class="gallery-caption">Ceremony</span>
+      </div>
+      <div class="gallery-pair-item" style="width:59%; height:560px;">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_c2d391194a2448e5be7c469cad4c2dc5~mv2_d_2048_1403_s_2.jpg/v1/fit/w_1920,h_1318,q_90,enc_avif,quality_auto/e581b2_c2d391194a2448e5be7c469cad4c2dc5~mv2_d_2048_1403_s_2.jpg" alt="Reception">
+        <span class="gallery-caption">Reception</span>
+      </div>
+    </div>
+
+    <!-- Full-width 2 -->
+    <div class="gallery-full">
+      <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_1673261dcd1144d0a9c9e7af18ce4ad6~mv2_d_2036_1384_s_2.jpg/v1/fit/w_1920,h_1304,q_90,enc_avif,quality_auto/e581b2_1673261dcd1144d0a9c9e7af18ce4ad6~mv2_d_2036_1384_s_2.jpg" alt="Wedding moment">
+    </div>
+
+    <!-- Offset pair -->
+    <div class="gallery-offset">
+      <div class="left-img gallery-pair-item">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_23f9ecd1e76849f593d2dca601a6e71f~mv2_d_1365_2048_s_2.jpg/v1/fit/w_1365,h_2047,q_90,enc_avif,quality_auto/e581b2_23f9ecd1e76849f593d2dca601a6e71f~mv2_d_1365_2048_s_2.jpg" alt="The Kiss">
+        <span class="gallery-caption">The Kiss</span>
+      </div>
+      <div class="right-img gallery-pair-item">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_27c63a72365542c298f752d869dfc992~mv2_d_1365_2048_s_2.jpg/v1/fit/w_1365,h_2047,q_90,enc_avif,quality_auto/e581b2_27c63a72365542c298f752d869dfc992~mv2_d_1365_2048_s_2.jpg" alt="Portraits">
+        <span class="gallery-caption">Portraits</span>
+      </div>
+    </div>
+
+    <!-- Pair 2 -->
+    <div class="gallery-pair" style="margin-top:4px;">
+      <div class="gallery-pair-item" style="width:55%; height:500px;">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_8a279628fcfc4866bb87abae54c87115~mv2_d_1365_2048_s_2.jpg/v1/fit/w_1365,h_2047,q_90,enc_avif,quality_auto/e581b2_8a279628fcfc4866bb87abae54c87115~mv2_d_1365_2048_s_2.jpg" alt="Details">
+        <span class="gallery-caption">Details</span>
+      </div>
+      <div class="gallery-pair-item" style="width:44%; height:500px;">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_3e0de6d6fd5842e6a398b0dbbc73e2fe~mv2_d_1365_2048_s_2.jpg/v1/fit/w_960,h_1444,q_90,enc_avif,quality_auto/e581b2_3e0de6d6fd5842e6a398b0dbbc73e2fe~mv2_d_1365_2048_s_2.jpg" alt="Moments">
+        <span class="gallery-caption">Moments</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-text">Capturing Elegance in Every Frame &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Wedding Photography &amp; Cinematography &nbsp;·&nbsp; Available Worldwide &nbsp;·&nbsp; 8 Years Experience &nbsp;·&nbsp; Elite Wedding Photo &amp; Film &nbsp;·&nbsp;</span>
+      <span class="marquee-text">Capturing Elegance in Every Frame &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Wedding Photography &amp; Cinematography &nbsp;·&nbsp; Available Worldwide &nbsp;·&nbsp; 8 Years Experience &nbsp;·&nbsp; Elite Wedding Photo &amp; Film &nbsp;·&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- FEATURED STORY -->
+  <section id="story">
+    <div class="story-inner">
+      <div class="story-image">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_d9dc3ca2c077472eb51039897ee716ce~mv2_d_1365_2048_s_2.jpg/v1/fit/w_480,h_722,q_90,enc_avif,quality_auto/e581b2_d9dc3ca2c077472eb51039897ee716ce~mv2_d_1365_2048_s_2.jpg" alt="Story image">
+      </div>
+      <div class="story-text">
+        <span class="story-num">02</span>
+        <h2 class="story-heading">Every Story Deserves<br>to Be Told</h2>
+        <p class="story-body">Nazih brings 8 years of refined technique and genuine emotional intelligence to every wedding — whether you're exchanging vows on a Tampa beach at sunset or a ballroom in another state entirely. The result is a body of work that feels less like documentation and more like a love letter in photographs and film.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section id="testimonial">
+    <blockquote class="testimonial-quote">"Nazih made our wedding day the best day of our lives with his amazing photography skills. The pictures came out so perfect and flawless — he made the bride and groom feel completely taken care of."</blockquote>
+    <p class="testimonial-attr">— Verified WeddingWire Review &nbsp;·&nbsp; 5 Stars</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-image-wrap">
+        <img loading="lazy" src="https://static.wixstatic.com/media/e581b2_1882905d96e54bb0ab65a373a178c3c8~mv2_d_1962_1962_s_2.jpg/v1/crop/x_0,y_206,w_1962,h_1512/fill/w_733,h_565,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/1397210_10208147640631331_65493021068000.jpg" alt="Nazih — Studio Nazih">
+      </div>
+      <div class="about-text">
+        <span class="about-num">03</span>
+        <span class="about-section-label">The Photographer</span>
+        <h2 class="about-heading">Nazih</h2>
+        <p class="about-body">Working across Tampa, throughout the United States, and at destination venues worldwide, Nazih has built a body of work defined by genuine emotional presence and luminous, available-light technique. Over 8 years of wedding seasons, he has developed an eye for the unrepeatable moments — the way a groom's expression changes when he sees his partner walking toward him, the particular light in a Florida courtyard at golden hour, the quiet in the room just before everything begins.</p>
+        <p class="about-pull">"The moments you almost missed — those are the ones I live for."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-overlay"></div>
+    <div class="cta-content">
+      <h2 class="cta-heading">Your Wedding Deserves This</h2>
+      <p class="cta-sub">Currently Booking 2026–2027 &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Available Worldwide</p>
+      <a href="mailto:studionazih@gmail.com" class="cta-btn">Begin Your Story</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <h2 class="contact-title">Get In Touch</h2>
+    </div>
+    <div class="contact-right">
+      <div class="contact-line" style="transition-delay: 0.1s">
+        <span>Email</span>
+        <a href="mailto:studionazih@gmail.com">studionazih@gmail.com</a>
+      </div>
+      <div class="contact-line" style="transition-delay: 0.2s">
+        <span>Phone</span>
+        <a href="tel:9412818901">941-281-8901</a>
+      </div>
+      <div class="contact-line" style="transition-delay: 0.3s">
+        <span>Instagram</span>
+        <a href="https://www.instagram.com/studionazih/" target="_blank">@studionazih</a>
+      </div>
+      <div class="contact-line" style="transition-delay: 0.4s">
+        <span>Location</span>
+        <span>Tampa, FL — Available Everywhere</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Studio Nazih</span>
+    <span class="footer-copy">© 2026 Studio Nazih · Tampa, FL</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+</div><!-- end content-layer -->
+
+<script>
+  // Hero name animate on load
+  window.addEventListener('load', () => {
+    const name = document.getElementById('heroName');
+    const tag = document.getElementById('heroTag');
+    setTimeout(() => {
+      name.classList.add('visible', 'loaded');
+      tag.classList.add('visible');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY;
+    if (s < window.innerHeight) {
+      heroBg.style.transform = `translateY(${s * 0.4}px)`;
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const stagger = el.dataset.stagger;
+        if (stagger !== undefined) {
+          setTimeout(() => el.classList.add('is-visible'), parseInt(stagger) * 150);
+        } else {
+          el.classList.add('is-visible');
+        }
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe section titles
+  document.querySelectorAll('.section-title, .story-heading, .story-body, .about-heading, .about-body, .about-pull, .about-section-label, .contact-title, .cta-heading, .cta-sub, .cta-btn, .testimonial-quote, .testimonial-attr').forEach(el => observer.observe(el));
+
+  // Observe images
+  const imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('is-visible'), i * 100);
+        imgObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.gallery-full img, .gallery-pair-item img, .gallery-offset img, .story-image img, .about-image-wrap img').forEach(el => imgObserver.observe(el));
+
+  // Observe stats with stagger
+  document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+  // Observe contact lines
+  document.querySelectorAll('.contact-line').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
