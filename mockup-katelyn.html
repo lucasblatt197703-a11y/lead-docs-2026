@@ -3,935 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Katelyn Michelle Photography — Clermont, FL</title>
+<title>Katelyn Michelle Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Mulish:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #FBF8F5;
+    --dark: #2C1A16;
+    --blush: #D4A5A5;
+    --blush-pale: #F5E9E9;
+    --text-muted: #7A5A56;
+  }
   html { scroll-behavior: smooth; }
-  body { background: #FEFCF9; color: #3D2B1F; font-family: 'Jost', sans-serif; overflow-x: hidden; }
+  body { background: var(--cream); color: var(--dark); font-family: 'Mulish', sans-serif; font-weight: 300; overflow-x: hidden; }
 
-  /* === NAV === */
   nav {
-    position: absolute;
-    top: 0; left: 0; width: 100%;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .nav-logo {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 24px;
-    color: #fff;
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.35);
-  }
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    text-decoration: none;
-    color: #3D2B1F;
-    opacity: 0.70;
-    transition: opacity 0.2s;
-  }
+  .nav-logo { font-family: 'Spectral', serif; font-size: 14px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dark); }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a { font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; color: var(--dark); opacity: 0.7; transition: opacity 0.3s; }
   .nav-links a:hover { opacity: 1; }
 
-  /* === HERO === */
-  #hero {
-    display: flex;
-    height: 100vh;
-    min-height: 600px;
-    position: relative;
-  }
-  .hero-image-panel {
-    width: 58%;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-image-panel img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    animation: kenburns 12s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-  @keyframes kenburns {
-    from { transform: scale(1.0); }
-    to   { transform: scale(1.08); }
-  }
-  .hero-text-panel {
-    width: 42%;
-    background: #FEFCF9;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 60px 48px;
-    position: relative;
-  }
-  .hero-location-label {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: #C4956A;
-    margin-bottom: 16px;
-  }
-  .hero-name {
-    font-family: 'Lora', serif;
-    font-weight: 600;
-    font-size: 80px;
-    line-height: 1.0;
-    color: #3D2B1F;
-    margin-bottom: 12px;
-  }
-  .hero-photography {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 18px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: #C4956A;
-    margin-bottom: 24px;
-  }
-  .hero-rule {
-    width: 60px;
-    height: 1px;
-    background: #D6B89A;
-    margin-bottom: 20px;
-  }
-  .hero-tagline {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: #8B7355;
-    margin-bottom: 36px;
-  }
-  .hero-book-btn {
-    display: inline-block;
-    font-family: 'Jost', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    background: #C4956A;
-    color: #fff;
-    padding: 14px 32px;
-    border-radius: 0;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.25s ease;
-    align-self: flex-start;
-  }
-  .hero-book-btn:hover { background: #8B6045; }
+  .hero { padding-top: 0; display: flex; flex-direction: column; }
+  .hero-text-block { padding: 140px 48px 48px; display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-eyebrow { font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; opacity: 0; transform: translateY(20px); transition: opacity 0.7s 0.1s, transform 0.7s 0.1s; }
+  .hero-name { font-family: 'Spectral', serif; font-size: clamp(52px, 8vw, 96px); font-weight: 300; letter-spacing: 0.06em; line-height: 1.0; color: var(--dark); opacity: 0; transform: translateX(60px); transition: opacity 0.9s 0.2s, transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s; }
+  .hero-name .italic { font-style: italic; color: var(--blush); }
+  .hero-divider { width: 0; height: 1px; background: var(--blush); margin: 28px 0; transition: width 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.6s; }
+  .hero-tagline { font-family: 'Mulish', sans-serif; font-size: 14px; font-weight: 300; letter-spacing: 0.08em; color: var(--text-muted); opacity: 0; transform: translateY(15px); transition: opacity 0.7s 0.7s, transform 0.7s 0.7s; }
+  .hero-image-full { width: 100%; height: 75vh; min-height: 500px; overflow: hidden; position: relative; }
+  .hero-image-full img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; transform: scale(1.05); transition: transform 6s ease-out; }
+  .hero-caption { position: absolute; bottom: 32px; right: 48px; font-family: 'Spectral', serif; font-style: italic; font-size: 12px; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; }
 
-  /* === MARQUEE === */
-  .marquee-strip {
-    background: #2A1F17;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .marquee-inner {
-    display: inline-flex;
-    animation: ticker 30s linear infinite;
-    will-change: transform;
-  }
-  .marquee-inner span {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #D6B89A;
-    padding-right: 40px;
-  }
-  @keyframes ticker {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+  body.loaded .hero-eyebrow { opacity: 1; transform: translateY(0); }
+  body.loaded .hero-name { opacity: 1; transform: translateX(0); }
+  body.loaded .hero-divider { width: 80px; }
+  body.loaded .hero-tagline { opacity: 1; transform: translateY(0); }
+  body.loaded .hero-image-full img { transform: scale(1.0); }
 
-  /* === SESSIONS === */
-  #sessions {
-    background: #FEFCF9;
-    padding: 100px 60px 80px;
-    position: relative;
-  }
-  .section-header {
-    position: relative;
-    margin-bottom: 48px;
-  }
-  .section-ghost-num {
-    font-family: 'Jost', sans-serif;
-    font-weight: 700;
-    font-size: 160px;
-    color: #3D2B1F;
-    opacity: 0.04;
-    position: absolute;
-    top: -60px;
-    left: -20px;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-  .section-title {
-    font-family: 'Lora', serif;
-    font-weight: 400;
-    font-size: 40px;
-    color: #3D2B1F;
-    position: relative;
-  }
-  .sessions-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
-  .session-card {
-    position: relative;
-    overflow: hidden;
-  }
-  .session-card-img-wrap {
-    overflow: hidden;
-    height: 280px;
-    margin-bottom: 16px;
-  }
-  .session-card-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  .session-card:hover .session-card-img-wrap img {
-    transform: scale(1.03);
-  }
-  .session-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: #C4956A;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .session-card:hover::after { transform: scaleX(1); }
-  .session-name {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 20px;
-    color: #3D2B1F;
-    margin-bottom: 6px;
-  }
-  .session-desc {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    color: #8B7355;
-    line-height: 1.6;
-  }
+  .marquee-strip { background: var(--blush); overflow: hidden; padding: 14px 0; }
+  .marquee-inner { display: flex; white-space: nowrap; animation: marquee 35s linear infinite; }
+  .marquee-inner span { font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: #fff; padding: 0 32px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* === GALLERY === */
-  #gallery {
-    background: #F5EDE3;
-    padding: 100px 60px 80px;
-    position: relative;
-  }
-  .gallery-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin-bottom: 40px;
-  }
-  .gallery-rule-vert {
-    width: 60px;
-    height: 2px;
-    background: #C4956A;
-    margin-bottom: 12px;
-  }
-  .gallery-masonry {
-    column-count: 3;
-    column-gap: 5px;
-  }
-  .gallery-item {
-    break-inside: avoid;
-    margin-bottom: 5px;
-    display: block;
-    width: 100%;
-    overflow: hidden;
-  }
-  .gallery-item img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
+  .stats { padding: 80px 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center; }
+  .stat-num { font-family: 'Spectral', serif; font-size: clamp(52px, 6vw, 80px); font-weight: 300; color: var(--blush); line-height: 1; opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+  .stat-label { font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 10px; }
+  .stat.is-visible .stat-num { opacity: 1; transform: translateY(0); }
 
-  /* === FEATURED NEWBORN === */
-  #featured {
-    background: #2A1F17;
-    padding: 80px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-  .featured-image-wrap {
-    overflow: hidden;
-  }
-  .featured-image-wrap img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-  .featured-text {
-    position: relative;
-    padding-top: 20px;
-  }
-  .featured-ghost-num {
-    font-family: 'Jost', sans-serif;
-    font-weight: 700;
-    font-size: 140px;
-    color: #D6B89A;
-    opacity: 0.05;
-    position: absolute;
-    top: -40px;
-    left: -10px;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-  .featured-title {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 36px;
-    color: #D6B89A;
-    margin-bottom: 24px;
-    position: relative;
-  }
-  .featured-body {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    color: #FEFCF9;
-    opacity: 0.85;
-    line-height: 1.75;
-    margin-bottom: 28px;
-  }
-  .featured-stat {
-    font-family: 'Jost', sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #C4956A;
-  }
+  .gallery-section { padding: 80px 0 120px; }
+  .gallery-header { padding: 0 48px 64px; display: flex; align-items: baseline; gap: 24px; }
+  .section-number { font-family: 'Spectral', serif; font-size: 11px; font-weight: 400; letter-spacing: 0.2em; color: var(--blush); opacity: 0.6; }
+  .section-title { font-family: 'Spectral', serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 300; letter-spacing: 0.04em; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
 
-  /* === STATS === */
-  #stats {
-    background: #FEFCF9;
-    padding: 80px 60px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    text-align: center;
-  }
-  .stat-col {
-    padding: 20px;
-    border-right: 1px solid rgba(61,43,31,0.1);
-  }
-  .stat-col:last-child { border-right: none; }
-  .stat-number {
-    font-family: 'Lora', serif;
-    font-weight: 600;
-    font-size: 64px;
-    color: #C4956A;
-    line-height: 1;
-    margin-bottom: 10px;
-  }
-  .stat-label {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #3D2B1F;
-    opacity: 0.60;
-  }
+  .gallery-row { display: grid; grid-template-columns: 65fr 35fr; gap: 10px; padding: 0 48px; margin-bottom: 10px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s; }
+  .gallery-row:nth-child(even) { grid-template-columns: 35fr 65fr; }
+  .gallery-row.is-visible { opacity: 1; transform: translateY(0); }
+  .gallery-row img { width: 100%; height: 460px; object-fit: cover; display: block; transition: transform 0.6s ease; }
+  .gallery-row img:hover { transform: scale(1.02); }
+  .gallery-accent { padding: 0 48px 10px; margin-bottom: 10px; }
+  .gallery-accent img { width: 50%; height: 520px; object-fit: cover; display: block; margin: 0 auto; opacity: 0; transform: translateY(40px); transition: opacity 0.8s 0.1s, transform 0.8s 0.1s; }
+  .gallery-accent img.is-visible { opacity: 1; transform: translateY(0); }
 
-  /* === PARALLAX QUOTE === */
-  #quote {
-    background-image: url('https://static.wixstatic.com/media/320d0b_30db888497d14f80ac43bdc31eb0b6d9~mv2_d_4272_2848_s_4_2.jpg');
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .quote-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(42,31,23,0.55);
-  }
-  .quote-text {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    max-width: 700px;
-    padding: 0 40px;
-  }
-  .quote-text p {
-    font-family: 'Lora', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 36px;
-    color: #FEFCF9;
-    line-height: 1.4;
-  }
+  .nicu-section { background: var(--blush-pale); padding: 96px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .nicu-text h3 { font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; }
+  .nicu-text h2 { font-family: 'Spectral', serif; font-size: clamp(28px, 3vw, 38px); font-weight: 300; line-height: 1.3; margin-bottom: 24px; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .nicu-text h2.is-visible { clip-path: inset(0 0% 0 0); }
+  .nicu-text p { font-size: 16px; line-height: 1.85; color: var(--text-muted); opacity: 0; transform: translateY(20px); transition: opacity 0.7s 0.3s, transform 0.7s 0.3s; }
+  .nicu-text p.is-visible { opacity: 1; transform: translateY(0); }
+  .nicu-image { opacity: 0; transform: translateX(40px); transition: opacity 0.9s 0.2s, transform 0.9s 0.2s; }
+  .nicu-image.is-visible { opacity: 1; transform: translateX(0); }
+  .nicu-image img { width: 100%; height: 420px; object-fit: cover; }
+  .nicu-badge { display: inline-block; margin-top: 28px; font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--blush); color: var(--blush); padding: 10px 24px; }
 
-  /* === ABOUT === */
-  #about {
-    background: #FEFCF9;
-    padding: 100px 60px;
-    display: grid;
-    grid-template-columns: 55% 45%;
-    gap: 60px;
-    align-items: center;
-    position: relative;
-  }
-  .about-text { position: relative; }
-  .about-ghost-num {
-    font-family: 'Jost', sans-serif;
-    font-weight: 700;
-    font-size: 160px;
-    color: #3D2B1F;
-    opacity: 0.04;
-    position: absolute;
-    top: -60px;
-    left: -20px;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-  .about-heading {
-    font-family: 'Lora', serif;
-    font-weight: 400;
-    font-size: 36px;
-    color: #3D2B1F;
-    margin-bottom: 24px;
-    position: relative;
-  }
-  .about-bio {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 17px;
-    line-height: 1.8;
-    color: #3D2B1F;
-    opacity: 0.85;
-    margin-bottom: 28px;
-  }
-  .about-pull-quote {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: #C4956A;
-    border-left: 2px solid #C4956A;
-    padding-left: 20px;
-    line-height: 1.6;
-  }
-  .about-image-wrap {
-    overflow: hidden;
-  }
-  .about-image-wrap img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
+  .about-section { padding: 120px 48px; text-align: center; }
+  .about-portrait { width: 260px; height: 340px; object-fit: cover; margin: 0 auto 48px; opacity: 0; transform: scale(0.96); transition: opacity 0.8s, transform 0.8s; }
+  .about-portrait.is-visible { opacity: 1; transform: scale(1); }
+  .about-body { max-width: 580px; margin: 0 auto; font-size: 16px; line-height: 1.9; color: var(--text-muted); opacity: 0; transform: translateY(24px); transition: opacity 0.7s 0.2s, transform 0.7s 0.2s; }
+  .about-body.is-visible { opacity: 1; transform: translateY(0); }
+  .pull-quote { font-family: 'Spectral', serif; font-style: italic; font-size: clamp(18px, 2.2vw, 26px); font-weight: 300; color: var(--dark); line-height: 1.55; max-width: 640px; margin: 48px auto; opacity: 0; transform: translateY(24px); transition: opacity 0.8s 0.1s, transform 0.8s 0.1s; }
+  .pull-quote.is-visible { opacity: 1; transform: translateY(0); }
+  .pull-quote::before { content: '\201C'; color: var(--blush); font-size: 1.4em; }
+  .pull-quote::after { content: '\201D'; color: var(--blush); font-size: 1.4em; }
 
-  /* === CTA === */
-  #cta {
-    position: relative;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-  }
-  .cta-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://static.wixstatic.com/media/320d0b_92e58c314bba45448efdd81e104b7542~mv2_d_4272_2848_s_4_2.jpg');
-    background-size: cover;
-    background-position: center;
-  }
-  .cta-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(42,31,23,0.65);
-  }
-  .cta-content {
-    position: relative;
-    z-index: 1;
-    padding: 0 40px;
-  }
-  .cta-heading {
-    font-family: 'Lora', serif;
-    font-weight: 300;
-    font-size: 64px;
-    color: #FEFCF9;
-    letter-spacing: 0.05em;
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-  .cta-sub {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #D6B89A;
-    margin-bottom: 36px;
-  }
-  .cta-btn {
-    display: inline-block;
-    font-family: 'Jost', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #FEFCF9;
-    border: 1px solid rgba(254,252,249,0.6);
-    padding: 14px 36px;
-    text-decoration: none;
-    transition: background 0.25s ease, border-color 0.25s ease;
-  }
-  .cta-btn:hover {
-    background: #C4956A;
-    border-color: #C4956A;
-  }
+  .cta-section { background: var(--blush); padding: 120px 48px; text-align: center; }
+  .cta-section h2 { font-family: 'Spectral', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 300; color: #fff; line-height: 1.2; margin-bottom: 16px; letter-spacing: 0.03em; }
+  .cta-section p { font-family: 'Mulish', sans-serif; font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.8); letter-spacing: 0.06em; margin-bottom: 48px; }
+  .cta-btn { display: inline-block; background: #fff; color: var(--blush); font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; padding: 18px 52px; transition: background 0.3s, color 0.3s; }
+  .cta-btn:hover { background: var(--dark); color: #fff; }
 
-  /* === CONTACT === */
-  #contact {
-    background: #FEFCF9;
-    padding: 100px 60px 80px;
-  }
-  .contact-heading {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 36px;
-    color: #3D2B1F;
-    margin-bottom: 36px;
-  }
-  .contact-detail {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    color: #3D2B1F;
-    line-height: 2;
-  }
-  .contact-detail a {
-    color: #C4956A;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .contact-detail a:hover { opacity: 0.7; }
-  .contact-area {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    color: #8B7355;
-    margin-top: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-  }
+  .contact-section { padding: 100px 48px; text-align: center; }
+  .contact-email { font-family: 'Spectral', serif; font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--blush); padding-bottom: 4px; transition: color 0.3s; }
+  .contact-email:hover { color: var(--blush); }
+  .contact-social { display: flex; justify-content: center; gap: 36px; margin-top: 40px; }
+  .contact-social a { font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; color: var(--text-muted); transition: color 0.3s; }
+  .contact-social a:hover { color: var(--blush); }
 
-  /* === FOOTER === */
-  footer {
-    background: #2A1F17;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 60px;
-  }
-  .footer-left {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    color: rgba(254,252,249,0.5);
-    letter-spacing: 0.05em;
-  }
-  .footer-right {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 10px;
-    color: rgba(254,252,249,0.30);
-    letter-spacing: 0.08em;
-  }
+  footer { background: var(--dark); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family: 'Spectral', serif; font-size: 13px; font-weight: 300; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); }
+  .footer-credit { font-family: 'Mulish', sans-serif; font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
 
-  /* === ANIMATION CLASSES === */
-  .clip-title {
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
-  }
-  .clip-title.visible {
-    clip-path: inset(0 0% 0 0);
-  }
-  .reveal-img {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    will-change: opacity, transform;
-  }
-  .reveal-img.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .scale-in {
-    transform: scale(0.93);
-    opacity: 0;
-    transition: transform 1s ease-out, opacity 0.7s ease;
-    will-change: transform, opacity;
-  }
-  .scale-in.visible {
-    transform: scale(1.0);
-    opacity: 1;
-  }
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: transform, opacity;
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* === RESPONSIVE === */
   @media (max-width: 768px) {
-    #hero { flex-direction: column; height: auto; }
-    .hero-image-panel { width: 100%; height: 60vw; }
-    .hero-text-panel { width: 100%; padding: 40px 32px; }
     nav { padding: 20px 24px; }
     .nav-links { gap: 20px; }
-    .sessions-grid { grid-template-columns: repeat(2, 1fr); }
-    .gallery-masonry { column-count: 2; }
-    #featured { grid-template-columns: 1fr; }
-    #stats { grid-template-columns: repeat(2, 1fr); }
-    .stat-col:nth-child(2) { border-right: none; }
-    .stat-col:nth-child(3) { border-right: 1px solid rgba(61,43,31,0.1); }
-    #about { grid-template-columns: 1fr; }
-    .cta-heading { font-size: 40px; }
-    #sessions, #gallery, #about, #contact { padding-left: 32px; padding-right: 32px; }
-    footer { padding: 0 32px; }
-    #featured { padding: 60px 32px; }
-    #stats { padding: 60px 32px; }
+    .hero-text-block { padding: 100px 24px 40px; }
+    .stats { padding: 60px 24px; grid-template-columns: 1fr; gap: 32px; }
+    .gallery-header { padding: 0 24px 40px; }
+    .gallery-row { padding: 0 24px; grid-template-columns: 1fr !important; }
+    .gallery-row img { height: 300px !important; }
+    .gallery-accent { padding: 0 24px 10px; }
+    .gallery-accent img { width: 100%; height: 320px; }
+    .nicu-section { padding: 60px 24px; grid-template-columns: 1fr; gap: 40px; }
+    .about-section { padding: 80px 24px; }
+    .cta-section { padding: 80px 24px; }
+    .contact-section { padding: 60px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
   }
   @media (max-width: 480px) {
-    #hero { flex-direction: column; height: auto; }
-    .hero-image-panel { display: block; width: 100%; height: 60vw; }
-    .hero-text-panel { width: 100%; min-height: auto; padding: 32px 24px 48px; }
-    .sessions-grid { grid-template-columns: 1fr; }
-    .gallery-masonry { column-count: 1; }
-    .hero-name { font-size: 52px; }
     .nav-links { display: none; }
-    .cta-heading { font-size: 28px; }
-    #quote { background-attachment: scroll; }
-    .quote-text p { font-size: 24px; }
   }
-
-/* Skeleton loaders */
-img:not(.img-loaded) {
-  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.4s ease infinite;
-  min-height: 40px;
-}
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-img.img-loaded {
-  animation: none !important;
-  background: none !important;
-}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">km</a>
-  <ul class="nav-links">
-    <li><a href="#sessions">Sessions</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-logo">KM Photography</div>
+  <div class="nav-links">
+    <a href="#gallery">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Book</a>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-image-panel">
-    <img src="https://static.wixstatic.com/media/320d0b_7e6e2de3b60640beb6b2e24383839ce6~mv2_d_4272_2848_s_4_2.jpg" alt="Katelyn Michelle Photography hero" loading="eager">
+<section class="hero">
+  <div class="hero-text-block">
+    <div class="hero-eyebrow">Newborn · Maternity · Family</div>
+    <h1 class="hero-name">Katelyn<br><span class="italic">Michelle</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Clermont, Florida · Preserving the moments that matter most</p>
   </div>
-  <div class="hero-text-panel">
-    <p class="hero-location-label">Clermont, Florida</p>
-    <h1 class="hero-name">Katelyn<br>Michelle</h1>
-    <p class="hero-photography">Photography</p>
-    <div class="hero-rule"></div>
-    <p class="hero-tagline">Newborn · Maternity · Family</p>
-    <a href="#contact" class="hero-book-btn">Book a Session</a>
+  <div class="hero-image-full">
+    <img src="https://static.wixstatic.com/media/320d0b_8138e3e5efe04aa3bacf23da035a454b~mv2_d_4272_2848_s_4_2.jpg" alt="Newborn portrait" loading="eager">
+    <div class="hero-caption">Newborn Session · Clermont, FL</div>
   </div>
 </section>
 
-<!-- MARQUEE STRIP -->
 <div class="marquee-strip" aria-hidden="true">
   <div class="marquee-inner">
-    <span>Newborn Sessions · Maternity · Family Portraits · Milestone Photography · Clermont, FL · </span>
-    <span>Newborn Sessions · Maternity · Family Portraits · Milestone Photography · Clermont, FL · </span>
-    <span>Newborn Sessions · Maternity · Family Portraits · Milestone Photography · Clermont, FL · </span>
-    <span>Newborn Sessions · Maternity · Family Portraits · Milestone Photography · Clermont, FL · </span>
+    <span>Newborn Sessions</span><span>·</span><span>Maternity Portraits</span><span>·</span><span>Family Photography</span><span>·</span><span>Preemie Prints NICU Program</span><span>·</span><span>Clermont, Florida</span><span>·</span>
+    <span>Newborn Sessions</span><span>·</span><span>Maternity Portraits</span><span>·</span><span>Family Photography</span><span>·</span><span>Preemie Prints NICU Program</span><span>·</span><span>Clermont, Florida</span><span>·</span>
   </div>
 </div>
 
-<!-- SESSIONS -->
-<section id="sessions">
-  <div class="section-header">
-    <span class="section-ghost-num" aria-hidden="true">01</span>
-    <h2 class="section-title clip-title">Sessions</h2>
+<section class="stats">
+  <div class="stat"><div class="stat-num">1,800+</div><div class="stat-label">Facebook Families</div></div>
+  <div class="stat"><div class="stat-num">NICU</div><div class="stat-label">Preemie Prints Volunteer</div></div>
+  <div class="stat"><div class="stat-num">FL</div><div class="stat-label">Clermont · Central Florida</div></div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Portfolio</h2>
   </div>
-  <div class="sessions-grid">
-    <div class="session-card">
-      <div class="session-card-img-wrap">
-        <img src="https://static.wixstatic.com/media/320d0b_87e94f2a8ab1491887b7096a7e3fc687~mv2_d_4272_2848_s_4_2.jpg" alt="Newborn session" loading="lazy">
-      </div>
-      <p class="session-name">Newborn</p>
-      <p class="session-desc">In-studio warmth. The first 14 days.</p>
-    </div>
-    <div class="session-card">
-      <div class="session-card-img-wrap">
-        <img src="https://static.wixstatic.com/media/320d0b_1ce3a9c7c3f94149b222bf7f9a96318b~mv2_d_2848_4272_s_4_2.jpg" alt="Maternity session" loading="lazy">
-      </div>
-      <p class="session-name">Maternity</p>
-      <p class="session-desc">Celebrate before they arrive.</p>
-    </div>
-    <div class="session-card">
-      <div class="session-card-img-wrap">
-        <img src="https://static.wixstatic.com/media/320d0b_8138e3e5efe04aa3bacf23da035a454b~mv2_d_4272_2848_s_4_2.jpg" alt="Family session" loading="lazy">
-      </div>
-      <p class="session-name">Family</p>
-      <p class="session-desc">Everyone together, right now.</p>
-    </div>
-    <div class="session-card">
-      <div class="session-card-img-wrap">
-        <img src="https://static.wixstatic.com/media/320d0b_fb684ab63bde43518bf3e1b4f707630f~mv2_d_4000_2667_s_4_2.jpg" alt="Milestone session" loading="lazy">
-      </div>
-      <p class="session-name">Milestone</p>
-      <p class="session-desc">First year. Every chapter.</p>
-    </div>
+  <div class="gallery-row">
+    <img src="https://static.wixstatic.com/media/320d0b_37aa35dcf2fd4555a762736ba783bd37~mv2_d_2848_4272_s_4_2.jpg" alt="Newborn portrait" loading="lazy">
+    <img src="https://static.wixstatic.com/media/320d0b_bd1222e13c854c01827b6c1447fc0544~mv2_d_4272_2848_s_4_2.jpg" alt="Maternity session" loading="lazy">
+  </div>
+  <div class="gallery-row">
+    <img src="https://static.wixstatic.com/media/320d0b_87e94f2a8ab1491887b7096a7e3fc687~mv2_d_4272_2848_s_4_2.jpg" alt="Newborn session" loading="lazy">
+    <img src="https://static.wixstatic.com/media/320d0b_1ce3a9c7c3f94149b222bf7f9a96318b~mv2_d_2848_4272_s_4_2.jpg" alt="Portrait session" loading="lazy">
+  </div>
+  <div class="gallery-accent">
+    <img src="https://static.wixstatic.com/media/320d0b_364eeb673b2a4cfc9528a654d2323ee7~mv2_d_2848_4272_s_4_2.jpg" alt="Newborn wrap portrait" loading="lazy">
+  </div>
+  <div class="gallery-row">
+    <img src="https://static.wixstatic.com/media/320d0b_7cffe16d95ee4721bc8b42d95fbb863b~mv2_d_4272_2848_s_4_2.jpg" alt="Family session" loading="lazy">
+    <img src="https://static.wixstatic.com/media/320d0b_3330cfbcf5444de8b497d7e33db21524~mv2_d_2848_4272_s_4_2.jpg" alt="Newborn close-up" loading="lazy">
+  </div>
+  <div class="gallery-row">
+    <img src="https://static.wixstatic.com/media/320d0b_800066ac4d6c4530a22e771e05ef3051~mv2_d_4272_2848_s_4_2.jpg" alt="Session photo" loading="lazy">
+    <img src="https://static.wixstatic.com/media/320d0b_ad1e3e8103894ba8a7a910953526a9ea~mv2_d_4272_2848_s_4_2.jpg" alt="Maternity portrait" loading="lazy">
   </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="section-header">
-    <div class="gallery-rule-vert"></div>
-    <h2 class="section-title clip-title">The Work</h2>
+<section class="nicu-section">
+  <div class="nicu-text">
+    <h3>Community</h3>
+    <h2>Preemie Prints<br>NICU Program</h2>
+    <p>Katelyn volunteers with Preemie Prints, providing complimentary portrait sessions to families in the NICU. Because every baby's arrival — no matter how early — deserves to be remembered.</p>
+    <span class="nicu-badge">Volunteer Photographer</span>
   </div>
-  <div class="gallery-masonry">
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_7e6e2de3b60640beb6b2e24383839ce6~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 1" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_30db888497d14f80ac43bdc31eb0b6d9~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 2" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_8138e3e5efe04aa3bacf23da035a454b~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 3" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_87e94f2a8ab1491887b7096a7e3fc687~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 4" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_f996fd8571cd490e9b028c5119d6ef83~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 5" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_92e58c314bba45448efdd81e104b7542~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 6" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_7cffe16d95ee4721bc8b42d95fbb863b~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 7" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_fb684ab63bde43518bf3e1b4f707630f~mv2_d_4000_2667_s_4_2.jpg" alt="Gallery 8" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_bd1222e13c854c01827b6c1447fc0544~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 9" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_ad1e3e8103894ba8a7a910953526a9ea~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 10" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_c4e0f33490e142a78815b55243a90525~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 11" loading="eager">
-    </div>
-    <div class="gallery-item">
-      <img class="reveal-img" src="https://static.wixstatic.com/media/320d0b_5d29fd094a4e4a808f61b4d0890b6d21~mv2_d_4272_2848_s_4_2.jpg" alt="Gallery 12" loading="eager">
-    </div>
+  <div class="nicu-image">
+    <img src="https://static.wixstatic.com/media/320d0b_fb684ab63bde43518bf3e1b4f707630f~mv2_d_4000_2667_s_4_2.jpg" alt="NICU newborn session" loading="lazy">
   </div>
 </section>
 
-<!-- FEATURED NEWBORN -->
-<section id="featured">
-  <div class="featured-image-wrap scale-in">
-    <img src="https://static.wixstatic.com/media/320d0b_5d29fd094a4e4a808f61b4d0890b6d21~mv2_d_4272_2848_s_4_2.jpg" alt="Featured newborn session" loading="lazy">
+<section class="about-section" id="about">
+  <div class="gallery-header" style="justify-content: center;">
+    <span class="section-number">02</span>
+    <h2 class="section-title">About</h2>
   </div>
-  <div class="featured-text">
-    <span class="featured-ghost-num" aria-hidden="true">02</span>
-    <h3 class="featured-title">Newborn Sessions</h3>
-    <p class="featured-body">Within the first two weeks, babies sleep deeply and curl naturally into the poses that become the photos you'll keep forever. Sessions in Katelyn's warm Clermont studio are unhurried — two to four hours, guided entirely by your baby's pace.</p>
-    <p class="featured-stat">Sessions from $250 · Clermont, FL</p>
+  <img src="https://static.wixstatic.com/media/320d0b_9d41e6d2d1814b93b4941040010b3179~mv2_d_4272_2848_s_4_2.jpg" alt="Katelyn Michelle" class="about-portrait" loading="lazy">
+  <blockquote class="pull-quote">These fleeting moments — a tiny hand, a sleeping face — are gone so fast. I'm here to make sure you never forget them.</blockquote>
+  <p class="about-body">Based in Clermont, Florida, Katelyn Michelle specializes in newborn, maternity, and family photography. Known for warm, gentle imagery and genuine care for every family she photographs, Katelyn also volunteers with the Preemie Prints NICU program — offering complimentary sessions to families in hospital intensive care units.</p>
+</section>
+
+<section class="cta-section">
+  <h2>Your session<br><em>starts here.</em></h2>
+  <p>Newborn · Maternity · Family · NICU</p>
+  <a href="mailto:KatelynMichellePhoto@gmail.com" class="cta-btn">Book Your Session</a>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="gallery-header" style="justify-content: center;">
+    <span class="section-number">03</span>
+    <h2 class="section-title">Inquiries</h2>
+  </div>
+  <a href="mailto:KatelynMichellePhoto@gmail.com" class="contact-email">KatelynMichellePhoto@gmail.com</a>
+  <div class="contact-social">
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
   </div>
 </section>
 
-<!-- STATS -->
-<section id="stats">
-  <div class="stat-col fade-up">
-    <div class="stat-number">5★</div>
-    <div class="stat-label">Google Reviews</div>
-  </div>
-  <div class="stat-col fade-up">
-    <div class="stat-number" data-count="7">7+</div>
-    <div class="stat-label">Years Experience</div>
-  </div>
-  <div class="stat-col fade-up">
-    <div class="stat-number" data-count="500">500+</div>
-    <div class="stat-label">Sessions</div>
-  </div>
-  <div class="stat-col fade-up">
-    <div class="stat-number">2 wk</div>
-    <div class="stat-label">Newborn Window</div>
-  </div>
-</section>
-
-<!-- PARALLAX QUOTE -->
-<section id="quote">
-  <div class="quote-overlay"></div>
-  <div class="quote-text">
-    <p>"Every tiny detail deserves to be remembered."</p>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-text">
-    <span class="about-ghost-num" aria-hidden="true">03</span>
-    <h2 class="about-heading clip-title">About Katelyn</h2>
-    <p class="about-bio">Katelyn Michelle is a Central Florida photographer specializing in the quiet, unhurried moments of early life. Based in Clermont, she works with families across the greater Orlando area, bringing warmth and patience to every newborn, maternity, and family session. She also volunteers with Preemie Prints, providing NICU families with photographs of their earliest days together.</p>
-    <blockquote class="about-pull-quote">"I want you to feel it all over again when you look at these photos in twenty years."</blockquote>
-  </div>
-  <div class="about-image-wrap scale-in">
-    <img src="https://static.wixstatic.com/media/320d0b_800066ac4d6c4530a22e771e05ef3051~mv2_d_4272_2848_s_4_2.jpg" alt="Katelyn Michelle photographer" loading="lazy">
-  </div>
-</section>
-
-<!-- CTA -->
-<section id="cta">
-  <div class="cta-bg"></div>
-  <div class="cta-overlay"></div>
-  <div class="cta-content">
-    <h2 class="cta-heading scale-in">Your session<br>is waiting.</h2>
-    <p class="cta-sub">Now booking May–August 2026 · Clermont, FL</p>
-    <a href="mailto:KatelynMichellePhoto@gmail.com" class="cta-btn">Book Now</a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2 class="contact-heading clip-title">Get In Touch</h2>
-  <div class="contact-detail">
-    <p>Email: <a href="mailto:KatelynMichellePhoto@gmail.com">KatelynMichellePhoto@gmail.com</a></p>
-    <p>Instagram: <a href="https://instagram.com/thekatelynmichellephoto" target="_blank" rel="noopener">@thekatelynmichellephoto</a></p>
-  </div>
-  <p class="contact-area">Serving Clermont, Orlando, and surrounding Central Florida</p>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <span class="footer-left">Katelyn Michelle Photography &middot; Clermont, FL &middot; &copy; 2026</span>
-  <span class="footer-right">Design by Lucas Blatt</span>
+  <span class="footer-name">Katelyn Michelle Photography · Clermont, FL · &copy; 2026</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
 </footer>
 
 <script>
-  // IntersectionObserver — threshold 0 fires as soon as ANY pixel is visible
+  window.addEventListener('load', () => {
+    setTimeout(() => document.body.classList.add('loaded'), 100);
+  });
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target); // fire once
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0, rootMargin: '0px 0px 60px 0px' });
-
-  // Gallery images with stagger
-  const galleryImgs = document.querySelectorAll('.reveal-img');
-  galleryImgs.forEach((img, i) => {
-    img.style.transitionDelay = (i * 60) + 'ms';
-    observer.observe(img);
-  });
-
-  // Clip-path titles
-  document.querySelectorAll('.clip-title').forEach(el => observer.observe(el));
-
-  // Scale-in elements
-  document.querySelectorAll('.scale-in').forEach(el => observer.observe(el));
-
-  // Stats stagger
-  const fadeUps = document.querySelectorAll('.fade-up');
-  fadeUps.forEach((el, i) => {
-    el.style.transitionDelay = (i * 100) + 'ms';
-    observer.observe(el);
-  });
-
-// Skeleton loader cleanup
-(function() {
-  function initSkeletons() {
-    document.querySelectorAll('img').forEach(function(img) {
-      if (img.complete && img.naturalWidth > 0) {
-        img.classList.add('img-loaded');
-      } else {
-        img.addEventListener('load', function() { img.classList.add('img-loaded'); });
-        img.addEventListener('error', function() { img.classList.add('img-loaded'); });
-      }
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSkeletons);
-  } else {
-    initSkeletons();
-  }
-})();
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section-title, .gallery-row, .gallery-accent img, .nicu-text h2, .nicu-text p, .nicu-image, .about-portrait, .pull-quote, .about-body, .stat').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
