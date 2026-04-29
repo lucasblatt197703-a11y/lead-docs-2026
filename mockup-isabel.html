@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isabel Lynn Photography — Tampa Bay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F8F2EB;
+    --espresso: #2C1A10;
+    --terracotta: #C4896A;
+    --blush: #E8D5C4;
+    --tint: #F0E8DF;
+    --near-black: #1A0F08;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--espresso); font-family: 'Work Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  /* ── HERO ───────────────────────────────────────── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    background-image: url('https://static.wixstatic.com/media/25425a_63b13ffa562046dd9902d890019c5f9a~mv2.jpeg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: background-position;
+  }
+
+  .hero-nav {
+    position: absolute;
+    top: 0; right: 0;
+    padding: 36px 60px;
+    display: flex;
+    gap: 40px;
+    z-index: 10;
+  }
+  .hero-nav a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .hero-nav a:hover { opacity: 1; border-bottom: 1px solid var(--terracotta); }
+
+  .hero-content {
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    z-index: 10;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 0.92;
+    color: var(--cream);
+    text-shadow: 0 2px 30px rgba(0,0,0,0.35);
+    letter-spacing: 0.4em;
+    display: block;
+    will-change: letter-spacing;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hero-name.revealed { letter-spacing: 0.12em; }
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-top: 16px;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s 1.4s ease, transform 0.8s 1.4s ease;
+  }
+  .hero-sub.revealed { opacity: 1; transform: translateY(0); }
+
+  /* ── MARQUEE STRIP ──────────────────────────────── */
+  .marquee-strip {
+    background: var(--espresso);
+    color: var(--blush);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-right: 60px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── GALLERY ────────────────────────────────────── */
+  #portfolio {
+    padding: 100px 60px 80px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 38px;
+    color: var(--espresso);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--terracotta);
+    opacity: 0.4;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: transform;
+  }
+  .section-rule.visible { transform: scaleX(1); }
+
+  .gallery-editorial {
+    display: grid;
+    gap: 10px;
+  }
+  .gallery-row {
+    display: grid;
+    gap: 10px;
+  }
+  .gallery-row.full { grid-template-columns: 1fr; }
+  .gallery-row.pair { grid-template-columns: 1fr 1fr; }
+  .gallery-row.offset { grid-template-columns: 30% 70%; }
+
+  .gallery-item {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+    object-fit: cover;
+  }
+  .gallery-row.full .gallery-item { height: 72vh; }
+  .gallery-row.pair .gallery-item { height: 55vh; }
+  .gallery-row.offset .gallery-item { height: 65vh; }
+  .gallery-item:hover img { transform: scale(1.025); }
+
+  /* ── SESSIONS ───────────────────────────────────── */
+  #sessions {
+    padding: 100px 60px;
+    background: var(--tint);
+    position: relative;
+  }
+  .section-number {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 160px;
+    font-weight: 300;
+    color: var(--espresso);
+    opacity: 0.04;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 60px;
+  }
+  .session-card {
+    padding: 36px 32px;
+    border-top: 1px solid var(--terracotta);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .session-card.visible { opacity: 1; transform: translateY(0); }
+  .session-card:nth-child(2) { transition-delay: 0.1s; }
+  .session-card:nth-child(3) { transition-delay: 0.2s; }
+  .session-card:nth-child(4) { transition-delay: 0.3s; }
+  .session-card:nth-child(5) { transition-delay: 0.4s; }
+  .session-card:nth-child(6) { transition-delay: 0.5s; }
+  .session-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--espresso);
+    margin-bottom: 10px;
+  }
+  .session-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--espresso);
+    opacity: 0.7;
+    line-height: 1.7;
+  }
+
+  /* ── STATS ──────────────────────────────────────── */
+  .stats-strip {
+    background: var(--espresso);
+    padding: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+  }
+  .stat-item { padding: 20px; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    display: block;
+    margin-top: 10px;
+    opacity: 0.7;
+  }
+
+  /* ── ABOUT ──────────────────────────────────────── */
+  #about {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-image-wrap {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 1s ease-out;
+  }
+  .about-image-wrap.visible { clip-path: inset(0 0 0 0); }
+  .about-image-wrap img {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .about-text-wrap { padding-right: 40px; }
+  .about-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: opacity, transform;
+  }
+  .about-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--espresso);
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s 0.15s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .about-heading.visible { clip-path: inset(0 0% 0 0); }
+  .about-bio {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--espresso);
+    opacity: 0.85;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s 0.3s ease, transform 0.6s 0.3s ease;
+    will-change: opacity, transform;
+  }
+  .about-bio.visible { opacity: 0.85; transform: translateY(0); }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--terracotta);
+    border-left: 2px solid var(--terracotta);
+    padding-left: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s 0.45s ease, transform 0.6s 0.45s ease;
+    will-change: opacity, transform;
+  }
+  .about-quote.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── BOLD CTA ────────────────────────────────────── */
+  #book {
+    position: relative;
+    height: 70vh;
+    min-height: 480px;
+    background-image: url('https://static.wixstatic.com/media/25425a_6a8921eb743846de8d0543c37b1bea68~mv2.jpeg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  #book::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(44, 26, 16, 0.52);
+  }
+  .book-content { position: relative; z-index: 1; padding: 20px; }
+  .book-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 62px;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 20px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .book-heading.visible { clip-path: inset(0 0% 0 0); }
+  .book-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 44px;
+    opacity: 0;
+    transition: opacity 0.6s 0.4s ease;
+    will-change: opacity;
+  }
+  .book-sub.visible { opacity: 0.85; }
+  .btn-contact {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid var(--cream);
+    padding: 14px 44px;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.6s 0.6s ease, background 0.3s ease, color 0.3s ease;
+    will-change: opacity;
+  }
+  .btn-contact.visible { opacity: 1; }
+  .btn-contact:hover { background: var(--cream); color: var(--espresso); }
+
+  /* ── CONTACT ─────────────────────────────────────── */
+  #contact {
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .contact-left {}
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .contact-heading.visible { clip-path: inset(0 0% 0 0); }
+  .contact-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--espresso);
+    opacity: 0.75;
+    max-width: 420px;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s 0.2s ease, transform 0.6s 0.2s ease;
+    will-change: opacity, transform;
+  }
+  .contact-desc.visible { opacity: 0.75; transform: translateY(0); }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--terracotta);
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s 0.35s ease, transform 0.6s 0.35s ease, border-color 0.2s;
+    will-change: opacity, transform;
+  }
+  .contact-email.visible { opacity: 1; transform: translateY(0); }
+  .contact-email:hover { border-bottom-color: var(--terracotta); }
+  .contact-image-right {
+    overflow: hidden;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s 0.2s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .contact-image-right.visible { clip-path: inset(0 0% 0 0); }
+  .contact-image-right img {
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: var(--near-black);
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--blush);
+    opacity: 0.7;
+    letter-spacing: 0.08em;
+  }
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--blush);
+    opacity: 0.4;
+    letter-spacing: 0.05em;
+  }
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--blush);
+    opacity: 0.3;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-name { font-size: 56px; }
+    .hero-content { left: 30px; bottom: 40px; }
+    .hero-nav { padding: 20px 24px; gap: 20px; }
+    #portfolio { padding: 60px 20px; }
+    .gallery-row.pair { grid-template-columns: 1fr; }
+    .gallery-row.offset { grid-template-columns: 1fr; }
+    .gallery-row.full .gallery-item,
+    .gallery-row.pair .gallery-item,
+    .gallery-row.offset .gallery-item { height: 56vw; }
+    #sessions { padding: 60px 20px; }
+    .sessions-grid { grid-template-columns: 1fr 1fr; }
+    .stats-strip { padding: 40px 20px; }
+    .stat-number { font-size: 56px; }
+    #about { grid-template-columns: 1fr; padding: 60px 20px; gap: 40px; }
+    .about-image-wrap img { height: 56vw; }
+    .about-text-wrap { padding-right: 0; }
+    #book { height: 60vh; }
+    .book-heading { font-size: 40px; }
+    #contact { grid-template-columns: 1fr; padding: 60px 20px; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 42px; }
+    .hero-sub { font-size: 10px; }
+    .sessions-grid { grid-template-columns: 1fr; }
+    .stats-strip { grid-template-columns: 1fr; }
+    .book-heading { font-size: 32px; }
+    .contact-heading { font-size: 36px; }
+    .contact-email { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <nav class="hero-nav">
+    <a href="#portfolio">Work</a>
+    <a href="#about">About</a>
+    <a href="#sessions">Sessions</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="hero-content">
+    <span class="hero-name" id="heroName">Isabel Lynn</span>
+    <p class="hero-sub" id="heroSub">Tampa Bay &nbsp;·&nbsp; Newborn &nbsp;·&nbsp; Maternity &nbsp;·&nbsp; Family</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Newborn · Maternity · Family · Couples · Fur Babies · Tampa Bay, FL · 2026 · Capturing Life's Tender Moments · </span>
+    <span>Newborn · Maternity · Family · Couples · Fur Babies · Tampa Bay, FL · 2026 · Capturing Life's Tender Moments · </span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="portfolio">
+  <div class="section-header">
+    <h2 class="section-title js-title">Portfolio</h2>
+    <div class="section-rule js-rule"></div>
+  </div>
+  <div class="gallery-editorial">
+    <div class="gallery-row full">
+      <div class="gallery-item js-gallery">
+        <img src="https://static.wixstatic.com/media/25425a_6a8921eb743846de8d0543c37b1bea68~mv2.jpeg" alt="Newborn Session" loading="lazy">
+      </div>
+    </div>
+    <div class="gallery-row pair">
+      <div class="gallery-item js-gallery">
+        <img src="https://static.wixstatic.com/media/25425a_0440d05c4e684bf59b40a975ca1e12f0~mv2.jpeg" alt="Family Session" loading="lazy">
+      </div>
+      <div class="gallery-item js-gallery">
+        <img src="https://static.wixstatic.com/media/25425a_afbf062694704c989eed3c85cadfea0c~mv2.jpeg" alt="Maternity Session" loading="lazy">
+      </div>
+    </div>
+    <div class="gallery-row offset">
+      <div class="gallery-item js-gallery">
+        <img src="https://static.wixstatic.com/media/25425a_3b2dc4f0cfc04e13abb31145e18d780e~mv2.jpeg" alt="Newborn Session 2" loading="lazy">
+      </div>
+      <div class="gallery-item js-gallery">
+        <img src="https://static.wixstatic.com/media/25425a_723a688926cf4b8ca4fccd56c333f459~mv2.jpeg" alt="Family Outdoor" loading="lazy">
+      </div>
+    </div>
+    <div class="gallery-row full">
+      <div class="gallery-item js-gallery">
+        <img src="https://static.wixstatic.com/media/25425a_96c5f570e24145c58cbf6cd9bf9d979c~mv2.jpeg" alt="Couples Session" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section id="sessions">
+  <span class="section-number" aria-hidden="true">02</span>
+  <div class="section-header">
+    <h2 class="section-title js-title">Sessions</h2>
+    <div class="section-rule js-rule"></div>
+  </div>
+  <div class="sessions-grid">
+    <div class="session-card js-card">
+      <h3 class="session-name">Newborn</h3>
+      <p class="session-desc">Capturing those precious first weeks on earth — soft, warm, and unhurried.</p>
+    </div>
+    <div class="session-card js-card">
+      <h3 class="session-name">Maternity</h3>
+      <p class="session-desc">Celebrating the beauty and anticipation of the journey to motherhood.</p>
+    </div>
+    <div class="session-card js-card">
+      <h3 class="session-name">Family</h3>
+      <p class="session-desc">Real moments, genuine connection — portraits that actually look like your family.</p>
+    </div>
+    <div class="session-card js-card">
+      <h3 class="session-name">Couples</h3>
+      <p class="session-desc">Engagements, anniversaries, or just because — your story, beautifully told.</p>
+    </div>
+    <div class="session-card js-card">
+      <h3 class="session-name">Fur Babies</h3>
+      <p class="session-desc">Because your pets deserve beautiful photos too. Dog mom approved.</p>
+    </div>
+    <div class="session-card js-card">
+      <h3 class="session-name">Self / Modeling</h3>
+      <p class="session-desc">Feeling yourself and want photos that show it? Let's make that happen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-number">6+</span>
+    <span class="stat-label">Session Types</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">Tampa</span>
+    <span class="stat-label">Bay Area, FL</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">100%</span>
+    <span class="stat-label">Natural Light</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap js-image-reveal">
+    <img src="https://static.wixstatic.com/media/25425a_afbf062694704c989eed3c85cadfea0c~mv2.jpeg" alt="Isabel Lynn Photography" loading="lazy">
+  </div>
+  <div class="about-text-wrap">
+    <p class="about-eyebrow js-fade">About Isabel</p>
+    <h2 class="about-heading js-title">Photographing life's<br>most tender moments.</h2>
+    <p class="about-bio js-fade-delay-2">Working in the intimate spaces where life begins — nurseries, golden-hour backyards, and the quiet warmth of a family's home — Isabel Guerra documents the tender early moments of Tampa Bay families. Her soft, natural-light approach turns ordinary sessions into photographs families return to for decades.</p>
+    <blockquote class="about-quote js-fade-delay-3">"Oh to see new babies, and to capture photos in their first couple weeks on earth, is such a privilege."</blockquote>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section id="book">
+  <div class="book-content">
+    <h2 class="book-heading js-title-cta">Your moments deserve to last.</h2>
+    <p class="book-sub js-book-sub">Newborn · Maternity · Family Sessions · Tampa Bay, FL</p>
+    <a href="#contact" class="btn-contact js-btn-contact">Get In Touch</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="contact-heading js-title">Get In Touch</h2>
+    <p class="contact-desc js-fade">Available for newborn, maternity, family, couples &amp; fur baby sessions throughout Tampa Bay, FL. Reach out to discuss your session.</p>
+    <a href="mailto:isabelguerra18@yahoo.com" class="contact-email js-fade-delay-2">isabelguerra18@yahoo.com</a>
+  </div>
+  <div class="contact-image-right js-image-reveal">
+    <img src="https://static.wixstatic.com/media/25425a_3b2dc4f0cfc04e13abb31145e18d780e~mv2.jpeg" alt="Contact Isabel Lynn Photography" loading="lazy">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Isabel Lynn Photography</span>
+  <span class="footer-copy">©2026 Isabel Guerra</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero name letter-spacing reveal
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('revealed');
+      document.getElementById('heroSub').classList.add('revealed');
+    }, 100);
+  });
+
+  // Hero parallax
+  const hero = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      hero.style.backgroundPositionY = `calc(30% + ${scrollY * 0.4}px)`;
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animations
+  const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+
+  // Section titles + rules
+  const titleObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Also trigger sibling rule
+        const rule = entry.target.closest('.section-header')?.querySelector('.js-rule');
+        if (rule) rule.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+  document.querySelectorAll('.js-title').forEach(el => titleObs.observe(el));
+
+  // Gallery items staggered
+  const galleryItems = document.querySelectorAll('.js-gallery');
+  const galleryObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.closest('.gallery-row')?.querySelectorAll('.js-gallery') || [entry.target];
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 120);
+        });
+        galleryObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  galleryItems.forEach(el => galleryObs.observe(el));
+
+  // Session cards
+  const cardObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+  document.querySelectorAll('.js-card').forEach(el => cardObs.observe(el));
+
+  // About image reveal
+  const imgObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        imgObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.js-image-reveal').forEach(el => imgObs.observe(el));
+
+  // Fade elements
+  const fadeObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  document.querySelectorAll('.js-fade, .js-fade-delay-2, .js-fade-delay-3').forEach(el => fadeObs.observe(el));
+
+  // CTA section
+  const ctaObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const sub = entry.target.closest('section')?.querySelector('.js-book-sub');
+        const btn = entry.target.closest('section')?.querySelector('.js-btn-contact');
+        if (sub) sub.classList.add('visible');
+        if (btn) btn.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.js-title-cta').forEach(el => ctaObs.observe(el));
+</script>
+</body>
+</html>
