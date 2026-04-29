@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annabella Mowry Photography — Tampa, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F0E8;
+    --text: #1A1208;
+    --accent: #C89B6E;
+    --champagne: #E8D5B7;
+    --dark: #2C1810;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .hero-nav {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    display: flex;
+    gap: 40px;
+    z-index: 10;
+  }
+
+  .hero-nav a {
+    color: rgba(247,240,232,0.85);
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .hero-nav a:hover { color: #F7F0E8; }
+
+  .hero-text {
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    z-index: 10;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 90px;
+    color: #F7F0E8;
+    text-shadow: 0 2px 20px rgba(26,18,8,0.4);
+    letter-spacing: 0.4em; /* animated to 0.12em */
+    line-height: 1;
+    display: block;
+    transition: letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .hero-tagline {
+    display: block;
+    margin-top: 14px;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(247,240,232,0.75);
+    text-shadow: 0 1px 8px rgba(26,18,8,0.5);
+  }
+
+  /* ─── MARQUEE ─── */
+  #marquee {
+    background: var(--dark);
+    overflow: hidden;
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-right: 60px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 80px 80px;
+    background: var(--bg);
+  }
+
+  .gallery-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .gallery-header.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-overline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 36px;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .masonry-grid {
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .masonry-item img {
+    width: 100%;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, transform 0.5s ease;
+  }
+
+  .masonry-item img.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .masonry-item:hover img {
+    transform: scale(1.02);
+  }
+
+  .masonry-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(26,18,8,0.6));
+    padding: 30px 16px 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .masonry-item:hover .masonry-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .masonry-caption span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,240,232,0.9);
+  }
+
+  /* ─── DIVIDER ─── */
+  .accent-divider {
+    width: 30%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto;
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--dark);
+    padding: 100px 80px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: center;
+  }
+
+  .stat-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 72px;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(247,240,232,0.55);
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--champagne);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .about-image {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-content {
+    padding: 80px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-overline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 38px;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1) 0.2s;
+  }
+
+  .about-heading.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .about-bio {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    opacity: 0.8;
+    margin-bottom: 32px;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--accent);
+    line-height: 1.5;
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  /* ─── EDITORIAL IMAGES ─── */
+  #editorial {
+    background: var(--bg);
+  }
+
+  .editorial-image {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .editorial-image.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .editorial-quote {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .editorial-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .editorial-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: var(--accent);
+    padding: 140px 80px;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 72px;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .cta-heading.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(26,18,8,0.65);
+    margin-bottom: 48px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    background: var(--text);
+    color: var(--bg);
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: background 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--dark);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 100px 80px;
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 36px;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+
+  .contact-link {
+    display: block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover {
+    color: var(--accent);
+  }
+
+  .contact-divider {
+    width: 30%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 48px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+  }
+
+  footer span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,240,232,0.45);
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    .hero-name { font-size: 52px; }
+    .hero-text { left: 30px; bottom: 40px; }
+    .hero-nav { top: 24px; right: 24px; gap: 20px; }
+
+    #gallery { padding: 60px 24px; }
+    .masonry-grid { columns: 2; }
+
+    #stats { padding: 60px 24px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-number { font-size: 52px; }
+
+    #about { grid-template-columns: 1fr; }
+    .about-image { height: 400px; }
+    .about-content { padding: 50px 30px; }
+    .about-heading { font-size: 30px; }
+
+    .cta-heading { font-size: 48px; }
+    #cta { padding: 80px 30px; }
+
+    #contact { padding: 60px 24px; }
+
+    footer {
+      flex-direction: column;
+      height: auto;
+      padding: 24px;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 38px; letter-spacing: 0.08em !important; }
+    .masonry-grid { columns: 1; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .hero-nav { display: none; }
+    .cta-heading { font-size: 36px; }
+    .editorial-image { height: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <img class="hero-img"
+    src="https://static.wixstatic.com/media/056f87_da5e766758934ba0b83fdb2e07112d19~mv2.jpg"
+    alt="Annabella Mowry Photography Hero"
+    loading="eager">
+
+  <nav class="hero-nav">
+    <a href="#gallery">Work</a>
+    <a href="#about">About</a>
+    <a href="#cta">Investment</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="hero-text">
+    <span class="hero-name" id="heroName">ANNABELLA MOWRY</span>
+    <span class="hero-tagline">Wedding &amp; Family Photography &nbsp;·&nbsp; Tampa, FL</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div id="marquee">
+  <div class="marquee-track">
+    <span>Weddings &nbsp;·&nbsp; Elopements &nbsp;·&nbsp; Family Sessions &nbsp;·&nbsp; Graduations &nbsp;·&nbsp; Couples &nbsp;·&nbsp; Headshots &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Tuscaloosa, AL &nbsp;·&nbsp; Available 2026 &nbsp;·&nbsp;</span>
+    <span>Weddings &nbsp;·&nbsp; Elopements &nbsp;·&nbsp; Family Sessions &nbsp;·&nbsp; Graduations &nbsp;·&nbsp; Couples &nbsp;·&nbsp; Headshots &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Tuscaloosa, AL &nbsp;·&nbsp; Available 2026 &nbsp;·&nbsp;</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header" id="galleryHeader">
+    <span class="section-overline">Portfolio</span>
+    <h2 class="section-title" id="galleryTitle">Selected Work</h2>
+  </div>
+
+  <div class="masonry-grid">
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_c5f389fdab8145ccb3d5737bde94098b~mv2.jpg" alt="Couples" loading="lazy">
+      <div class="masonry-caption"><span>Couples</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_8f6916923ec64ed6a51154cc0ab8617b~mv2.jpg" alt="Portrait" loading="lazy">
+      <div class="masonry-caption"><span>Portrait</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_933211cdb8074fa4851c32c968b99199~mv2.jpg" alt="Wedding" loading="lazy">
+      <div class="masonry-caption"><span>Wedding</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_a3c02ce0356b4f148663d49278d1fea7~mv2.jpg" alt="Family" loading="lazy">
+      <div class="masonry-caption"><span>Family</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_4f8ae93088854da091d9ed1134048aec~mv2.jpg" alt="Celebration" loading="lazy">
+      <div class="masonry-caption"><span>Celebration</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_02b9ea5c7a0a4d62838dc753b4b5a249~mv2.jpg" alt="Outdoor" loading="lazy">
+      <div class="masonry-caption"><span>Outdoor</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_969dad7eb1c14421af98fd1d2df06845~mv2.jpg" alt="Ceremony" loading="lazy">
+      <div class="masonry-caption"><span>Ceremony</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_55121d44db7c4b419ac8498888603b66~mv2.jpg" alt="Golden Hour" loading="lazy">
+      <div class="masonry-caption"><span>Golden Hour</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/056f87_0083639d61db4e399bee6a9d78cf7637~mv2.jpg" alt="Moments" loading="lazy">
+      <div class="masonry-caption"><span>Moments</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCENT DIVIDER -->
+<div class="accent-divider"></div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">5+</span>
+      <span class="stat-label">Years Shooting</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">2</span>
+      <span class="stat-label">Cities · Tampa &amp; Tuscaloosa</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">All</span>
+      <span class="stat-label">Day Coverage Available</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Natural Light · Always</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image">
+    <img src="https://static.wixstatic.com/media/056f87_8f6916923ec64ed6a51154cc0ab8617b~mv2.jpg"
+      alt="Annabella Mowry" loading="lazy">
+  </div>
+  <div class="about-content" id="aboutContent">
+    <p class="about-overline">About</p>
+    <h2 class="about-heading" id="aboutHeading">Capturing connection,<br>not just moments.</h2>
+    <p class="about-bio">
+      Annabella Mowry is a Tampa-based photographer drawn to the unguarded moments — a quiet laugh between ceremony and reception, the way morning light falls across a kitchen table. Her work began photographing marine life at a rescue center in Clearwater, FL, where she first understood what it means to truly see something. Available in Tampa, FL and Tuscaloosa, AL for weddings, family sessions, elopements, and beyond.
+    </p>
+    <blockquote class="about-quote">
+      "I started by photographing marine life. Now I photograph the people who matter most."
+    </blockquote>
+  </div>
+</section>
+
+<!-- EDITORIAL IMAGES -->
+<section id="editorial">
+  <img class="editorial-image" id="editorial1"
+    src="https://static.wixstatic.com/media/056f87_bb7020d6667f406bb0c5e6594534acea~mv2.jpg"
+    alt="Wedding Editorial" loading="lazy">
+  <div class="editorial-quote" id="editorialQuote">
+    <p>Every wedding is its own world.<br>Every family has its own light.</p>
+  </div>
+  <img class="editorial-image" id="editorial2"
+    src="https://static.wixstatic.com/media/056f87_9879fc85aa254b129be5ae85e0144ce6~mv2.jpg"
+    alt="Golden Hour Portrait" loading="lazy">
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="cta-heading" id="ctaHeading">Let's Make Something Beautiful.</h2>
+  <p class="cta-sub">Tampa · Tuscaloosa · Destination Weddings Available</p>
+  <a href="mailto:mowryannabella@gmail.com" class="cta-btn">Get In Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-divider"></div>
+  <h2 class="contact-heading">Inquiries</h2>
+  <a href="mailto:mowryannabella@gmail.com" class="contact-link">mowryannabella@gmail.com</a>
+  <a href="https://www.instagram.com/_amphotography_1/" class="contact-link" target="_blank">@_amphotography_1</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Annabella Mowry Photography</span>
+  <span>&copy; 2026</span>
+  <span>Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // 1. Hero letter-spacing animate
+  setTimeout(() => {
+    document.getElementById('heroName').style.letterSpacing = '0.12em';
+  }, 100);
+
+  // 2. IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, entry.target.dataset.delay || 0);
+        imgObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Gallery header
+  observer.observe(document.getElementById('galleryHeader'));
+  observer.observe(document.getElementById('galleryTitle'));
+
+  // Gallery images with stagger
+  document.querySelectorAll('.masonry-item img').forEach((img, i) => {
+    img.dataset.delay = i * 100;
+    imgObserver.observe(img);
+  });
+
+  // Stats
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 120) + 'ms';
+    observer.observe(el);
+  });
+
+  // About
+  observer.observe(document.getElementById('aboutContent'));
+  observer.observe(document.getElementById('aboutHeading'));
+
+  // Editorial
+  imgObserver.observe(document.getElementById('editorial1'));
+  imgObserver.observe(document.getElementById('editorial2'));
+  observer.observe(document.getElementById('editorialQuote'));
+
+  // CTA
+  observer.observe(document.getElementById('ctaHeading'));
+</script>
+</body>
+</html>
