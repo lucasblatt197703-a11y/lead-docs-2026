@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
@@ -186,8 +191,8 @@
     text-transform: uppercase;
     color: var(--amber);
     margin-bottom: 12px;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
@@ -199,7 +204,7 @@
     font-size: 42px;
     color: var(--ink);
     margin-bottom: 40px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
   }
 
@@ -222,7 +227,7 @@
     width: 100%;
     display: block;
     transition: transform 0.6s ease;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease-out, transform 0.6s ease;
   }
 
@@ -241,8 +246,8 @@
     font-size: 14px;
     color: var(--linen);
     letter-spacing: 0.04em;
-    opacity: 0;
-    transform: translateY(12px);
+    opacity: 1;
+    
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
 
@@ -298,7 +303,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 1s ease-out;
   }
 
@@ -359,7 +364,7 @@
     font-weight: 400;
     color: var(--ink);
     margin-bottom: 16px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
   }
 
@@ -372,8 +377,8 @@
     line-height: 1.75;
     color: #5A4F48;
     margin-bottom: 24px;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
   }
 
@@ -418,7 +423,7 @@
     font-weight: 300;
     color: var(--linen);
     margin-bottom: 60px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
   }
 
@@ -433,8 +438,8 @@
   }
 
   .proof-item {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
@@ -545,7 +550,7 @@
     color: var(--ink);
     line-height: 1.1;
     margin-bottom: 30px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
   }
 
@@ -558,8 +563,8 @@
     line-height: 1.85;
     color: #4A3F38;
     margin-bottom: 16px;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
   }
 
@@ -629,7 +634,7 @@
     font-weight: 300;
     color: var(--ink);
     margin-bottom: 40px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
   }
 

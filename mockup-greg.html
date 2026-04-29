@@ -6,6 +6,11 @@
 <title>Greg Rubin — Photography & Video</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #0A0A0A;
@@ -72,7 +77,7 @@
     font-style: italic; font-weight: 700;
     font-size: 88px; line-height: 0.92;
     letter-spacing: -0.02em; color: var(--white);
-    opacity: 0; transform: translateY(30px);
+    opacity: 1; 
     transition: opacity 1s ease, transform 1s ease;
     will-change: opacity, transform;
   }
@@ -116,7 +121,7 @@
   .stat-number {
     font-family: 'Playfair Display', serif; font-size: 56px;
     color: var(--accent-light); line-height: 1;
-    opacity: 0; transform: translateY(20px);
+    opacity: 1; 
     transition: opacity 0.8s ease, transform 0.8s ease;
     will-change: opacity, transform;
   }
@@ -135,7 +140,7 @@
   .section-title {
     font-family: 'Playfair Display', serif; font-style: italic;
     font-size: 40px; color: var(--text);
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
     will-change: clip-path;
   }
@@ -151,7 +156,7 @@
 
   .gallery-item {
     position: relative; overflow: hidden; cursor: pointer;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.85s ease-out;
     will-change: clip-path;
   }
@@ -165,7 +170,7 @@
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 32px 20px 20px;
     background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 100%);
-    opacity: 0; transition: opacity 0.3s ease;
+    opacity: 1; transition: opacity 0.3s ease;
   }
   .gallery-item:hover .gallery-overlay { opacity: 1; }
   .gallery-label {
@@ -187,7 +192,7 @@
     font-family: 'Playfair Display', serif; font-style: italic;
     font-size: 24px; line-height: 1.65; color: var(--text);
     max-width: 760px; margin: 0 auto 28px;
-    opacity: 0; transform: translateY(20px);
+    opacity: 1; 
     transition: opacity 0.9s ease, transform 0.9s ease;
     will-change: opacity, transform;
   }
@@ -218,7 +223,7 @@
   .about-img-wrap { position: relative; }
   .about-img {
     width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease-out 0.2s;
     will-change: clip-path;
   }

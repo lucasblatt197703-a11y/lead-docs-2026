@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -169,8 +174,8 @@
   }
   .stat-item {
     padding: 20px;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .stat-item.is-visible { opacity: 1; transform: translateY(0); }
@@ -218,7 +223,7 @@
     font-size: 36px;
     font-weight: 600;
     color: var(--text);
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }
   .section-title.is-visible { clip-path: inset(0 0% 0 0); }
@@ -232,7 +237,7 @@
     position: relative;
     aspect-ratio: 1/1;
     overflow: hidden;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease-out;
     cursor: pointer;
   }
@@ -262,8 +267,8 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--bg);
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
   .gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
@@ -303,15 +308,15 @@
     display: block;
     border-radius: 0;
     box-shadow: 8px 8px 0 var(--accent);
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.9s ease, transform 0.9s ease;
   }
   .about-image.is-visible { opacity: 1; transform: translateY(0); }
   .about-content {
     padding-top: 20px;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
   }
   .about-content.is-visible { opacity: 1; transform: translateY(0); }
@@ -368,7 +373,7 @@
     color: var(--bg);
     line-height: 1.15;
     margin-bottom: 20px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }
   .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
@@ -379,7 +384,7 @@
     color: var(--accent);
     letter-spacing: 0.05em;
     margin-bottom: 48px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.6s ease 0.3s;
   }
   .cta-sub.is-visible { opacity: 1; }
@@ -422,7 +427,7 @@
     font-weight: 600;
     color: var(--text);
     margin-bottom: 48px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }
   .contact-heading.is-visible { clip-path: inset(0 0% 0 0); }
@@ -432,8 +437,8 @@
     font-weight: 400;
     color: var(--text);
     margin-bottom: 16px;
-    opacity: 0;
-    transform: translateY(16px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
   .contact-line.is-visible { opacity: 1; transform: translateY(0); }

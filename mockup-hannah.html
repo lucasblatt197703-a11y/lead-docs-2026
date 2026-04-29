@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -161,7 +166,7 @@
     font-weight: 400;
     color: var(--text);
     margin-bottom: 48px;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }
 
@@ -176,7 +181,7 @@
     width: 100%;
     margin-bottom: 8px;
     display: block;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease-out, transform 0.4s ease;
     cursor: crosshair;
   }
@@ -269,8 +274,8 @@
   }
 
   .stat-item {
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
@@ -354,7 +359,7 @@
   .wedding-img, .wedding-img-sm, .wedding-img-center {
     object-fit: cover;
     aspect-ratio: 3/4;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease-out;
   }
 
@@ -378,8 +383,8 @@
     color: #F2EDE6;
     line-height: 1.1;
     margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 1;
+    
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
 
@@ -393,7 +398,7 @@
     text-transform: uppercase;
     color: rgba(242,237,230,0.5);
     margin-bottom: 48px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.7s ease 0.15s;
   }
 
@@ -410,7 +415,7 @@
     letter-spacing: 0.12em;
     text-decoration: none;
     transition: background 0.3s ease, color 0.3s ease;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.7s ease 0.25s, background 0.3s ease, color 0.3s ease;
   }
 

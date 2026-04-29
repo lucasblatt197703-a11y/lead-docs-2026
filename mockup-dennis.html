@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --black:  #0A0A0A;
@@ -76,7 +81,7 @@
     font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 500;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold);
     margin-bottom: 20px;
-    opacity: 0; transform: translateY(16px);
+    opacity: 1; 
     transition: opacity 0.7s 0.1s ease, transform 0.7s 0.1s ease;
   }
   .hero-h1 {
@@ -85,20 +90,20 @@
     font-weight: 300; line-height: 0.9;
     letter-spacing: -0.01em;
     color: var(--white);
-    opacity: 0; transform: translateY(24px);
+    opacity: 1; 
     transition: opacity 0.9s 0.2s ease, transform 0.9s 0.2s ease;
   }
   .hero-h1 em { font-style: italic; color: var(--chrome); }
   .hero-tagline {
     margin-top: 32px; font-size: 14px; font-weight: 300;
-    line-height: 1.7; color: var(--chrome); opacity: 0;
+    line-height: 1.7; color: var(--chrome); opacity: 1;
     max-width: 360px;
-    transform: translateY(16px);
+    
     transition: opacity 0.8s 0.45s ease, transform 0.8s 0.45s ease;
   }
   .hero-right {
     display: flex; flex-direction: column; align-items: flex-end; gap: 24px;
-    opacity: 0; transform: translateY(16px);
+    opacity: 1; 
     transition: opacity 0.8s 0.55s ease, transform 0.8s 0.55s ease;
   }
   .hero-trademark {
@@ -145,7 +150,7 @@
   }
   .stat-item {
     padding: 40px 32px; border-right: 1px solid rgba(200,208,216,0.07);
-    opacity: 0; transform: translateY(20px);
+    opacity: 1; 
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .stat-item:last-child { border-right: none; }
@@ -174,7 +179,7 @@
   }
   .gallery-item {
     position: relative; overflow: hidden; cursor: pointer;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease;
   }
   .gallery-item.is-visible { clip-path: inset(0% 0 0 0); }
@@ -200,7 +205,7 @@
     padding: 32px 20px 18px;
     background: linear-gradient(transparent, rgba(10,10,10,0.85));
     color: var(--white); font-size: 11px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
-    opacity: 0; transform: translateY(8px);
+    opacity: 1; 
     transition: opacity 0.35s, transform 0.35s;
   }
   .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
@@ -222,7 +227,7 @@
   .featured-text {
     background: var(--mid); padding: 80px 64px;
     display: flex; flex-direction: column; justify-content: center;
-    opacity: 0; transform: translateX(32px);
+    opacity: 1; transform: translateX(32px);
     transition: opacity 0.9s ease, transform 0.9s ease;
   }
   .featured-text.is-visible { opacity: 1; transform: translateX(0); }
@@ -238,7 +243,7 @@
   }
   .about-portrait {
     position: relative;
-    opacity: 0; transform: translateY(32px);
+    opacity: 1; 
     transition: opacity 1s ease, transform 1s ease;
   }
   .about-portrait.is-visible { opacity: 1; transform: translateY(0); }
@@ -254,7 +259,7 @@
     opacity: 0.25; pointer-events: none;
   }
   .about-text {
-    opacity: 0; transform: translateY(32px);
+    opacity: 1; 
     transition: opacity 1s 0.2s ease, transform 1s 0.2s ease;
   }
   .about-text.is-visible { opacity: 1; transform: translateY(0); }
@@ -272,7 +277,7 @@
     border-top: 1px solid rgba(200,208,216,0.08);
     border-bottom: 1px solid rgba(200,208,216,0.08);
     gap: 60px;
-    opacity: 0; transform: translateY(24px);
+    opacity: 1; 
     transition: opacity 0.9s ease, transform 0.9s ease;
   }
   #cta.is-visible { opacity: 1; transform: translateY(0); }
@@ -296,7 +301,7 @@
     display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
   }
   .contact-left {
-    opacity: 0; transform: translateY(24px);
+    opacity: 1; 
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
   .contact-left.is-visible { opacity: 1; transform: translateY(0); }
@@ -311,7 +316,7 @@
   .contact-email-link:hover { border-color: var(--gold); }
   .contact-meta { margin-top: 32px; font-size: 13px; font-weight: 300; color: var(--steel); line-height: 2.2; letter-spacing: 0.04em; }
   .contact-right {
-    opacity: 0; transform: translateY(24px);
+    opacity: 1; 
     transition: opacity 0.8s 0.2s ease, transform 0.8s 0.2s ease;
   }
   .contact-right.is-visible { opacity: 1; transform: translateY(0); }

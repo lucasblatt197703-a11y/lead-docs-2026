@@ -6,6 +6,11 @@
 <title>Auretha Callison — Watercolor Portraits</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --bg: #FDFAF6; --text: #2C1A0E; --accent: #D4956A; --light: #EDE4D8; --muted: #8C7B6E; }
   html { scroll-behavior: smooth; }
@@ -24,7 +29,7 @@
   #hero { padding-top: 80px; min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
 
   .hero-mosaic { grid-column: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 300px 260px; gap: 6px; padding: 80px 0 0 48px; }
-  .mosaic-img { overflow: hidden; opacity: 0; transform: scale(1.04); transition: opacity 0.9s ease, transform 0.9s ease; will-change: transform, opacity; }
+  .mosaic-img { overflow: hidden; opacity: 1; transform: scale(1.04); transition: opacity 0.9s ease, transform 0.9s ease; will-change: transform, opacity; }
   .mosaic-img.is-visible { opacity: 1; transform: scale(1); }
   .mosaic-img:nth-child(1) { grid-column: 1; grid-row: 1; }
   .mosaic-img:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
@@ -34,11 +39,11 @@
 
   .hero-text { grid-column: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 48px 60px 32px; }
   .hero-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; font-weight: 500; }
-  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(52px, 5.5vw, 88px); font-weight: 900; line-height: 1.0; letter-spacing: -0.01em; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1); margin-bottom: 24px; will-change: clip-path; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(52px, 5.5vw, 88px); font-weight: 900; line-height: 1.0; letter-spacing: -0.01em; color: var(--text);  transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1); margin-bottom: 24px; will-change: clip-path; }
   .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
-  .hero-tagline { font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--muted); max-width: 320px; margin-bottom: 40px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s; }
+  .hero-tagline { font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--muted); max-width: 320px; margin-bottom: 40px; opacity: 1;  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s; }
   .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
-  .hero-cta { display: inline-block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); text-decoration: none; padding-bottom: 4px; border-bottom: 1px solid var(--accent); opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s; font-weight: 500; }
+  .hero-cta { display: inline-block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); text-decoration: none; padding-bottom: 4px; border-bottom: 1px solid var(--accent); opacity: 1;  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s; font-weight: 500; }
   .hero-cta.is-visible { opacity: 1; transform: translateY(0); }
   .hero-cta:hover { color: var(--accent); }
 
@@ -46,7 +51,7 @@
 
   /* STATS */
   #stats { display: flex; justify-content: center; align-items: center; padding: 40px 48px; border-top: 1px solid var(--light); border-bottom: 1px solid var(--light); margin-top: 60px; }
-  .stat-item { text-align: center; padding: 0 48px; border-right: 1px solid var(--light); opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .stat-item { text-align: center; padding: 0 48px; border-right: 1px solid var(--light); opacity: 1;  transition: opacity 0.6s ease, transform 0.6s ease; }
   .stat-item:last-child { border-right: none; }
   .stat-item.is-visible { opacity: 1; transform: translateY(0); }
   .stat-item:nth-child(2) { transition-delay: 100ms; }
@@ -57,12 +62,12 @@
   /* GALLERY */
   #gallery { padding: 120px 48px 80px; }
   .section-header { display: flex; align-items: center; gap: 24px; margin-bottom: 60px; }
-  .section-title { font-family: 'Playfair Display', serif; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); white-space: nowrap; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text);  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); white-space: nowrap; }
   .section-title.is-visible { clip-path: inset(0 0% 0 0); }
   .section-line { flex: 1; height: 1px; background: var(--light); }
 
   .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-  .gallery-item { overflow: hidden; aspect-ratio: 3/4; position: relative; opacity: 0; clip-path: inset(100% 0 0 0); transition: opacity 0.8s ease, clip-path 0.9s ease; will-change: clip-path, opacity; }
+  .gallery-item { overflow: hidden; aspect-ratio: 3/4; position: relative; opacity: 1;  transition: opacity 0.8s ease, clip-path 0.9s ease; will-change: clip-path, opacity; }
   .gallery-item.is-visible { opacity: 1; clip-path: inset(0% 0 0 0); }
   .gallery-item:nth-child(2) { transition-delay: 80ms; }
   .gallery-item:nth-child(3) { transition-delay: 160ms; }
@@ -73,7 +78,7 @@
   .gallery-item:nth-child(8) { transition-delay: 560ms; }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
   .gallery-item:hover img { transform: scale(1.03); }
-  .gallery-item .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px 16px 16px; background: linear-gradient(transparent, rgba(44,26,14,0.5)); opacity: 0; transition: opacity 0.3s ease; }
+  .gallery-item .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px 16px 16px; background: linear-gradient(transparent, rgba(44,26,14,0.5)); opacity: 1; transition: opacity 0.3s ease; }
   .gallery-item:hover .overlay { opacity: 1; }
   .overlay-title { font-size: 12px; color: #fff; letter-spacing: 0.1em; }
 
@@ -85,27 +90,27 @@
 
   /* ABOUT */
   #about { padding: 80px 48px 120px; max-width: 700px; margin: 0 auto; text-align: center; }
-  .about-portrait { width: 200px; height: 260px; overflow: hidden; margin: 0 auto 48px; opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .about-portrait { width: 200px; height: 260px; overflow: hidden; margin: 0 auto 48px; opacity: 1;  transition: opacity 0.9s ease, transform 0.9s ease; }
   .about-portrait.is-visible { opacity: 1; transform: translateY(0); }
   .about-portrait img { width: 100%; height: 100%; object-fit: cover; }
-  .pull-quote { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.5vw, 28px); font-style: italic; font-weight: 400; color: var(--accent); line-height: 1.4; margin-bottom: 32px; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s; }
+  .pull-quote { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.5vw, 28px); font-style: italic; font-weight: 400; color: var(--accent); line-height: 1.4; margin-bottom: 32px; opacity: 1;  transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s; }
   .pull-quote.is-visible { opacity: 1; transform: translateY(0); }
-  .about-bio { font-size: 16px; line-height: 1.85; color: var(--muted); font-weight: 300; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s; }
+  .about-bio { font-size: 16px; line-height: 1.85; color: var(--muted); font-weight: 300; opacity: 1;  transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s; }
   .about-bio.is-visible { opacity: 1; transform: translateY(0); }
 
   /* CTA */
   #cta { background: var(--accent); padding: 100px 48px; text-align: center; }
-  .cta-heading { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; margin-bottom: 20px; line-height: 1.1; clip-path: inset(0 100% 0 0); opacity: 0; transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease; }
+  .cta-heading { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: #fff; margin-bottom: 20px; line-height: 1.1;  opacity: 1; transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease; }
   .cta-heading.is-visible { clip-path: inset(0 0% 0 0); opacity: 1; }
-  .cta-sub { font-size: 15px; color: rgba(255,255,255,0.85); font-weight: 300; margin-bottom: 40px; opacity: 0; transition: opacity 0.8s ease 0.3s; }
+  .cta-sub { font-size: 15px; color: rgba(255,255,255,0.85); font-weight: 300; margin-bottom: 40px; opacity: 1; transition: opacity 0.8s ease 0.3s; }
   .cta-sub.is-visible { opacity: 1; }
-  .cta-btn { display: inline-block; padding: 16px 44px; border: 1.5px solid #fff; color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; opacity: 0; transition: opacity 0.8s ease 0.5s, background 0.3s, color 0.3s; }
+  .cta-btn { display: inline-block; padding: 16px 44px; border: 1.5px solid #fff; color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; opacity: 1; transition: opacity 0.8s ease 0.5s, background 0.3s, color 0.3s; }
   .cta-btn.is-visible { opacity: 1; }
   .cta-btn:hover { background: #fff; color: var(--accent); }
 
   /* CONTACT */
   #contact { padding: 100px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-  .contact-left h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 52px); font-weight: 700; line-height: 1.1; margin-bottom: 24px; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .contact-left h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 52px); font-weight: 700; line-height: 1.1; margin-bottom: 24px;  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
   .contact-left h2.is-visible { clip-path: inset(0 0% 0 0); }
   .contact-left p { font-size: 15px; color: var(--muted); line-height: 1.7; font-weight: 300; }
   .contact-info { list-style: none; padding-top: 8px; }

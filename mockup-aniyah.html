@@ -8,6 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
   <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
@@ -85,7 +90,7 @@
     }
     .mosaic-img {
       overflow: hidden;
-      clip-path: inset(100% 0 0 0);
+      
       transition: clip-path 0.9s ease-out;
       will-change: clip-path;
     }
@@ -215,7 +220,7 @@
       font-size: 38px;
       letter-spacing: -0.01em;
       color: var(--text);
-      clip-path: inset(0 100% 0 0);
+      
       transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
       will-change: clip-path;
     }
@@ -238,7 +243,7 @@
       display: block;
       filter: saturate(0.85);
       transition: filter 0.4s, transform 0.5s;
-      clip-path: inset(100% 0 0 0);
+      
       will-change: clip-path;
       transition: clip-path 0.9s ease-out, filter 0.4s, transform 0.5s;
     }
@@ -298,8 +303,8 @@
 
     /* Fade+rise */
     .fade-rise {
-      opacity: 0;
-      transform: translateY(40px);
+      opacity: 1;
+      
       transition: opacity 0.7s ease, transform 0.7s ease;
       will-change: opacity, transform;
     }

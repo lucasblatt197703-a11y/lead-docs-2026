@@ -8,6 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet" />
   <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -147,7 +152,7 @@
       color: var(--dark);
       margin-bottom: 52px;
       /* clip-path reveal */
-      clip-path: inset(0 100% 0 0);
+      
       transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
     }
 
@@ -220,8 +225,8 @@
       color: var(--accent);
       margin-bottom: 20px;
       /* stagger animation item 1 */
-      opacity: 0;
-      transform: translateY(40px);
+      opacity: 1;
+      
       transition: opacity 0.7s ease 0ms, transform 0.7s ease 0ms;
     }
 
@@ -236,8 +241,8 @@
       color: var(--accent);
       margin-bottom: 32px;
       /* stagger animation item 2 */
-      opacity: 0;
-      transform: translateY(40px);
+      opacity: 1;
+      
       transition: opacity 0.7s ease 120ms, transform 0.7s ease 120ms;
     }
 
@@ -249,8 +254,8 @@
       font-size: 17px;
       line-height: 1.8;
       color: var(--dark);
-      opacity: 0;
-      transform: translateY(40px);
+      opacity: 1;
+      
       transition: opacity 0.7s ease 240ms, transform 0.7s ease 240ms;
     }
 

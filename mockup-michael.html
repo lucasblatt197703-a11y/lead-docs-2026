@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -57,7 +62,7 @@
     font-size: 100px; line-height: 0.95;
     letter-spacing: 0.08em; color: #fff;
     text-shadow: 0 2px 16px rgba(0,0,0,0.35);
-    opacity: 0;
+    opacity: 1;
     letter-spacing: 0.4em;
     transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
   }
@@ -110,7 +115,7 @@
     position: relative;
     font-family: 'Lora', serif; font-weight: 600;
     font-size: 36px; color: var(--dark);
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }
   .section-label.is-visible { clip-path: inset(0 0% 0 0); }
@@ -125,7 +130,7 @@
   }
   .gallery-pair {
     display: grid; gap: 10px; margin-bottom: 10px;
-    opacity: 0; transform: translateY(40px);
+    opacity: 1; 
     transition: opacity 0.9s ease, transform 0.9s ease;
     will-change: transform, opacity;
   }
@@ -135,7 +140,7 @@
   .gallery-item { position: relative; overflow: hidden; }
   .gallery-item img {
     width: 100%; display: block;
-    clip-path: inset(100% 0 0 0);
+    
     transition: clip-path 0.9s ease-out;
     will-change: clip-path;
     loading: lazy;
@@ -145,7 +150,7 @@
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 20px 16px 14px;
     background: linear-gradient(to top, rgba(28,20,16,0.75) 0%, transparent 100%);
-    opacity: 0; transform: translateY(20px);
+    opacity: 1; 
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
   .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
@@ -169,7 +174,7 @@
   }
   .about-portrait-wrap {
     position: relative; padding-right: 0;
-    opacity: 0; transform: translateX(-30px);
+    opacity: 1; transform: translateX(-30px);
     transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
     will-change: transform, opacity;
   }
@@ -184,7 +189,7 @@
   }
   .about-text {
     padding-left: 60px;
-    opacity: 0; transform: translateX(20px);
+    opacity: 1; transform: translateX(20px);
     transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
     will-change: transform, opacity;
   }
@@ -210,7 +215,7 @@
   #cta {
     background: var(--dark2); padding: 160px 60px;
     text-align: center;
-    opacity: 0; transform: translateY(30px);
+    opacity: 1; 
     transition: opacity 0.8s ease, transform 0.8s ease;
     will-change: transform, opacity;
   }
@@ -241,7 +246,7 @@
   .contact-header {
     position: relative; margin-bottom: 50px;
     display: inline-block;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
     font-family: 'Lora', serif; font-weight: 600; font-size: 40px;
   }

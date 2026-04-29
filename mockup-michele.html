@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --dark: #1A1008;
@@ -41,7 +46,7 @@
   .hero-bg img {
     position: absolute; inset: 0;
     width: 100%; height: 100%; object-fit: cover;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 2s ease-in-out;
     will-change: opacity;
   }
@@ -55,10 +60,10 @@
     display: flex; justify-content: space-between; align-items: flex-end;
   }
   .hero-title-group {}
-  .hero-label { font-family: 'Libre Baskerville', serif; font-size: 11px; font-style: italic; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s 0.2s, transform 0.8s 0.2s; }
-  .hero-name { font-family: 'IM Fell English', serif; font-size: clamp(48px, 6vw, 80px); font-style: italic; color: var(--gold); line-height: 1.0; letter-spacing: 0.04em; opacity: 0; transform: translateX(-40px); transition: opacity 1s 0.3s, transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s; }
-  .hero-sub { font-family: 'Libre Baskerville', serif; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--parchment); opacity: 0; margin-top: 12px; transition: opacity 0.8s 0.8s; }
-  .hero-stats { text-align: right; opacity: 0; transform: translateY(20px); transition: opacity 0.8s 0.5s, transform 0.8s 0.5s; }
+  .hero-label { font-family: 'Libre Baskerville', serif; font-size: 11px; font-style: italic; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; opacity: 1;  transition: opacity 0.8s 0.2s, transform 0.8s 0.2s; }
+  .hero-name { font-family: 'IM Fell English', serif; font-size: clamp(48px, 6vw, 80px); font-style: italic; color: var(--gold); line-height: 1.0; letter-spacing: 0.04em; opacity: 1; transform: translateX(-40px); transition: opacity 1s 0.3s, transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s; }
+  .hero-sub { font-family: 'Libre Baskerville', serif; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--parchment); opacity: 1; margin-top: 12px; transition: opacity 0.8s 0.8s; }
+  .hero-stats { text-align: right; opacity: 1;  transition: opacity 0.8s 0.5s, transform 0.8s 0.5s; }
   .hero-stats p { font-family: 'IM Fell English', serif; font-style: italic; font-size: 14px; color: var(--text-mid); line-height: 1.8; }
   .hero-stats strong { color: var(--gold); font-style: normal; }
 
@@ -76,20 +81,20 @@
 
   /* STATS */
   .stats-section { padding: 80px 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; border-bottom: 1px solid rgba(196,160,80,0.15); }
-  .stat-num { font-family: 'IM Fell English', serif; font-size: clamp(40px, 5vw, 64px); color: var(--gold); line-height: 1; opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+  .stat-num { font-family: 'IM Fell English', serif; font-size: clamp(40px, 5vw, 64px); color: var(--gold); line-height: 1; opacity: 1;  transition: opacity 0.8s, transform 0.8s; }
   .stat-label { font-family: 'Libre Baskerville', serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-mid); margin-top: 10px; }
   .stat.is-visible .stat-num { opacity: 1; transform: translateY(0); }
 
   /* SECTION HEADERS */
   .section-head { padding: 80px 56px 48px; display: flex; align-items: baseline; gap: 20px; }
   .section-num-label { font-family: 'IM Fell English', serif; font-style: italic; font-size: 48px; color: rgba(196,160,80,0.15); line-height: 1; }
-  .section-title { font-family: 'IM Fell English', serif; font-size: clamp(28px, 3.5vw, 44px); color: var(--parchment); font-style: italic; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .section-title { font-family: 'IM Fell English', serif; font-size: clamp(28px, 3.5vw, 44px); color: var(--parchment); font-style: italic;  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
   .section-title.is-visible { clip-path: inset(0 0% 0 0); }
 
   /* PORTRAITS GALLERY — 3-column masonry */
   .gallery-portraits { padding: 0 56px 80px; }
   .masonry-grid { columns: 3; column-gap: 12px; }
-  .masonry-item { break-inside: avoid; margin-bottom: 12px; overflow: hidden; opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+  .masonry-item { break-inside: avoid; margin-bottom: 12px; overflow: hidden; opacity: 1;  transition: opacity 0.7s, transform 0.7s; }
   .masonry-item.is-visible { opacity: 1; transform: translateY(0); }
   .masonry-item img { width: 100%; display: block; transition: transform 0.5s ease; }
   .masonry-item:hover img { transform: scale(1.03); }
@@ -97,7 +102,7 @@
   /* MURALS GALLERY — 2-column wide */
   .gallery-murals { padding: 0 56px 80px; }
   .mural-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .mural-item { overflow: hidden; opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+  .mural-item { overflow: hidden; opacity: 1;  transition: opacity 0.7s, transform 0.7s; }
   .mural-item.is-visible { opacity: 1; transform: translateY(0); }
   .mural-item img { width: 100%; height: 380px; object-fit: cover; display: block; transition: transform 0.5s ease; }
   .mural-item:hover img { transform: scale(1.02); }
@@ -106,13 +111,13 @@
   .commissions-section { padding: 80px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; background: rgba(196,160,80,0.05); border-top: 1px solid rgba(196,160,80,0.15); border-bottom: 1px solid rgba(196,160,80,0.15); }
   .comm-text {}
   .comm-text h3 { font-family: 'Libre Baskerville', serif; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
-  .comm-text h2 { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(28px, 3vw, 40px); color: var(--parchment); line-height: 1.3; margin-bottom: 32px; clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1); }
+  .comm-text h2 { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(28px, 3vw, 40px); color: var(--parchment); line-height: 1.3; margin-bottom: 32px;  transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1); }
   .comm-text h2.is-visible { clip-path: inset(0 0% 0 0); }
   .comm-types { list-style: none; }
-  .comm-types li { font-family: 'IM Fell English', serif; font-style: italic; font-size: 18px; color: var(--parchment); padding: 14px 0; border-bottom: 1px solid rgba(196,160,80,0.15); opacity: 0; transform: translateX(-20px); transition: opacity 0.6s, transform 0.6s; }
+  .comm-types li { font-family: 'IM Fell English', serif; font-style: italic; font-size: 18px; color: var(--parchment); padding: 14px 0; border-bottom: 1px solid rgba(196,160,80,0.15); opacity: 1; transform: translateX(-20px); transition: opacity 0.6s, transform 0.6s; }
   .comm-types li.is-visible { opacity: 1; transform: translateX(0); }
   .comm-types li span { color: var(--gold); margin-right: 12px; }
-  .comm-portrait { opacity: 0; transform: scale(0.97); transition: opacity 0.9s 0.2s, transform 0.9s 0.2s; }
+  .comm-portrait { opacity: 1; transform: scale(0.97); transition: opacity 0.9s 0.2s, transform 0.9s 0.2s; }
   .comm-portrait.is-visible { opacity: 1; transform: scale(1); }
   .comm-portrait img { width: 100%; height: 500px; object-fit: cover; }
 
@@ -120,11 +125,11 @@
   .about-section { padding: 100px 56px; display: grid; grid-template-columns: 2fr 1fr; gap: 80px; align-items: start; }
   .about-text {}
   .about-text h3 { font-family: 'Libre Baskerville', serif; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
-  .about-bio { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(16px, 1.8vw, 22px); color: var(--parchment); line-height: 1.7; margin-bottom: 28px; opacity: 0; transform: translateY(24px); transition: opacity 0.8s, transform 0.8s; }
+  .about-bio { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(16px, 1.8vw, 22px); color: var(--parchment); line-height: 1.7; margin-bottom: 28px; opacity: 1;  transition: opacity 0.8s, transform 0.8s; }
   .about-bio.is-visible { opacity: 1; transform: translateY(0); }
-  .about-detail { font-family: 'Libre Baskerville', serif; font-size: 14px; color: var(--text-mid); line-height: 1.85; opacity: 0; transform: translateY(24px); transition: opacity 0.8s 0.2s, transform 0.8s 0.2s; }
+  .about-detail { font-family: 'Libre Baskerville', serif; font-size: 14px; color: var(--text-mid); line-height: 1.85; opacity: 1;  transition: opacity 0.8s 0.2s, transform 0.8s 0.2s; }
   .about-detail.is-visible { opacity: 1; transform: translateY(0); }
-  .about-portrait-wrap { opacity: 0; transform: translateX(30px); transition: opacity 0.9s 0.3s, transform 0.9s 0.3s; }
+  .about-portrait-wrap { opacity: 1; transform: translateX(30px); transition: opacity 0.9s 0.3s, transform 0.9s 0.3s; }
   .about-portrait-wrap.is-visible { opacity: 1; transform: translateX(0); }
   .about-portrait-wrap img { width: 100%; height: 460px; object-fit: cover; }
   .about-divider { width: 40px; height: 1px; background: var(--gold); margin: 28px 0; }

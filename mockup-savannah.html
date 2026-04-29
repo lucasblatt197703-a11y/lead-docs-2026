@@ -7,6 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{--bg:#FDFAF7;--text:#2C1A10;--rose:#D4A0A0;--tan:#C9B8A8;--light:#F5EEE8;--mid:#EDE3DC;}
 html{scroll-behavior:smooth;}
@@ -23,11 +28,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 /* HERO — CENTERED EDITORIAL (name top, full image below, tagline below) */
 #hero{padding-top:88px;background:var(--bg);}
 .hero-top{padding:72px 56px 56px;text-align:center;}
-.hero-eyebrow{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
+.hero-eyebrow{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;opacity: 1;transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
 .hero-eyebrow.visible{opacity:1;transform:translateY(0);}
-.hero-name{font-family:'Lora',serif;font-weight:600;font-size:80px;letter-spacing:.06em;color:var(--text);line-height:1;clip-path:inset(0 100% 0 0);transition:clip-path .9s cubic-bezier(.76,0,.24,1) .1s;will-change:clip-path;}
+.hero-name{font-family:'Lora',serif;font-weight:600;font-size:80px;letter-spacing:.06em;color:var(--text);line-height:1;transition:clip-path .9s cubic-bezier(.76,0,.24,1) .1s;will-change:clip-path;}
 .hero-name.visible{clip-path:inset(0 0% 0 0);}
-.hero-img-wrap{position:relative;overflow:hidden;transform:translateY(40px);opacity:0;transition:transform .9s ease .2s,opacity .9s ease .2s;will-change:transform,opacity;}
+.hero-img-wrap{position:relative;overflow:hidden;opacity: 1;transition:transform .9s ease .2s,opacity .9s ease .2s;will-change:transform,opacity;}
 .hero-img-wrap.visible{transform:translateY(0);opacity:1;}
 .hero-img-wrap img{width:100%;height:65vh;object-fit:cover;object-position:center 35%;display:block;}
 .hero-tagline{padding:32px 56px 0;text-align:center;}
@@ -35,10 +40,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 
 /* SERVICES */
 #services{padding:100px 56px;background:var(--light);}
-.services-heading{font-family:'Lora',serif;font-weight:500;font-size:36px;text-align:center;color:var(--text);margin-bottom:56px;clip-path:inset(0 100% 0 0);transition:clip-path .8s cubic-bezier(.76,0,.24,1);will-change:clip-path;}
+.services-heading{font-family:'Lora',serif;font-weight:500;font-size:36px;text-align:center;color:var(--text);margin-bottom:56px;transition:clip-path .8s cubic-bezier(.76,0,.24,1);will-change:clip-path;}
 .services-heading.visible{clip-path:inset(0 0% 0 0);}
 .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
-.service-card{background:var(--bg);padding:40px 32px;border:1px solid rgba(212,160,160,.2);text-align:center;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
+.service-card{background:var(--bg);padding:40px 32px;border:1px solid rgba(212,160,160,.2);text-align:center;opacity: 1;transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
 .service-card.visible{opacity:1;transform:translateY(0);}
 .service-icon{font-family:'Lora',serif;font-style:italic;font-size:28px;color:var(--rose);margin-bottom:16px;display:block;}
 .service-name{font-family:'Lora',serif;font-weight:500;font-size:18px;color:var(--text);margin-bottom:12px;}
@@ -51,7 +56,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .gallery-heading{font-family:'Lora',serif;font-weight:500;font-size:36px;color:var(--text);}
 .gallery-sub{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(44,26,16,.4);}
 .tight-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
-.tight-img{overflow:hidden;aspect-ratio:1;clip-path:inset(100% 0 0 0);transition:clip-path .8s ease-out;will-change:clip-path;}
+.tight-img{overflow:hidden;aspect-ratio:1;transition:clip-path .8s ease-out;will-change:clip-path;}
 .tight-img.visible{clip-path:inset(0 0 0 0);}
 .tight-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
 .tight-img:hover img{transform:scale(1.04);}
@@ -59,10 +64,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 /* ABOUT — OFFSET OVERLAP */
 #about{padding:140px 56px;background:var(--light);}
 .about-wrap{position:relative;max-width:1100px;margin:0 auto;}
-.about-portrait-wrap{position:relative;width:50%;opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease;will-change:transform,opacity;}
+.about-portrait-wrap{position:relative;width:50%;opacity: 1;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease;will-change:transform,opacity;}
 .about-portrait-wrap.visible{opacity:1;transform:translateX(0);}
 .about-portrait-wrap img{width:100%;height:560px;object-fit:cover;display:block;object-position:center top;}
-.about-text-overlap{position:absolute;right:0;bottom:-60px;width:52%;background:var(--bg);padding:52px 48px;border:1px solid rgba(212,160,160,.2);opacity:0;transform:translateY(30px);transition:opacity .8s ease .15s,transform .8s ease .15s;will-change:transform,opacity;}
+.about-text-overlap{position:absolute;right:0;bottom:-60px;width:52%;background:var(--bg);padding:52px 48px;border:1px solid rgba(212,160,160,.2);opacity: 1;transition:opacity .8s ease .15s,transform .8s ease .15s;will-change:transform,opacity;}
 .about-text-overlap.visible{opacity:1;transform:translateY(0);}
 .about-eyebrow{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;}
 .about-name{font-family:'Lora',serif;font-weight:600;font-size:32px;color:var(--text);margin-bottom:20px;}
@@ -74,7 +79,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 /* STATS */
 #stats{padding:100px 56px;background:var(--mid);margin-top:100px;}
 .stats-inner{display:flex;justify-content:center;gap:80px;}
-.stat-block{text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
+.stat-block{text-align:center;opacity: 1;transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
 .stat-block.visible{opacity:1;transform:translateY(0);}
 .stat-n{font-family:'Lora',serif;font-size:56px;font-weight:500;color:var(--rose);line-height:1;}
 .stat-l{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(44,26,16,.45);margin-top:8px;}
@@ -83,7 +88,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 #testimonials{padding:120px 56px;background:var(--light);}
 .test-heading{font-family:'Lora',serif;font-style:italic;font-weight:400;font-size:36px;text-align:center;color:var(--text);margin-bottom:64px;}
 .test-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
-.test-card{background:var(--bg);padding:40px;border:1px solid rgba(212,160,160,.18);opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
+.test-card{background:var(--bg);padding:40px;border:1px solid rgba(212,160,160,.18);opacity: 1;transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
 .test-card.visible{opacity:1;transform:translateY(0);}
 .test-quote{font-family:'Lora',serif;font-style:italic;font-weight:400;font-size:17px;line-height:1.7;color:rgba(44,26,16,.75);margin-bottom:20px;}
 .test-author{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--rose);}

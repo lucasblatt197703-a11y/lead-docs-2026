@@ -8,6 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;400&display=swap" rel="stylesheet" />
   <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { scroll-behavior: smooth; }
@@ -114,7 +119,7 @@
     }
     .reveal-title span {
       display: inline-block;
-      clip-path: inset(0 100% 0 0);
+      
       transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
       will-change: clip-path;
     }
@@ -169,7 +174,7 @@
       width: 100%;
       display: block;
       object-fit: cover;
-      clip-path: inset(100% 0 0 0);
+      
       transition: clip-path 0.9s ease-out;
       will-change: clip-path;
     }
@@ -189,8 +194,8 @@
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      transform: translateY(20px);
-      opacity: 0;
+      
+      opacity: 1;
       transition: opacity 0.3s, transform 0.3s;
     }
     figure:hover figcaption {
@@ -287,8 +292,8 @@
 
     /* ─── STAGGERED FADE+RISE ─── */
     .fade-rise {
-      opacity: 0;
-      transform: translateY(40px);
+      opacity: 1;
+      
       transition: opacity 0.7s ease, transform 0.7s ease;
       will-change: opacity, transform;
     }

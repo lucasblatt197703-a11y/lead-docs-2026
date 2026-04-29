@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -203,7 +208,7 @@
     letter-spacing: 0.15em;
     color: var(--text);
     text-transform: uppercase;
-    clip-path: inset(0 100% 0 0);
+    
     will-change: clip-path;
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }
@@ -220,7 +225,7 @@
     overflow: hidden;
     aspect-ratio: 4/3;
     background: #111;
-    clip-path: inset(100% 0 0 0);
+    
     will-change: clip-path;
     transition: clip-path 0.9s ease-out;
   }
@@ -242,8 +247,8 @@
     right: 0;
     padding: 32px 20px 20px;
     background: linear-gradient(to top, rgba(28,26,23,0.9) 0%, transparent 100%);
-    transform: translateY(20px);
-    opacity: 0;
+    
+    opacity: 1;
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
   .gallery-item:hover .gallery-caption {
@@ -287,8 +292,8 @@
     aspect-ratio: 4/5;
     object-fit: cover;
     display: block;
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 1;
+    
     will-change: opacity, transform;
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
@@ -306,8 +311,8 @@
     color: var(--mid);
     margin-bottom: 32px;
     display: block;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     will-change: opacity, transform;
     transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
   }
@@ -323,8 +328,8 @@
     color: var(--accent);
     line-height: 1.4;
     margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     will-change: opacity, transform;
     transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
   }
@@ -339,8 +344,8 @@
     line-height: 1.8;
     color: var(--bg);
     margin-bottom: 32px;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     will-change: opacity, transform;
     transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
   }
@@ -355,8 +360,8 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--mid);
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    
     will-change: opacity, transform;
     transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
   }
@@ -394,7 +399,7 @@
     color: var(--text);
     letter-spacing: 0.06em;
     margin-bottom: 24px;
-    clip-path: inset(0 100% 0 0);
+    
     will-change: clip-path;
     transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
   }
@@ -407,8 +412,8 @@
     text-transform: uppercase;
     color: rgba(240,235,225,0.7);
     margin-bottom: 56px;
-    opacity: 0;
-    transform: translateY(16px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
   }
   .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
@@ -459,7 +464,7 @@
     letter-spacing: 0.12em;
     color: var(--text);
     margin-bottom: 40px;
-    clip-path: inset(0 100% 0 0);
+    
     will-change: clip-path;
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   }

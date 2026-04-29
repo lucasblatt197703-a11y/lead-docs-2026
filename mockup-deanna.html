@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;1,400;1,600&family=Karla:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #F4EFE8;
@@ -43,38 +48,38 @@
     display: inline-block; font-family: 'Karla', sans-serif; font-size: 10px; font-weight: 400;
     letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent);
     border: 1px solid var(--accent); padding: 6px 16px; margin-bottom: 40px; width: fit-content;
-    opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease;
+    opacity: 1;  transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .hero-badge.in { opacity: 1; transform: translateY(0); }
   .hero-name {
     font-family: 'Bodoni Moda', serif; font-size: clamp(42px, 5vw, 74px); font-weight: 600;
     line-height: 1.0; letter-spacing: 0.02em; color: var(--text); margin-bottom: 24px;
-    opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease 0.1s, transform 0.9s ease 0.1s;
+    opacity: 1;  transition: opacity 0.9s ease 0.1s, transform 0.9s ease 0.1s;
   }
   .hero-name.in { opacity: 1; transform: translateY(0); }
   .hero-divider {
     width: 48px; height: 1px; background: var(--accent); margin-bottom: 24px;
-    opacity: 0; transform: scaleX(0); transform-origin: left;
+    opacity: 1; transform: scaleX(0); transform-origin: left;
     transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
   }
   .hero-divider.in { opacity: 1; transform: scaleX(1); }
   .hero-specialty {
     font-family: 'Bodoni Moda', serif; font-size: 16px; font-style: italic; font-weight: 400;
     color: var(--mid); letter-spacing: 0.04em; margin-bottom: 16px;
-    opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+    opacity: 1;  transition: opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
   }
   .hero-specialty.in { opacity: 1; transform: translateY(0); }
   .hero-location {
     font-family: 'Karla', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.2em;
     text-transform: uppercase; color: var(--secondary); margin-bottom: 48px;
-    opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+    opacity: 1;  transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
   }
   .hero-location.in { opacity: 1; transform: translateY(0); }
   .hero-cta {
     display: inline-block; font-family: 'Karla', sans-serif; font-size: 12px; font-weight: 400;
     letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: var(--accent);
     padding: 14px 32px; text-decoration: none; width: fit-content;
-    opacity: 0; transform: translateY(16px);
+    opacity: 1; 
     transition: opacity 0.7s ease 0.45s, transform 0.7s ease 0.45s, background 0.3s;
   }
   .hero-cta.in { opacity: 1; transform: translateY(0); }
@@ -85,7 +90,7 @@
 
   /* SECTION HELPERS */
   .section-number { font-family: 'Karla', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 14px; }
-  .section-title { font-family: 'Bodoni Moda', serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 600; line-height: 1.1; color: var(--text); clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
+  .section-title { font-family: 'Bodoni Moda', serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 600; line-height: 1.1; color: var(--text);  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1); }
   .section-title.visible { clip-path: inset(0 0% 0 0); }
 
   /* STATS */
@@ -94,7 +99,7 @@
     display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 40px;
     border-top: 1px solid rgba(139,69,19,0.1); border-bottom: 1px solid rgba(139,69,19,0.1);
   }
-  .stat-item { text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .stat-item { text-align: center; opacity: 1;  transition: opacity 0.7s ease, transform 0.7s ease; }
   .stat-item.visible { opacity: 1; transform: translateY(0); }
   .stat-item:nth-child(2) { transition-delay: 0.1s; } .stat-item:nth-child(3) { transition-delay: 0.2s; } .stat-item:nth-child(4) { transition-delay: 0.3s; }
   .stat-number { font-family: 'Bodoni Moda', serif; font-size: clamp(44px, 5vw, 64px); font-weight: 600; color: var(--accent); line-height: 1; display: block; }
@@ -104,14 +109,14 @@
   .gallery-section { padding: 120px 80px; background: var(--bg); }
   .gallery-header { margin-bottom: 70px; }
   .gallery-masonry { columns: 3; column-gap: 10px; }
-  .gallery-card { break-inside: avoid; margin-bottom: 10px; position: relative; overflow: hidden; opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .gallery-card { break-inside: avoid; margin-bottom: 10px; position: relative; overflow: hidden; opacity: 1;  transition: opacity 0.8s ease, transform 0.8s ease; }
   .gallery-card.visible { opacity: 1; transform: translateY(0); }
   .gallery-card img { width: 100%; display: block; }
   .gallery-card-border { position: absolute; inset: 0; border: 1px solid transparent; transition: border-color 0.3s ease; pointer-events: none; }
   .gallery-card:hover .gallery-card-border { border-color: var(--accent); }
   .gallery-card-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 14px; background: rgba(28,18,9,0); transition: background 0.3s; }
   .gallery-card:hover .gallery-card-overlay { background: rgba(28,18,9,0.35); }
-  .gallery-card-title { font-family: 'Bodoni Moda', serif; font-size: 13px; font-style: italic; color: #fff; opacity: 0; transition: opacity 0.3s; }
+  .gallery-card-title { font-family: 'Bodoni Moda', serif; font-size: 13px; font-style: italic; color: #fff; opacity: 1; transition: opacity 0.3s; }
   .gallery-card:hover .gallery-card-title { opacity: 1; }
 
   /* ABOUT */
@@ -119,20 +124,20 @@
   .about-pull-quote {
     font-family: 'Bodoni Moda', serif; font-size: clamp(20px, 2.8vw, 30px); font-style: italic;
     font-weight: 400; color: var(--accent); line-height: 1.5; max-width: 680px; margin: 0 auto 80px; text-align: center;
-    opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease;
+    opacity: 1;  transition: opacity 0.9s ease, transform 0.9s ease;
   }
   .about-pull-quote.visible { opacity: 1; transform: translateY(0); }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-  .about-portrait { width: 100%; display: block; object-fit: cover; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .about-portrait { width: 100%; display: block; object-fit: cover; opacity: 1;  transition: opacity 0.9s ease, transform 0.9s ease; }
   .about-portrait.visible { opacity: 1; transform: translateY(0); }
-  .about-text p { font-size: 16px; line-height: 1.85; color: rgba(28,18,9,0.73); margin-bottom: 22px; opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .about-text p { font-size: 16px; line-height: 1.85; color: rgba(28,18,9,0.73); margin-bottom: 22px; opacity: 1;  transition: opacity 0.8s ease, transform 0.8s ease; }
   .about-text p.visible { opacity: 1; transform: translateY(0); }
   .about-text p:nth-child(2) { transition-delay: 0.12s; } .about-text p:nth-child(3) { transition-delay: 0.24s; }
 
   /* EXHIBITIONS */
   .exhibitions-section { padding: 100px 80px; background: var(--bg); }
   .exhibitions-list { margin-top: 48px; border-top: 1px solid rgba(139,69,19,0.15); }
-  .exhibition-item { display: flex; align-items: baseline; gap: 32px; padding: 22px 0; border-bottom: 1px solid rgba(139,69,19,0.1); opacity: 0; transform: translateX(-16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .exhibition-item { display: flex; align-items: baseline; gap: 32px; padding: 22px 0; border-bottom: 1px solid rgba(139,69,19,0.1); opacity: 1; transform: translateX(-16px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .exhibition-item.visible { opacity: 1; transform: translateX(0); }
   .exhibition-item:nth-child(2) { transition-delay: 0.07s; } .exhibition-item:nth-child(3) { transition-delay: 0.14s; } .exhibition-item:nth-child(4) { transition-delay: 0.21s; } .exhibition-item:nth-child(5) { transition-delay: 0.28s; } .exhibition-item:nth-child(6) { transition-delay: 0.35s; }
   .exhibition-year { font-family: 'Bodoni Moda', serif; font-size: 13px; font-style: italic; color: var(--accent); min-width: 60px; }

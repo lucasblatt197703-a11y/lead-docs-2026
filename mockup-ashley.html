@@ -8,6 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
+  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
+        clip-path: none !important; transform: none !important; }
+  body { overflow-x: hidden; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -167,7 +172,7 @@
     opacity: 0.5;
     margin-bottom: 32px;
     display: block;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1);
   }
 
@@ -193,8 +198,8 @@
     break-inside: avoid;
     overflow: hidden;
     cursor: crosshair;
-    opacity: 0;
-    clip-path: inset(100% 0 0 0);
+    opacity: 1;
+    
     transition: clip-path 0.9s ease-out, opacity 0.4s ease;
   }
 
@@ -268,8 +273,8 @@
     line-height: 1.4;
     color: var(--text);
     margin-bottom: 32px;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
 
@@ -286,8 +291,8 @@
     color: var(--text);
     opacity: 0.75;
     margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
   }
 
@@ -308,8 +313,8 @@
     border-bottom: 1px solid var(--accent);
     padding-bottom: 4px;
     transition: color 0.2s, border-color 0.2s;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s, color 0.2s, border-color 0.2s;
   }
 
@@ -339,8 +344,8 @@
 
   .stat-block {
     text-align: center;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
@@ -432,7 +437,7 @@
     font-weight: 300;
     color: #F0EBE1;
     line-height: 1.1;
-    clip-path: inset(0 100% 0 0);
+    
     transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
     margin-bottom: 16px;
   }
@@ -449,7 +454,7 @@
     text-transform: uppercase;
     color: var(--warm);
     margin-bottom: 40px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.7s ease 0.4s;
   }
 
@@ -470,7 +475,7 @@
     padding: 14px 44px;
     border-radius: 0;
     transition: background 0.25s ease, color 0.25s ease;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.7s ease 0.6s, background 0.25s ease, color 0.25s ease;
   }
 
