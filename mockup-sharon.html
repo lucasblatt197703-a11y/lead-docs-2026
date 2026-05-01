@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharon Schindelwig — Cherry Croft Oil Painting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ochre:    #C4892A;
+    --cream:    #F5EFE4;
+    --bark:     #3A2B1A;
+    --sage:     #7A8B6F;
+    --warm-mid: #8C6A3C;
+    --dust:     #E8DEC8;
+  }
+
+  html { scroll-behavior: smooth; background: var(--cream); }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: var(--bark);
+    overflow-x: hidden;
+    background: var(--cream);
+  }
+
+  /* ─── HERO ─────────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: var(--bark);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b9c360_a944baff7e194a8ca0f9dcbcc3264eae~mv2.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    will-change: transform;
+    transform-origin: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30,18,8,0.72) 0%, rgba(30,18,8,0.08) 55%, transparent 100%);
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 48px;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--ochre); }
+
+  .hero-content {
+    position: absolute;
+    bottom: 60px;
+    left: 64px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.2s ease, transform 0.8s 0.2s ease;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.92;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,239,228,0.75);
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s 0.7s ease, transform 0.9s 0.7s ease;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    right: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 1s 1.2s ease;
+  }
+
+  .hero-scroll span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.55);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--ochre), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.6; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* ─── MARQUEE ───────────────────────────────────────────────── */
+  .marquee-strip {
+    background: var(--bark);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 45s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,239,228,0.55);
+    margin-right: 48px;
+  }
+
+  .marquee-inner span.accent { color: var(--ochre); }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ────────────────────────────────────────────────── */
+  #stats {
+    padding: 100px 64px;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid rgba(58,43,26,0.1);
+  }
+
+  .stat-item {
+    padding: 0 40px;
+    border-left: 1px solid rgba(58,43,26,0.12);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item:first-child { border-left: none; padding-left: 0; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--bark);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* ─── SECTION SHARED ───────────────────────────────────────── */
+  .section-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--bark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  /* ─── GALLERY ─────────────────────────────────────────────── */
+  #gallery {
+    padding: 80px 48px 120px;
+    background: var(--cream);
+  }
+
+  .gallery-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+  }
+
+  .gallery-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--warm-mid);
+  }
+
+  .masonry-grid {
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .masonry-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+    loading: lazy;
+  }
+
+  .masonry-item:hover img { transform: scale(1.03); }
+
+  .masonry-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 16px 14px;
+    background: linear-gradient(to top, rgba(30,18,8,0.75), transparent);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .masonry-item:hover .masonry-caption { opacity: 1; }
+
+  .masonry-caption span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── FEATURED PIECE ────────────────────────────────────────── */
+  #featured {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    min-height: 620px;
+    background: var(--bark);
+  }
+
+  .featured-image {
+    overflow: hidden;
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1s ease;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out, transform 1s ease;
+  }
+
+  #featured:hover .featured-image img { transform: scale(1.04); }
+
+  .featured-text {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .featured-label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 16px;
+  }
+
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .featured-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(245,239,228,0.7);
+    max-width: 380px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.3s ease, transform 0.8s 0.3s ease;
+  }
+
+  .featured-price {
+    margin-top: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ochre);
+    opacity: 0;
+    transition: opacity 0.8s 0.5s ease;
+  }
+
+  /* ─── SHOW SCHEDULE ─────────────────────────────────────────── */
+  #shows {
+    padding: 100px 64px;
+    background: var(--dust);
+  }
+
+  .shows-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 80px;
+    margin-top: 56px;
+  }
+
+  .show-item {
+    display: flex;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(58,43,26,0.12);
+    gap: 24px;
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .show-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ochre);
+    min-width: 130px;
+    flex-shrink: 0;
+  }
+
+  .show-name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--bark);
+  }
+
+  /* ─── ABOUT ─────────────────────────────────────────────────── */
+  #about {
+    display: grid;
+    grid-template-columns: 48% 52%;
+    min-height: 560px;
+    background: var(--cream);
+  }
+
+  .about-image {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .about-text {
+    padding: 96px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Vertical accent line */
+  .about-text::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 80px; bottom: 80px;
+    width: 1px;
+    background: var(--ochre);
+    opacity: 0.4;
+  }
+
+  .about-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--bark);
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s 0.3s ease, transform 0.9s 0.3s ease;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--warm-mid);
+    line-height: 1.5;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(58,43,26,0.12);
+    opacity: 0;
+    transition: opacity 0.9s 0.5s ease;
+  }
+
+  /* ─── COMMISSIONS CTA ───────────────────────────────────────── */
+  #cta {
+    padding: 120px 64px;
+    background: var(--bark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background name watermark */
+  #cta::before {
+    content: 'CHERRY CROFT';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18vw;
+    font-weight: 600;
+    color: rgba(255,255,255,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+
+  .cta-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 16px;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(245,239,228,0.65);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 48px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s 0.4s ease, transform 0.8s 0.4s ease;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid var(--ochre);
+    color: var(--ochre);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transition: opacity 0.8s 0.6s ease, background 0.3s, color 0.3s;
+  }
+
+  .cta-btn:hover { background: var(--ochre); color: var(--bark); }
+
+  /* ─── CONTACT ───────────────────────────────────────────────── */
+  #contact {
+    padding: 100px 64px;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left .section-title { margin-bottom: 24px; }
+
+  .contact-info {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--warm-mid);
+  }
+
+  .contact-info a {
+    color: var(--bark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ochre);
+    transition: color 0.3s;
+  }
+
+  .contact-info a:hover { color: var(--ochre); }
+
+  .contact-right {
+    padding-top: 8px;
+  }
+
+  .shows-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .show-mini {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(58,43,26,0.1);
+    font-size: 14px;
+    color: var(--bark);
+    font-weight: 300;
+    display: flex;
+    gap: 20px;
+  }
+
+  .show-mini-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--ochre);
+    min-width: 80px;
+    font-size: 13px;
+  }
+
+  /* ─── FOOTER ────────────────────────────────────────────────── */
+  footer {
+    background: var(--bark);
+    padding: 36px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: rgba(245,239,228,0.6);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(245,239,228,0.35);
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(245,239,228,0.25);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── RESPONSIVE ────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; bottom: 40px; }
+    #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; }
+    .stat-item { padding: 20px 16px; }
+    #gallery { padding: 60px 16px 80px; }
+    .masonry-grid { columns: 2; }
+    #featured { grid-template-columns: 1fr; }
+    .featured-text { padding: 48px 24px; }
+    #shows { padding: 60px 24px; }
+    .shows-grid { grid-template-columns: 1fr; gap: 0; }
+    #about { grid-template-columns: 1fr; }
+    .about-image { height: 340px; }
+    .about-text { padding: 48px 24px; }
+    #cta { padding: 80px 24px; }
+    #contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 48px; }
+    .masonry-grid { columns: 1; }
+    #stats { grid-template-columns: 1fr 1fr; }
+    .stat-number { font-size: 52px; }
+  }
+
+  /* ─── IS-VISIBLE state ──────────────────────────────────────── */
+  .is-visible .section-title,
+  .section-title.is-visible { clip-path: inset(0 0% 0 0) !important; }
+
+  .is-visible .featured-title,
+  .featured-title.is-visible { clip-path: inset(0 0% 0 0) !important; }
+
+  .is-visible .cta-heading,
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0) !important; }
+
+  .is-visible .hero-name,
+  .hero-name.is-visible { clip-path: inset(0 0% 0 0) !important; }
+
+  .is-visible .about-image img,
+  .about-image.is-visible img { clip-path: inset(0 0% 0 0) !important; }
+
+  .is-visible .featured-image img,
+  .featured-image.is-visible img { clip-path: inset(0% 0 0 0) !important; }
+
+  .masonry-item.is-visible { clip-path: inset(0 0 0% 0) !important; }
+
+  .is-visible .hero-eyebrow,
+  .hero-eyebrow.is-visible { opacity: 1 !important; transform: none !important; }
+
+  .is-visible .hero-tagline,
+  .hero-tagline.is-visible { opacity: 1 !important; transform: none !important; }
+
+  .hero-scroll.is-visible { opacity: 1 !important; }
+
+  .stat-item.is-visible { opacity: 1 !important; transform: none !important; }
+
+  .is-visible .featured-body,
+  .featured-body.is-visible { opacity: 1 !important; transform: none !important; }
+
+  .is-visible .featured-price,
+  .featured-price.is-visible { opacity: 1 !important; }
+
+  .is-visible .about-body,
+  .about-body.is-visible { opacity: 1 !important; transform: none !important; }
+
+  .is-visible .about-quote,
+  .about-quote.is-visible { opacity: 1 !important; }
+
+  .is-visible .cta-sub,
+  .cta-sub.is-visible { opacity: 1 !important; transform: none !important; }
+
+  .is-visible .cta-btn,
+  .cta-btn.is-visible { opacity: 1 !important; }
+
+  .show-item.is-visible { opacity: 1 !important; transform: none !important; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Cherry Croft</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Paintings</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Oil Paintings · Rural Florida</p>
+    <h1 class="hero-name">Sharon<br>Schindelwig</h1>
+    <p class="hero-tagline">Preserving the landscapes that time is about to erase</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Hand-Painted Oil on Canvas</span>
+    <span class="accent">·</span>
+    <span>Rural Florida Landscapes</span>
+    <span class="accent">·</span>
+    <span>One-of-a-Kind Originals</span>
+    <span class="accent">·</span>
+    <span>Central Florida Art Festivals</span>
+    <span class="accent">·</span>
+    <span>Available for Commission</span>
+    <span class="accent">·</span>
+    <span>Hand-Painted Oil on Canvas</span>
+    <span class="accent">·</span>
+    <span>Rural Florida Landscapes</span>
+    <span class="accent">·</span>
+    <span>One-of-a-Kind Originals</span>
+    <span class="accent">·</span>
+    <span>Central Florida Art Festivals</span>
+    <span class="accent">·</span>
+    <span>Available for Commission</span>
+    <span class="accent">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">20+</span>
+    <span class="stat-label">Years Painting</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">100+</span>
+    <span class="stat-label">Original Works</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">12</span>
+    <span class="stat-label">Art Festivals · 2026</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">$40</span>
+    <span class="stat-label">Prints Starting From</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <span class="section-eyebrow">01 · The Work</span>
+      <h2 class="section-title">Landscapes &amp;<br>Buildings</h2>
+    </div>
+    <span class="gallery-count">Oil on canvas — originals &amp; prints available</span>
+  </div>
+
+  <div class="masonry-grid">
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_9b7a377ee83e42edadb5eb60df0caca6~mv2.jpg" alt="Rural Florida landscape oil painting" loading="lazy">
+      <div class="masonry-caption"><span>Peaceful Afternoon</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_080fa080695f4a87a63e701cb195a9d2~mv2.jpg" alt="Country road oil painting Florida" loading="lazy">
+      <div class="masonry-caption"><span>Summer in the Field</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_f7cf3a3a2943490d95fcaec7e7c78590~mv2.jpg" alt="Rural building Florida oil painting" loading="lazy">
+      <div class="masonry-caption"><span>Stones of August</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_60959a5e96164ed7a66c14ee202c7c56~mv2.jpg" alt="Florida countryside oil painting" loading="lazy">
+      <div class="masonry-caption"><span>Sunlight and Lichens</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_2f151de5e8e04b7b9b7a53ceac79f821~mv2.jpg" alt="Florida rural landscape painting" loading="lazy">
+      <div class="masonry-caption"><span>Huntington Corner</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_4a3382ee60eb4baa95b247f1612200b6~mv2.jpg" alt="Country intersection oil painting" loading="lazy">
+      <div class="masonry-caption"><span>Sanford Intersection</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_dcb9d9d020bb4bb79dbba7ed43bbd807~mv2.jpg" alt="Rural road Florida oil painting" loading="lazy">
+      <div class="masonry-caption"><span>Bevans Road</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_69cb3196f91f471f83893071a1144a8e~mv2.jpg" alt="Long field view oil painting" loading="lazy">
+      <div class="masonry-caption"><span>Long Field</span></div>
+    </div>
+    <div class="masonry-item">
+      <img src="https://static.wixstatic.com/media/b9c360_7241fb255b9640df9971350f84b6893e~mv2.jpg" alt="Florida countryside building painting" loading="lazy">
+      <div class="masonry-caption"><span>County Road 519</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PIECE -->
+<section id="featured">
+  <div class="featured-image">
+    <img src="https://static.wixstatic.com/media/b9c360_9fa4470e67eb47c78eb30437b90ed9f4~mv2.jpg" alt="Featured oil painting — Parrish Farm" loading="lazy">
+  </div>
+  <div class="featured-text">
+    <span class="featured-label">02 · Featured Work</span>
+    <h2 class="featured-title">Originals<br>That Won't<br>Come Back</h2>
+    <p class="featured-body">Each canvas captures a specific field, a particular morning light, a bend in a road that may soon be replaced by a subdivision. Sharon Schindelwig works en plein air and in studio to document the vanishing rural character of Central Florida — one painting at a time.</p>
+    <p class="featured-price">From $200 · Originals &amp; Prints</p>
+  </div>
+</section>
+
+<!-- SHOW SCHEDULE -->
+<section id="shows">
+  <div>
+    <span class="section-eyebrow">03 · Find the Work</span>
+    <h2 class="section-title">2026 Show<br>Schedule</h2>
+  </div>
+  <div class="shows-grid">
+    <div class="show-item">
+      <span class="show-date">Feb 14–15</span>
+      <span class="show-name">St Augustine Beach Craft Fest, FL</span>
+    </div>
+    <div class="show-item">
+      <span class="show-date">Feb 21–22</span>
+      <span class="show-name">Art Fiesta, New Smyrna Beach, FL</span>
+    </div>
+    <div class="show-item">
+      <span class="show-date">Mar 7–8</span>
+      <span class="show-name">Bartow Art Festival, FL</span>
+    </div>
+    <div class="show-item">
+      <span class="show-date">Mar 14–15</span>
+      <span class="show-name">St Augustine Beach Craft Fest, FL</span>
+    </div>
+    <div class="show-item">
+      <span class="show-date">Mar 21–22</span>
+      <span class="show-name">Winter Haven Art Festival, FL</span>
+    </div>
+    <div class="show-item">
+      <span class="show-date">Mar 28–29</span>
+      <span class="show-name">Spring Art Festival, DeLand, FL</span>
+    </div>
+    <div class="show-item">
+      <span class="show-date">Apr 11–12</span>
+      <span class="show-name">Cedar Key Art Festival, FL</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image">
+    <img src="https://static.wixstatic.com/media/b9c360_acebf7a3ef4c4e95b83691123d7e32c5~mv2.jpg" alt="Sharon Schindelwig oil painting" loading="lazy">
+  </div>
+  <div class="about-text">
+    <span class="section-eyebrow">04 · The Artist</span>
+    <h2 class="section-title">Preserving<br>Rural Florida</h2>
+    <p class="about-body">Working primarily in oil on canvas, Sharon Schindelwig documents the country farms, old roadways, and open fields of Central and Eastern Florida — the landscapes that construction and development are steadily erasing.<br><br>Based in the Crestview area, she exhibits throughout Florida's art festival circuit, bringing her originals and prints directly to collectors who understand what's being lost.</p>
+    <p class="about-quote">"My art aims to preserve one beautiful day and one particular view that may soon be just a memory."</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-eyebrow">05 · Commission Your Piece</p>
+  <h2 class="cta-heading">Own a Piece<br>of What Was</h2>
+  <p class="cta-sub">Original paintings and archival prints available. Commissions accepted for specific locations and properties across Florida. Each work is one-of-a-kind.</p>
+  <a href="tel:3213629211" class="cta-btn">Call 321-362-9211</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <span class="section-eyebrow">06 · Get in Touch</span>
+    <h2 class="section-title">Inquiries &amp;<br>Purchases</h2>
+    <div class="contact-info" style="margin-top:24px;">
+      <p>Call or visit in person at a show<br>to purchase originals and prints.</p>
+      <br>
+      <p><a href="tel:3213629211">321-362-9211</a></p>
+      <br>
+      <p>Central Florida</p>
+    </div>
+  </div>
+  <div class="contact-right">
+    <span class="shows-label">Upcoming Shows</span>
+    <div class="show-mini">
+      <span class="show-mini-date">Mar 21–22</span>
+      <span>Winter Haven Art Festival, FL</span>
+    </div>
+    <div class="show-mini">
+      <span class="show-mini-date">Mar 28–29</span>
+      <span>Spring Art Festival, DeLand, FL</span>
+    </div>
+    <div class="show-mini">
+      <span class="show-mini-date">Apr 11–12</span>
+      <span>Cedar Key Art Festival, FL</span>
+    </div>
+    <div style="margin-top:32px; padding-top:32px; border-top: 1px solid rgba(58,43,26,0.1);">
+      <p style="font-size:13px; font-weight:300; color:var(--warm-mid); line-height:1.8;">
+        Prints: 8×11 from $40 · 24×36 from $240<br>
+        Originals: from $200<br>
+        Shipping available · Custom commissions welcome
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Cherry Croft Oil Painting</span>
+  <span class="footer-copy">© 2026 Sharon Schindelwig · Central Florida</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Force all elements visible immediately (fallback)
+  document.querySelectorAll('[class]').forEach(function(el) { el.classList.add('is-visible'); });
+
+  // Hero entrance animations
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.querySelector('.hero-name').classList.add('is-visible');
+    }, 100);
+    setTimeout(function() {
+      document.querySelector('.hero-eyebrow').classList.add('is-visible');
+      document.querySelector('.hero-tagline').classList.add('is-visible');
+      document.querySelector('.hero-scroll').classList.add('is-visible');
+    }, 300);
+  });
+
+  // Hero parallax
+  var heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', function() {
+    var sy = window.scrollY;
+    if (sy < window.innerHeight * 1.5) {
+      heroBg.style.transform = 'translateY(' + (sy * 0.38) + 'px)';
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  // Observe section titles
+  document.querySelectorAll('.section-title, .featured-title, .cta-heading').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Observe stat items with stagger
+  document.querySelectorAll('.stat-item').forEach(function(el, i) {
+    el.style.transitionDelay = (i * 0.12) + 's';
+    observer.observe(el);
+  });
+
+  // Observe gallery items with stagger
+  document.querySelectorAll('.masonry-item').forEach(function(el, i) {
+    el.style.transitionDelay = (i * 0.08) + 's';
+    observer.observe(el);
+  });
+
+  // Observe show items with stagger
+  document.querySelectorAll('.show-item').forEach(function(el, i) {
+    el.style.transitionDelay = (i * 0.1) + 's';
+    observer.observe(el);
+  });
+
+  // Observe about and featured images
+  document.querySelectorAll('.about-image, .featured-image').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Observe text elements
+  document.querySelectorAll('.featured-body, .featured-price, .about-body, .about-quote, .cta-sub, .cta-btn, .hero-eyebrow, .hero-tagline').forEach(function(el) {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
