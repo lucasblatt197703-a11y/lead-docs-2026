@@ -1181,12 +1181,9 @@
     }, { threshold: 0.05 });
 
     // Observe animated elements
+    // All elements already have is-visible from the querySelectorAll above — observer adds it when scrolled into view
     document.querySelectorAll('.section-title, .fade-rise, .img-reveal, .about-text p').forEach(el => {
-      // Remove pre-added is-visible for scroll elements that need animation
-      if (el.classList.contains('section-title') || el.classList.contains('fade-rise') || el.classList.contains('img-reveal')) {
-        el.classList.remove('is-visible');
-        observer.observe(el);
-      }
+      observer.observe(el);
     });
 
     // Hero parallax
