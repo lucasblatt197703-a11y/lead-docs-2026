@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arielle D'Ornellas — Orlando Photographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory: #F7F3EE;
+      --terracotta: #C4553A;
+      --sage: #8BA888;
+      --near-black: #111111;
+      --dark: #1A1A1A;
+      --mid-gray: #888;
+      --light-gray: #E8E3DC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ivory);
+      color: var(--near-black);
+      overflow-x: hidden;
+    }
+
+    img {
+      opacity: 1 !important;
+      clip-path: none !important;
+      transform: none !important;
+      max-width: 100% !important;
+      display: block;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      background: transparent;
+      mix-blend-mode: normal;
+      transition: background 0.3s ease;
+    }
+    nav.scrolled {
+      background: rgba(247,243,238,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-logo { color: var(--near-black); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav.scrolled .nav-links a { color: var(--mid-gray); }
+    .nav-links a:hover { color: var(--terracotta) !important; }
+
+    /* ─── HERO: ASYMMETRIC SPLIT ─── */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 45% 55%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      background: var(--near-black);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 64px 80px 64px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+    }
+    .hero-eyebrow.is-visible { opacity: 1; transform: none; }
+    .hero-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 80px;
+      font-weight: 800;
+      line-height: 0.9;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+    }
+    .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
+    .hero-name span { color: var(--terracotta); display: block; }
+    .hero-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.65);
+      max-width: 300px;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+    }
+    .hero-tagline.is-visible { opacity: 1; transform: none; }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--terracotta);
+      color: white;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      width: fit-content;
+      transition: background 0.2s ease, transform 0.2s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero-cta.is-visible { opacity: 1; transform: none; transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s, background 0.2s ease; }
+    .hero-cta:hover { background: #a8432a; transform: translateX(4px) !important; }
+    .hero-cta svg { transition: transform 0.2s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-right img.is-visible { transform: scale(1.0); }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.3);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%, 100% { transform: scaleY(1); opacity: 0.3; }
+      50% { transform: scaleY(0.5); opacity: 1; }
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      background: var(--near-black);
+      padding: 48px 0;
+      overflow: hidden;
+    }
+    .marquee-wrap {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-wrap span {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      padding: 0 32px;
+    }
+    .marquee-wrap span.accent { color: var(--terracotta); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── NUMBERS ─── */
+    #numbers {
+      background: var(--ivory);
+      padding: 100px 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item.is-visible { opacity: 1; transform: none; }
+    .stat-item:nth-child(2) { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) { transition-delay: 0.3s; }
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 80px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--near-black);
+      letter-spacing: -0.04em;
+    }
+    .stat-num span { color: var(--terracotta); }
+    .stat-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-top: 8px;
+    }
+
+    /* ─── SECTION LABELS ─── */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--terracotta);
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--near-black);
+      letter-spacing: -0.02em;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    /* ─── GALLERY: TIGHT GRID ─── */
+    #gallery {
+      padding: 80px 40px;
+      background: var(--ivory);
+    }
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      padding: 0 8px;
+    }
+    .gallery-intro {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--mid-gray);
+      max-width: 320px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+    .gallery-intro.is-visible { opacity: 1; transform: none; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      cursor: pointer;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+    .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+    .gallery-item:nth-child(4) { transition-delay: 0.15s; }
+    .gallery-item:nth-child(5) { transition-delay: 0.25s; }
+    .gallery-item:nth-child(6) { transition-delay: 0.35s; }
+    .gallery-item:nth-child(7) { transition-delay: 0.2s; }
+    .gallery-item:nth-child(8) { transition-delay: 0.3s; }
+    .gallery-item:nth-child(9) { transition-delay: 0.4s; }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(17,17,17,0.75));
+      padding: 40px 20px 20px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; transform: none; }
+    .gallery-overlay-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 0.02em;
+    }
+    .gallery-overlay-cat {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+    }
+
+    /* ─── FEATURED FAMILY SESSION ─── */
+    #featured {
+      background: var(--near-black);
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .featured-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .featured-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .featured-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px;
+    }
+    .featured-img-main {
+      grid-column: 1 / 3;
+      overflow: hidden;
+    }
+    .featured-img-main img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transform: scale(0.95);
+      transition: transform 0.6s ease;
+    }
+    .featured-img-main.is-visible img { transform: scale(1.0); }
+    .featured-img-small {
+      overflow: hidden;
+    }
+    .featured-img-small img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transform: scale(0.95);
+      transition: transform 0.6s ease 0.2s;
+    }
+    .featured-img-small.is-visible img { transform: scale(1.0); }
+    .featured-text { color: white; }
+    .featured-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 120px;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(255,255,255,0.05);
+      letter-spacing: -0.05em;
+      margin-bottom: -40px;
+    }
+    .featured-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .featured-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .featured-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+    .featured-desc.is-visible { opacity: 1; transform: none; }
+    .featured-link {
+      color: var(--terracotta);
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: gap 0.2s ease;
+    }
+    .featured-link:hover { gap: 18px; }
+    .featured-link::after { content: '→'; }
+
+    /* ─── WEDDING SECTION ─── */
+    #wedding {
+      padding: 120px 80px;
+      background: var(--ivory);
+    }
+    .wedding-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .wedding-header {
+      margin-bottom: 64px;
+    }
+    .wedding-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px;
+    }
+    .wedding-img {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .wedding-img.is-visible { clip-path: inset(0 0 0 0); }
+    .wedding-img:nth-child(2) { transition-delay: 0.15s; }
+    .wedding-img:nth-child(3) { transition-delay: 0.3s; }
+    .wedding-img:nth-child(4) { transition-delay: 0.1s; }
+    .wedding-img:nth-child(5) { transition-delay: 0.25s; }
+    .wedding-img-main {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+    .wedding-img-main img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+    .wedding-img img {
+      width: 100%;
+      height: 244px;
+      object-fit: cover;
+    }
+    .wedding-caption {
+      grid-column: 1 / 4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--light-gray);
+      margin-top: 24px;
+    }
+    .wedding-caption p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--mid-gray);
+      max-width: 480px;
+      line-height: 1.65;
+    }
+    .wedding-caption a {
+      color: var(--terracotta);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ─── PORTRAIT SECTION ─── */
+    #portraits {
+      padding: 0 80px 120px;
+      background: var(--ivory);
+    }
+    .portrait-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .portrait-header { margin-bottom: 48px; }
+    .portrait-scroll-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .portrait-item {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .portrait-item.is-visible { clip-path: inset(0 0 0 0); }
+    .portrait-item:nth-child(2) { transition-delay: 0.1s; }
+    .portrait-item:nth-child(3) { transition-delay: 0.2s; }
+    .portrait-item:nth-child(4) { transition-delay: 0.3s; }
+    .portrait-item img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 80px;
+      background: var(--light-gray);
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .about-portrait {
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.7s ease;
+    }
+    .about-portrait.is-visible { transform: scale(1.0); }
+    .about-portrait img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .about-portrait-label {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--terracotta);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+    }
+    .about-text {
+      padding-top: 48px;
+    }
+    .about-pull-quote {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--terracotta);
+      font-style: italic;
+      border-left: 3px solid var(--terracotta);
+      padding-left: 24px;
+      margin: 32px 0 40px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+    .about-pull-quote.is-visible { opacity: 1; transform: none; }
+    .about-bio {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #444;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+    }
+    .about-bio.is-visible { opacity: 1; transform: none; }
+    .about-bio p + p { margin-top: 20px; }
+    .about-credentials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.6s;
+    }
+    .about-credentials.is-visible { opacity: 1; }
+    .credential {
+      padding: 16px;
+      background: white;
+      border-left: 2px solid var(--sage);
+    }
+    .credential strong {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--near-black);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .credential span {
+      font-size: 12px;
+      color: var(--mid-gray);
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    #testimonial {
+      background: var(--near-black);
+      padding: 100px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Outfit', sans-serif;
+      font-size: 200px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.02);
+      white-space: nowrap;
+      letter-spacing: -0.05em;
+      user-select: none;
+    }
+    .testimonial-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .testimonial-quote-mark {
+      font-family: 'Outfit', sans-serif;
+      font-size: 80px;
+      color: var(--terracotta);
+      line-height: 0.5;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .testimonial-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: white;
+      font-style: italic;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .testimonial-text.is-visible { opacity: 1; transform: none; }
+    .testimonial-source {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      background: var(--terracotta);
+      padding: 120px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+    }
+    .cta-left {
+      flex: 1;
+    }
+    .cta-headline {
+      font-family: 'Outfit', sans-serif;
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1.0;
+      color: white;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-headline.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.8);
+      max-width: 420px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+    .cta-sub.is-visible { opacity: 1; transform: none; }
+    .cta-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.5s;
+    }
+    .cta-right.is-visible { opacity: 1; }
+    .btn-primary {
+      display: inline-block;
+      background: white;
+      color: var(--terracotta);
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 20px 44px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      text-align: center;
+    }
+    .btn-primary:hover { background: var(--near-black); color: white; transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 44px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+    /* ─── PACKAGES ─── */
+    #packages {
+      padding: 120px 80px;
+      background: var(--ivory);
+    }
+    .packages-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .packages-header { margin-bottom: 60px; }
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .package-card {
+      background: white;
+      padding: 48px 36px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .package-card.is-visible { opacity: 1; transform: none; }
+    .package-card:nth-child(2) { transition-delay: 0.15s; }
+    .package-card:nth-child(3) { transition-delay: 0.3s; }
+    .package-card.featured { background: var(--near-black); }
+    .package-type {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+    }
+    .package-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--near-black);
+      margin-bottom: 12px;
+    }
+    .package-card.featured .package-name { color: white; }
+    .package-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--mid-gray);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .package-card.featured .package-desc { color: rgba(255,255,255,0.55); }
+    .package-features {
+      list-style: none;
+      margin-bottom: 36px;
+    }
+    .package-features li {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #555;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .package-card.featured .package-features li { color: rgba(255,255,255,0.65); border-color: rgba(255,255,255,0.1); }
+    .package-features li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--terracotta);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .package-cta {
+      display: block;
+      text-align: center;
+      padding: 14px 24px;
+      border: 1px solid var(--near-black);
+      color: var(--near-black);
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .package-cta:hover { background: var(--near-black); color: white; }
+    .package-card.featured .package-cta { border-color: var(--terracotta); background: var(--terracotta); color: white; }
+    .package-card.featured .package-cta:hover { background: #a8432a; }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--light-gray);
+      padding: 120px 80px;
+    }
+    .contact-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+    }
+    .contact-left {}
+    .contact-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: #555;
+      margin: 24px 0 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+    .contact-body.is-visible { opacity: 1; transform: none; }
+    .contact-email {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--terracotta);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .contact-email:hover { color: var(--near-black); }
+    .contact-socials {
+      display: flex;
+      gap: 24px;
+    }
+    .contact-socials a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-socials a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+    .contact-right {
+      padding-top: 80px;
+    }
+    .contact-img-stack {
+      position: relative;
+    }
+    .contact-img-main img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      transform: scale(0.95);
+      transition: transform 0.7s ease;
+    }
+    .contact-img-main.is-visible img { transform: scale(1.0); }
+    .contact-img-accent {
+      position: absolute;
+      bottom: -32px;
+      left: -32px;
+      width: 48%;
+      overflow: hidden;
+      border: 4px solid var(--ivory);
+    }
+    .contact-img-accent img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--near-black);
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-credit {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+    }
+    .footer-credit a { color: rgba(255,255,255,0.35); text-decoration: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; height: auto; }
+      .hero-left { padding: 100px 32px 60px; min-height: 60vh; }
+      .hero-name { font-size: 52px; }
+      .hero-right { height: 50vh; }
+      nav { padding: 16px 24px; }
+      #numbers { grid-template-columns: 1fr 1fr; padding: 60px 32px; }
+      .stat-num { font-size: 56px; }
+      #gallery { padding: 60px 20px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .featured-inner { grid-template-columns: 1fr; padding: 0 32px; gap: 40px; }
+      #wedding { padding: 80px 32px; }
+      .wedding-grid { grid-template-columns: 1fr 1fr; }
+      .wedding-img-main { grid-column: 1 / 3; grid-row: auto; }
+      #portraits { padding: 0 32px 80px; }
+      .portrait-scroll-row { grid-template-columns: 1fr 1fr; }
+      #about { padding: 80px 32px; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-portrait img { height: 400px; }
+      #cta { flex-direction: column; padding: 80px 32px; }
+      .cta-headline { font-size: 40px; }
+      #packages { padding: 80px 32px; }
+      .packages-grid { grid-template-columns: 1fr; }
+      #contact { padding: 80px 32px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 40px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .portrait-scroll-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">Arielle D'Ornellas</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#packages">Packages</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: ASYMMETRIC SPLIT -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Orlando, Florida · Est. 2018</div>
+      <h1 class="hero-name">
+        Arielle<br>
+        <span>D'Ornellas</span>
+      </h1>
+      <p class="hero-tagline">Families. Weddings. Portraits.<br>Capturing the moments that matter most across Central Florida.</p>
+      <a href="#contact" class="hero-cta">
+        Book a Session
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-right">
+      <img src="images/arielle/img12.jpg" alt="Arielle D'Ornellas photography" loading="eager">
+      <div class="hero-scroll-hint">Scroll</div>
+    </div>
+  </section>
+
+  <!-- STATS MARQUEE -->
+  <section id="stats">
+    <div class="marquee-wrap">
+      <span>Orlando, FL</span>
+      <span class="accent">·</span>
+      <span>Family Sessions</span>
+      <span class="accent">·</span>
+      <span>Wedding Photography</span>
+      <span class="accent">·</span>
+      <span>Portrait Work</span>
+      <span class="accent">·</span>
+      <span>Full Sail University</span>
+      <span class="accent">·</span>
+      <span>1,598 Instagram Followers</span>
+      <span class="accent">·</span>
+      <span>2,430 Facebook Followers</span>
+      <span class="accent">·</span>
+      <span>Central Florida</span>
+      <span class="accent">·</span>
+      <!-- Duplicate for seamless loop -->
+      <span>Orlando, FL</span>
+      <span class="accent">·</span>
+      <span>Family Sessions</span>
+      <span class="accent">·</span>
+      <span>Wedding Photography</span>
+      <span class="accent">·</span>
+      <span>Portrait Work</span>
+      <span class="accent">·</span>
+      <span>Full Sail University</span>
+      <span class="accent">·</span>
+      <span>1,598 Instagram Followers</span>
+      <span class="accent">·</span>
+      <span>2,430 Facebook Followers</span>
+      <span class="accent">·</span>
+      <span>Central Florida</span>
+      <span class="accent">·</span>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers">
+    <div class="stat-item">
+      <div class="stat-num">6<span>+</span></div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4<span>k+</span></div>
+      <div class="stat-label">Social Followers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Specialties</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Degree · Full Sail Univ.</div>
+    </div>
+  </section>
+
+  <!-- GALLERY: TIGHT GRID -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <div>
+        <div class="section-label">Portfolio</div>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+      <p class="gallery-intro">Family moments, wedding days, and portrait sessions — all shot with intention across Central Florida.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="images/arielle/img01.jpg" alt="Family session" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Family Session</div>
+          <div class="gallery-overlay-cat">Outdoor · Orlando</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img03.jpg" alt="Wedding photography" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Wedding Day</div>
+          <div class="gallery-overlay-cat">Ceremony · Florida</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img05.jpg" alt="Portrait session" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Portrait Session</div>
+          <div class="gallery-overlay-cat">Studio · Orlando</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img07.jpg" alt="Family portrait" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Family Portrait</div>
+          <div class="gallery-overlay-cat">Golden Hour · FL</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img09.jpg" alt="Wedding ceremony" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Wedding Ceremony</div>
+          <div class="gallery-overlay-cat">Outdoor · Central FL</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img11.jpg" alt="Portrait" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Individual Portrait</div>
+          <div class="gallery-overlay-cat">Natural Light</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img14.jpg" alt="Lifestyle session" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Lifestyle Session</div>
+          <div class="gallery-overlay-cat">Family · Orlando</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img16.jpg" alt="Wedding reception" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Wedding Reception</div>
+          <div class="gallery-overlay-cat">Evening · Florida</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/arielle/img18.jpg" alt="Family outdoors" loading="eager">
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-title">Outdoor Family</div>
+          <div class="gallery-overlay-cat">Natural · Central FL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED FAMILY SESSION -->
+  <section id="featured">
+    <div class="featured-bg">
+      <img src="images/arielle/img10.jpg" alt="background" loading="eager">
+    </div>
+    <div class="featured-inner">
+      <div class="featured-images">
+        <div class="featured-img-main">
+          <img src="images/arielle/img02.jpg" alt="Featured family session" loading="eager">
+        </div>
+        <div class="featured-img-small">
+          <img src="images/arielle/img04.jpg" alt="Family detail" loading="eager">
+        </div>
+        <div class="featured-img-small">
+          <img src="images/arielle/img06.jpg" alt="Family moment" loading="eager">
+        </div>
+      </div>
+      <div class="featured-text">
+        <div class="featured-number">01</div>
+        <h2 class="featured-title">Family Sessions That Feel Like Home</h2>
+        <p class="featured-desc">Every family has its own story — its own rhythm, inside jokes, and quiet moments. Arielle's approach is unhurried and real, capturing how your family actually is, not just how they stand in front of a camera.</p>
+        <a href="#contact" class="featured-link">Book a Family Session</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEDDING SECTION -->
+  <section id="wedding">
+    <div class="wedding-inner">
+      <div class="wedding-header">
+        <div class="section-label">Wedding Photography</div>
+        <h2 class="section-title">Your Day, Every Detail</h2>
+      </div>
+      <div class="wedding-grid">
+        <div class="wedding-img wedding-img-main">
+          <img src="images/arielle/img08.jpg" alt="Wedding" loading="eager">
+        </div>
+        <div class="wedding-img">
+          <img src="images/arielle/img13.jpg" alt="Wedding detail" loading="eager">
+        </div>
+        <div class="wedding-img">
+          <img src="images/arielle/img15.jpg" alt="Wedding portrait" loading="eager">
+        </div>
+        <div class="wedding-img">
+          <img src="images/arielle/img17.jpg" alt="Wedding ceremony" loading="eager">
+        </div>
+        <div class="wedding-img">
+          <img src="images/arielle/img19.jpg" alt="Wedding reception" loading="eager">
+        </div>
+      </div>
+      <div class="wedding-caption">
+        <p>From the first look to the last dance — comprehensive wedding coverage for couples across Central Florida. Available for intimate ceremonies and full-day events.</p>
+        <a href="#contact">Inquire About Weddings →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTRAIT SECTION -->
+  <section id="portraits">
+    <div class="portrait-inner">
+      <div class="portrait-header">
+        <div class="section-label">Portraits & Headshots</div>
+        <h2 class="section-title">Who You Are, Right Now</h2>
+      </div>
+      <div class="portrait-scroll-row">
+        <div class="portrait-item">
+          <img src="images/arielle/img20.jpg" alt="Portrait" loading="eager">
+        </div>
+        <div class="portrait-item">
+          <img src="images/arielle/img05.jpg" alt="Portrait session" loading="eager">
+        </div>
+        <div class="portrait-item">
+          <img src="images/arielle/img14.jpg" alt="Individual portrait" loading="eager">
+        </div>
+        <div class="portrait-item">
+          <img src="images/arielle/img19.jpg" alt="Portrait outdoor" loading="eager">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT: MAGAZINE SPREAD -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-portrait">
+        <img src="images/arielle/img07.jpg" alt="Arielle D'Ornellas" loading="eager">
+        <div class="about-portrait-label">Full Sail University · B.S. Photography</div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">About Arielle</div>
+        <h2 class="section-title">Photographer.<br>Artist. Musician.</h2>
+        <blockquote class="about-pull-quote">"Making good &amp; thinking on my feet."</blockquote>
+        <div class="about-bio">
+          <p>Arielle D'Ornellas is an Orlando-based photographer specializing in family, wedding, and portrait photography. A Full Sail University graduate, she brings both technical discipline and genuine warmth to every session she photographs.</p>
+          <p>Her work spans quiet family moments in golden afternoon light to full wedding days across Central Florida — always with an eye for the details that make a moment irreplaceable. With over 650 posts and an active following across Instagram and Facebook, she's built a loyal creative community around her work.</p>
+        </div>
+        <div class="about-credentials">
+          <div class="credential">
+            <strong>Education</strong>
+            <span>Full Sail University, Orlando</span>
+          </div>
+          <div class="credential">
+            <strong>Location</strong>
+            <span>Orlando, Florida</span>
+          </div>
+          <div class="credential">
+            <strong>Specialties</strong>
+            <span>Family · Weddings · Portraits</span>
+          </div>
+          <div class="credential">
+            <strong>Social Reach</strong>
+            <span>4,000+ across platforms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section id="testimonial">
+    <div class="testimonial-bg-text">Arielle</div>
+    <div class="testimonial-inner">
+      <span class="testimonial-quote-mark">"</span>
+      <p class="testimonial-text">She made our whole family feel so comfortable in front of the camera. The photos came out beautifully — we'll have them forever. Highly recommend Arielle for any family session.</p>
+      <div class="testimonial-source">— A Happy Family Client · Orlando, FL</div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section id="cta">
+    <div class="cta-left">
+      <h2 class="cta-headline">Let's Make<br>Something<br>Beautiful.</h2>
+      <p class="cta-sub">Whether it's your wedding day, a family session, or a portrait for your portfolio — let's create something you'll come back to for years.</p>
+    </div>
+    <div class="cta-right">
+      <a href="mailto:arielledornellas@gmail.com?subject=Session Inquiry" class="btn-primary">Book Your Session</a>
+      <a href="#gallery" class="btn-secondary">View Full Portfolio</a>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section id="packages">
+    <div class="packages-inner">
+      <div class="packages-header">
+        <div class="section-label">Investment</div>
+        <h2 class="section-title">Photography Packages</h2>
+      </div>
+      <div class="packages-grid">
+        <div class="package-card">
+          <div class="package-type">Essential</div>
+          <div class="package-name">Mini Session</div>
+          <div class="package-desc">Perfect for individual portraits, updated headshots, or quick family captures.</div>
+          <ul class="package-features">
+            <li>1 hour shoot</li>
+            <li>1 location</li>
+            <li>25+ edited digital images</li>
+            <li>Online gallery delivery</li>
+          </ul>
+          <a href="mailto:arielledornellas@gmail.com?subject=Mini Session Inquiry" class="package-cta">Inquire</a>
+        </div>
+        <div class="package-card featured">
+          <div class="package-type">Most Popular</div>
+          <div class="package-name">Full Session</div>
+          <div class="package-desc">Our most popular choice for families and couples — room to truly tell your story.</div>
+          <ul class="package-features">
+            <li>2–3 hour shoot</li>
+            <li>Up to 2 locations</li>
+            <li>75+ edited digital images</li>
+            <li>Online gallery delivery</li>
+            <li>Print release included</li>
+          </ul>
+          <a href="mailto:arielledornellas@gmail.com?subject=Full Session Inquiry" class="package-cta">Inquire</a>
+        </div>
+        <div class="package-card">
+          <div class="package-type">Complete</div>
+          <div class="package-name">Wedding Day</div>
+          <div class="package-desc">Full coverage of your wedding day from getting ready through the reception.</div>
+          <ul class="package-features">
+            <li>Full day coverage (8 hrs)</li>
+            <li>Ceremony + reception</li>
+            <li>300+ edited digital images</li>
+            <li>Private online gallery</li>
+            <li>Print release included</li>
+          </ul>
+          <a href="mailto:arielledornellas@gmail.com?subject=Wedding Photography Inquiry" class="package-cta">Inquire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="contact-body">Ready to book a session or want to learn more about pricing? Reach out — Arielle responds within 24 hours and would love to hear about what you have in mind.</p>
+        <a href="mailto:arielledornellas@gmail.com" class="contact-email">arielledornellas@gmail.com</a>
+        <div class="contact-socials">
+          <a href="https://instagram.com/arielledigsart" target="_blank">Instagram</a>
+          <a href="https://facebook.com/arielledigsart" target="_blank">Facebook</a>
+          <a href="https://arielledornellas.wixsite.com/photographer" target="_blank">Current Site</a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="contact-img-main">
+          <img src="images/arielle/img11.jpg" alt="Contact Arielle" loading="eager">
+        </div>
+        <div class="contact-img-accent">
+          <img src="images/arielle/img02.jpg" alt="Arielle work" loading="eager">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Arielle D'Ornellas</div>
+    <div class="footer-copy">© 2026 Arielle D'Ornellas Photography · Orlando, FL</div>
+    <div class="footer-credit">Design concept by <a href="#">Lucas Blatt</a></div>
+  </footer>
+
+  <script>
+    // Force all visible immediately (safety net)
+    document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+    // Nav scroll behavior
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hero parallax
+    const heroRight = document.querySelector('.hero-right img');
+    if (heroRight) {
+      window.addEventListener('scroll', () => {
+        heroRight.style.transform = `scale(1.05) translateY(${window.scrollY * 0.15}px)`;
+      });
+    }
+
+    // IntersectionObserver for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(
+      '.hero-eyebrow, .hero-name, .hero-tagline, .hero-cta, .hero-right img, ' +
+      '.stat-item, .section-title, .gallery-intro, .gallery-item, ' +
+      '.featured-title, .featured-desc, .featured-img-main, .featured-img-small, ' +
+      '.wedding-img, .portrait-item, ' +
+      '.about-portrait, .about-pull-quote, .about-bio, .about-credentials, ' +
+      '.testimonial-text, .cta-headline, .cta-sub, .cta-right, ' +
+      '.package-card, .contact-body, .contact-img-main'
+    ).forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
