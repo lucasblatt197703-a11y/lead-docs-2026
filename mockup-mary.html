@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exposed Essence Portraits — Fine Art Newborn & Maternity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Work Sans', sans-serif;
+  background: #FEFCF9;
+  color: #2A3D2E;
+  overflow-x: hidden;
+}
+img {
+  opacity: 1 !important;
+  clip-path: none !important;
+  transform: none !important;
+  max-width: 100% !important;
+  display: block;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  mix-blend-mode: normal;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #FEFCF9;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FEFCF9;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+.nav-links a:hover { opacity: 1; }
+
+/* ===== HERO — MOSAIC ASYMMETRIC GRID ===== */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  background: #2A3D2E;
+  overflow: hidden;
+}
+.hero-mosaic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+}
+.mosaic-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.mosaic-img.loaded { opacity: 1; }
+.mosaic-cell-1 {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+.mosaic-cell-2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+.mosaic-cell-3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+.mosaic-cell-4 {
+  grid-column: 2 / 4;
+  grid-row: 2;
+}
+/* Overlay gradient */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(42, 61, 46, 0.72) 0%,
+    rgba(42, 61, 46, 0.25) 50%,
+    rgba(42, 61, 46, 0.55) 100%
+  );
+}
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 60px 60px;
+  z-index: 10;
+}
+.hero-eyebrow {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.hero-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 88px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  color: #F8F4EE;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  /* Letter-spacing animation applied via JS */
+}
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(248, 244, 238, 0.85);
+  letter-spacing: 0.05em;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.24s, transform 0.8s ease 0.24s;
+}
+.hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+.hero-cta {
+  display: inline-block;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #2A3D2E;
+  background: #F8F4EE;
+  padding: 14px 36px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s, background 0.3s ease, color 0.3s ease;
+}
+.hero-cta.is-visible { opacity: 1; transform: translateY(0); }
+.hero-cta:hover { background: #C8847A; color: #FEFCF9; }
+
+/* ===== MARQUEE STRIP ===== */
+.marquee-strip {
+  background: #2A3D2E;
+  overflow: hidden;
+  padding: 16px 0;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 40s linear infinite;
+}
+.marquee-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.15em;
+  color: #F8F4EE;
+  padding: 0 48px;
+}
+.marquee-dot {
+  color: #C8847A;
+  padding: 0 12px;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== GALLERY — EDITORIAL SCROLL ===== */
+#gallery {
+  padding: 120px 0;
+  background: #F8F4EE;
+}
+.section-header {
+  padding: 0 60px;
+  margin-bottom: 64px;
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+.section-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.08);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: #2A3D2E;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+}
+.section-title-inner {
+  display: block;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.section-title-inner.is-visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Editorial gallery rows */
+.editorial-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+.editorial-full {
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+}
+.editorial-full img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transform: scale(0.94);
+  transition: transform 0.9s ease;
+}
+.editorial-full.is-visible img { transform: scale(1.0); }
+
+.editorial-split-large {
+  width: 62%;
+  height: 480px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.editorial-split-large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(0.94);
+  transition: transform 0.9s ease;
+}
+.editorial-split-large.is-visible img { transform: scale(1.0); }
+
+.editorial-split-small {
+  flex: 1;
+  height: 480px;
+  overflow: hidden;
+}
+.editorial-split-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(0.94);
+  transition: transform 0.9s ease 0.1s;
+}
+.editorial-split-small.is-visible img { transform: scale(1.0); }
+
+.editorial-caption-col {
+  width: 38%;
+  padding: 60px 60px 60px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.caption-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 16px;
+}
+.caption-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 300;
+  color: #2A3D2E;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+.caption-body {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.75);
+  line-height: 1.75;
+}
+.editorial-img-right {
+  width: 62%;
+  flex-shrink: 0;
+  height: 480px;
+  overflow: hidden;
+}
+.editorial-img-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(0.94);
+  transition: transform 0.9s ease;
+}
+.editorial-img-right.is-visible img { transform: scale(1.0); }
+
+/* ===== EXPERIENCE SECTION ===== */
+#experience {
+  padding: 140px 60px;
+  background: #FEFCF9;
+}
+.experience-intro {
+  max-width: 560px;
+  margin-bottom: 80px;
+}
+.experience-intro p {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(42, 61, 46, 0.8);
+}
+.experience-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+}
+.step {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.step.is-visible { opacity: 1; transform: translateY(0); }
+.step:nth-child(2) { transition-delay: 0.12s; }
+.step:nth-child(3) { transition-delay: 0.24s; }
+.step:nth-child(4) { transition-delay: 0.36s; }
+.step-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 300;
+  color: rgba(200, 132, 122, 0.3);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #2A3D2E;
+  margin-bottom: 12px;
+}
+.step-desc {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.7);
+  line-height: 1.7;
+}
+.accent-line {
+  width: 32%;
+  height: 1px;
+  background: #C8847A;
+  margin: 60px 0;
+}
+
+/* ===== SESSION TYPES ===== */
+#sessions {
+  padding: 0 0 120px;
+  background: #FEFCF9;
+}
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.session-card {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+}
+.session-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 0.7s ease;
+}
+.session-card:hover img { transform: scale(1.03); }
+.session-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 32px;
+  background: linear-gradient(to top, rgba(42, 61, 46, 0.88) 0%, transparent 100%);
+}
+.session-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 8px;
+}
+.session-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 300;
+  color: #F8F4EE;
+  margin-bottom: 8px;
+}
+.session-desc {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(248, 244, 238, 0.75);
+  line-height: 1.6;
+}
+
+/* ===== STUDIO SECTION ===== */
+#studio {
+  background: #2A3D2E;
+  padding: 100px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.studio-text { }
+.studio-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 20px;
+}
+.studio-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 46px;
+  font-weight: 300;
+  color: #F8F4EE;
+  line-height: 1.2;
+  margin-bottom: 28px;
+}
+.studio-body {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(248, 244, 238, 0.7);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+.studio-address {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.studio-address span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(248, 244, 238, 0.6);
+}
+.studio-image {
+  height: 400px;
+  overflow: hidden;
+}
+.studio-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== ABOUT — OFFSET OVERLAP ===== */
+#about {
+  padding: 120px 60px;
+  background: #F8F4EE;
+}
+.about-inner {
+  position: relative;
+  max-width: 1000px;
+}
+.about-portrait {
+  width: 55%;
+  height: 640px;
+  overflow: hidden;
+}
+.about-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+.about-text-block {
+  position: absolute;
+  bottom: -40px;
+  right: 0;
+  width: 52%;
+  background: #FEFCF9;
+  padding: 52px 52px 52px 48px;
+  box-shadow: 0 8px 48px rgba(42, 61, 46, 0.08);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.about-text-block.is-visible { opacity: 1; transform: translateY(0); }
+.about-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 16px;
+}
+.about-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 300;
+  color: #2A3D2E;
+  margin-bottom: 20px;
+}
+.about-bio {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.8);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.about-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: #2A3D2E;
+  border-left: 2px solid #C8847A;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+
+/* ===== TESTIMONIAL ===== */
+#testimonial {
+  background: #2A3D2E;
+  padding: 120px 60px;
+  text-align: center;
+}
+.testimonial-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  font-style: italic;
+  color: #F8F4EE;
+  max-width: 800px;
+  margin: 0 auto 32px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.testimonial-quote.is-visible { opacity: 1; transform: translateY(0); }
+.testimonial-divider {
+  width: 48px;
+  height: 1px;
+  background: #C8847A;
+  margin: 0 auto 20px;
+}
+.testimonial-source {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.5);
+}
+
+/* ===== PRICING ===== */
+#pricing {
+  padding: 120px 60px;
+  background: #FEFCF9;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 64px;
+}
+.pricing-card {
+  padding: 48px 40px;
+  background: #F8F4EE;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.pricing-card.is-visible { opacity: 1; transform: translateY(0); }
+.pricing-card:nth-child(2) {
+  transition-delay: 0.12s;
+  background: #2A3D2E;
+}
+.pricing-card:nth-child(3) { transition-delay: 0.24s; }
+.pricing-type {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 16px;
+}
+.pricing-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 300;
+  color: #2A3D2E;
+  margin-bottom: 8px;
+}
+.pricing-card:nth-child(2) .pricing-name { color: #F8F4EE; }
+.pricing-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: #2A3D2E;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.pricing-card:nth-child(2) .pricing-price { color: #F8F4EE; }
+.pricing-note {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.5);
+  margin-bottom: 28px;
+}
+.pricing-card:nth-child(2) .pricing-note { color: rgba(248, 244, 238, 0.5); }
+.pricing-features {
+  list-style: none;
+}
+.pricing-features li {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.75);
+  line-height: 1;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(42, 61, 46, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pricing-features li::before {
+  content: '—';
+  color: #C8847A;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.pricing-card:nth-child(2) .pricing-features li {
+  color: rgba(248, 244, 238, 0.65);
+  border-bottom-color: rgba(248, 244, 238, 0.1);
+}
+
+/* ===== BOLD CTA ===== */
+#cta {
+  background: #C8847A;
+  padding: 100px 60px;
+  text-align: center;
+}
+.cta-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 58px;
+  font-weight: 300;
+  color: #FEFCF9;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  letter-spacing: 0.03em;
+}
+.cta-sub {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(254, 252, 249, 0.8);
+  margin-bottom: 40px;
+  letter-spacing: 0.05em;
+}
+.cta-btn {
+  display: inline-block;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C8847A;
+  background: #FEFCF9;
+  padding: 18px 48px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.cta-btn:hover { background: #2A3D2E; color: #F8F4EE; }
+
+/* ===== CONTACT ===== */
+#contact {
+  padding: 120px 60px;
+  background: #F8F4EE;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-left {}
+.contact-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 50px;
+  font-weight: 300;
+  color: #2A3D2E;
+  margin-bottom: 24px;
+  line-height: 1.15;
+}
+.contact-sub {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.7);
+  line-height: 1.8;
+  margin-bottom: 48px;
+}
+.contact-link {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  color: #C8847A;
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
+}
+.contact-link:hover { color: #2A3D2E; }
+.contact-right {
+  padding-top: 20px;
+}
+.contact-info-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C8847A;
+  margin-bottom: 16px;
+}
+.contact-info-line {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(42, 61, 46, 0.7);
+  line-height: 1;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(42, 61, 46, 0.1);
+}
+.socials {
+  margin-top: 40px;
+  display: flex;
+  gap: 24px;
+}
+.social-link {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2A3D2E;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(42, 61, 46, 0.3);
+  padding-bottom: 2px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.social-link:hover { color: #C8847A; border-color: #C8847A; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: #2A3D2E;
+  padding: 32px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: rgba(248, 244, 238, 0.6);
+  text-transform: uppercase;
+}
+.footer-copy {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(248, 244, 238, 0.4);
+  letter-spacing: 0.05em;
+}
+.footer-credit {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(248, 244, 238, 0.3);
+  letter-spacing: 0.05em;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 18px 24px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 24px 40px; }
+  .hero-name { font-size: 48px; letter-spacing: 0.15em; }
+  .hero-tagline { font-size: 16px; }
+  .section-header { padding: 0 24px; flex-direction: column; gap: 8px; }
+  .section-number { font-size: 48px; }
+  .section-title { font-size: 32px; }
+  .editorial-row { flex-direction: column; }
+  .editorial-split-large, .editorial-split-small, .editorial-caption-col, .editorial-img-right { width: 100%; }
+  .editorial-caption-col { padding: 40px 24px; }
+  .experience-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+  #experience { padding: 80px 24px; }
+  .sessions-grid { grid-template-columns: 1fr; }
+  #studio { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+  #about { padding: 80px 24px; }
+  .about-portrait { width: 100%; height: 400px; }
+  .about-text-block { position: relative; bottom: auto; right: auto; width: 100%; margin-top: -40px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  #pricing { padding: 80px 24px; }
+  .cta-heading { font-size: 38px; }
+  #cta { padding: 80px 24px; }
+  #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 36px; letter-spacing: 0.1em; }
+  .hero-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .mosaic-cell-1 { grid-column: 1; grid-row: 1 / 3; }
+  .mosaic-cell-2 { grid-column: 2; grid-row: 1; }
+  .mosaic-cell-3 { display: none; }
+  .mosaic-cell-4 { grid-column: 2; grid-row: 2; }
+  .experience-steps { grid-template-columns: 1fr; }
+  .cta-heading { font-size: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Exposed Essence</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — MOSAIC ASYMMETRIC GRID -->
+<section id="hero">
+  <div class="hero-mosaic">
+    <div class="mosaic-cell-1">
+      <img src="images/mary/img01.jpg" alt="Newborn portrait" class="mosaic-img" loading="eager">
+    </div>
+    <div class="mosaic-cell-2">
+      <img src="images/mary/img02.jpg" alt="Maternity portrait" class="mosaic-img" loading="eager">
+    </div>
+    <div class="mosaic-cell-3">
+      <img src="images/mary/img05.jpg" alt="Family portrait" class="mosaic-img" loading="eager">
+    </div>
+    <div class="mosaic-cell-4">
+      <img src="images/mary/img03.jpg" alt="Newborn session" class="mosaic-img" loading="eager">
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Fine Art Portraiture · Davie, FL</div>
+    <h1 class="hero-name" id="hero-name">Exposed Essence</h1>
+    <p class="hero-tagline">Newborn &amp; Maternity · Styling &amp; Makeup Included</p>
+    <a href="#contact" class="hero-cta">Reserve Your Experience</a>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-text">Fine Art Portraits</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Makeup &amp; Styling Included</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Davie, FL Studio</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">On-Location Available</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Newborn · Maternity · Family</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Fine Art Portraits</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Makeup &amp; Styling Included</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Davie, FL Studio</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">On-Location Available</span>
+    <span class="marquee-dot">·</span>
+    <span class="marquee-text">Newborn · Maternity · Family</span>
+    <span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- GALLERY — EDITORIAL SCROLL -->
+<section id="gallery">
+  <div class="section-header">
+    <div class="section-number">01</div>
+    <h2 class="section-title"><span class="section-title-inner">The Work</span></h2>
+  </div>
+
+  <!-- Row 1: Full width -->
+  <div class="editorial-row">
+    <div class="editorial-full">
+      <img src="images/mary/img04.jpg" alt="Maternity session" loading="eager">
+    </div>
+  </div>
+
+  <!-- Row 2: Large image left, caption right -->
+  <div class="editorial-row">
+    <div class="editorial-split-large">
+      <img src="images/mary/img07.jpg" alt="Newborn wrapped" loading="eager">
+    </div>
+    <div class="editorial-caption-col">
+      <div class="caption-label">Pure Essence Newborns</div>
+      <h3 class="caption-headline">Every detail of the first days, preserved.</h3>
+      <p class="caption-body">Each newborn session is art-directed from start to finish — wraps, props, styling, and light all chosen to complement your baby's unique features. Sessions take place in our Davie studio or on location.</p>
+    </div>
+  </div>
+
+  <!-- Row 3: Caption left, image right -->
+  <div class="editorial-row">
+    <div class="editorial-caption-col" style="padding: 60px 48px 60px 60px;">
+      <div class="caption-label">Angelic Essence Maternity</div>
+      <h3 class="caption-headline">The radiance of expectation, in fine art form.</h3>
+      <p class="caption-body">Maternity sessions include professional styling and makeup artistry. We photograph you at the peak of your glow — with wardrobe, location, and lighting selected specifically for your vision.</p>
+    </div>
+    <div class="editorial-img-right">
+      <img src="images/mary/img08.jpg" alt="Maternity portrait styled" loading="eager">
+    </div>
+  </div>
+
+  <!-- Row 4: Full width -->
+  <div class="editorial-row">
+    <div class="editorial-full">
+      <img src="images/mary/img09.jpg" alt="Family session" loading="eager">
+    </div>
+  </div>
+
+  <!-- Row 5: Two images side by side -->
+  <div class="editorial-row">
+    <div class="editorial-split-large">
+      <img src="images/mary/img10.jpg" alt="Newborn close up" loading="eager">
+    </div>
+    <div class="editorial-split-small">
+      <img src="images/mary/img06.jpg" alt="Portrait detail" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- THE EXPERIENCE -->
+<section id="experience">
+  <div class="section-header" style="padding: 0; margin-bottom: 48px;">
+    <div class="section-number">02</div>
+    <h2 class="section-title"><span class="section-title-inner">The Experience</span></h2>
+  </div>
+  <div class="experience-intro">
+    <p>Every Exposed Essence session is a curated, art-directed experience. No two sessions are alike — each one is designed around you, your style, and the story you want to tell.</p>
+  </div>
+  <div class="accent-line"></div>
+  <div class="experience-steps">
+    <div class="step">
+      <div class="step-number">01</div>
+      <div class="step-title">Consultation</div>
+      <p class="step-desc">A detailed conversation about your vision, wardrobe, color palette, and the feeling you want to capture.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">02</div>
+      <div class="step-title">Styling &amp; Makeup</div>
+      <p class="step-desc">Professional hair, makeup, and wardrobe styling included in every premium session. You arrive, we handle the rest.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">03</div>
+      <div class="step-title">The Session</div>
+      <p class="step-desc">Unhurried, intimate. We photograph you in our Davie studio or on-location — wherever the light and story call for.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">04</div>
+      <div class="step-title">Fine Art Delivery</div>
+      <p class="step-desc">Gallery-quality prints, albums, and digital files. Delivered as art pieces worthy of the walls in your home.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION TYPES -->
+<section id="sessions">
+  <div class="section-header" style="padding: 0 60px; margin-bottom: 40px;">
+    <div class="section-number">03</div>
+    <h2 class="section-title"><span class="section-title-inner">Sessions</span></h2>
+  </div>
+  <div class="sessions-grid">
+    <div class="session-card">
+      <img src="images/mary/img01.jpg" alt="Newborn session" loading="eager">
+      <div class="session-overlay">
+        <div class="session-label">Pure Essence</div>
+        <div class="session-name">Newborns</div>
+        <p class="session-desc">First 14 days. Studio & on-location. Styling &amp; props included.</p>
+      </div>
+    </div>
+    <div class="session-card">
+      <img src="images/mary/img04.jpg" alt="Maternity session" loading="eager">
+      <div class="session-overlay">
+        <div class="session-label">Angelic Essence</div>
+        <div class="session-name">Maternity</div>
+        <p class="session-desc">Weeks 28–36. Makeup &amp; wardrobe styling included.</p>
+      </div>
+    </div>
+    <div class="session-card">
+      <img src="images/mary/img09.jpg" alt="Family session" loading="eager">
+      <div class="session-overlay">
+        <div class="session-label">Pure &amp; Angelic</div>
+        <div class="session-name">Family</div>
+        <p class="session-desc">Multi-generational. Styled, lit, and art-directed just for you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STUDIO -->
+<section id="studio">
+  <div class="studio-text">
+    <div class="studio-label">Our Studio</div>
+    <h2 class="studio-heading">A space designed<br>for quiet, beautiful<br>work.</h2>
+    <p class="studio-body">Located in the heart of Davie, the Exposed Essence studio is a fully equipped fine art portrait studio with curated props, premium wraps, a wardrobe room, and professional lighting setups for every session type.</p>
+    <div class="studio-address">
+      <span>7200 Griffin Road, Suite 5</span>
+      <span>Davie, Florida 33314</span>
+    </div>
+  </div>
+  <div class="studio-image">
+    <img src="images/mary/img02.jpg" alt="Studio session" loading="eager">
+  </div>
+</section>
+
+<!-- ABOUT — OFFSET OVERLAP -->
+<section id="about">
+  <div class="section-header" style="padding: 0; margin-bottom: 64px;">
+    <div class="section-number">04</div>
+    <h2 class="section-title"><span class="section-title-inner">About Mary</span></h2>
+  </div>
+  <div class="about-inner">
+    <div class="about-portrait">
+      <img src="images/mary/img05.jpg" alt="Mary Beine photographer" loading="eager">
+    </div>
+    <div class="about-text-block">
+      <div class="about-label">Photographer & Creative Director</div>
+      <div class="about-name">Mary Beine</div>
+      <p class="about-bio">Working out of Davie, Florida and on location across South Florida, Mary Beine brings a fine art editorial approach to newborn, maternity, and family portraiture. Every session is personally designed — from the wardrobe and makeup down to the light and location. Her work reflects the belief that these moments deserve more than snapshots. They deserve art.</p>
+      <blockquote class="about-quote">"No two sessions are alike. Each one is specially designed for you and your family."</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <p class="testimonial-quote">"Mary made us feel so comfortable and relaxed throughout the entire session. The images she captured are absolutely breathtaking — we could not have asked for a more beautiful experience for our newborn."</p>
+  <div class="testimonial-divider"></div>
+  <div class="testimonial-source">Recent Client · Davie, FL</div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-header" style="padding: 0; margin-bottom: 0;">
+    <div class="section-number">05</div>
+    <h2 class="section-title"><span class="section-title-inner">Investment</span></h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-type">Essential</div>
+      <div class="pricing-name">Basic Session</div>
+      <div class="pricing-price">$350<span style="font-size: 20px; opacity: 0.5">+</span></div>
+      <div class="pricing-note">Starting investment</div>
+      <ul class="pricing-features">
+        <li>1–2 hour session</li>
+        <li>Studio or on-location</li>
+        <li>Professional editing</li>
+        <li>Digital gallery</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-type">Most Popular</div>
+      <div class="pricing-name">Premium Session</div>
+      <div class="pricing-price" style="color: #F8F4EE;">$650<span style="font-size: 20px; opacity: 0.5">+</span></div>
+      <div class="pricing-note" style="color: rgba(248,244,238,0.5)">Full styled experience</div>
+      <ul class="pricing-features">
+        <li>2–3 hour session</li>
+        <li>Makeup &amp; hair styling</li>
+        <li>Wardrobe guidance</li>
+        <li>Premium print options</li>
+        <li>Full digital gallery</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-type">Heirloom</div>
+      <div class="pricing-name">À La Carte</div>
+      <div class="pricing-price">Custom</div>
+      <div class="pricing-note">Investment upon inquiry</div>
+      <ul class="pricing-features">
+        <li>Custom session design</li>
+        <li>Full styling &amp; makeup</li>
+        <li>Fine art prints &amp; albums</li>
+        <li>Multiple looks/locations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section id="cta">
+  <h2 class="cta-heading">Reserve Your<br>Experience</h2>
+  <p class="cta-sub">Sessions book quickly. Newborn sessions should be reserved during your second trimester.</p>
+  <a href="#contact" class="cta-btn">Book Online</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="contact-heading">Let's Create<br>Something Beautiful</h2>
+    <p class="contact-sub">Reach out to reserve your session or ask any questions about the experience. Newborn sessions are best reserved 6–8 weeks before your due date.</p>
+    <a href="https://marybeine.wixsite.com/exposedessence/book-online" class="contact-link">Book Online →</a>
+    <a href="mailto:contact@exposedessence.com" class="contact-link">contact@exposedessence.com</a>
+  </div>
+  <div class="contact-right">
+    <div class="contact-info-label">Studio Information</div>
+    <div class="contact-info-line">7200 Griffin Road, Suite 5 · Davie, FL 33314</div>
+    <div class="contact-info-line">Newborn · Maternity · Family</div>
+    <div class="contact-info-line">Makeup &amp; Styling Included in Premium Sessions</div>
+    <div class="contact-info-line">Studio &amp; On-Location Available</div>
+    <div class="socials">
+      <a href="https://www.facebook.com/Exposed-Essence-Portraits-395302757170974/" class="social-link" target="_blank">Facebook</a>
+      <a href="https://marybeine.wixsite.com/exposedessence" class="social-link" target="_blank">Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Exposed Essence Portraits</span>
+  <span class="footer-copy">© 2026 Mary Beine · Davie, Florida</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+// Ensure all elements are visible immediately (override any animation failures)
+document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+// Load all images eagerly
+document.querySelectorAll("img").forEach(img => {
+  img.loading = "eager";
+  img.onload = () => img.classList.add("loaded");
+  if (img.complete) img.classList.add("loaded");
+});
+
+// Hero name letter-spacing compress animation
+const heroName = document.getElementById("hero-name");
+if (heroName) {
+  heroName.style.letterSpacing = "0.35em";
+  setTimeout(() => {
+    heroName.style.transition = "letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+    heroName.style.letterSpacing = "0.15em";
+  }, 100);
+}
+
+// IntersectionObserver for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe animated elements
+document.querySelectorAll(".section-title-inner, .step, .pricing-card, .about-text-block, .testimonial-quote, .hero-eyebrow, .hero-tagline, .hero-cta, .editorial-full, .editorial-split-large, .editorial-split-small, .editorial-img-right").forEach(el => {
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
