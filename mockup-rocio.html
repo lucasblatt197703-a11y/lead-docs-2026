@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocio MT — Visual Artist · Miami</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F0E8;
+    --bg-dark: #1A1614;
+    --text: #1A1614;
+    --text-light: #6B5E54;
+    --accent: #B85C38;
+    --accent2: #8A4D2A;
+    --cream: #FAF7F2;
+    --warm: #E8D5C4;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVIGATION ─────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    mix-blend-mode: normal;
+    transition: background 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(245,240,232,0.95);
+    backdrop-filter: blur(8px);
+    padding: 16px 48px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--text); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--text-light); }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: grid;
+    grid-template-columns: 42% 58%;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    position: relative;
+    z-index: 2;
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 56px 80px 56px;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: 'ROCIO';
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.02);
+    letter-spacing: -0.02em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    text-transform: uppercase;
+    overflow: hidden;
+  }
+  .hero-name span {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .hero-name span.visible { clip-path: inset(0 0% 0 0); }
+  .hero-name .name-bold {
+    font-weight: 700;
+    color: var(--warm);
+  }
+
+  .hero-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px 0;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
+  }
+  .hero-divider.visible { opacity: 1; transform: scaleX(1); }
+
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+  }
+  .hero-sub.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-location {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(255,255,255,0.35);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 1.1s, transform 0.8s ease 1.1s;
+  }
+  .hero-location.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 80px;
+    background: linear-gradient(to right, var(--bg-dark), transparent);
+    z-index: 1;
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 1s ease 1.5s;
+  }
+  .hero-scroll-hint.visible { opacity: 1; }
+  .hero-scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    animation: scrollLine 2s ease-in-out 2s infinite;
+  }
+  @keyframes scrollLine {
+    0% { left: -100%; }
+    50% { left: 0; }
+    100% { left: 100%; }
+  }
+
+  /* ─── MARQUEE STRIP ──────────────────────── */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    font-weight: 400;
+    padding: 0 40px;
+  }
+  .marquee-inner span::after {
+    content: '·';
+    padding-left: 40px;
+    opacity: 0.5;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION SHARED ─────────────────────── */
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: rgba(26,22,20,0.05);
+    line-height: 1;
+    margin-bottom: -20px;
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section-number.visible { opacity: 1; transform: translateY(0); }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  }
+  .section-label.visible { opacity: 1; transform: translateY(0); }
+
+  h2.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 4vw, 56px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+  h2.section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* ─── STATS SECTION ──────────────────────── */
+  .stats {
+    background: var(--bg-dark);
+    padding: 80px 0;
+  }
+  .stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(1) { transition-delay: 0ms; }
+  .stat-item:nth-child(2) { transition-delay: 120ms; }
+  .stat-item:nth-child(3) { transition-delay: 240ms; }
+  .stat-item:nth-child(4) { transition-delay: 360ms; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 8px;
+    display: block;
+  }
+  .stat-divider {
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+    margin: 12px auto;
+  }
+
+  /* ─── GALLERY ────────────────────────────── */
+  .gallery-section {
+    padding: 120px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .gallery-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 64px;
+  }
+  .gallery-header-left {}
+  .gallery-header-right {
+    font-size: 13px;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    max-width: 260px;
+    text-align: right;
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .gallery-header-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* Editorial scroll layout — alternating large/small */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    cursor: pointer;
+    background: var(--warm);
+  }
+  .gallery-item.visible { clip-path: inset(0 0 0 0); }
+  .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; aspect-ratio: 4/3; }
+  .gallery-item:nth-child(2) { grid-column: 3; grid-row: 1; aspect-ratio: 3/4; }
+  .gallery-item:nth-child(3) { grid-column: 1; grid-row: 2; aspect-ratio: 3/4; }
+  .gallery-item:nth-child(4) { grid-column: 2 / 4; grid-row: 2; aspect-ratio: 4/3; }
+  .gallery-item:nth-child(5) { grid-column: 1 / 3; grid-row: 3; aspect-ratio: 16/9; }
+  .gallery-item:nth-child(6) { grid-column: 3; grid-row: 3; aspect-ratio: 1; }
+  .gallery-item:nth-child(7) { grid-column: 1; grid-row: 4; aspect-ratio: 1; }
+  .gallery-item:nth-child(8) { grid-column: 2 / 4; grid-row: 4; aspect-ratio: 16/9; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    loading: lazy;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 16px;
+    background: linear-gradient(to top, rgba(26,22,20,0.8) 0%, transparent 100%);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover .gallery-caption { transform: translateY(0); }
+  .gallery-caption-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── ARCHITECTURE INFLUENCE ─────────────── */
+  .arch-section {
+    background: var(--cream);
+    padding: 140px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .arch-section::before {
+    content: '01';
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 160px;
+    font-weight: 300;
+    color: rgba(26,22,20,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .arch-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .arch-text {}
+  .arch-image-col {
+    position: relative;
+  }
+  .arch-image-main {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+    will-change: clip-path;
+  }
+  .arch-image-main.visible { clip-path: inset(0 0 0 0); }
+  .arch-image-overlay {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 50%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border: 6px solid var(--cream);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out 0.2s;
+    will-change: clip-path;
+  }
+  .arch-image-overlay.visible { clip-path: inset(0 0 0 0); }
+
+  .arch-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin: 24px 0 32px;
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .arch-body.visible { opacity: 1; transform: translateY(0); }
+
+  .arch-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+  }
+  .arch-tags.visible { opacity: 1; transform: translateY(0); }
+  .arch-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ─── SELECTED WORKS ─────────────────────── */
+  .works-section {
+    padding: 140px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .works-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px 60px;
+    margin-top: 80px;
+  }
+  .work-item {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .work-item.visible { opacity: 1; transform: translateY(0); }
+  .work-item:nth-child(2) { transition-delay: 150ms; }
+  .work-item:nth-child(3) { transition-delay: 100ms; }
+  .work-item:nth-child(4) { transition-delay: 250ms; }
+  .work-img-wrap {
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    margin-bottom: 20px;
+  }
+  .work-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+    will-change: transform;
+  }
+  .work-item:hover .work-img-wrap img { transform: scale(1.05); }
+  .work-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+  .work-medium {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  /* ─── ABOUT ──────────────────────────────── */
+  .about-section {
+    background: var(--bg-dark);
+    padding: 140px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-text-col {}
+  .about-image-col {
+    position: sticky;
+    top: 100px;
+  }
+  .about-image-col img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+    will-change: clip-path;
+  }
+  .about-image-col img.visible { clip-path: inset(0 0 0 0); }
+  .about-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .about-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .about-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 4.5vw, 64px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1) 0.1s;
+    margin-bottom: 32px;
+  }
+  .about-name.visible { clip-path: inset(0 0% 0 0); }
+  .pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--warm);
+    line-height: 1.5;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .pull-quote.visible { opacity: 1; transform: translateX(0); }
+  .about-bio {
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(250,247,242,0.6);
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .about-bio.visible { opacity: 1; transform: translateY(0); }
+  .about-bio p { margin-bottom: 16px; }
+  .about-influences {
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+  .about-influences.visible { opacity: 1; transform: translateY(0); }
+  .influences-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .influence-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+  }
+  .influence-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(255,255,255,0.45);
+    border-bottom: 1px solid rgba(184,92,56,0.3);
+    padding-bottom: 2px;
+  }
+
+  /* ─── EXHIBITIONS ────────────────────────── */
+  .exhibitions-section {
+    padding: 120px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .exhibition-list {
+    margin-top: 60px;
+  }
+  .exhibition-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: baseline;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(26,22,20,0.1);
+    gap: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .exhibition-item.visible { opacity: 1; transform: translateY(0); }
+  .exhibition-item:nth-child(2) { transition-delay: 100ms; }
+  .exhibition-item:nth-child(3) { transition-delay: 200ms; }
+  .exhibit-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .exhibit-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text);
+  }
+  .exhibit-meta {
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    text-align: right;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* ─── COMMISSIONS CTA ────────────────────── */
+  .cta-section {
+    background: var(--accent2);
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .cta-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .cta-eyebrow.visible { opacity: 1; }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76,0,0.24,1) 0.1s;
+  }
+  .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+  .cta-body {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .cta-body.visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 56px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s, background 0.3s ease;
+  }
+  .cta-btn.visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--cream); color: var(--accent2); border-color: var(--cream); }
+
+  /* ─── CONTACT ────────────────────────────── */
+  #contact {
+    padding: 140px 48px 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .contact-left {}
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 4.5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 32px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
+  }
+  .contact-title.visible { clip-path: inset(0 0% 0 0); }
+  .contact-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-body.visible { opacity: 1; transform: translateY(0); }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 16px;
+    transition: color 0.3s;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s, color 0.3s;
+  }
+  .contact-email.visible { opacity: 1; transform: translateY(0); }
+  .contact-email:hover { color: var(--accent2); }
+  .contact-phone {
+    font-size: 14px;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+  .contact-phone.visible { opacity: 1; transform: translateY(0); }
+  .contact-right {
+    padding-top: 20px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-right.visible { opacity: 1; transform: translateX(0); }
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .contact-detail-item {}
+  .contact-detail-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+  .contact-detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .social-link {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+  }
+  .social-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ─── FOOTER ──────────────────────────────── */
+  footer {
+    background: var(--bg-dark);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-weight: 400;
+  }
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2);
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em;
+  }
+  .footer-credit a {
+    color: rgba(184,92,56,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-credit a:hover { color: var(--accent); }
+
+  /* ─── RESPONSIVE ─────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .hero { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
+    .hero-left { padding: 100px 32px 60px; min-height: 55vh; }
+    .hero-right { height: 45vh; }
+    .hero-right::after { display: none; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 0 24px; }
+    .gallery-section { padding: 80px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 1 !important; }
+    .arch-inner { grid-template-columns: 1fr; gap: 60px; }
+    .arch-image-overlay { display: none; }
+    .works-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-image-col { position: relative; top: auto; }
+    #contact { grid-template-columns: 1fr; gap: 60px; padding: 80px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    h2.section-title { font-size: 36px; }
+    .arch-section, .works-section, .exhibitions-section { padding: 80px 24px; }
+    .cta-section { padding: 80px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-logo { font-size: 14px; }
+    .nav-links { gap: 20px; }
+    .hero-name { font-size: 56px; }
+    .stat-number { font-size: 52px; }
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Rocio MT</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#commissions">Commissions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — asymmetric split: text left (dark), large artwork right -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Dominican-American · Miami, FL</span>
+    <h1 class="hero-name">
+      <span>Rocio</span>
+      <span class="name-bold">MT</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Visual Artist</p>
+    <p class="hero-location">Architecture · Mixed Media · Fine Art</p>
+  </div>
+  <div class="hero-right">
+    <img
+      src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/ciclo_orig.jpg"
+      alt="Ciclo — Rocio MT"
+      id="hero-img"
+      loading="eager"
+    >
+  </div>
+  <div class="hero-scroll-hint" id="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Visual Artist</span>
+    <span>Miami, FL</span>
+    <span>Mixed Media</span>
+    <span>Architecture</span>
+    <span>Landscape</span>
+    <span>Illustrations</span>
+    <span>Murals</span>
+    <span>Commissions Open</span>
+    <span>Visual Artist</span>
+    <span>Miami, FL</span>
+    <span>Mixed Media</span>
+    <span>Architecture</span>
+    <span>Landscape</span>
+    <span>Illustrations</span>
+    <span>Murals</span>
+    <span>Commissions Open</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number">15+</span>
+      <div class="stat-divider"></div>
+      <span class="stat-label">Years Creating</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">4</span>
+      <div class="stat-divider"></div>
+      <span class="stat-label">Mediums</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3+</span>
+      <div class="stat-divider"></div>
+      <span class="stat-label">Exhibitions</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">MIA</span>
+      <div class="stat-divider"></div>
+      <span class="stat-label">Miami, Florida</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery-section">
+  <div class="gallery-header">
+    <div class="gallery-header-left">
+      <span class="section-number">01</span>
+      <span class="section-label">Selected Work</span>
+      <h2 class="section-title">The Portfolio</h2>
+    </div>
+    <p class="gallery-header-right">
+      Works in mixed media, digital illustration, and fine art — spanning a decade of creative practice rooted in architectural abstraction.
+    </p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/cariba_orig.jpg" alt="Cariba" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Cariba</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/abstract_orig.jpg" alt="Abstract" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Abstract</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/autoretrato3_orig.jpg" alt="Autoretrato" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Self-Portrait</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/windows_orig.jpg" alt="Windows" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Windows</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/23-11-21-florida_orig.jpg" alt="Florida 2023" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Florida, 2023</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/elephant-in-the-room2_orig.jpg" alt="Elephant in the Room" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Elephant in the Room</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/fecundidad_orig.jpg" alt="Fecundidad" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Fecundidad</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/modificando-el-mundo2_orig.jpg" alt="Modificando el Mundo" loading="lazy">
+      <div class="gallery-caption"><span class="gallery-caption-title">Modificando el Mundo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE INFLUENCE -->
+<section class="arch-section">
+  <div class="arch-inner">
+    <div class="arch-text">
+      <span class="section-number">02</span>
+      <span class="section-label">The Practice</span>
+      <h2 class="section-title">Where Architecture<br>Meets Art</h2>
+      <p class="arch-body">
+        Rocio MT's work is inseparable from her formation as an architect. Years of training in spatial abstraction, structural thinking, and environmental design inform every mark. The landscape is not backdrop — it is language.
+        <br><br>
+        Through her Miami-based studio, Tropico Design Studio, she continues practicing landscape architecture alongside her fine art — a dual practice that keeps each discipline vital, each feeding the other.
+      </p>
+      <div class="arch-tags">
+        <span class="arch-tag">Landscape Architecture</span>
+        <span class="arch-tag">Mixed Media</span>
+        <span class="arch-tag">Digital Illustration</span>
+        <span class="arch-tag">Murals</span>
+        <span class="arch-tag">Portraiture</span>
+      </div>
+    </div>
+    <div class="arch-image-col">
+      <img
+        src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/seascape_orig.jpg"
+        alt="Seascape — Rocio MT"
+        class="arch-image-main"
+        loading="lazy"
+      >
+      <img
+        src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/atardecer_orig.jpg"
+        alt="Atardecer — Rocio MT"
+        class="arch-image-overlay"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORKS -->
+<section id="work" class="works-section">
+  <span class="section-number">03</span>
+  <span class="section-label">Deep Cuts</span>
+  <h2 class="section-title">Featured Pieces</h2>
+  <div class="works-grid">
+    <div class="work-item">
+      <div class="work-img-wrap">
+        <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/mirror_orig.jpg" alt="Mirror" loading="lazy">
+      </div>
+      <p class="work-title">Mirror</p>
+      <p class="work-medium">Mixed Media · Digital</p>
+    </div>
+    <div class="work-item">
+      <div class="work-img-wrap">
+        <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/tiempo2_orig.jpg" alt="Tiempo" loading="lazy">
+      </div>
+      <p class="work-title">Tiempo</p>
+      <p class="work-medium">Illustration · Fine Art</p>
+    </div>
+    <div class="work-item">
+      <div class="work-img-wrap">
+        <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/free_orig.jpg" alt="Free" loading="lazy">
+      </div>
+      <p class="work-title">Free</p>
+      <p class="work-medium">Mixed Media</p>
+    </div>
+    <div class="work-item">
+      <div class="work-img-wrap">
+        <img src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/20231118-092114_orig.jpg" alt="Work 2023" loading="lazy">
+      </div>
+      <p class="work-title">Study, 2023</p>
+      <p class="work-medium">Fine Art · Photography</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="about-inner">
+    <div class="about-text-col">
+      <span class="about-eyebrow">About the Artist</span>
+      <h2 class="about-name">Dominican-American.<br>Miami-based.<br>Architecturally formed.</h2>
+      <blockquote class="pull-quote">
+        "My illustrations are the fruit of years of architectural training that emphasizes abstraction, juxtaposed with my natural tendency for figurative drawing."
+      </blockquote>
+      <div class="about-bio">
+        <p>Rocio MT is a Miami-based Dominican-American visual artist whose professional background in Architecture and Landscape Architecture shapes every aspect of her practice. Trained in visual art under the Dominican master Guillo Perez and later self-directed, her work synthesizes architectural precision with deep cultural and psychological exploration.</p>
+        <p>Her mixed-media work has been exhibited in the UNPHU 2017 Graduate Exhibition and published in the Calendar of Dominican Illustrations 2016 and the UNPHU Calendar 2018. She has been commissioned for illustrations for video games, portraits, corporate logos, and public murals.</p>
+        <p>Influenced by the psychedelic spiritual work of Alex Grey, the folk tradition of Haitian art, the figurative power of Dominican artist Nadal Walcot, and the landscape philosophy of Roberto Burle Marx, Rocio's practice bridges the designed world and the imagined one.</p>
+      </div>
+      <div class="about-influences">
+        <span class="influences-label">Influences</span>
+        <div class="influence-list">
+          <span class="influence-name">Alex Grey</span>
+          <span class="influence-name">Haitian Folk Art</span>
+          <span class="influence-name">Nadal Walcot</span>
+          <span class="influence-name">Roberto Burle Marx</span>
+          <span class="influence-name">Guillo Perez</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-image-col">
+      <img
+        src="https://rociomt.weebly.com/uploads/1/4/8/0/148042795/untitled-1xxx_orig.jpg"
+        alt="Rocio MT"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- EXHIBITIONS -->
+<section class="exhibitions-section">
+  <span class="section-number">04</span>
+  <span class="section-label">Record</span>
+  <h2 class="section-title">Exhibitions &amp; Publications</h2>
+  <div class="exhibition-list">
+    <div class="exhibition-item">
+      <span class="exhibit-year">2017</span>
+      <span class="exhibit-name">UNPHU Graduate Exhibition</span>
+      <span class="exhibit-meta">Santo Domingo, DR</span>
+    </div>
+    <div class="exhibition-item">
+      <span class="exhibit-year">2018</span>
+      <span class="exhibit-name">UNPHU Calendar 2018</span>
+      <span class="exhibit-meta">Publication · Print</span>
+    </div>
+    <div class="exhibition-item">
+      <span class="exhibit-year">2016</span>
+      <span class="exhibit-name">Calendar of Dominican Illustrations</span>
+      <span class="exhibit-meta">Publication · Print</span>
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSIONS CTA -->
+<section id="commissions" class="cta-section">
+  <div class="cta-inner">
+    <span class="cta-eyebrow">Open for Work</span>
+    <h2 class="cta-heading">Illustrations.<br>Murals. Portraits.</h2>
+    <p class="cta-body">
+      Available for illustration commissions, portrait work, mural projects, and logo design. Based in Brickell, Miami — available for local and remote projects.
+    </p>
+    <a href="mailto:info@tropicodesignstudio.com" class="cta-btn">Start a Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="contact-title">Studio<br>Inquiries</h2>
+    <p class="contact-body">For commissions, collaborations, or to discuss a custom project — reach out directly. Response within 48 hours.</p>
+    <a href="mailto:info@tropicodesignstudio.com" class="contact-email">info@tropicodesignstudio.com</a>
+    <p class="contact-phone">(561) 571-2770</p>
+  </div>
+  <div class="contact-right">
+    <div class="contact-details">
+      <div class="contact-detail-item">
+        <p class="contact-detail-label">Location</p>
+        <p class="contact-detail-value">1000 Brickell Ave, Miami FL</p>
+      </div>
+      <div class="contact-detail-item">
+        <p class="contact-detail-label">Available For</p>
+        <p class="contact-detail-value">Illustrations · Murals · Portraits · Logos</p>
+      </div>
+      <div class="contact-detail-item">
+        <p class="contact-detail-label">Also Practicing</p>
+        <p class="contact-detail-value">Tropico Design Studio — Landscape Architecture</p>
+      </div>
+    </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/rocio_mt/" target="_blank" class="social-link">Instagram</a>
+      <a href="https://rociomt.weebly.com" target="_blank" class="social-link">Current Site</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Rocio MT · Visual Artist</span>
+  <span class="footer-copy">© 2026 Rocio MT. All rights reserved.</span>
+  <span class="footer-credit">Design concept by <a href="mailto:lucasblatt197703@gmail.com">Lucas Blatt</a></span>
+</footer>
+
+<script>
+// Nav scroll behavior
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Hero parallax
+const heroImg = document.getElementById('hero-img');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    heroImg.style.transform = `translateY(${scrollY * 0.3}px)`;
+  }
+});
+
+// Intersection Observer for all animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe all animated elements
+const animatedEls = document.querySelectorAll(
+  '.hero-eyebrow, .hero-name span, .hero-divider, .hero-sub, .hero-location, ' +
+  '#scroll-hint, .stat-item, .section-number, .section-label, h2.section-title, ' +
+  '.gallery-header-right, .gallery-item, .arch-body, .arch-tags, ' +
+  '.arch-image-main, .arch-image-overlay, .work-item, ' +
+  '.about-eyebrow, .about-name, .pull-quote, .about-bio, .about-influences, ' +
+  '.about-image-col img, .exhibition-item, ' +
+  '.cta-eyebrow, .cta-heading, .cta-body, .cta-btn, ' +
+  '.contact-title, .contact-body, .contact-email, .contact-phone, .contact-right'
+);
+animatedEls.forEach(el => observer.observe(el));
+
+// Stagger gallery items
+const galleryItems = document.querySelectorAll('.gallery-item');
+galleryItems.forEach((item, i) => {
+  item.style.transitionDelay = `${i * 100}ms`;
+});
+
+// Fire hero animations on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.hero-eyebrow, .hero-name span, .hero-divider, .hero-sub, .hero-location, #scroll-hint').forEach(el => {
+      el.classList.add('visible');
+    });
+  }, 200);
+});
+</script>
+</body>
+</html>
