@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaDora Sims — Wildlife Photography · Space Coast, Florida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F3EE;
+  --bg-dark: #1A1612;
+  --text: #1A1612;
+  --text-light: #5C5147;
+  --spoonbill-rose: #D4766A;
+  --wetland-green: #2C4A3C;
+  --amber: #C8852A;
+  --cream: #F7F3EE;
+  --linen: #EDE8E0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Work Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  mix-blend-mode: normal;
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: #fff; }
+
+/* ===== HERO ===== */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://photos.smugmug.com/Roseate-Spoonbills/i-Vn7fMK5/0/KdNzV8t5XvdmGc3c4rvNfGjNLTGrDXvLWztbT5M8X/L/1224-7188h%208x11-L.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 22, 18, 0.75) 0%,
+    rgba(26, 22, 18, 0.15) 50%,
+    rgba(26, 22, 18, 0.3) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 60px;
+  left: 60px;
+  right: 40%;
+  color: #fff;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--spoonbill-rose);
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(60px, 8vw, 104px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin-bottom: 20px;
+  opacity: 0;
+  letter-spacing: 0.4em;
+  transition: opacity 1.0s ease, letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-name.loaded {
+  opacity: 1;
+  letter-spacing: 0.06em;
+}
+
+.hero-subtitle {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 36px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+}
+
+.hero-cta {
+  display: inline-block;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid var(--spoonbill-rose);
+  padding-bottom: 4px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s, color 0.3s;
+}
+
+.hero-cta:hover { color: var(--spoonbill-rose); }
+
+.hero-scroll-line {
+  position: absolute;
+  bottom: 60px;
+  right: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,0.5);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.hero-scroll-line::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: rgba(255,255,255,0.3);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.2); }
+}
+
+/* ===== MARQUEE ===== */
+.marquee-strip {
+  background: var(--wetland-green);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee-inner span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.75);
+  padding: 0 32px;
+}
+
+.marquee-inner span.dot {
+  color: var(--spoonbill-rose);
+  padding: 0 4px;
+  font-style: normal;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== STATS ===== */
+#stats {
+  background: var(--bg-dark);
+  padding: 80px 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  clip-path: inset(0);
+}
+
+.stat-item {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.stat-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 6vw, 96px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1;
+  display: block;
+}
+
+.stat-number span {
+  font-size: 0.5em;
+  color: var(--spoonbill-rose);
+  vertical-align: super;
+}
+
+.stat-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: 8px;
+  display: block;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--spoonbill-rose);
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.section-title.dark { color: #fff; }
+
+.section-number.is-visible,
+.section-title.is-visible {
+  opacity: 1; transform: translateY(0); clip-path: inset(0 0% 0 0);
+}
+
+/* ===== FEATURED SPOONBILL ===== */
+#featured {
+  padding: 120px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  background: var(--bg);
+}
+
+.featured-image-wrap {
+  position: relative;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-image-wrap.is-visible {
+  clip-path: inset(0% 0 0 0);
+}
+
+.featured-image-wrap img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  display: block;
+}
+
+.featured-accent-line {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 60px;
+  height: 3px;
+  background: var(--spoonbill-rose);
+}
+
+.featured-text { padding: 20px 0; }
+
+.featured-text .section-number { margin-bottom: 24px; }
+
+.featured-text .section-title { margin-bottom: 28px; }
+
+.featured-pull-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-light);
+  border-left: 2px solid var(--spoonbill-rose);
+  padding-left: 24px;
+  margin: 28px 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+.featured-pull-quote.is-visible { opacity: 1; transform: translateY(0); }
+
+.featured-body {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+}
+
+.featured-body.is-visible { opacity: 1; transform: translateY(0); }
+
+.location-tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--wetland-green);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+
+.location-tag.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ===== SPECIES GALLERY ===== */
+#gallery {
+  padding: 0 0 120px;
+  background: var(--bg);
+}
+
+.gallery-header {
+  padding: 0 60px;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.gallery-header-right {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+}
+
+.gallery-item.is-visible { clip-path: inset(0% 0 0 0); }
+.gallery-item:nth-child(2) { transition-delay: 0.1s; }
+.gallery-item:nth-child(3) { transition-delay: 0.2s; }
+.gallery-item:nth-child(4) { transition-delay: 0.3s; }
+.gallery-item:nth-child(5) { transition-delay: 0.15s; }
+.gallery-item:nth-child(6) { transition-delay: 0.25s; }
+.gallery-item:nth-child(7) { transition-delay: 0.35s; }
+.gallery-item:nth-child(8) { transition-delay: 0.05s; }
+
+.gallery-item img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+.gallery-item:hover img { transform: scale(1.04); }
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,22,18,0.7) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+.gallery-item-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+/* Gallery large items */
+.gallery-item.wide { grid-column: span 2; }
+
+.gallery-item.wide img { height: 400px; }
+
+/* ===== SPECIES CATEGORIES ===== */
+#species {
+  padding: 120px 60px;
+  background: var(--linen);
+}
+
+.species-header {
+  margin-bottom: 60px;
+}
+
+.species-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.species-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.species-card.is-visible { opacity: 1; transform: translateY(0); }
+.species-card:nth-child(2) { transition-delay: 0.12s; }
+.species-card:nth-child(3) { transition-delay: 0.24s; }
+.species-card:nth-child(4) { transition-delay: 0.06s; }
+.species-card:nth-child(5) { transition-delay: 0.18s; }
+.species-card:nth-child(6) { transition-delay: 0.3s; }
+
+.species-card img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.species-card:hover img { transform: scale(1.03); }
+
+.species-card-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(26,22,18,0.88) 0%, transparent 100%);
+  padding: 40px 24px 24px;
+}
+
+.species-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  color: #fff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.species-location {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--spoonbill-rose);
+}
+
+/* ===== SHOW SCHEDULE ===== */
+#shows {
+  padding: 120px 60px;
+  background: var(--wetland-green);
+}
+
+.shows-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-top: 60px;
+}
+
+.shows-list { list-style: none; }
+
+.show-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.show-item.is-visible { opacity: 1; transform: translateX(0); }
+.show-item:nth-child(2) { transition-delay: 0.1s; }
+.show-item:nth-child(3) { transition-delay: 0.2s; }
+.show-item:nth-child(4) { transition-delay: 0.3s; }
+.show-item:nth-child(5) { transition-delay: 0.4s; }
+.show-item:nth-child(6) { transition-delay: 0.5s; }
+.show-item:nth-child(7) { transition-delay: 0.6s; }
+
+.show-date-block {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--spoonbill-rose);
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+.show-details-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.show-details-loc {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+.shows-image-side {
+  position: relative;
+}
+
+.shows-image-side img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.shows-image-side img.is-visible { clip-path: inset(0% 0 0 0); }
+
+.shows-note {
+  margin-top: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+
+/* ===== PRINTS PRICING ===== */
+#prints {
+  padding: 120px 60px;
+  background: var(--bg);
+}
+
+.prints-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+  margin-top: 60px;
+}
+
+.prints-image img {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  display: block;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.prints-image img.is-visible { clip-path: inset(0% 0 0 0); }
+
+.prints-table { margin-top: 8px; }
+
+.print-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--linen);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.print-row.is-visible { opacity: 1; transform: translateY(0); }
+.print-row:nth-child(2) { transition-delay: 0.08s; }
+.print-row:nth-child(3) { transition-delay: 0.16s; }
+.print-row:nth-child(4) { transition-delay: 0.24s; }
+.print-row:nth-child(5) { transition-delay: 0.32s; }
+.print-row:nth-child(6) { transition-delay: 0.40s; }
+.print-row:nth-child(7) { transition-delay: 0.48s; }
+.print-row:nth-child(8) { transition-delay: 0.56s; }
+
+.print-size {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.print-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--spoonbill-rose);
+}
+
+.prints-note {
+  margin-top: 28px;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-light);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+/* ===== ABOUT ===== */
+#about {
+  padding: 120px 60px;
+  background: var(--bg-dark);
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  gap: 80px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.about-image-block { position: relative; }
+
+.about-image-block img {
+  width: 100%;
+  height: 580px;
+  object-fit: cover;
+  display: block;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-image-block img.is-visible { clip-path: inset(0% 0 0 0); }
+
+.about-image-caption {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--spoonbill-rose);
+  padding: 16px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: #fff;
+}
+
+.about-text .section-number { color: var(--spoonbill-rose); }
+
+.about-text .section-title { color: #fff; margin-bottom: 32px; }
+
+.about-bio {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+}
+
+.about-bio.is-visible { opacity: 1; transform: translateY(0); }
+
+.about-highlight {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  border-left: 2px solid var(--spoonbill-rose);
+  padding-left: 20px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+.about-highlight.is-visible { opacity: 1; transform: translateY(0); }
+
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+}
+
+.about-tags.is-visible { opacity: 1; transform: translateY(0); }
+
+.about-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px 14px;
+}
+
+/* ===== CTA ===== */
+#cta {
+  padding: 120px 60px;
+  background: var(--spoonbill-rose);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#cta::before {
+  content: 'PRINTS';
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 280px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.06);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+}
+
+.cta-eyebrow {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 20px;
+}
+
+.cta-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(44px, 5vw, 72px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 28px;
+}
+
+.cta-sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 48px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: #fff;
+  color: var(--spoonbill-rose);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 18px 44px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.cta-btn:hover {
+  background: var(--bg-dark);
+  color: #fff;
+}
+
+/* ===== CONTACT ===== */
+#contact {
+  padding: 120px 60px;
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+.contact-text .section-title { margin-bottom: 32px; }
+
+.contact-body {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 40px;
+}
+
+.contact-links { display: flex; flex-direction: column; gap: 16px; }
+
+.contact-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.3s;
+}
+
+.contact-link:hover { color: var(--spoonbill-rose); }
+
+.contact-link-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  min-width: 60px;
+}
+
+.contact-image img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg-dark);
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.5);
+}
+
+.footer-copy {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+.footer-credit {
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.08em;
+}
+
+.footer-credit a {
+  color: var(--spoonbill-rose);
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .hero-content { left: 24px; right: 24px; bottom: 40px; }
+  #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+  #featured, #about, #contact { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+  .about-layout { grid-template-columns: 1fr; }
+  .prints-layout { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+  #gallery, #species, #shows, #prints, #cta { padding: 80px 24px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .species-grid { grid-template-columns: 1fr; }
+  .shows-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  #stats { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">LaDora Sims</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#prints">Prints</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="heroEyebrow">Space Coast · Florida</p>
+    <h1 class="hero-name" id="heroName">LaDora<br>Sims</h1>
+    <p class="hero-subtitle" id="heroSubtitle">Wildlife & Nature Photography · Merritt Island NWR</p>
+    <a href="#gallery" class="hero-cta" id="heroCta">Explore the Work</a>
+  </div>
+  <div class="hero-scroll-line">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Roseate Spoonbills</span><span class="dot">·</span>
+    <span>Great Blue Herons</span><span class="dot">·</span>
+    <span>Manatees</span><span class="dot">·</span>
+    <span>Space Coast, Florida</span><span class="dot">·</span>
+    <span>Fine Art Prints</span><span class="dot">·</span>
+    <span>Merritt Island NWR</span><span class="dot">·</span>
+    <span>Brown Pelicans</span><span class="dot">·</span>
+    <span>Bald Eagles</span><span class="dot">·</span>
+    <span>Available at 2026 Shows</span><span class="dot">·</span>
+    <!-- duplicate for seamless loop -->
+    <span>Roseate Spoonbills</span><span class="dot">·</span>
+    <span>Great Blue Herons</span><span class="dot">·</span>
+    <span>Manatees</span><span class="dot">·</span>
+    <span>Space Coast, Florida</span><span class="dot">·</span>
+    <span>Fine Art Prints</span><span class="dot">·</span>
+    <span>Merritt Island NWR</span><span class="dot">·</span>
+    <span>Brown Pelicans</span><span class="dot">·</span>
+    <span>Bald Eagles</span><span class="dot">·</span>
+    <span>Available at 2026 Shows</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">20<span>+</span></span>
+    <span class="stat-label">Species Photographed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">7</span>
+    <span class="stat-label">2026 Art Shows</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">500<span>+</span></span>
+    <span class="stat-label">Gallery Images</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">$40<span>+</span></span>
+    <span class="stat-label">Fine Art Prints</span>
+  </div>
+</section>
+
+<!-- FEATURED SPOONBILL -->
+<section id="featured">
+  <div class="featured-image-wrap">
+    <div class="featured-accent-line"></div>
+    <img
+      src="https://photos.smugmug.com/Herons-Egrets-and-Ibis/i-MmBHQqb/0/MBMDVKLwxZG4pnxDgZKL7ZxVVRk98qHFD2s8DZtVf/L/1277-6841b%20GP%208x11-L.jpg"
+      alt="Great Egret at Circle B" loading="lazy">
+  </div>
+  <div class="featured-text">
+    <p class="section-number">01 — Featured Work</p>
+    <h2 class="section-title">Florida's Wild Heart,<br>Frame by Frame</h2>
+    <blockquote class="featured-pull-quote">
+      "Every image is a quiet moment — a split second where the wild pauses and lets you in."
+    </blockquote>
+    <p class="featured-body">
+      Working from Merritt Island National Wildlife Refuge and wetlands across Central Florida,
+      LaDora Sims has spent years building an intimate archive of the birds, mammals, and
+      reptiles that call the Space Coast home. Her prints hang in homes throughout Florida —
+      and sell out at shows across the state.
+    </p>
+    <span class="location-tag">Merritt Island · Viera Wetlands · Circle B Reserve</span>
+  </div>
+</section>
+
+<!-- GALLERY GRID -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <p class="section-number">02 — Portfolio</p>
+      <h2 class="section-title">The Collection</h2>
+    </div>
+    <div class="gallery-header-right">Fine art prints available for purchase</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item wide">
+      <img src="https://photos.smugmug.com/Roseate-Spoonbills/i-Vn7fMK5/0/KdNzV8t5XvdmGc3c4rvNfGjNLTGrDXvLWztbT5M8X/L/1224-7188h%208x11-L.jpg" alt="Roseate Spoonbills" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Roseate Spoonbills</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://photos.smugmug.com/Herons-Egrets-and-Ibis/i-MmBHQqb/0/KrqWxKzN9kw6CSTFTjQBCtZ7KR6RThR2gxRqVQLgW/Ti/1277-6841b%20GP%208x11-Ti.jpg" alt="Great Egret" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Great Egret</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://photos.smugmug.com/Pelicans/i-zJdgZSB/0/NG3cghzkStws4wkxSxx6CFNJkJPCdpg9pmHJnDp9L/L/008-5099%20Brown%20Pelican%2C%20Mathers%20Bridge%2C%20Merritt%20Island%20Florida-L.jpg" alt="Brown Pelican" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Brown Pelican</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://photos.smugmug.com/Roseate-Spoonbills/i-D8P349x/0/KKQ5NCsjN4Jh9m4MKm4JkbmDq358MKcnDkRxWcG2F/Ti/183-0461%20Roseate%20Spoonbill%2C%20Merritt%20Island%20National%20Wildlife%20Refuge%2C%20Florida-Ti.jpg" alt="Roseate Spoonbill" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Roseate Spoonbill, MINWR</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://photos.smugmug.com/Herons-Egrets-and-Ibis/i-NCshkxL/0/MfNd5GzvS6TSfdF7KdR6Cff5bsDfxPKx4Ct7CZ7Gb/Ti/110-7654%20Great%20Blue%20Heron%20Dance%2C%20Viera%20Wetlands%2C%20Florida%20-%20Copy-Ti.jpg" alt="Great Blue Heron Dance" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Great Blue Heron Dance</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://photos.smugmug.com/Manatees/i-5gH2vrW/0/KrjbrCwKkQmskjL9dS6JmrdZvHQtwkrzvqxRmp3xn/L/032-9023%20Manatee%2C%20Sebastian%20Inlet%2C%20Florida-L.jpg" alt="Manatee" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Manatee, Sebastian Inlet</span></div>
+    </div>
+    <div class="gallery-item wide">
+      <img src="https://photos.smugmug.com/Sunrises-and-Sunsets/i-8nvDNHH/0/L6rxVKHLhvZTBtQpPvshcGX9QJDLcnrtf58Fj7qSm/L/385-9019%20Mystic%20Morning%2C%20St%20Augustine%2C%20Florida-L.jpg" alt="Mystic Morning" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Mystic Morning, St Augustine</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://photos.smugmug.com/Eagles-Owls-and-Ospreys/i-pFmGLVq/0/NfmK5D8kX7Mp36sLxLwxqmFwKtXHNSKxTCHXH69w7/L/585-9686%20Bald%20Eage%2C%20Merritt%20Island%2C%20Florida-L.jpg" alt="Bald Eagle" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bald Eagle, Merritt Island</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIES CATEGORIES -->
+<section id="species">
+  <div class="species-header">
+    <p class="section-number">03 — By Subject</p>
+    <h2 class="section-title">From the Wetlands</h2>
+  </div>
+  <div class="species-grid">
+    <div class="species-card">
+      <img src="https://photos.smugmug.com/Roseate-Spoonbills/i-ST4b7SG/0/LmwWGkrN2LbBvXrCQpZcJGXqn8LP4Z7WNRxk6wPFR/Ti/228-3581%20Roseate%20Spoonbill%20Splendor%2C%20Viera%20Wetlands%2C%20Florida-Ti.jpg" alt="Roseate Spoonbills" loading="lazy">
+      <div class="species-card-info">
+        <span class="species-name">Roseate Spoonbills</span>
+        <span class="species-location">Viera Wetlands · Merritt Island</span>
+      </div>
+    </div>
+    <div class="species-card">
+      <img src="https://photos.smugmug.com/Herons-Egrets-and-Ibis/i-szLNHzD/0/NX24MFTRLKg5CBfmNKShtN3skzKj8xjKGfbtKvSc3/Ti/039-1555%20Great%20Egret%20%26%20Chicks%2C%20Melbourne%20Florida%20-%20Copy-Ti.jpg" alt="Great Egret Chicks" loading="lazy">
+      <div class="species-card-info">
+        <span class="species-name">Herons &amp; Egrets</span>
+        <span class="species-location">Melbourne · St Augustine</span>
+      </div>
+    </div>
+    <div class="species-card">
+      <img src="https://photos.smugmug.com/Manatees/i-JbhqD99/0/LR2LdZD3SjTmSckndTwnxMx9Qxv7KfNK3qVmKgZL3/Th/095-4224%20Manatee%20%26%20Canoe%2C%20Blue%20Spring%20State%20Park%2C%20Florida-Th.jpg" alt="Manatee and Canoe" loading="lazy">
+      <div class="species-card-info">
+        <span class="species-name">Manatees</span>
+        <span class="species-location">Blue Spring · Sebastian Inlet</span>
+      </div>
+    </div>
+    <div class="species-card">
+      <img src="https://photos.smugmug.com/Pelicans/i-w7nvhsW/0/Kv8T5ccb8h52KGsF6GL72v3D4g2sghkZ7qSq45v2J/Ti/279-7169%20Playful%20Pelican%2C%20Sebastian%20Inlet%2C%20Florida%20-%20Copy-Ti.jpg" alt="Playful Pelican" loading="lazy">
+      <div class="species-card-info">
+        <span class="species-name">Pelicans</span>
+        <span class="species-location">Sebastian Inlet · Merritt Island</span>
+      </div>
+    </div>
+    <div class="species-card">
+      <img src="https://photos.smugmug.com/Eagles-Owls-and-Ospreys/i-pFmGLVq/0/NfmK5D8kX7Mp36sLxLwxqmFwKtXHNSKxTCHXH69w7/L/585-9686%20Bald%20Eage%2C%20Merritt%20Island%2C%20Florida-L.jpg" alt="Bald Eagle" loading="lazy">
+      <div class="species-card-info">
+        <span class="species-name">Eagles &amp; Raptors</span>
+        <span class="species-location">Merritt Island NWR</span>
+      </div>
+    </div>
+    <div class="species-card">
+      <img src="https://photos.smugmug.com/Sunrises-and-Sunsets/i-8nvDNHH/0/L6rxVKHLhvZTBtQpPvshcGX9QJDLcnrtf58Fj7qSm/L/385-9019%20Mystic%20Morning%2C%20St%20Augustine%2C%20Florida-L.jpg" alt="Sunrises and Sunsets" loading="lazy">
+      <div class="species-card-info">
+        <span class="species-name">Sunrises &amp; Landscapes</span>
+        <span class="species-location">Space Coast · St Augustine</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOW SCHEDULE -->
+<section id="shows">
+  <p class="section-number" style="color: rgba(255,255,255,0.5)">04 — 2026 Schedule</p>
+  <h2 class="section-title dark">Find LaDora at a Show Near You</h2>
+  <div class="shows-grid">
+    <ul class="shows-list">
+      <li class="show-item">
+        <div class="show-date-block">Feb 14–15</div>
+        <div>
+          <span class="show-details-name">St Augustine Beach Craft Fest</span>
+          <span class="show-details-loc">St Augustine Beach, FL</span>
+        </div>
+      </li>
+      <li class="show-item">
+        <div class="show-date-block">Feb 21–22</div>
+        <div>
+          <span class="show-details-name">Art Fiesta</span>
+          <span class="show-details-loc">New Smyrna Beach, FL</span>
+        </div>
+      </li>
+      <li class="show-item">
+        <div class="show-date-block">Mar 7–8</div>
+        <div>
+          <span class="show-details-name">Bartow Art Festival</span>
+          <span class="show-details-loc">Bartow, FL</span>
+        </div>
+      </li>
+      <li class="show-item">
+        <div class="show-date-block">Mar 14–15</div>
+        <div>
+          <span class="show-details-name">St Augustine Beach Craft Fest</span>
+          <span class="show-details-loc">St Augustine Beach, FL</span>
+        </div>
+      </li>
+      <li class="show-item">
+        <div class="show-date-block">Mar 21–22</div>
+        <div>
+          <span class="show-details-name">Winter Haven Art Festival</span>
+          <span class="show-details-loc">Winter Haven, FL</span>
+        </div>
+      </li>
+      <li class="show-item">
+        <div class="show-date-block">Mar 28–29</div>
+        <div>
+          <span class="show-details-name">Spring Art Festival</span>
+          <span class="show-details-loc">DeLand, FL</span>
+        </div>
+      </li>
+      <li class="show-item">
+        <div class="show-date-block">Apr 11–12</div>
+        <div>
+          <span class="show-details-name">Cedar Key Art Festival</span>
+          <span class="show-details-loc">Cedar Key, FL</span>
+        </div>
+      </li>
+    </ul>
+    <div class="shows-image-side">
+      <img src="https://photos.smugmug.com/Roseate-Spoonbills/i-8DpMfB5/0/Mz2zpR9NbCS54qkLCZqFZJHKGWDhbmHr64vRgsXrL/Ti/232-5489%20Roseate%20Spoonbills%2C%20Viera%20Wetlands%2C%20Florida-Ti.jpg" alt="Roseate Spoonbills Viera Wetlands" loading="lazy">
+      <p class="shows-note">Originals and fine art prints available for purchase at all shows. To order ahead of a show or inquire about shipping, contact LaDora directly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRINTS PRICING -->
+<section id="prints">
+  <p class="section-number">05 — Fine Art Prints</p>
+  <h2 class="section-title">Bring the Wild Home</h2>
+  <div class="prints-layout">
+    <div class="prints-image">
+      <img src="https://photos.smugmug.com/Herons-Egrets-and-Ibis/i-MmBHQqb/0/MBMDVKLwxZG4pnxDgZKL7ZxVVRk98qHFD2s8DZtVf/L/1277-6841b%20GP%208x11-L.jpg" alt="Great Egret Circle B" loading="lazy">
+    </div>
+    <div>
+      <p style="font-size:13px; font-weight:300; letter-spacing:0.08em; color:var(--text-light); margin-bottom:28px; line-height:1.7;">All prints are produced from original digital files shot by LaDora Sims. White border prints arrive ready for standard frames. Prices do not include tax or shipping.</p>
+      <div class="prints-table">
+        <div class="print-row"><span class="print-size">8×11 matted to 11×14</span><span class="print-price">$40</span></div>
+        <div class="print-row"><span class="print-size">16×20 with white border</span><span class="print-price">$90</span></div>
+        <div class="print-row"><span class="print-size">12×22 with white border</span><span class="print-price">$90</span></div>
+        <div class="print-row"><span class="print-size">18×24 with white border</span><span class="print-price">$120</span></div>
+        <div class="print-row"><span class="print-size">14×24 with white border</span><span class="print-price">$120</span></div>
+        <div class="print-row"><span class="print-size">16×28 with white border</span><span class="print-price">$190</span></div>
+        <div class="print-row"><span class="print-size">22×28 with white border</span><span class="print-price">$190</span></div>
+        <div class="print-row"><span class="print-size">24×36 with white border</span><span class="print-price">$240</span></div>
+      </div>
+      <p class="prints-note">To order, call <strong>(321) 720-2407</strong> or email <strong>ladorasims@mpinet.net</strong>. Prints can be picked up at a show or shipped. Custom sizes available on request.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-layout">
+    <div class="about-image-block">
+      <img src="https://photos.smugmug.com/Roseate-Spoonbills/i-NghT9Fm/0/LBLJbgXz89NCmH439HQSfWgbHSccQWj4v84pNdgJk/Ti/597-2725%20Roseate%20Spoonbill%2C%20Merritt%20Island%2C%20Florida%20Biolab%20Road-Ti.jpg" alt="Roseate Spoonbill Biolab Road" loading="lazy">
+      <div class="about-image-caption">Biolab Road, Merritt Island NWR</div>
+    </div>
+    <div class="about-text">
+      <p class="section-number">06 — About</p>
+      <h2 class="section-title dark">The Photographer</h2>
+      <p class="about-bio">
+        LaDora Sims is a wildlife and nature photographer based on Florida's Space Coast.
+        Working primarily in the wetlands, refuges, and coastal habitats of Central Florida,
+        she has built a body of work that documents the region's extraordinary biodiversity
+        with patience and precision.
+      </p>
+      <blockquote class="about-highlight">
+        Her photographs are sold as fine art prints at shows across Florida, from Cedar Key to St Augustine Beach.
+      </blockquote>
+      <p class="about-bio">
+        Her subjects — roseate spoonbills in sunrise light, manatees beneath clear springs,
+        great blue herons mid-dance — are caught at moments most photographers never witness.
+        Each image in her catalog represents hours in the field.
+      </p>
+      <div class="about-tags">
+        <span class="about-tag">Merritt Island NWR</span>
+        <span class="about-tag">Viera Wetlands</span>
+        <span class="about-tag">Circle B Reserve</span>
+        <span class="about-tag">Sebastian Inlet</span>
+        <span class="about-tag">Blue Spring SP</span>
+        <span class="about-tag">Space Coast, FL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-eyebrow">Fine Art Prints</p>
+  <h2 class="cta-heading">Your favorite Florida species,<br>beautifully printed.</h2>
+  <p class="cta-sub">From a compact 8×11 matted print to a statement 24×36, every size is available to order. Visit a show or reach out directly.</p>
+  <a href="#contact" class="cta-btn">Order a Print</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-text">
+    <p class="section-number">07 — Inquiries</p>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="contact-body">To order prints, inquire about custom sizes, or ask about show appearances, reach out directly. LaDora responds to all inquiries personally.</p>
+    <div class="contact-links">
+      <a href="tel:3217202407" class="contact-link">
+        <span class="contact-link-label">Phone</span>
+        (321) 720-2407
+      </a>
+      <a href="mailto:ladorasims@mpinet.net" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        ladorasims@mpinet.net
+      </a>
+    </div>
+  </div>
+  <div class="contact-image">
+    <img src="https://photos.smugmug.com/Roseate-Spoonbills/i-tpF9SvL/0/LDSkdCBbWdLWLnt3mkvLthBZWm3MFhLkmcXGJTQZj/Ti/401-3492%20Roseate%20Spoonbills%2C%20Orlando%20Wetlands.%20Florida-Ti.jpg" alt="Roseate Spoonbills Orlando Wetlands" loading="lazy">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Photography by LaDora Sims</span>
+  <span class="footer-copy">© 2026 · Space Coast, Florida</span>
+  <span class="footer-credit">Site concept by <a href="#">Lucas Blatt</a></span>
+</footer>
+
+<script>
+// Hero entrance animations
+document.addEventListener('DOMContentLoaded', () => {
+  const heroName = document.getElementById('heroName');
+  const heroEyebrow = document.getElementById('heroEyebrow');
+  const heroSubtitle = document.getElementById('heroSubtitle');
+  const heroCta = document.getElementById('heroCta');
+
+  // Trigger hero name letter-spacing animation
+  setTimeout(() => { heroName.classList.add('loaded'); }, 100);
+
+  // Fade in other hero elements
+  setTimeout(() => {
+    heroEyebrow.style.opacity = '1';
+    heroEyebrow.style.transform = 'translateY(0)';
+  }, 200);
+
+  setTimeout(() => {
+    heroSubtitle.style.opacity = '1';
+    heroSubtitle.style.transform = 'translateY(0)';
+  }, 500);
+
+  setTimeout(() => {
+    heroCta.style.opacity = '1';
+    heroCta.style.transform = 'translateY(0)';
+  }, 700);
+});
+
+// Hero parallax
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight * 1.5) {
+    heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+  }
+}, { passive: true });
+
+// IntersectionObserver for all animated elements
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe all animatable elements
+document.querySelectorAll(
+  '.stat-item, .section-number, .section-title, .featured-image-wrap, ' +
+  '.featured-pull-quote, .featured-body, .location-tag, ' +
+  '.gallery-item, .species-card, .show-item, .shows-image-side img, ' +
+  '.prints-image img, .print-row, .about-image-block img, ' +
+  '.about-bio, .about-highlight, .about-tags'
+).forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
