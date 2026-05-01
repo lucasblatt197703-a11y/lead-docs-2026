@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jerome Glickman — Fine Art</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+img { opacity: 1 !important; clip-path: none !important; transform: none !important; max-width: 100% !important; display: block; }
+body { overflow-x: hidden; }
+
+:root {
+  --bg: #FAFAF8;
+  --dark: #111010;
+  --burgundy: #8B1A1A;
+  --warm-gray: #888;
+  --off-white: #F0EDE8;
+  --light-rule: #D8D4CE;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--dark);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+}
+
+/* ============ NAV ============ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 60px;
+  mix-blend-mode: multiply;
+}
+
+nav .nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  color: var(--bg);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+}
+
+nav ul li a {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bg);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+nav ul li a:hover { color: var(--burgundy); }
+
+/* ============ HERO ============ */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  background: var(--dark);
+  overflow: hidden;
+}
+
+.hero-mosaic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+}
+
+.mosaic-img {
+  overflow: hidden;
+  position: relative;
+}
+
+.mosaic-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.75 !important;
+  transform: none !important;
+  clip-path: none !important;
+  filter: saturate(0.85);
+  transition: opacity 0.6s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.mosaic-img:hover img {
+  opacity: 0.9 !important;
+  transform: scale(1.03) !important;
+}
+
+.mosaic-img.large {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+.mosaic-img.top-right {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.mosaic-img.bottom-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+/* Dark vignette overlay */
+.hero-mosaic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(17,16,16,0.55) 0%, rgba(17,16,16,0.25) 50%, rgba(17,16,16,0.5) 100%);
+  pointer-events: none;
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 60px 60px;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.hero-name-block {
+  position: relative;
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(56px, 8vw, 96px);
+  letter-spacing: 0.25em;
+  color: #FAFAF8;
+  text-transform: uppercase;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  transition: letter-spacing 1.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.hero-name.loaded {
+  letter-spacing: 0.15em;
+}
+
+/* Accent line overlapping name */
+.hero-name-block::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: var(--burgundy);
+  z-index: 2;
+}
+
+.hero-tagline {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: rgba(250,250,248,0.7);
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+.hero-side-info {
+  text-align: right;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s 0.4s, transform 0.8s 0.4s;
+}
+
+.hero-side-info.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-side-info p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(250,250,248,0.65);
+  line-height: 1.7;
+}
+
+/* ============ CREDENTIALS STRIP ============ */
+#credentials {
+  background: var(--dark);
+  padding: 20px 60px;
+  border-top: 1px solid rgba(250,250,248,0.1);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  overflow: hidden;
+}
+
+.cred-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cred-item span {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,250,248,0.55);
+}
+
+.cred-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--burgundy);
+  flex-shrink: 0;
+}
+
+/* Marquee for credentials */
+.marquee-track {
+  display: flex;
+  gap: 40px;
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============ STATS SECTION ============ */
+#stats {
+  padding: 100px 60px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--light-rule);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat-item {
+  padding: 40px 40px 40px 0;
+  border-right: 1px solid var(--light-rule);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+.stat-item:first-child { padding-left: 0; }
+.stat-item:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
+
+.stat-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat-item:nth-child(2) { transition-delay: 0.1s; padding-left: 40px; }
+.stat-item:nth-child(3) { transition-delay: 0.2s; padding-left: 40px; }
+.stat-item:nth-child(4) { transition-delay: 0.3s; }
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(60px, 8vw, 96px);
+  color: var(--dark);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+}
+
+/* ============ SECTION HEADER ============ */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.section-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  color: var(--burgundy);
+  letter-spacing: 0.15em;
+  font-weight: 300;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: 0.08em;
+  color: var(--dark);
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
+}
+
+.section-title.is-visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--light-rule);
+  margin-left: 24px;
+}
+
+/* ============ PAINTINGS GALLERY ============ */
+#paintings {
+  padding: 120px 60px;
+  background: var(--bg);
+}
+
+/* Staggered pairs layout */
+.staggered-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+}
+
+.gallery-pair {
+  display: contents;
+}
+
+.gallery-item {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.95s cubic-bezier(0.76,0,0.24,1), opacity 0.4s;
+}
+
+.gallery-item.is-visible {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+
+.gallery-item:nth-child(2) { transition-delay: 0.12s; margin-top: 60px; }
+.gallery-item:nth-child(3) { transition-delay: 0.06s; }
+.gallery-item:nth-child(4) { transition-delay: 0.18s; margin-top: -40px; }
+.gallery-item:nth-child(5) { transition-delay: 0.1s; margin-top: 40px; }
+.gallery-item:nth-child(6) { transition-delay: 0.22s; margin-top: 20px; }
+
+.gallery-item img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.04) !important;
+}
+
+.gallery-caption {
+  padding: 14px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.gallery-caption h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--dark);
+}
+
+.gallery-caption span {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+}
+
+/* Full-width featured piece */
+.gallery-featured {
+  margin: 40px 0 0;
+  overflow: hidden;
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s cubic-bezier(0.76,0,0.24,1) 0.15s, opacity 0.4s 0.15s;
+}
+
+.gallery-featured.is-visible {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+
+.gallery-featured img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.gallery-featured:hover img {
+  transform: scale(1.02) !important;
+}
+
+/* ============ MIXED MEDIA ============ */
+#mixed-media {
+  padding: 120px 60px;
+  background: var(--off-white);
+}
+
+.media-editorial {
+  display: grid;
+  grid-template-columns: 45% 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.media-editorial .left-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.media-editorial .left-stack img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+.media-editorial .left-stack img.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.media-editorial .left-stack img:nth-child(2) { transition-delay: 0.15s; }
+
+.media-right {
+  padding-top: 20px;
+}
+
+.media-right .media-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.5;
+  color: var(--dark);
+  margin-bottom: 32px;
+  padding-left: 24px;
+  border-left: 2px solid var(--burgundy);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+.media-right .media-quote.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.media-right p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s 0.2s, transform 0.7s 0.2s;
+}
+
+.media-right p.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============ PHOTOGRAPHY STRIP ============ */
+#photography {
+  padding: 120px 0;
+  background: var(--dark);
+}
+
+.photo-header {
+  padding: 0 60px;
+  margin-bottom: 60px;
+}
+
+.photo-header .section-title {
+  color: var(--bg);
+}
+
+.photo-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.photo-strip .photo-item {
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.85s cubic-bezier(0.76,0,0.24,1), opacity 0.4s;
+}
+
+.photo-strip .photo-item.is-visible {
+  clip-path: inset(0 0% 0 0);
+  opacity: 1;
+}
+
+.photo-strip .photo-item:nth-child(2) { transition-delay: 0.12s; }
+.photo-strip .photo-item:nth-child(3) { transition-delay: 0.24s; }
+
+.photo-strip .photo-item img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  filter: saturate(0.9);
+  transition: transform 0.8s, filter 0.5s;
+}
+
+.photo-strip .photo-item:hover img {
+  transform: scale(1.04) !important;
+  filter: saturate(1);
+}
+
+/* ============ EXHIBITIONS ============ */
+#exhibitions {
+  padding: 120px 60px;
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+
+.exhibitions-left .section-header { margin-bottom: 48px; }
+
+.exhibition-list {
+  list-style: none;
+}
+
+.exhibition-list li {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--light-rule);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+
+.exhibition-list li.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.exhibition-list li:nth-child(2) { transition-delay: 0.08s; }
+.exhibition-list li:nth-child(3) { transition-delay: 0.16s; }
+.exhibition-list li:nth-child(4) { transition-delay: 0.24s; }
+.exhibition-list li:nth-child(5) { transition-delay: 0.32s; }
+.exhibition-list li:nth-child(6) { transition-delay: 0.40s; }
+
+.exh-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  color: var(--burgundy);
+  letter-spacing: 0.1em;
+  padding-top: 2px;
+}
+
+.exh-details h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.exh-details p {
+  font-size: 13px;
+  color: var(--warm-gray);
+  letter-spacing: 0.05em;
+}
+
+.exhibitions-right {
+  padding-top: 8px;
+}
+
+.awards-block {
+  margin-bottom: 60px;
+}
+
+.awards-block h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  margin-bottom: 32px;
+  color: var(--dark);
+}
+
+.award-item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--light-rule);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+
+.award-item.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.award-item:nth-child(2) { transition-delay: 0.1s; }
+.award-item:nth-child(3) { transition-delay: 0.2s; }
+
+.award-item h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.award-item p {
+  font-size: 13px;
+  color: var(--warm-gray);
+}
+
+/* ============ ABOUT ============ */
+#about {
+  padding: 140px 60px;
+  background: var(--off-white);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 60px;
+  align-items: start;
+}
+
+.about-divider {
+  background: var(--burgundy);
+  align-self: stretch;
+  min-height: 400px;
+  opacity: 0;
+  transition: opacity 0.8s 0.3s;
+}
+
+.about-divider.is-visible { opacity: 1; }
+
+.about-portrait {
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.8s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.about-portrait.is-visible {
+  opacity: 1;
+  transform: scale(1) !important;
+}
+
+.about-portrait img {
+  width: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.about-text {
+  padding-top: 8px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+}
+
+.about-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 40px;
+  letter-spacing: 0.08em;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.about-text .about-subtitle {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 32px;
+}
+
+.about-text p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #3A3A3A;
+  margin-bottom: 20px;
+}
+
+.about-credentials-list {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-cred {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #555;
+}
+
+.about-cred::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--burgundy);
+  flex-shrink: 0;
+}
+
+/* ============ ARTIST STATEMENT ============ */
+#statement {
+  padding: 140px 60px;
+  background: var(--bg);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.statement-label {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 40px;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.statement-label.is-visible { opacity: 1; }
+
+.statement-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(26px, 3.5vw, 38px);
+  line-height: 1.55;
+  color: var(--dark);
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s 0.1s, transform 0.9s 0.1s;
+}
+
+.statement-quote.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.statement-attribution {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  opacity: 0;
+  transition: opacity 0.6s 0.3s;
+}
+
+.statement-attribution.is-visible { opacity: 1; }
+
+/* ============ CTA SECTION ============ */
+#cta {
+  padding: 0;
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+}
+
+.cta-bg-img {
+  position: absolute;
+  inset: 0;
+}
+
+.cta-bg-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3 !important;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  padding: 100px 60px;
+  max-width: 700px;
+}
+
+.cta-content h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 5vw, 58px);
+  color: var(--bg);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s, transform 0.9s;
+}
+
+.cta-content h2.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta-content p {
+  font-size: 15px;
+  color: rgba(250,250,248,0.65);
+  margin-bottom: 40px;
+  line-height: 1.7;
+  opacity: 0;
+  transition: opacity 0.9s 0.15s;
+}
+
+.cta-content p.is-visible { opacity: 1; }
+
+.cta-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid rgba(250,250,248,0.5);
+  color: var(--bg);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+  opacity: 0;
+  transition: opacity 0.9s 0.25s, background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.cta-btn.is-visible { opacity: 1; }
+
+.cta-btn:hover {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: #fff;
+}
+
+/* ============ CONTACT ============ */
+#contact {
+  padding: 120px 60px;
+  background: var(--bg);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 52px);
+  letter-spacing: 0.08em;
+  color: var(--dark);
+  line-height: 1.15;
+  margin-bottom: 32px;
+}
+
+.contact-left p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.contact-link {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--dark);
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--light-rule);
+  transition: color 0.25s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-link:hover { color: var(--burgundy); }
+
+.contact-link::after {
+  content: '→';
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  transform: translateX(-8px);
+}
+
+.contact-link:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.contact-right {
+  padding-top: 20px;
+}
+
+.contact-detail {
+  margin-bottom: 28px;
+}
+
+.contact-detail label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.contact-detail p {
+  font-size: 16px;
+  color: var(--dark);
+}
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--dark);
+  padding: 36px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,250,248,0.6);
+}
+
+.footer-copy {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(250,250,248,0.35);
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+}
+
+.footer-links a {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,250,248,0.45);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.footer-links a:hover { color: var(--burgundy); }
+
+/* ============ SECTION WRAPPER ============ */
+#statement-wrap {
+  background: var(--bg);
+  padding: 0 60px;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  nav ul { gap: 20px; }
+
+  .hero-text { padding: 0 24px 40px; }
+
+  #credentials { padding: 16px 24px; }
+
+  #stats { padding: 60px 24px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .stat-item:nth-child(2) { padding-left: 20px; }
+  .stat-item:nth-child(3) { padding-left: 0; padding-right: 20px; border-right: 1px solid var(--light-rule); }
+  .stat-item:nth-child(4) { border-right: none; padding-left: 20px; }
+
+  #paintings { padding: 80px 24px; }
+  .staggered-gallery { grid-template-columns: 1fr; gap: 24px; }
+  .gallery-item:nth-child(even) { margin-top: 0; }
+  .gallery-item:nth-child(odd) { margin-top: 0; }
+
+  #mixed-media { padding: 80px 24px; }
+  .media-editorial { grid-template-columns: 1fr; gap: 32px; }
+
+  #photography { padding: 80px 0; }
+  .photo-header { padding: 0 24px; }
+  .photo-strip { grid-template-columns: 1fr; }
+  .photo-strip .photo-item img { height: 300px; }
+
+  #exhibitions { padding: 80px 24px; grid-template-columns: 1fr; gap: 60px; }
+
+  #about { padding: 80px 24px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-divider { display: none; }
+
+  #statement-wrap { padding: 0 24px; }
+  #statement { padding: 80px 0; }
+
+  #cta .cta-content { padding: 80px 24px; }
+
+  #contact { padding: 80px 24px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+
+  footer { padding: 28px 24px; flex-direction: column; gap: 16px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 42px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-item img { height: 320px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Jerome Glickman</a>
+  <ul>
+    <li><a href="#paintings">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#exhibitions">Exhibitions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO MOSAIC -->
+<section id="hero">
+  <div class="hero-mosaic">
+    <div class="mosaic-img large">
+      <img src="images/jerome/img01.jpg" alt="Figurative Painting" loading="eager">
+    </div>
+    <div class="mosaic-img top-right">
+      <img src="images/jerome/img03.jpg" alt="Abstract Expressionist Work" loading="eager">
+    </div>
+    <div class="mosaic-img bottom-right">
+      <img src="images/jerome/img07.jpg" alt="Mixed Media" loading="eager">
+    </div>
+  </div>
+
+  <div class="hero-text">
+    <div class="hero-name-block">
+      <h1 class="hero-name" id="heroName">JEROME GLICKMAN</h1>
+      <p class="hero-tagline">Painter &nbsp;·&nbsp; Sculptor &nbsp;·&nbsp; Educator &nbsp;·&nbsp; Boynton Beach, FL</p>
+    </div>
+    <div class="hero-side-info" id="heroSide">
+      <p>Figurative & Abstract Expressionist<br>Works in oil, mixed media & sculpture<br>Ed.D. · Lynn University Faculty</p>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS MARQUEE STRIP -->
+<div id="credentials">
+  <div class="marquee-track">
+    <div class="cred-item"><span>Ed.D. — Doctor of Education</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Adjunct Professor · Lynn University</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Art Students League — Life Member</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Boca Museum of Art — Award Winner</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>FAU Library Gallery — Award Winner</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Digital Media Arts College — Faculty</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>South Florida Fine Arts Community</span></div>
+    <div class="cred-dot"></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="cred-item"><span>Ed.D. — Doctor of Education</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Adjunct Professor · Lynn University</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Art Students League — Life Member</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Boca Museum of Art — Award Winner</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>FAU Library Gallery — Award Winner</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>Digital Media Arts College — Faculty</span></div>
+    <div class="cred-dot"></div>
+    <div class="cred-item"><span>South Florida Fine Arts Community</span></div>
+    <div class="cred-dot"></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">40+</div>
+      <div class="stat-label">Years Creating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Disciplines</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2×</div>
+      <div class="stat-label">Award Winner</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">Ed.D.</div>
+      <div class="stat-label">Doctor of Education</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAINTINGS GALLERY -->
+<section id="paintings">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Paintings</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="staggered-gallery">
+    <div class="gallery-item">
+      <img src="images/jerome/img01.jpg" alt="In Tune with Nature" loading="eager">
+      <div class="gallery-caption">
+        <h3>In Tune with Nature</h3>
+        <span>Oil on Canvas</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/jerome/img02.jpg" alt="Figurative Study" loading="eager">
+      <div class="gallery-caption">
+        <h3>Figurative Study</h3>
+        <span>Mixed Media</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/jerome/img03.jpg" alt="Abstract Composition" loading="eager">
+      <div class="gallery-caption">
+        <h3>Abstract Composition</h3>
+        <span>Acrylic on Canvas</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/jerome/img04.jpg" alt="Expressionist Study II" loading="eager">
+      <div class="gallery-caption">
+        <h3>Expressionist Study II</h3>
+        <span>Oil on Board</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/jerome/img09.jpg" alt="Untitled Figure" loading="eager">
+      <div class="gallery-caption">
+        <h3>Untitled Figure</h3>
+        <span>Oil on Canvas</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/jerome/img10.jpg" alt="Color Field Study" loading="eager">
+      <div class="gallery-caption">
+        <h3>Color Field Study</h3>
+        <span>Acrylic & Collage</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-featured">
+    <img src="images/jerome/img11.jpg" alt="Featured Work — Full Width" loading="eager">
+    <div class="gallery-caption" style="padding: 16px 0 0;">
+      <h3 style="font-size: 20px;">Featured Work</h3>
+      <span>Large Format — Oil on Canvas</span>
+    </div>
+  </div>
+</section>
+
+<!-- MIXED MEDIA -->
+<section id="mixed-media">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Mixed Media</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="media-editorial">
+    <div class="left-stack">
+      <img src="images/jerome/img05.jpg" alt="Mixed Media Work 1" loading="eager" class="reveal-img">
+      <img src="images/jerome/img06.jpg" alt="Mixed Media Work 2" loading="eager" class="reveal-img">
+    </div>
+    <div class="media-right">
+      <p class="media-quote reveal-text">"Glickman works across the boundaries of figuration and abstraction, weaving personal narrative into every surface."</p>
+      <p class="reveal-text">Working in oil, acrylic, collage, and assemblage, Jerome Glickman's mixed media practice collapses the distance between painting and sculpture. Each work is built up in layers — material as memory, surface as history.</p>
+      <p class="reveal-text">Based in South Florida, his studio practice draws from life drawing sessions at the Art Students League and decades of teaching visual thinking at Lynn University and the Digital Media Arts College in Boca Raton.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY STRIP -->
+<section id="photography">
+  <div class="photo-header">
+    <div class="section-header">
+      <span class="section-number" style="color: rgba(250,250,248,0.5);">03</span>
+      <h2 class="section-title" style="color: var(--bg);">Photography</h2>
+      <div class="section-rule" style="background: rgba(250,250,248,0.2);"></div>
+    </div>
+  </div>
+
+  <div class="photo-strip">
+    <div class="photo-item">
+      <img src="images/jerome/img07.jpg" alt="Photography Work 1" loading="eager">
+    </div>
+    <div class="photo-item">
+      <img src="images/jerome/img08.jpg" alt="Photography Work 2" loading="eager">
+    </div>
+    <div class="photo-item">
+      <img src="images/jerome/img12.jpg" alt="Photography Work 3" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- EXHIBITIONS + AWARDS -->
+<section id="exhibitions">
+  <div class="exhibitions-left">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Exhibitions</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <ul class="exhibition-list">
+      <li>
+        <span class="exh-year">2023</span>
+        <div class="exh-details">
+          <h4>Boca Museum of Art</h4>
+          <p>Award Winner · Boca Raton, FL</p>
+        </div>
+      </li>
+      <li>
+        <span class="exh-year">2022</span>
+        <div class="exh-details">
+          <h4>FAU Library Gallery</h4>
+          <p>Award Winner · Florida Atlantic University</p>
+        </div>
+      </li>
+      <li>
+        <span class="exh-year">2021</span>
+        <div class="exh-details">
+          <h4>South Florida Juried Exhibition</h4>
+          <p>Selected Works · Boynton Beach, FL</p>
+        </div>
+      </li>
+      <li>
+        <span class="exh-year">Ongoing</span>
+        <div class="exh-details">
+          <h4>Art Students League</h4>
+          <p>Life Member — New York / South Florida</p>
+        </div>
+      </li>
+      <li>
+        <span class="exh-year">Ongoing</span>
+        <div class="exh-details">
+          <h4>Studio Practice</h4>
+          <p>Available for studio visits · Boynton Beach</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="exhibitions-right">
+    <div class="awards-block">
+      <h3>Credentials &amp; Affiliations</h3>
+      <div class="award-item">
+        <h4>Doctor of Education — Ed.D.</h4>
+        <p>Advanced studies in visual art and education</p>
+      </div>
+      <div class="award-item">
+        <h4>Adjunct Professor · Lynn University</h4>
+        <p>Boca Raton, FL — Fine Arts</p>
+      </div>
+      <div class="award-item">
+        <h4>Digital Media Arts College</h4>
+        <p>Adjunct Faculty · Boca Raton, FL</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header" style="margin-bottom: 80px;">
+    <span class="section-number">05</span>
+    <h2 class="section-title">About the Artist</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-portrait reveal-portrait">
+      <img src="images/jerome/portrait.png" alt="Jerome Glickman" loading="eager">
+    </div>
+
+    <div class="about-divider reveal-divider"></div>
+
+    <div class="about-text reveal-about">
+      <h2>Jerome T. Glickman, Ed.D.</h2>
+      <p class="about-subtitle">Painter &nbsp;·&nbsp; Sculptor &nbsp;·&nbsp; Educator &nbsp;·&nbsp; South Florida</p>
+      <p>Working across painting, mixed media, photography, and sculpture, Jerome Glickman builds a body of work grounded in the expressive tradition and shaped by decades of teaching, life drawing, and community engagement. His canvases move between the figurative and the abstract — between representation and raw gesture.</p>
+      <p>Glickman holds a Doctor of Education and serves as adjunct faculty at Lynn University and the Digital Media Arts College in Boca Raton, where he brings the same rigor he applies to his studio practice into the classroom. A life member of the Art Students League, his work has been recognized at the Boca Museum of Art and FAU Library Gallery.</p>
+      <div class="about-credentials-list">
+        <span class="about-cred">Art Students League — Life Member</span>
+        <span class="about-cred">Boca Museum of Art — Award Winner</span>
+        <span class="about-cred">FAU Library Gallery — Award Winner</span>
+        <span class="about-cred">Lynn University — Adjunct Professor</span>
+        <span class="about-cred">Based in Boynton Beach, FL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTIST STATEMENT -->
+<div id="statement-wrap">
+  <section id="statement">
+    <p class="statement-label reveal-statement">Artist Statement</p>
+    <blockquote class="statement-quote reveal-statement-q">
+      "I am drawn to the figure not as a subject to be depicted, but as a vehicle for feeling — the intersection of what is seen and what is felt, what is remembered and what escapes language."
+    </blockquote>
+    <p class="statement-attribution reveal-statement-a">— Jerome T. Glickman, Ed.D. &nbsp;·&nbsp; Boynton Beach, FL</p>
+  </section>
+</div>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-img">
+    <img src="images/jerome/img02.jpg" alt="Background" loading="eager">
+  </div>
+  <div class="cta-content">
+    <h2 class="reveal-cta">Available for<br>Commissions &amp; Inquiries</h2>
+    <p class="reveal-cta-p">Original works, collector inquiries, and institutional commissions welcome. Studio visits available by appointment in Boynton Beach.</p>
+    <a href="mailto:jgvisionquest@gmail.com" class="cta-btn reveal-cta-btn">Begin a Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header" style="margin-bottom: 60px;">
+    <span class="section-number">06</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-left">
+      <h2>Get in Touch</h2>
+      <p>Commission inquiries, gallery proposals, speaking engagements, and collector questions welcome. All correspondence handled personally.</p>
+      <a href="mailto:jgvisionquest@gmail.com" class="contact-link">jgvisionquest@gmail.com</a>
+      <a href="tel:5617045297" class="contact-link">561-704-5297</a>
+      <a href="https://www.instagram.com/glickmanjerome" target="_blank" class="contact-link">@glickmanjerome</a>
+    </div>
+    <div class="contact-right">
+      <div class="contact-detail">
+        <label>Location</label>
+        <p>Boynton Beach / Delray Beach, FL</p>
+      </div>
+      <div class="contact-detail">
+        <label>Teaching</label>
+        <p>Lynn University · Digital Media Arts College<br>Boca Raton, FL</p>
+      </div>
+      <div class="contact-detail">
+        <label>Memberships</label>
+        <p>Art Students League — Life Member</p>
+      </div>
+      <div class="contact-detail">
+        <label>Studio Visits</label>
+        <p>Available by appointment</p>
+      </div>
+      <p style="margin-top: 40px; font-size: 12px; color: var(--warm-gray); letter-spacing: 0.05em;">Site design concept by <strong>Lucas Blatt</strong> — lucasblatt197703@gmail.com</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Jerome Glickman</span>
+  <span class="footer-copy">© 2026 Jerome T. Glickman, Ed.D. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/glickmanjerome" target="_blank">Instagram</a>
+    <a href="mailto:jgvisionquest@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+// Make ALL elements visible immediately (no hidden state)
+document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+// Hero animations on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const heroName = document.getElementById('heroName');
+    if (heroName) heroName.classList.add('loaded');
+    const heroSide = document.getElementById('heroSide');
+    if (heroSide) heroSide.classList.add('loaded');
+  }, 100);
+});
+
+// Intersection Observer for scroll animations
+const observerOptions = { threshold: 0.05, rootMargin: '0px 0px -60px 0px' };
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Observe section titles for clip-path sweep
+document.querySelectorAll('.section-title').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe stat items
+document.querySelectorAll('.stat-item').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe gallery items
+document.querySelectorAll('.gallery-item, .gallery-featured').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe photo strip items
+document.querySelectorAll('.photo-item').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe exhibition list items
+document.querySelectorAll('.exhibition-list li').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe award items
+document.querySelectorAll('.award-item').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe mixed media reveals
+document.querySelectorAll('.reveal-img').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+document.querySelectorAll('.media-quote, .reveal-text').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Observe about section
+const aboutPortrait = document.querySelector('.reveal-portrait');
+const aboutDivider = document.querySelector('.reveal-divider');
+const aboutText = document.querySelector('.reveal-about');
+if (aboutPortrait) { aboutPortrait.classList.remove('is-visible'); observer.observe(aboutPortrait); }
+if (aboutDivider) { aboutDivider.classList.remove('is-visible'); observer.observe(aboutDivider); }
+if (aboutText) { aboutText.classList.remove('is-visible'); observer.observe(aboutText); }
+
+// Statement section
+document.querySelectorAll('.statement-label, .statement-quote, .statement-attribution').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// CTA section
+document.querySelectorAll('.reveal-cta, .reveal-cta-p, .reveal-cta-btn').forEach(el => {
+  el.classList.remove('is-visible');
+  observer.observe(el);
+});
+
+// Parallax on hero
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  const scrolled = window.scrollY;
+  const heroHeight = hero.offsetHeight;
+  if (scrolled < heroHeight) {
+    const imgs = hero.querySelectorAll('.mosaic-img img');
+    imgs.forEach(img => {
+      img.style.transform = `translateY(${scrolled * 0.25}px) scale(1)`;
+    });
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
