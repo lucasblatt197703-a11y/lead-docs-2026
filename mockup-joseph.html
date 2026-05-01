@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joseph Huynh — Reclaimed. Painted. Preserved.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Karla:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  /* =====================
+     RESET & BASE
+  ===================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal:    #1A4A5C;
+    --teal-light: #2A6A80;
+    --wood:    #8B6553;
+    --sand:    #F0E6D3;
+    --sand-dark: #DDD0BC;
+    --near-black: #0F1A1F;
+    --white:   #FAFAF8;
+    --gold:    #C4A46B;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Karla', sans-serif;
+    background: var(--near-black);
+    color: var(--sand);
+    overflow-x: hidden;
+  }
+
+  /* =====================
+     ANIMATIONS — hidden states
+  ===================== */
+  .reveal-clip {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .reveal-clip.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+  .reveal-img {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .reveal-img.is-visible { clip-path: inset(0 0 0 0); }
+
+  .delay-1 { transition-delay: 0.12s; }
+  .delay-2 { transition-delay: 0.24s; }
+  .delay-3 { transition-delay: 0.36s; }
+  .delay-4 { transition-delay: 0.48s; }
+  .delay-5 { transition-delay: 0.60s; }
+  .delay-6 { transition-delay: 0.72s; }
+
+  /* =====================
+     NAVIGATION
+  ===================== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(15,26,31,0.85) 0%, transparent 100%);
+  }
+  nav .logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--sand);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+  }
+  nav ul a {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand);
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.25s;
+  }
+  nav ul a:hover { opacity: 1; }
+
+  /* =====================
+     HERO — CINEMATIC LETTERBOX
+  ===================== */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/0b4428_fc0fd46f257b42a0a9889ee1c71040a5~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+  }
+  /* Dark overlay — heavier at edges, lighter at center */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(15,26,31,0.3) 0%,
+      rgba(15,26,31,0.1) 30%,
+      rgba(15,26,31,0.2) 60%,
+      rgba(15,26,31,0.9) 100%
+    );
+  }
+  /* Letterbox bars */
+  .letterbox-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: var(--near-black);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .letterbox-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: var(--near-black);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+  }
+  .letterbox-top.open { transform: scaleY(1); }
+  .letterbox-bottom.open { transform: scaleY(1); }
+
+  .hero-text {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 40px;
+    width: 100%;
+  }
+  .hero-subtitle {
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.7s ease 0.9s, transform 0.7s ease 0.9s;
+  }
+  .hero-name {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(64px, 10vw, 116px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: 0.18em;
+    color: var(--white);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.5s;
+  }
+  .hero-tagline {
+    margin-top: 20px;
+    font-family: 'Karla', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: var(--sand);
+    opacity: 0;
+    transition: opacity 0.7s ease 1.3s;
+  }
+  .hero-name.open { clip-path: inset(0 0% 0 0); }
+  .hero-subtitle.open { opacity: 1; transform: translateY(0); }
+  .hero-tagline.open { opacity: 0.8; }
+
+  /* Bottom bar content */
+  .bar-text {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    width: 100%;
+  }
+  .bar-stat {
+    text-align: center;
+  }
+  .bar-stat .num {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+    display: block;
+  }
+  .bar-stat .label {
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.6;
+  }
+  .bar-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(240,230,211,0.2);
+  }
+  .bar-tagline {
+    flex: 1;
+    font-family: 'Bodoni Moda', serif;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--sand);
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  /* =====================
+     MARQUEE STRIP
+  ===================== */
+  .marquee-strip {
+    background: var(--teal);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.8;
+    padding: 0 32px;
+  }
+  .marquee-track .dot {
+    color: var(--gold);
+    padding: 0 8px;
+    opacity: 1;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* =====================
+     ORIGIN STORY
+  ===================== */
+  #origin {
+    padding: 140px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 80vh;
+  }
+  .origin-image {
+    position: relative;
+    overflow: hidden;
+  }
+  .origin-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease-out;
+    will-change: transform;
+    transform: scale(1.05);
+  }
+  .origin-image img.is-visible { transform: scale(1.0); }
+  .origin-text {
+    padding: 80px 80px 80px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--near-black);
+  }
+  .section-number {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 32px;
+    display: block;
+  }
+  .origin-text p {
+    font-family: 'Karla', sans-serif;
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--sand);
+    opacity: 0.85;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .origin-text p strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .origin-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--teal-light);
+    margin: 36px 0;
+  }
+  .origin-pull-quote {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1.5;
+    border-left: 2px solid var(--teal-light);
+    padding-left: 24px;
+  }
+
+  /* =====================
+     GALLERY
+  ===================== */
+  #gallery {
+    padding: 120px 48px;
+    background: #0C1519;
+  }
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .gallery-header .section-title { margin-bottom: 0; }
+  .gallery-header p {
+    font-size: 14px;
+    color: var(--sand);
+    opacity: 0.5;
+    letter-spacing: 0.08em;
+    max-width: 280px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* Masonry-style editorial grid */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 60px;
+    gap: 6px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease-out;
+    will-change: transform;
+    transform: scale(1.05);
+  }
+  .gallery-item img.is-visible { transform: scale(1.0); }
+  .gallery-item:hover img { transform: scale(1.03); }
+  /* Grid placement */
+  .g1 { grid-column: 1 / 6;  grid-row: 1 / 7; }
+  .g2 { grid-column: 6 / 9;  grid-row: 1 / 5; }
+  .g3 { grid-column: 9 / 13; grid-row: 1 / 6; }
+  .g4 { grid-column: 6 / 9;  grid-row: 5 / 9; }
+  .g5 { grid-column: 9 / 13; grid-row: 6 / 10; }
+  .g6 { grid-column: 1 / 5;  grid-row: 7 / 12; }
+  .g7 { grid-column: 5 / 9;  grid-row: 9 / 13; }
+  .g8 { grid-column: 9 / 13; grid-row: 10 / 14; }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px 20px 16px;
+    background: linear-gradient(transparent, rgba(15,26,31,0.85));
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+  }
+  .gallery-item:hover .gallery-caption { transform: translateY(0); }
+  .gallery-caption span {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.8;
+  }
+
+  /* =====================
+     WOOD SECTION
+  ===================== */
+  #wood {
+    padding: 140px 48px;
+    background: var(--near-black);
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 0;
+    align-items: center;
+  }
+  .wood-text-col {
+    padding-right: 80px;
+  }
+  .wood-text-col .section-number { margin-bottom: 24px; }
+  .wood-text-col .section-title { margin-bottom: 28px; }
+  .wood-text-col p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--sand);
+    opacity: 0.8;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .wood-detail {
+    margin-top: 48px;
+    padding: 32px;
+    border: 1px solid rgba(139,101,83,0.3);
+    background: rgba(139,101,83,0.05);
+  }
+  .wood-detail-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .wood-detail p {
+    font-size: 15px;
+    color: var(--sand);
+    opacity: 0.7;
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+  .wood-images {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 6px;
+    height: 580px;
+  }
+  .wood-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* =====================
+     STATS STRIP
+  ===================== */
+  #stats {
+    background: var(--teal);
+    padding: 80px 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(240,230,211,0.1);
+    border-bottom: 1px solid rgba(240,230,211,0.1);
+  }
+  .stat-item {
+    text-align: center;
+    padding: 20px 0;
+    border-right: 1px solid rgba(240,230,211,0.15);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(60px, 6vw, 90px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--white);
+    display: block;
+  }
+  .stat-unit {
+    color: var(--gold);
+    font-size: 0.6em;
+  }
+  .stat-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.6;
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* =====================
+     ABOUT
+  ===================== */
+  #about {
+    padding: 160px 48px;
+    background: #0C1519;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 0;
+    align-items: start;
+  }
+  .about-image-col {
+    position: sticky;
+    top: 120px;
+    padding-right: 80px;
+  }
+  .about-portrait {
+    position: relative;
+  }
+  .about-portrait img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .about-portrait-tag {
+    position: absolute;
+    bottom: 24px;
+    left: -20px;
+    background: var(--teal);
+    padding: 14px 24px;
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.9;
+  }
+  .about-text-col { padding-left: 40px; }
+  .about-text-col .section-number { margin-bottom: 24px; }
+  .about-text-col .section-title { margin-bottom: 36px; }
+  .about-body {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--sand);
+    opacity: 0.82;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .about-quote {
+    margin: 48px 0;
+    padding: 32px 0;
+    border-top: 1px solid rgba(240,230,211,0.1);
+    border-bottom: 1px solid rgba(240,230,211,0.1);
+  }
+  .about-quote p {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--gold);
+  }
+  .about-quote cite {
+    display: block;
+    margin-top: 16px;
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.5;
+    font-style: normal;
+  }
+  .about-facts {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .fact {
+    padding: 20px 0;
+    border-top: 1px solid rgba(240,230,211,0.08);
+  }
+  .fact-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+  .fact-value {
+    font-family: 'Karla', sans-serif;
+    font-size: 15px;
+    color: var(--sand);
+    opacity: 0.85;
+  }
+
+  /* =====================
+     ART SHOWS
+  ===================== */
+  #shows {
+    padding: 120px 48px;
+    background: var(--near-black);
+  }
+  .shows-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+  .shows-header p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--sand);
+    opacity: 0.7;
+    font-weight: 300;
+  }
+  .shows-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(240,230,211,0.08);
+  }
+  .show-item {
+    background: var(--near-black);
+    padding: 40px 36px;
+    position: relative;
+  }
+  .show-year {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--teal);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .show-name {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .show-location {
+    font-family: 'Karla', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--sand);
+    opacity: 0.5;
+    margin-bottom: 16px;
+  }
+  .show-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  /* =====================
+     COMMISSIONS CTA
+  ===================== */
+  #commissions {
+    position: relative;
+    padding: 160px 80px;
+    background: var(--teal);
+    overflow: hidden;
+    text-align: center;
+  }
+  #commissions::before {
+    content: 'COMMISSION';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bodoni Moda', serif;
+    font-size: 260px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+  .commissions-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 32px;
+    display: block;
+  }
+  .commissions-heading {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .commissions-body {
+    font-family: 'Karla', sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--sand);
+    opacity: 0.8;
+    max-width: 520px;
+    margin: 0 auto 52px;
+    font-weight: 300;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 20px 52px;
+    border: 1px solid var(--sand);
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sand);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-btn:hover {
+    background: var(--sand);
+    color: var(--teal);
+  }
+
+  /* =====================
+     CONTACT
+  ===================== */
+  #contact {
+    padding: 120px 80px;
+    background: var(--near-black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left .section-title { margin-bottom: 28px; }
+  .contact-left p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--sand);
+    opacity: 0.7;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .contact-email {
+    display: block;
+    font-family: 'Bodoni Moda', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--gold);
+    text-decoration: none;
+    margin-bottom: 36px;
+    transition: opacity 0.25s;
+  }
+  .contact-email:hover { opacity: 0.7; }
+  .contact-social {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .contact-social a {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.5;
+    text-decoration: none;
+    transition: opacity 0.25s;
+  }
+  .contact-social a:hover { opacity: 1; }
+  .contact-right {
+    padding-top: 8px;
+  }
+  .contact-right img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 0;
+  }
+  .contact-caption {
+    padding: 20px 0;
+    border-top: 1px solid rgba(240,230,211,0.08);
+    font-size: 13px;
+    color: var(--sand);
+    opacity: 0.4;
+    font-style: italic;
+  }
+
+  /* =====================
+     FOOTER
+  ===================== */
+  footer {
+    background: #060D10;
+    padding: 36px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(240,230,211,0.06);
+  }
+  footer .foot-name {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--sand);
+    opacity: 0.5;
+  }
+  footer .foot-copy {
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--sand);
+    opacity: 0.3;
+  }
+  footer .foot-credit {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--sand);
+    opacity: 0.2;
+  }
+  footer .foot-social a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand);
+    opacity: 0.3;
+    text-decoration: none;
+    margin-left: 24px;
+    transition: opacity 0.25s;
+  }
+  footer .foot-social a:hover { opacity: 0.7; }
+
+  /* =====================
+     RESPONSIVE
+  ===================== */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+    nav ul a { font-size: 10px; }
+    .hero-text { padding: 0 24px 30px; }
+    .letterbox-bottom { padding: 0 24px; }
+    .bar-text { gap: 20px; flex-wrap: wrap; }
+
+    #origin { grid-template-columns: 1fr; padding: 80px 0; }
+    .origin-text { padding: 56px 24px; }
+    .origin-image { height: 380px; }
+
+    #gallery { padding: 80px 24px; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 180px;
+    }
+    .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8 {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    #wood { grid-template-columns: 1fr; padding: 80px 24px; }
+    .wood-text-col { padding-right: 0; margin-bottom: 40px; }
+    .wood-images { height: 300px; grid-template-rows: 1fr; }
+    .wood-images img:last-child { display: none; }
+
+    #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; gap: 20px; }
+    .stat-item { border-right: none; }
+    .stat-num { font-size: 50px; }
+
+    #about { grid-template-columns: 1fr; padding: 80px 24px; }
+    .about-image-col { position: static; padding-right: 0; margin-bottom: 48px; }
+    .about-text-col { padding-left: 0; }
+    .about-facts { grid-template-columns: 1fr; }
+
+    #shows { padding: 80px 24px; }
+    .shows-header { grid-template-columns: 1fr; gap: 24px; }
+    .shows-list { grid-template-columns: 1fr; }
+
+    #commissions { padding: 100px 24px; }
+    #commissions::before { font-size: 80px; }
+
+    #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
+    footer .foot-social { margin-top: 8px; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 52px; letter-spacing: 0.1em; }
+    .bar-stat .num { font-size: 20px; }
+    .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="logo">Joseph Huynh</a>
+  <ul>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">Story</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — CINEMATIC LETTERBOX -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="letterbox-top" id="lbTop"></div>
+  <div class="letterbox-bottom" id="lbBottom">
+    <div class="bar-text" id="barText">
+      <div class="bar-stat">
+        <span class="num">379</span>
+        <span class="label">Works Created</span>
+      </div>
+      <div class="bar-divider"></div>
+      <div class="bar-stat">
+        <span class="num">15<span class="unit">+</span></span>
+        <span class="label">Art Festivals</span>
+      </div>
+      <div class="bar-divider"></div>
+      <div class="bar-stat">
+        <span class="num">565</span>
+        <span class="label">Followers</span>
+      </div>
+      <div class="bar-divider"></div>
+      <p class="bar-tagline">Daytona Beach, Florida · Original paintings on reclaimed hurricane wood</p>
+    </div>
+  </div>
+  <div class="hero-text">
+    <p class="hero-subtitle" id="heroSubtitle">Daytona Beach, Florida</p>
+    <h1 class="hero-name" id="heroName">JOSEPH<br>HUYNH</h1>
+    <p class="hero-tagline" id="heroTagline">Reclaimed. Painted. Preserved.</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Sea Turtle Art</span><span class="dot">·</span>
+    <span>Reclaimed Hurricane Wood</span><span class="dot">·</span>
+    <span>Daytona Beach</span><span class="dot">·</span>
+    <span>Space Coast Art Festival</span><span class="dot">·</span>
+    <span>Halifax Art Festival</span><span class="dot">·</span>
+    <span>Original Paintings</span><span class="dot">·</span>
+    <span>Vietnam-Born · Self-Taught</span><span class="dot">·</span>
+    <span>Sea Turtle Art</span><span class="dot">·</span>
+    <span>Reclaimed Hurricane Wood</span><span class="dot">·</span>
+    <span>Daytona Beach</span><span class="dot">·</span>
+    <span>Space Coast Art Festival</span><span class="dot">·</span>
+    <span>Halifax Art Festival</span><span class="dot">·</span>
+    <span>Original Paintings</span><span class="dot">·</span>
+    <span>Vietnam-Born · Self-Taught</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- ORIGIN STORY -->
+<section id="origin">
+  <div class="origin-image">
+    <img
+      src="https://static.wixstatic.com/media/0b4428_567c9167a18a41ee9b9f0a80805d4cc9~mv2.jpg"
+      alt="Joseph Huynh — painting on reclaimed wood"
+      loading="lazy"
+    >
+  </div>
+  <div class="origin-text">
+    <p class="section-number reveal-up">01 — Origin</p>
+    <span class="section-title reveal-clip">When a Storm<br>Becomes a Canvas</span>
+    <div class="origin-divider reveal-up delay-1"></div>
+    <p class="reveal-up delay-1">
+      In 2018, <strong>Hurricane Michael</strong> tore through the Florida Panhandle — one of the most destructive storms to ever make landfall in the United States. It left behind splintered homes, collapsed beams, and thousands of feet of lumber with nowhere to go.
+    </p>
+    <p class="reveal-up delay-2">
+      Joseph Huynh saw something different. He saw <strong>a canvas.</strong>
+    </p>
+    <p class="reveal-up delay-2">
+      Born in Vietnam and self-taught as an artist, Joseph salvages the wreckage of those homes — pine floors, bead board, wall studs — and transforms them into original paintings. Sea turtles, pelicans, coastal wildlife. Rendered in oil on wood that has survived a category 5 hurricane.
+    </p>
+    <div class="origin-pull-quote reveal-up delay-3">
+      "The wood already has a story. I just add one more layer to it."
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <span class="section-title reveal-clip">The Work</span>
+    <p class="reveal-up delay-1">Original paintings on reclaimed hurricane wood. Each piece unique — no two surfaces the same.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item g1">
+      <img src="https://static.wixstatic.com/media/0b4428_fc0fd46f257b42a0a9889ee1c71040a5~mv2.jpg"
+           alt="Sea turtle — original painting" loading="lazy" class="reveal-img">
+      <div class="gallery-caption"><span>Sea Turtle · Reclaimed Pine</span></div>
+    </div>
+    <div class="gallery-item g2">
+      <img src="https://static.wixstatic.com/media/0b4428_36e0a9eb1cde4ff4abcfff014b9423b8~mv2.jpeg"
+           alt="Wildlife painting on wood" loading="lazy" class="reveal-img delay-1">
+      <div class="gallery-caption"><span>Wildlife · Hurricane Oak</span></div>
+    </div>
+    <div class="gallery-item g3">
+      <img src="https://static.wixstatic.com/media/0b4428_1a303ceb9e6b4ea5b08a4182bb91537c~mv2.jpg"
+           alt="Coastal painting" loading="lazy" class="reveal-img delay-2">
+      <div class="gallery-caption"><span>Coastal · Oil on Wood</span></div>
+    </div>
+    <div class="gallery-item g4">
+      <img src="https://static.wixstatic.com/media/0b4428_fd2a9d6dc1d146f4905e1a98787c5593~mv2.jpeg"
+           alt="Sea turtle painting detail" loading="lazy" class="reveal-img delay-2">
+      <div class="gallery-caption"><span>Detail · 2024</span></div>
+    </div>
+    <div class="gallery-item g5">
+      <img src="https://static.wixstatic.com/media/0b4428_38e3b05687fb4091b8ff4e4949fcf257~mv2.jpeg"
+           alt="Nature painting on reclaimed board" loading="lazy" class="reveal-img delay-3">
+      <div class="gallery-caption"><span>Reclaimed Board · Bead Pine</span></div>
+    </div>
+    <div class="gallery-item g6">
+      <img src="https://static.wixstatic.com/media/0b4428_c9d468db19d84ae4ad576f857893c248~mv2.jpg"
+           alt="Sea creature painting" loading="lazy" class="reveal-img delay-3">
+      <div class="gallery-caption"><span>Oil on Reclaimed Wood</span></div>
+    </div>
+    <div class="gallery-item g7">
+      <img src="https://static.wixstatic.com/media/0b4428_4000b34b56e5401ea139795817b9ee64~mv2.jpg"
+           alt="Art piece on wood panel" loading="lazy" class="reveal-img delay-4">
+      <div class="gallery-caption"><span>Wood Panel · Original</span></div>
+    </div>
+    <div class="gallery-item g8">
+      <img src="https://static.wixstatic.com/media/0b4428_61b333c2825148839a66bbf8d0bd1157~mv2.jpg"
+           alt="Wildlife art on hurricane wood" loading="lazy" class="reveal-img delay-5">
+      <div class="gallery-caption"><span>Hurricane Wood · 2024</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE WOOD -->
+<section id="wood">
+  <div class="wood-text-col">
+    <p class="section-number reveal-up">02 — Material</p>
+    <span class="section-title reveal-clip">The Wood Has<br>Already Survived.</span>
+    <p class="reveal-up delay-1">
+      The reclaimed lumber Joseph works with isn't just raw material. It's pine flooring pulled from homes that stood for 150 years. Bead board that absorbed the salt air of the Gulf for generations. Heart pine studs that watched families grow.
+    </p>
+    <p class="reveal-up delay-2">
+      Hurricane Michael destroyed those homes in hours. Joseph salvages that wood and gives it new purpose — turning loss into something people want on their walls.
+    </p>
+    <div class="wood-detail reveal-up delay-2">
+      <p class="wood-detail-title">What Makes It Rare</p>
+      <p>No two pieces of reclaimed wood share the same grain, weathering, or history. Every painting is singular — the texture, the knots, the age rings are part of the composition. You're not buying a print. You're buying a piece of Florida history with art on top of it.</p>
+    </div>
+  </div>
+  <div class="wood-images">
+    <img src="https://static.wixstatic.com/media/0b4428_0d3279f4532842fe9b11db32c79c7099~mv2.png"
+         alt="Detail of reclaimed wood surface" loading="lazy">
+    <img src="https://static.wixstatic.com/media/0b4428_25c27808ab264b9eaefe727e6cf4c65a~mv2.jpeg"
+         alt="Wood grain and art detail" loading="lazy">
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item reveal-up">
+    <span class="stat-num">379</span>
+    <span class="stat-label">Works Created</span>
+  </div>
+  <div class="stat-item reveal-up delay-1">
+    <span class="stat-num">150<span class="stat-unit">+</span></span>
+    <span class="stat-label">Yr Old Pine Used</span>
+  </div>
+  <div class="stat-item reveal-up delay-2">
+    <span class="stat-num">15<span class="stat-unit">+</span></span>
+    <span class="stat-label">Art Shows &amp; Festivals</span>
+  </div>
+  <div class="stat-item reveal-up delay-3">
+    <span class="stat-num">1</span>
+    <span class="stat-label">Hurricane. Many Canvases.</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-col">
+    <div class="about-portrait">
+      <img
+        src="https://static.wixstatic.com/media/0b4428_dc29d107fa3141b282ba5234a1f721e9~mv2.jpeg"
+        alt="Joseph Huynh — artist"
+        loading="lazy"
+        class="reveal-img"
+      >
+      <div class="about-portrait-tag">Daytona Beach, FL</div>
+    </div>
+  </div>
+  <div class="about-text-col">
+    <p class="section-number reveal-up">03 — The Artist</p>
+    <span class="section-title reveal-clip">Joseph<br>Huynh</span>
+    <p class="about-body reveal-up delay-1">
+      Born in Vietnam, Joseph Huynh came to Florida without formal art training and built his practice entirely through observation, experimentation, and an instinct for the natural world. His primary subjects — sea turtles, pelicans, coastal birds — are rendered with a warmth that feels personal rather than illustrative.
+    </p>
+    <p class="about-body reveal-up delay-2">
+      What distinguishes Huynh's work is the material beneath the paint. Every piece is executed on wood salvaged from homes destroyed by Hurricane Michael, the 2018 Category 5 storm that devastated the Florida Panhandle. The wood arrives with its own patina — nail holes, saw marks, knots, grain — and Huynh incorporates all of it into the final composition.
+    </p>
+    <div class="about-quote reveal-up delay-3">
+      <p>"Chris" — a sea turtle rendered on a plank of 150-year-old reclaimed pine flooring — became one of his most-requested pieces. Collectors specifically ask for prints of it in handmade reclaimed-wood frames.</p>
+      <cite>— From the Studio, Daytona Beach</cite>
+    </div>
+    <div class="about-facts">
+      <div class="fact reveal-up delay-2">
+        <p class="fact-label">Based In</p>
+        <p class="fact-value">Daytona Beach, FL</p>
+      </div>
+      <div class="fact reveal-up delay-3">
+        <p class="fact-label">Origin</p>
+        <p class="fact-value">Vietnam-born, self-taught</p>
+      </div>
+      <div class="fact reveal-up delay-3">
+        <p class="fact-label">Medium</p>
+        <p class="fact-value">Oil on reclaimed wood</p>
+      </div>
+      <div class="fact reveal-up delay-4">
+        <p class="fact-label">Material Source</p>
+        <p class="fact-value">Hurricane Michael homes, FL Panhandle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ART SHOWS -->
+<section id="shows">
+  <div class="shows-header">
+    <div>
+      <p class="section-number reveal-up">04 — Where to Find the Work</p>
+      <span class="section-title reveal-clip">Art Shows<br>&amp; Markets</span>
+    </div>
+    <p class="reveal-up delay-1">Joseph shows his work throughout Florida — from Daytona to the Space Coast, the Jacksonville beaches, and regional markets. Collectors find him in person before finding a website. That's about to change.</p>
+  </div>
+  <div class="shows-list">
+    <div class="show-item reveal-up">
+      <div class="show-year">2025</div>
+      <p class="show-name">Space Coast Art Festival</p>
+      <p class="show-location">Viera, Florida</p>
+      <div class="show-dot"></div>
+    </div>
+    <div class="show-item reveal-up delay-1">
+      <div class="show-year">2025</div>
+      <p class="show-name">Halifax Art Festival</p>
+      <p class="show-location">Daytona Beach, Florida</p>
+      <div class="show-dot"></div>
+    </div>
+    <div class="show-item reveal-up delay-2">
+      <div class="show-year">2025</div>
+      <p class="show-name">Jax Beach Arts Market</p>
+      <p class="show-location">Jacksonville Beach, Florida</p>
+      <div class="show-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSIONS CTA -->
+<section id="commissions">
+  <span class="commissions-label reveal-up">Original Commissions Available</span>
+  <h2 class="commissions-heading reveal-clip">Your Animal.<br>Your Hurricane Wood.</h2>
+  <p class="commissions-body reveal-up delay-1">
+    Commission a custom painting on reclaimed hurricane wood. Choose your subject, choose your size. Every piece is painted from observation and delivered with the full story of the wood it lives on.
+  </p>
+  <a href="#contact" class="cta-btn reveal-up delay-2">Start a Commission</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <p class="section-number reveal-up">05 — Inquiries</p>
+    <span class="section-title reveal-clip">Get In Touch</span>
+    <p class="reveal-up delay-1">
+      For commission inquiries, pricing, availability, or questions about upcoming shows — reach out directly. Joseph responds to every message personally.
+    </p>
+    <a href="mailto:josephhuynhart@gmail.com" class="contact-email reveal-up delay-1">josephhuynhart@gmail.com</a>
+    <div class="contact-social reveal-up delay-2">
+      <a href="https://www.instagram.com/josephhuynhart/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#shows">Upcoming Shows</a>
+    </div>
+  </div>
+  <div class="contact-right reveal-up delay-1">
+    <img
+      src="https://static.wixstatic.com/media/0b4428_accd2356b1074308b43dda565e1e954d~mv2.jpg"
+      alt="Joseph Huynh artwork"
+      loading="lazy"
+    >
+    <p class="contact-caption">Every painting ships with a card detailing where the wood came from.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-name">Joseph Huynh Art</span>
+  <span class="foot-copy">© 2026 Joseph Huynh. Daytona Beach, FL.</span>
+  <div class="foot-social">
+    <a href="https://www.instagram.com/josephhuynhart/" target="_blank" rel="noopener">@josephhuynhart</a>
+  </div>
+  <span class="foot-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+// HERO ANIMATION — letterbox bars + name reveal
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('lbTop').classList.add('open');
+    document.getElementById('lbBottom').classList.add('open');
+    document.getElementById('heroName').classList.add('open');
+    document.getElementById('heroSubtitle').classList.add('open');
+    document.getElementById('heroTagline').classList.add('open');
+  }, 100);
+});
+
+// HERO PARALLAX
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+  }
+}, { passive: true });
+
+// INTERSECTION OBSERVER — scroll reveals
+const observerOpts = { threshold: 0.12 };
+const imageOpts   = { threshold: 0.05 };
+
+const textObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      textObserver.unobserve(entry.target);
+    }
+  });
+}, observerOpts);
+
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      imgObserver.unobserve(entry.target);
+    }
+  });
+}, imageOpts);
+
+document.querySelectorAll('.reveal-clip, .reveal-up').forEach(el => textObserver.observe(el));
+document.querySelectorAll('.reveal-img, .origin-image img').forEach(el => imgObserver.observe(el));
+// Also observe gallery item imgs for scale effect
+document.querySelectorAll('.gallery-item img').forEach(el => imgObserver.observe(el));
+</script>
+</body>
+</html>
