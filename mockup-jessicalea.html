@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jessica Lea Photography — Burlington, NC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* GLOBAL RESET — prevent broken images */
+    img { opacity: 1 !important; clip-path: none !important; transform: none !important; max-width: 100% !important; display: block; }
+    body { overflow-x: hidden; }
+
+    :root {
+      --linen: #F5EFEA;
+      --sage: #7A8C6E;
+      --blush: #D4837A;
+      --near-black: #1C1C1C;
+      --warm-mid: #8C7B72;
+      --cream: #FBF7F4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--linen);
+      color: var(--near-black);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* ===========================
+       NAVIGATION
+    =========================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: normal;
+      background: linear-gradient(to bottom, rgba(28,28,28,0.45) 0%, transparent 100%);
+    }
+    .nav-logo {
+      font-family: 'Lora', serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ===========================
+       HERO — FULL BLEED
+    =========================== */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 680px;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(28,28,28,0.72) 0%,
+        rgba(28,28,28,0.18) 50%,
+        transparent 100%
+      );
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 80px;
+      left: 60px;
+      right: 60px;
+    }
+    .hero-name {
+      font-family: 'Lora', serif;
+      font-size: 68px;
+      font-weight: 400;
+      line-height: 1.05;
+      color: #fff;
+      letter-spacing: 0.3em;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      /* animate in */
+      transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hero-name.animate-in { letter-spacing: 0.02em; }
+    .hero-tagline {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      margin-top: 20px;
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 30px;
+      right: 60px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Source Sans 3', sans-serif;
+    }
+
+    /* ===========================
+       STATS STRIP
+    =========================== */
+    #stats {
+      background: var(--near-black);
+      padding: 64px 60px;
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-number {
+      font-family: 'Lora', serif;
+      font-size: 64px;
+      font-weight: 400;
+      color: var(--blush);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 10px;
+    }
+
+    /* ===========================
+       MARQUEE STRIP
+    =========================== */
+    .marquee-strip {
+      background: var(--sage);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 36s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      padding: 0 48px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===========================
+       SECTION UTILITIES
+    =========================== */
+    .section-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--near-black);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .section-title-light {
+      color: #fff;
+    }
+
+    /* ===========================
+       GALLERY — STAGGERED PAIRS
+    =========================== */
+    #gallery {
+      padding: 120px 60px;
+      background: var(--linen);
+    }
+    .gallery-header {
+      margin-bottom: 64px;
+    }
+    .gallery-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+    .gallery-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .gallery-pair:nth-child(odd) .gallery-img:last-child {
+      margin-top: 80px;
+    }
+    .gallery-pair:nth-child(even) .gallery-img:first-child {
+      margin-top: 80px;
+    }
+    .gallery-img {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      cursor: pointer;
+    }
+    .gallery-img.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-img img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .gallery-img:hover img { transform: scale(1.03); }
+    .gallery-caption {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--warm-mid);
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+    /* Landscape variant */
+    .gallery-img.landscape img {
+      aspect-ratio: 4/3;
+    }
+
+    /* ===========================
+       NEWBORN FEATURE
+    =========================== */
+    #newborn {
+      background: var(--cream);
+      padding: 120px 60px;
+    }
+    .newborn-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .newborn-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .newborn-images img:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      width: 100%;
+    }
+    .newborn-images img:not(:first-child) {
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      width: 100%;
+    }
+    .newborn-text { }
+    .newborn-text p {
+      font-size: 17px;
+      color: var(--warm-mid);
+      margin: 20px 0;
+      line-height: 1.8;
+    }
+    .newborn-pull-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--blush);
+      border-left: 3px solid var(--blush);
+      padding-left: 24px;
+      margin: 32px 0;
+    }
+
+    /* ===========================
+       WEDDING SECTION
+    =========================== */
+    #weddings {
+      padding: 0;
+      position: relative;
+      height: 80vh;
+      overflow: hidden;
+    }
+    #weddings img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+    .wedding-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(28,28,28,0.75) 0%,
+        rgba(28,28,28,0.15) 100%
+      );
+      display: flex;
+      align-items: center;
+    }
+    .wedding-text {
+      padding: 0 80px;
+      max-width: 520px;
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .wedding-text.is-visible { opacity: 1; transform: translateX(0); }
+    .wedding-text .section-label { color: rgba(212,131,122,0.9); }
+    .wedding-text .section-title { color: #fff; clip-path: none; }
+    .wedding-text p {
+      color: rgba(255,255,255,0.72);
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    /* ===========================
+       PRICING SECTION
+    =========================== */
+    #pricing {
+      padding: 120px 60px;
+      background: var(--near-black);
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .pricing-header .section-label { justify-content: center; display: flex; }
+    .pricing-header .section-title {
+      color: #fff;
+      text-align: center;
+      clip-path: none;
+    }
+    .pricing-subtitle {
+      color: rgba(255,255,255,0.5);
+      font-size: 15px;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 40px 32px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .pricing-card.is-visible { opacity: 1; transform: translateY(0); }
+    .pricing-card:nth-child(2) { transition-delay: 0.12s; }
+    .pricing-card:nth-child(3) { transition-delay: 0.24s; }
+    .pricing-card:nth-child(4) { transition-delay: 0.08s; }
+    .pricing-card:nth-child(5) { transition-delay: 0.2s; }
+    .pricing-card:nth-child(6) { transition-delay: 0.32s; }
+    .pricing-card-name {
+      font-family: 'Lora', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .pricing-card-price {
+      font-family: 'Lora', serif;
+      font-size: 44px;
+      font-weight: 400;
+      color: var(--blush);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .pricing-card-price span {
+      font-size: 18px;
+      color: rgba(255,255,255,0.35);
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .pricing-card-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+    .pricing-card.featured {
+      background: var(--blush);
+      border-color: var(--blush);
+    }
+    .pricing-card.featured .pricing-card-name { color: #fff; }
+    .pricing-card.featured .pricing-card-price { color: #fff; }
+    .pricing-card.featured .pricing-card-price span { color: rgba(255,255,255,0.7); }
+    .pricing-card.featured .pricing-card-desc { color: rgba(255,255,255,0.85); }
+
+    /* ===========================
+       FAMILY/SENIOR SECTION
+    =========================== */
+    #families {
+      padding: 120px 60px;
+      background: var(--linen);
+    }
+    .families-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 64px;
+    }
+    .families-layout img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .families-layout img.is-visible { clip-path: inset(0 0 0 0); }
+    .families-layout img:nth-child(2) { transition-delay: 0.12s; }
+    .families-layout img:nth-child(3) { transition-delay: 0.24s; }
+
+    /* ===========================
+       ABOUT — MAGAZINE SPREAD
+    =========================== */
+    #about {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .about-portrait {
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.9s ease;
+    }
+    .about-portrait.is-visible { transform: scale(1.0); }
+    .about-portrait img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .about-portrait-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 60%;
+      height: 60%;
+      border: 1px solid var(--sage);
+      z-index: -1;
+    }
+    .about-text {
+      padding-top: 40px;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .about-text.is-visible { opacity: 1; transform: translateX(0); }
+    .about-bio {
+      color: var(--warm-mid);
+      font-size: 17px;
+      line-height: 1.85;
+      margin: 24px 0;
+    }
+    .about-pull-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--blush);
+      border-left: 3px solid var(--blush);
+      padding-left: 28px;
+      margin: 36px 0;
+    }
+    .ivy-note {
+      background: var(--linen);
+      border-left: 3px solid var(--sage);
+      padding: 20px 24px;
+      margin-top: 32px;
+    }
+    .ivy-note p {
+      font-size: 14px;
+      color: var(--warm-mid);
+      line-height: 1.7;
+    }
+    .ivy-note strong {
+      color: var(--near-black);
+      font-weight: 600;
+    }
+
+    /* ===========================
+       TESTIMONIALS
+    =========================== */
+    #testimonials {
+      padding: 100px 60px;
+      background: #1C1C1C;
+    }
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .testimonials-header .section-title { color: #fff; clip-path: none; text-align: center; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      padding: 40px 32px;
+      border: 1px solid rgba(255,255,255,0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .testimonial-card.is-visible { opacity: 1; transform: translateY(0); }
+    .testimonial-card:nth-child(2) { transition-delay: 0.15s; }
+    .testimonial-card:nth-child(3) { transition-delay: 0.3s; }
+    .testimonial-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 24px;
+    }
+    .testimonial-quote::before { content: "\201C"; color: var(--blush); font-size: 32px; line-height: 0; vertical-align: -12px; }
+    .testimonial-source {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ===========================
+       CTA SECTION
+    =========================== */
+    #cta {
+      padding: 160px 60px;
+      background: var(--sage);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lora', serif;
+      font-size: 200px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.05);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: 0.1em;
+    }
+    .cta-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 20px;
+    }
+    .cta-heading {
+      font-family: 'Lora', serif;
+      font-size: 52px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .cta-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 48px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #fff;
+      color: var(--sage);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 20px 48px;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .cta-btn:hover {
+      background: var(--near-black);
+      color: #fff;
+    }
+
+    /* ===========================
+       CONTACT
+    =========================== */
+    #contact {
+      padding: 100px 60px;
+      background: var(--linen);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .contact-text h3 {
+      font-family: 'Lora', serif;
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      color: var(--near-black);
+    }
+    .contact-text p {
+      color: var(--warm-mid);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-link-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-link-item span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 6px;
+    }
+    .contact-link-item a {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--near-black);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .contact-link-item a:hover { color: var(--blush); }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    footer {
+      background: var(--near-black);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'Lora', serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 28px;
+    }
+    .footer-links a {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.05em;
+    }
+
+    /* ===========================
+       DIVIDER LINE DETAIL
+    =========================== */
+    .section-divider {
+      width: 30%;
+      height: 1px;
+      background: var(--blush);
+      margin: 60px 0;
+    }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 10px; }
+      .hero-text { bottom: 48px; left: 24px; right: 24px; }
+      .hero-name { font-size: 36px; }
+      #stats { padding: 48px 24px; gap: 40px; }
+      .stat-number { font-size: 44px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-pair { grid-template-columns: 1fr; gap: 12px; }
+      .gallery-pair:nth-child(odd) .gallery-img:last-child { margin-top: 0; }
+      .gallery-pair:nth-child(even) .gallery-img:first-child { margin-top: 0; }
+      .newborn-layout { grid-template-columns: 1fr; gap: 40px; }
+      #pricing { padding: 80px 24px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .families-layout { grid-template-columns: 1fr; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      #testimonials { padding: 80px 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      #cta { padding: 100px 24px; }
+      .cta-heading { font-size: 36px; }
+      #contact { grid-template-columns: 1fr; padding: 80px 24px; }
+      footer { padding: 32px 24px; }
+      .section-title { font-size: 30px; }
+      .newborn-layout { padding: 0; }
+      #newborn { padding: 80px 24px; }
+      #families { padding: 80px 24px; }
+      #about { padding: 80px 24px; }
+      #weddings { height: 60vh; }
+      .wedding-text { padding: 0 24px; }
+      .cta-bg-text { font-size: 80px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 28px; letter-spacing: 0.12em; }
+      .hero-tagline { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Jessica Lea Photography</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — FULL BLEED -->
+  <section id="hero">
+    <img
+      class="hero-img"
+      src="images/jessica/img02.jpg"
+      alt="Jessica Lea Photography — newborn and family photographer, Burlington NC"
+      loading="eager"
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <h1 class="hero-name" id="heroName">Jessica Lea<br>Photography</h1>
+      <p class="hero-tagline">Weddings · Newborns · Families · Maternity · Burlington, NC</p>
+    </div>
+    <p class="hero-scroll-hint">Scroll</p>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item" style="transition-delay:0.1s">
+      <div class="stat-number">1.4K</div>
+      <div class="stat-label">Instagram Followers</div>
+    </div>
+    <div class="stat-item" style="transition-delay:0.2s">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Specialties</div>
+    </div>
+    <div class="stat-item" style="transition-delay:0.3s">
+      <div class="stat-number">3</div>
+      <div class="stat-label">States Covered</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Burlington, NC</span><span>·</span>
+      <span>Weddings</span><span>·</span>
+      <span>Newborns</span><span>·</span>
+      <span>Maternity</span><span>·</span>
+      <span>Families</span><span>·</span>
+      <span>Senior Portraits</span><span>·</span>
+      <span>Dance Photography</span><span>·</span>
+      <span>Available to Travel</span><span>·</span>
+      <span>NC Beach · Virginia Beach · Houston</span><span>·</span>
+      <span>The Ivy Collection</span><span>·</span>
+      <span>Burlington, NC</span><span>·</span>
+      <span>Weddings</span><span>·</span>
+      <span>Newborns</span><span>·</span>
+      <span>Maternity</span><span>·</span>
+      <span>Families</span><span>·</span>
+      <span>Senior Portraits</span><span>·</span>
+      <span>Dance Photography</span><span>·</span>
+      <span>Available to Travel</span><span>·</span>
+      <span>NC Beach · Virginia Beach · Houston</span><span>·</span>
+      <span>The Ivy Collection</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- GALLERY — STAGGERED PAIRS -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Real Moments.<br>Honest Images.</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-pair">
+        <div class="gallery-img">
+          <img src="images/jessica/img01.jpg" alt="Newborn portrait — Jessica Lea Photography" loading="eager" />
+          <p class="gallery-caption">Newborn</p>
+        </div>
+        <div class="gallery-img" style="transition-delay:0.12s">
+          <img src="images/jessica/img04.jpg" alt="Portrait session — Jessica Lea Photography" loading="eager" />
+          <p class="gallery-caption">Portrait</p>
+        </div>
+      </div>
+      <div class="gallery-pair">
+        <div class="gallery-img" style="transition-delay:0.05s">
+          <img src="images/jessica/img05.jpg" alt="Family session — Jessica Lea Photography" loading="eager" />
+          <p class="gallery-caption">Family</p>
+        </div>
+        <div class="gallery-img" style="transition-delay:0.18s">
+          <img src="images/jessica/img06.jpg" alt="Maternity — Jessica Lea Photography" loading="eager" />
+          <p class="gallery-caption">Maternity</p>
+        </div>
+      </div>
+      <div class="gallery-pair">
+        <div class="gallery-img" style="transition-delay:0.08s">
+          <img src="images/jessica/img09.jpg" alt="Wedding — Jessica Lea Photography" loading="eager" />
+          <p class="gallery-caption">Wedding</p>
+        </div>
+        <div class="gallery-img" style="transition-delay:0.2s">
+          <img src="images/jessica/img10.jpg" alt="Senior portrait — Jessica Lea Photography" loading="eager" />
+          <p class="gallery-caption">Senior</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWBORN FEATURE SECTION -->
+  <section id="newborn">
+    <div class="newborn-layout">
+      <div class="newborn-images">
+        <img src="images/jessica/img11.jpg" alt="Newborn — Jessica Lea Photography" loading="eager" />
+        <img src="images/jessica/img12.jpg" alt="Baby session — Jessica Lea Photography" loading="eager" />
+        <img src="images/jessica/img13.jpg" alt="Newborn detail — Jessica Lea Photography" loading="eager" />
+      </div>
+      <div class="newborn-text">
+        <p class="section-label">Newborn &amp; Baby</p>
+        <h2 class="section-title">They grow up too fast to not have photos you love.</h2>
+        <div class="newborn-pull-quote">
+          "Every tiny detail — the curled toes, the sleepy stretch — captured before the week is over."
+        </div>
+        <p>Newborn sessions are scheduled within the first 14 days of life, when babies are sleepiest and most moldable for those classic curled poses. Sessions are relaxed, warm, and entirely on your baby's schedule.</p>
+        <div class="section-divider"></div>
+        <p>Birth story sessions also available — in-hospital or at home, documenting every real moment from labor through first latch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEDDING SECTION -->
+  <section id="weddings">
+    <img src="images/jessica/img07.jpg" alt="Wedding photography — Jessica Lea Photography, Burlington NC" loading="eager" />
+    <div class="wedding-overlay">
+      <div class="wedding-text">
+        <p class="section-label">Weddings</p>
+        <h2 class="section-title section-title-light">Every wedding tells its own story.</h2>
+        <p>From intimate ceremonies to full celebrations, Jessica documents your day as it actually unfolds — the nervous laugh before the vows, the grandmother tearing up, the first real exhale of the evening.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="pricing-header">
+      <p class="section-label">Transparent Pricing</p>
+      <h2 class="section-title">No guesswork. No surprises.</h2>
+      <p class="pricing-subtitle">All packages include edited digital files delivered via online gallery.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-card-name">Newborn Classic</div>
+        <div class="pricing-card-price">$299 <span>— $399</span></div>
+        <p class="pricing-card-desc">First 14 days of life. Posed studio newborn photography. Includes props, wraps, and sibling poses. Digital gallery included.</p>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-card-name">Belly to Birthday Bundle</div>
+        <div class="pricing-card-price">$999</div>
+        <p class="pricing-card-desc">The full journey: maternity, newborn, and baby milestone sessions. The most popular package — all three stages of that first year.</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name">Maternity + Newborn</div>
+        <div class="pricing-card-price">$799</div>
+        <p class="pricing-card-desc">Two-session bundle covering your final weeks of pregnancy and the first days of your baby's life. A complete story.</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name">Baby Mini Session</div>
+        <div class="pricing-card-price">$125</div>
+        <p class="pricing-card-desc">Milestone mini sessions — sitter, cake smash, first birthday. 20 minutes, perfect for capturing big firsts without a big commitment.</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name">Birth Story</div>
+        <div class="pricing-card-price">From $200</div>
+        <p class="pricing-card-desc">In-hospital or home birth documentation. The real story of arrival — raw, honest, and yours forever.</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name">Baby Sessions</div>
+        <div class="pricing-card-price">$199</div>
+        <p class="pricing-card-desc">Individual baby milestone sessions outside of mini packages. Full-length session for those who want more time and images.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE 2 -->
+  <div class="marquee-strip" style="background: var(--blush)">
+    <div class="marquee-inner" style="animation-direction: reverse">
+      <span>Reserve Your Session</span><span>·</span>
+      <span>Limited Availability</span><span>·</span>
+      <span>Burlington NC · NC Beach · Virginia Beach · Houston</span><span>·</span>
+      <span>Currently Booking 2025–2026</span><span>·</span>
+      <span>Reserve Your Session</span><span>·</span>
+      <span>Limited Availability</span><span>·</span>
+      <span>Burlington NC · NC Beach · Virginia Beach · Houston</span><span>·</span>
+      <span>Currently Booking 2025–2026</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- FAMILIES / SENIORS -->
+  <section id="families">
+    <p class="section-label">Families &amp; Seniors</p>
+    <h2 class="section-title">Where you are right now is worth remembering.</h2>
+    <div class="families-layout">
+      <img src="images/jessica/img14.jpg" alt="Family portrait — Jessica Lea Photography" loading="eager" />
+      <img src="images/jessica/img15.jpg" alt="Senior portrait — Jessica Lea Photography" loading="eager" />
+      <img src="images/jessica/img16.jpg" alt="Portrait session — Jessica Lea Photography" loading="eager" />
+    </div>
+  </section>
+
+  <!-- ABOUT — MAGAZINE SPREAD -->
+  <section id="about">
+    <div class="about-layout">
+      <div class="about-portrait">
+        <img src="images/jessica/img17.jpg" alt="Jessica Lea — Burlington NC photographer" loading="eager" />
+        <div class="about-portrait-accent"></div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About Jessica</p>
+        <h2 class="section-title">Burlington, NC photographer specializing in life's biggest moments.</h2>
+        <div class="section-divider"></div>
+        <p class="about-bio">Based in Burlington, North Carolina, Jessica Lea has spent more than a decade documenting weddings, newborns, families, maternity, seniors, and dancers. Her approach is direct and warm — get in close, go easy on the posing, and let real people be real people. She travels regularly to NC beaches, Virginia Beach, and Houston for clients who want her specific eye.</p>
+        <div class="about-pull-quote">
+          "I want the photos to feel like you — not like a photo session."
+        </div>
+        <div class="ivy-note">
+          <p><strong>The Ivy Collection</strong> — Jessica's daughter runs a complementary creative venture alongside the photography business, making this a genuinely family-built creative practice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testimonials-header">
+      <p class="section-label" style="color: var(--sage); display: flex; justify-content: center;">Client Words</p>
+      <h2 class="section-title section-title-light">What families are saying.</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">She made us feel so comfortable. We were nervous the whole drive there and within five minutes it felt like hanging out with a friend. The photos are everything.</p>
+        <p class="testimonial-source">— Family session, Burlington NC</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">Our newborn photos are the most treasured photos we own. She was so patient with our baby — three hours and zero pressure. We cried when we saw the gallery.</p>
+        <p class="testimonial-source">— Newborn session, Greensboro NC</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">I booked the Belly to Birthday package and it was worth every single penny. Three milestones, three galleries, and I didn't have to think about finding a photographer each time.</p>
+        <p class="testimonial-source">— Belly to Birthday client</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg-text">Jessica Lea</div>
+    <p class="cta-label">Book a Session</p>
+    <h2 class="cta-heading">Ready to reserve your date?</h2>
+    <p class="cta-sub">Sessions book quickly — especially newborns. Don't wait until after the baby arrives.</p>
+    <a href="mailto:JessicaLeaPhotographyNC@gmail.com?subject=Session%20Inquiry" class="cta-btn">Reserve Your Session</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-text">
+      <h3>Get in touch.</h3>
+      <p>Questions about packages, availability, or travel? Send an email or find Jessica on Instagram. Response time is typically same-day.</p>
+    </div>
+    <div class="contact-links">
+      <div class="contact-link-item">
+        <span>Email</span>
+        <a href="mailto:JessicaLeaPhotographyNC@gmail.com">JessicaLeaPhotographyNC@gmail.com</a>
+      </div>
+      <div class="contact-link-item">
+        <span>Instagram</span>
+        <a href="https://instagram.com/jessicaleaphotography" target="_blank">@jessicaleaphotography</a>
+      </div>
+      <div class="contact-link-item">
+        <span>Based in</span>
+        <a href="#">Burlington, North Carolina</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Jessica Lea Photography</div>
+    <div class="footer-links">
+      <a href="#gallery">Portfolio</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Jessica Lea Photography · Burlington, NC</div>
+    <div class="footer-credit">Design by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // Force all elements visible immediately (prevent broken animations on local)
+    document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+    // Hero name letter-spacing animate on load
+    setTimeout(() => {
+      const heroName = document.getElementById('heroName');
+      if (heroName) heroName.classList.add('animate-in');
+    }, 100);
+
+    // IntersectionObserver for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.05 });
+
+    // Observe animated elements
+    document.querySelectorAll('.section-title, .gallery-img, .stat-item, .pricing-card, .testimonial-card, .about-portrait, .about-text, .wedding-text, .families-layout img').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
