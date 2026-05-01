@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lorena Duarte — ISA Art Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== GLOBAL ANIMATION OVERRIDE — content always visible ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+.reveal, .reveal-title, .reveal-img, .fade-up {
+  opacity: 1 !important;
+  clip-path: none !important;
+  transform: none !important;
+}
+
+/* ===== RESET & BASE ===== */
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  padding: 0;
+  background: #F7F3EE;
+  color: #2C2420;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  mix-blend-mode: normal;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+  transition: opacity 0.3s;
+}
+.nav-links a:hover { opacity: 0.6; }
+
+/* ===== HERO — ASYMMETRIC SPLIT ===== */
+#hero {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+}
+.hero-image-side {
+  position: relative;
+  overflow: hidden;
+}
+.hero-image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.hero-image-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 100%);
+  pointer-events: none;
+}
+.hero-text-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 56px 80px 64px;
+  background: #2C2420;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #C4907A;
+  margin-bottom: 32px;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 82px;
+  line-height: 0.95;
+  letter-spacing: 0.08em;
+  color: #F7F3EE;
+  margin: 0 0 32px 0;
+}
+.hero-name span {
+  display: block;
+}
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 20px;
+  color: rgba(247,243,238,0.65);
+  line-height: 1.5;
+  margin-bottom: 48px;
+  max-width: 280px;
+}
+.hero-cta {
+  display: inline-block;
+  border: 1px solid #C4907A;
+  color: #C4907A;
+  padding: 14px 32px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-family: 'Work Sans', sans-serif;
+  transition: background 0.3s, color 0.3s;
+  align-self: flex-start;
+}
+.hero-cta:hover {
+  background: #C4907A;
+  color: #2C2420;
+}
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  right: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247,243,238,0.4);
+}
+.hero-scroll-hint::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(247,243,238,0.3);
+}
+
+/* ===== STATS STRIP ===== */
+#stats {
+  background: #C4907A;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+.marquee-track {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+  width: max-content;
+}
+.marquee-item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+  padding: 18px 40px;
+  border-right: 1px solid rgba(247,243,238,0.3);
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== NUMBERS SECTION ===== */
+#numbers {
+  background: #F7F3EE;
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-bottom: 1px solid rgba(44,36,32,0.1);
+}
+.number-item {
+  text-align: center;
+  padding: 40px 20px;
+  border-right: 1px solid rgba(44,36,32,0.1);
+}
+.number-item:last-child { border-right: none; }
+.number-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 88px;
+  line-height: 1;
+  color: #2C2420;
+  display: block;
+  margin-bottom: 8px;
+}
+.number-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C4907A;
+}
+
+/* ===== GALLERY — MASONRY ===== */
+#gallery {
+  padding: 120px 48px;
+  background: #F7F3EE;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 64px;
+}
+.section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  color: rgba(44,36,32,0.08);
+  line-height: 1;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 38px;
+  letter-spacing: 0.08em;
+  color: #2C2420;
+  margin: 0;
+}
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #C4907A;
+  max-width: 80px;
+  margin-left: 16px;
+  align-self: center;
+}
+.masonry-grid {
+  columns: 3;
+  column-gap: 8px;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 8px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  loading: eager;
+}
+.masonry-item:hover img {
+  transform: scale(1.03);
+}
+.masonry-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(44,36,32,0.8) 0%, transparent 100%);
+  padding: 32px 20px 16px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.masonry-item:hover .masonry-caption { opacity: 1; }
+.masonry-caption span {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+}
+
+/* ===== FEATURED PORTRAIT ===== */
+#featured {
+  position: relative;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
+}
+#featured img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+.featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(44,36,32,0.7) 0%, rgba(44,36,32,0.3) 60%, transparent 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+}
+.featured-quote {
+  max-width: 560px;
+}
+.featured-quote blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 34px;
+  line-height: 1.4;
+  color: #F7F3EE;
+  margin: 0 0 24px 0;
+}
+.featured-quote cite {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C4907A;
+  font-style: normal;
+}
+
+/* ===== ABOUT — MAGAZINE SPREAD ===== */
+#about {
+  padding: 140px 80px;
+  background: #2C2420;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-portrait {
+  position: relative;
+}
+.about-portrait img {
+  width: 100%;
+  height: 580px;
+  object-fit: cover;
+  object-position: center top;
+}
+.about-portrait-label {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  background: #C4907A;
+  padding: 20px 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+}
+.about-text {
+  padding-left: 16px;
+}
+.about-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C4907A;
+  margin-bottom: 28px;
+  font-family: 'Work Sans', sans-serif;
+}
+.about-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 1.15;
+  color: #F7F3EE;
+  margin: 0 0 32px 0;
+}
+.about-body {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(247,243,238,0.72);
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+.about-pull-quote {
+  border-left: 2px solid #C4907A;
+  padding-left: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.5;
+  color: rgba(247,243,238,0.85);
+  margin: 0;
+}
+
+/* ===== SERVICES ===== */
+#services {
+  padding: 120px 80px;
+  background: #F7F3EE;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(44,36,32,0.12);
+  margin-top: 64px;
+  border: 1px solid rgba(44,36,32,0.12);
+}
+.service-item {
+  background: #F7F3EE;
+  padding: 52px 44px;
+}
+.service-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: rgba(44,36,32,0.1);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.service-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #2C2420;
+  margin: 0 0 16px 0;
+}
+.service-desc {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(44,36,32,0.65);
+  font-weight: 300;
+  margin: 0 0 24px 0;
+}
+.service-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: #C4907A;
+  font-style: italic;
+}
+
+/* ===== TESTIMONIAL ===== */
+#testimonial {
+  background: #1A1210;
+  padding: 120px 80px;
+  text-align: center;
+}
+.testimonial-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 38px;
+  line-height: 1.45;
+  color: #F7F3EE;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+.testimonial-author {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C4907A;
+}
+.testimonial-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 40px;
+}
+.star {
+  width: 16px;
+  height: 16px;
+  background: #C4907A;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* ===== PROCESS ===== */
+#process {
+  padding: 120px 80px;
+  background: #EDE7DF;
+}
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 72px;
+}
+.process-step {
+  padding: 0 40px 0 0;
+  position: relative;
+}
+.process-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: 8px;
+  top: 32px;
+  font-size: 24px;
+  color: #C4907A;
+  opacity: 0.5;
+}
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 300;
+  color: rgba(44,36,32,0.08);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #2C2420;
+  margin: 0 0 12px;
+}
+.step-desc {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(44,36,32,0.62);
+  font-weight: 300;
+}
+
+/* ===== SECOND GALLERY ROW ===== */
+#gallery2 {
+  padding: 0 48px 120px;
+  background: #F7F3EE;
+}
+.editorial-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 8px;
+}
+.editorial-row img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+.editorial-row .tall {
+  height: 420px;
+}
+
+/* ===== BOLD CTA ===== */
+#cta {
+  background: #C4907A;
+  padding: 140px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: 'ISA';
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 400px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.05);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.cta-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 64px;
+  line-height: 1.15;
+  color: #F7F3EE;
+  margin: 0 0 24px;
+  position: relative;
+}
+.cta-sub {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  color: rgba(247,243,238,0.75);
+  margin-bottom: 52px;
+  font-weight: 300;
+  position: relative;
+}
+.cta-btn {
+  display: inline-block;
+  background: #F7F3EE;
+  color: #2C2420;
+  padding: 18px 52px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: background 0.3s, color 0.3s;
+  position: relative;
+}
+.cta-btn:hover {
+  background: #2C2420;
+  color: #F7F3EE;
+}
+
+/* ===== CONTACT ===== */
+#contact {
+  padding: 120px 80px;
+  background: #F7F3EE;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-left .section-title { margin-bottom: 28px; }
+.contact-body {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(44,36,32,0.65);
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+.contact-email {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: #2C2420;
+  border-bottom: 1px solid #C4907A;
+  padding-bottom: 8px;
+  display: inline-block;
+  margin-bottom: 32px;
+  transition: color 0.3s;
+}
+.contact-email:hover { color: #C4907A; }
+.contact-socials {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.contact-socials a {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(44,36,32,0.5);
+  transition: color 0.3s;
+}
+.contact-socials a:hover { color: #C4907A; }
+.contact-right {
+  padding-top: 80px;
+}
+.contact-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.contact-details li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.detail-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C4907A;
+  min-width: 80px;
+  padding-top: 3px;
+  font-family: 'Work Sans', sans-serif;
+}
+.detail-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: #2C2420;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: #1A1210;
+  padding: 48px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+}
+.footer-copy {
+  font-size: 12px;
+  color: rgba(247,243,238,0.35);
+  font-family: 'Work Sans', sans-serif;
+}
+.footer-credit {
+  font-size: 11px;
+  color: rgba(247,243,238,0.25);
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* ===== VERTICAL TEXT ACCENT ===== */
+.vertical-accent {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(44,36,32,0.2);
+  font-family: 'Work Sans', sans-serif;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  #hero {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .hero-image-side { height: 55vh; }
+  .hero-text-side { padding: 60px 32px; }
+  .hero-name { font-size: 52px; }
+  #numbers { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+  #gallery { padding: 80px 24px; }
+  .masonry-grid { columns: 2; }
+  #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+  #services { padding: 80px 24px; }
+  .services-grid { grid-template-columns: 1fr; }
+  #process { padding: 80px 24px; }
+  .process-steps { grid-template-columns: repeat(2,1fr); gap: 32px; }
+  #cta { padding: 100px 32px; }
+  .cta-heading { font-size: 42px; }
+  #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
+  .editorial-row { grid-template-columns: 1fr; }
+  .vertical-accent { display: none; }
+}
+@media (max-width: 480px) {
+  .hero-name { font-size: 42px; }
+  #numbers { grid-template-columns: 1fr 1fr; padding: 40px 16px; }
+  .number-big { font-size: 60px; }
+  .masonry-grid { columns: 1; }
+  .process-steps { grid-template-columns: 1fr; }
+  .section-num { font-size: 48px; }
+  .section-title { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="vertical-accent">ISA Art Photography · Miami, FL · 2026</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ISA Art Photography</div>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — ASYMMETRIC SPLIT -->
+<section id="hero">
+  <div class="hero-image-side">
+    <img src="images/lorena/img02.png" alt="ISA Art Photography — Children's Portrait" loading="eager">
+  </div>
+  <div class="hero-text-side">
+    <p class="hero-eyebrow reveal">Miami, Florida · Children &amp; Family</p>
+    <h1 class="hero-name reveal">
+      <span>Lorena</span>
+      <span>Duarte</span>
+    </h1>
+    <p class="hero-tagline reveal">Photographs that hold time still. Portraits of childhood, tenderness, and light.</p>
+    <a href="#gallery" class="hero-cta reveal">View Portfolio</a>
+    <div class="hero-scroll-hint">Scroll</div>
+  </div>
+</section>
+
+<!-- STATS MARQUEE -->
+<div id="stats">
+  <div class="marquee-track">
+    <span class="marquee-item">Miami, Florida</span>
+    <span class="marquee-item">Children's Portraits</span>
+    <span class="marquee-item">Family Sessions</span>
+    <span class="marquee-item">Newborn Photography</span>
+    <span class="marquee-item">Est. 2015</span>
+    <span class="marquee-item">Available for Bookings</span>
+    <span class="marquee-item">Miami, Florida</span>
+    <span class="marquee-item">Children's Portraits</span>
+    <span class="marquee-item">Family Sessions</span>
+    <span class="marquee-item">Newborn Photography</span>
+    <span class="marquee-item">Est. 2015</span>
+    <span class="marquee-item">Available for Bookings</span>
+    <span class="marquee-item">Miami, Florida</span>
+    <span class="marquee-item">Children's Portraits</span>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<section id="numbers">
+  <div class="number-item reveal fade-up">
+    <span class="number-big">8K+</span>
+    <span class="number-label">Instagram Followers</span>
+  </div>
+  <div class="number-item reveal fade-up">
+    <span class="number-big">10+</span>
+    <span class="number-label">Years of Experience</span>
+  </div>
+  <div class="number-item reveal fade-up">
+    <span class="number-big">500+</span>
+    <span class="number-label">Families Photographed</span>
+  </div>
+  <div class="number-item reveal fade-up">
+    <span class="number-big">100%</span>
+    <span class="number-label">Love Guaranteed</span>
+  </div>
+</section>
+
+<!-- GALLERY — MASONRY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title reveal-title">Portfolio</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="masonry-grid">
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img01.png" alt="Children's Portrait" loading="eager">
+      <div class="masonry-caption"><span>Childhood Wonder</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img04.jpg" alt="Family Portrait" loading="eager">
+      <div class="masonry-caption"><span>Family Session</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img10.png" alt="Portrait" loading="eager">
+      <div class="masonry-caption"><span>Natural Light</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img05.jpg" alt="Children's Portrait" loading="eager">
+      <div class="masonry-caption"><span>Golden Hour</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img11.png" alt="Portrait Session" loading="eager">
+      <div class="masonry-caption"><span>Miami Session</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img06.jpg" alt="Portrait" loading="eager">
+      <div class="masonry-caption"><span>Pure Joy</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img12.png" alt="Children Portrait" loading="eager">
+      <div class="masonry-caption"><span>Little Moments</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img07.jpg" alt="Family Session" loading="eager">
+      <div class="masonry-caption"><span>Family Story</span></div>
+    </div>
+    <div class="masonry-item reveal-img">
+      <img src="images/lorena/img13.png" alt="Portrait" loading="eager">
+      <div class="masonry-caption"><span>Tender Light</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PORTRAIT -->
+<section id="featured">
+  <img src="images/lorena/img03.png" alt="Featured Portrait" loading="eager">
+  <div class="featured-overlay">
+    <div class="featured-quote">
+      <blockquote>"Every child carries a universe inside them. My job is to make sure it shows."</blockquote>
+      <cite>— Lorena Duarte, ISA Art Photography</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT — MAGAZINE SPREAD -->
+<section id="about">
+  <div class="about-portrait reveal-img">
+    <img src="images/lorena/img08.jpg" alt="Lorena Duarte, Photographer" loading="eager">
+    <div class="about-portrait-label">ISA Art Photography</div>
+  </div>
+  <div class="about-text">
+    <p class="about-eyebrow reveal">About the Artist</p>
+    <h2 class="about-heading reveal-title">Capturing the light in every child's eyes.</h2>
+    <p class="about-body reveal fade-up">
+      Lorena Duarte is a Miami-based portrait photographer specializing in children and family photography. With over a decade of experience, her work is defined by natural light, genuine emotion, and an instinctive gift for putting even the most camera-shy subjects at ease.
+    </p>
+    <p class="about-body reveal fade-up">
+      Based in Miami, FL 33193, Lorena works on location throughout South Florida — bringing her studio sensibility to beaches, parks, gardens, and family homes alike.
+    </p>
+    <blockquote class="about-pull-quote reveal fade-up">
+      "Beautiful work far above the average — photographs that feel like memories before they're even printed."
+    </blockquote>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title reveal-title">Services</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-num">01</div>
+      <h3 class="service-name">Children's Portraits</h3>
+      <p class="service-desc">Individual portrait sessions for children of all ages. Natural light, genuine expressions, timeless images you'll return to for decades.</p>
+      <span class="service-price">Contact for pricing</span>
+    </div>
+    <div class="service-item">
+      <div class="service-num">02</div>
+      <h3 class="service-name">Family Sessions</h3>
+      <p class="service-desc">Full family portrait sessions — on location throughout Miami and South Florida. 1–2 hours, multiple looks, gallery delivery within 2 weeks.</p>
+      <span class="service-price">Contact for pricing</span>
+    </div>
+    <div class="service-item">
+      <div class="service-num">03</div>
+      <h3 class="service-name">Newborn &amp; Baby</h3>
+      <p class="service-desc">Specialty sessions for newborns and infants, capturing those fleeting early weeks with warmth, safety, and artistic care.</p>
+      <span class="service-price">Contact for pricing</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <div class="testimonial-stars">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+  <blockquote class="testimonial-quote reveal fade-up">
+    "Lorena has an incredible eye for light and emotion. Our family photos came out better than anything we could have imagined — she made the whole session feel completely natural."
+  </blockquote>
+  <p class="testimonial-author">— Miami Family Client</p>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title reveal-title">How It Works</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Inquiry</h3>
+      <p class="step-desc">Reach out by email or DM. Tell me about your family and what you're looking for. I'll reply within 24 hours.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Planning</h3>
+      <p class="step-desc">We'll choose the perfect location, time of day, and look for your session. I handle everything — you just show up.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3 class="step-title">The Session</h3>
+      <p class="step-desc">Relaxed, unhurried, and fun. Kids lead, I follow. The best portraits happen when everyone forgets there's a camera.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Your Gallery</h3>
+      <p class="step-desc">Edited images delivered within 2 weeks via private online gallery. Print-ready, high-resolution files included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECOND GALLERY ROW -->
+<section id="gallery2">
+  <div class="editorial-row">
+    <img src="images/lorena/img14.png" alt="Portrait Session" loading="eager" class="tall">
+    <img src="images/lorena/img15.png" alt="Children Portrait" loading="eager">
+    <img src="images/lorena/img16.png" alt="Family Portrait" loading="eager">
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section id="cta">
+  <h2 class="cta-heading">Book Your Session</h2>
+  <p class="cta-sub">Limited availability — Miami &amp; South Florida · 2026</p>
+  <a href="mailto:Isaartphotography@gmail.com" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title reveal-title">Contact</h2>
+    </div>
+    <p class="contact-body">Ready to book a session or have questions? Reach out directly — I'd love to hear about your family.</p>
+    <a href="mailto:Isaartphotography@gmail.com" class="contact-email">Isaartphotography@gmail.com</a>
+    <ul class="contact-socials">
+      <li><a href="https://instagram.com/lorenaaduarte" target="_blank">Instagram</a></li>
+      <li><a href="https://isaartphotography.wixsite.com/mysite" target="_blank">Current Site</a></li>
+    </ul>
+  </div>
+  <div class="contact-right">
+    <ul class="contact-details">
+      <li>
+        <span class="detail-label">Location</span>
+        <span class="detail-val">Miami, FL 33193</span>
+      </li>
+      <li>
+        <span class="detail-label">Specialty</span>
+        <span class="detail-val">Children &amp; Family</span>
+      </li>
+      <li>
+        <span class="detail-label">Availability</span>
+        <span class="detail-val">Booking 2026</span>
+      </li>
+      <li>
+        <span class="detail-label">Response</span>
+        <span class="detail-val">Within 24 hours</span>
+      </li>
+      <li>
+        <span class="detail-label">Instagram</span>
+        <span class="detail-val">@lorenaaduarte</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ISA Art Photography</div>
+  <div class="footer-copy">© 2026 Lorena Duarte · All Rights Reserved</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+// Force all elements visible immediately
+document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+// Hero name letter-spacing animate: 0.4em → 0.08em
+const heroName = document.querySelector('.hero-name');
+if (heroName) {
+  heroName.style.letterSpacing = '0.4em';
+  heroName.style.transition = 'letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  setTimeout(() => {
+    heroName.style.letterSpacing = '0.08em';
+  }, 100);
+}
+
+// Clip-path title sweep on section titles
+const titleObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'titleSweep 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards';
+      titleObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal-title').forEach(el => {
+  titleObserver.observe(el);
+});
+
+// Image mask reveal from bottom — staggered
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const items = entry.target.querySelectorAll ?
+        entry.target.querySelectorAll('.masonry-item') :
+        [entry.target];
+      items.forEach((item, i) => {
+        item.style.animation = `imgReveal 0.9s ease-out ${i * 100}ms forwards`;
+      });
+      imgObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.masonry-grid').forEach(grid => {
+  imgObserver.observe(grid);
+});
+
+// Staggered fade + rise for stats and about text
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const children = entry.target.querySelectorAll('.fade-up');
+      children.forEach((child, i) => {
+        child.style.animation = `fadeRise 0.7s ease-out ${i * 120}ms forwards`;
+      });
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('#numbers, #about, #process').forEach(section => {
+  fadeObserver.observe(section);
+});
+
+// Parallax on hero image
+const heroImg = document.querySelector('.hero-image-side img');
+if (heroImg) {
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    heroImg.style.transform = `translateY(${scrollY * 0.35}px)`;
+  }, { passive: true });
+}
+</script>
+</body>
+</html>
