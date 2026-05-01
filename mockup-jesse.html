@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesse Kraker — Landscape Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --deep-blue: #1C3A5C;
+    --amber: #D4894A;
+    --off-white: #F6F2EC;
+    --near-black: #0E1A27;
+    --text-light: #8A9BAB;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 300;
+    background: var(--near-black);
+    color: var(--off-white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 28px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--amber); }
+
+  /* HERO — full-bleed, text pinned bottom-left */
+  #hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--near-black);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/f43b5ec4-bc89-4fdd-a8e0-5af922426527_rwc_0x209x1920x1501x1920.jpg?h=72590d0eaced9b6bcb29ffc7de149ae1');
+    background-size: cover;
+    background-position: center 40%;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(14,26,39,0.85) 0%,
+      rgba(14,26,39,0.3) 40%,
+      rgba(14,26,39,0.15) 70%,
+      rgba(14,26,39,0.05) 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 72px;
+    left: 72px;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s, letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+  }
+
+  .hero-name.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-eyebrow.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-subtitle {
+    margin-top: 20px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s;
+  }
+
+  .hero-subtitle.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 72px;
+    right: 72px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.5;
+  }
+
+  .hero-scroll span {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white);
+    writing-mode: vertical-lr;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: var(--white);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(0.5); opacity: 1; }
+  }
+
+  /* STATS SECTION */
+  #stats {
+    background: var(--off-white);
+    color: var(--near-black);
+    padding: 100px 72px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-item {
+    padding: 0 40px;
+    border-left: 1px solid rgba(28,58,92,0.15);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item:first-child { border-left: none; padding-left: 0; }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--deep-blue);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7A8EA0;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--deep-blue);
+    padding: 18px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    padding: 0 48px;
+  }
+
+  .marquee-inner span.accent {
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* EDITORIAL GALLERY */
+  #gallery {
+    background: var(--near-black);
+    padding: 140px 0;
+  }
+
+  .section-header {
+    padding: 0 72px;
+    margin-bottom: 72px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(255,255,255,0.03);
+    position: absolute;
+    left: 0;
+    top: -40px;
+    pointer-events: none;
+  }
+
+  .section-label-wrap {
+    position: relative;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-eyebrow.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--white);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .section-link {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(138,155,171,0.3);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .section-link:hover {
+    color: var(--amber);
+    border-color: var(--amber);
+  }
+
+  /* Editorial staggered gallery */
+  .gallery-editorial {
+    padding: 0 72px;
+  }
+
+  .gallery-row {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .gallery-row.row-2-1 { grid-template-columns: 3fr 2fr; }
+  .gallery-row.row-1-2 { grid-template-columns: 2fr 3fr; }
+  .gallery-row.row-full { grid-template-columns: 1fr; }
+  .gallery-row.row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-item.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.05);
+    transition: transform 0.6s ease;
+    loading: lazy;
+  }
+
+  .gallery-row.row-2-1 .gallery-item { height: 480px; }
+  .gallery-row.row-1-2 .gallery-item { height: 420px; }
+  .gallery-row.row-full .gallery-item { height: 600px; }
+  .gallery-row.row-3 .gallery-item { height: 360px; }
+
+  .gallery-item:hover img {
+    transform: scale(1.0);
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(14,26,39,0.8), transparent);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-caption {
+    transform: translateY(0);
+  }
+
+  .gallery-caption span {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* FEATURED PIECE */
+  #featured {
+    position: relative;
+    height: 85vh;
+    overflow: hidden;
+  }
+
+  .featured-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/14ebf36b-36d6-4a07-ad02-063eca23164f_rw_1920.jpg?h=c900fb6c61499b316d7a686164482ad9');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transform: scale(1.05);
+    transition: transform 0.3s linear;
+  }
+
+  .featured-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(14,26,39,0.45);
+  }
+
+  .featured-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 72px;
+  }
+
+  .featured-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .featured-label.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .featured-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.1;
+    max-width: 700px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .featured-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .featured-desc {
+    margin-top: 24px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+  }
+
+  .featured-desc.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* PRINTS SECTION */
+  #prints {
+    background: var(--off-white);
+    color: var(--near-black);
+    padding: 140px 72px;
+  }
+
+  #prints .section-eyebrow { color: var(--amber); }
+  #prints .section-title { color: var(--deep-blue); }
+
+  .prints-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .print-card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .print-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .print-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .print-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--deep-blue);
+    margin-bottom: 8px;
+  }
+
+  .print-detail {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8A9BAB;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .print-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--deep-blue);
+  }
+
+  .divider-line {
+    width: 60px;
+    height: 1px;
+    background: var(--amber);
+    margin: 48px 0;
+  }
+
+  .prints-note {
+    font-size: 14px;
+    color: #6A7E90;
+    line-height: 1.8;
+    max-width: 540px;
+  }
+
+  /* TRAVEL SECTION */
+  #travel {
+    background: var(--near-black);
+    padding: 140px 0;
+  }
+
+  .travel-header {
+    padding: 0 72px;
+    margin-bottom: 72px;
+  }
+
+  .travel-scroll {
+    display: flex;
+    gap: 16px;
+    padding: 0 72px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .travel-scroll::-webkit-scrollbar { display: none; }
+
+  .travel-item {
+    flex: 0 0 400px;
+    height: 560px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .travel-item.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .travel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .travel-item:hover img {
+    transform: scale(1.04);
+  }
+
+  .travel-label {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--off-white);
+    color: var(--near-black);
+    padding: 160px 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .about-portrait-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-portrait-wrap.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .about-portrait {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-portrait-accent {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--amber);
+    pointer-events: none;
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  #about .section-eyebrow { color: var(--amber); margin-bottom: 16px; }
+  #about .section-title { color: var(--deep-blue); margin-bottom: 32px; }
+
+  .about-bio {
+    font-size: 17px;
+    line-height: 1.85;
+    color: #4A5E6E;
+    margin-bottom: 32px;
+  }
+
+  .about-pull {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--deep-blue);
+    border-left: 3px solid var(--amber);
+    padding-left: 24px;
+    margin: 36px 0;
+  }
+
+  /* AWARDS */
+  #awards {
+    background: var(--deep-blue);
+    padding: 120px 72px;
+  }
+
+  .awards-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .award-item {
+    background: var(--deep-blue);
+    padding: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .award-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .award-year {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .award-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  .award-desc {
+    margin-top: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.05em;
+  }
+
+  /* CTA SECTION */
+  #cta {
+    background: var(--amber);
+    padding: 120px 72px;
+    text-align: center;
+  }
+
+  .cta-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(14,26,39,0.5);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--near-black);
+    line-height: 1.1;
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    background: var(--near-black);
+    color: var(--white);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .cta-btn:hover {
+    background: var(--deep-blue);
+    color: var(--white);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--near-black);
+    padding: 140px 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .contact-left.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #contact .section-title { color: var(--white); margin-bottom: 24px; }
+  #contact .section-eyebrow { color: var(--amber); margin-bottom: 16px; }
+
+  .contact-tagline {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.5);
+    max-width: 380px;
+    margin-bottom: 40px;
+  }
+
+  .contact-detail {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .contact-detail a {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.3s;
+  }
+
+  .contact-detail a:hover { color: var(--amber); }
+
+  .contact-social {
+    margin-top: 40px;
+    display: flex;
+    gap: 32px;
+  }
+
+  .contact-social a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-social a:hover { color: var(--amber); }
+
+  .contact-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  }
+
+  .contact-right.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-map-placeholder {
+    width: 100%;
+    height: 380px;
+    background: rgba(28,58,92,0.3);
+    border: 1px solid rgba(28,58,92,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-map-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    loading: lazy;
+  }
+
+  .contact-map-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(14,26,39,0.5);
+  }
+
+  .map-location {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    text-align: center;
+  }
+
+  .map-sublocation {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-top: 8px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0A1520;
+    padding: 40px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(28,58,92,0.3);
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-credit a {
+    color: rgba(212,137,74,0.5);
+    text-decoration: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+
+    .hero-content { left: 24px; bottom: 48px; }
+    .hero-name { font-size: 48px; }
+    .hero-scroll { display: none; }
+
+    #stats {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 60px 24px;
+      gap: 32px;
+    }
+
+    .stat-item { border-left: none; border-top: 1px solid rgba(28,58,92,0.15); padding: 24px 0 0; }
+    .stat-item:first-child, .stat-item:nth-child(2) { border-top: none; }
+    .stat-number { font-size: 56px; }
+
+    #gallery, #featured, #travel, #awards, #contact { padding: 80px 24px; }
+    .gallery-editorial { padding: 0 24px; }
+    .gallery-row { grid-template-columns: 1fr !important; }
+    .gallery-row .gallery-item { height: 280px !important; }
+
+    .section-header { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .section-title { font-size: 28px; }
+
+    .featured-content { padding: 40px 24px; }
+    .featured-title { font-size: 36px; }
+
+    #prints { padding: 80px 24px; }
+    .prints-grid { grid-template-columns: 1fr; }
+
+    .travel-scroll { padding: 0 24px; }
+    .travel-item { flex: 0 0 280px; height: 400px; }
+
+    #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    .about-portrait { height: 400px; }
+
+    .awards-grid { grid-template-columns: 1fr; }
+
+    #cta { padding: 80px 24px; }
+    .cta-title { font-size: 36px; }
+
+    #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 36px; }
+    .stat-number { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Jesse Kraker</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#prints">Prints</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="heroEyebrow">Jacksonville Beach, Florida</span>
+    <span class="hero-name" id="heroName">Jesse<br>Kraker</span>
+    <p class="hero-subtitle" id="heroSub">Landscape &amp; Coastal Photography</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item" data-delay="0">
+    <span class="stat-number">8+</span>
+    <span class="stat-label">Years of Practice</span>
+  </div>
+  <div class="stat-item" data-delay="100">
+    <span class="stat-number">5</span>
+    <span class="stat-label">Award Wins · 2025–26</span>
+  </div>
+  <div class="stat-item" data-delay="200">
+    <span class="stat-number">6</span>
+    <span class="stat-label">Portfolio Series</span>
+  </div>
+  <div class="stat-item" data-delay="300">
+    <span class="stat-number">3</span>
+    <span class="stat-label">Continents Shot</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Landscape Photography</span>
+    <span class="accent">·</span>
+    <span>Coastal Northeast Florida</span>
+    <span class="accent">·</span>
+    <span>Fine Art Prints</span>
+    <span class="accent">·</span>
+    <span>Award-Winning</span>
+    <span class="accent">·</span>
+    <span>Space Coast Art Festival 2025</span>
+    <span class="accent">·</span>
+    <span>Archival Quality</span>
+    <span class="accent">·</span>
+    <span>Landscape Photography</span>
+    <span class="accent">·</span>
+    <span>Coastal Northeast Florida</span>
+    <span class="accent">·</span>
+    <span>Fine Art Prints</span>
+    <span class="accent">·</span>
+    <span>Award-Winning</span>
+    <span class="accent">·</span>
+    <span>Space Coast Art Festival 2025</span>
+    <span class="accent">·</span>
+    <span>Archival Quality</span>
+    <span class="accent">·</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <div class="section-label-wrap" style="position:relative;">
+      <div class="section-num" aria-hidden="true">01</div>
+      <span class="section-eyebrow">Selected Work</span>
+      <h2 class="section-title">The Portfolio</h2>
+    </div>
+    <a href="#contact" class="section-link">View All Work</a>
+  </div>
+
+  <div class="gallery-editorial">
+    <!-- Row 1: large left, smaller right -->
+    <div class="gallery-row row-2-1">
+      <div class="gallery-item" data-delay="0">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/e83905cf-449c-49a8-98f0-0c3986667627_rw_1920.jpg?h=9e2fb154ff153181391e73489c3e7f4f" alt="Coastal landscape" loading="lazy">
+        <div class="gallery-caption"><span>Coastal Series</span></div>
+      </div>
+      <div class="gallery-item" data-delay="100">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/eb76ae72-fd0e-4aa1-9389-ffd42082787f_rw_1920.jpg?h=0a5755efdfc747ab46f40ccce27844b4" alt="Seascape" loading="lazy">
+        <div class="gallery-caption"><span>Ocean Blur Collection</span></div>
+      </div>
+    </div>
+    <!-- Row 2: smaller left, large right -->
+    <div class="gallery-row row-1-2">
+      <div class="gallery-item" data-delay="0">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/60c8cae7-c8d2-40dc-8e91-e47d6f4f64d1_rw_1920.jpg?h=96ad63b633bc1529d000ec01844b19f2" alt="Landscape" loading="lazy">
+        <div class="gallery-caption"><span>Landscapes</span></div>
+      </div>
+      <div class="gallery-item" data-delay="100">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/f74ca5ec-06a2-48df-9e46-a5472444d836_rw_1920.jpg?h=331ec7263aa7c3527ecc5596d02744bf" alt="Golden hour seascape" loading="lazy">
+        <div class="gallery-caption"><span>Golden Hour</span></div>
+      </div>
+    </div>
+    <!-- Row 3: full width -->
+    <div class="gallery-row row-full">
+      <div class="gallery-item" data-delay="0">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/fbb2fbf1-3099-4375-87e1-a36bfac8b445_rw_1920.jpg?h=c22e12e06d2afc61bc5efa3ccb3da8e4" alt="Ocean blur seascape" loading="lazy">
+        <div class="gallery-caption"><span>New Ocean Blur Collection</span></div>
+      </div>
+    </div>
+    <!-- Row 4: three equal -->
+    <div class="gallery-row row-3">
+      <div class="gallery-item" data-delay="0">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/a4546174-f200-4ccb-989b-8aa510828713_rw_1920.jpg?h=6dbd9d4afbbd61a570117663a1243ae3" alt="Coastal dunes" loading="lazy">
+        <div class="gallery-caption"><span>Coastal</span></div>
+      </div>
+      <div class="gallery-item" data-delay="100">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/64fbca2e-ad6e-43fb-accb-8764d355d9b2_rw_1920.jpg?h=c4a0d22f327c3655931bc0fe942d2ab3" alt="Wildlife" loading="lazy">
+        <div class="gallery-caption"><span>Wildlife</span></div>
+      </div>
+      <div class="gallery-item" data-delay="200">
+        <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/809c3fab-7966-4df9-9ad8-2144e88e8e3a_rw_1920.jpg?h=33f9fadbd8460a21a9e6c495f0d7df7e" alt="Seascape" loading="lazy">
+        <div class="gallery-caption"><span>Seascape</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PIECE -->
+<section id="featured">
+  <div class="featured-bg" id="featuredBg"></div>
+  <div class="featured-content">
+    <span class="featured-label">Featured Work</span>
+    <h2 class="featured-title">Where Land Meets Light</h2>
+    <p class="featured-desc">The Northeast Florida coastline as it truly exists — unhurried, vast, and luminous. Each image is a study in the moment just before everything changes.</p>
+  </div>
+</section>
+
+<!-- PRINTS -->
+<section id="prints">
+  <div class="section-header" style="padding:0; margin-bottom:72px;">
+    <div class="section-label-wrap" style="position:relative;">
+      <div class="section-num" style="color:rgba(28,58,92,0.05);" aria-hidden="true">02</div>
+      <span class="section-eyebrow">Fine Art Prints</span>
+      <h2 class="section-title">Bring It Home</h2>
+    </div>
+    <a href="#contact" class="section-link" style="color:#6A7E90; border-color:rgba(106,126,144,0.3);">Request Pricing</a>
+  </div>
+
+  <div class="prints-grid">
+    <div class="print-card" data-delay="0">
+      <img class="print-img" src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/8a6f6240-c1e8-4a6c-bf84-f93f207c7887_rw_1920.jpg?h=8963dbab3d8a2f9b0d19527461c97cce" alt="Landscape print" loading="lazy">
+      <div class="print-name">Landscapes Series</div>
+      <span class="print-detail">Archival Giclée Print · Small, Medium, Large</span>
+      <span class="print-price">Price on Request</span>
+    </div>
+    <div class="print-card" data-delay="100">
+      <img class="print-img" src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/6a4f769b-4f08-415d-91ea-55ecd125f62d_rw_1920.jpg?h=81fd30ed38ece580386fd480ab79ec59" alt="Coastal print" loading="lazy">
+      <div class="print-name">Coastal Collection</div>
+      <span class="print-detail">Archival Giclée Print · Small, Medium, Large</span>
+      <span class="print-price">Price on Request</span>
+    </div>
+    <div class="print-card" data-delay="200">
+      <img class="print-img" src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/e2def48f-0e95-4651-b50b-ffe125ef2b3f_rw_1920.jpg?h=1ac46c462db09ec63f145487fb6f9859" alt="Ocean blur print" loading="lazy">
+      <div class="print-name">Ocean Blur Collection</div>
+      <span class="print-detail">Archival Giclée Print · Small, Medium, Large</span>
+      <span class="print-price">Price on Request</span>
+    </div>
+  </div>
+
+  <div class="divider-line"></div>
+  <p class="prints-note">All prints are produced on premium archival paper with museum-grade inks. Each piece ships directly from Jacksonville Beach with a certificate of authenticity.</p>
+</section>
+
+<!-- TRAVEL -->
+<section id="travel">
+  <div class="travel-header">
+    <div style="position:relative;">
+      <div class="section-num" aria-hidden="true">03</div>
+      <span class="section-eyebrow">Beyond Florida</span>
+      <h2 class="section-title">Travel Work</h2>
+    </div>
+  </div>
+  <div class="travel-scroll">
+    <div class="travel-item" data-delay="0">
+      <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/1fa51023-8fae-4cb6-95e9-7b8c6b791c4d_rw_1920.jpg?h=0aac96e9f197f87a0aea363fa78517d8" alt="Travel photography" loading="lazy">
+      <span class="travel-label">Landscape</span>
+    </div>
+    <div class="travel-item" data-delay="100">
+      <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/ffe0597d-6010-49a4-8a65-6b424c02e351_rw_1920.jpg?h=6b2c1d2cf6f6beb46ca9ef3a14fe4732" alt="Travel photography" loading="lazy">
+      <span class="travel-label">Coastal</span>
+    </div>
+    <div class="travel-item" data-delay="200">
+      <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/7dbcf049-4dfa-4f4d-b381-d3180b33e838_rw_1920.jpg?h=7054039f17ac50662ca8f052ef707c2b" alt="Travel photography" loading="lazy">
+      <span class="travel-label">Wildlife</span>
+    </div>
+    <div class="travel-item" data-delay="300">
+      <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/f463ef05-6b94-45eb-b5cf-b83e4a1001f0_rw_1920.jpg?h=0a9105583887779ed102af9fa6e5236a" alt="Travel photography" loading="lazy">
+      <span class="travel-label">Photomontage</span>
+    </div>
+    <div class="travel-item" data-delay="400">
+      <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/0a0d3225-1c95-4a27-86dd-7f82f836e6d1_rw_1920.jpg?h=cf25a04d226912b9d9e0d1def9cd2c1e" alt="Black and white" loading="lazy">
+      <span class="travel-label">Black &amp; White</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-portrait-wrap">
+    <div class="about-portrait-accent"></div>
+    <img class="about-portrait" src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/426401ff-d6fc-42d4-ac24-c21415e270c4_rw_1200.jpg?h=303b8cdc36ef2d6366775c351158ce11" alt="Jesse Kraker" loading="lazy">
+  </div>
+  <div class="about-text">
+    <div style="position:relative;">
+      <div class="section-num" style="color:rgba(28,58,92,0.05);" aria-hidden="true">04</div>
+      <span class="section-eyebrow">The Photographer</span>
+      <h2 class="section-title">Jesse Kraker</h2>
+    </div>
+    <p class="about-bio">Based in Jacksonville Beach, Kraker's work centers on the coastal beauty of Northeast Florida — scenes where tranquility, space, and light converge. His practice often employs intentional motion blur and gentle gradients, techniques that evoke the fleeting quality of time and the serenity found in stillness.</p>
+    <blockquote class="about-pull">"Each photograph is an invitation to pause and reflect — a visual sanctuary where viewers reconnect with the world's quiet magic."</blockquote>
+    <p class="about-bio">Whether capturing the soft horizon of a dawn-lit ocean, the vast solitude of rolling dunes, or the quiet strength of wildlife, Kraker balances technical precision with emotional depth.</p>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div style="position:relative;">
+    <div class="section-num" aria-hidden="true">05</div>
+    <span class="section-eyebrow">Recognition</span>
+    <h2 class="section-title">Awards &amp; Honors</h2>
+  </div>
+
+  <div class="awards-grid">
+    <div class="award-item" data-delay="0">
+      <span class="award-year">2026</span>
+      <div class="award-title">Mandarin Arts Festival</div>
+      <div class="award-desc">Award of Merit</div>
+    </div>
+    <div class="award-item" data-delay="100">
+      <span class="award-year">2026</span>
+      <div class="award-title">Bloomin' Arts Festival</div>
+      <div class="award-desc">Honorable Mention</div>
+    </div>
+    <div class="award-item" data-delay="200">
+      <span class="award-year">2026</span>
+      <div class="award-title">Granada Grand Festival of the Arts</div>
+      <div class="award-desc">2nd Place</div>
+    </div>
+    <div class="award-item" data-delay="300">
+      <span class="award-year">2025</span>
+      <div class="award-title">Mandarin Art Festival</div>
+      <div class="award-desc">Judges Choice Award</div>
+    </div>
+    <div class="award-item" data-delay="100">
+      <span class="award-year">2025</span>
+      <div class="award-title">St. Johns River Festival of the Arts</div>
+      <div class="award-desc">Award of Distinction</div>
+    </div>
+    <div class="award-item" data-delay="200">
+      <span class="award-year">2025</span>
+      <div class="award-title">Space Coast Art Festival</div>
+      <div class="award-desc">Featured Exhibitor</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <span class="cta-label">Fine Art Prints Available</span>
+  <h2 class="cta-title">Bring the Coast Into Your Space</h2>
+  <a href="mailto:JKrakerPhotography@gmail.com" class="cta-btn">Inquire About Prints</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <div style="position:relative;">
+      <div class="section-num" aria-hidden="true">06</div>
+      <span class="section-eyebrow">Get in Touch</span>
+      <h2 class="section-title">Inquiries</h2>
+    </div>
+    <p class="contact-tagline">For print requests, commissions, licensing, and exhibition inquiries — reach out directly.</p>
+    <span class="contact-detail"><a href="mailto:JKrakerPhotography@gmail.com">JKrakerPhotography@gmail.com</a></span>
+    <span class="contact-detail"><a href="tel:9043379294">(904) 337-9294</a></span>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/jkraker_photography/" target="_blank">Instagram</a>
+      <a href="https://jkrakerphotography.com" target="_blank">Portfolio</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="contact-map-placeholder">
+      <img src="https://cdn.myportfolio.com/7fb367b3-0120-4ec8-bc8d-2cdce62303c8/ec0f1e3e-da43-4acc-93e4-c84a1c7c1cb0_rwc_0x705x1536x1200x1536.jpg?h=7ffd46aa95cb54c42c5adc81b2740b27" alt="Jacksonville Beach landscape" loading="lazy">
+      <div class="contact-map-overlay">
+        <div class="map-location">Jacksonville Beach</div>
+        <div class="map-sublocation">Northeast Florida</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Jesse Kraker Photography</span>
+  <span class="footer-copy">© 2026 Jesse Kraker. All rights reserved.</span>
+  <span class="footer-credit">Design by <a href="#">Lucas Blatt</a></span>
+</footer>
+
+<script>
+  // Hero entrance
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const name = document.getElementById('heroName');
+      const eyebrow = document.getElementById('heroEyebrow');
+      const sub = document.getElementById('heroSub');
+      if (name) name.classList.add('is-visible');
+      if (eyebrow) eyebrow.classList.add('is-visible');
+      if (sub) sub.classList.add('is-visible');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    if (heroBg) {
+      const scrollY = window.scrollY;
+      heroBg.style.backgroundPositionY = (scrollY * 0.4) + 'px';
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for scroll reveals
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -60px 0px' };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, parseInt(delay));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animatable elements
+  const animatables = document.querySelectorAll(
+    '.stat-item, .gallery-item, .print-card, .travel-item, .award-item, ' +
+    '.about-portrait-wrap, .about-text, .contact-left, .contact-right, ' +
+    '.section-eyebrow, .section-title, .featured-label, .featured-title, .featured-desc'
+  );
+
+  animatables.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
