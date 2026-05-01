@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jan Shaw King — Watercolor & Acrylic Impressionist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand:    #F4EFE6;
+    --cream:   #EDE5D8;
+    --teal:    #3B8C8C;
+    --teal-lt: #5AADAD;
+    --deep:    #1A3A3A;
+    --warm:    #8C6B3B;
+    --text:    #2C2C2C;
+    --muted:   #7A7065;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--sand); color: var(--text); overflow-x: hidden; }
+
+  /* ─── NAV ─────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    background: transparent;
+    transition: background 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled { background: rgba(26,58,58,0.95); box-shadow: 0 1px 20px rgba(0,0,0,0.3); }
+  .nav-logo { font-family: 'Lora', serif; color: #fff; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal-lt); }
+
+  /* ─── HERO (stacked editorial) ──────────────────── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    background: var(--deep); overflow: hidden;
+  }
+  .hero-name-block {
+    padding: 120px 48px 32px;
+    position: relative; z-index: 2;
+  }
+  .hero-name {
+    font-family: 'Lora', serif;
+    font-size: clamp(60px, 9vw, 120px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #fff;
+    line-height: 0.95;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
+  .hero-name span { display: block; }
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--teal-lt); font-weight: 500;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s 0.8s, transform 0.8s 0.8s;
+  }
+  .hero-sub.is-visible { opacity: 1; transform: translateY(0); }
+
+  .hero-image-wrap {
+    flex: 1; position: relative; min-height: 50vh; overflow: hidden;
+  }
+  .hero-image-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    transform: scale(1.06);
+    transition: transform 8s ease;
+  }
+  .hero-image-wrap img.is-visible { transform: scale(1.0); }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(26,58,58,0.55) 0%, transparent 60%);
+  }
+  .hero-tagline {
+    padding: 28px 48px 52px;
+    font-family: 'Lora', serif; font-style: italic;
+    font-size: 18px; color: rgba(255,255,255,0.75);
+    letter-spacing: 0.03em;
+    position: relative; z-index: 2;
+    background: var(--deep);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s 1.0s, transform 0.8s 1.0s;
+  }
+  .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MARQUEE ────────────────────────────────────── */
+  .marquee-strip {
+    background: var(--teal); overflow: hidden;
+    padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .marquee-inner { display: flex; white-space: nowrap; animation: marquee 40s linear infinite; }
+  .marquee-inner span { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; padding: 0 40px; font-weight: 500; font-family: 'Source Sans 3', sans-serif; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── SECTION GENERAL ────────────────────────────── */
+  section { position: relative; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--teal); font-weight: 600;
+    margin-bottom: 14px; display: block;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .section-label.is-visible { opacity: 1; transform: translateY(0); }
+  .section-title {
+    font-family: 'Lora', serif; font-size: clamp(32px, 4vw, 52px);
+    font-weight: 600; line-height: 1.12; color: var(--deep);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .section-title-light { color: #fff; }
+
+  /* ─── SPECIALTIES ─────────────────────────────────── */
+  .specialties { padding: 100px 48px; background: var(--cream); }
+  .spec-inner { max-width: 1200px; margin: 0 auto; }
+  .spec-header { margin-bottom: 60px; }
+  .spec-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .spec-card {
+    position: relative; overflow: hidden; aspect-ratio: 3/4;
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .spec-card:nth-child(1) { transition-delay: 0ms; }
+  .spec-card:nth-child(2) { transition-delay: 120ms; }
+  .spec-card:nth-child(3) { transition-delay: 240ms; }
+  .spec-card.is-visible { opacity: 1; transform: translateY(0); }
+  .spec-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+  .spec-card:hover img { transform: scale(1.04); }
+  .spec-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,58,58,0.85) 0%, transparent 55%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
+  }
+  .spec-card-title { font-family: 'Lora', serif; font-size: 22px; color: #fff; font-weight: 600; margin-bottom: 6px; }
+  .spec-card-desc { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+  /* ─── GALLERY ─────────────────────────────────────── */
+  .gallery { padding: 120px 48px; background: var(--sand); }
+  .gallery-inner { max-width: 1200px; margin: 0 auto; }
+  .gallery-header { margin-bottom: 70px; }
+  /* Editorial scroll: alternating large/small */
+  .gallery-row {
+    display: grid; gap: 16px; margin-bottom: 16px;
+  }
+  .gallery-row.row-1 { grid-template-columns: 2fr 1fr; }
+  .gallery-row.row-2 { grid-template-columns: 1fr 2fr; }
+  .gallery-row.row-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .gallery-item {
+    position: relative; overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-item:nth-child(2) { transition-delay: 100ms; }
+  .gallery-item:nth-child(3) { transition-delay: 200ms; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 260px; }
+  .gallery-item-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(26,58,58,0.8) 0%, transparent 100%);
+    padding: 40px 18px 16px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-item-label { opacity: 1; }
+  .gallery-item-label span { font-size: 13px; color: #fff; font-style: italic; font-family: 'Lora', serif; }
+
+  /* ─── SEA TURTLES FEATURE ──────────────────────────── */
+  .sea-turtles {
+    padding: 0;
+    background: var(--deep);
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+  .st-text {
+    padding: 100px 64px; display: flex; flex-direction: column; justify-content: center;
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .st-text.is-visible { opacity: 1; transform: translateX(0); }
+  .st-text .section-label { color: var(--teal-lt); }
+  .st-text .section-title { color: #fff; }
+  .st-body { margin-top: 24px; font-size: 17px; color: rgba(255,255,255,0.7); line-height: 1.75; max-width: 420px; }
+  .st-images {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px; overflow: hidden;
+  }
+  .st-images img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 200px; }
+
+  /* ─── WORKSHOPS ────────────────────────────────────── */
+  .workshops { padding: 120px 48px; background: var(--cream); }
+  .workshops-inner { max-width: 1200px; margin: 0 auto; }
+  .workshops-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .workshops-img-stack { position: relative; }
+  .workshops-img-stack img:first-child {
+    width: 80%; display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease;
+  }
+  .workshops-img-stack img:first-child.is-visible { clip-path: inset(0 0 0 0); }
+  .workshops-img-stack img:last-child {
+    width: 55%; position: absolute; right: 0; bottom: -40px;
+    border: 4px solid var(--sand);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s 0.2s ease;
+  }
+  .workshops-img-stack img:last-child.is-visible { clip-path: inset(0 0 0 0); }
+  .workshops-text { }
+  .workshops-text .section-label { }
+  .workshops-text p { margin-top: 20px; font-size: 17px; line-height: 1.8; color: var(--muted); }
+  .workshops-list { margin-top: 28px; list-style: none; }
+  .workshops-list li {
+    padding: 14px 0; border-bottom: 1px solid rgba(59,140,140,0.2);
+    font-size: 15px; color: var(--deep); display: flex; align-items: center; gap: 12px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .workshops-list li.is-visible { opacity: 1; transform: translateY(0); }
+  .workshops-list li:nth-child(1) { transition-delay: 0ms; }
+  .workshops-list li:nth-child(2) { transition-delay: 100ms; }
+  .workshops-list li:nth-child(3) { transition-delay: 200ms; }
+  .workshops-list li:nth-child(4) { transition-delay: 300ms; }
+  .workshops-list li::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+
+  /* ─── AWARDS STRIP ─────────────────────────────────── */
+  .awards { padding: 80px 48px; background: var(--deep); }
+  .awards-inner { max-width: 1200px; margin: 0 auto; }
+  .awards-header { text-align: center; margin-bottom: 60px; }
+  .awards-header .section-title { color: #fff; text-align: center; }
+  .awards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; }
+  .award-item {
+    padding: 36px 24px; text-align: center;
+    border: 1px solid rgba(90,173,173,0.15);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .award-item.is-visible { opacity: 1; transform: translateY(0); }
+  .award-item:nth-child(1) { transition-delay: 0ms; }
+  .award-item:nth-child(2) { transition-delay: 100ms; }
+  .award-item:nth-child(3) { transition-delay: 200ms; }
+  .award-item:nth-child(4) { transition-delay: 300ms; }
+  .award-number { font-family: 'Lora', serif; font-size: 56px; color: var(--teal-lt); font-weight: 700; line-height: 1; }
+  .award-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 10px; }
+
+  /* ─── CHILDREN'S BOOKS ─────────────────────────────── */
+  .childrens-books { padding: 120px 48px; background: var(--sand); }
+  .cb-inner { max-width: 1200px; margin: 0 auto; }
+  .cb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .cb-text p { margin-top: 20px; font-size: 17px; line-height: 1.8; color: var(--muted); }
+  .cb-text .pull-quote {
+    margin-top: 32px; font-family: 'Lora', serif; font-style: italic;
+    font-size: 20px; color: var(--teal); border-left: 3px solid var(--teal);
+    padding-left: 20px; line-height: 1.5;
+  }
+  .cb-images { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cb-images img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+
+  /* ─── ABOUT ────────────────────────────────────────── */
+  .about { padding: 0; display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+  .about-portrait { overflow: hidden; }
+  .about-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-text {
+    padding: 100px 72px; background: #1A3A3A; display: flex; flex-direction: column; justify-content: center;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .about-text.is-visible { opacity: 1; transform: translateX(0); }
+  .about-text .section-label { color: var(--teal-lt); }
+  .about-text .section-title { color: #fff; }
+  .about-text p { margin-top: 24px; font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.8; }
+  .about-text p + p { margin-top: 16px; }
+  .about-inspirations { margin-top: 32px; }
+  .about-inspirations span { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-lt); font-weight: 600; }
+  .about-inspirations p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 8px; font-style: italic; line-height: 1.7; }
+
+  /* ─── CTA SECTION ───────────────────────────────────── */
+  .cta-section {
+    padding: 120px 48px; text-align: center;
+    background: var(--teal);
+  }
+  .cta-section .section-title { color: #fff; display: inline-block; }
+  .cta-section p { margin: 20px auto 0; max-width: 520px; font-size: 18px; color: rgba(255,255,255,0.8); line-height: 1.7; }
+  .cta-btn {
+    display: inline-block; margin-top: 40px;
+    padding: 16px 44px; border: 2px solid #fff;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+    color: #fff; text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-btn:hover { background: #fff; color: var(--teal); }
+
+  /* ─── CONTACT ───────────────────────────────────────── */
+  .contact { padding: 120px 48px; background: var(--cream); }
+  .contact-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .contact-left .section-title { }
+  .contact-left p { margin-top: 20px; font-size: 17px; color: var(--muted); line-height: 1.75; }
+  .contact-links { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .contact-links a { font-size: 15px; color: var(--teal); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .contact-links a:hover { color: var(--deep); }
+  .contact-right { display: flex; flex-direction: column; justify-content: flex-end; }
+  .contact-right img { width: 100%; object-fit: cover; }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer {
+    background: var(--deep); padding: 36px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer .footer-name { font-family: 'Lora', serif; font-size: 15px; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; }
+  footer .footer-right { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.12em; text-align: right; }
+  footer .footer-right a { color: rgba(90,173,173,0.7); text-decoration: none; }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero-name-block { padding: 80px 20px 20px; }
+    .specialties, .gallery, .workshops, .childrens-books, .contact { padding: 60px 20px; }
+    .spec-cards { grid-template-columns: 1fr; }
+    .gallery-row { grid-template-columns: 1fr !important; }
+    .sea-turtles, .about { grid-template-columns: 1fr; }
+    .st-text { padding: 60px 28px; }
+    .workshops-grid, .cb-grid { grid-template-columns: 1fr; gap: 40px; }
+    .awards-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-text { padding: 60px 28px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <span class="nav-logo">Jan Shaw King</span>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#sea-turtles">Sea Turtles</a></li>
+    <li><a href="#workshops">Workshops</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: stacked editorial -->
+<section class="hero">
+  <div class="hero-name-block">
+    <h1 class="hero-name" id="hero-name">
+      <span>JAN SHAW</span>
+      <span>KING</span>
+    </h1>
+    <p class="hero-sub" id="hero-sub">Watercolor &amp; Acrylic Impressionist &nbsp;·&nbsp; Sebastian, Florida</p>
+  </div>
+  <div class="hero-image-wrap">
+    <img id="hero-img" src="https://www.janshawking.com/uploads/1/3/3/4/133496746/sunset-on-the-grand-triptyc-web-8-24-16_12.png" alt="Sunset on the Grand Canyon — triptych" loading="eager"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <p class="hero-tagline" id="hero-tagline">Painting the light of Western landscapes, coastal waters, and endangered species since 1986.</p>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Watercolor</span><span>·</span>
+    <span>Acrylic Impressionism</span><span>·</span>
+    <span>Sea Turtle Conservation</span><span>·</span>
+    <span>Children's Illustration</span><span>·</span>
+    <span>Workshop Instructor</span><span>·</span>
+    <span>Sebastian, FL</span><span>·</span>
+    <span>Commissions Open</span><span>·</span>
+    <span>Watercolor</span><span>·</span>
+    <span>Acrylic Impressionism</span><span>·</span>
+    <span>Sea Turtle Conservation</span><span>·</span>
+    <span>Children's Illustration</span><span>·</span>
+    <span>Workshop Instructor</span><span>·</span>
+    <span>Sebastian, FL</span><span>·</span>
+    <span>Commissions Open</span><span>·</span>
+  </div>
+</div>
+
+<!-- SPECIALTIES -->
+<section class="specialties">
+  <div class="spec-inner">
+    <div class="spec-header">
+      <span class="section-label reveal">The Work</span>
+      <h2 class="section-title reveal">Three Distinct<br/>Bodies of Work</h2>
+    </div>
+    <div class="spec-cards">
+      <div class="spec-card reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/westernland-1-shawking-jan-viewfrommatherpointgrandcanyonsouthrim-orig.jpg" alt="Western Landscape Watercolor" loading="lazy"/>
+        <div class="spec-card-overlay">
+          <div class="spec-card-title">Landscapes</div>
+          <div class="spec-card-desc">Watercolor &amp; Acrylic — National Parks, Grand Canyon, Yosemite</div>
+        </div>
+      </div>
+      <div class="spec-card reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/green-sea-turtle-watercolor-2025-sm-wm.jpg" alt="Sea Turtle Watercolor" loading="lazy"/>
+        <div class="spec-card-overlay">
+          <div class="spec-card-title">Sea Turtles</div>
+          <div class="spec-card-desc">Conservation series — endangered species in watercolor &amp; acrylic</div>
+        </div>
+      </div>
+      <div class="spec-card reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/fire-in-the-sky-collegiaterange-final-2.jpg" alt="Fire in the Sky — Acrylic" loading="lazy"/>
+        <div class="spec-card-overlay">
+          <div class="spec-card-title">Seascapes &amp; Lighthouses</div>
+          <div class="spec-card-desc">Florida coastal scenes, dramatic skies, award-winning series</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-header">
+      <span class="section-label reveal">Portfolio</span>
+      <h2 class="section-title reveal">Selected Works</h2>
+    </div>
+
+    <div class="gallery-row row-1">
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/castles-at-ohio-overlook-anthrocite-range-co-watercolor-2025-sm-wm.jpg" alt="Castles at Ohio Overlook — Anthracite Range, CO" loading="lazy"/>
+        <div class="gallery-item-label"><span>Castles at Ohio Overlook, Anthracite Range CO — Watercolor 2025</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/editor/closeup-green-sea-turtle-watercolor-2025-sm-wm.jpg" alt="Close-Up Green Sea Turtle — Watercolor 2025" loading="lazy"/>
+        <div class="gallery-item-label"><span>Close-Up: Green Sea Turtle — Watercolor 2025</span></div>
+      </div>
+    </div>
+
+    <div class="gallery-row row-2">
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/hawksbill-sea-turtle-1-watercolor-sm-wm.jpg" alt="Hawksbill Sea Turtle — Watercolor" loading="lazy"/>
+        <div class="gallery-item-label"><span>Hawksbill Sea Turtle — Watercolor</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/westernland-1-shawking-jan-viewfrommatherpointgrandcanyonsouthrim-orig.jpg" alt="View from Mather Point, Grand Canyon South Rim" loading="lazy"/>
+        <div class="gallery-item-label"><span>View from Mather Point, Grand Canyon South Rim — Watercolor</span></div>
+      </div>
+    </div>
+
+    <div class="gallery-row row-3">
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/the-journey-begins-sm-wm.jpg" alt="The Journey Begins" loading="lazy"/>
+        <div class="gallery-item-label"><span>The Journey Begins</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/editor/3-lb-hawsbill-sea-turtle-watercolor-2025-sm-wm.jpg" alt="3 lb. Hawksbill Sea Turtle — Watercolor 2025" loading="lazy"/>
+        <div class="gallery-item-label"><span>3 lb. Hawksbill Sea Turtle — Watercolor 2025</span></div>
+      </div>
+      <div class="gallery-item reveal">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/fire-in-the-sky-collegiaterange-final-2.jpg" alt="Fire in the Sky, Collegiate Range" loading="lazy"/>
+        <div class="gallery-item-label"><span>Fire in the Sky, Collegiate Range — Acrylic</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEA TURTLES -->
+<section class="sea-turtles" id="sea-turtles">
+  <div class="st-text reveal-left">
+    <span class="section-label">Conservation Series</span>
+    <h2 class="section-title section-title-light">Sea Turtle<br/>Paintings</h2>
+    <p class="st-body">Jan completed a dedicated series of sea turtle paintings to raise awareness of these endangered species, supporting sea turtle rescue, rehabilitation, and conservation efforts along Florida's Indian River Lagoon coastline.</p>
+    <p class="st-body" style="margin-top:16px">The series spans multiple species — Green, Hawksbill, Flatback, and Loggerhead — rendered in her signature luminous watercolor technique.</p>
+  </div>
+  <div class="st-images">
+    <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/green-sea-turtle-watercolor-2025-sm-wm.jpg" alt="Green Sea Turtle — Watercolor 2025" loading="lazy"/>
+    <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/editor/3-lb-hawsbill-sea-turtle-watercolor-2025-sm-wm.jpg" alt="Hawksbill Sea Turtle — 3 lb." loading="lazy"/>
+    <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/hawksbill-sea-turtle-1-watercolor-sm-wm.jpg" alt="Hawksbill Sea Turtle — Watercolor" loading="lazy"/>
+    <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/the-journey-begins-sm-wm.jpg" alt="The Journey Begins" loading="lazy"/>
+  </div>
+</section>
+
+<!-- AWARDS STRIP -->
+<section class="awards" id="awards">
+  <div class="awards-inner">
+    <div class="awards-header">
+      <span class="section-label reveal" style="display:block; text-align:center; color:var(--teal-lt)">Recognition</span>
+      <h2 class="section-title section-title-light reveal" style="text-align:center">Award-Winning Work</h2>
+    </div>
+    <div class="awards-grid">
+      <div class="award-item reveal">
+        <div class="award-number">1st</div>
+        <div class="award-label">Blue Ribbon — Cape Ann Light, Rockport MA</div>
+      </div>
+      <div class="award-item reveal">
+        <div class="award-number">AWS</div>
+        <div class="award-label">American Watercolor Society — National Exhibition Consideration</div>
+      </div>
+      <div class="award-item reveal">
+        <div class="award-number">NPS</div>
+        <div class="award-label">National Arts for the Parks — Competition Entrant, Jackson Hole WY</div>
+      </div>
+      <div class="award-item reveal">
+        <div class="award-number">30+</div>
+        <div class="award-label">Years Professional Practice — Galleries &amp; Juried Exhibitions Nationwide</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section class="workshops" id="workshops">
+  <div class="workshops-inner">
+    <span class="section-label reveal">Teach &amp; Learn</span>
+    <h2 class="section-title reveal">Watercolor<br/>Workshops</h2>
+    <div class="workshops-grid">
+      <div class="workshops-img-stack">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/jan-at-watercolor-rockport-ma.jpg" alt="Jan teaching watercolor at Rockport MA" loading="lazy" class="reveal"/>
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/rockport-ma-motif-1-workshop-sm.jpg" alt="Rockport MA watercolor workshop" loading="lazy" class="reveal"/>
+      </div>
+      <div class="workshops-text">
+        <p>Jan teaches watercolor and acrylic workshops at locations across the country — from Cape Ann, Massachusetts to the National Parks of the American West. She teaches painting from life on location, helping artists at every level develop a looser, more expressive approach to light, atmosphere, and color.</p>
+        <ul class="workshops-list">
+          <li class="reveal">National Parks Series — Grand Canyon, Yosemite, Colorado Rockies</li>
+          <li class="reveal">Coastal Workshops — Rockport MA, Anna Maria Island FL</li>
+          <li class="reveal">Lighthouses Watercolor — New England &amp; Florida</li>
+          <li class="reveal">Commissions open — custom paintings from reference or en plein air</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHILDREN'S BOOKS -->
+<section class="childrens-books">
+  <div class="cb-inner">
+    <span class="section-label reveal">Author &amp; Illustrator</span>
+    <h2 class="section-title reveal">Children's Books &amp;<br/>Beacons of Light Studio</h2>
+    <div class="cb-grid">
+      <div class="cb-text">
+        <p>Mentored by Eloise Wilken, the legendary children's book illustrator for Golden Books/Western Publishing and Random House, Jan became an accomplished author-illustrator in her own right. Her imprint, Beacons of Light Studio, publishes books of inspirational verses that blend her fine art with her storytelling voice.</p>
+        <p style="margin-top:16px">Jan's background spans film and television production, creative consulting for themed entertainment, and hosting travel series on CBS, PBS, and The Travel Channel — all informing the visual storytelling in her art.</p>
+        <div class="pull-quote">"The work deserves to be seen."</div>
+      </div>
+      <div class="cb-images">
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/pigen-point-light.jpg" alt="Pigeon Point Light" loading="lazy"/>
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/st-augustinelight.jpg" alt="St. Augustine Light" loading="lazy"/>
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/capeannlight-rockport-ma-firstplaceblueribbon-sm.jpg" alt="Cape Ann Light — 1st Place Blue Ribbon" loading="lazy"/>
+        <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/trimmed-lighthouse-rocket-poster-working-file-sm.jpg" alt="Lighthouse Poster" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-portrait">
+    <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/meet-artist-1819538.jpg" alt="Jan Shaw King, artist" loading="lazy"/>
+  </div>
+  <div class="about-text reveal-right">
+    <span class="section-label">The Artist</span>
+    <h2 class="section-title section-title-light">Jan Shaw King</h2>
+    <p>Multiple award-winning American Impressionist based in Sebastian, Florida. Working primarily in watercolor and acrylic, Jan's paintings explore Western landscapes, coastal waters, and the urgent beauty of endangered species. Her loose impressionistic style — known for luminous skies, atmospheric perspective, and fluid brushwork — captures the story behind the moment.</p>
+    <p>Studied under master watercolorists Martin R. Ahern AWS, Zoltan Szabo, Ferdinand R. Petrie, and Carole A. Battle. Jan has shown in galleries and juried exhibitions across the country and entered her work for consideration in the American Watercolor Society's National Exhibition.</p>
+    <div class="about-inspirations">
+      <span>Inspired by</span>
+      <p>Winslow Homer · Andrew Wyeth · Claude Monet · Mary Cassatt · Georgia O'Keeffe · Pierre-Auguste Renoir</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="section-title section-title-light reveal">Commission a Painting<br/>or Book a Workshop</h2>
+  <p>Whether you're looking for a custom painting of a place that matters to you, or want to deepen your own watercolor practice — Jan is available.</p>
+  <a href="#contact" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-label reveal">Studio</span>
+      <h2 class="section-title reveal">Inquiries &amp;<br/>Commissions</h2>
+      <p>Based in Sebastian, Florida. Available for commissions, workshops, and exhibitions nationwide.</p>
+      <div class="contact-links">
+        <a href="mailto:Jan@WyldBlueEnt.com">Jan@WyldBlueEnt.com</a>
+        <a href="mailto:Jan@SeaTurtleRock.com">Jan@SeaTurtleRock.com</a>
+        <a href="https://www.janshawking.com" target="_blank">janshawking.com</a>
+        <a href="https://www.seaturtlerock.com" target="_blank">seaturtlerock.com</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <img src="https://www.janshawking.com/uploads/1/3/3/4/133496746/published/janshawking-painting-wall-sm.jpg" alt="Jan Shaw King in her studio" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Jan Shaw King · Beacons of Light Studio</span>
+  <div class="footer-right">
+    &copy; 2026 Jan Shaw King. All rights reserved.<br/>
+    <a href="mailto:lucasblatt197703@gmail.com">Design concept by Lucas Blatt</a>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll behavior
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Hero name letter-spacing animation
+  const heroName = document.getElementById('hero-name');
+  const heroSub = document.getElementById('hero-sub');
+  const heroImg = document.getElementById('hero-img');
+  const heroTagline = document.getElementById('hero-tagline');
+  setTimeout(() => {
+    heroName.classList.add('is-visible');
+    heroImg.classList.add('is-visible');
+  }, 100);
+  setTimeout(() => {
+    heroSub.classList.add('is-visible');
+  }, 400);
+  setTimeout(() => {
+    heroTagline.classList.add('is-visible');
+  }, 700);
+
+  // IntersectionObserver for scroll reveals
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .section-label, .section-title, .spec-card, .gallery-item, .workshops-list li, .award-item').forEach(el => {
+    if (el.classList.contains('reveal-left')) el.classList.add('st-text');
+    if (el.classList.contains('reveal-right')) el.classList.add('about-text');
+    io.observe(el);
+  });
+
+  // Hero parallax
+  const heroSection = document.querySelector('.hero');
+  const heroImgEl = document.querySelector('.hero-image-wrap img');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroImgEl.style.transform = `scale(1.0) translateY(${scrollY * 0.25}px)`;
+    }
+  }, { passive: true });
+
+  // Force all elements visible immediately to avoid blank page
+  setTimeout(() => {
+    document.querySelectorAll('.section-label, .section-title, .spec-card, .gallery-item, .award-item, .workshops-list li, .st-text, .about-text, .workshops-img-stack img').forEach(el => {
+      el.classList.add('is-visible');
+    });
+  }, 200);
+</script>
+</body>
+</html>
