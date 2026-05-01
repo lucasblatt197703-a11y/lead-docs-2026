@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zydra Delaney — Epoxy Resin & Coastal Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ocean:    #1A6B7C;
+      --turquoise:#2BBCD4;
+      --coral:    #E8705A;
+      --sand:     #F8F3EE;
+      --cream:    #FAF7F3;
+      --deep:     #0D2B35;
+      --mid:      #1C4855;
+      --text:     #1A2D33;
+      --muted:    #6B8A91;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 60px;
+      mix-blend-mode: normal;
+      transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(13,43,53,0.92); backdrop-filter: blur(8px); }
+    .nav-logo {
+      font-family: 'Italiana', serif;
+      font-size: 20px;
+      letter-spacing: 0.08em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--turquoise); }
+
+    /* ─── HERO: MOSAIC ────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+      background: var(--deep);
+    }
+
+    .hero-mosaic {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 58% 42%;
+      grid-template-rows: 55% 45%;
+      gap: 4px;
+    }
+    .mosaic-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .mosaic-img.loaded { opacity: 1; }
+    .mosaic-cell-1 { grid-row: 1 / 3; grid-column: 1; }
+    .mosaic-cell-2 { grid-row: 1; grid-column: 2; }
+    .mosaic-cell-3 { grid-row: 2; grid-column: 2; }
+
+    /* dark overlay */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(13,43,53,0.55) 0%,
+        rgba(13,43,53,0.15) 50%,
+        rgba(13,43,53,0.6) 100%
+      );
+      pointer-events: none;
+    }
+
+    .hero-text {
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      left: -2px;
+      padding: 0 60px 56px;
+      max-width: 680px;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--turquoise);
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;
+    }
+    .hero-name {
+      font-family: 'Italiana', serif;
+      font-size: clamp(68px, 9vw, 120px);
+      line-height: 0.92;
+      color: #fff;
+      letter-spacing: 0.18em;
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s 0.35s, transform 0.8s 0.35s letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 0.1s;
+    }
+    .hero-tagline {
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.75);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s 0.55s, transform 0.6s 0.55s;
+    }
+    .hero-text.is-visible .hero-eyebrow,
+    .hero-text.is-visible .hero-name,
+    .hero-text.is-visible .hero-tagline { opacity: 1; transform: translateY(0); }
+
+    /* ─── MARQUEE ─────────────────────────────── */
+    .marquee-wrap {
+      background: var(--ocean);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      padding: 0 36px;
+    }
+    .marquee-inner span.dot { color: var(--turquoise); padding: 0; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ───────────────────────────────── */
+    .stats {
+      background: var(--deep);
+      padding: 80px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'Italiana', serif;
+      font-size: clamp(56px, 7vw, 96px);
+      color: var(--turquoise);
+      line-height: 1;
+      display: block;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .stat-item:nth-child(2) .stat-number { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) .stat-number { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) .stat-number { transition-delay: 0.3s; }
+    .stat-item.is-visible .stat-number { opacity: 1; transform: translateY(0); }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ─── SECTION TITLES ──────────────────────── */
+    .section-title {
+      font-family: 'Italiana', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .section-number {
+      font-family: 'Italiana', serif;
+      font-size: 120px;
+      color: rgba(26,107,124,0.07);
+      line-height: 1;
+      position: absolute;
+      left: -20px;
+      top: -30px;
+      pointer-events: none;
+      font-weight: 400;
+    }
+
+    /* ─── SHOP CATEGORIES ─────────────────────── */
+    .shop {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .shop-header {
+      position: relative;
+      margin-bottom: 70px;
+    }
+    .shop-sub {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 14px;
+      display: block;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .shop-sub.is-visible { opacity: 1; transform: translateY(0); }
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .shop-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--deep);
+      aspect-ratio: 4/5;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .shop-card:nth-child(2) { transition-delay: 0.1s; }
+    .shop-card:nth-child(3) { transition-delay: 0.2s; }
+    .shop-card.is-visible { clip-path: inset(0 0 0 0); }
+    .shop-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .shop-card:hover img { transform: scale(1.04); }
+    .shop-card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 50px 28px 28px;
+      background: linear-gradient(to top, rgba(13,43,53,0.92) 0%, transparent 100%);
+    }
+    .shop-card-category {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--turquoise);
+      margin-bottom: 6px;
+    }
+    .shop-card-name {
+      font-family: 'Italiana', serif;
+      font-size: 26px;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+    .shop-card-price {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 6px;
+    }
+
+    /* ─── FEATURED PIECE ──────────────────────── */
+    .featured {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: 600px;
+      overflow: hidden;
+    }
+    .featured-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.05);
+      transition: transform 0.8s ease-out;
+    }
+    .featured-img-wrap.is-visible img { transform: scale(1.0); }
+    .featured-content {
+      background: var(--deep);
+      padding: 80px 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--turquoise);
+      margin-bottom: 20px;
+    }
+    .featured-title {
+      font-family: 'Italiana', serif;
+      font-size: clamp(38px, 4.5vw, 56px);
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.76,0,0.24,1) 0.2s;
+    }
+    .featured-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .featured-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s 0.4s, transform 0.6s 0.4s;
+    }
+    .featured-body.is-visible { opacity: 1; transform: translateY(0); }
+    .featured-price {
+      font-family: 'Italiana', serif;
+      font-size: 40px;
+      color: var(--turquoise);
+    }
+    .featured-medium {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 6px;
+    }
+
+    /* ─── GALLERY ─────────────────────────────── */
+    .gallery-section {
+      padding: 120px 60px;
+      background: var(--sand);
+    }
+    .gallery-header {
+      position: relative;
+      margin-bottom: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .gallery-hint {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+    .gallery-masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .gallery-item:nth-child(2) { transition-delay: 0.08s; }
+    .gallery-item:nth-child(3) { transition-delay: 0.16s; }
+    .gallery-item:nth-child(4) { transition-delay: 0.24s; }
+    .gallery-item:nth-child(5) { transition-delay: 0.32s; }
+    .gallery-item:nth-child(6) { transition-delay: 0.40s; }
+    .gallery-item:nth-child(7) { transition-delay: 0.48s; }
+    .gallery-item:nth-child(8) { transition-delay: 0.56s; }
+    .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      loading: lazy;
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,43,53,0.75);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-piece-name {
+      font-family: 'Italiana', serif;
+      font-size: 20px;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── SECOND MARQUEE ──────────────────────── */
+    .marquee-wrap-2 {
+      background: var(--coral);
+      overflow: hidden;
+      padding: 12px 0;
+      white-space: nowrap;
+    }
+    .marquee-inner-2 {
+      display: inline-block;
+      animation: marquee 32s linear infinite reverse;
+    }
+    .marquee-inner-2 span {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      padding: 0 30px;
+    }
+
+    /* ─── THE PROCESS ─────────────────────────── */
+    .process {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .process-header {
+      position: relative;
+      margin-bottom: 80px;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .process-step {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .process-step:nth-child(2) { transition-delay: 0.12s; }
+    .process-step:nth-child(3) { transition-delay: 0.24s; }
+    .process-step:nth-child(4) { transition-delay: 0.36s; }
+    .process-step.is-visible { opacity: 1; transform: translateY(0); }
+    .process-num {
+      font-family: 'Italiana', serif;
+      font-size: 72px;
+      color: var(--turquoise);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: -10px;
+    }
+    .process-name {
+      font-family: 'Italiana', serif;
+      font-size: 24px;
+      color: var(--deep);
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+    .process-desc {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .process-divider {
+      width: 36px;
+      height: 2px;
+      background: var(--coral);
+      margin: 14px 0 18px;
+    }
+
+    /* ─── ABOUT ───────────────────────────────── */
+    .about {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      overflow: hidden;
+      min-height: 620px;
+    }
+    .about-img-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--deep);
+    }
+    .about-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      opacity: 0.85;
+      transform: scale(1.04);
+      transition: transform 0.8s ease;
+    }
+    .about-img-wrap.is-visible img { transform: scale(1.0); }
+    .about-content {
+      background: var(--deep);
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--turquoise);
+      margin-bottom: 22px;
+    }
+    .about-pull {
+      font-family: 'Italiana', serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      line-height: 1.2;
+      color: #fff;
+      font-style: italic;
+      margin-bottom: 36px;
+      border-left: 2px solid var(--coral);
+      padding-left: 24px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.7s 0.2s, transform 0.7s 0.2s;
+    }
+    .about-pull.is-visible { opacity: 1; transform: translateX(0); }
+    .about-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s 0.4s, transform 0.6s 0.4s;
+    }
+    .about-body.is-visible { opacity: 1; transform: translateY(0); }
+    .about-detail {
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.8;
+      opacity: 0;
+      transition: opacity 0.5s 0.6s;
+    }
+    .about-detail.is-visible { opacity: 1; }
+
+    /* ─── SHOWS ───────────────────────────────── */
+    .shows {
+      padding: 100px 60px;
+      background: var(--sand);
+    }
+    .shows-header {
+      position: relative;
+      margin-bottom: 60px;
+    }
+    .shows-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(26,107,124,0.2);
+    }
+    .show-item {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(26,107,124,0.2);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .show-item:nth-child(odd) { padding-right: 40px; }
+    .show-item:nth-child(even) { padding-left: 40px; border-left: 1px solid rgba(26,107,124,0.2); }
+    .show-item.is-visible { opacity: 1; transform: translateY(0); }
+    .show-name {
+      font-family: 'Italiana', serif;
+      font-size: 20px;
+      color: var(--deep);
+      letter-spacing: 0.02em;
+    }
+    .show-location {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .show-date {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--coral);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ─── GALLERY SECTION 2 - SURFBOARDS ─────── */
+    .surfboards {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .surfboards-header {
+      position: relative;
+      margin-bottom: 60px;
+    }
+    .surfboards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .surfboard-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--deep);
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .surfboard-card:nth-child(2) { transition-delay: 0.12s; margin-top: 60px; }
+    .surfboard-card.is-visible { clip-path: inset(0 0 0 0); }
+    .surfboard-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .surfboard-card:hover img { transform: scale(1.03); }
+    .surfboard-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 60px 32px 32px;
+      background: linear-gradient(to top, rgba(13,43,53,0.95) 0%, transparent 100%);
+    }
+    .surfboard-name {
+      font-family: 'Italiana', serif;
+      font-size: 30px;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+    .surfboard-price {
+      font-size: 14px;
+      color: var(--turquoise);
+      margin-top: 6px;
+    }
+    .surfboards-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 80px;
+    }
+
+    /* ─── CTA ─────────────────────────────────── */
+    .cta {
+      background: var(--ocean);
+      padding: 100px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: 'ZYDRA';
+      position: absolute;
+      font-family: 'Italiana', serif;
+      font-size: 280px;
+      color: rgba(255,255,255,0.03);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 20px;
+    }
+    .cta-heading {
+      font-family: 'Italiana', serif;
+      font-size: clamp(44px, 6vw, 80px);
+      color: #fff;
+      letter-spacing: 0.06em;
+      line-height: 1.05;
+      margin-bottom: 30px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.5s 0.3s, transform 0.5s 0.3s;
+    }
+    .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .cta-btn:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+
+    /* ─── CONTACT ─────────────────────────────── */
+    .contact {
+      padding: 100px 60px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left {}
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 16px;
+    }
+    .contact-email {
+      font-family: 'Italiana', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      color: var(--deep);
+      text-decoration: none;
+      display: block;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid rgba(26,43,53,0.15);
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+      transition: color 0.2s;
+    }
+    .contact-email:hover { color: var(--ocean); }
+    .contact-socials {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .contact-social-link {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-social-link:hover { color: var(--ocean); }
+    .contact-right {
+      padding-top: 10px;
+    }
+    .contact-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(26,107,124,0.12);
+    }
+    .contact-info-key {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact-info-val {
+      font-size: 14px;
+      color: var(--deep);
+      font-weight: 400;
+    }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--deep);
+      padding: 36px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: 'Italiana', serif;
+      font-size: 22px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.08em;
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .hero-text { padding: 0 24px 40px; }
+      .hero-name { font-size: 62px; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .shop { padding: 80px 24px; }
+      .shop-grid { grid-template-columns: 1fr; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-content { padding: 56px 32px; }
+      .gallery-section { padding: 80px 24px; }
+      .gallery-masonry { columns: 2; }
+      .process { padding: 80px 24px; }
+      .process-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .about { grid-template-columns: 1fr; }
+      .about-img-wrap { height: 400px; }
+      .about-content { padding: 60px 32px; }
+      .shows { padding: 80px 24px; }
+      .shows-list { grid-template-columns: 1fr; }
+      .show-item:nth-child(even) { padding-left: 0; border-left: none; }
+      .surfboards { padding: 80px 24px; }
+      .surfboards-grid { grid-template-columns: 1fr; }
+      .surfboard-card:nth-child(2) { margin-top: 0; }
+      .cta { padding: 80px 24px; }
+      .contact { grid-template-columns: 1fr; padding: 80px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 30px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 48px; }
+      .gallery-masonry { columns: 1; }
+      .process-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="#" class="nav-logo">Zydra Delaney</a>
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: MOSAIC -->
+  <section class="hero">
+    <div class="hero-mosaic">
+      <div class="mosaic-cell-1">
+        <img class="mosaic-img"
+          src="https://static.wixstatic.com/media/0b4428_563da690d4e344f4a8c6208e646ed64b~mv2.jpg"
+          alt="Epoxy ocean art"
+          onload="this.classList.add('loaded')"
+          onerror="this.src='https://static.wixstatic.com/media/0b4428_fc0fd46f257b42a0a9889ee1c71040a5~mv2.jpg';this.classList.add('loaded')">
+      </div>
+      <div class="mosaic-cell-2">
+        <img class="mosaic-img"
+          src="https://static.wixstatic.com/media/0b4428_36e0a9eb1cde4ff4abcfff014b9423b8~mv2.jpeg"
+          alt="Coastal wave art"
+          onload="this.classList.add('loaded')"
+          onerror="this.src='https://static.wixstatic.com/media/0b4428_4000b34b56e5401ea139795817b9ee64~mv2.jpg';this.classList.add('loaded')">
+      </div>
+      <div class="mosaic-cell-3">
+        <img class="mosaic-img"
+          src="https://static.wixstatic.com/media/0b4428_fd2a9d6dc1d146f4905e1a98787c5593~mv2.jpeg"
+          alt="Epoxy resin surfboard art"
+          onload="this.classList.add('loaded')"
+          onerror="this.src='https://static.wixstatic.com/media/0b4428_1a303ceb9e6b4ea5b08a4182bb91537c~mv2.jpg';this.classList.add('loaded')">
+      </div>
+    </div>
+    <div class="hero-text" id="heroText">
+      <div class="hero-eyebrow">Epoxy Resin · Mixed Media · Merritt Island, FL</div>
+      <h1 class="hero-name">ZYDRA<br>DELANEY</h1>
+      <p class="hero-tagline">Coastal art that carries the weight of the sea — painted, layered, and sealed in glass.</p>
+    </div>
+  </section>
+
+  <!-- MARQUEE 1 -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <span>Whisper of the Ocean</span><span class="dot">·</span>
+      <span>Coastal Epoxy Art</span><span class="dot">·</span>
+      <span>Merritt Island, Florida</span><span class="dot">·</span>
+      <span>Original Surfboard Art</span><span class="dot">·</span>
+      <span>Mixed Media Paintings</span><span class="dot">·</span>
+      <span>Handcrafted Resin</span><span class="dot">·</span>
+      <span>Space Coast Art Festival 2025</span><span class="dot">·</span>
+      <span>Galleria of Art · Melbourne FL</span><span class="dot">·</span>
+      <span>Whisper of the Ocean</span><span class="dot">·</span>
+      <span>Coastal Epoxy Art</span><span class="dot">·</span>
+      <span>Merritt Island, Florida</span><span class="dot">·</span>
+      <span>Original Surfboard Art</span><span class="dot">·</span>
+      <span>Mixed Media Paintings</span><span class="dot">·</span>
+      <span>Handcrafted Resin</span><span class="dot">·</span>
+      <span>Space Coast Art Festival 2025</span><span class="dot">·</span>
+      <span>Galleria of Art · Melbourne FL</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" id="statsSection">
+    <div class="stat-item">
+      <span class="stat-number">$85</span>
+      <span class="stat-label">Starting Price</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">$899</span>
+      <span class="stat-label">Large Originals</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">Annual Art Shows</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">2</span>
+      <span class="stat-label">Continents Collected</span>
+    </div>
+  </section>
+
+  <!-- SHOP CATEGORIES -->
+  <section class="shop" id="shop">
+    <div class="shop-header">
+      <span class="section-number">01</span>
+      <span class="shop-sub">Available Now</span>
+      <h2 class="section-title">The Collection</h2>
+    </div>
+    <div class="shop-grid">
+      <div class="shop-card">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_38e3b05687fb4091b8ff4e4949fcf257~mv2.jpeg"
+          alt="Surfboard Art"
+          onerror="this.src='https://static.wixstatic.com/media/0b4428_fc0fd46f257b42a0a9889ee1c71040a5~mv2.jpg'">
+        <div class="shop-card-info">
+          <div class="shop-card-category">Statement Piece</div>
+          <div class="shop-card-name">Surfboard Wall Art</div>
+          <div class="shop-card-price">From $825</div>
+        </div>
+      </div>
+      <div class="shop-card">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_4000b34b56e5401ea139795817b9ee64~mv2.jpg"
+          alt="Mixed Media Painting"
+          onerror="this.src='https://static.wixstatic.com/media/0b4428_567c9167a18a41ee9b9f0a80805d4cc9~mv2.jpg'">
+        <div class="shop-card-info">
+          <div class="shop-card-category">Original Painting</div>
+          <div class="shop-card-name">Mixed Media Canvas</div>
+          <div class="shop-card-price">From $825–$899</div>
+        </div>
+      </div>
+      <div class="shop-card">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_0d3279f4532842fe9b11db32c79c7099~mv2.png"
+          alt="Flip Flop Door Hanger"
+          onerror="this.src='https://static.wixstatic.com/media/0b4428_61b333c2825148839a66bbf8d0bd1157~mv2.jpg'">
+        <div class="shop-card-info">
+          <div class="shop-card-category">Coastal Decor</div>
+          <div class="shop-card-name">Flip Flop Door Hanger</div>
+          <div class="shop-card-price">$85</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PIECE -->
+  <section class="featured">
+    <div class="featured-img-wrap" id="featuredImg">
+      <img loading="lazy"
+        src="https://static.wixstatic.com/media/0b4428_d292dcdbf54a4602a5906476c26bb234~mv2.jpg"
+        alt="Whisper of the Ocean"
+        onerror="this.src='https://static.wixstatic.com/media/0b4428_1a303ceb9e6b4ea5b08a4182bb91537c~mv2.jpg'">
+    </div>
+    <div class="featured-content">
+      <div class="featured-label">Featured Work</div>
+      <h3 class="featured-title" id="featuredTitle">Whisper of<br>the Ocean</h3>
+      <p class="featured-body" id="featuredBody">
+        Epoxy resin layered with vibrant pigments over wood panel — each pour catching light the way water does at the edge of a wave. The high-gloss finish creates depth you can lose yourself in.
+      </p>
+      <div class="featured-price">$899</div>
+      <div class="featured-medium">Epoxy Resin · Mixed Media · 36" Wood Panel</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <div style="position:relative">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Gallery</h2>
+      </div>
+      <span class="gallery-hint">hover to reveal title</span>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_9b9c47e7aa494faea9c38a43641f280e~mv2.jpeg"
+          alt="Ocean piece"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Ocean Abstract</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_61b333c2825148839a66bbf8d0bd1157~mv2.jpg"
+          alt="Coastal piece"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Coastal Vibes</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_58323eb631a548aea0d1585d2a860b48~mv2.png"
+          alt="Mixed media"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Indigo Sky</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_bbb39108b22e47ef900d3605e8a24690~mv2.jpeg"
+          alt="Epoxy resin art"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Crashing Wave</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_a3d70d03ce6a44d99cb1498e9e5fbb3b~mv2.jpg"
+          alt="Sunset art"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Sunset Tides</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_fc0fd46f257b42a0a9889ee1c71040a5~mv2.jpg"
+          alt="Florida coastal art"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Shadows</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_040e9480859b416097ecac2c04267e94~mv2.jpeg"
+          alt="Abstract ocean"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Abstract Ocean</div></div>
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy"
+          src="https://static.wixstatic.com/media/0b4428_c9d468db19d84ae4ad576f857893c248~mv2.jpg"
+          alt="Ocean tray lazy susan"
+          onerror="this.parentElement.style.display='none'">
+        <div class="gallery-overlay"><div class="gallery-piece-name">Ocean Lazy Susan</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE 2 -->
+  <div class="marquee-wrap-2">
+    <div class="marquee-inner-2">
+      <span>$85 Door Hangers</span><span>·</span>
+      <span>$825 Surfboard Art</span><span>·</span>
+      <span>$899 Original Paintings</span><span>·</span>
+      <span>$125 Resin Trays</span><span>·</span>
+      <span>Collected in US & Europe</span><span>·</span>
+      <span>Full-Time Artist Since 2020</span><span>·</span>
+      <span>$85 Door Hangers</span><span>·</span>
+      <span>$825 Surfboard Art</span><span>·</span>
+      <span>$899 Original Paintings</span><span>·</span>
+      <span>$125 Resin Trays</span><span>·</span>
+      <span>Collected in US & Europe</span><span>·</span>
+      <span>Full-Time Artist Since 2020</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- THE PROCESS -->
+  <section class="process" id="process">
+    <div class="process-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">The Process</h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-divider"></div>
+        <div class="process-name">Foundation</div>
+        <p class="process-desc">Each piece begins on pine wood or canvas — primed and sanded until the surface holds texture like wet sand holds a footprint.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-divider"></div>
+        <div class="process-name">First Pour</div>
+        <p class="process-desc">Acrylic and oil pigments are applied in layers — building tidal movement, beach gradients, and the soft violence of a breaking wave.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-divider"></div>
+        <div class="process-name">Resin Layers</div>
+        <p class="process-desc">Epoxy resin is mixed, tinted, and poured in controlled waves. Each layer cures for 24 hours. Some pieces take five or six pours to reach depth.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-divider"></div>
+        <div class="process-name">Glass Finish</div>
+        <p class="process-desc">A final high-gloss seal. Under light, the surface moves. Under shade, it holds still. Either way, it looks like the ocean from above.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-img-wrap" id="aboutImg">
+      <img loading="lazy"
+        src="https://static.wixstatic.com/media/a3c153_3592f141741849e8b2cb99afa8e3a412~mv2.jpg"
+        alt="Zydra Delaney in her studio"
+        onerror="this.src='https://static.wixstatic.com/media/0b4428_567c9167a18a41ee9b9f0a80805d4cc9~mv2.jpg'">
+    </div>
+    <div class="about-content">
+      <div class="about-label">The Artist</div>
+      <blockquote class="about-pull" id="aboutPull">
+        "Through the fusion of her Lithuanian heritage and the vivid influence of Florida, Zydra creates one-of-a-kind artworks that evoke the wonders of the sea."
+      </blockquote>
+      <p class="about-body" id="aboutBody">
+        Lithuanian-born and self-taught, Zydra Delaney is a full-time artist living and working in Merritt Island, Florida. Growing up beside the Baltic Sea, water has always been her native language. She moved to Florida's Space Coast and found its light, its color, and its coast waiting to be translated into paint and resin.
+      </p>
+      <div class="about-detail" id="aboutDetail">
+        Her work is collected in the United States and Europe<br>
+        Represented at Galleria of Art & Photography — Melbourne, FL<br>
+        7720 N. Wickham Rd, Melbourne FL 32940
+      </div>
+    </div>
+  </section>
+
+  <!-- ART SHOWS -->
+  <section class="shows">
+    <div class="shows-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">2026 Shows</h2>
+    </div>
+    <div class="shows-list">
+      <div class="show-item">
+        <div>
+          <div class="show-name">Melbourne Wickham Park Art & Craft Festival</div>
+          <div class="show-location">Melbourne, FL</div>
+        </div>
+        <div class="show-date">Jan 17–18</div>
+      </div>
+      <div class="show-item">
+        <div>
+          <div class="show-name">Jensen Beach Art Festival</div>
+          <div class="show-location">Jensen Beach, FL</div>
+        </div>
+        <div class="show-date">Jan 24–25</div>
+      </div>
+      <div class="show-item">
+        <div>
+          <div class="show-name">Hobe Sound Art Festival</div>
+          <div class="show-location">Hobe Sound, FL</div>
+        </div>
+        <div class="show-date">Jan 31–Feb 1</div>
+      </div>
+      <div class="show-item">
+        <div>
+          <div class="show-name">Delray Beach Art & Craft Festival</div>
+          <div class="show-location">Delray Beach, FL</div>
+        </div>
+        <div class="show-date">Feb 7–8</div>
+      </div>
+      <div class="show-item">
+        <div>
+          <div class="show-name">Coconut Point Art Fair</div>
+          <div class="show-location">Estero, FL</div>
+        </div>
+        <div class="show-date">Feb 14–15</div>
+      </div>
+      <div class="show-item">
+        <div>
+          <div class="show-name">Space Coast Art Festival</div>
+          <div class="show-location">Cocoa Beach, FL</div>
+        </div>
+        <div class="show-date">Nov 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SURFBOARD FEATURE -->
+  <section class="surfboards">
+    <div class="surfboards-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Surfboard Art</h2>
+    </div>
+    <div class="surfboards-grid">
+      <div>
+        <div class="surfboard-card" id="surfCard1">
+          <img loading="lazy"
+            src="https://static.wixstatic.com/media/0b4428_77073fcbce6240f2b0fb7f64690bb15e~mv2.png"
+            alt="Sunset Surfboard"
+            onerror="this.src='https://static.wixstatic.com/media/0b4428_38e3b05687fb4091b8ff4e4949fcf257~mv2.jpeg'">
+          <div class="surfboard-info">
+            <div class="surfboard-name">Sunset Color</div>
+            <div class="surfboard-price">$825 · 60" Pine Wood</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="surfboard-card" id="surfCard2">
+          <img loading="lazy"
+            src="https://static.wixstatic.com/media/0b4428_70949309f2154e5ebcc53b4eeb29e780~mv2.png"
+            alt="Coastal Vibes Surfboard"
+            onerror="this.src='https://static.wixstatic.com/media/0b4428_4000b34b56e5401ea139795817b9ee64~mv2.jpg'">
+          <div class="surfboard-info">
+            <div class="surfboard-name">Coastal Vibes</div>
+            <div class="surfboard-price">$825 · 60" Pine Wood</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-eyebrow">Ready to Own a Piece of the Ocean</div>
+    <h2 class="cta-heading" id="ctaHeading">Every Wave<br>Is Original</h2>
+    <p class="cta-sub" id="ctaSub">
+      No two pours are the same. Each piece is a one-time event — the resin moves, the pigments bloom, and then it's sealed forever.
+    </p>
+    <a href="mailto:zdelaney46@gmail.com" class="cta-btn">Inquire About a Piece</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-left">
+      <div class="contact-label">Get In Touch</div>
+      <a class="contact-email" href="mailto:zdelaney46@gmail.com">zdelaney46@gmail.com</a>
+      <div class="contact-socials">
+        <a href="https://www.instagram.com/zydra_delaney_art/" class="contact-social-link" target="_blank">Instagram</a>
+        <a href="#" class="contact-social-link">Facebook</a>
+        <a href="https://www.zydradelaneyart.com" class="contact-social-link" target="_blank">Website</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-info-row">
+        <span class="contact-info-key">Studio</span>
+        <span class="contact-info-val">Merritt Island, Florida</span>
+      </div>
+      <div class="contact-info-row">
+        <span class="contact-info-key">Gallery</span>
+        <span class="contact-info-val">Galleria of Art — Melbourne, FL</span>
+      </div>
+      <div class="contact-info-row">
+        <span class="contact-info-key">Commissions</span>
+        <span class="contact-info-val">Open — inquire by email</span>
+      </div>
+      <div class="contact-info-row">
+        <span class="contact-info-key">Shipping</span>
+        <span class="contact-info-val">US & International</span>
+      </div>
+      <div class="contact-info-row">
+        <span class="contact-info-key">Instagram</span>
+        <span class="contact-info-val">@zydra_delaney_art</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Zydra Delaney Art</span>
+    <span class="footer-copy">© 2026 Zydra Delaney · Merritt Island, FL</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Nav scroll behavior
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hero text entrance
+    setTimeout(() => {
+      document.getElementById('heroText').classList.add('is-visible');
+    }, 100);
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          // For stat items, animate children
+          if (entry.target.id === 'statsSection') {
+            entry.target.querySelectorAll('.stat-item').forEach(el => el.classList.add('is-visible'));
+          }
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Observe all animated elements
+    const animated = [
+      '#statsSection',
+      '.section-title',
+      '.shop-sub',
+      '.shop-card',
+      '.featured-img-wrap',
+      '#featuredTitle',
+      '#featuredBody',
+      '.gallery-item',
+      '.process-step',
+      '#aboutImg',
+      '#aboutPull',
+      '#aboutBody',
+      '#aboutDetail',
+      '.show-item',
+      '#surfCard1',
+      '#surfCard2',
+      '#ctaHeading',
+      '#ctaSub',
+    ];
+
+    animated.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => observer.observe(el));
+    });
+
+    // Stat items need their own observer since they're inside a section
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.stat-item').forEach(el => statObserver.observe(el));
+  </script>
+</body>
+</html>
