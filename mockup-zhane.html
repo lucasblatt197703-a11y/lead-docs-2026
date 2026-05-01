@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zhane Chanelle Photography — Jacksonville, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Karla:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mocha: #2C1810;
+      --gold: #F0B429;
+      --cream: #FAF6F1;
+      --peach: #F5C5A3;
+      --dark: #1A0F09;
+      --text: #3D2316;
+      --light-text: #7A5C4E;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    img {
+      opacity: 1 !important;
+      clip-path: none !important;
+      transform: none !important;
+      max-width: 100% !important;
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250, 246, 241, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(240, 180, 41, 0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Italiana', serif;
+      font-size: 22px;
+      color: var(--mocha);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--mocha);
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── HERO — STACKED EDITORIAL ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+    }
+
+    .hero-name-block {
+      padding: 60px 60px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-name {
+      font-family: 'Italiana', serif;
+      font-size: 100px;
+      font-weight: 400;
+      line-height: 0.95;
+      color: var(--mocha);
+      letter-spacing: 0.4em;
+      transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hero-name.loaded {
+      letter-spacing: 0.08em;
+    }
+
+    .hero-tagline {
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--light-text);
+    }
+
+    .hero-accent-line {
+      width: 80px;
+      height: 2px;
+      background: var(--gold);
+      margin: 16px 0 0;
+    }
+
+    .hero-image-wrap {
+      flex: 1;
+      position: relative;
+      min-height: 520px;
+      overflow: hidden;
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+
+    .hero-bottom-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 60px;
+      background: linear-gradient(to top, rgba(26,15,9,0.7) 0%, transparent 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .hero-caption {
+      font-size: 14px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.05em;
+    }
+
+    .hero-cta-link {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 3px;
+      transition: color 0.25s;
+    }
+
+    /* ─── STATS STRIP ─── */
+    .stats-strip {
+      background: var(--mocha);
+      padding: 22px 60px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .stats-inner {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-number {
+      font-family: 'Italiana', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 50px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      background: var(--gold);
+      padding: 12px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 30s linear infinite;
+    }
+
+    .marquee-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mocha);
+      padding: 0 40px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── GALLERY — MASONRY ─── */
+    #gallery {
+      padding: 120px 60px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Italiana', serif;
+      font-size: 52px;
+      font-weight: 400;
+      color: var(--mocha);
+      line-height: 1;
+      margin-bottom: 60px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.is-visible {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    .masonry-grid {
+      columns: 3;
+      column-gap: 6px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 6px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      filter: saturate(0.6);
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    .masonry-item:hover img {
+      filter: saturate(1);
+      transform: scale(1.02);
+    }
+
+    .masonry-item .img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 14px 14px;
+      background: linear-gradient(to top, rgba(26,15,9,0.75), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .masonry-item:hover .img-caption {
+      opacity: 1;
+    }
+
+    .img-caption span {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--peach);
+    }
+
+    /* ─── CHILDREN FEATURE ─── */
+    #children {
+      background: var(--mocha);
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .feature-text .section-label { color: var(--gold); }
+    .feature-text .section-title { color: var(--white); }
+
+    .feature-text p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 32px;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 13px 36px;
+      border: 1px solid var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold);
+      color: var(--mocha);
+    }
+
+    .feature-image {
+      position: relative;
+    }
+
+    .feature-image img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .feature-image::before {
+      content: '01';
+      position: absolute;
+      top: -30px;
+      right: -20px;
+      font-family: 'Italiana', serif;
+      font-size: 120px;
+      color: rgba(240, 180, 41, 0.08);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ─── WEDDING SECTION ─── */
+    #weddings {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+
+    .wedding-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 6px;
+      margin-top: 60px;
+    }
+
+    .wedding-main img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wedding-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .wedding-stack img {
+      width: 100%;
+      height: calc(50% - 3px);
+      object-fit: cover;
+      display: block;
+      flex: 1;
+    }
+
+    .wedding-quote {
+      margin-top: 60px;
+      padding: 40px 60px;
+      border-left: 3px solid var(--gold);
+      background: rgba(240, 180, 41, 0.06);
+    }
+
+    .wedding-quote p {
+      font-family: 'Italiana', serif;
+      font-size: 28px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--mocha);
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .wedding-quote cite {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--light-text);
+    }
+
+    /* ─── DANCE SECTION ─── */
+    #dance {
+      padding: 120px 60px;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #dance::before {
+      content: 'DANCE';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Italiana', serif;
+      font-size: 260px;
+      color: rgba(240, 180, 41, 0.04);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    #dance .section-label { color: var(--gold); }
+    #dance .section-title { color: var(--white); }
+
+    .dance-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 60px;
+    }
+
+    .dance-row img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(0.3);
+      transition: filter 0.4s, transform 0.4s;
+    }
+
+    .dance-row img:hover {
+      filter: grayscale(0);
+      transform: scale(1.03);
+    }
+
+    /* ─── ABOUT — SIDE BY SIDE ─── */
+    #about {
+      padding: 140px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .about-portrait {
+      position: relative;
+    }
+
+    .about-portrait img {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-divider {
+      width: 1px;
+      background: rgba(240, 180, 41, 0.3);
+      margin: 0 80px;
+    }
+
+    .about-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .about-text .section-label { margin-bottom: 10px; }
+
+    .about-text .section-title {
+      font-size: 42px;
+      margin-bottom: 32px;
+    }
+
+    .about-text p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--light-text);
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .about-text p.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-text p:nth-child(3) { transition-delay: 0ms; }
+    .about-text p:nth-child(4) { transition-delay: 120ms; }
+    .about-text p:nth-child(5) { transition-delay: 240ms; }
+
+    .about-magazine-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 10px 20px;
+      background: rgba(240, 180, 41, 0.1);
+      border: 1px solid rgba(240, 180, 41, 0.3);
+    }
+
+    .about-magazine-tag span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    #testimonial {
+      background: var(--mocha);
+      padding: 100px 120px;
+      text-align: center;
+    }
+
+    .testimonial-quote {
+      font-family: 'Italiana', serif;
+      font-size: 38px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.4;
+      max-width: 900px;
+      margin: 0 auto 28px;
+    }
+
+    .testimonial-author {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ─── MAGAZINE SECTION ─── */
+    #magazine {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+
+    .magazine-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .magazine-text .section-title { font-size: 44px; margin-bottom: 24px; }
+
+    .magazine-text p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--light-text);
+      margin-bottom: 20px;
+    }
+
+    .magazine-callout {
+      background: var(--mocha);
+      padding: 40px;
+      position: relative;
+    }
+
+    .magazine-callout::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gold);
+    }
+
+    .magazine-callout h3 {
+      font-family: 'Italiana', serif;
+      font-size: 32px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .magazine-callout p {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+    }
+
+    .magazine-callout .mag-genres {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .mag-tag {
+      padding: 5px 14px;
+      border: 1px solid rgba(240, 180, 41, 0.4);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ─── BOLD CTA ─── */
+    #cta {
+      background: var(--gold);
+      padding: 100px 60px;
+      text-align: center;
+    }
+
+    #cta h2 {
+      font-family: 'Italiana', serif;
+      font-size: 72px;
+      font-weight: 400;
+      color: var(--mocha);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    #cta p {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(44, 24, 16, 0.75);
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+
+    .btn-dark {
+      display: inline-block;
+      padding: 16px 52px;
+      background: var(--mocha);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn-dark:hover { background: var(--dark); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-left .section-title { font-size: 52px; margin-bottom: 24px; }
+
+    .contact-left p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--light-text);
+      margin-bottom: 32px;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Italiana', serif;
+      font-size: 24px;
+      color: var(--mocha);
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 4px;
+      transition: color 0.25s;
+    }
+
+    .contact-email:hover { color: var(--gold); }
+
+    .contact-social {
+      margin-top: 28px;
+      display: flex;
+      gap: 24px;
+    }
+
+    .contact-social a {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .contact-social a:hover { color: var(--gold); }
+
+    .contact-right {
+      background: var(--mocha);
+      padding: 60px;
+    }
+
+    .contact-right h3 {
+      font-family: 'Italiana', serif;
+      font-size: 28px;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .contact-info-line {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .contact-info-line:last-child { border-bottom: none; }
+
+    .contact-info-line strong {
+      font-weight: 600;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 32px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-name {
+      font-family: 'Italiana', serif;
+      font-size: 20px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .footer-center {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(240, 180, 41, 0.4);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-rise {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-rise.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .img-reveal {
+      overflow: hidden;
+    }
+
+    .img-reveal img {
+      clip-path: inset(100% 0 0 0) !important;
+      transition: clip-path 0.9s ease-out !important;
+    }
+
+    .img-reveal.is-visible img {
+      clip-path: inset(0 0 0 0) !important;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .hero-name { font-size: 72px; }
+      .masonry-grid { columns: 2; }
+      #children, #about, #magazine, #contact { grid-template-columns: 1fr; }
+      .about-divider { display: none; }
+      .dance-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero-name-block { padding: 40px 24px 16px; }
+      .hero-name { font-size: 48px; }
+      #gallery, #children, #weddings, #dance, #about, #magazine, #cta, #contact { padding: 80px 24px; }
+      .stats-strip { padding: 20px 24px; }
+      .stats-inner { gap: 28px; }
+      .stat-number { font-size: 36px; }
+      .masonry-grid { columns: 1; }
+      .wedding-grid { grid-template-columns: 1fr; }
+      .dance-row { grid-template-columns: 1fr; }
+      #testimonial { padding: 80px 24px; }
+      .testimonial-quote { font-size: 26px; }
+      #cta h2 { font-size: 48px; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+      .hero-bottom-overlay { padding: 24px; }
+      .wedding-quote { padding: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 36px; }
+      .section-title { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">ZC</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#weddings">Weddings</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#magazine">Magazine</a></li>
+      <li><a href="#contact">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — STACKED EDITORIAL -->
+  <section id="hero">
+    <div class="hero-name-block">
+      <h1 class="hero-name" id="heroName">ZHANE CHANELLE</h1>
+      <p class="hero-tagline">Photography · Jacksonville, Florida · Children · Weddings · Dance</p>
+      <div class="hero-accent-line"></div>
+    </div>
+    <div class="hero-image-wrap">
+      <img src="images/zhane/img03.jpg" alt="Zhane Chanelle Photography — Hero" loading="eager">
+      <div class="hero-bottom-overlay">
+        <span class="hero-caption">Every frame tells a story. Your story.</span>
+        <a href="#contact" class="hero-cta-link">Book a Session</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-number">10+</span>
+        <span class="stat-label">Years Capturing</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Photography Genres</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">7</span>
+        <span class="stat-label">Magazine Issues</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">JAX</span>
+        <span class="stat-label">Jacksonville, FL</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">UNF</span>
+        <span class="stat-label">B.S. Communications</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="marquee-text">Children Photography</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Family Portraits</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Weddings &amp; Engagements</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Dance Photography</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Ultra Style &amp; Talent Magazine</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Jacksonville, FL</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Children Photography</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Family Portraits</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Weddings &amp; Engagements</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Dance Photography</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Ultra Style &amp; Talent Magazine</span>
+      <span class="marquee-text">·</span>
+      <span class="marquee-text">Jacksonville, FL</span>
+      <span class="marquee-text">·</span>
+    </div>
+  </div>
+
+  <!-- GALLERY — MASONRY -->
+  <section id="gallery">
+    <p class="section-label fade-rise">Portfolio</p>
+    <h2 class="section-title">A Life in Frames</h2>
+    <div class="masonry-grid">
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img04.jpg" alt="Children portrait" loading="eager">
+        <div class="img-caption"><span>Children</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img09.jpg" alt="Family portrait" loading="eager">
+        <div class="img-caption"><span>Portraits</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img05.jpg" alt="Dance photography" loading="eager">
+        <div class="img-caption"><span>Dance</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img07.jpg" alt="Engagement session" loading="eager">
+        <div class="img-caption"><span>Engagements</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img06.jpg" alt="Wedding photography" loading="eager">
+        <div class="img-caption"><span>Weddings</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img10.jpg" alt="Children photography" loading="eager">
+        <div class="img-caption"><span>Children</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img11.jpg" alt="Family session" loading="eager">
+        <div class="img-caption"><span>Family</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img12.jpg" alt="Portrait session" loading="eager">
+        <div class="img-caption"><span>Portraits</span></div>
+      </div>
+      <div class="masonry-item img-reveal">
+        <img src="images/zhane/img02.jpg" alt="Children portrait session" loading="eager">
+        <div class="img-caption"><span>Children</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHILDREN FEATURE -->
+  <section id="children">
+    <div class="feature-text">
+      <p class="section-label">Specialty</p>
+      <h2 class="section-title">Children &amp; Family</h2>
+      <p>Every child holds an entire universe. A laugh that's never been laughed before, a curious gaze at something completely ordinary. These are the moments that vanish in an instant — and last a lifetime in a photograph.</p>
+      <p>Zhane's patient, playful approach creates space for genuine connection. No stiff poses. Just real families, real moments, real joy.</p>
+      <a href="#contact" class="btn-outline">Book a Session</a>
+    </div>
+    <div class="feature-image img-reveal">
+      <img src="images/zhane/img08.jpg" alt="Children photography Jacksonville" loading="eager">
+    </div>
+  </section>
+
+  <!-- WEDDING SECTION -->
+  <section id="weddings">
+    <p class="section-label fade-rise">Love Stories</p>
+    <h2 class="section-title fade-rise">Weddings &amp; Engagements</h2>
+    <div class="wedding-grid">
+      <div class="wedding-main img-reveal">
+        <img src="images/zhane/img06.jpg" alt="Wedding photography" loading="eager">
+      </div>
+      <div class="wedding-stack">
+        <div class="img-reveal" style="flex:1; overflow:hidden;">
+          <img src="images/zhane/img05.jpg" alt="Engagement session" loading="eager" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="img-reveal" style="flex:1; overflow:hidden;">
+          <img src="images/zhane/img09.jpg" alt="Wedding portraits" loading="eager" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+      </div>
+    </div>
+    <div class="wedding-quote fade-rise">
+      <p>"She made us feel so comfortable — like she wasn't even there. The photos look like scenes from a film."</p>
+      <cite>— Ashley &amp; Marcus, Jacksonville Wedding 2024</cite>
+    </div>
+  </section>
+
+  <!-- DANCE SECTION -->
+  <section id="dance">
+    <p class="section-label fade-rise">In Motion</p>
+    <h2 class="section-title fade-rise">Dance Photography</h2>
+    <div class="dance-row">
+      <img src="images/zhane/img04.jpg" alt="Dance recital photography" loading="eager">
+      <img src="images/zhane/img07.jpg" alt="Dance performance photography" loading="eager">
+      <img src="images/zhane/img05.jpg" alt="Dance studio photography" loading="eager">
+      <img src="images/zhane/img10.jpg" alt="Dance photography Jacksonville" loading="eager">
+    </div>
+  </section>
+
+  <!-- ABOUT — SIDE BY SIDE MINIMAL -->
+  <section id="about">
+    <div class="about-portrait img-reveal">
+      <img src="images/zhane/img03.jpg" alt="Zhane Chanelle — Photographer & Publisher" loading="eager">
+    </div>
+    <div class="about-divider"></div>
+    <div class="about-text">
+      <p class="section-label">The Artist</p>
+      <h2 class="section-title">Zhane Chanelle Allen</h2>
+      <p>Jacksonville-based photographer and media entrepreneur, Zhane Chanelle Allen has spent over a decade turning fleeting moments into lasting visual stories. A University of North Florida Communications graduate, her work spans children's portraiture, weddings, family sessions, and dance — each genre approached with the same precise attention to light and authentic connection.</p>
+      <p>Beyond the lens, Zhane is the founder and publisher of <em>Ultra Style & Talent</em>, an international magazine promoting young models, actors, dancers, and singers across North America, Europe, and South America. Seven issues in, it has become a genuine platform for emerging talent — a natural extension of her belief that every person deserves to see themselves celebrated.</p>
+      <p>She photographs what matters. Commissions are open for all session types in the Jacksonville area.</p>
+      <div class="about-magazine-tag">
+        <span>Publisher · Ultra Style &amp; Talent Magazine</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section id="testimonial">
+    <p class="testimonial-quote">"Zhane has this incredible ability to make every child feel like a star. Our daughter's portraits are everything — pure, joyful, and absolutely her."</p>
+    <p class="testimonial-author">— The Williams Family, Jacksonville</p>
+  </section>
+
+  <!-- MAGAZINE SECTION -->
+  <section id="magazine">
+    <div class="magazine-inner">
+      <div class="magazine-text">
+        <p class="section-label fade-rise">Beyond the Lens</p>
+        <h2 class="section-title fade-rise">Ultra Style &amp; Talent</h2>
+        <p>What started as a platform for Jacksonville's talented kids has grown into an international publication reaching audiences across three continents. Ultra Style &amp; Talent celebrates emerging models, dancers, actors, and singers — the same young energy Zhane captures every day behind the camera.</p>
+        <p>Seven issues. Hundreds of young talents featured. A community built around the belief that extraordinary stories belong in print.</p>
+        <a href="#contact" class="btn-outline" style="margin-top:16px;">Get Featured</a>
+      </div>
+      <div class="magazine-callout">
+        <h3>Ultra Style &amp; Talent</h3>
+        <p>An international talent magazine founded in Jacksonville, FL. Promoting emerging young performers across North America, Europe, and South America since its first issue.</p>
+        <div class="mag-genres">
+          <span class="mag-tag">Modeling</span>
+          <span class="mag-tag">Dance</span>
+          <span class="mag-tag">Acting</span>
+          <span class="mag-tag">Singing</span>
+          <span class="mag-tag">International</span>
+          <span class="mag-tag">7 Issues</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section id="cta">
+    <h2>Let's Tell Your Story.</h2>
+    <p>Children, families, weddings, engagements, dance — Zhane photographs the moments that define who you are.</p>
+    <a href="#contact" class="btn-dark">Book Your Session</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Inquiries</h2>
+      <p>Based in Jacksonville, FL. Available for sessions throughout Northeast Florida and beyond. Reach out to discuss your session, request pricing, or submit to Ultra Style &amp; Talent Magazine.</p>
+      <a href="mailto:zhanechanelle@example.com" class="contact-email">@zhanechanelle on Instagram</a>
+      <div class="contact-social">
+        <a href="https://www.instagram.com/zhanechanelle" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/zhanechanellephotography" target="_blank">Facebook</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <h3>Session Types</h3>
+      <div class="contact-info-line">
+        <strong>Specialty</strong>
+        <span>Children &amp; Family</span>
+      </div>
+      <div class="contact-info-line">
+        <strong>Also offers</strong>
+        <span>Weddings &amp; Engagements</span>
+      </div>
+      <div class="contact-info-line">
+        <strong>And</strong>
+        <span>Dance Photography</span>
+      </div>
+      <div class="contact-info-line">
+        <strong>Location</strong>
+        <span>Jacksonville, Florida</span>
+      </div>
+      <div class="contact-info-line">
+        <strong>Magazine</strong>
+        <span>Ultra Style &amp; Talent</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Zhane Chanelle Photography</span>
+    <span class="footer-center">© 2026 · Jacksonville, Florida · All Rights Reserved</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Force visibility immediately
+    document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+    // Hero name letter-spacing animation
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const heroName = document.getElementById('heroName');
+        if (heroName) heroName.classList.add('loaded');
+      }, 100);
+    });
+
+    // IntersectionObserver for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          // Stagger about-text paragraphs
+          if (entry.target.closest && entry.target.closest('.about-text')) {
+            const ps = entry.target.closest('.about-text').querySelectorAll('p:not(.section-label)');
+            ps.forEach((p, i) => {
+              setTimeout(() => p.classList.add('is-visible'), i * 120);
+            });
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    // Observe animated elements
+    document.querySelectorAll('.section-title, .fade-rise, .img-reveal, .about-text p').forEach(el => {
+      // Remove pre-added is-visible for scroll elements that need animation
+      if (el.classList.contains('section-title') || el.classList.contains('fade-rise') || el.classList.contains('img-reveal')) {
+        el.classList.remove('is-visible');
+        observer.observe(el);
+      }
+    });
+
+    // Hero parallax
+    const heroImg = document.querySelector('.hero-image-wrap img');
+    if (heroImg) {
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        heroImg.style.transform = `translateY(${scrollY * 0.4}px)`;
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
