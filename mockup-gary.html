@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GL Photography — Gary Lester | West Palm Beach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #080808;
+      --white: #FFFFFF;
+      --blue: #0066CC;
+      --gray: #888888;
+      --light-gray: #CCCCCC;
+      --off-white: #F0EFED;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* Global image safety */
+    img {
+      opacity: 1 !important;
+      clip-path: none !important;
+      transform: none !important;
+      max-width: 100% !important;
+    }
+
+    /* ========== NAV ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
+
+    /* ========== HERO — CINEMATIC LETTERBOX ========== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .letterbox-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 0;
+      background: var(--black);
+      z-index: 2;
+      animation: letterboxTopIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+    }
+
+    .letterbox-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 0;
+      background: var(--black);
+      z-index: 2;
+      animation: letterboxBottomIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+    }
+
+    @keyframes letterboxTopIn {
+      to { height: 14%; }
+    }
+
+    @keyframes letterboxBottomIn {
+      to { height: 22%; }
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      animation: heroNameIn 1s ease 0.9s forwards;
+    }
+
+    @keyframes heroNameIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-align: right;
+      opacity: 0;
+      animation: heroNameIn 1s ease 1.1s forwards;
+    }
+
+    /* ========== MARQUEE ========== */
+    .marquee-strip {
+      background: var(--blue);
+      padding: 12px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0 30px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ========== STATS ========== */
+    .stats {
+      background: var(--black);
+      padding: 120px 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-item:nth-child(2) { transition-delay: 0.12s; }
+    .stat-item:nth-child(3) { transition-delay: 0.24s; }
+    .stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(64px, 8vw, 110px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .stat-plus {
+      color: var(--blue);
+    }
+
+    .stat-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* ========== SECTION LABELS ========== */
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-label.is-visible {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+      margin-bottom: 60px;
+    }
+
+    .section-title.is-visible {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    /* ========== WEDDING GALLERY — EDITORIAL SCROLL ========== */
+    .wedding-section {
+      padding: 120px 60px;
+      background: var(--black);
+    }
+
+    .wedding-editorial {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .editorial-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .editorial-row.row-reverse { flex-direction: row-reverse; }
+
+    .editorial-img-large {
+      flex: 0 0 65%;
+      overflow: hidden;
+    }
+
+    .editorial-img-small {
+      flex: 0 0 calc(35% - 20px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .editorial-img-large img,
+    .editorial-img-small img,
+    .gallery-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .editorial-img-large { height: 580px; }
+    .editorial-img-small { height: 580px; }
+
+    .img-caption {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      padding: 12px 0 0;
+    }
+
+    .editorial-text-block {
+      padding: 40px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .editorial-text-block h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .editorial-text-block p {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--gray);
+    }
+
+    /* Gallery image reveal animation */
+    .gallery-reveal {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      overflow: hidden;
+    }
+
+    .gallery-reveal.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .gallery-reveal:nth-child(2) { transition-delay: 0.1s; }
+    .gallery-reveal:nth-child(3) { transition-delay: 0.2s; }
+    .gallery-reveal:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ========== TRAVEL SECTION ========== */
+    .travel-section {
+      background: #0A0A0A;
+      padding: 120px 60px;
+    }
+
+    .travel-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .travel-img {
+      position: relative;
+      overflow: hidden;
+      height: 400px;
+    }
+
+    .travel-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .travel-img:hover img { transform: scale(1.03); }
+
+    .travel-img-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 100%);
+    }
+
+    .travel-location {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    /* ========== MATERNITY / FAMILY ========== */
+    .maternity-section {
+      padding: 120px 60px;
+      background: var(--black);
+    }
+
+    .maternity-layout {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .maternity-tall {
+      grid-row: span 2;
+    }
+
+    .maternity-img {
+      overflow: hidden;
+    }
+
+    .maternity-tall .maternity-img { height: 760px; }
+    .maternity-img { height: 370px; }
+
+    .maternity-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ========== EVENTS SECTION ========== */
+    .events-section {
+      background: #050505;
+      padding: 120px 60px;
+    }
+
+    .events-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .events-img {
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .events-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .events-text h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 30px;
+    }
+
+    .events-text p {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    .services-list {
+      list-style: none;
+      margin: 30px 0;
+    }
+
+    .services-list li {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .services-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* ========== ABOUT — MAGAZINE SPREAD ========== */
+    .about-section {
+      padding: 120px 60px;
+      background: var(--black);
+    }
+
+    .about-layout {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-portrait {
+      height: 700px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .about-text-content {}
+
+    .about-text-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    .pull-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 500;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.4;
+      border-left: 3px solid var(--blue);
+      padding-left: 28px;
+      margin: 40px 0;
+    }
+
+    .about-details {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .about-detail-item {}
+
+    .about-detail-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .about-detail-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ========== TESTIMONIAL ========== */
+    .testimonial-section {
+      background: #0D0D0D;
+      padding: 120px 60px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .testimonial-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--white);
+      margin-bottom: 40px;
+    }
+
+    .testimonial-quote::before { content: '\201C'; color: var(--blue); }
+    .testimonial-quote::after { content: '\201D'; color: var(--blue); }
+
+    .testimonial-author {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .testimonial-source {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--blue);
+      margin-top: 6px;
+    }
+
+    /* ========== CTA SECTION ========== */
+    .cta-section {
+      background: var(--blue);
+      padding: 140px 60px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .cta-section p {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 50px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 50px;
+      background: var(--white);
+      color: var(--blue);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* ========== CONTACT ========== */
+    .contact-section {
+      background: var(--black);
+      padding: 120px 60px;
+    }
+
+    .contact-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      margin-bottom: 24px;
+    }
+
+    .contact-item-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .contact-item-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item-value:hover { color: var(--blue); }
+
+    .contact-availability {
+      margin-top: 50px;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .contact-availability p {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--gray);
+    }
+
+    .avail-highlight {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .contact-form-area {
+      padding-top: 10px;
+    }
+
+    .contact-form-area h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 30px;
+    }
+
+    .contact-form-area p {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    .inquiry-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 16px 40px;
+      border: 1px solid var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .inquiry-link:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: #040404;
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--gray);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-social a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-social a:hover { color: var(--blue); }
+
+    .footer-credit {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: rgba(136,136,136,0.4);
+      text-align: right;
+    }
+
+    /* ========== VERTICAL ACCENT LINE ========== */
+    .vertical-accent {
+      position: fixed;
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(0, 102, 204, 0.4);
+      z-index: 50;
+    }
+
+    /* ========== DIVIDER LINE ========== */
+    .section-divider {
+      width: 30%;
+      height: 1px;
+      background: var(--blue);
+      margin: 0 60px 0 0;
+      opacity: 0.4;
+    }
+
+    /* ========== MOBILE ========== */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 10px; }
+      .vertical-accent { display: none; }
+      .stats { padding: 80px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      .stat-number { font-size: 52px; }
+      .wedding-section, .travel-section, .maternity-section, .events-section,
+      .about-section, .contact-section { padding: 80px 24px; }
+      .editorial-row { flex-direction: column; }
+      .editorial-img-large, .editorial-img-small { flex: none; width: 100%; }
+      .editorial-img-large { height: 350px; }
+      .editorial-img-small { height: 280px; }
+      .travel-grid { grid-template-columns: 1fr; }
+      .travel-img { height: 300px; }
+      .maternity-layout { grid-template-columns: 1fr; }
+      .maternity-tall { grid-row: auto; }
+      .maternity-tall .maternity-img { height: 500px; }
+      .maternity-img { height: 300px; }
+      .events-content { grid-template-columns: 1fr; gap: 40px; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      .about-portrait { height: 450px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 60px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      .cta-section { padding: 100px 24px; }
+      .cta-section h2 { font-size: clamp(28px, 8vw, 48px); }
+      .testimonial-section { padding: 80px 24px; }
+      .letterbox-bottom { padding: 0 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 36px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-number { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+<span class="vertical-accent">GL Photography &middot; 2026</span>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">GL Photography</a>
+  <ul class="nav-links">
+    <li><a href="#weddings">Weddings</a></li>
+    <li><a href="#travel">Travel</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — CINEMATIC LETTERBOX -->
+<section class="hero" id="hero">
+  <img class="hero-image" src="images/gary/img01.jpg" alt="Wedding photography - GL Photography" loading="eager">
+  <div class="letterbox-top"></div>
+  <div class="letterbox-bottom">
+    <h1 class="hero-name">GL Photography</h1>
+    <div class="hero-tagline">
+      70+ Countries &nbsp;&middot;&nbsp; Weddings &amp; Editorial<br>
+      West Palm Beach, FL
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Weddings</span><span>&middot;</span>
+    <span>Engagement</span><span>&middot;</span>
+    <span>Maternity</span><span>&middot;</span>
+    <span>Events</span><span>&middot;</span>
+    <span>Travel Photography</span><span>&middot;</span>
+    <span>70+ Countries</span><span>&middot;</span>
+    <span>West Palm Beach, FL</span><span>&middot;</span>
+    <span>Available Worldwide</span><span>&middot;</span>
+    <span>Drone Photography</span><span>&middot;</span>
+    <span>Weddings</span><span>&middot;</span>
+    <span>Engagement</span><span>&middot;</span>
+    <span>Maternity</span><span>&middot;</span>
+    <span>Events</span><span>&middot;</span>
+    <span>Travel Photography</span><span>&middot;</span>
+    <span>70+ Countries</span><span>&middot;</span>
+    <span>West Palm Beach, FL</span><span>&middot;</span>
+    <span>Available Worldwide</span><span>&middot;</span>
+    <span>Drone Photography</span><span>&middot;</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">70<span class="stat-plus">+</span></div>
+      <div class="stat-label">Countries Shot In</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">10<span class="stat-plus">+</span></div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5<span class="stat-plus">+</span></div>
+      <div class="stat-label">Services Offered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span style="font-size:0.6em">WPB</span></div>
+      <div class="stat-label">West Palm Beach, FL</div>
+    </div>
+  </div>
+</section>
+
+<!-- WEDDING GALLERY -->
+<section class="wedding-section" id="weddings">
+  <div class="wedding-editorial">
+    <div class="section-label">01 — Weddings</div>
+    <div class="section-title">Love Stories,<br>Captured Forever</div>
+
+    <div class="editorial-row">
+      <div class="editorial-img-large gallery-reveal">
+        <img src="images/gary/img06.jpg" alt="Beach wedding photography West Palm Beach" loading="eager">
+        <div class="img-caption">South Florida Beach Wedding</div>
+      </div>
+      <div class="editorial-img-small">
+        <div class="editorial-text-block">
+          <h3>Every Detail, Every Emotion</h3>
+          <p>Specializing in weddings, engagements, and intimate ceremonies across South Florida and beyond. Each session is a collaboration — your vision, brought to life through Gary's cinematic eye.</p>
+        </div>
+        <div class="gallery-reveal" style="flex: 1; min-height: 300px;">
+          <img src="images/gary/img05.jpg" alt="Wedding portrait photography" loading="eager" style="width:100%;height:300px;object-fit:cover;">
+          <div class="img-caption">Wedding Portrait</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editorial-row row-reverse" style="margin-top: 20px;">
+      <div class="editorial-img-large gallery-reveal" style="height: 500px;">
+        <img src="images/gary/img09.jpg" alt="Engagement photography" loading="eager">
+        <div class="img-caption">Engagement Session</div>
+      </div>
+      <div class="editorial-img-small gallery-reveal" style="height: 500px;">
+        <img src="images/gary/img08.jpg" alt="Wedding ceremony" loading="eager">
+        <div class="img-caption">Wedding Ceremony</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="margin: 0 auto; width: 25%; height: 1px;"></div>
+
+<!-- TRAVEL SECTION -->
+<section class="travel-section" id="travel">
+  <div style="max-width: 1300px; margin: 0 auto 60px;">
+    <div class="section-label">02 — Travel</div>
+    <div class="section-title">70+ Countries,<br>One Lens</div>
+    <p style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--gray); max-width: 600px;">Over a decade of international travel photography — from the beaches of the Philippines to the streets of Tokyo, the fjords of New Zealand to the markets of Marrakech.</p>
+  </div>
+  <div class="travel-grid">
+    <div class="travel-img gallery-reveal">
+      <img src="images/gary/img03.jpg" alt="Travel photography" loading="eager">
+      <div class="travel-img-overlay">
+        <div class="travel-location">International</div>
+      </div>
+    </div>
+    <div class="travel-img gallery-reveal" style="height: 500px; grid-row: span 2; transition-delay: 0.1s;">
+      <img src="images/gary/img07.jpg" alt="Travel documentary" loading="eager">
+      <div class="travel-img-overlay">
+        <div class="travel-location">70+ Countries</div>
+      </div>
+    </div>
+    <div class="travel-img gallery-reveal" style="transition-delay: 0.2s;">
+      <img src="images/gary/img04.jpg" alt="Travel landscape" loading="eager">
+      <div class="travel-img-overlay">
+        <div class="travel-location">Around the World</div>
+      </div>
+    </div>
+    <div class="travel-img gallery-reveal" style="transition-delay: 0.15s;">
+      <img src="images/gary/img10.jpg" alt="Photography in nature" loading="eager">
+      <div class="travel-img-overlay">
+        <div class="travel-location">South Florida</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERNITY / FAMILY -->
+<section class="maternity-section" id="maternity">
+  <div style="max-width: 1300px; margin: 0 auto;">
+    <div class="section-label">03 — Maternity &amp; Family</div>
+    <div class="section-title" style="margin-bottom: 50px;">New Beginnings</div>
+    <div class="maternity-layout">
+      <div class="maternity-tall">
+        <div class="maternity-img gallery-reveal">
+          <img src="images/gary/img07.jpg" alt="Maternity portrait" loading="eager">
+        </div>
+        <div class="img-caption" style="margin-top: 12px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray);">Maternity Portrait</div>
+      </div>
+      <div>
+        <div class="maternity-img gallery-reveal" style="margin-bottom: 20px;">
+          <img src="images/gary/img10.jpg" alt="Newborn photography" loading="eager">
+        </div>
+        <div class="maternity-img gallery-reveal" style="transition-delay: 0.1s;">
+          <img src="images/gary/img05.jpg" alt="Family photography" loading="eager">
+        </div>
+      </div>
+      <div style="padding-top: 60px;">
+        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 20px;">Moments That Last Forever</h3>
+        <p style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--gray); margin-bottom: 30px;">From first bumps to first steps, Gary captures the raw, tender moments of early family life. Sessions available in-studio and on-location throughout South Florida.</p>
+        <ul class="services-list">
+          <li>Maternity Sessions</li>
+          <li>Newborn Photography</li>
+          <li>Family Portraits</li>
+          <li>Lifestyle Sessions</li>
+          <li>Birthday Celebrations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events-section" id="events">
+  <div class="events-content">
+    <div class="events-img gallery-reveal">
+      <img src="images/gary/img08.jpg" alt="Event photography" loading="eager">
+    </div>
+    <div class="events-text">
+      <div class="section-label">04 — Events</div>
+      <h2>Your Event,<br>Professionally Documented</h2>
+      <p>From corporate galas to birthday parties, Gary brings the same cinematic precision he applies to weddings to every event he shoots. Available for events of all sizes across South Florida and beyond.</p>
+      <ul class="services-list">
+        <li>Corporate Events</li>
+        <li>Birthday Celebrations</li>
+        <li>Graduation Parties</li>
+        <li>Drone Coverage Available</li>
+        <li>Same-Week Delivery</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-layout">
+    <div class="about-portrait gallery-reveal">
+      <img src="images/gary/img02.jpg" alt="Gary Lester - GL Photography" loading="eager">
+    </div>
+    <div class="about-text-content">
+      <div class="section-label">05 — The Photographer</div>
+      <div class="section-title" style="margin-bottom: 30px;">Gary Lester</div>
+      <p>Born and raised in West Palm Beach, Gary Lester has spent the past decade using photography as a vehicle for exploration — shooting in over 70 countries while building one of South Florida's most trusted names in wedding and portrait photography.</p>
+      <p>Armed with a Canon 6D, 24-105mm and 70-200mm MkII, Gary brings the compositional instincts of a travel photojournalist to every wedding, maternity session, and event he covers.</p>
+      <div class="pull-quote">"Capturing the moments you'll never want to forget."</div>
+      <p>When he's not behind the lens, Gary is surfing the Florida coast, exploring the outdoors, and spending time with his family — the same values he brings to every client relationship.</p>
+      <div class="about-details">
+        <div class="about-detail-item">
+          <div class="about-detail-label">Based In</div>
+          <div class="about-detail-value">West Palm Beach, FL</div>
+        </div>
+        <div class="about-detail-item">
+          <div class="about-detail-label">Available</div>
+          <div class="about-detail-value">Worldwide</div>
+        </div>
+        <div class="about-detail-item">
+          <div class="about-detail-label">Instagram</div>
+          <div class="about-detail-value">@glphotography77</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="testimonial-inner">
+    <p class="testimonial-quote">Gary captured our wedding day exactly as we dreamed it — every emotion, every detail. The photos are genuinely stunning. We'll treasure them forever.</p>
+    <div class="testimonial-author">— Happy Client</div>
+    <div class="testimonial-source">South Florida Wedding</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="book">
+  <h2>Ready to Book?</h2>
+  <p>Based in West Palm Beach and available worldwide. Get in touch to check your date and receive a custom quote.</p>
+  <a href="mailto:GLphotography777@gmail.com?subject=Photography Inquiry" class="cta-btn">Inquire Now</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h3>Get In Touch</h3>
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <a href="mailto:GLphotography777@gmail.com" class="contact-item-value">GLphotography777@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Phone</div>
+        <a href="tel:5619517766" class="contact-item-value">561-951-7766</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Location</div>
+        <span class="contact-item-value">West Palm Beach, Florida</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Instagram</div>
+        <a href="https://www.instagram.com/glphotography77/" class="contact-item-value" target="_blank">@glphotography77</a>
+      </div>
+      <div class="contact-availability">
+        <p><span class="avail-highlight">Currently booking 2026</span> weddings, engagements, maternity sessions, and events. <span class="avail-highlight">Drone photography</span> also available. Serving South Florida and available for destination work worldwide.</p>
+      </div>
+    </div>
+    <div class="contact-form-area">
+      <h3>Start the Conversation</h3>
+      <p>Whether you're planning a wedding in Palm Beach, a destination elopement in Europe, or a family portrait session on the Florida coast — let's talk about what you're envisioning.</p>
+      <p>Gary personally responds to every inquiry, typically within 24 hours.</p>
+      <a href="mailto:GLphotography777@gmail.com?subject=Photography Inquiry - GL Photography" class="inquiry-link">Send an Inquiry</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">GL Photography</div>
+  <div class="footer-copy">&copy; 2026 Gary Lester &middot; West Palm Beach, FL</div>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/glphotography77/" target="_blank">Instagram</a>
+    <a href="https://kate2991.wixsite.com/glph" target="_blank">Current Site</a>
+  </div>
+  <div class="footer-credit">Design concept by Lucas Blatt</div>
+</footer>
+
+<script>
+  // Make all elements visible immediately (safety net)
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+  // IntersectionObserver for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Observe animated elements
+  document.querySelectorAll('.section-label, .section-title, .stat-item, .gallery-reveal').forEach(el => {
+    el.classList.remove('is-visible');
+    observer.observe(el);
+  });
+
+  // Hero parallax
+  const heroImg = document.querySelector('.hero-image');
+  if (heroImg) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      heroImg.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
