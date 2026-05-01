@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skagen Photography — Tampa Bay Birth Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;1,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0D0D0D;
+    --ivory: #F5F0E8;
+    --terracotta: #B85C38;
+    --warm-gray: #C8C0B0;
+    --mid: #6B6056;
+    --light-bg: #FAF7F2;
+  }
+
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: 'Karla', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* Global img rules per spec */
+  img {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
+    max-width: 100% !important;
+  }
+
+  /* ===================== NAV ===================== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.85) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--ivory); }
+
+  /* ===================== HERO ===================== */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/amanda/img01.png');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,13,13,0.85) 0%,
+      rgba(13,13,13,0.3) 40%,
+      rgba(13,13,13,0.1) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    max-width: 700px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .hero-content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-eyebrow {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+  .hero-name {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 80px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1.0;
+    color: var(--ivory);
+    text-shadow: 0 2px 40px rgba(13,13,13,0.6);
+    margin-bottom: 20px;
+  }
+  .hero-sub {
+    font-family: 'Karla', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--warm-gray);
+    margin-bottom: 36px;
+    text-shadow: 0 1px 12px rgba(13,13,13,0.8);
+  }
+  .hero-cta {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--terracotta);
+    color: var(--ivory);
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .hero-cta:hover {
+    background: var(--terracotta);
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    opacity: 0.6;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--warm-gray);
+  }
+
+  /* ===================== STATS ===================== */
+  #stats {
+    background: var(--ivory);
+    color: var(--black);
+    padding: 80px 64px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stat-number {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 88px;
+    font-weight: 400;
+    line-height: 1.0;
+    color: var(--terracotta);
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 8px;
+  }
+
+  /* ===================== MARQUEE ===================== */
+  .marquee-strip {
+    background: var(--terracotta);
+    overflow: hidden;
+    padding: 14px 0;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    padding: 0 40px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ===================== PRICING ===================== */
+  #pricing {
+    background: var(--black);
+    padding: 120px 64px;
+  }
+  .section-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section-label span {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section-label.is-visible span {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--ivory);
+    margin-bottom: 64px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1100px;
+  }
+  .pricing-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(200,192,176,0.12);
+    padding: 48px 40px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .pricing-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .pricing-card.featured {
+    background: rgba(184,92,56,0.12);
+    border-color: var(--terracotta);
+  }
+  .pricing-tag {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+  .pricing-name {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 12px;
+  }
+  .pricing-price {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: var(--ivory);
+    line-height: 1.0;
+    margin-bottom: 24px;
+  }
+  .pricing-price span {
+    font-size: 22px;
+    color: var(--warm-gray);
+    vertical-align: super;
+  }
+  .pricing-includes {
+    font-size: 14px;
+    color: var(--warm-gray);
+    line-height: 1.8;
+  }
+  .pricing-footer-note {
+    margin-top: 40px;
+    font-size: 14px;
+    color: var(--mid);
+    font-style: italic;
+  }
+
+  /* ===================== GALLERY ===================== */
+  #gallery {
+    background: var(--black);
+    padding: 80px 64px 120px;
+  }
+  .gallery-masonry {
+    columns: 2;
+    column-gap: 8px;
+    max-width: 1100px;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    filter: brightness(0.92);
+    transition: filter 0.4s, transform 0.5s;
+  }
+  .gallery-item:hover img {
+    filter: brightness(1.05);
+    transform: scale(1.02);
+  }
+
+  /* ===================== WHAT TO EXPECT ===================== */
+  #process {
+    background: var(--light-bg);
+    color: var(--black);
+    padding: 120px 64px;
+  }
+  .process-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+    align-items: center;
+  }
+  .process-image img {
+    width: 100%;
+    object-fit: cover;
+    height: 600px;
+  }
+  .process-content .section-label span { color: var(--terracotta); }
+  .process-content .section-title { color: var(--black); }
+  .process-steps {
+    list-style: none;
+    margin-top: 40px;
+  }
+  .process-step {
+    display: flex;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .process-step.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .step-num {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--terracotta);
+    opacity: 0.5;
+    min-width: 48px;
+    line-height: 1.0;
+    margin-top: 2px;
+  }
+  .step-text h4 {
+    font-family: 'Karla', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .step-text p {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* ===================== DOULA ===================== */
+  #doula {
+    background: var(--black);
+    padding: 120px 64px;
+  }
+  .doula-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+    align-items: center;
+  }
+  .doula-content {}
+  .doula-image {
+    position: relative;
+  }
+  .doula-image img {
+    width: 100%;
+    object-fit: cover;
+    height: 560px;
+  }
+  .doula-image::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid rgba(184,92,56,0.3);
+    z-index: -1;
+  }
+  .doula-list {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .doula-list li {
+    font-size: 15px;
+    color: var(--warm-gray);
+    padding-left: 20px;
+    position: relative;
+  }
+  .doula-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--terracotta);
+  }
+  .doula-body {
+    color: var(--warm-gray);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* ===================== ABOUT ===================== */
+  #about {
+    background: var(--light-bg);
+    color: var(--black);
+    padding: 120px 64px;
+    text-align: center;
+  }
+  .about-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .about-portrait {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    margin: 0 auto 40px;
+    display: block;
+    border: 3px solid var(--terracotta);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .about-portrait.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .about-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .about-role {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 32px;
+  }
+  .about-bio {
+    font-size: 17px;
+    line-height: 1.85;
+    color: #4A4440;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.2s;
+  }
+  .about-bio.is-visible { opacity: 1; }
+  .about-credentials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 40px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.4s;
+  }
+  .about-credentials.is-visible { opacity: 1; }
+  .cred-badge {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid rgba(184,92,56,0.4);
+    color: var(--mid);
+    padding: 8px 16px;
+  }
+
+  /* ===================== TESTIMONIAL ===================== */
+  #testimonial {
+    background: #1A0F0A;
+    padding: 120px 64px;
+    text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ivory);
+    max-width: 880px;
+    margin: 0 auto 40px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .testimonial-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .testimonial-source {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+  }
+  .testimonial-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--terracotta);
+    margin: 0 auto 20px;
+  }
+
+  /* ===================== CTA ===================== */
+  #cta {
+    background: var(--terracotta);
+    padding: 120px 64px;
+    text-align: center;
+  }
+  .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.7);
+    margin-bottom: 24px;
+  }
+  .cta-heading {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 68px;
+    font-weight: 400;
+    color: var(--ivory);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-size: 17px;
+    color: rgba(245,240,232,0.8);
+    max-width: 520px;
+    margin: 0 auto 48px;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    background: var(--ivory);
+    color: var(--terracotta);
+    font-family: 'Karla', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-btn:hover {
+    background: var(--black);
+    color: var(--ivory);
+  }
+  .cta-note {
+    margin-top: 24px;
+    font-size: 13px;
+    color: rgba(245,240,232,0.6);
+  }
+
+  /* ===================== FAQ ===================== */
+  #faq {
+    background: var(--black);
+    padding: 120px 64px;
+  }
+  .faq-grid {
+    max-width: 820px;
+  }
+  .faq-item {
+    border-bottom: 1px solid rgba(200,192,176,0.15);
+    padding: 32px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .faq-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .faq-q {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 16px;
+  }
+  .faq-a {
+    font-size: 15px;
+    color: var(--warm-gray);
+    line-height: 1.8;
+  }
+
+  /* ===================== CONTACT ===================== */
+  #contact {
+    background: var(--light-bg);
+    color: var(--black);
+    padding: 120px 64px;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 900px;
+    align-items: start;
+  }
+  .contact-heading {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  .contact-body {
+    font-size: 16px;
+    color: #5A5048;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .contact-detail {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--mid);
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+  .contact-detail:hover { color: var(--terracotta); }
+  .contact-detail strong {
+    font-weight: 500;
+    color: var(--black);
+    margin-right: 8px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+  .contact-availability {
+    margin-top: 40px;
+    padding: 24px;
+    background: rgba(184,92,56,0.08);
+    border-left: 3px solid var(--terracotta);
+  }
+  .avail-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 8px;
+  }
+  .avail-text {
+    font-size: 15px;
+    color: #4A4440;
+  }
+  .contact-form-area {}
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.12);
+    padding: 14px 16px;
+    font-family: 'Karla', sans-serif;
+    font-size: 15px;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--terracotta);
+  }
+  .form-group textarea { height: 120px; resize: vertical; }
+  .form-submit {
+    display: inline-block;
+    padding: 16px 48px;
+    background: var(--terracotta);
+    color: var(--ivory);
+    font-family: 'Karla', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    text-align: center;
+  }
+  .form-submit:hover { background: #9E4D2F; }
+
+  /* ===================== FOOTER ===================== */
+  footer {
+    background: #0A0806;
+    padding: 48px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200,192,176,0.1);
+  }
+  .footer-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+  }
+  .footer-credit {
+    font-size: 12px;
+    color: var(--mid);
+  }
+  .footer-credit a {
+    color: rgba(184,92,56,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-credit a:hover { color: var(--terracotta); }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; bottom: 48px; }
+    .hero-name { font-size: 48px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    #stats, #pricing, #gallery, #process, #doula, #about, #testimonial, #cta, #faq, #contact { padding: 80px 24px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .gallery-masonry { columns: 1; }
+    .process-grid, .doula-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .process-image, .doula-image { order: -1; }
+    .cta-heading { font-size: 44px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 36px; }
+    .stat-number { font-size: 64px; }
+    .section-title { font-size: 36px; }
+    .testimonial-quote { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Skagen Photography</a>
+  <ul class="nav-links">
+    <li><a href="#pricing">Investment</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-content" id="hero-content">
+    <p class="hero-eyebrow">Tampa Bay · Land O' Lakes, FL</p>
+    <h1 class="hero-name">SKAGEN<br>PHOTOGRAPHY</h1>
+    <p class="hero-sub">Birth Photography · Birth Film · Certified Doula · Since 2011</p>
+    <a href="#contact" class="hero-cta">Secure Your Due Date</a>
+  </div>
+  <div class="hero-scroll-hint">
+    <span class="scroll-line"></span>
+    Scroll
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item" data-delay="0">
+      <span class="stat-number" data-count="95">0</span>
+      <span class="stat-label">Births Attended</span>
+    </div>
+    <div class="stat-item" data-delay="120">
+      <span class="stat-number">15+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat-item" data-delay="240">
+      <span class="stat-number">24/7</span>
+      <span class="stat-label">On-Call Coverage</span>
+    </div>
+    <div class="stat-item" data-delay="360">
+      <span class="stat-number">7</span>
+      <span class="stat-label">Personal Births</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Birth Photography</span>
+    <span>·</span>
+    <span>Birth Videography</span>
+    <span>·</span>
+    <span>Maternity</span>
+    <span>·</span>
+    <span>Newborn</span>
+    <span>·</span>
+    <span>Certified Doula</span>
+    <span>·</span>
+    <span>Tampa Bay FL</span>
+    <span>·</span>
+    <span>On-Call 24/7</span>
+    <span>·</span>
+    <span>Birth Photography</span>
+    <span>·</span>
+    <span>Birth Videography</span>
+    <span>·</span>
+    <span>Maternity</span>
+    <span>·</span>
+    <span>Newborn</span>
+    <span>·</span>
+    <span>Certified Doula</span>
+    <span>·</span>
+    <span>Tampa Bay FL</span>
+    <span>·</span>
+    <span>On-Call 24/7</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-label"><span>Investment</span></div>
+  <h2 class="section-title">Transparent Pricing.<br>No Surprises.</h2>
+  <div class="pricing-grid">
+    <div class="pricing-card" data-delay="0">
+      <div class="pricing-tag">Photography</div>
+      <div class="pricing-name">Birth Photography</div>
+      <div class="pricing-price"><span>$</span>2,000</div>
+      <div class="pricing-includes">
+        Unlimited time at your birth<br>
+        Full gallery of edited images<br>
+        Online delivery within 2 weeks<br>
+        Print release included
+      </div>
+    </div>
+    <div class="pricing-card featured" data-delay="150">
+      <div class="pricing-tag">Most Popular · Save $1,600</div>
+      <div class="pricing-name">Photo + Film Bundle</div>
+      <div class="pricing-price"><span>$</span>2,400</div>
+      <div class="pricing-includes">
+        Full birth photography gallery<br>
+        Cinematic birth film<br>
+        Unlimited time at your birth<br>
+        Online delivery within 3 weeks
+      </div>
+    </div>
+    <div class="pricing-card" data-delay="300">
+      <div class="pricing-tag">Film</div>
+      <div class="pricing-name">Birth Film</div>
+      <div class="pricing-price"><span>$</span>2,000</div>
+      <div class="pricing-includes">
+        Cinematic short film (8–15 min)<br>
+        Music-scored edit<br>
+        Raw footage archive<br>
+        Online delivery within 3 weeks
+      </div>
+    </div>
+    <div class="pricing-card" data-delay="0">
+      <div class="pricing-tag">Maternity</div>
+      <div class="pricing-name">Maternity Session</div>
+      <div class="pricing-price"><span>$</span>400</div>
+      <div class="pricing-includes">
+        1-hour studio or outdoor session<br>
+        30+ edited images<br>
+        Online gallery delivery<br>
+        Print release included
+      </div>
+    </div>
+    <div class="pricing-card" data-delay="150">
+      <div class="pricing-tag">Newborn</div>
+      <div class="pricing-name">Newborn Session</div>
+      <div class="pricing-price"><span>$</span>400</div>
+      <div class="pricing-includes">
+        2-hour in-home or studio session<br>
+        30+ edited images<br>
+        Online gallery delivery<br>
+        Print release included
+      </div>
+    </div>
+    <div class="pricing-card" data-delay="300">
+      <div class="pricing-tag">Reserve Your Spot</div>
+      <div class="pricing-name">Book by Due Date</div>
+      <div class="pricing-price" style="font-size:36px; color: var(--warm-gray);">Space Is<br>Limited</div>
+      <div class="pricing-includes">
+        Birth photographers book<br>
+        months in advance — spots fill<br>
+        quickly around your due date.<br>
+        <a href="#contact" style="color:var(--terracotta); text-decoration:none; margin-top:12px; display:block; font-size:13px; letter-spacing:0.1em; text-transform:uppercase;">Reserve Now →</a>
+      </div>
+    </div>
+  </div>
+  <p class="pricing-footer-note">Payment plans available · Retainer secures your due date · Questions? <a href="#contact" style="color:var(--terracotta); text-decoration:none;">Get in touch</a></p>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-label"><span>Portfolio</span></div>
+  <h2 class="section-title">Real Births.<br>Real Moments.</h2>
+  <div class="gallery-masonry">
+    <div class="gallery-item">
+      <img src="images/amanda/img01.png" alt="Birth photography Tampa" loading="eager">
+    </div>
+    <div class="gallery-item">
+      <img src="images/amanda/img04.png" alt="Birth photography Tampa Bay" loading="eager">
+    </div>
+    <div class="gallery-item">
+      <img src="images/amanda/img02.png" alt="Newborn photography Tampa" loading="eager">
+    </div>
+    <div class="gallery-item">
+      <img src="images/amanda/img05.png" alt="Maternity photography Tampa" loading="eager">
+    </div>
+    <div class="gallery-item">
+      <img src="images/amanda/img03.jpg" alt="Amanda Skagen portrait" loading="eager">
+    </div>
+    <div class="gallery-item">
+      <img src="images/amanda/img06.png" alt="Birth photography package Tampa" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO EXPECT -->
+<section id="process">
+  <div class="process-grid">
+    <div class="process-image">
+      <img src="images/amanda/img02.png" alt="Birth session Tampa" loading="eager">
+    </div>
+    <div class="process-content">
+      <div class="section-label"><span>The Process</span></div>
+      <h2 class="section-title" style="color:var(--black); font-size:44px;">What to<br>Expect</h2>
+      <ol class="process-steps">
+        <li class="process-step" data-delay="0">
+          <span class="step-num">01</span>
+          <div class="step-text">
+            <h4>Book by Your Due Date</h4>
+            <p>Spots book months in advance. Reserve your space as soon as you know your due date. A retainer holds your spot.</p>
+          </div>
+        </li>
+        <li class="process-step" data-delay="120">
+          <span class="step-num">02</span>
+          <div class="step-text">
+            <h4>Pre-Birth Consultation</h4>
+            <p>We connect before your due date to discuss your birth preferences, location, and vision for your photos and film.</p>
+          </div>
+        </li>
+        <li class="process-step" data-delay="240">
+          <span class="step-num">03</span>
+          <div class="step-text">
+            <h4>On-Call 24/7</h4>
+            <p>When labor begins, you call. I arrive at whatever stage you're comfortable with and stay until after the golden hour.</p>
+          </div>
+        </li>
+        <li class="process-step" data-delay="360">
+          <span class="step-num">04</span>
+          <div class="step-text">
+            <h4>Gallery Delivered Within 2 Weeks</h4>
+            <p>Your fully edited gallery is delivered online with a print release. Birth films within 3 weeks.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- DOULA SERVICES -->
+<section id="doula">
+  <div class="doula-grid">
+    <div class="doula-content">
+      <div class="section-label"><span>Doula Services</span></div>
+      <h2 class="section-title">More Than<br>a Photographer</h2>
+      <p class="doula-body">As a certified doula with over 15 years of experience and 7 personal births across hospital, birth center, and home settings, Amanda brings a depth of knowledge most photographers simply can't. She is present for you — not just the images.</p>
+      <ul class="doula-list" style="margin-top:32px;">
+        <li>Certified Birth Doula (CD)</li>
+        <li>Continuous emotional and physical support</li>
+        <li>Childbirth education resources</li>
+        <li>Virtual doula services available nationwide</li>
+        <li>Christian faith-based birth support available</li>
+        <li>Evidence-based comfort techniques</li>
+      </ul>
+    </div>
+    <div class="doula-image">
+      <img src="images/amanda/img04.png" alt="Doula birth support Tampa" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <img src="images/amanda/img03.jpg" alt="Amanda Skagen" class="about-portrait" loading="eager">
+    <h2 class="about-title">Amanda Skagen</h2>
+    <p class="about-role">Birth Photographer · Certified Doula · Land O' Lakes, FL</p>
+    <p class="about-bio">A wife and homeschooling mother of seven, Amanda has attended over 95 births since 2011 as a doula, birth assistant, photographer, and videographer. Her seven personal pregnancies — spanning hospital, birth center, and home births — give her a rare, lived understanding of the sacred transition into parenthood. She documents birth not as an observer, but as a witness who truly understands what is happening in the room.</p>
+    <div class="about-credentials">
+      <span class="cred-badge">Certified Birth Doula</span>
+      <span class="cred-badge">95+ Births</span>
+      <span class="cred-badge">Since 2011</span>
+      <span class="cred-badge">Virtual Services</span>
+      <span class="cred-badge">Tampa Bay</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <div class="testimonial-divider"></div>
+  <blockquote class="testimonial-quote">
+    "Having Amanda there — as our photographer and as a doula — meant we could actually be present in the moment knowing everything was being captured and supported at the same time. I can't imagine our birth without her."
+  </blockquote>
+  <p class="testimonial-source">— Tampa Bay Birth Family, 2024</p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-eyebrow">Limited Spots Available</p>
+  <h2 class="cta-heading">Secure Your<br>Due Date</h2>
+  <p class="cta-sub">Birth photography books months in advance. Don't wait until your third trimester — reach out as soon as you know your dates.</p>
+  <a href="#contact" class="cta-btn">Reserve Your Spot</a>
+  <p class="cta-note">Retainer required to hold your due date window · Payment plans available</p>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label"><span>FAQ</span></div>
+  <h2 class="section-title">Common<br>Questions</h2>
+  <div class="faq-grid">
+    <div class="faq-item" data-delay="0">
+      <div class="faq-q">When should I book?</div>
+      <div class="faq-a">As soon as possible — ideally in your first or second trimester. Birth photographers book by due date windows, and multiple clients can share nearby dates. The earlier you book, the more secure your spot.</div>
+    </div>
+    <div class="faq-item" data-delay="100">
+      <div class="faq-q">What if my birth is really fast — or really long?</div>
+      <div class="faq-a">No time limits. Whether your labor is 2 hours or 20, Amanda stays with you from whenever you call until after golden hour with your new baby. You pay for the experience, not the hours.</div>
+    </div>
+    <div class="faq-item" data-delay="200">
+      <div class="faq-q">Do you photograph hospital, birth center, and home births?</div>
+      <div class="faq-a">Yes — all three. Having delivered in hospital, birth center, and home settings herself, Amanda is comfortable and experienced in every birth environment.</div>
+    </div>
+    <div class="faq-item" data-delay="300">
+      <div class="faq-q">What areas do you serve?</div>
+      <div class="faq-a">Primarily the Tampa Bay area including Land O' Lakes, Wesley Chapel, New Tampa, Brandon, St. Petersburg, and surrounding communities. Virtual doula services are available nationwide.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label"><span>Get In Touch</span></div>
+      <h2 class="contact-heading">Let's Talk<br>About Your<br>Birth</h2>
+      <p class="contact-body">Ready to secure your due date or just have questions? Reach out — Amanda responds personally to every inquiry.</p>
+      <a href="https://tampabirthphoto.weebly.com/contact.html" class="contact-detail">
+        <strong>Website</strong> tampabirthphoto.weebly.com
+      </a>
+      <a href="https://www.facebook.com/skagenbirthservices/" class="contact-detail" target="_blank">
+        <strong>Facebook</strong> Skagen Birth Services
+      </a>
+      <div class="contact-availability">
+        <div class="avail-label">On-Call Coverage</div>
+        <div class="avail-text">Amanda is on-call 24/7 for active birth clients. Inquiries are typically answered within 24 hours.</div>
+      </div>
+    </div>
+    <div class="contact-form-area">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="First & Last Name">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Due Date (approximate)</label>
+        <input type="text" placeholder="Month Year">
+      </div>
+      <div class="form-group">
+        <label>Service Interested In</label>
+        <select>
+          <option>Birth Photography ($2,000)</option>
+          <option>Birth Film ($2,000)</option>
+          <option>Photo + Film Bundle ($2,400)</option>
+          <option>Maternity Session ($400)</option>
+          <option>Newborn Session ($400)</option>
+          <option>Doula Support</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your birth plan, questions, or anything else..."></textarea>
+      </div>
+      <button class="form-submit">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Skagen Photography</div>
+  <div class="footer-copy">© 2026 Skagen Photography · Land O' Lakes, FL · Tampa Bay</div>
+  <div class="footer-credit">Design by <a href="#">Lucas Blatt</a></div>
+</footer>
+
+<script>
+  // Make all classes visible immediately (spec requirement)
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+  // Hero content immediate show
+  const heroContent = document.getElementById('hero-content');
+  if (heroContent) heroContent.classList.add('is-visible');
+
+  // Parallax on hero background
+  const heroBg = document.getElementById('hero-bg');
+  window.addEventListener('scroll', () => {
+    if (heroBg) {
+      heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+    }
+  }, { passive: true });
+
+  // Stats counter animation
+  const counters = document.querySelectorAll('.stat-number[data-count]');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count);
+        let current = 0;
+        const step = Math.ceil(target / 60);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current + '+';
+          if (current >= target) clearInterval(timer);
+        }, 25);
+        countObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => countObserver.observe(c));
+
+  // Staggered reveals via IntersectionObserver
+  const revealEls = document.querySelectorAll('.stat-item, .pricing-card, .gallery-item, .process-step, .faq-item');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, parseInt(delay));
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Section title and label clip-path reveals
+  const clipEls = document.querySelectorAll('.section-title, .section-label, .cta-heading');
+  const clipObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        clipObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  clipEls.forEach(el => clipObserver.observe(el));
+
+  // About section reveals
+  const aboutEls = document.querySelectorAll('.about-portrait, .about-bio, .about-credentials, .testimonial-quote');
+  const aboutObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        aboutObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  aboutEls.forEach(el => aboutObserver.observe(el));
+</script>
+</body>
+</html>
