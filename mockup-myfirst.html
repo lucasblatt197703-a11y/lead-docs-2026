@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My First Photo — Newborn, Maternity & Cake Smash Photography · Miami, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0A;
+    --warm-white: #F5F0E8;
+    --cream: #F0EAD6;
+    --gold: #D4A853;
+    --gold-light: #E8C97A;
+    --text-muted: #9A8E7D;
+    --dark-section: #111109;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--warm-white);
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  img {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
+    max-width: 100% !important;
+    display: block;
+  }
+
+  /* ─── GLOBAL ANIMATION INIT ─── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  .clip-reveal {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .clip-reveal.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .img-reveal {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .img-reveal.is-visible { clip-path: inset(0 0 0 0); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+    transition: background 0.3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,0.97); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--warm-white);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  /* ─── HERO — STACKED EDITORIAL ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-name-block {
+    position: relative;
+    z-index: 2;
+    padding: 80px 60px 0;
+    background: var(--black);
+  }
+  .hero-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 10vw, 128px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--warm-white);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .hero-name span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .hero-name span.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-name-line2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 10vw, 128px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--gold);
+    text-transform: none;
+    overflow: hidden;
+  }
+  .hero-name-line2 span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .hero-name-line2 span.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-tagline {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 28px;
+    max-width: 400px;
+  }
+  .hero-image-block {
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+  .hero-image-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+  }
+  .hero-image-block img.is-visible { transform: scale(1.0); }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 3;
+    padding: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 100%);
+  }
+  .hero-caption {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+  .hero-scroll-line {
+    width: 1px;
+    height: 60px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--gold);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-text {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+  .marquee-dot { margin: 0 20px; opacity: 0.4; }
+
+  /* ─── STATS ─── */
+  #stats {
+    padding: 80px 60px;
+    background: var(--black);
+    border-top: 1px solid rgba(212,168,83,0.15);
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(212,168,83,0.1);
+  }
+  .stat-item {
+    background: var(--black);
+    padding: 50px 40px;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 12px;
+    display: block;
+  }
+
+  /* ─── SECTION LABELS ─── */
+  .section-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--warm-white);
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* ─── GALLERY — TIGHT GRID ─── */
+  #gallery {
+    padding: 100px 0 0;
+    background: var(--black);
+  }
+  .gallery-header {
+    padding: 0 60px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: #1a1a1a;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    loading: eager;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.0);
+    transition: background 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+  .gallery-item:hover .overlay { background: rgba(10,10,10,0.4); }
+  .gallery-item .overlay span {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-family: 'Libre Franklin', sans-serif;
+  }
+  .gallery-item:hover .overlay span { opacity: 1; }
+
+  /* ─── FEATURED FULL-BLEED ─── */
+  #featured {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+  }
+  .featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transform: translateY(0);
+  }
+  .featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.3) 60%, transparent 100%);
+    display: flex;
+    align-items: center;
+    padding: 80px;
+  }
+  .featured-quote {
+    max-width: 580px;
+  }
+  .featured-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 52px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--warm-white);
+    margin-bottom: 28px;
+  }
+  .featured-quote cite {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ─── SESSION TYPES ─── */
+  #sessions {
+    padding: 120px 60px;
+    background: var(--black);
+  }
+  .sessions-header { margin-bottom: 70px; }
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .session-card {
+    position: relative;
+    overflow: hidden;
+    background: #111;
+  }
+  .session-card-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .session-card:hover .session-card-img { transform: scale(1.04); }
+  .session-card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 30px;
+    background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 100%);
+  }
+  .session-card-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(212,168,83,0.08);
+    position: absolute;
+    top: 20px; right: 20px;
+    line-height: 1;
+  }
+  .session-card-type {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .session-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--warm-white);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .session-card-desc {
+    font-size: 13px;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.6;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 140px 60px;
+    background: var(--dark-section);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 22vw;
+    font-weight: 900;
+    color: rgba(212,168,83,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+  .about-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .about-portrait {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 50px;
+    border: 2px solid rgba(212,168,83,0.3);
+  }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 3vw, 48px);
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+  .about-title em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .about-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.75);
+    margin-bottom: 28px;
+  }
+  .about-spanish {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--gold);
+    opacity: 0.7;
+    display: block;
+    margin-top: 20px;
+  }
+  .about-accent-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 40px auto;
+    opacity: 0.4;
+  }
+
+  /* ─── PROCESS ─── */
+  #process {
+    padding: 120px 60px;
+    background: var(--black);
+    border-top: 1px solid rgba(212,168,83,0.08);
+  }
+  .process-header { margin-bottom: 80px; }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(212,168,83,0.08);
+  }
+  .process-step {
+    background: var(--black);
+    padding: 50px 36px;
+    position: relative;
+  }
+  .process-step-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(212,168,83,0.12);
+    line-height: 1;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .process-step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--warm-white);
+    display: block;
+    margin-bottom: 14px;
+  }
+  .process-step-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .process-step-line {
+    width: 30px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  /* ─── TESTIMONIAL ─── */
+  #testimonial {
+    padding: 120px 60px;
+    background: var(--gold);
+    text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 52px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--black);
+    max-width: 900px;
+    margin: 0 auto 36px;
+  }
+  .testimonial-author {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(10,10,10,0.6);
+  }
+  .testimonial-stars {
+    font-size: 20px;
+    color: var(--black);
+    margin-bottom: 40px;
+    opacity: 0.6;
+  }
+
+  /* ─── GALLERY ROW 2 ─── */
+  #gallery2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    background: #111;
+  }
+  .gallery2-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: #1a1a1a;
+  }
+  .gallery2-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .gallery2-item:hover img { transform: scale(1.04); }
+
+  /* ─── BOLD CTA ─── */
+  #cta {
+    padding: 140px 60px;
+    background: var(--dark-section);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-accent {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 24px;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 6vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--warm-white);
+    margin-bottom: 24px;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .cta-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 50px;
+    line-height: 1.7;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 18px 56px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .cta-button:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .cta-alt {
+    display: block;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .cta-alt a { color: var(--gold); text-decoration: none; }
+  .cta-alt a:hover { text-decoration: underline; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 120px 60px;
+    background: var(--black);
+    border-top: 1px solid rgba(212,168,83,0.1);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left {}
+  .contact-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--warm-white);
+    margin-top: 24px;
+    margin-bottom: 40px;
+  }
+  .contact-tagline em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .contact-info-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .contact-info-list li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .contact-info-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 90px;
+    display: block;
+  }
+  .contact-info-value {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--warm-white);
+  }
+  .contact-info-value a {
+    color: var(--warm-white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-info-value a:hover { color: var(--gold); }
+  .contact-right {}
+  .contact-social-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 24px;
+  }
+  .contact-social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    list-style: none;
+    margin-bottom: 50px;
+  }
+  .contact-social-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .contact-social-links a::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .contact-social-links a:hover { color: var(--gold); }
+  .contact-languages {
+    padding: 24px 28px;
+    border: 1px solid rgba(212,168,83,0.2);
+  }
+  .contact-lang-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .contact-lang-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--warm-white);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #050505;
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(212,168,83,0.08);
+  }
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(154,142,125,0.4);
+  }
+  .footer-credit a { color: inherit; text-decoration: none; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.12em; }
+    .hero-name-block { padding: 80px 24px 0; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    #stats { padding: 60px 24px; }
+    .gallery-header { padding: 0 24px 40px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    #sessions { padding: 80px 24px; }
+    .sessions-grid { grid-template-columns: 1fr; }
+    #about { padding: 100px 24px; }
+    #process { padding: 80px 24px; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    #testimonial { padding: 80px 24px; }
+    #gallery2 { grid-template-columns: repeat(2, 1fr); }
+    #cta { padding: 100px 24px; }
+    #contact { padding: 80px 24px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+    footer { padding: 30px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    .featured-overlay { padding: 40px; }
+    .hero-scroll-hint { padding: 20px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    #gallery2 { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">My First Photo</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — STACKED EDITORIAL -->
+<section id="hero">
+  <div class="hero-name-block">
+    <span class="hero-eyebrow">Miramar · South Florida · Est. 2014</span>
+    <div class="hero-name">
+      <span style="transition-delay:0ms">M</span><span style="transition-delay:30ms">Y</span>&nbsp;<span style="transition-delay:80ms">F</span><span style="transition-delay:110ms">I</span><span style="transition-delay:140ms">R</span><span style="transition-delay:170ms">S</span><span style="transition-delay:200ms">T</span>
+    </div>
+    <div class="hero-name-line2">
+      <span style="transition-delay:260ms">P</span><span style="transition-delay:290ms">h</span><span style="transition-delay:320ms">o</span><span style="transition-delay:350ms">t</span><span style="transition-delay:380ms">o</span>
+    </div>
+    <p class="hero-tagline reveal">Newborn · Maternity · Cake Smash Photography<br>Serving South Florida families since 2014</p>
+  </div>
+  <div class="hero-image-block">
+    <img src="images/myfirst/img01.jpg" alt="My First Photo — Newborn Photography Miami" loading="eager" id="hero-img">
+    <div class="hero-scroll-hint">
+      <span class="hero-caption">Jenice Garcia · 900+ Five-Star Reviews</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-text">Newborn<span class="marquee-dot">·</span>Cake Smash<span class="marquee-dot">·</span>Maternity<span class="marquee-dot">·</span>Miami, FL<span class="marquee-dot">·</span>Español<span class="marquee-dot">·</span>2026<span class="marquee-dot">·</span>900+ Reviews<span class="marquee-dot">·</span>14K Instagram<span class="marquee-dot">·</span>Newborn<span class="marquee-dot">·</span>Cake Smash<span class="marquee-dot">·</span>Maternity<span class="marquee-dot">·</span>Miami, FL<span class="marquee-dot">·</span>Español<span class="marquee-dot">·</span>2026<span class="marquee-dot">·</span>900+ Reviews<span class="marquee-dot">·</span>14K Instagram<span class="marquee-dot">·</span></span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <span class="stat-number">14K+</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <span class="stat-number">900+</span>
+      <span class="stat-label">Five-Star Reviews</span>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <span class="stat-number">2</span>
+      <span class="stat-label">Languages · EN / ES</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY — TIGHT GRID -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <span class="section-eyebrow">Portfolio</span>
+      <h2 class="section-title clip-reveal">The <em>Work</em></h2>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);max-width:260px;line-height:1.7;">Every session is a collaboration. Every image is yours to keep forever.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item img-reveal" style="transition-delay:0ms">
+      <img src="images/myfirst/img02.jpg" alt="Newborn photography session" loading="eager">
+      <div class="overlay"><span>Newborn</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:80ms">
+      <img src="images/myfirst/img05.jpg" alt="Cake smash birthday session" loading="eager">
+      <div class="overlay"><span>Cake Smash</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:160ms">
+      <img src="images/myfirst/img08.jpg" alt="Maternity portrait session" loading="eager">
+      <div class="overlay"><span>Maternity</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:80ms">
+      <img src="images/myfirst/img06.jpg" alt="6-month milestone session" loading="eager">
+      <div class="overlay"><span>6-Month Milestone</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:160ms">
+      <img src="images/myfirst/img09.jpg" alt="Maternity photography" loading="eager">
+      <div class="overlay"><span>Maternity</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:240ms">
+      <img src="images/myfirst/img07.jpg" alt="Baby cake smash session" loading="eager">
+      <div class="overlay"><span>Cake Smash</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0ms">
+      <img src="images/myfirst/img12.jpg" alt="Baby milestone portrait" loading="eager">
+      <div class="overlay"><span>Milestone</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:80ms">
+      <img src="images/myfirst/img10.jpg" alt="Maternity portrait" loading="eager">
+      <div class="overlay"><span>Maternity</span></div>
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:160ms">
+      <img src="images/myfirst/img04.jpg" alt="Family session" loading="eager">
+      <div class="overlay"><span>Family</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED FULL-BLEED -->
+<section id="featured">
+  <img src="images/myfirst/img03.jpg" alt="Maternity photography South Florida" loading="eager" class="featured-img" id="parallax-img">
+  <div class="featured-overlay">
+    <div class="featured-quote reveal">
+      <blockquote>"These are the moments you'll never be able to re-create. We make sure they're never forgotten."</blockquote>
+      <cite>— Jenice Garcia, My First Photo</cite>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION TYPES -->
+<section id="sessions">
+  <div class="sessions-header">
+    <span class="section-eyebrow">What We Offer</span>
+    <h2 class="section-title clip-reveal">Session <em>Types</em></h2>
+  </div>
+  <div class="sessions-grid">
+    <div class="session-card reveal">
+      <img src="images/myfirst/img02.jpg" alt="Newborn session" class="session-card-img" loading="eager">
+      <div class="session-card-info">
+        <span class="session-card-number">01</span>
+        <span class="session-card-type">Days 5–14</span>
+        <span class="session-card-title">Newborn</span>
+        <p class="session-card-desc">Sleepy poses, soft wraps, and the kind of tiny details that disappear in days. Booked before baby arrives.</p>
+      </div>
+    </div>
+    <div class="session-card reveal reveal-delay-2">
+      <img src="images/myfirst/img08.jpg" alt="Maternity session" class="session-card-img" loading="eager">
+      <div class="session-card-info">
+        <span class="session-card-number">02</span>
+        <span class="session-card-type">28–36 Weeks</span>
+        <span class="session-card-title">Maternity</span>
+        <p class="session-card-desc">Studio or outdoor. Elegant gowns provided. Artful portraits that honor this once-in-a-lifetime moment.</p>
+      </div>
+    </div>
+    <div class="session-card reveal reveal-delay-4">
+      <img src="images/myfirst/img07.jpg" alt="Cake smash session" class="session-card-img" loading="eager">
+      <div class="session-card-info">
+        <span class="session-card-number">03</span>
+        <span class="session-card-type">First Birthday</span>
+        <span class="session-card-title">Cake Smash</span>
+        <p class="session-card-desc">Themed sets, full decoration, cake included. A full birthday celebration captured in one session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-bg-text" aria-hidden="true">MFP</div>
+  <div class="about-inner">
+    <img src="images/myfirst/img11.jpg" alt="Jenice Garcia — My First Photo" class="about-portrait reveal" loading="eager">
+    <span class="section-eyebrow">The Artist</span>
+    <h2 class="about-title clip-reveal">Jenice Garcia<br><em>Newborn Specialist</em></h2>
+    <div class="about-accent-line"></div>
+    <p class="about-body reveal">
+      Based in Miramar, FL, Jenice Garcia has spent over a decade mastering the art of newborn, maternity, and milestone photography. With 900+ five-star reviews and a bilingual studio serving families across South Florida, her work is built on patience, precision, and an instinct for capturing the un-repeatable.
+    </p>
+    <p class="about-body reveal reveal-delay-1">
+      Certified in safe newborn handling, Jenice creates an environment where babies settle naturally and parents can exhale. Every session is unhurried. Every image is gallery-worthy.
+    </p>
+    <span class="about-spanish reveal reveal-delay-2">"Capturando los primeros momentos"</span>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header">
+    <span class="section-eyebrow">How It Works</span>
+    <h2 class="section-title clip-reveal">The <em>Process</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <span class="process-step-number">01</span>
+      <span class="process-step-line"></span>
+      <span class="process-step-title">Book</span>
+      <p class="process-step-desc">Reserve your date — newborn sessions are booked before baby arrives. Availability is limited.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <span class="process-step-number">02</span>
+      <span class="process-step-line"></span>
+      <span class="process-step-title">Consult</span>
+      <p class="process-step-desc">A pre-session call to plan your themes, wardrobe, and what you'd love to have framed forever.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <span class="process-step-number">03</span>
+      <span class="process-step-line"></span>
+      <span class="process-step-title">Session Day</span>
+      <p class="process-step-desc">Relax. The studio is warm, calm, and baby-ready. Sessions typically run 2–4 hours.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <span class="process-step-number">04</span>
+      <span class="process-step-line"></span>
+      <span class="process-step-title">Your Gallery</span>
+      <p class="process-step-desc">Online gallery delivered within 2 weeks. Print packages, albums, and wall art available.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+  <blockquote class="testimonial-quote reveal">
+    "Jenice was absolutely incredible. She handled our newborn with such care and made us feel completely at ease. The photos are stunning — we cry every time we look at them."
+  </blockquote>
+  <cite class="testimonial-author reveal reveal-delay-1">— Verified Google Review · Miami, FL</cite>
+</section>
+
+<!-- GALLERY ROW 2 -->
+<div id="gallery2">
+  <div class="gallery2-item img-reveal" style="transition-delay:0ms">
+    <img src="images/myfirst/img05.jpg" alt="Winter wonderland cake smash" loading="eager">
+  </div>
+  <div class="gallery2-item img-reveal" style="transition-delay:80ms">
+    <img src="images/myfirst/img06.jpg" alt="6-month milestone session" loading="eager">
+  </div>
+  <div class="gallery2-item img-reveal" style="transition-delay:160ms">
+    <img src="images/myfirst/img12.jpg" alt="Baby portrait" loading="eager">
+  </div>
+  <div class="gallery2-item img-reveal" style="transition-delay:240ms">
+    <img src="images/myfirst/img04.jpg" alt="Family photography" loading="eager">
+  </div>
+</div>
+
+<!-- BOLD CTA -->
+<section id="cta">
+  <div class="cta-bg-accent"></div>
+  <div class="cta-inner">
+    <span class="cta-eyebrow">Limited Availability</span>
+    <h2 class="cta-title reveal">Reserve Your<br><em>Session</em></h2>
+    <p class="cta-subtitle reveal reveal-delay-1">Newborn sessions book out weeks in advance. Secure your date before baby arrives — or contact us to check current availability.</p>
+    <a href="https://wa.me/17542033594" class="cta-button reveal reveal-delay-2">Book via WhatsApp</a>
+    <span class="cta-alt reveal reveal-delay-3">
+      Or call <a href="tel:+17542033594">(754) 203-3594</a> &nbsp;·&nbsp; <a href="tel:+17863016440">(786) 301-6440</a>
+    </span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-left">
+      <span class="section-eyebrow">Get In Touch</span>
+      <h2 class="contact-tagline clip-reveal">Let's make<br>something <em>beautiful</em></h2>
+      <ul class="contact-info-list">
+        <li class="reveal">
+          <span class="contact-info-label">Phone</span>
+          <span class="contact-info-value"><a href="tel:+17542033594">(754) 203-3594</a></span>
+        </li>
+        <li class="reveal reveal-delay-1">
+          <span class="contact-info-label">WhatsApp</span>
+          <span class="contact-info-value"><a href="https://wa.me/17542033594">Message us directly</a></span>
+        </li>
+        <li class="reveal reveal-delay-2">
+          <span class="contact-info-label">Location</span>
+          <span class="contact-info-value">Miramar, FL · South Florida</span>
+        </li>
+        <li class="reveal reveal-delay-3">
+          <span class="contact-info-label">Site</span>
+          <span class="contact-info-value"><a href="https://www.my1stphoto.com" target="_blank">my1stphoto.com</a></span>
+        </li>
+      </ul>
+    </div>
+    <div class="contact-right reveal">
+      <h3 class="contact-social-title">Follow Along</h3>
+      <ul class="contact-social-links">
+        <li><a href="https://instagram.com/myfirstphoto" target="_blank">@myfirstphoto · Instagram · 14.5K Followers</a></li>
+        <li><a href="https://www.tiktok.com/@myfirstphoto" target="_blank">@myfirstphoto · TikTok</a></li>
+        <li><a href="https://www.facebook.com/myfirstphoto" target="_blank">My First Photo · Facebook</a></li>
+      </ul>
+      <div class="contact-languages reveal reveal-delay-2">
+        <span class="contact-lang-label">Bilingual Studio</span>
+        <span class="contact-lang-text">English &amp; Español · Hablamos español</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">My First Photo</span>
+  <span class="footer-copy">© 2026 · Miramar, FL · All Rights Reserved</span>
+  <span class="footer-credit"><a href="https://lucasblatt.com">Design by Lucas Blatt</a></span>
+</footer>
+
+<script>
+  // Immediately add is-visible to all elements so nothing is hidden on load
+  document.querySelectorAll('.reveal, .clip-reveal, .img-reveal').forEach(el => el.classList.add('is-visible'));
+
+  // Hero name letters
+  document.querySelectorAll('.hero-name span, .hero-name-line2 span').forEach(el => el.classList.add('is-visible'));
+
+  // Hero image
+  const heroImg = document.getElementById('hero-img');
+  if (heroImg) heroImg.classList.add('is-visible');
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Parallax on featured image (subtle)
+  const parallaxImg = document.getElementById('parallax-img');
+  if (parallaxImg) {
+    window.addEventListener('scroll', () => {
+      const section = document.getElementById('featured');
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const progress = 1 - (rect.bottom / (window.innerHeight + rect.height));
+        parallaxImg.style.transform = `translateY(${progress * 40}px)`;
+      }
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
