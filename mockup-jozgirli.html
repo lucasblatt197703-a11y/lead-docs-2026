@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JozGirli Photography — Newborn · Maternity · Family · Pembroke Pines, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F8F4EF;
+    --forest: #2C4A3E;
+    --blush: #E8C5B5;
+    --dark: #1A1A1A;
+    --mid: #5A5A5A;
+    --light: #C8BDB5;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  img { opacity: 1 !important; clip-path: none !important; transform: none !important; max-width: 100% !important; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 0.7; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 110%;
+    object-fit: cover;
+    object-position: center 30%;
+    top: -5%;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(26,26,26,0.55) 0%,
+      rgba(26,26,26,0.1) 40%,
+      transparent 100%
+    );
+  }
+
+  .hero-text {
+    position: absolute;
+    bottom: 64px;
+    left: 56px;
+    max-width: 680px;
+  }
+
+  .hero-name {
+    font-family: 'Lora', serif;
+    font-size: 90px;
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease, transform 0.9s ease, letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .hero-name.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-top: 20px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+  }
+
+  .hero-sub.is-visible { opacity: 1; }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Source Sans 3', sans-serif;
+    opacity: 0.7;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: var(--white);
+    opacity: 0.5;
+  }
+
+  /* ── AWARD STRIP ── */
+  #award-strip {
+    background: var(--forest);
+    padding: 18px 0;
+    text-align: center;
+  }
+
+  .award-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .award-badge {
+    font-size: 22px;
+  }
+
+  .award-text {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .award-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(248,244,239,0.3);
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-section {
+    overflow: hidden;
+    background: var(--cream);
+    border-top: 1px solid rgba(26,26,26,0.08);
+    border-bottom: 1px solid rgba(26,26,26,0.08);
+    padding: 14px 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS ── */
+  #stats {
+    padding: 80px 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    border-bottom: 1px solid rgba(26,26,26,0.08);
+  }
+
+  .stat-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.12s; }
+  .stat-item:nth-child(3) { transition-delay: 0.24s; }
+  .stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+  .stat-number {
+    font-family: 'Lora', serif;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 8px;
+  }
+
+  /* ── GALLERY ── */
+  #gallery {
+    padding: 100px 0;
+  }
+
+  .section-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--dark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-header {
+    padding: 0 56px;
+    margin-bottom: 60px;
+  }
+
+  /* Editorial scroll gallery */
+  .gallery-editorial {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .gallery-row {
+    display: grid;
+    align-items: start;
+  }
+
+  .gallery-row.row-full {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-row.row-split-left {
+    grid-template-columns: 60% 40%;
+  }
+
+  .gallery-row.row-split-right {
+    grid-template-columns: 40% 60%;
+  }
+
+  .gallery-row.row-thirds {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .gallery-item.is-visible { opacity: 1; transform: scale(1); }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.02); }
+
+  .gallery-item.tall { height: 600px; }
+  .gallery-item.medium { height: 450px; }
+  .gallery-item.short { height: 350px; }
+  .gallery-item.full { height: 70vh; min-height: 480px; }
+
+  .gallery-caption-cell {
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: var(--cream);
+  }
+
+  .gallery-caption-cell.dark-bg {
+    background: var(--forest);
+  }
+
+  .gallery-caption-text {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--dark);
+    font-style: italic;
+  }
+
+  .gallery-caption-cell.dark-bg .gallery-caption-text { color: var(--cream); }
+
+  .gallery-caption-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 16px;
+  }
+
+  .gallery-caption-cell.dark-bg .gallery-caption-sub { color: rgba(248,244,239,0.6); }
+
+  /* ── SPECIALTIES ── */
+  #specialties {
+    padding: 100px 56px;
+    background: var(--white);
+  }
+
+  .specialties-header {
+    margin-bottom: 60px;
+  }
+
+  .specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .specialty-card {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .specialty-card.is-visible { opacity: 1; transform: translateY(0); }
+  .specialty-card:nth-child(2) { transition-delay: 0.15s; }
+  .specialty-card:nth-child(3) { transition-delay: 0.3s; }
+
+  .specialty-img-wrap {
+    overflow: hidden;
+    height: 440px;
+  }
+
+  .specialty-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .specialty-card:hover .specialty-img-wrap img { transform: scale(1.04); }
+
+  .specialty-info {
+    padding: 24px 0;
+  }
+
+  .specialty-name {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--dark);
+  }
+
+  .specialty-desc {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-top: 8px;
+  }
+
+  .specialty-link {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--forest);
+    text-decoration: none;
+    border-bottom: 1px solid var(--forest);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .specialty-link:hover { opacity: 0.6; }
+
+  /* ── FEATURED QUOTE ── */
+  #featured {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    overflow: hidden;
+  }
+
+  .featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+  }
+
+  .featured-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,26,26,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-quote {
+    max-width: 700px;
+    text-align: center;
+    padding: 0 40px;
+  }
+
+  .featured-quote-text {
+    font-family: 'Lora', serif;
+    font-size: 32px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--white);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .featured-quote-text.is-visible { opacity: 1; transform: translateY(0); }
+
+  .featured-quote-attr {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.2s;
+  }
+
+  .featured-quote-attr.is-visible { opacity: 1; }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 120px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-img-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-img-wrap.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-img-wrap img {
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-accent {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    width: 180px;
+    height: 180px;
+    background: var(--blush);
+    z-index: -1;
+  }
+
+  .about-text {
+    padding-top: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .about-text.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-pull-quote {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--forest);
+    border-left: 2px solid var(--forest);
+    padding-left: 24px;
+    margin-bottom: 32px;
+  }
+
+  .about-body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--mid);
+  }
+
+  .about-body p + p { margin-top: 16px; }
+
+  .about-sig {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--forest);
+    margin-top: 32px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials {
+    background: var(--dark);
+    padding: 100px 56px;
+  }
+
+  .testimonials-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .testimonials-label {
+    color: var(--blush);
+    margin-bottom: 12px;
+  }
+
+  .testimonials-title {
+    color: var(--cream);
+    margin-bottom: 64px;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+  }
+
+  .testimonial-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .testimonial-item.is-visible { opacity: 1; transform: translateY(0); }
+  .testimonial-item:nth-child(2) { transition-delay: 0.15s; }
+  .testimonial-item:nth-child(3) { transition-delay: 0.3s; }
+
+  .testimonial-stars {
+    color: var(--blush);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .testimonial-quote {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(248,244,239,0.85);
+  }
+
+  .testimonial-attr {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(248,244,239,0.45);
+    margin-top: 16px;
+  }
+
+  /* ── CTA ── */
+  #cta {
+    background: var(--forest);
+    padding: 120px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Lora', serif;
+    font-size: 180px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+
+  .cta-label {
+    color: var(--blush);
+  }
+
+  .cta-heading {
+    font-family: 'Lora', serif;
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--cream);
+    margin: 16px 0 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: rgba(248,244,239,0.7);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--forest);
+    background: var(--cream);
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--blush);
+    color: var(--dark);
+  }
+
+  /* ── REFERRAL ── */
+  #referral {
+    padding: 72px 56px;
+    background: var(--blush);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+  }
+
+  .referral-text h3 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .referral-text p {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .referral-badge {
+    font-family: 'Lora', serif;
+    font-size: 56px;
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 100px 56px;
+    background: var(--cream);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left { }
+
+  .contact-body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-top: 24px;
+    margin-bottom: 40px;
+  }
+
+  .contact-email {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--forest);
+    text-decoration: none;
+    border-bottom: 1px solid var(--forest);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .contact-email:hover { opacity: 0.6; }
+
+  .contact-socials {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+    list-style: none;
+  }
+
+  .contact-socials a {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-socials a:hover {
+    color: var(--forest);
+    border-color: var(--forest);
+  }
+
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(26,26,26,0.08);
+  }
+
+  .contact-detail-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+
+  .contact-detail-value {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--dark);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 36px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(248,244,239,0.5);
+  }
+
+  .footer-copy {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(248,244,239,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-credit {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(248,244,239,0.25);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── VERTICAL LABEL ── */
+  .vertical-label {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(26,26,26,0.25);
+    pointer-events: none;
+    z-index: 50;
+    white-space: nowrap;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+
+    .hero-name { font-size: 52px; }
+    .hero-text { left: 24px; bottom: 48px; }
+    .hero-scroll { display: none; }
+
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; gap: 32px; }
+    .stat-number { font-size: 52px; }
+
+    #gallery { padding: 60px 0; }
+    .gallery-header { padding: 0 24px; }
+    .gallery-row.row-split-left,
+    .gallery-row.row-split-right,
+    .gallery-row.row-thirds { grid-template-columns: 1fr; }
+    .gallery-caption-cell { padding: 32px 24px; }
+    .gallery-item.tall, .gallery-item.medium { height: 300px; }
+    .gallery-item.full { height: 50vh; }
+
+    #specialties { padding: 60px 24px; }
+    .specialties-grid { grid-template-columns: 1fr; gap: 48px; }
+
+    #about { padding: 60px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-img-wrap img { height: 400px; }
+    .about-text { padding-top: 0; }
+    .cta-heading { font-size: 36px; }
+
+    #testimonials { padding: 60px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 40px; }
+
+    #cta { padding: 80px 24px; }
+    .cta-bg-text { font-size: 80px; }
+
+    #referral { padding: 48px 24px; flex-direction: column; text-align: center; }
+    #contact { padding: 60px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+
+    footer { padding: 28px 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .vertical-label { display: none; }
+    .section-title { font-size: 28px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 38px; }
+    #stats { grid-template-columns: 1fr 1fr; padding: 40px 16px; }
+    .stat-number { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="vertical-label">Portfolio 2026</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">JozGirli Photography</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#specialties">Sessions</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — Full-bleed, text pinned bottom-left -->
+<section id="hero">
+  <img class="hero-img" src="images/jozgirli/img01.jpg" alt="Newborn photography by JozGirli — Pembroke Pines FL" loading="eager">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <h1 class="hero-name" id="heroName">JozGirli<br>Photography</h1>
+    <p class="hero-sub" id="heroSub">Newborn · Maternity · Family &nbsp;&nbsp;·&nbsp;&nbsp; Pembroke Pines, FL</p>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- AWARD STRIP -->
+<section id="award-strip">
+  <div class="award-inner">
+    <span class="award-badge">🏆</span>
+    <span class="award-text">Voted Best of Florida 2024</span>
+    <div class="award-divider"></div>
+    <span class="award-badge">🏆</span>
+    <span class="award-text">Voted Best of Florida 2025</span>
+    <div class="award-divider"></div>
+    <span class="award-text">South Florida's Premier Newborn Studio</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Newborn</span><span>·</span>
+    <span>Maternity</span><span>·</span>
+    <span>Family</span><span>·</span>
+    <span>Best of Florida 2025</span><span>·</span>
+    <span>Pembroke Pines</span><span>·</span>
+    <span>South Florida</span><span>·</span>
+    <span>Fine Art Sessions</span><span>·</span>
+    <span>Newborn</span><span>·</span>
+    <span>Maternity</span><span>·</span>
+    <span>Family</span><span>·</span>
+    <span>Best of Florida 2025</span><span>·</span>
+    <span>Pembroke Pines</span><span>·</span>
+    <span>South Florida</span><span>·</span>
+    <span>Fine Art Sessions</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-number">4K+</div>
+    <div class="stat-label">Instagram Followers</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">500+</div>
+    <div class="stat-label">Sessions Completed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">10+</div>
+    <div class="stat-label">Years of Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">2×</div>
+    <div class="stat-label">Best of Florida Winner</div>
+  </div>
+</section>
+
+<!-- GALLERY — Editorial scroll -->
+<section id="gallery">
+  <div class="gallery-header">
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-title">Every First. Every Milestone.<br>Every Family.</h2>
+  </div>
+
+  <div class="gallery-editorial">
+    <!-- Row 1: Full width -->
+    <div class="gallery-row row-full">
+      <div class="gallery-item full">
+        <img src="images/jozgirli/img06.jpg" alt="Family portrait session" loading="eager">
+      </div>
+    </div>
+
+    <!-- Row 2: Large left + caption right -->
+    <div class="gallery-row row-split-left">
+      <div class="gallery-item tall">
+        <img src="images/jozgirli/img04.jpg" alt="Newborn portrait" loading="eager">
+      </div>
+      <div class="gallery-caption-cell dark-bg">
+        <p class="gallery-caption-text">"The work feels gentle and unhurried — every image a quiet monument to the smallest of moments."</p>
+        <span class="gallery-caption-sub">Newborn · Maternity · Family</span>
+      </div>
+    </div>
+
+    <!-- Row 3: 3 equal columns -->
+    <div class="gallery-row row-thirds">
+      <div class="gallery-item medium">
+        <img src="images/jozgirli/img02.jpg" alt="Newborn session" loading="eager">
+      </div>
+      <div class="gallery-item medium" style="margin-top: 48px;">
+        <img src="images/jozgirli/img05.jpg" alt="Family photography" loading="eager">
+      </div>
+      <div class="gallery-item medium">
+        <img src="images/jozgirli/img03.jpg" alt="Maternity photography" loading="eager">
+      </div>
+    </div>
+
+    <!-- Row 4: Caption left + large right -->
+    <div class="gallery-row row-split-right">
+      <div class="gallery-caption-cell">
+        <p class="gallery-caption-text">Warm, sun-drenched light. The stillness of a first morning.</p>
+        <span class="gallery-caption-sub" style="color: var(--forest);">Pembroke Pines, FL</span>
+      </div>
+      <div class="gallery-item tall">
+        <img src="images/jozgirli/img07.jpg" alt="Newborn lifestyle session" loading="eager">
+      </div>
+    </div>
+
+    <!-- Row 5: Full width -->
+    <div class="gallery-row row-full">
+      <div class="gallery-item" style="height: 60vh; min-height: 420px;">
+        <img src="images/jozgirli/img08.jpg" alt="About JozGirli Photography" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section id="specialties">
+  <div class="specialties-header">
+    <span class="section-label">Sessions</span>
+    <h2 class="section-title">What I Offer</h2>
+  </div>
+  <div class="specialties-grid">
+    <div class="specialty-card">
+      <div class="specialty-img-wrap">
+        <img src="images/jozgirli/img04.jpg" alt="Newborn Photography" loading="eager">
+      </div>
+      <div class="specialty-info">
+        <h3 class="specialty-name">Newborn</h3>
+        <p class="specialty-desc">Tiny fingers, new-baby smell, and the glow of those first hours. Sessions in studio or lifestyle, designed for your family's style.</p>
+        <a href="#contact" class="specialty-link">Book a Session</a>
+      </div>
+    </div>
+    <div class="specialty-card">
+      <div class="specialty-img-wrap">
+        <img src="images/jozgirli/img05.jpg" alt="Maternity Photography" loading="eager">
+      </div>
+      <div class="specialty-info">
+        <h3 class="specialty-name">Maternity</h3>
+        <p class="specialty-desc">Your body, your story, your strength — captured in warm, glowing light before your world beautifully changes forever.</p>
+        <a href="#contact" class="specialty-link">Book a Session</a>
+      </div>
+    </div>
+    <div class="specialty-card">
+      <div class="specialty-img-wrap">
+        <img src="images/jozgirli/img06.jpg" alt="Family Photography" loading="eager">
+      </div>
+      <div class="specialty-info">
+        <h3 class="specialty-name">Family</h3>
+        <p class="specialty-desc">Real laughter, real connection, real life. Family sessions that feel less like a photoshoot and more like a perfect afternoon together.</p>
+        <a href="#contact" class="specialty-link">Book a Session</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED QUOTE IMAGE -->
+<section id="featured">
+  <img class="featured-img" src="images/jozgirli/img03.jpg" alt="JozGirli Photography maternity session" loading="eager">
+  <div class="featured-overlay">
+    <div class="featured-quote">
+      <p class="featured-quote-text" id="featuredQuote">"She didn't just take photos — she gave us something to hold onto forever."</p>
+      <p class="featured-quote-attr" id="featuredAttr">— Happy Client · Pembroke Pines, FL</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap" id="aboutImg">
+      <img src="images/jozgirli/img02.jpg" alt="JozGirli Photography — Josie" loading="eager">
+      <div class="about-accent"></div>
+    </div>
+    <div class="about-text" id="aboutText">
+      <span class="section-label">About</span>
+      <h2 class="section-title" style="margin-bottom: 32px;">The Photographer<br>Behind the Lens</h2>
+      <blockquote class="about-pull-quote">
+        "I photograph the moments you'll want to remember when everything else has blurred."
+      </blockquote>
+      <div class="about-body">
+        <p>JozGirli Photography is a South Florida studio specializing in newborn, maternity, and family sessions — a two-time winner of the Best of Florida award (2024 &amp; 2025). Based in Pembroke Pines, FL, and serving the greater Miami and Broward area.</p>
+        <p>Each session is unhurried. Every image is made with care. The studio is warm, welcoming, and designed to make families feel completely at ease — because the best photographs happen when no one is trying to pose.</p>
+      </div>
+      <p class="about-sig">— Josie</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <span class="section-label testimonials-label">Client Love</span>
+    <h2 class="section-title testimonials-title">What Families Say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-item">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"She made our newborn session so relaxed and easy — the photos came out absolutely beautiful. Worth every penny."</p>
+        <p class="testimonial-attr">— Sarah M., Pembroke Pines</p>
+      </div>
+      <div class="testimonial-item">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Josie has a gift for capturing the real emotion in a moment. Our maternity photos are hanging in our living room — they're that good."</p>
+        <p class="testimonial-attr">— Amanda R., Weston FL</p>
+      </div>
+      <div class="testimonial-item">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">"Best family photographer in South Florida, hands down. She gets kids to actually smile — I don't know how she does it."</p>
+        <p class="testimonial-attr">— Maria L., Miramar FL</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-text">JozGirli</div>
+  <span class="section-label cta-label">Ready?</span>
+  <h2 class="cta-heading" id="ctaHeading">Book Your Session<br>Before Dates Fill Up</h2>
+  <p class="cta-sub">Newborn sessions should be booked during the third trimester. Limited sessions available each month.</p>
+  <a href="mailto:jozgirli@gmail.com" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- REFERRAL -->
+<section id="referral">
+  <div class="referral-text">
+    <h3>Refer a Friend. Get Rewarded.</h3>
+    <p>JozGirli Photography has a referral program — when you send a friend our way, you both benefit. Ask about session credits and print rewards at your next booking.</p>
+  </div>
+  <div class="referral-badge">🎁</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-label">Contact</span>
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="contact-body">Reach out to discuss your session, check availability, or ask any questions. Response time is usually within 24 hours.</p>
+      <a href="mailto:jozgirli@gmail.com" class="contact-email">jozgirli@gmail.com</a>
+      <ul class="contact-socials">
+        <li><a href="https://instagram.com/jozgirliphotography" target="_blank">Instagram</a></li>
+        <li><a href="https://instagram.com/thecozyvibestudio" target="_blank">@thecozyvibestudio</a></li>
+      </ul>
+    </div>
+    <div class="contact-right">
+      <div class="contact-detail">
+        <span class="contact-detail-label">Location</span>
+        <span class="contact-detail-value">Pembroke Pines, FL</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Serving</span>
+        <span class="contact-detail-value">Greater Miami & Broward</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Specialties</span>
+        <span class="contact-detail-value">Newborn · Maternity · Family</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Awards</span>
+        <span class="contact-detail-value">Best of Florida 2024 &amp; 2025</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Instagram</span>
+        <span class="contact-detail-value">@jozgirliphotography</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">JozGirli Photography</span>
+  <span class="footer-copy">© 2026 · Pembroke Pines, FL · All Rights Reserved</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Make all elements visible immediately for screenshot reliability
+  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+  // Hero name animation — letter-spacing compress on load
+  const heroName = document.getElementById('heroName');
+  const heroSub = document.getElementById('heroSub');
+  if (heroName) {
+    heroName.classList.add('is-visible');
+    setTimeout(() => { heroName.style.letterSpacing = '0.08em'; }, 100);
+  }
+  if (heroSub) heroSub.classList.add('is-visible');
+
+  // Hero parallax
+  const heroImg = document.querySelector('.hero-img');
+  if (heroImg) {
+    window.addEventListener('scroll', () => {
+      heroImg.style.transform = 'translateY(' + (window.scrollY * 0.4) + 'px)';
+    }, { passive: true });
+  }
+
+  // IntersectionObserver for scroll-triggered animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe all animatable elements
+  document.querySelectorAll('.section-title, .stat-item, .gallery-item, .specialty-card, .testimonial-item, .about-img-wrap, .about-text, .cta-heading, #featuredQuote, #featuredAttr').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
