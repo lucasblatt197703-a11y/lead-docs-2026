@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dan Florez — Photography & Film · St. Augustine, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ivory: #F7F2EC;
+    --ivory-dark: #EDE8E1;
+    --rose: #D4907A;
+    --rose-light: #E8B4A0;
+    --charcoal: #1C1C1C;
+    --charcoal-mid: #2E2E2E;
+    --warm-gray: #7A7570;
+    --cream: #FAF7F3;
+  }
+
+  html { scroll-behavior: smooth; background: var(--charcoal); }
+
+  body {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 300;
+    color: var(--charcoal);
+    background: var(--ivory);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(28, 28, 28, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 18px 60px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rose-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--charcoal);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/ed9c16_3e314bdfdd39a538b0a0a971c7959055.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(28,28,28,0.85) 0%,
+      rgba(28,28,28,0.3) 50%,
+      rgba(28,28,28,0.1) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .hero-left { max-width: 700px; }
+  .hero-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 9vw, 110px);
+    font-weight: 900;
+    line-height: 0.92;
+    color: #fff;
+    letter-spacing: 0.04em;
+    display: block;
+    overflow: hidden;
+  }
+  .hero-name-line {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .hero-name-line.visible { clip-path: inset(0 0% 0 0); }
+  .hero-name-line:nth-child(2) { transition-delay: 0.15s; }
+  .hero-sub {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+  .hero-sub.visible { opacity: 1; transform: translateY(0); }
+  .hero-right {
+    text-align: right;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.7s;
+  }
+  .hero-right.visible { opacity: 1; }
+  .hero-scroll-hint {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--rose);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+  .marquee-track span {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.1em;
+    padding: 0 40px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  .stats {
+    background: var(--charcoal);
+    padding: 100px 60px;
+  }
+  .stats-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 40px 20px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2).visible { transition-delay: 0.12s; }
+  .stat-item:nth-child(3).visible { transition-delay: 0.24s; }
+  .stat-item:nth-child(4).visible { transition-delay: 0.36s; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 7vw, 88px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    display: block;
+  }
+  .stat-number em {
+    font-style: italic;
+    color: var(--rose);
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 12px;
+    display: block;
+  }
+
+  /* ─── GALLERY ─── */
+  .gallery {
+    background: var(--ivory);
+    padding: 120px 60px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(28,28,28,0.05);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--charcoal);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* Staggered editorial pairs */
+  .gallery-pairs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .gallery-row {
+    display: grid;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+  }
+  .gallery-row.visible { opacity: 1; transform: translateY(0); }
+  .gallery-row:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-row:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-row:nth-child(4) { transition-delay: 0.3s; }
+
+  .gallery-row.pair { grid-template-columns: 1fr 1fr; }
+  .gallery-row.trio { grid-template-columns: 1.4fr 1fr 1.2fr; }
+  .gallery-row.feature { grid-template-columns: 2fr 1fr; }
+
+  .gallery-img {
+    overflow: hidden;
+    position: relative;
+    background: var(--charcoal-mid);
+    cursor: zoom-in;
+  }
+  .gallery-row.pair .gallery-img:nth-child(odd) { margin-top: 40px; }
+  .gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    will-change: transform;
+    aspect-ratio: 4/3;
+    loading: lazy;
+  }
+  .gallery-row.pair .gallery-img:nth-child(odd) img { aspect-ratio: 3/4; }
+  .gallery-row.feature .gallery-img:first-child img { aspect-ratio: 16/9; }
+  .gallery-row.feature .gallery-img:last-child img { aspect-ratio: 3/4; }
+  .gallery-row.trio .gallery-img img { aspect-ratio: 1/1; }
+  .gallery-img:hover img { transform: scale(1.04); }
+
+  /* ─── ST. AUGUSTINE SECTION ─── */
+  .staugustine {
+    background: var(--charcoal);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .staugustine-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/ed9c16_95eecef1dc3e4580d8c77ff59078a481.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+  }
+  .staugustine-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+  .staugustine-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 24px;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .staugustine-eyebrow.visible { clip-path: inset(0 0% 0 0); }
+  .staugustine-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+  .staugustine-heading.visible { opacity: 1; transform: translateY(0); }
+  .staugustine-body {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+  }
+  .staugustine-body.visible { opacity: 1; transform: translateY(0); }
+  .staugustine-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--rose);
+    margin: 40px 0;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s, width 0.8s ease 0.5s;
+  }
+  .staugustine-divider.visible { opacity: 1; width: 120px; }
+
+  /* ─── FILM SECTION ─── */
+  .film {
+    background: var(--ivory-dark);
+    padding: 120px 60px;
+  }
+  .film-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+  }
+  .film-text {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .film-text.visible { opacity: 1; transform: translateX(0); }
+  .film-tag {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    display: block;
+    margin-bottom: 16px;
+  }
+  .film-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--charcoal);
+    margin-bottom: 24px;
+  }
+  .film-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    margin-bottom: 36px;
+  }
+  .film-formats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .film-format-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    border: 1px solid rgba(28,28,28,0.2);
+    padding: 8px 16px;
+  }
+  .film-visual {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+  }
+  .film-visual.visible { opacity: 1; transform: translateX(0); }
+  .film-img-wrap {
+    position: relative;
+    overflow: hidden;
+    background: var(--charcoal-mid);
+  }
+  .film-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid var(--rose);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .film-img-wrap img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.6s ease;
+  }
+  .film-img-wrap:hover img { transform: scale(1.03); }
+
+  /* ─── TESTIMONIAL ─── */
+  .testimonial {
+    background: var(--charcoal);
+    padding: 100px 60px;
+    text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-style: italic;
+    font-weight: 400;
+    color: #fff;
+    max-width: 860px;
+    margin: 0 auto;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .testimonial-quote.visible { opacity: 1; transform: translateY(0); }
+  .testimonial-rule {
+    width: 40px;
+    height: 1px;
+    background: var(--rose);
+    margin: 36px auto;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s, width 0.8s ease 0.3s;
+  }
+  .testimonial-rule.visible { opacity: 1; width: 80px; }
+  .testimonial-attr {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    opacity: 0;
+    transition: opacity 0.8s ease 0.4s;
+  }
+  .testimonial-attr.visible { opacity: 1; }
+
+  /* ─── ABOUT ─── */
+  .about {
+    background: var(--ivory);
+    padding: 140px 60px;
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .about-portrait {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .about-portrait.visible { opacity: 1; transform: translateX(0); }
+  .about-portrait img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+  }
+  .about-portrait-caption {
+    position: absolute;
+    bottom: 24px;
+    right: -30px;
+    background: var(--rose);
+    padding: 16px 24px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .about-text {
+    padding-top: 40px;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+  }
+  .about-text.visible { opacity: 1; transform: translateX(0); }
+  .about-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .about-heading-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--rose);
+    line-height: 1.2;
+    margin-bottom: 40px;
+  }
+  .about-body {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--warm-gray);
+    margin-bottom: 24px;
+  }
+  .about-pull {
+    border-left: 3px solid var(--rose);
+    padding-left: 24px;
+    margin: 36px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+  .about-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 36px;
+  }
+  .credential {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--charcoal-mid);
+  }
+  .credential::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--rose);
+    flex-shrink: 0;
+  }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    background: var(--charcoal);
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 15vw, 200px);
+    font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+  .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rose);
+    display: block;
+    margin-bottom: 28px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .cta-eyebrow.visible { opacity: 1; }
+  .cta-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 68px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+  .cta-heading.visible { opacity: 1; transform: translateY(0); }
+  .cta-heading em {
+    font-style: italic;
+    color: var(--rose-light);
+  }
+  .cta-body {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.2s;
+  }
+  .cta-body.visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid var(--rose);
+    color: #fff;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transition: background 0.3s, color 0.3s, opacity 0.8s ease 0.35s;
+  }
+  .cta-btn.visible { opacity: 1; }
+  .cta-btn:hover {
+    background: var(--rose);
+    color: #fff;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--ivory-dark);
+    padding: 120px 60px;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .contact-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .contact-left.visible { opacity: 1; transform: translateY(0); }
+  .contact-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+  }
+  .contact-right.visible { opacity: 1; transform: translateY(0); }
+  .contact-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    display: block;
+    margin-bottom: 20px;
+  }
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+  }
+  .contact-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    margin-bottom: 40px;
+  }
+  .contact-link {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--charcoal);
+    text-decoration: none;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(28,28,28,0.1);
+    transition: color 0.2s, padding-left 0.2s;
+  }
+  .contact-link:hover { color: var(--rose); padding-left: 8px; }
+  .contact-social {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .social-link {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .social-link:hover { color: var(--rose); border-color: var(--rose); }
+  .contact-service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .contact-service-item {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(28,28,28,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--charcoal);
+  }
+  .service-detail {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--charcoal);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+  }
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+  .footer-credit {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+  }
+  .footer-credit a { color: var(--rose); text-decoration: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 30px; }
+    nav.scrolled { padding: 14px 30px; }
+    .hero-content { left: 30px; right: 30px; bottom: 60px; }
+    .stats { padding: 60px 30px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .gallery { padding: 80px 30px; }
+    .gallery-row.trio { grid-template-columns: 1fr 1fr; }
+    .gallery-row.trio .gallery-img:last-child { display: none; }
+    .film-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about { padding: 80px 30px; }
+    .staugustine { padding: 80px 30px; }
+    .film { padding: 80px 30px; }
+    .testimonial { padding: 80px 30px; }
+    .cta-section { padding: 80px 30px; }
+    .contact { padding: 80px 30px; }
+    footer { padding: 36px 30px; flex-direction: column; gap: 12px; text-align: center; }
+    .gallery-row.pair .gallery-img:nth-child(odd) { margin-top: 20px; }
+    .about-portrait-caption { right: 0; }
+    .film-img-wrap::before { display: none; }
+  }
+  @media (max-width: 480px) {
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .gallery-row.pair { grid-template-columns: 1fr; }
+    .gallery-row.pair .gallery-img:nth-child(odd) { margin-top: 0; }
+    .gallery-row.trio { grid-template-columns: 1fr; }
+    .gallery-row.feature { grid-template-columns: 1fr; }
+    .hero-content { left: 20px; right: 20px; bottom: 40px; }
+    .section-num { font-size: 50px; }
+    .section-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Dan Florez</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#film">Film</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-eyebrow" id="eyebrow">St. Augustine, Florida · Since 2007</p>
+      <h1 class="hero-name">
+        <span class="hero-name-line" id="nameLine1">Dan</span>
+        <span class="hero-name-line" id="nameLine2">Florez</span>
+      </h1>
+      <p class="hero-sub" id="heroSub">Photography &amp; Film · Weddings · Events · Musicians</p>
+    </div>
+    <div class="hero-right" id="heroRight">
+      <span class="hero-scroll-hint">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Wedding Photography</span><span>·</span>
+    <span>Film &amp; Video</span><span>·</span>
+    <span>St. Augustine</span><span>·</span>
+    <span>18+ Years</span><span>·</span>
+    <span>Northeast Florida</span><span>·</span>
+    <span>Musicians &amp; Portraits</span><span>·</span>
+    <span>Digital, Super 8 &amp; 16mm</span><span>·</span>
+    <span>Wedding Photography</span><span>·</span>
+    <span>Film &amp; Video</span><span>·</span>
+    <span>St. Augustine</span><span>·</span>
+    <span>18+ Years</span><span>·</span>
+    <span>Northeast Florida</span><span>·</span>
+    <span>Musicians &amp; Portraits</span><span>·</span>
+    <span>Digital, Super 8 &amp; 16mm</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="stats-inner">
+    <div class="stat-item reveal-item">
+      <span class="stat-number">18<em>+</em></span>
+      <span class="stat-label">Years Photographing Weddings</span>
+    </div>
+    <div class="stat-item reveal-item">
+      <span class="stat-number">200<em>+</em></span>
+      <span class="stat-label">Weddings &amp; Events</span>
+    </div>
+    <div class="stat-item reveal-item">
+      <span class="stat-number">5<em>★</em></span>
+      <span class="stat-label">WeddingWire Rating</span>
+    </div>
+    <div class="stat-item reveal-item">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Film Formats · Digital / Super 8 / 16mm</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title reveal-title">The Work</h2>
+  </div>
+  <div class="gallery-pairs">
+    <!-- Row 1: staggered pair -->
+    <div class="gallery-row pair reveal-row">
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_3e314bdfdd39a538b0a0a971c7959055.jpg" alt="Wedding ceremony" loading="lazy">
+      </div>
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_95eecef1dc3e4580d8c77ff59078a481.jpg" alt="Wedding portraits" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 2: full-width feature + tall portrait -->
+    <div class="gallery-row feature reveal-row">
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_d2509b092059ef30986a61c0830790ef.jpg" alt="Wedding event photography" loading="lazy">
+      </div>
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_88167f715dcf02383eb46b65bae4ca10.jpg" alt="Wedding portrait" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 3: staggered pair -->
+    <div class="gallery-row pair reveal-row">
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_bb2477454af2764f65545852cd46b86d.jpg" alt="Wedding couple" loading="lazy">
+      </div>
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_be1ac02a293b53d173c01716fc60c7a1.jpg" alt="Wedding ceremony" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 4: trio -->
+    <div class="gallery-row trio reveal-row">
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_faa1d6072eb767003959d20a7f5e9489.jpg" alt="Photography" loading="lazy">
+      </div>
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_f35efc248fddf45d293bb33b4502d1bb.jpg" alt="Music photography" loading="lazy">
+      </div>
+      <div class="gallery-img">
+        <img src="https://static.wixstatic.com/media/ed9c16_5283dc2729e015a51d9ed53eef6b0d1c.jpg" alt="Event photography" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ST. AUGUSTINE -->
+<section class="staugustine" id="staugustine">
+  <div class="staugustine-bg"></div>
+  <div class="staugustine-content">
+    <span class="staugustine-eyebrow reveal-title">Home of Some of Florida's Most Beautiful Venues</span>
+    <h2 class="staugustine-heading reveal-fade">St. Augustine is different.</h2>
+    <div class="staugustine-divider reveal-divider"></div>
+    <p class="staugustine-body reveal-fade-2">America's oldest city has a quality of light you won't find anywhere else in Florida — golden hour bounces off 400-year-old stone, Spanish moss filters everything into something cinematic. Dan has been working in these streets, courtyards, and chapels since 2000. He knows when the light falls right on the Castillo. He knows which garden at Lightner Museum goes golden at 5pm. This isn't a location — it's home.</p>
+  </div>
+</section>
+
+<!-- FILM SECTION -->
+<section class="film" id="film">
+  <div class="film-inner">
+    <div class="film-text reveal-slide-left">
+      <span class="film-tag">02 · Film &amp; Video</span>
+      <h2 class="film-title">Not just a photographer. A filmmaker.</h2>
+      <p class="film-body">Dan Florez Films brings the same instinctive, unposed approach to moving image. Drawing from over a decade of still photography, the films feel less like wedding videos and more like short documentaries — unhurried, naturalistic, and specific to the two of you.</p>
+      <div class="film-formats">
+        <span class="film-format-tag">Digital</span>
+        <span class="film-format-tag">Super 8</span>
+        <span class="film-format-tag">16mm Film</span>
+        <span class="film-format-tag">Music Videos</span>
+        <span class="film-format-tag">Short Documentary</span>
+      </div>
+    </div>
+    <div class="film-visual reveal-slide-right">
+      <div class="film-img-wrap">
+        <img src="https://static.wixstatic.com/media/ed9c16_030c49cebe6e3af01e3b7505ad3099b7.png" alt="Dan Florez film work" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <p class="testimonial-quote reveal-fade">"Dan's photos are some of the most honest wedding photos I've ever seen. No posing, no forced smiles — just real moments. We cry every time we look at them."</p>
+  <div class="testimonial-rule reveal-divider"></div>
+  <span class="testimonial-attr reveal-fade-2">— WeddingWire Review · 5 Stars</span>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-portrait reveal-slide-left">
+      <img src="https://static.wixstatic.com/media/84770f_7e90f916b536501ee5ea36d06c850f18.jpg" alt="Dan Florez photographer" loading="lazy">
+      <div class="about-portrait-caption">Fine Arts · Flagler College</div>
+    </div>
+    <div class="about-text reveal-slide-right">
+      <div class="section-header" style="margin-bottom: 30px;">
+        <span class="section-num">03</span>
+        <h2 class="section-title reveal-title">About</h2>
+      </div>
+      <p class="about-body">Working from instinct rather than formula, Dan Florez has spent over two decades documenting the moments that actually matter — the ones that happen between the posed shots. Originally from North Carolina's Outer Banks, he earned his Fine Arts degree from Flagler College and has been based in St. Augustine since 2000.</p>
+      <div class="about-pull">
+        "I've been photographing weddings in St. Augustine since 2007. I know these venues, I know this light."
+      </div>
+      <p class="about-body">Specializing in weddings, musical artists, and events across Northeast Florida, he brings the sensibility of a documentary filmmaker to every shoot — available to travel throughout Florida and beyond.</p>
+      <div class="about-credentials">
+        <div class="credential">Fine Arts degree, Flagler College, St. Augustine</div>
+        <div class="credential">18+ years wedding photography, est. 2007</div>
+        <div class="credential">WeddingWire 5-star rated photographer</div>
+        <div class="credential">Photography · Film · Super 8 · 16mm</div>
+        <div class="credential">Available to travel throughout the US</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="cta-bg-text">2026</div>
+  <span class="cta-eyebrow reveal-fade">Now booking · St. Augustine &amp; beyond</span>
+  <h2 class="cta-heading reveal-fade-2">Your wedding deserves<br><em>a site that says so.</em></h2>
+  <p class="cta-body reveal-fade-3">Eighteen years of work. Hundreds of weddings. A WeddingWire 5-star rating. This is what it could look like online.</p>
+  <a href="#contact" class="cta-btn reveal-fade-4">Start a Conversation</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal-item">
+      <span class="contact-label">04 · Inquiries</span>
+      <h2 class="contact-heading">Let's talk about your day.</h2>
+      <p class="contact-body">Based in St. Augustine, Florida. Available throughout Northeast Florida, Jacksonville, and for destination weddings across the US.</p>
+      <a href="https://shnopple.wixsite.com/3-point-5/contact" class="contact-link">Contact via website →</a>
+      <a href="https://www.facebook.com/danflorezphoto" class="contact-link">facebook.com/danflorezphoto →</a>
+      <a href="https://www.instagram.com/dan.florez/" class="contact-link">@dan.florez on Instagram →</a>
+      <div class="contact-social">
+        <a href="https://www.instagram.com/dan.florez/" class="social-link">Instagram</a>
+        <a href="https://www.facebook.com/danflorezphoto" class="social-link">Facebook</a>
+        <a href="https://www.danflorezfilms.com" class="social-link">Films</a>
+        <a href="https://florezphotography.smugmug.com/" class="social-link">Portfolio</a>
+      </div>
+    </div>
+    <div class="contact-right reveal-item">
+      <ul class="contact-service-list">
+        <li class="contact-service-item">
+          <span class="service-name">Wedding Photography</span>
+          <span class="service-detail">Full Day Coverage</span>
+        </li>
+        <li class="contact-service-item">
+          <span class="service-name">Wedding Videography</span>
+          <span class="service-detail">Digital · Super 8 · 16mm</span>
+        </li>
+        <li class="contact-service-item">
+          <span class="service-name">Photo + Film Package</span>
+          <span class="service-detail">Combined Coverage</span>
+        </li>
+        <li class="contact-service-item">
+          <span class="service-name">Musicians &amp; Portraits</span>
+          <span class="service-detail">Live &amp; Studio</span>
+        </li>
+        <li class="contact-service-item">
+          <span class="service-name">Destination Weddings</span>
+          <span class="service-detail">Available to Travel</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Dan Florez · Photography &amp; Film</span>
+  <span class="footer-copy">© 2026 · St. Augustine, FL</span>
+  <span class="footer-credit">Design concept by <a href="#">Lucas Blatt</a></span>
+</footer>
+
+<script>
+  // ── Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.35}px)`;
+  }, { passive: true });
+
+  // ── Nav scroll behavior
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // ── Hero entrance animation (fires after load)
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('eyebrow').classList.add('visible');
+      document.getElementById('nameLine1').classList.add('visible');
+      setTimeout(() => {
+        document.getElementById('nameLine2').classList.add('visible');
+        document.getElementById('heroSub').classList.add('visible');
+        document.getElementById('heroRight').classList.add('visible');
+      }, 150);
+    }, 100);
+  });
+
+  // ── IntersectionObserver for scroll reveals
+  const observerOpts = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+
+  // stat items
+  const statObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); statObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.stat-item').forEach(el => statObs.observe(el));
+
+  // Gallery rows
+  const rowObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); rowObs.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.gallery-row').forEach(el => rowObs.observe(el));
+
+  // Section titles (clip-path reveal)
+  const titleObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); titleObs.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.section-title, .staugustine-eyebrow').forEach(el => titleObs.observe(el));
+
+  // Generic fade/slide reveals
+  const fadeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
+  }, observerOpts);
+
+  // Map all reveal classes to their visible toggle
+  [
+    '.reveal-fade', '.reveal-fade-2', '.reveal-fade-3', '.reveal-fade-4',
+    '.staugustine-heading', '.staugustine-body', '.staugustine-divider',
+    '.film-text', '.film-visual',
+    '.about-portrait', '.about-text',
+    '.contact-left', '.contact-right',
+    '.testimonial-quote', '.testimonial-rule', '.testimonial-attr',
+    '.cta-eyebrow', '.cta-heading', '.cta-body', '.cta-btn',
+  ].forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('reveal-item-inner');
+      fadeObs.observe(el);
+    });
+  });
+
+  // Slide left/right
+  const slideObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); slideObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal-slide-left, .reveal-slide-right, .film-text.reveal-slide-left, .film-visual.reveal-slide-right').forEach(el => slideObs.observe(el));
+
+  // Dividers
+  const divObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); divObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.staugustine-divider, .testimonial-rule').forEach(el => divObs.observe(el));
+</script>
+</body>
+</html>
