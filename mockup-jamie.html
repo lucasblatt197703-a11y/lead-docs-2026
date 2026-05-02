@@ -389,6 +389,27 @@
   });
   // Show everything immediately on load
   document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
+
+// Fallback: force-reveal all animated elements (for screenshots & slow-load)
+setTimeout(function() {
+  document.querySelectorAll(
+    '.gallery-item, .photo-item, .masonry-item, .grid-item, .portfolio-item, .work-item, ' +
+    '.species-card, .show-item, .fade-rise, .stat-item, .stats-item, ' +
+    '.section-number, .section-title, .section-heading, ' +
+    '.featured-image-wrap, .featured-pull-quote, .featured-body, .location-tag, ' +
+    '.about-img, .about-bio, .about-highlight, .about-tags, .about-block, .about-col, .about-wrap, ' +
+    '.prints-row, .print-row, .prints-image, .pricing-row, ' +
+    '.cta-heading, .contact-col, .contact-block, ' +
+    '.shows-image-side img, .prints-image img, .about-image-block img, ' +
+    '.reveal-text, .reveal-image, .scroll-reveal, .anim-item, ' +
+    '.hero-subtitle, .hero-tagline, .hero-text, ' +
+    '.image-block, .text-block, .content-block, .lead-item, ' +
+    '.service-item, .testimonial-item, .bio-text, .gallery-col, ' +
+    '[class*="-item"]:not(li), [class*="-wrap"], [class*="-block"], [class*="-col"]'
+  ).forEach(function(el) {
+    el.classList.add('is-visible');
+  });
+}, 200);
 </script>
 </body>
 </html>
