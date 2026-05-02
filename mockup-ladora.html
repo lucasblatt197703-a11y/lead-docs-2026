@@ -327,12 +327,12 @@ nav {
 
 .featured-image-wrap {
   position: relative;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transition: opacity 0.7s ease;
 }
 
 .featured-image-wrap.is-visible {
-  clip-path: inset(0% 0 0 0);
+  opacity: 1;
 }
 
 .featured-image-wrap img {
@@ -430,12 +430,12 @@ nav {
 .gallery-item {
   position: relative;
   overflow: hidden;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transition: opacity 0.6s ease;
   cursor: pointer;
 }
 
-.gallery-item.is-visible { clip-path: inset(0% 0 0 0); }
+.gallery-item.is-visible { opacity: 1; }
 .gallery-item:nth-child(2) { transition-delay: 0.1s; }
 .gallery-item:nth-child(3) { transition-delay: 0.2s; }
 .gallery-item:nth-child(4) { transition-delay: 0.3s; }
@@ -620,11 +620,11 @@ nav {
   height: 500px;
   object-fit: cover;
   display: block;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.shows-image-side img.is-visible { clip-path: inset(0% 0 0 0); }
+.shows-image-side img.is-visible { opacity: 1; }
 
 .shows-note {
   margin-top: 20px;
@@ -654,11 +654,11 @@ nav {
   height: 550px;
   object-fit: cover;
   display: block;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.prints-image img.is-visible { clip-path: inset(0% 0 0 0); }
+.prints-image img.is-visible { opacity: 1; }
 
 .prints-table { margin-top: 8px; }
 
@@ -726,11 +726,11 @@ nav {
   height: 580px;
   object-fit: cover;
   display: block;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.about-image-block img.is-visible { clip-path: inset(0% 0 0 0); }
+.about-image-block img.is-visible { opacity: 1; }
 
 .about-image-caption {
   position: absolute;
@@ -1114,7 +1114,7 @@ footer {
       <img src="https://photos.smugmug.com/Manatees/i-5gH2vrW/0/KrjbrCwKkQmskjL9dS6JmrdZvHQtwkrzvqxRmp3xn/L/032-9023%20Manatee%2C%20Sebastian%20Inlet%2C%20Florida-L.jpg" alt="Manatee" loading="eager">
       <div class="gallery-item-overlay"><span class="gallery-item-label">Manatee, Sebastian Inlet</span></div>
     </div>
-    <div class="gallery-item wide">
+    <div class="gallery-item">
       <img src="https://photos.smugmug.com/Sunrises-and-Sunsets/i-8nvDNHH/0/L6rxVKHLhvZTBtQpPvshcGX9QJDLcnrtf58Fj7qSm/L/385-9019%20Mystic%20Morning%2C%20St%20Augustine%2C%20Florida-L.jpg" alt="Mystic Morning" loading="eager">
       <div class="gallery-item-overlay"><span class="gallery-item-label">Mystic Morning, St Augustine</span></div>
     </div>
@@ -1353,7 +1353,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     heroEyebrow.style.opacity = '1';
     heroEyebrow.style.transform = 'translateY(0)';
-  }, 200);
+  }, 50);
 
   setTimeout(() => {
     heroSubtitle.style.opacity = '1';
