@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Tilsley — Wildlife Painter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest:   #1C2A1E;
+    --earth:    #3D2B1F;
+    --sage:     #6B7C5C;
+    --cream:    #F2EDE4;
+    --mist:     #A8B09A;
+    --sky:      #7C9EB2;
+    --bone:     #D6CCBA;
+  }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--cream);
+    color: var(--forest);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+
+  /* ── Animated elements — start hidden ── */
+  .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+  .fade-up.delay-1 { transition-delay: 0.12s; }
+  .fade-up.delay-2 { transition-delay: 0.24s; }
+  .fade-up.delay-3 { transition-delay: 0.36s; }
+
+  .img-fade { opacity: 0; transition: opacity 1.1s ease; }
+  .img-fade.is-visible { opacity: 1; }
+  .img-fade.delay-1 { transition-delay: 0.1s; }
+  .img-fade.delay-2 { transition-delay: 0.2s; }
+  .img-fade.delay-3 { transition-delay: 0.3s; }
+  .img-fade.delay-4 { transition-delay: 0.4s; }
+  .img-fade.delay-5 { transition-delay: 0.5s; }
+  .img-fade.delay-6 { transition-delay: 0.6s; }
+  .img-fade.delay-7 { transition-delay: 0.7s; }
+
+  /* Clip-path title sweep — text only */
+  .sweep-text {
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .sweep-text.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--bone); }
+
+  /* ── Hero — Stacked Editorial ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--forest);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b44bc1_9dd9b3cb93f940b4b958a54849aaf7de~mv2_d_2310_2295_s_2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15,25,15,0.35) 0%, rgba(15,25,15,0.15) 40%, rgba(15,25,15,0.65) 100%);
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 0 48px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 10vw, 120px);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    line-height: 0.9;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+  }
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--mist);
+    margin-bottom: 16px;
+    opacity: 0;
+    transition: opacity 1s ease 0.8s, width 1s ease 0.8s;
+  }
+  .hero-divider.is-visible { opacity: 1; }
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--bone);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 30px;
+    right: 48px;
+    writing-mode: vertical-rl;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    opacity: 0.7;
+  }
+
+  /* ── Section Numbers ── */
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(80px, 10vw, 110px);
+    font-weight: 300;
+    color: var(--forest);
+    opacity: 0.06;
+    position: absolute;
+    left: -20px;
+    top: -30px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Marquee Strip ── */
+  .marquee-strip {
+    background: var(--forest);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mist);
+    padding: 0 40px;
+  }
+  .marquee-inner span.dot {
+    color: var(--sage);
+    padding: 0 10px;
+    letter-spacing: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── Stats Section ── */
+  #stats {
+    background: var(--cream);
+    padding: 90px 48px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    border-bottom: 1px solid var(--bone);
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 8vw, 88px);
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ── Gallery — Editorial Scroll ── */
+  #gallery {
+    padding: 120px 0;
+    background: var(--cream);
+    position: relative;
+  }
+  .section-header {
+    position: relative;
+    padding: 0 48px;
+    margin-bottom: 80px;
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--forest);
+    line-height: 1;
+  }
+  .section-header .sub {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 12px;
+  }
+
+  /* Editorial gallery rows */
+  .gallery-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 0 48px;
+  }
+  .gallery-row.full {
+    padding: 0;
+    margin-bottom: 12px;
+  }
+  .gallery-piece {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 1;
+  }
+  .gallery-piece img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .gallery-piece:hover img { transform: scale(1.03); }
+  .gallery-piece .piece-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 20px 16px;
+    background: linear-gradient(to top, rgba(20,30,20,0.75) 0%, transparent 100%);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .gallery-piece:hover .piece-info { opacity: 1; transform: translateY(0); }
+  .piece-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--cream);
+    font-style: italic;
+  }
+  .piece-medium {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-top: 4px;
+  }
+
+  /* Row layouts */
+  .gallery-row.r-big-small .big { flex: 2; height: 520px; }
+  .gallery-row.r-big-small .small { flex: 1; height: 520px; }
+  .gallery-row.full .piece { height: 500px; flex: 1; padding: 0; }
+  .gallery-row.r-three .gallery-piece { height: 400px; }
+  .gallery-row.r-small-big .small { flex: 1; height: 480px; }
+  .gallery-row.r-small-big .big { flex: 2; height: 480px; }
+
+  /* ── Featured Work ── */
+  #featured {
+    background: var(--forest);
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-inner {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .featured-image-wrap {
+    flex: 1.2;
+    position: relative;
+  }
+  .featured-image-wrap img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    display: block;
+  }
+  .featured-accent-line {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 60px;
+    height: 3px;
+    background: var(--sage);
+  }
+  .featured-text {
+    flex: 1;
+    padding: 20px 0;
+  }
+  .featured-eyebrow {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 24px;
+  }
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+  .featured-desc {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--mist);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .featured-meta {
+    display: flex;
+    gap: 40px;
+  }
+  .meta-item .meta-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 6px;
+  }
+  .meta-item .meta-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .featured-bg-text {
+    position: absolute;
+    bottom: -40px;
+    right: -20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px;
+    font-weight: 300;
+    color: var(--cream);
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── About ── */
+  #about {
+    background: var(--cream);
+    padding: 120px 48px;
+    position: relative;
+  }
+  .about-inner {
+    display: flex;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: stretch;
+    position: relative;
+  }
+  .about-portrait {
+    flex: 1;
+    min-height: 600px;
+    max-height: 680px;
+    overflow: hidden;
+  }
+  .about-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .about-divider {
+    width: 1px;
+    background: var(--bone);
+    margin: 0 60px;
+    flex-shrink: 0;
+  }
+  .about-text {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .about-eyebrow {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 28px;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 50px);
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+  .about-body {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--earth);
+    line-height: 1.85;
+    margin-bottom: 28px;
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--sage);
+    line-height: 1.5;
+    border-left: 2px solid var(--sage);
+    padding-left: 24px;
+    margin: 36px 0;
+  }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .about-tag {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage);
+    border: 1px solid var(--bone);
+    padding: 7px 14px;
+  }
+
+  /* ── CTA Section ── */
+  #cta {
+    background: var(--earth);
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b44bc1_eec46f69fd9248c98a2616a07ed844a4~mv2_d_5000_2335_s_2.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+  }
+  .cta-content { position: relative; z-index: 1; }
+  .cta-eyebrow {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 28px;
+  }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 6vw, 76px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+  .cta-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mist);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid var(--sage);
+    padding: 18px 44px;
+    text-decoration: none;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  .cta-btn:hover {
+    background: var(--sage);
+    color: var(--forest);
+  }
+
+  /* ── Contact ── */
+  #contact {
+    background: var(--cream);
+    padding: 100px 48px;
+    display: flex;
+    gap: 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .contact-left { flex: 1; }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  .contact-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--earth);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--forest);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+  }
+  .contact-email:hover { color: var(--sage); }
+  .contact-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .social-list { list-style: none; }
+  .social-list li {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--bone);
+  }
+  .social-list li:last-child { border-bottom: none; }
+  .social-list a {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .social-list a:hover { color: var(--forest); }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--forest);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--mist);
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--sage);
+    letter-spacing: 0.1em;
+  }
+  .footer-credit {
+    font-size: 10px;
+    color: var(--sage);
+    opacity: 0.5;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    .hero-content { padding: 0 24px 48px; }
+    #stats { padding: 60px 24px; gap: 40px; flex-wrap: wrap; justify-content: space-around; }
+    .gallery-row { padding: 0 12px; }
+    .gallery-row.r-big-small .big,
+    .gallery-row.r-big-small .small { height: 280px; }
+    .gallery-row.r-three .gallery-piece { height: 220px; }
+    .gallery-row.full .piece { height: 320px; }
+    #featured { padding: 80px 24px; }
+    .featured-inner { flex-direction: column; gap: 40px; }
+    .featured-image-wrap img { height: 340px; }
+    #about { padding: 80px 24px; }
+    .about-inner { flex-direction: column; }
+    .about-divider { display: none; }
+    .about-portrait { min-height: 360px; max-height: 400px; }
+    #contact { flex-direction: column; padding: 80px 24px; gap: 48px; }
+    footer { padding: 24px; flex-wrap: wrap; gap: 12px; }
+    .section-header { padding: 0 24px; }
+    #cta { padding: 80px 24px; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 58px; }
+    .gallery-row { flex-direction: column; }
+    .gallery-row.r-big-small .big,
+    .gallery-row.r-big-small .small,
+    .gallery-row.r-small-big .big,
+    .gallery-row.r-small-big .small { height: 260px; flex: none; }
+    .gallery-row.r-three .gallery-piece { height: 200px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a href="#hero" class="nav-logo">Andrew Tilsley</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-name" id="heroName">Andrew<br>Tilsley</h1>
+    <div class="hero-divider" id="heroDivider"></div>
+    <p class="hero-tagline">Wildlife Painter &nbsp;·&nbsp; Florida</p>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ── Marquee Strip ── -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Birds</span><span class="dot">·</span>
+    <span>Mammals</span><span class="dot">·</span>
+    <span>Reptiles</span><span class="dot">·</span>
+    <span>Original Paintings</span><span class="dot">·</span>
+    <span>Limited Prints</span><span class="dot">·</span>
+    <span>Conservation</span><span class="dot">·</span>
+    <span>Wildlife Art</span><span class="dot">·</span>
+    <span>Oils &amp; Acrylics</span><span class="dot">·</span>
+    <span>Birds</span><span class="dot">·</span>
+    <span>Mammals</span><span class="dot">·</span>
+    <span>Reptiles</span><span class="dot">·</span>
+    <span>Original Paintings</span><span class="dot">·</span>
+    <span>Limited Prints</span><span class="dot">·</span>
+    <span>Conservation</span><span class="dot">·</span>
+    <span>Wildlife Art</span><span class="dot">·</span>
+    <span>Oils &amp; Acrylics</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- ── Stats ── -->
+<section id="stats">
+  <div class="stat-item fade-up">
+    <span class="stat-number">3</span>
+    <span class="stat-label">Kingdoms</span>
+  </div>
+  <div class="stat-item fade-up delay-1">
+    <span class="stat-number">Birds<br><span style="font-size:0.5em;opacity:0.6;">Mammals · Reptiles</span></span>
+    <span class="stat-label">Subject Range</span>
+  </div>
+  <div class="stat-item fade-up delay-2">
+    <span class="stat-number">Originals</span>
+    <span class="stat-label">+ Limited Prints Available</span>
+  </div>
+</section>
+
+<!-- ── Gallery ── -->
+<section id="gallery">
+  <div class="section-header">
+    <div style="position:relative;">
+      <span class="section-num">01</span>
+      <h2><span class="sweep-text">Selected Works</span></h2>
+      <p class="sub fade-up delay-1">Birds · Mammals · Reptiles</p>
+    </div>
+  </div>
+
+  <!-- Row 1: large left, smaller right -->
+  <div class="gallery-row r-big-small">
+    <div class="gallery-piece big img-fade">
+      <img src="https://static.wixstatic.com/media/b44bc1_076e0f1fe315451aa61fb58807dbc1a6~mv2_d_2310_2295_s_2.jpg" alt="Wildlife painting — bird" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">Avian Study</div>
+        <div class="piece-medium">Oil on board</div>
+      </div>
+    </div>
+    <div class="gallery-piece small img-fade delay-1">
+      <img src="https://static.wixstatic.com/media/b44bc1_bf1576f7d13f4c4e96b7d79187c8d98f~mv2_d_3104_3184_s_4_2.jpg" alt="Wildlife portrait" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">Close Study</div>
+        <div class="piece-medium">Original</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: full bleed -->
+  <div class="gallery-row full">
+    <div class="gallery-piece piece img-fade delay-2">
+      <img src="https://static.wixstatic.com/media/b44bc1_eec46f69fd9248c98a2616a07ed844a4~mv2_d_5000_2335_s_2.jpg" alt="Panoramic wildlife scene" loading="lazy" style="height:380px;width:100%;object-fit:cover;">
+      <div class="piece-info">
+        <div class="piece-title">Landscape Panorama</div>
+        <div class="piece-medium">Original Oil</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: three equal -->
+  <div class="gallery-row r-three">
+    <div class="gallery-piece img-fade delay-1">
+      <img src="https://static.wixstatic.com/media/b44bc1_d1be7840b9dd40e79ca6342afe28362b~mv2_d_3567_2430_s_4_2.jpg" alt="Mammal painting" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">Mammal Study</div>
+        <div class="piece-medium">Oil on canvas</div>
+      </div>
+    </div>
+    <div class="gallery-piece img-fade delay-2">
+      <img src="https://static.wixstatic.com/media/b44bc1_2b3b9d382a624da7adddec58843dcb56~mv2_d_3258_2616_s_4_2.jpg" alt="Wildlife painting" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">Field Study</div>
+        <div class="piece-medium">Original</div>
+      </div>
+    </div>
+    <div class="gallery-piece img-fade delay-3">
+      <img src="https://static.wixstatic.com/media/b44bc1_a931c84bbab8455cb98a5893537173f3~mv2_d_3616_2444_s_4_2.jpg" alt="Wildlife painting" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">In the Field</div>
+        <div class="piece-medium">Original Oil</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: small left, large right -->
+  <div class="gallery-row r-small-big" style="margin-top:12px;">
+    <div class="gallery-piece small img-fade delay-2">
+      <img src="https://static.wixstatic.com/media/b44bc1_caa54b23772e4780b5f1ea7055a73a64~mv2_d_4200_2455_s_4_2.jpg" alt="Reptile painting" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">Reptile Study</div>
+        <div class="piece-medium">Original</div>
+      </div>
+    </div>
+    <div class="gallery-piece big img-fade delay-3">
+      <img src="https://static.wixstatic.com/media/b44bc1_dc96e5cb59f9415cbd7f8f3d5d2a07fa~mv2_d_3492_2340_s_2.jpg" alt="Wildlife painting" loading="lazy">
+      <div class="piece-info">
+        <div class="piece-title">Natural World</div>
+        <div class="piece-medium">Oil on board</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Featured Work ── -->
+<section id="featured">
+  <div class="featured-bg-text">Nature</div>
+  <div class="featured-inner">
+    <div class="featured-image-wrap fade-up">
+      <div class="featured-accent-line"></div>
+      <img src="https://static.wixstatic.com/media/b44bc1_b3e63a332184499db76ccf57f45cd25f~mv2_d_3508_2480_s_4_2.jpg" alt="Featured wildlife painting" loading="lazy">
+    </div>
+    <div class="featured-text">
+      <div style="position:relative;">
+        <span class="section-num" style="color:var(--cream);">02</span>
+        <p class="featured-eyebrow fade-up">Featured Work</p>
+        <h3 class="featured-title fade-up delay-1">"The Intimacy<br>of the Wild"</h3>
+      </div>
+      <p class="featured-desc fade-up delay-2">Working from direct observation and field study, Tilsley captures the tension between a subject's fragile beauty and raw animal presence. Each piece is a negotiation between scientific precision and painterly instinct.</p>
+      <div class="featured-meta fade-up delay-3">
+        <div class="meta-item">
+          <div class="meta-label">Medium</div>
+          <div class="meta-val">Oil on Board</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Availability</div>
+          <div class="meta-val">Prints + Originals</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div style="position:relative; max-width:1100px; margin:0 auto;">
+    <span class="section-num" style="left:0;">03</span>
+  </div>
+  <div class="about-inner">
+    <div class="about-portrait img-fade">
+      <img src="https://static.wixstatic.com/media/b44bc1_74c69c121878461a9aaaae0b65ebb653~mv2.jpg" alt="Andrew Tilsley" loading="lazy">
+    </div>
+    <div class="about-divider"></div>
+    <div class="about-text">
+      <p class="about-eyebrow fade-up">About the Artist</p>
+      <h2 class="about-heading fade-up delay-1">Painter, Biologist,<br>Wildlife Enthusiast</h2>
+      <p class="about-body fade-up delay-2">Tilsley's practice is rooted in a lifelong fascination with the natural world — one that began in childhood and was formally deepened through studies in both art and biology. A conservationist at heart, he has contributed field work with sea turtles in Greece and Costa Rica, bringing that empirical intimacy directly into the studio.</p>
+      <blockquote class="about-quote fade-up delay-3">"His inspiration comes from anger and beauty — a rare combination that makes every piece impossible to ignore."</blockquote>
+      <p class="about-body fade-up" style="transition-delay:0.48s;">Paintings and limited-edition prints are available. Originals span birds, mammals, and reptiles. Conservation themes run throughout.</p>
+      <div class="about-tags fade-up" style="transition-delay:0.56s;">
+        <span class="about-tag">Birds</span>
+        <span class="about-tag">Mammals</span>
+        <span class="about-tag">Reptiles</span>
+        <span class="about-tag">Conservation</span>
+        <span class="about-tag">Original Oils</span>
+        <span class="about-tag">Limited Prints</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="cta-bg-img"></div>
+  <div class="cta-content">
+    <div style="position:relative; display:inline-block;">
+      <span class="section-num" style="color:var(--cream); position:static; display:block; text-align:center; margin-bottom:-30px;">04</span>
+    </div>
+    <p class="cta-eyebrow fade-up">Acquire Original Work</p>
+    <h2 class="cta-heading fade-up delay-1">Paintings &amp; Prints<br>Available Now</h2>
+    <p class="cta-sub fade-up delay-2">Originals and high-quality limited prints available to collectors. Inquire directly for pricing, availability, and commissions.</p>
+    <a href="#contact" class="cta-btn fade-up delay-3">Inquire About Work</a>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<div id="contact-wrap" style="background: var(--cream);">
+  <section id="contact">
+    <div class="contact-left">
+      <div style="position:relative;">
+        <span class="section-num">05</span>
+        <h2 class="contact-heading fade-up">Studio<br>Inquiries</h2>
+      </div>
+      <p class="contact-body fade-up delay-1">For original paintings, limited edition prints, commissions, or general inquiries, reach out directly.</p>
+      <a href="mailto:andrewtilsley@example.com" class="contact-email fade-up delay-2">andrewtilsley.wixsite.com/artwork</a>
+    </div>
+    <div class="contact-right">
+      <ul class="social-list fade-up delay-1">
+        <li><a href="https://www.facebook.com/AndrewTilsleyArtwork" target="_blank">Facebook — @AndrewTilsleyArtwork</a></li>
+        <li><a href="https://www.instagram.com/wildlife.artist/" target="_blank">Instagram — @wildlife.artist</a></li>
+        <li><a href="https://andrewtilsley.wixsite.com/artwork" target="_blank">Portfolio — andrewtilsley.wixsite.com</a></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <span class="footer-name">Andrew Tilsley</span>
+  <span class="footer-copy">© 2026 — Wildlife Paintings &amp; Prints</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.4}px)`;
+  }, { passive: true });
+
+  // Hero name letter-spacing animate
+  const heroName = document.getElementById('heroName');
+  heroName.style.letterSpacing = '0.22em';
+  setTimeout(() => {
+    heroName.style.transition = 'letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    heroName.style.letterSpacing = '0.04em';
+  }, 150);
+
+  // Hero divider reveal
+  setTimeout(() => {
+    document.getElementById('heroDivider').classList.add('is-visible');
+  }, 800);
+
+  // IntersectionObserver for fade-up + img-fade + sweep-text
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up, .img-fade, .sweep-text').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
