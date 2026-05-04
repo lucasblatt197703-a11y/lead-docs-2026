@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shutter Photo Studio — Miami</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D0D0D;
+      --surface:   #141414;
+      --text:      #F0EDE8;
+      --muted:     #888580;
+      --accent:    #C9A96E;
+      --accent-dk: #A8854E;
+      --divider:   #2A2A2A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: transparent;
+      transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(13,13,13,0.92); backdrop-filter: blur(12px); }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── SECTION NUMBERS ─── */
+    .sec-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 96px; font-weight: 700;
+      color: rgba(201,169,110,0.06);
+      line-height: 1; margin-bottom: -48px;
+      position: relative; left: -8px;
+      pointer-events: none; user-select: none;
+    }
+
+    /* ─── 1. HERO — MOSAIC ─── */
+    #hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: center;
+      padding: 120px 56px 80px;
+      overflow: hidden;
+    }
+
+    .hero-mosaic {
+      position: absolute; inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 0.8fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 4px;
+    }
+    .mosaic-img {
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .mosaic-img.loaded { opacity: 1; }
+    .mosaic-img:nth-child(1) {
+      grid-row: 1 / 3;
+      background-image: url('https://static.wixstatic.com/media/4424b7_97f46aed939f47af92b791baa476c061.jpg');
+    }
+    .mosaic-img:nth-child(2) {
+      background-image: url('https://static.wixstatic.com/media/4424b7_e0659041f95e46d3bf05ea989e14ec88.jpg');
+    }
+    .mosaic-img:nth-child(3) {
+      background-image: url('https://static.wixstatic.com/media/4424b7_b244732c693dd14fc01127c09e5a9497.jpg');
+    }
+    .mosaic-img:nth-child(4) {
+      background-image: url('https://static.wixstatic.com/media/4424b7_fa35f8a290c6151288a6660f17adc376.jpg');
+    }
+    .mosaic-img:nth-child(5) {
+      background-image: url('https://static.wixstatic.com/media/4424b7_6c9d88feef5245466f24b12210188f34.jpg');
+    }
+
+    /* Dark gradient overlay for text readability */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(13,13,13,0.82) 0%,
+        rgba(13,13,13,0.55) 45%,
+        rgba(13,13,13,0.3) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 640px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(64px, 7vw, 108px);
+      font-weight: 700; line-height: 0.95;
+      letter-spacing: 0.22em;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      /* Clip-path sweep animation */
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .hero-name.visible { clip-path: inset(0 0% 0 0); }
+
+    .hero-tagline {
+      font-size: 16px; font-weight: 300; line-height: 1.7;
+      color: rgba(240,237,232,0.72);
+      max-width: 420px; margin-bottom: 48px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+    .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 12px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+      opacity: 0;
+      transition: background 0.25s, color 0.25s, opacity 0.6s ease 0.5s;
+    }
+    .hero-cta.visible { opacity: 1; }
+    .hero-cta:hover { background: var(--accent); color: var(--bg); }
+
+    /* ─── 2. MARQUEE STRIP ─── */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--bg);
+      margin: 0 32px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── 3. STATS STRIP ─── */
+    #stats {
+      background: var(--surface);
+      padding: 80px 56px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+    }
+    .stat-item {
+      text-align: center; padding: 40px 20px;
+      border-right: 1px solid var(--divider);
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 64px; font-weight: 700; line-height: 1;
+      color: var(--accent); display: block; margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ─── 4. GALLERY — MASONRY ─── */
+    #gallery {
+      padding: 120px 56px;
+    }
+    .section-header {
+      margin-bottom: 64px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 600; color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+    .section-sub {
+      font-size: 14px; color: var(--muted); margin-top: 12px;
+      letter-spacing: 0.04em;
+      opacity: 0; transition: opacity 0.6s ease 0.25s;
+    }
+    .section-sub.visible { opacity: 1; }
+
+    .masonry-grid {
+      columns: 3;
+      column-gap: 10px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .masonry-item.visible { opacity: 1; }
+    .masonry-item img {
+      width: 100%; display: block;
+      transform: scale(1.04);
+      transition: transform 0.6s ease;
+    }
+    .masonry-item:hover img { transform: scale(1.0); }
+
+    /* ─── 5. SERVICES — EDITORIAL ─── */
+    #services {
+      padding: 120px 56px;
+      background: var(--surface);
+      border-top: 1px solid var(--divider);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      margin-top: 64px;
+      border: 1px solid var(--divider);
+    }
+    .service-card {
+      padding: 56px 48px;
+      border-right: 1px solid var(--divider);
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .service-card:last-child { border-right: none; }
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 32px;
+    }
+    .service-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 600; color: var(--text);
+      margin-bottom: 20px; line-height: 1.2;
+    }
+    .service-desc {
+      font-size: 14px; line-height: 1.8; color: rgba(240,237,232,0.62);
+    }
+    .service-line {
+      width: 32px; height: 1px; background: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    /* ─── 6. ABOUT — SIDE BY SIDE ─── */
+    #about {
+      padding: 160px 56px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0 64px;
+      align-items: center;
+      margin-top: 64px;
+    }
+    .about-divider { background: var(--divider); align-self: stretch; }
+    .about-photo {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .about-photo.visible { opacity: 1; transform: translateY(0); }
+    .about-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .about-text {
+      padding-left: 32px;
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+    .about-text.visible { opacity: 1; transform: translateY(0); }
+    .about-bio {
+      font-size: 17px; line-height: 1.85;
+      color: rgba(240,237,232,0.78); margin-bottom: 40px;
+    }
+    .about-detail {
+      font-size: 12px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .about-pull {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px; font-weight: 300; line-height: 1.4;
+      color: var(--text); font-style: italic;
+      margin-bottom: 40px;
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+    }
+
+    /* ─── 7. BOLD CTA ─── */
+    #cta {
+      background: var(--accent);
+      padding: 120px 56px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 200px; font-weight: 700;
+      text-transform: uppercase; white-space: nowrap;
+      color: rgba(13,13,13,0.07);
+      pointer-events: none; user-select: none;
+      line-height: 1;
+    }
+    .cta-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(13,13,13,0.6); margin-bottom: 24px;
+      opacity: 0; transition: opacity 0.6s ease;
+    }
+    .cta-label.visible { opacity: 1; }
+    .cta-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 700; color: var(--bg);
+      line-height: 1.05; margin-bottom: 40px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 48px;
+      background: var(--bg);
+      color: var(--accent);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .cta-btn:hover { background: rgba(13,13,13,0.85); }
+
+    /* ─── 8. CONTACT ─── */
+    #contact {
+      padding: 120px 56px;
+      background: var(--surface);
+      border-top: 1px solid var(--divider);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .contact-left {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .contact-left.visible { opacity: 1; transform: translateY(0); }
+    .contact-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 40px; font-weight: 600;
+      line-height: 1.2; color: var(--text); margin-bottom: 24px;
+    }
+    .contact-sub {
+      font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 48px;
+    }
+    .contact-email {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px; font-weight: 500;
+      color: var(--accent); text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px; width: fit-content;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-email:hover { color: var(--text); border-color: var(--text); }
+    .contact-right {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    }
+    .contact-right.visible { opacity: 1; transform: translateY(0); }
+    .contact-detail { margin-bottom: 20px; }
+    .contact-detail-label {
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .contact-detail-val {
+      font-size: 15px; color: var(--text);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--divider);
+      padding: 32px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .footer-copy {
+      font-size: 12px; color: rgba(136,133,128,0.5);
+    }
+    .footer-credit {
+      font-size: 11px; color: rgba(136,133,128,0.35);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      #hero { padding: 100px 24px 60px; }
+      #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; }
+      #gallery { padding: 80px 24px; }
+      .masonry-grid { columns: 2; }
+      #services { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid var(--divider); }
+      #about { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-divider { display: none; }
+      .about-text { padding-left: 0; margin-top: 40px; }
+      #cta { padding: 80px 24px; }
+      #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+      .sec-num { font-size: 60px; }
+    }
+    @media (max-width: 480px) {
+      .hero-mosaic { grid-template-columns: 1fr 1fr; }
+      .masonry-grid { columns: 1; }
+      .stat-num { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a class="nav-logo" href="#">Shutter Studio</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1. HERO -->
+  <section id="hero">
+    <div class="hero-mosaic">
+      <div class="mosaic-img"></div>
+      <div class="mosaic-img"></div>
+      <div class="mosaic-img"></div>
+      <div class="mosaic-img"></div>
+      <div class="mosaic-img"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="hero-eyebrow">Miami, Florida · Est. 2017</p>
+      <h1 class="hero-name" id="hero-name">Shutter<br>Photo<br>Studio</h1>
+      <p class="hero-tagline" id="hero-tagline">
+        Portraits, fashion, and event photography crafted with intention.
+        Based in Miami — shooting the stories that matter.
+      </p>
+      <a class="hero-cta" href="#contact" id="hero-cta">Book a Session</a>
+    </div>
+  </section>
+
+  <!-- 2. MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Portrait Sessions</span><span>·</span>
+      <span>Corporate Headshots</span><span>·</span>
+      <span>Fashion &amp; Glamour</span><span>·</span>
+      <span>Family Photography</span><span>·</span>
+      <span>Events &amp; Ceremonies</span><span>·</span>
+      <span>Miami, FL</span><span>·</span>
+      <span>Portrait Sessions</span><span>·</span>
+      <span>Corporate Headshots</span><span>·</span>
+      <span>Fashion &amp; Glamour</span><span>·</span>
+      <span>Family Photography</span><span>·</span>
+      <span>Events &amp; Ceremonies</span><span>·</span>
+      <span>Miami, FL</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- 3. STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <span class="stat-num">8+</span>
+      <span class="stat-label">Years in Miami</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">Sessions Shot</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Specialties</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Client Satisfaction</span>
+    </div>
+  </section>
+
+  <!-- 4. GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <div class="sec-num">01</div>
+      <h2 class="section-title" data-anim="sweep">Portfolio</h2>
+      <p class="section-sub" data-anim="fade">A selection of recent portrait and fashion work.</p>
+    </div>
+    <div class="masonry-grid">
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_97f46aed939f47af92b791baa476c061.jpg"
+             alt="Portrait session Miami" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_e0659041f95e46d3bf05ea989e14ec88.jpg"
+             alt="Fashion photography Miami" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_fa35f8a290c6151288a6660f17adc376.jpg"
+             alt="Glamour portrait" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_b244732c693dd14fc01127c09e5a9497.jpg"
+             alt="Studio portrait" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_6c9d88feef5245466f24b12210188f34.jpg"
+             alt="Editorial photography" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_79055498640145979f1e46a42159f014.jpg"
+             alt="Miami portrait photographer" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_2e92f0e94f3a4602abf6e8157cb8c23b.jpg"
+             alt="Photography session" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_f50e2440efa54fcab264d1efa525bb99.jpg"
+             alt="Portrait work" loading="lazy">
+      </div>
+      <div class="masonry-item" data-anim="fade-img">
+        <img src="https://static.wixstatic.com/media/4424b7_4f3409c5647a47d095e98c08f547bf18.jpg"
+             alt="Event photography" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SERVICES -->
+  <section id="services">
+    <div class="section-header">
+      <div class="sec-num">02</div>
+      <h2 class="section-title" data-anim="sweep">What We Shoot</h2>
+      <p class="section-sub" data-anim="fade">Every shoot is tailored. Every image is intentional.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" data-anim="rise">
+        <div class="service-num">01</div>
+        <div class="service-line"></div>
+        <div class="service-name">Portrait Sessions</div>
+        <p class="service-desc">
+          Individual and family portraits shot on location across Miami — beaches, landmarks, and private venues. We make you look like yourself at your best.
+        </p>
+      </div>
+      <div class="service-card" data-anim="rise" style="transition-delay:0.12s">
+        <div class="service-num">02</div>
+        <div class="service-line"></div>
+        <div class="service-name">Corporate Headshots</div>
+        <p class="service-desc">
+          Professional headshots for attorneys, executives, and business owners. Clean, confident, camera-ready — delivered fast.
+        </p>
+      </div>
+      <div class="service-card" data-anim="rise" style="transition-delay:0.24s">
+        <div class="service-num">03</div>
+        <div class="service-line"></div>
+        <div class="service-name">Fashion &amp; Events</div>
+        <p class="service-desc">
+          Glamour, modeling portfolios, baptisms, and ceremonies. We bring the same level of craft whether it's a runway test or a first communion.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <div class="sec-num">03</div>
+      <h2 class="section-title" data-anim="sweep">The Photographer</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-photo" data-anim="rise">
+        <img src="https://static.wixstatic.com/media/4424b7_0cebd0c89d0f452788797cd48e0d4650.jpg"
+             alt="Ernesto — Shutter Photo Studio Miami" loading="lazy">
+      </div>
+      <div class="about-divider"></div>
+      <div class="about-text" data-anim="rise">
+        <blockquote class="about-pull">
+          "I help clients look natural, feel confident, and walk away with images they're proud to show the world."
+        </blockquote>
+        <p class="about-bio">
+          Ernesto has been photographing Miami's families, professionals, and creative talent since 2017. Known for his patience on set and his eye for authentic moments, he works with clients across corporate headshots, portrait sessions, fashion editorial, and life events.
+        </p>
+        <p class="about-bio">
+          Based in Miami with deep ties to the city's diverse communities, he shoots in both English and Spanish.
+        </p>
+        <p class="about-detail">Miami, Florida · Available for shoots citywide</p>
+        <p class="about-detail">Corporate · Portraits · Fashion · Events</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CTA -->
+  <section id="cta">
+    <div class="cta-bg-text">BOOK</div>
+    <p class="cta-label" data-anim="fade">Ready when you are</p>
+    <h2 class="cta-heading" data-anim="sweep">Let's make<br>something real.</h2>
+    <a class="cta-btn" href="mailto:info@shutterphotostudio.com">Book Your Session</a>
+  </section>
+
+  <!-- 8. CONTACT -->
+  <section id="contact">
+    <div class="contact-left" data-anim="rise">
+      <h2 class="contact-heading">Get in Touch</h2>
+      <p class="contact-sub">
+        Ready to book, have questions about packages, or want to discuss a project?
+        Reach out — we respond within 24 hours.
+      </p>
+      <a class="contact-email" href="mailto:info@shutterphotostudio.com">
+        info@shutterphotostudio.com
+      </a>
+    </div>
+    <div class="contact-right" data-anim="rise">
+      <div class="contact-detail">
+        <p class="contact-detail-label">Location</p>
+        <p class="contact-detail-val">Miami, Florida</p>
+      </div>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Languages</p>
+        <p class="contact-detail-val">English &amp; Spanish</p>
+      </div>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Specialties</p>
+        <p class="contact-detail-val">Portraits · Headshots · Fashion · Events</p>
+      </div>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Response Time</p>
+        <p class="contact-detail-val">Within 24 hours</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Shutter Photo Studio</span>
+    <span class="footer-copy">© 2026 Shutter Photo Studio · Miami, FL</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Load mosaic images immediately
+    document.querySelectorAll('.mosaic-img').forEach(el => {
+      setTimeout(() => el.classList.add('loaded'), 100);
+    });
+
+    // Hero entrance animations
+    setTimeout(() => {
+      document.getElementById('hero-eyebrow').classList.add('visible');
+    }, 200);
+    setTimeout(() => {
+      document.getElementById('hero-name').classList.add('visible');
+    }, 350);
+    setTimeout(() => {
+      document.getElementById('hero-tagline').classList.add('visible');
+    }, 600);
+    setTimeout(() => {
+      document.getElementById('hero-cta').classList.add('visible');
+    }, 800);
+
+    // IntersectionObserver for scroll animations
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const type = el.dataset.anim;
+
+        if (type === 'sweep') {
+          el.classList.add('visible');
+          // Also trigger sibling section-sub
+          const sub = el.parentElement.querySelector('.section-sub');
+          if (sub) sub.classList.add('visible');
+        } else if (type === 'fade') {
+          el.classList.add('visible');
+        } else if (type === 'rise') {
+          el.classList.add('visible');
+        } else if (type === 'fade-img') {
+          el.classList.add('visible');
+        }
+
+        io.unobserve(el);
+      });
+    }, { threshold: 0.12 });
+
+    // Observe all animated elements
+    document.querySelectorAll('[data-anim]').forEach(el => io.observe(el));
+
+    // Stats stagger
+    const statsIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        document.querySelectorAll('.stat-item').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 100);
+        });
+        statsIo.disconnect();
+      });
+    }, { threshold: 0.2 });
+    const statsSection = document.getElementById('stats');
+    if (statsSection) statsIo.observe(statsSection);
+
+    // Masonry image stagger
+    const galleryIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        document.querySelectorAll('.masonry-item').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 80);
+        });
+        galleryIo.disconnect();
+      });
+    }, { threshold: 0.05 });
+    const gallerySection = document.getElementById('gallery');
+    if (gallerySection) galleryIo.observe(gallerySection);
+  </script>
+</body>
+</html>
