@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorena — Realism & Hyperrealism Painter · Tampa, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F4EFE8;   /* warm linen — oil painting ground */
+      --dark:      #1A1612;   /* deep umber charcoal */
+      --text:      #2C2420;   /* warm dark brown */
+      --mid:       #6B5A4E;   /* warm mid-tone */
+      --accent:    #8B4A2F;   /* burnt sienna — from realism palette */
+      --pale:      #EDE6DC;   /* lighter linen */
+      --cream:     #FAF7F3;   /* near-white */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
+
+    /* ─── GLOBAL ANIMATION STATES ─── */
+    .reveal-text {
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .reveal-text.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+
+    .fade-up.delay-1 { transition-delay: 0.12s; }
+    .fade-up.delay-2 { transition-delay: 0.24s; }
+    .fade-up.delay-3 { transition-delay: 0.36s; }
+
+    .img-reveal {
+      opacity: 0;
+      transition: opacity 1.1s ease;
+    }
+    .img-reveal.is-visible { opacity: 1; }
+    .img-reveal.delay-1 { transition-delay: 0.1s; }
+    .img-reveal.delay-2 { transition-delay: 0.2s; }
+    .img-reveal.delay-3 { transition-delay: 0.3s; }
+    .img-reveal.delay-4 { transition-delay: 0.4s; }
+    .img-reveal.delay-5 { transition-delay: 0.5s; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: multiply;
+    }
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--cream);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+    nav ul a {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.25s;
+    }
+    nav ul a:hover { opacity: 1; }
+
+    /* ─── HERO — Asymmetric Split ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 58% 42%;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image-side {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=90');
+      background-size: cover;
+      background-position: center 20%;
+      will-change: transform;
+      transition: transform 0.1s linear;
+    }
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 70%, var(--dark) 100%);
+    }
+
+    .hero-text-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 64px 80px 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-overline {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.3s;
+    }
+    .hero-overline.loaded { opacity: 1; }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(72px, 8vw, 108px);
+      font-weight: 300;
+      line-height: 0.92;
+      color: var(--cream);
+      letter-spacing: 0.4em;
+      margin-bottom: 36px;
+      display: block;
+      transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+    }
+    .hero-name.loaded { letter-spacing: 0.08em; }
+
+    .hero-name-line { display: block; overflow: hidden; }
+    .hero-name-inner {
+      display: block;
+      transform: translateY(100%);
+      transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .hero-name-inner.loaded { transform: translateY(0); }
+    .hero-name-inner.delay-1 { transition-delay: 0.15s; }
+
+    .hero-descriptor {
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,243,0.55);
+      margin-bottom: 64px;
+      opacity: 0;
+      transition: opacity 0.7s ease 0.9s;
+    }
+    .hero-descriptor.loaded { opacity: 1; }
+
+    .hero-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.7s, width 0.8s ease 0.7s;
+    }
+    .hero-divider.loaded { opacity: 1; width: 48px; }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(250,247,243,0.65);
+      line-height: 1.7;
+      max-width: 280px;
+      opacity: 0;
+      transition: opacity 0.7s ease 1.1s;
+    }
+    .hero-tagline.loaded { opacity: 1; }
+
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 40px;
+      right: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.6s ease 1.4s;
+    }
+    .hero-scroll-cue.loaded { opacity: 1; }
+    .hero-scroll-cue span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,243,0.4);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: rgba(250,247,243,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scrollLine 2s ease-in-out 1.8s infinite;
+    }
+    @keyframes scrollLine {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* ─── MARQUEE STRIP ─── */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cream);
+      padding: 0 48px;
+    }
+    .marquee-inner span::before {
+      content: '·';
+      margin-right: 48px;
+      opacity: 0.5;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS SECTION ─── */
+    #stats {
+      background: var(--dark);
+      padding: 80px 0;
+    }
+    .stats-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 40px 20px;
+      border-right: 1px solid rgba(250,247,243,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(60px, 6vw, 88px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(250,247,243,0.4);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ─── ACCENT LINE ─── */
+    .accent-line {
+      width: 30%;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .accent-line.is-visible { opacity: 1; transform: scaleX(1); }
+    .accent-line-container {
+      display: flex;
+      justify-content: center;
+      padding: 60px 0;
+      background: var(--bg);
+    }
+
+    /* ─── GALLERY — Editorial Scroll ─── */
+    #gallery {
+      background: var(--bg);
+      padding: 0 48px 120px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 80px;
+      padding-top: 80px;
+    }
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 300;
+      color: rgba(44,36,32,0.06);
+      line-height: 1;
+      user-select: none;
+    }
+    .section-title-block { text-align: right; }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    /* Editorial scroll gallery */
+    .gallery-editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* Row 1: Large left + small right */
+    .gallery-row-1 {
+      display: grid;
+      grid-template-columns: 62% 36%;
+      gap: 24px;
+      align-items: end;
+    }
+    /* Row 2: Full width */
+    .gallery-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .gallery-row-2 .gallery-img-wrap { aspect-ratio: 21/9; }
+
+    /* Row 3: Small left + large right */
+    .gallery-row-3 {
+      display: grid;
+      grid-template-columns: 36% 62%;
+      gap: 24px;
+      align-items: start;
+    }
+    /* Row 4: Three columns */
+    .gallery-row-4 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .gallery-img-wrap {
+      overflow: hidden;
+      position: relative;
+      background: var(--pale);
+    }
+    .gallery-img-wrap.portrait { aspect-ratio: 4/5; }
+    .gallery-img-wrap.landscape { aspect-ratio: 5/4; }
+    .gallery-img-wrap.square { aspect-ratio: 1/1; }
+
+    .gallery-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+    .gallery-img-wrap:hover img { transform: scale(1.03); }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 24px 20px;
+      background: linear-gradient(transparent, rgba(26,22,18,0.7));
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .gallery-img-wrap:hover .gallery-caption { transform: translateY(0); }
+    .gallery-caption p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--cream);
+      font-weight: 300;
+    }
+    .gallery-caption span {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,243,0.6);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* Gallery placeholder gradients */
+    .gp-1 { background: linear-gradient(135deg, #3D2B1F 0%, #6B4C35 40%, #9E7B5A 70%, #C4A882 100%); }
+    .gp-2 { background: linear-gradient(155deg, #2A1F1A 0%, #5C3D2B 50%, #8B6347 100%); }
+    .gp-3 { background: linear-gradient(120deg, #1C1510 0%, #4A3328 40%, #7A5A46 80%, #A88060 100%); }
+    .gp-4 { background: linear-gradient(160deg, #3A2820 0%, #6B4A38 50%, #A07855 100%); }
+    .gp-5 { background: linear-gradient(140deg, #251B16 0%, #503C30 45%, #876550 80%, #B58C70 100%); }
+    .gp-6 { background: linear-gradient(125deg, #2D2018 0%, #5A3F30 45%, #8F6A50 80%, #C09070 100%); }
+    .gp-7 { background: linear-gradient(150deg, #1E1610 0%, #453528 45%, #7A5A42 80%, #A8806A 100%); }
+
+    /* ─── FEATURED WORK ─── */
+    #featured {
+      background: var(--dark);
+      padding: 120px 0;
+      overflow: hidden;
+    }
+    .featured-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: 80px;
+      align-items: center;
+    }
+    .featured-image-wrap {
+      position: relative;
+    }
+    .featured-image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(145deg, #3D2B1F 0%, #7A5A3A 50%, #B08A5A 80%, #D4B07A 100%);
+    }
+    .featured-image-label {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 140px;
+      height: 140px;
+      border: 1px solid rgba(250,247,243,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .featured-image-label span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,243,0.4);
+      text-align: center;
+    }
+    .featured-image-label strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--cream);
+    }
+
+    .featured-text { padding: 20px 0; }
+    .featured-overline {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .featured-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4vw, 58px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+    .featured-title em {
+      font-style: italic;
+      color: rgba(250,247,243,0.6);
+    }
+    .featured-body {
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(250,247,243,0.6);
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+    .featured-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(250,247,243,0.1);
+    }
+    .featured-meta-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .featured-meta-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,243,0.35);
+    }
+    .featured-meta-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: rgba(250,247,243,0.75);
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--bg);
+      padding: 120px 0;
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 45% 55%;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-image-col { position: relative; }
+    .about-portrait {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(160deg, #4A3020 0%, #7A5A40 40%, #A88060 70%, #C8A478 100%);
+    }
+    .about-image-accent {
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 100px;
+      height: 100px;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+
+    .about-text-col { padding: 20px 0; }
+    .about-overline {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 50px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 40px;
+    }
+
+    .about-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1.55;
+      border-left: 2px solid var(--accent);
+      padding-left: 28px;
+      margin-bottom: 40px;
+    }
+    .about-body {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--mid);
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+    .about-credentials {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(44,36,32,0.12);
+    }
+    .about-credential {
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+    }
+    .about-credential-year {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      min-width: 50px;
+      font-weight: 500;
+    }
+    .about-credential-text {
+      font-size: 14px;
+      color: var(--mid);
+      font-weight: 300;
+    }
+
+    /* ─── SECOND ACCENT LINE ─── */
+    .accent-line-dark {
+      background: var(--dark);
+    }
+    .accent-line-dark .accent-line-container {
+      background: var(--dark);
+    }
+    .accent-line-dark .accent-line { background: var(--accent); }
+
+    /* ─── CTA ─── */
+    #cta {
+      background: var(--dark);
+      padding: 140px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: 'COMMISSION';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 12vw, 160px);
+      font-weight: 300;
+      color: rgba(250,247,243,0.025);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.1em;
+    }
+    .cta-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 28px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .cta-label.is-visible { opacity: 1; }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-heading em {
+      font-style: italic;
+      color: rgba(250,247,243,0.5);
+    }
+    .cta-sub {
+      font-size: 15px;
+      color: rgba(250,247,243,0.5);
+      font-weight: 300;
+      margin-bottom: 56px;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 18px 56px;
+      border: 1px solid rgba(250,247,243,0.3);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-button:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--pale);
+      padding: 100px 48px;
+    }
+    .contact-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-overline {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 50px);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .contact-body {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--mid);
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+    .contact-email {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--accent);
+      text-decoration: none;
+      font-style: italic;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      transition: opacity 0.25s;
+    }
+    .contact-email:hover { opacity: 0.7; }
+    .contact-socials {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 48px;
+    }
+    .contact-socials a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .contact-socials a:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      color: rgba(250,247,243,0.4);
+      font-weight: 300;
+    }
+    footer .footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: rgba(250,247,243,0.25);
+    }
+    footer .footer-credit {
+      font-size: 11px;
+      color: rgba(250,247,243,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; min-height: 100vh; }
+      .hero-image-side {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero-bg-overlay {
+        background: linear-gradient(to bottom, transparent 30%, rgba(26,22,18,0.85) 100%);
+      }
+      .hero-text-side {
+        position: relative;
+        z-index: 1;
+        padding: 160px 32px 80px;
+      }
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(250,247,243,0.08); }
+      #gallery { padding: 0 24px 80px; }
+      .gallery-row-1, .gallery-row-3 { grid-template-columns: 1fr; }
+      .gallery-row-4 { grid-template-columns: 1fr 1fr; }
+      .featured-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-row-4 { grid-template-columns: 1fr; }
+      .gallery-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .section-number { font-size: 72px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">Lorena</a>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">Studio</a></li>
+      <li><a href="#cta">Commission</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Asymmetric Split -->
+  <section id="hero">
+    <div class="hero-image-side">
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-bg-overlay"></div>
+    </div>
+    <div class="hero-text-side">
+      <span class="hero-overline" id="heroOverline">Realism · Hyperrealism · Tampa, FL</span>
+      <span class="hero-name" id="heroName">
+        <span class="hero-name-line"><span class="hero-name-inner" id="heroNameInner1">Lorena</span></span>
+        <span class="hero-name-line"><span class="hero-name-inner delay-1" id="heroNameInner2">Art</span></span>
+      </span>
+      <div class="hero-divider" id="heroDivider"></div>
+      <p class="hero-descriptor" id="heroDescriptor">Oil · Graphite · Original Portraits</p>
+      <p class="hero-tagline" id="heroTagline">Painting the human face as it deserves to be seen — with every shadow earned, every detail considered.</p>
+      <div class="hero-scroll-cue" id="heroScroll">
+        <span>Scroll</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Original Paintings</span>
+      <span>Portrait Commissions</span>
+      <span>Oil on Canvas</span>
+      <span>Graphite Studies</span>
+      <span>Tampa, Florida</span>
+      <span>Available for Commission</span>
+      <span>Original Paintings</span>
+      <span>Portrait Commissions</span>
+      <span>Oil on Canvas</span>
+      <span>Graphite Studies</span>
+      <span>Tampa, Florida</span>
+      <span>Available for Commission</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number fade-up">12+</span>
+        <span class="stat-label">Years painting</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number fade-up delay-1">80+</span>
+        <span class="stat-label">Original works</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number fade-up delay-2">40+</span>
+        <span class="stat-label">Commissions completed</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number fade-up delay-3">2</span>
+        <span class="stat-label">Mediums mastered</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCENT LINE -->
+  <div class="accent-line-container">
+    <div class="accent-line"></div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <span class="section-number">01</span>
+      <div class="section-title-block">
+        <span class="section-label">Selected works</span>
+        <h2 class="section-title reveal-text">The Portfolio</h2>
+      </div>
+    </div>
+
+    <div class="gallery-editorial">
+      <!-- Row 1: Large + portrait -->
+      <div class="gallery-row-1">
+        <div class="gallery-img-wrap landscape img-reveal">
+          <div class="gp-1" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Portrait Study No. 7</p>
+            <span>Oil on linen · 24 × 30 in</span>
+          </div>
+        </div>
+        <div class="gallery-img-wrap portrait img-reveal delay-1">
+          <div class="gp-2" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Graphite — The Gaze</p>
+            <span>Graphite on paper · 16 × 20 in</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Full bleed panoramic -->
+      <div class="gallery-row-2">
+        <div class="gallery-img-wrap img-reveal">
+          <div class="gp-3" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Skin & Light — Commission</p>
+            <span>Oil on canvas · 36 × 48 in</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Small + large -->
+      <div class="gallery-row-3">
+        <div class="gallery-img-wrap portrait img-reveal">
+          <div class="gp-4" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Hands Study</p>
+            <span>Graphite · 11 × 14 in</span>
+          </div>
+        </div>
+        <div class="gallery-img-wrap landscape img-reveal delay-1">
+          <div class="gp-5" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Legacy Portrait</p>
+            <span>Oil on canvas · 30 × 40 in</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Three columns -->
+      <div class="gallery-row-4">
+        <div class="gallery-img-wrap square img-reveal">
+          <div class="gp-6" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Reverie</p>
+            <span>Oil · 18 × 18 in</span>
+          </div>
+        </div>
+        <div class="gallery-img-wrap square img-reveal delay-2">
+          <div class="gp-2" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Father & Son</p>
+            <span>Oil · Commission</span>
+          </div>
+        </div>
+        <div class="gallery-img-wrap square img-reveal delay-4">
+          <div class="gp-7" style="width:100%;height:100%;position:absolute;inset:0;"></div>
+          <div class="gallery-caption">
+            <p>Graphite Study III</p>
+            <span>Graphite on paper</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCENT LINE (dark bg) -->
+  <div style="background:var(--dark); display:flex; justify-content:center; padding: 60px 0;">
+    <div class="accent-line" style="background: rgba(139,74,47,0.4);"></div>
+  </div>
+
+  <!-- FEATURED WORK -->
+  <section id="featured">
+    <div class="featured-inner">
+      <div class="featured-image-wrap fade-up">
+        <div class="featured-image gp-1"></div>
+        <div class="featured-image-label">
+          <span>Original</span>
+          <strong>Oil</strong>
+          <span>on linen</span>
+        </div>
+      </div>
+      <div class="featured-text">
+        <span class="featured-overline fade-up">02 · Featured work</span>
+        <h2 class="featured-title fade-up delay-1">
+          The <em>subject</em><br>before the<br>technique
+        </h2>
+        <p class="featured-body fade-up delay-2">
+          Each portrait begins not with the brush but with observation — hours spent understanding how light falls across a particular face, how the weight of an expression changes from minute to minute. The hyperrealism is in service of the person, never the other way around.
+        </p>
+        <div class="featured-meta fade-up delay-3">
+          <div class="featured-meta-row">
+            <span class="featured-meta-label">Medium</span>
+            <span class="featured-meta-value">Oil on Belgian linen</span>
+          </div>
+          <div class="featured-meta-row">
+            <span class="featured-meta-label">Dimensions</span>
+            <span class="featured-meta-value">30 × 40 inches</span>
+          </div>
+          <div class="featured-meta-row">
+            <span class="featured-meta-label">Status</span>
+            <span class="featured-meta-value" style="color: var(--accent);">Commission inquiries open</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCENT LINE -->
+  <div class="accent-line-container">
+    <div class="accent-line"></div>
+  </div>
+
+  <!-- ABOUT — Magazine spread -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-image-col fade-up">
+        <div class="about-portrait gp-4"></div>
+        <div class="about-image-accent"></div>
+      </div>
+      <div class="about-text-col">
+        <span class="about-overline fade-up">03 · The painter</span>
+        <h2 class="about-title reveal-text">Drawn to what<br>the camera misses</h2>
+        <blockquote class="about-pull-quote fade-up">
+          "Realism isn't about copying what you see — it's about painting what you feel when you look."
+        </blockquote>
+        <p class="about-body fade-up delay-1">
+          Based in Tampa, Florida, Lorena works primarily in oil on canvas and linen, with a parallel practice in graphite for portraiture and figure studies. Her hyperrealist approach draws on years of careful observation — an insistence on getting the light exactly right, on finding the expression that lives just beneath the surface of a face.
+        </p>
+        <p class="about-body fade-up delay-2">
+          Commissions form the core of the studio practice. Each piece is approached as a conversation between subject and painter — a collaboration that takes months but lasts a lifetime.
+        </p>
+        <div class="about-credentials fade-up delay-3">
+          <div class="about-credential">
+            <span class="about-credential-year">2023</span>
+            <span class="about-credential-text">Tampa Bay regional exhibitions</span>
+          </div>
+          <div class="about-credential">
+            <span class="about-credential-year">2022</span>
+            <span class="about-credential-text">Solo portrait commission series, private collectors</span>
+          </div>
+          <div class="about-credential">
+            <span class="about-credential-year">2019</span>
+            <span class="about-credential-text">Graphite & oil — dual-medium studio established</span>
+          </div>
+          <div class="about-credential">
+            <span class="about-credential-year">Tampa</span>
+            <span class="about-credential-text">Based — available for national commissions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA — Full bleed dark -->
+  <section id="cta">
+    <span class="cta-label">04 · Commission</span>
+    <h2 class="cta-heading reveal-text">
+      Commission original work<br><em>made to outlast everything</em>
+    </h2>
+    <p class="cta-sub">Oil portraits · Graphite studies · Family heirlooms · Legacy pieces</p>
+    <a href="mailto:lorena@lorena-art.com" class="cta-button">Begin a Commission</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <span class="contact-overline">05 · Studio contact</span>
+      <h2 class="contact-title reveal-text">Get In Touch</h2>
+      <p class="contact-body fade-up">
+        For commission inquiries, pricing, and timelines — reach out directly. Response within 48 hours.
+      </p>
+      <a href="mailto:lorena@lorena-art.com" class="contact-email fade-up">lorena@lorena-art.com</a>
+      <div class="contact-socials fade-up delay-1">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Behance</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Lorena Art · Tampa, FL</span>
+    <span class="footer-copy">© 2026 Lorena Art. All rights reserved.</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // ─── HERO LOAD ANIMATIONS ───
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroOverline').classList.add('loaded');
+        document.getElementById('heroDivider').classList.add('loaded');
+      }, 100);
+      setTimeout(() => {
+        document.getElementById('heroNameInner1').classList.add('loaded');
+      }, 200);
+      setTimeout(() => {
+        document.getElementById('heroNameInner2').classList.add('loaded');
+      }, 380);
+      setTimeout(() => {
+        document.getElementById('heroDescriptor').classList.add('loaded');
+        document.getElementById('heroTagline').classList.add('loaded');
+      }, 900);
+      setTimeout(() => {
+        document.getElementById('heroScroll').classList.add('loaded');
+      }, 1400);
+    });
+
+    // ─── HERO PARALLAX ───
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (heroBg && scrollY < window.innerHeight * 1.5) {
+        heroBg.style.transform = `translateY(${scrollY * 0.35}px)`;
+      }
+    }, { passive: true });
+
+    // ─── INTERSECTION OBSERVER ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const textObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          textObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal-text, .cta-label').forEach(el => textObserver.observe(el));
+    document.querySelectorAll('.fade-up, .img-reveal, .accent-line').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
