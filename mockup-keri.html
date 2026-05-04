@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keri Keene Art — Pastel Pet Portraits &amp; Fine Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F5EFE6;
+      --warm-white: #FBF7F2;
+      --sand:    #DDD0BE;
+      --taupe:   #9A8D7E;
+      --charcoal: #2E2A27;
+      --ink:     #1A1714;
+      --dusty-rose: #C4907A;
+      --accent:  #A06048;
+      --light-line: #DDD0BE;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────── NAV ─────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      mix-blend-mode: multiply;
+    }
+
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    nav ul a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 0.65; }
+
+    /* ─────────────────────────── HERO ─────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://i.pinimg.com/736x/bc/cf/ab/bccfab83c3c64935a2a21a2375a427a6.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 0.1s linear;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26,23,20,0.72) 0%,
+        rgba(26,23,20,0.25) 40%,
+        rgba(26,23,20,0.08) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 64px;
+      left: 64px;
+      right: 30%;
+    }
+
+    .hero-tag {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hero-tag.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(64px, 8vw, 108px);
+      line-height: 0.92;
+      letter-spacing: 0.06em;
+      color: var(--warm-white);
+      text-shadow: 0 2px 24px rgba(26,23,20,0.3);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .hero-name.visible { clip-path: inset(0 0% 0 0); }
+
+    .hero-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      color: var(--sand);
+      margin-top: 22px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+    }
+
+    .hero-sub.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-line {
+      width: 48px;
+      height: 1px;
+      background: var(--dusty-rose);
+      margin-top: 28px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.6s;
+    }
+
+    .hero-line.visible { opacity: 1; }
+
+    /* ─────────────────────────── MARQUEE ─────────────────────────── */
+    .marquee-strip {
+      background: var(--charcoal);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 36s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      color: var(--sand);
+      margin-right: 0;
+    }
+
+    .marquee-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: var(--dusty-rose);
+      border-radius: 50%;
+      vertical-align: middle;
+      margin: 0 28px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─────────────────────────── SECTION COMMON ─────────────────────────── */
+    section { position: relative; }
+
+    .section-number {
+      position: absolute;
+      top: -18px;
+      left: -10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 100px;
+      color: rgba(196,144,122,0.08);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .accent-line {
+      width: 30%;
+      height: 1px;
+      background: var(--dusty-rose);
+      margin: 0 auto;
+    }
+
+    /* ─────────────────────────── STATS ─────────────────────────── */
+    .stats {
+      background: var(--cream);
+      padding: 80px 64px;
+    }
+
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .stat-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-top: 10px;
+    }
+
+    /* ─────────────────────────── GALLERY ─────────────────────────── */
+    .gallery {
+      padding: 120px 64px;
+      background: var(--warm-white);
+    }
+
+    .gallery-header {
+      display: flex;
+      align-items: baseline;
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 38px;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+    .section-subtitle {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: var(--taupe);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.3s;
+    }
+
+    .section-subtitle.visible { opacity: 1; }
+
+    .masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .masonry-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      transition: opacity 0.7s ease, transform 0.5s ease;
+    }
+
+    .masonry-item img.visible { opacity: 1; }
+
+    .masonry-item:hover img {
+      transform: scale(1.02);
+    }
+
+    .masonry-item .img-title {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 16px 16px;
+      background: linear-gradient(transparent, rgba(26,23,20,0.7));
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--cream);
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .masonry-item:hover .img-title { opacity: 1; }
+
+    /* ─────────────────────────── ACCENT DIVIDER ─────────────────────────── */
+    .divider {
+      padding: 40px 64px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: var(--light-line);
+      flex: 1;
+    }
+
+    .divider-mark {
+      width: 6px;
+      height: 6px;
+      border: 1px solid var(--dusty-rose);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────── COMMISSION PROCESS ─────────────────────────── */
+    .process {
+      padding: 80px 64px 120px;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-bg-text {
+      position: absolute;
+      top: 20px;
+      right: -20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 200px;
+      color: rgba(196,144,122,0.05);
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .process-header {
+      margin-bottom: 72px;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 18%;
+      right: 18%;
+      height: 1px;
+      background: var(--sand);
+    }
+
+    .process-step {
+      padding: 0 40px 0 0;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .process-step.visible { opacity: 1; transform: translateY(0); }
+
+    .step-num {
+      width: 60px;
+      height: 60px;
+      border: 1px solid var(--sand);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--accent);
+      background: var(--cream);
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--ink);
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .step-text {
+      font-size: 15px;
+      color: var(--taupe);
+      line-height: 1.7;
+    }
+
+    /* ─────────────────────────── ABOUT ─────────────────────────── */
+    .about {
+      padding: 120px 64px;
+      background: var(--warm-white);
+    }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-portrait {
+      position: relative;
+    }
+
+    .about-portrait img {
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+
+    .about-portrait img.visible { opacity: 1; }
+
+    .about-portrait::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 60%;
+      height: 60%;
+      border: 1px solid var(--sand);
+      z-index: -1;
+    }
+
+    .about-text {
+      padding-top: 12px;
+    }
+
+    .about-label {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+
+    .about-label.visible { opacity: 1; }
+
+    .about-bio {
+      font-size: 17px;
+      color: var(--charcoal);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+
+    .about-bio.visible { opacity: 1; transform: translateY(0); }
+
+    .about-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--accent);
+      border-left: 2px solid var(--dusty-rose);
+      padding-left: 24px;
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.9s ease 0.25s, transform 0.9s ease 0.25s;
+    }
+
+    .about-pull-quote.visible { opacity: 1; transform: translateX(0); }
+
+    .about-details {
+      display: flex;
+      gap: 48px;
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.35s;
+    }
+
+    .about-details.visible { opacity: 1; }
+
+    .about-detail-item dt {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-bottom: 6px;
+    }
+
+    .about-detail-item dd {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      color: var(--ink);
+    }
+
+    /* ─────────────────────────── FEATURED ─────────────────────────── */
+    .featured {
+      background: var(--charcoal);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .featured-image {
+      overflow: hidden;
+      max-height: 560px;
+    }
+
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.9s ease, transform 0.6s ease;
+    }
+
+    .featured-image img.visible { opacity: 1; }
+    .featured-image:hover img { transform: scale(1.03); }
+
+    .featured-text {
+      padding: 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-label {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+
+    .featured-label.visible { opacity: 1; }
+
+    .featured-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 46px;
+      line-height: 1.15;
+      color: var(--cream);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+
+    .featured-heading.visible { clip-path: inset(0 0% 0 0); }
+
+    .featured-body {
+      font-size: 15px;
+      color: var(--sand);
+      line-height: 1.75;
+      margin-top: 28px;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    }
+
+    .featured-body.visible { opacity: 1; transform: translateY(0); }
+
+    .featured-price-note {
+      margin-top: 40px;
+      padding: 24px 28px;
+      border: 1px solid rgba(196,144,122,0.35);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.5s;
+    }
+
+    .featured-price-note.visible { opacity: 1; }
+
+    .price-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-bottom: 8px;
+    }
+
+    .price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: var(--cream);
+    }
+
+    /* ─────────────────────────── BOLD CTA ─────────────────────────── */
+    .cta-section {
+      background: var(--accent);
+      padding: 100px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: 'Commission';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 200px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(40px, 5vw, 64px);
+      color: var(--warm-white);
+      line-height: 1.2;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .cta-title.visible { clip-path: inset(0 0% 0 0); }
+
+    .cta-subtitle {
+      font-size: 16px;
+      color: rgba(251,247,242,0.75);
+      letter-spacing: 0.08em;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.3s;
+    }
+
+    .cta-subtitle.visible { opacity: 1; }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 48px;
+      padding: 16px 52px;
+      border: 1px solid var(--warm-white);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.5s, background 0.3s, color 0.3s;
+    }
+
+    .cta-btn.visible { opacity: 1; }
+
+    .cta-btn:hover {
+      background: var(--warm-white);
+      color: var(--accent);
+    }
+
+    /* ─────────────────────────── CONTACT ─────────────────────────── */
+    .contact {
+      padding: 100px 64px;
+      background: var(--warm-white);
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left .section-title {
+      font-size: 44px;
+      margin-bottom: 28px;
+    }
+
+    .contact-body {
+      font-size: 16px;
+      color: var(--taupe);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.2s;
+    }
+
+    .contact-body.visible { opacity: 1; }
+
+    .contact-email-link {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--dusty-rose);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.35s;
+    }
+
+    .contact-email-link.visible { opacity: 1; }
+
+    .contact-email-link:hover { color: var(--charcoal); border-color: var(--charcoal); }
+
+    .contact-right {
+      padding-top: 12px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .contact-link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--light-line);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    .contact-link-item.visible { opacity: 1; transform: translateX(0); transition: opacity 0.7s ease, transform 0.7s ease, color 0.2s; }
+
+    .contact-link-item:hover { color: var(--accent); }
+
+    .contact-link-arrow {
+      font-size: 18px;
+      color: var(--dusty-rose);
+    }
+
+    /* ─────────────────────────── FOOTER ─────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 44px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--taupe);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(155,141,126,0.5);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─────────────────────────── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      nav ul { gap: 20px; }
+      .hero-content { left: 24px; right: 5%; bottom: 48px; }
+      .hero-name { font-size: 56px; }
+      .stats { padding: 60px 24px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .gallery { padding: 80px 24px; }
+      .masonry { columns: 2; }
+      .process { padding: 60px 24px 80px; }
+      .process-steps { grid-template-columns: 1fr; }
+      .process-steps::before { display: none; }
+      .process-step { padding: 0 0 40px; }
+      .about { padding: 80px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-text { padding: 48px 24px; }
+      .cta-section { padding: 80px 24px; }
+      .contact { padding: 80px 24px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 14px; text-align: center; padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 44px; }
+      .masonry { columns: 1; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Keri Keene Art</a>
+    <ul>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#process">Commission</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: Full-bleed, text pinned bottom-left, text-shadow only -->
+  <section class="hero">
+    <div class="hero-bg" id="hero-parallax"></div>
+    <div class="hero-content">
+      <p class="hero-tag" id="hero-tag">Pastel Pet Portraits · Fine Art · Florida</p>
+      <h1 class="hero-name" id="hero-name">Keri<br>Keene</h1>
+      <p class="hero-sub" id="hero-sub">Original pastels &amp; custom pet portraits from Jacksonville Beach, FL</p>
+      <div class="hero-line" id="hero-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Pastel Pet Portraits</span>
+      <span class="marquee-dot"></span>
+      <span>Original Fine Art</span>
+      <span class="marquee-dot"></span>
+      <span>Custom Commissions Open</span>
+      <span class="marquee-dot"></span>
+      <span>Jacksonville Beach, FL</span>
+      <span class="marquee-dot"></span>
+      <span>Archival Quality</span>
+      <span class="marquee-dot"></span>
+      <span>Dogs · Cats · Horses · Wildlife</span>
+      <span class="marquee-dot"></span>
+      <span>Village Arts Gallery Member</span>
+      <span class="marquee-dot"></span>
+      <span>Pastel Pet Portraits</span>
+      <span class="marquee-dot"></span>
+      <span>Original Fine Art</span>
+      <span class="marquee-dot"></span>
+      <span>Custom Commissions Open</span>
+      <span class="marquee-dot"></span>
+      <span>Jacksonville Beach, FL</span>
+      <span class="marquee-dot"></span>
+      <span>Archival Quality</span>
+      <span class="marquee-dot"></span>
+      <span>Dogs · Cats · Horses · Wildlife</span>
+      <span class="marquee-dot"></span>
+      <span>Village Arts Gallery Member</span>
+      <span class="marquee-dot"></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number">7+</div>
+        <div class="stat-label">Years of commissions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Media: Pastel · Graphite · Color Pencil</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">790</div>
+        <div class="stat-label">Instagram followers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Love for Florida animals</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div style="position:relative; max-width: 1100px; margin: 0 auto 64px;">
+      <span class="section-number">01</span>
+    </div>
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div class="gallery-header">
+        <h2 class="section-title">Portfolio</h2>
+        <p class="section-subtitle">Original pastels · Color pencil · Graphite</p>
+      </div>
+
+      <div class="masonry">
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/bc/cf/ab/bccfab83c3c64935a2a21a2375a427a6.jpg" alt="Dog portrait in pastel" loading="lazy" />
+          <div class="img-title">Dog Portrait — Pastel</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/8e/fc/f0/8efcf064d74ef258d3275a2bfe0b7ffd.jpg" alt="Great Horned Owl by Keri Keene" loading="lazy" />
+          <div class="img-title">Great Horned Owl — Pastel</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/6a/ff/57/6aff573cb874e2dc65fbdbc39f316884.jpg" alt="Pitbull portrait pastel" loading="lazy" />
+          <div class="img-title">Pitbull Portrait — Pastel</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/19/65/d8/1965d8e585fb61a21414fddc976058b5.jpg" alt="Dog drawing" loading="lazy" />
+          <div class="img-title">Dog Study — Color Pencil</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/84/72/69/84726963dcf7ae8e8d4712081b54871a.jpg" alt="Pitbull Bentley" loading="lazy" />
+          <div class="img-title">Bentley — Color Pencil 8×10</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/d7/2a/2a/d72a2a4f84bcd50004ac1fb432133d98.jpg" alt="Calming watercolor pet" loading="lazy" />
+          <div class="img-title">Calm Study — Watercolor Pencil</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/5e/eb/d0/5eebd0c674a3da3630c5c1e75d061d4c.jpg" alt="Pitbull in pastel" loading="lazy" />
+          <div class="img-title">Pitbull — Pastel Pencil</div>
+        </div>
+        <div class="masonry-item">
+          <img src="https://i.pinimg.com/736x/c7/e0/88/c7e08817b7116c16600066ee10b8d389.jpg" alt="Florida landscape pastel" loading="lazy" />
+          <div class="img-title">Florida Landscape — Pastel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+  <!-- COMMISSION PROCESS -->
+  <section class="process" id="process">
+    <div class="process-bg-text" aria-hidden="true">Commission</div>
+    <div style="max-width: 1100px; margin: 0 auto; position: relative;">
+      <div class="process-header">
+        <h2 class="section-title">Commission a Portrait</h2>
+        <p class="section-subtitle" style="margin-top: 16px;">Each piece is drawn by hand, one layer at a time.</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Share your photos</h3>
+          <p class="step-text">Send 2–4 reference photos that show your pet's eyes, coat, and personality. The clearer the photo, the more alive the portrait.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Choose size &amp; medium</h3>
+          <p class="step-text">Select from pastel, graphite, or color pencil. Sizes range from 8×10 to 16×12 and beyond. All work is on archival-quality paper.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Receive your portrait</h3>
+          <p class="step-text">Your portrait is drawn in careful layers, capturing not just accuracy — but the familiar expression that makes your pet irreplaceable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORK + WILDLIFE -->
+  <section class="featured">
+    <div class="featured-image">
+      <img src="https://i.pinimg.com/736x/35/a7/ce/35a7ceafe5a5c6ed664f7b02b63fb180.jpg" alt="Keri Keene featured artwork" loading="lazy" />
+    </div>
+    <div class="featured-text">
+      <p class="featured-label">Featured Work</p>
+      <h2 class="featured-heading">Captured in<br>Pastel &amp; Pencil</h2>
+      <p class="featured-body">
+        Working primarily in pastel, graphite, and color pencil, Keri builds each piece in deliberate layers — fur texture first, then shadows, then the light that makes the eyes hold. The result is a portrait that feels alive long after the subject has left the room.
+      </p>
+      <div class="featured-price-note">
+        <div class="price-label">Commissions starting at</div>
+        <div class="price-value">Available on Etsy · KeriKeeneArt</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-portrait">
+        <img src="https://i.pinimg.com/736x/9f/7a/08/9f7a08da6214cec0cd945ba51f418437.jpg" alt="Keri Keene artwork" loading="lazy" />
+      </div>
+      <div class="about-text">
+        <p class="about-label">About the Artist</p>
+        <h2 class="section-title" style="margin-bottom: 28px;">Keri Keene</h2>
+        <p class="about-bio">
+          A Florida native with roots in both the panhandle and the Treasure Coast, Keene draws from the landscapes and animals she has lived among her entire life. Trained early by her mother, fellow pastelist Melody May Keene, she developed a rigorous hand-drawing practice across pastel, graphite, and color pencil. Her work — animals, pet portraits, and Florida landscapes — has been shown at the Vero Beach Main Street Gallery and earned her membership in the Village Arts Framing &amp; Gallery in Ponte Vedra Beach.
+        </p>
+        <blockquote class="about-pull-quote">
+          "I take time and care with each portrait, building the drawing in layers to capture not just accuracy, but also the familiar expression that makes your pet unique."
+        </blockquote>
+        <dl class="about-details">
+          <div class="about-detail-item">
+            <dt>Based in</dt>
+            <dd>Jacksonville Beach, FL</dd>
+          </div>
+          <div class="about-detail-item">
+            <dt>Gallery</dt>
+            <dd>Village Arts, Ponte Vedra</dd>
+          </div>
+          <div class="about-detail-item">
+            <dt>Media</dt>
+            <dd>Pastel · Graphite · Color Pencil</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section class="cta-section" id="commission">
+    <h2 class="cta-title">Commission Your<br>Pet's Portrait</h2>
+    <p class="cta-subtitle">Custom pastel &amp; pencil portraits · Ships anywhere · Archival materials</p>
+    <a href="mailto:kerikeeneart@yahoo.com" class="cta-btn">Start a commission</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="contact-body">
+          Ready to commission a portrait, or just want to learn more about the process? Reach out directly — response time is typically within 48 hours.
+        </p>
+        <a href="mailto:kerikeeneart@yahoo.com" class="contact-email-link">kerikeeneart@yahoo.com</a>
+      </div>
+      <div class="contact-right">
+        <a href="https://www.etsy.com/shop/KeriKeeneArt" target="_blank" rel="noopener" class="contact-link-item">
+          <span>Etsy Shop — KeriKeeneArt</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://www.instagram.com/kerikeeneart/" target="_blank" rel="noopener" class="contact-link-item">
+          <span>Instagram — @kerikeeneart</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://www.facebook.com/KeriKeeneArt" target="_blank" rel="noopener" class="contact-link-item">
+          <span>Facebook — Keri Keene Art</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://villageartspvb.com" target="_blank" rel="noopener" class="contact-link-item">
+          <span>Village Arts Gallery, Ponte Vedra</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Keri Keene Art</div>
+    <div class="footer-copy">© 2026 · Jacksonville Beach, FL</div>
+    <div class="footer-credit">Design concept by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // ─── HERO ENTRANCE ───────────────────────────────────────────
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('hero-tag').classList.add('visible');
+        document.getElementById('hero-name').classList.add('visible');
+      }, 120);
+      setTimeout(() => {
+        document.getElementById('hero-sub').classList.add('visible');
+        document.getElementById('hero-line').classList.add('visible');
+      }, 500);
+    });
+
+    // ─── HERO PARALLAX ───────────────────────────────────────────
+    const heroBg = document.getElementById('hero-parallax');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < window.innerHeight) {
+        heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+      }
+    }, { passive: true });
+
+    // ─── INTERSECTION OBSERVER ───────────────────────────────────
+    const observerText = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.15 });
+
+    const observerImg = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.05 });
+
+    // Text elements
+    document.querySelectorAll(
+      '.section-title, .section-subtitle, .stat-item, .about-label, .about-bio, .about-pull-quote, .about-details, .contact-body, .contact-email-link, .featured-label, .featured-heading, .featured-body, .featured-price-note, .cta-title, .cta-subtitle, .cta-btn'
+    ).forEach(el => observerText.observe(el));
+
+    // Images
+    document.querySelectorAll('.masonry-item img, .about-portrait img, .featured-image img').forEach((img, i) => {
+      img.style.transitionDelay = `${i * 80}ms`;
+      observerImg.observe(img);
+    });
+
+    // Process steps with stagger
+    document.querySelectorAll('.process-step').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 150}ms`;
+      observerText.observe(el);
+    });
+
+    // Contact links with stagger
+    document.querySelectorAll('.contact-link-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 100}ms`;
+      observerText.observe(el);
+    });
+  </script>
+
+</body>
+</html>
