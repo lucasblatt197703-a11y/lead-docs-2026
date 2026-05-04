@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lynne Raimondo — Coastal Painter · Bonita Springs, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ocean: #3A7CA5;
+    --ocean-deep: #1D4E6F;
+    --teal: #4AADA8;
+    --sand: #F5EDD6;
+    --sand-dark: #E8D9B8;
+    --warm-white: #FDFAF5;
+    --driftwood: #8C7A64;
+    --text-dark: #1C2B3A;
+    --text-mid: #4A5568;
+    --coral: #D4784A;
+    --accent-line: #4AADA8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 0.7; }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1cfcf82a-960b-4b6c-a6a2-389154c01b91/1000023674.png');
+    background-size: cover;
+    background-position: center 40%;
+    transform: scale(1.05);
+    transition: transform 12s ease-out;
+  }
+
+  .hero-bg.loaded { transform: scale(1.0); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(15, 30, 45, 0.55) 0%,
+      rgba(15, 30, 45, 0.1) 50%,
+      transparent 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    max-width: 560px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+
+  .hero-name {
+    font-family: 'Lora', serif;
+    font-size: clamp(56px, 8vw, 96px);
+    font-weight: 700;
+    line-height: 1.0;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .hero-tagline {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(255,255,255,0.88);
+    margin-top: 18px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.8s, transform 0.7s ease 0.8s;
+  }
+
+  .hero-accent-line {
+    width: 48px;
+    height: 2px;
+    background: var(--teal);
+    margin: 22px 0;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.4s ease 1.0s, transform 0.6s ease 1.0s;
+  }
+
+  .hero-scroll-cue {
+    position: absolute;
+    bottom: 28px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.8s ease 1.4s;
+  }
+
+  .hero-scroll-cue span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    writing-mode: vertical-rl;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.4);
+    animation: scrollPulse 2s ease-in-out infinite 1.6s;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.7); }
+  }
+
+  /* hero loaded state */
+  .hero-loaded .hero-eyebrow { opacity: 1; transform: translateY(0); }
+  .hero-loaded .hero-name { clip-path: inset(0 0% 0 0); }
+  .hero-loaded .hero-tagline { opacity: 1; transform: translateY(0); }
+  .hero-loaded .hero-accent-line { opacity: 1; transform: scaleX(1); }
+  .hero-loaded .hero-scroll-cue { opacity: 1; }
+
+  /* ─── MARQUEE STRIP ─── */
+  .marquee-strip {
+    background: var(--ocean-deep);
+    color: rgba(255,255,255,0.75);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marqueeScroll 40s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0 32px;
+  }
+
+  .marquee-inner .dot {
+    color: var(--teal);
+    padding: 0 8px;
+  }
+
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION SHARED ─── */
+  section { position: relative; }
+
+  .section-accent {
+    display: block;
+    width: 30%;
+    height: 1px;
+    background: var(--accent-line);
+    margin: 0 auto 60px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-accent.is-visible { opacity: 1; transform: scaleX(1); }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 100px 0 0;
+    background: var(--warm-white);
+  }
+
+  .gallery-header {
+    padding: 0 64px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .gallery-heading {
+    font-family: 'Lora', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--text-dark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .gallery-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--text-mid);
+    text-align: right;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--sand-dark);
+    aspect-ratio: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .gallery-item.is-visible { opacity: 1; }
+
+  .gallery-item:nth-child(1) { aspect-ratio: 1 / 1.3; grid-row: span 1; }
+  .gallery-item:nth-child(5) { grid-column: span 2; aspect-ratio: 2 / 1; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .gallery-item-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(15,30,45,0.7) 0%, transparent 100%);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-item-overlay { transform: translateY(0); }
+
+  .gallery-item-title {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #fff;
+  }
+
+  .gallery-item-price {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* ─── FEATURED ORIGINALS ─── */
+  #originals {
+    padding: 120px 64px;
+    background: var(--sand);
+  }
+
+  .originals-heading {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .originals-heading.is-visible { opacity: 1; transform: translateY(0); }
+
+  .originals-title {
+    font-family: 'Lora', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 64px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .originals-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .originals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .original-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--sand-dark);
+    padding: 40px 0;
+    gap: 60px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .original-item.is-visible { opacity: 1; transform: translateY(0); }
+  .original-item:last-child { border-bottom: 1px solid var(--sand-dark); }
+
+  .original-item:nth-child(even) { direction: rtl; }
+  .original-item:nth-child(even) > * { direction: ltr; }
+
+  .original-img-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .original-img-wrap img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+  }
+
+  .original-item:hover .original-img-wrap img { transform: scale(1.03); }
+
+  .original-info { padding: 20px 0; }
+
+  .original-num {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .original-name {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .original-desc {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-mid);
+    margin-bottom: 28px;
+    max-width: 400px;
+  }
+
+  .original-price {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+  }
+
+  .btn-inquire {
+    display: inline-block;
+    padding: 12px 28px;
+    background: transparent;
+    border: 1.5px solid var(--ocean-deep);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ocean-deep);
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  .btn-inquire:hover {
+    background: var(--ocean-deep);
+    color: #fff;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 120px 64px;
+    background: var(--warm-white);
+  }
+
+  .about-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-eyebrow {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .about-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-portrait {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 40px;
+    display: block;
+    border: 3px solid var(--sand-dark);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .about-portrait.is-visible { opacity: 1; }
+
+  .about-name {
+    font-family: 'Lora', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .about-name.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .about-bio {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-quote {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ocean);
+    line-height: 1.6;
+    border-left: 3px solid var(--teal);
+    padding: 4px 0 4px 24px;
+    text-align: left;
+    margin: 40px 0 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+  }
+
+  .about-quote.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-details {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid var(--sand-dark);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+  }
+
+  .about-details.is-visible { opacity: 1; transform: translateY(0); }
+
+  .detail-item { text-align: center; }
+
+  .detail-num {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--ocean-deep);
+    display: block;
+  }
+
+  .detail-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    padding: 120px 64px;
+    background: var(--ocean-deep);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/9f2960f6-9406-4097-808a-bf0491caddf1/1000040584.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+  }
+
+  .cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+  .cta-eyebrow {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+
+  .btn-cta {
+    display: inline-block;
+    padding: 18px 48px;
+    background: var(--teal);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.2s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s, background 0.25s ease;
+  }
+
+  .btn-cta.is-visible { opacity: 1; transform: translateY(0); }
+  .btn-cta:hover { background: var(--coral); }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 80px 64px;
+    background: var(--sand);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left { }
+
+  .contact-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .contact-label.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-heading {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    line-height: 1.25;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+  }
+
+  .contact-heading.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-text {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+
+  .contact-text.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-email {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ocean-deep);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--teal);
+    padding-bottom: 3px;
+    transition: color 0.2s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s, color 0.2s ease;
+  }
+
+  .contact-email.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-email:hover { color: var(--teal); }
+
+  .contact-right {
+    padding-top: 20px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-info-line {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--sand-dark);
+  }
+
+  .contact-info-line:first-child { border-top: 1px solid var(--sand-dark); }
+
+  .info-key {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--driftwood);
+    min-width: 100px;
+    padding-top: 2px;
+  }
+
+  .info-val {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+
+  .info-val a {
+    color: var(--ocean);
+    text-decoration: none;
+  }
+
+  .info-val a:hover { text-decoration: underline; }
+
+  .social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ocean-deep);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--teal);
+    transition: color 0.2s ease;
+  }
+
+  .social-link:hover { color: var(--teal); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--text-dark);
+    padding: 32px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .footer-copy {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-credit {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .hero-content { left: 24px; bottom: 40px; }
+    .gallery-header { padding: 0 24px 32px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(5) { grid-column: span 2; }
+    #originals { padding: 80px 24px; }
+    .original-item { grid-template-columns: 1fr; gap: 24px; }
+    .original-item:nth-child(even) { direction: ltr; }
+    #about { padding: 80px 24px; }
+    #cta { padding: 80px 24px; }
+    #contact { padding: 60px 24px; grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 48px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(1) { aspect-ratio: 1 / 1; }
+    .gallery-heading { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Lynne Raimondo</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#originals">Originals</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content" id="heroContent">
+    <div class="hero-eyebrow">Coastal Painter · Bonita Springs, Florida</div>
+    <h1 class="hero-name">Lynne<br>Raimondo</h1>
+    <div class="hero-accent-line"></div>
+    <p class="hero-tagline">Original paintings of Florida's coast, light, and living color.</p>
+  </div>
+  <div class="hero-scroll-cue">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Original Oil Paintings</span><span class="dot">·</span>
+    <span>Bonita Springs, FL</span><span class="dot">·</span>
+    <span>Seascapes &amp; Coastal Landscapes</span><span class="dot">·</span>
+    <span>Available for Commissions</span><span class="dot">·</span>
+    <span>Etsy · Facebook · Shangri-La Resort</span><span class="dot">·</span>
+    <span>Free Shipping on Most Originals</span><span class="dot">·</span>
+    <span>Original Oil Paintings</span><span class="dot">·</span>
+    <span>Bonita Springs, FL</span><span class="dot">·</span>
+    <span>Seascapes &amp; Coastal Landscapes</span><span class="dot">·</span>
+    <span>Available for Commissions</span><span class="dot">·</span>
+    <span>Etsy · Facebook · Shangri-La Resort</span><span class="dot">·</span>
+    <span>Free Shipping on Most Originals</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <h2 class="gallery-heading">The Collection</h2>
+    <p class="gallery-sub">Original paintings &amp; framed prints<br>from the Florida coast</p>
+  </div>
+  <span class="section-accent"></span>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1cfcf82a-960b-4b6c-a6a2-389154c01b91/1000023674.png" alt="High Tide" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">High Tide</div>
+        <div class="gallery-item-price">$1,000</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/9f2960f6-9406-4097-808a-bf0491caddf1/1000040584.jpg" alt="Sanctuary" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Sanctuary</div>
+        <div class="gallery-item-price">$1,200</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/eb1d2c73-af8f-453a-8787-f270870462e4/1000040358.png" alt="Paradise Point" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Paradise Point</div>
+        <div class="gallery-item-price">$1,200</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1719599875256-62YV8IZXSDUUNUB0FW0X/1000014359.jpg" alt="Bird Watching I" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Bird Watching I</div>
+        <div class="gallery-item-price">$250</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/450251ec-cc84-4453-8c02-174f333c5888/1000028647.png" alt="Riverwalk Park" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Riverwalk Park</div>
+        <div class="gallery-item-price">$550</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1713366589377-1SPRL7OM0G2RQ2LOWN40/1000010937.jpg" alt="Sand Dune" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Sand Dune</div>
+        <div class="gallery-item-price">$250</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1707565025921-99ME2A0MDCMTJC5MQTLT/processed_207b0c19cb714892b1d943065628fca7.jpeg" alt="Pink Marsh Sky" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Pink Marsh Sky</div>
+        <div class="gallery-item-price">$225</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/5982c5c5-49e5-40b3-8240-99361c46e6bf/1000042101.jpg" alt="Luminous Morning" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Luminous Morning</div>
+        <div class="gallery-item-price">$275</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED ORIGINALS -->
+<section id="originals">
+  <div class="originals-heading">Featured Works</div>
+  <h2 class="originals-title">Available Originals</h2>
+
+  <div class="originals-list">
+
+    <div class="original-item">
+      <div class="original-img-wrap">
+        <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/9f2960f6-9406-4097-808a-bf0491caddf1/1000040584.jpg" alt="Sanctuary" loading="lazy">
+      </div>
+      <div class="original-info">
+        <div class="original-num">01</div>
+        <h3 class="original-name">Sanctuary</h3>
+        <p class="original-desc">A luminous coastal vista where warm sky meets still water — the quiet moment before the tide turns. Oil on gallery-wrapped canvas, ready to hang.</p>
+        <div class="original-price">$1,200</div>
+        <a href="mailto:coastalartetc@gmail.com?subject=Inquiry: Sanctuary" class="btn-inquire">Inquire</a>
+      </div>
+    </div>
+
+    <div class="original-item">
+      <div class="original-img-wrap">
+        <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/450251ec-cc84-4453-8c02-174f333c5888/1000028647.png" alt="Riverwalk Park" loading="lazy">
+      </div>
+      <div class="original-info">
+        <div class="original-num">02</div>
+        <h3 class="original-name">Riverwalk Park</h3>
+        <p class="original-desc">Dappled light through palm canopy over the Bonita Springs waterfront. The kind of afternoon that makes you stop and look twice. Oil on canvas.</p>
+        <div class="original-price">$550</div>
+        <a href="mailto:coastalartetc@gmail.com?subject=Inquiry: Riverwalk Park" class="btn-inquire">Inquire</a>
+      </div>
+    </div>
+
+    <div class="original-item">
+      <div class="original-img-wrap">
+        <img src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1699183842146-ZSLXYJ1CVCBPCTU28HRF/processed_d01f15a6f2474e8cb7ddf5f2f6c0a3b8.jpeg" alt="Lake Reflections" loading="lazy">
+      </div>
+      <div class="original-info">
+        <div class="original-num">03</div>
+        <h3 class="original-name">Lake Reflections</h3>
+        <p class="original-desc">Mirror-still water doubling the sky above — a Florida wetland at its most meditative. Vibrant impressionist palette, oil on canvas.</p>
+        <div class="original-price">$225</div>
+        <a href="mailto:coastalartetc@gmail.com?subject=Inquiry: Lake Reflections" class="btn-inquire">Inquire</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-eyebrow">The Artist</div>
+    <img
+      src="https://images.squarespace-cdn.com/content/v1/62c1e036d4d3a877b231e869/1658857449235-63NQXHEP0R6SRMP1EAO3/il_fullxfull.3711116631_ox03.jpg"
+      alt="Lynne Raimondo"
+      class="about-portrait"
+      loading="lazy"
+    >
+    <h2 class="about-name">Lynne Raimondo</h2>
+    <p class="about-bio">
+      Working from her studio in Bonita Springs, Raimondo paints Florida's coastal world with a commitment to vivid color and captured light — seascapes, wetlands, egrets, palms, beach cottages, and the particular quality of Gulf air at dusk. Her work is sold through local galleries, Shangri-La Resort, Etsy, and direct from the studio.
+    </p>
+    <blockquote class="about-quote">
+      "Vivid colors to capture beauty and light — that's what Southwest Florida gives you, if you slow down enough to look."
+    </blockquote>
+    <div class="about-details">
+      <div class="detail-item">
+        <span class="detail-num">46+</span>
+        <span class="detail-label">Originals Sold</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-num">4+</span>
+        <span class="detail-label">Years Active</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-num">FL</span>
+        <span class="detail-label">Bonita Springs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-img"></div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Commissions Open</div>
+    <h2 class="cta-title">Own a Piece<br>of the Coast</h2>
+    <p class="cta-sub">Original paintings ship free within the US. Custom commissions available — your beach town, your boat, your dog in the surf.</p>
+    <a href="mailto:coastalartetc@gmail.com?subject=Commission Inquiry" class="btn-cta">Start a Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <div class="contact-label">Get in Touch</div>
+    <h2 class="contact-heading">Studio<br>Inquiries</h2>
+    <p class="contact-text">For originals, prints, commissions, or wholesale — reach out directly. Most pieces ship within 5 business days.</p>
+    <a href="mailto:coastalartetc@gmail.com" class="contact-email">coastalartetc@gmail.com</a>
+  </div>
+  <div class="contact-right">
+    <div class="contact-info-line">
+      <span class="info-key">Location</span>
+      <span class="info-val">Bonita Springs, Florida</span>
+    </div>
+    <div class="contact-info-line">
+      <span class="info-key">Phone</span>
+      <span class="info-val">914-646-4153</span>
+    </div>
+    <div class="contact-info-line">
+      <span class="info-key">Gallery</span>
+      <span class="info-val">Shangri-La Resort, downtown Bonita Springs</span>
+    </div>
+    <div class="contact-info-line">
+      <span class="info-key">Shop Online</span>
+      <span class="info-val"><a href="https://www.etsy.com/shop/coastalartetc" target="_blank">Etsy — CoastalArtEtc</a></span>
+    </div>
+    <div class="social-links">
+      <a href="https://instagram.com/lynneraimondo_art" target="_blank" class="social-link">Instagram</a>
+      <a href="https://facebook.com/coastalartetc" target="_blank" class="social-link">Facebook</a>
+      <a href="https://pinterest.com/coastalartetc" target="_blank" class="social-link">Pinterest</a>
+      <a href="https://etsy.com/shop/coastalartetc" target="_blank" class="social-link">Etsy</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Lynne Raimondo Art</div>
+  <div class="footer-copy">© 2026 Lynne Raimondo · Bonita Springs, FL</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+  // Hero entrance animations
+  window.addEventListener('DOMContentLoaded', () => {
+    const heroEl = document.getElementById('heroContent');
+    const heroBg = document.getElementById('heroBg');
+    setTimeout(() => {
+      if (heroEl) heroEl.closest('section').classList.add('hero-loaded');
+      if (heroBg) heroBg.classList.add('loaded');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      heroBg.style.backgroundPositionY = (window.scrollY * 0.4) + 'px';
+    }, { passive: true });
+  }
+
+  // IntersectionObserver for all scroll animations
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, observerOptions);
+
+  // Gallery items stagger
+  const galleryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.gallery-item');
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('is-visible'), i * 80);
+        });
+        galleryObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  const galleryGrid = document.querySelector('.gallery-grid');
+  if (galleryGrid) galleryObserver.observe(galleryGrid);
+
+  // Section accent lines
+  document.querySelectorAll('.section-accent').forEach(el => observer.observe(el));
+
+  // Gallery heading
+  document.querySelectorAll('.gallery-heading').forEach(el => observer.observe(el));
+
+  // Originals
+  document.querySelectorAll('.originals-heading, .originals-title').forEach(el => observer.observe(el));
+  document.querySelectorAll('.original-item').forEach((el, i) => {
+    const itemObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('is-visible'), i * 120);
+          itemObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    itemObserver.observe(el);
+  });
+
+  // About
+  document.querySelectorAll('.about-eyebrow, .about-portrait, .about-name, .about-bio, .about-quote, .about-details').forEach(el => observer.observe(el));
+
+  // CTA
+  document.querySelectorAll('.cta-eyebrow, .cta-title, .cta-sub, .btn-cta').forEach(el => observer.observe(el));
+
+  // Contact
+  document.querySelectorAll('.contact-label, .contact-heading, .contact-text, .contact-email, .contact-right').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
