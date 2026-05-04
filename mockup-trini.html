@@ -129,12 +129,7 @@
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 16px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
   }
-
-  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
 
   .hero-name {
     font-family: 'Space Grotesk', sans-serif;
@@ -144,13 +139,7 @@
     letter-spacing: -0.02em;
     color: var(--text);
     display: block;
-    overflow: hidden;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1) 0.4s;
-  }
-
-  .hero-name.visible {
-    clip-path: inset(0 0% 0 0);
+    text-shadow: 0 2px 40px rgba(0,0,0,0.6);
   }
 
   .hero-sub {
@@ -158,14 +147,9 @@
     font-size: 16px;
     font-weight: 300;
     letter-spacing: 0.06em;
-    color: rgba(242,237,230,0.65);
+    color: rgba(242,237,230,0.75);
     margin-top: 20px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.7s ease 1.1s, transform 0.7s ease 1.1s;
   }
-
-  .hero-sub.visible { opacity: 1; transform: translateY(0); }
 
   /* ── MARQUEE STRIP ── */
   .marquee-wrap {
@@ -790,8 +774,8 @@
 
 <!-- HERO — MOSAIC GRID -->
 <section id="hero">
-  <img class="hero-img hero-img-1" src="https://static.wixstatic.com/media/e091e1_aaf81219e5fd4226973523ab26bc2d5c~mv2_d_2732_2048_s_2.png" alt="Mural work by TrinArt" loading="eager">
-  <img class="hero-img hero-img-2" src="https://static.wixstatic.com/media/e091e1_d3c7a5058ed44382a3aa364e03d865cb~mv2_d_2732_2048_s_2.png" alt="Commission mural Miami" loading="eager">
+  <img class="hero-img hero-img-1" src="https://static.wixstatic.com/media/e091e1_5e92ad9f478d4e3395246b276887d243~mv2.jpg" alt="Mural work by TrinArt" loading="eager">
+  <img class="hero-img hero-img-2" src="https://static.wixstatic.com/media/e091e1_06e8f84fbb864b97bdba8b9410c12151~mv2.jpg" alt="Commission mural Miami" loading="eager">
   <img class="hero-img hero-img-3" src="https://static.wixstatic.com/media/e091e1_c470457152ac49c1bbba08842f0e0ecf~mv2_d_2048_1536_s_2.jpg" alt="Mural detail" loading="eager">
   <img class="hero-img hero-img-4" src="https://static.wixstatic.com/media/e091e1_62e12a246a90415d968e5ff1959f094c~mv2.jpg" alt="Wall mural Miami" loading="eager">
 
@@ -1023,19 +1007,13 @@
   // ── HERO IMAGES ──
   // Trigger hero images immediately
   document.querySelectorAll('.hero-img').forEach((img, i) => {
-    setTimeout(() => img.classList.add('visible'), i * 150);
+    setTimeout(() => img.classList.add('visible'), i * 100);
   });
 
-  // Trigger hero text
-  setTimeout(() => {
-    document.querySelector('.hero-eyebrow')?.classList.add('visible');
-  }, 300);
-  setTimeout(() => {
-    document.querySelector('.hero-name')?.classList.add('visible');
-  }, 500);
-  setTimeout(() => {
-    document.querySelector('.hero-sub')?.classList.add('visible');
-  }, 900);
+  // Trigger hero text immediately
+  document.querySelector('.hero-eyebrow')?.classList.add('visible');
+  document.querySelector('.hero-name')?.classList.add('visible');
+  document.querySelector('.hero-sub')?.classList.add('visible');
 
   // ── INTERSECTION OBSERVER ──
   const observer = new IntersectionObserver((entries) => {
