@@ -3,346 +3,1191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amy Xie Photography — Proposal & Wedding Photographer</title>
+<title>Mariani Photography — Amy Mariani | Miami Wedding Photographer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  /* FORCE ALL IMAGES VISIBLE + RESPONSIVE */
-  img { max-width: 100% !important; height: auto; display: block; opacity: 1 !important; 
-        clip-path: none !important; transform: none !important; }
-  body { overflow-x: hidden; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-:root{--bg:#1A1614;--text:#F5EDE3;--amber:#C4885A;--mid:#221E1C;--subtle:#2E2924;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
+  :root {
+    --warm-cream: #F7F3EE;
+    --warm-white: #FBF8F5;
+    --text-dark: #1C1510;
+    --text-mid: #4A3728;
+    --accent-rose: #C4706A;
+    --accent-gold: #C9A96E;
+    --accent-muted: #E8D5C4;
+    --dark-bg: #1C1510;
+  }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:flex-end;align-items:center;padding:32px 56px;pointer-events:none;}
-.nav-inner{pointer-events:all;display:flex;gap:44px;}
-.nav-inner a{font-family:'Work Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--text);text-decoration:none;opacity:.55;transition:opacity .3s,color .3s;}
-.nav-inner a:hover{opacity:1;color:var(--amber);}
-.nav-brand{position:fixed;top:32px;left:56px;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:18px;color:var(--text);text-decoration:none;opacity:.75;pointer-events:all;}
+  html { scroll-behavior: smooth; }
 
-/* HERO — FULL BLEED, TEXT PINNED BOTTOM-LEFT */
-#hero{position:relative;height:100vh;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;transform:scale(1.06);transition:transform 8s ease-out;}
-.hero-bg img.loaded{transform:scale(1.0);}
-.hero-content{position:absolute;bottom:72px;left:56px;z-index:2;}
-.hero-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:96px;line-height:1;color:#fff;letter-spacing:.04em;text-shadow:0 2px 40px rgba(0,0,0,.5);letter-spacing:.18em;transition:letter-spacing 1.2s cubic-bezier(.25,.46,.45,.94);}
-.hero-name.compressed{letter-spacing:.04em;}
-.hero-sub{font-family:'Work Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,237,227,.65);margin-top:14px;text-shadow:0 1px 12px rgba(0,0,0,.5);}
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
 
-/* MARQUEE */
-.marquee-strip{background:transparent;border-top:1px solid rgba(196,136,90,.25);border-bottom:1px solid rgba(196,136,90,.25);padding:12px 0;overflow:hidden;white-space:nowrap;}
-.marquee-inner{display:inline-block;animation:marquee 40s linear infinite;}
-.marquee-inner span{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,237,227,.4);padding:0 48px;}
-.marquee-inner .dot{color:var(--amber);padding:0 16px;}
-@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
 
-/* GALLERY — MASONRY */
-#gallery{padding:100px 56px;background:var(--bg);}
-.gallery-header{margin-bottom:56px;}
-.gallery-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:52px;color:var(--text);transition:clip-path .8s cubic-bezier(.76,0,.24,1);will-change:clip-path;}
-.gallery-title.visible{clip-path:inset(0 0% 0 0);}
-.gallery-subtitle{font-family:'Work Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,237,227,.35);margin-top:12px;}
-.masonry{columns:3;column-gap:10px;}
-.masonry-item{break-inside:avoid;margin-bottom:10px;overflow:hidden;transition:clip-path .9s ease-out;will-change:clip-path;}
-.masonry-item.visible{clip-path:inset(0 0 0 0);}
-.masonry-item img{width:100%;display:block;transition:transform .7s ease;}
-.masonry-item:hover img{transform:scale(1.03);}
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
 
-/* FEATURED STORIES */
-#stories{padding:80px 56px 120px;background:var(--bg);}
-.stories-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:44px;color:var(--text);margin-bottom:64px;}
-.story-pair{display:grid;grid-template-columns:60fr 40fr;gap:40px;align-items:center;margin-bottom:80px;}
-.story-pair:nth-child(even){grid-template-columns:40fr 60fr;}
-.story-pair:nth-child(even) .story-img{order:2;}
-.story-pair:nth-child(even) .story-text{order:1;}
-.story-img{overflow:hidden;transition:clip-path .9s ease-out;will-change:clip-path;}
-.story-img.visible{clip-path:inset(0 0 0 0);}
-.story-img img{width:100%;height:500px;object-fit:cover;display:block;}
-.story-text{opacity: 1;transition:opacity .7s ease,transform .7s ease;will-change:transform,opacity;}
-.story-text.visible{opacity:1;transform:translateY(0);}
-.story-location{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
-.story-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:36px;line-height:1.3;color:var(--text);margin-bottom:20px;}
-.story-body{font-family:'Work Sans',sans-serif;font-size:16px;font-weight:300;line-height:1.85;color:rgba(245,237,227,.55);}
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
 
-/* ABOUT */
-#about{padding:120px 56px;background:var(--mid);display:flex;justify-content:center;}
-.about-inner{max-width:680px;text-align:center;}
-.about-portrait{width:120px;height:120px;border-radius:50%;object-fit:cover;margin:0 auto 40px;display:block;border:1px solid rgba(196,136,90,.25);}
-.about-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:32px;line-height:1.6;color:var(--text);margin-bottom:36px;opacity: 1;transition:opacity .8s ease,transform .8s ease;will-change:transform,opacity;}
-.about-quote.visible{opacity:1;transform:translateY(0);}
-.about-body{font-family:'Work Sans',sans-serif;font-size:16px;font-weight:300;line-height:1.9;color:rgba(245,237,227,.55);max-width:520px;margin:0 auto 36px;}
-.about-tags{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
-.about-tag{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);}
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.88);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
 
-/* STATS MARQUEE AREA */
-.stats-row{background:var(--bg);padding:80px 56px;display:flex;justify-content:center;gap:80px;border-top:1px solid rgba(196,136,90,.12);border-bottom:1px solid rgba(196,136,90,.12);}
-.stat-block{text-align:center;opacity: 1;transition:opacity .6s ease,transform .6s ease;will-change:transform,opacity;}
-.stat-block.visible{opacity:1;transform:translateY(0);}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--amber);line-height:1;}
-.stat-lbl{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,237,227,.35);margin-top:8px;}
+  .nav-links a:hover { color: #fff; }
 
-/* CTA */
-#cta{background:var(--subtle);padding:140px 56px;text-align:center;}
-.cta-eyebrow{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:28px;}
-.cta-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:64px;line-height:1.15;color:var(--text);margin-bottom:36px;}
-.cta-sub{font-family:'Work Sans',sans-serif;font-size:17px;font-weight:300;color:rgba(245,237,227,.5);margin-bottom:52px;max-width:440px;margin-left:auto;margin-right:auto;}
-.cta-btn{display:inline-block;border:1px solid var(--amber);color:var(--amber);font-family:'Work Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;padding:20px 48px;transition:background .3s,color .3s;}
-.cta-btn:hover{background:var(--amber);color:var(--bg);}
+  /* HERO — Full-bleed, text pinned bottom-left */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--dark-bg);
+  }
 
-/* CONTACT */
-#contact{padding:120px 56px;background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.contact-heading{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:44px;line-height:1.2;color:var(--text);margin-bottom:28px;}
-.contact-info p{font-family:'Work Sans',sans-serif;font-size:16px;font-weight:300;line-height:1.85;color:rgba(245,237,227,.5);}
-.contact-items{padding-top:8px;}
-.contact-item{display:flex;flex-direction:column;gap:6px;margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid rgba(196,136,90,.1);}
-.contact-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-.c-label{font-family:'Work Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);}
-.c-value{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;font-style:italic;color:var(--text);text-decoration:none;}
-.c-value:hover{color:var(--amber);}
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1800&q=85');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transition: transform 0s;
+  }
 
-/* FOOTER */
-footer{background:#0D0B0A;padding:36px 56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(196,136,90,.08);}
-.footer-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:16px;color:var(--amber);}
-.footer-copy{font-family:'Work Sans',sans-serif;font-size:12px;color:rgba(245,237,227,.2);}
-.footer-links{display:flex;gap:24px;}
-.footer-links a{font-family:'Work Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,237,227,.3);text-decoration:none;transition:color .3s;}
-.footer-links a:hover{color:var(--amber);}
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(28, 21, 16, 0.72) 0%,
+      rgba(28, 21, 16, 0.15) 50%,
+      rgba(28, 21, 16, 0.05) 100%
+    );
+  }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-nav{padding:20px 24px;}
-.nav-brand{left:24px;top:24px;}
-.nav-inner{display:none;}
-.hero-content{bottom:48px;left:24px;}
-.hero-name{font-size:56px;}
-#gallery{padding:80px 24px;}
-.masonry{columns:2;}
-#stories{padding:80px 24px 80px;}
-.story-pair,.story-pair:nth-child(even){grid-template-columns:1fr;}
-.story-pair:nth-child(even) .story-img,.story-pair:nth-child(even) .story-text{order:unset;}
-.story-img img{height:320px;}
-#about{padding:80px 24px;}
-.stats-row{padding:60px 24px;gap:40px;flex-wrap:wrap;}
-#cta{padding:80px 24px;}
-.cta-heading{font-size:44px;}
-#contact{grid-template-columns:1fr;padding:80px 24px;}
-footer{flex-direction:column;gap:16px;padding:28px 24px;text-align:center;}
-}
-@media(max-width:480px){
-.hero-name{font-size:40px;}
-.masonry{columns:1;}
-}
-  .section-title, .section-label, h2, h3 { opacity: 1 !important; clip-path: none !important; }
+  .hero-content {
+    position: absolute;
+    bottom: 72px;
+    left: 64px;
+    max-width: 680px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(72px, 9vw, 118px);
+    line-height: 0.92;
+    color: #fff;
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .hero-name .word {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .hero-name .word.visible { clip-path: inset(0 0% 0 0); }
+  .hero-name .word:nth-child(2) { transition-delay: 0.15s; }
+
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s;
+  }
+
+  .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-cta {
+    margin-top: 40px;
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #fff;
+    border-bottom: 1px solid var(--accent-rose);
+    padding-bottom: 6px;
+    text-decoration: none;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s, border-color 0.3s ease;
+  }
+
+  .hero-cta.visible { opacity: 1; transform: translateY(0); }
+  .hero-cta:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+  /* ACCENT LINE */
+  .accent-line {
+    width: 30%;
+    height: 1px;
+    background: var(--accent-rose);
+    margin: 0 auto;
+  }
+
+  /* MARQUEE STRIP */
+  .marquee-strip {
+    background: var(--dark-bg);
+    padding: 18px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-right: 0;
+  }
+
+  .marquee-dot {
+    color: var(--accent-rose) !important;
+    margin: 0 28px !important;
+    letter-spacing: 0 !important;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* STATS SECTION */
+  .stats {
+    background: var(--warm-cream);
+    padding: 80px 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--accent-muted);
+    border-bottom: 1px solid var(--accent-muted);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid var(--accent-muted);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item:last-child { border-right: none; }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.1s; }
+  .stat-item:nth-child(3) { transition-delay: 0.2s; }
+  .stat-item:nth-child(4) { transition-delay: 0.3s; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 88px;
+    line-height: 1;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+  }
+
+  /* GALLERY — Editorial scroll */
+  .gallery {
+    padding: 120px 0;
+    background: var(--warm-white);
+  }
+
+  .gallery-header {
+    padding: 0 64px;
+    margin-bottom: 72px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .section-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-rose);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 52px);
+    color: var(--text-dark);
+    letter-spacing: 0.04em;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  .gallery-header-right {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-mid);
+    max-width: 280px;
+    line-height: 1.7;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.4s;
+    text-align: right;
+  }
+
+  .gallery-header-right.visible { opacity: 1; }
+
+  /* Editorial gallery rows */
+  .gallery-row {
+    display: grid;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .gallery-row-1 {
+    grid-template-columns: 60% 40%;
+  }
+
+  .gallery-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-row-3 {
+    grid-template-columns: 35% 65%;
+  }
+
+  .gallery-row-4 {
+    grid-template-columns: 50% 50%;
+  }
+
+  .gallery-img-wrap {
+    overflow: hidden;
+    position: relative;
+    background: var(--accent-muted);
+  }
+
+  .gallery-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.9s ease, transform 1.2s ease;
+    loading: lazy;
+  }
+
+  .gallery-img-wrap img.visible {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+
+  .gallery-row-1 .gallery-img-wrap:first-child { height: 680px; }
+  .gallery-row-1 .gallery-img-wrap:last-child { height: 680px; }
+  .gallery-row-2 .gallery-img-wrap { height: 520px; }
+  .gallery-row-3 .gallery-img-wrap:first-child { height: 540px; }
+  .gallery-row-3 .gallery-img-wrap:last-child { height: 540px; }
+  .gallery-row-4 .gallery-img-wrap { height: 460px; }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-img-wrap:hover .gallery-caption { opacity: 1; }
+
+  .full-width-row {
+    padding: 60px 64px;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+
+  .full-width-row .text-block {
+    flex: 0 0 320px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .full-width-row .text-block.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .full-width-row .text-block p {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-mid);
+  }
+
+  .full-width-row .img-wrap {
+    flex: 1;
+    height: 500px;
+    overflow: hidden;
+    background: var(--accent-muted);
+    opacity: 0;
+    transition: opacity 0.9s ease 0.2s;
+  }
+
+  .full-width-row .img-wrap.visible { opacity: 1; }
+
+  .full-width-row .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .section-divider .line {
+    flex: 1;
+    height: 1px;
+    background: var(--accent-muted);
+  }
+
+  .section-divider .accent-bar {
+    width: 30%;
+    height: 1px;
+    background: var(--accent-rose);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--dark-bg);
+    padding: 120px 64px;
+    text-align: center;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(24px, 3.5vw, 38px);
+    line-height: 1.55;
+    color: rgba(255,255,255,0.9);
+    max-width: 860px;
+    margin: 0 auto 40px;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .testimonial-quote.visible { opacity: 1; transform: translateY(0); }
+
+  .testimonial-source {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-rose);
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+
+  .testimonial-source.visible { opacity: 1; }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 80px;
+    text-align: left;
+  }
+
+  .testimonial-card {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 32px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .testimonial-card.visible { opacity: 1; transform: translateY(0); }
+  .testimonial-card:nth-child(2) { transition-delay: 0.1s; }
+  .testimonial-card:nth-child(3) { transition-delay: 0.2s; }
+
+  .testimonial-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+  }
+
+  .testimonial-card .reviewer {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-style: normal;
+  }
+
+  /* ABOUT — Magazine spread */
+  .about {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    min-height: 680px;
+  }
+
+  .about-image {
+    overflow: hidden;
+    position: relative;
+    background: var(--accent-muted);
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .about-image img.visible { opacity: 1; }
+
+  .about-content {
+    padding: 100px 80px;
+    background: var(--warm-cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-content .section-eyebrow { margin-bottom: 18px; }
+
+  .about-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 3.5vw, 46px);
+    color: var(--text-dark);
+    letter-spacing: 0.03em;
+    margin-bottom: 32px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .about-content h2.visible { clip-path: inset(0 0% 0 0); }
+
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--accent-rose);
+    border-left: 2px solid var(--accent-rose);
+    padding-left: 24px;
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+
+  .about-pull-quote.visible { opacity: 1; transform: translateX(0); }
+
+  .about-content p {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+
+  .about-content p:last-of-type { transition-delay: 0.65s; }
+
+  .about-content p.visible { opacity: 1; transform: translateY(0); }
+
+  .about-details {
+    display: flex;
+    gap: 40px;
+    margin-top: 32px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.8s;
+  }
+
+  .about-details.visible { opacity: 1; }
+
+  .about-detail {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+  }
+
+  .about-detail strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+
+  /* BOLD CTA */
+  .cta-section {
+    background: var(--accent-rose);
+    padding: 120px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+
+  .cta-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 28px;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .cta-eyebrow.visible { opacity: 1; }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(42px, 6vw, 76px);
+    color: #fff;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: rgba(255,255,255,0.82);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+
+  .cta-sub.visible { opacity: 1; transform: translateY(0); }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-rose);
+    background: #fff;
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.6s, background 0.3s ease, color 0.3s ease;
+  }
+
+  .cta-btn.visible { opacity: 1; }
+  .cta-btn:hover { background: var(--dark-bg); color: #fff; }
+
+  /* CONTACT */
+  #contact {
+    padding: 120px 64px;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 52px);
+    color: var(--text-dark);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .contact-left h2.visible { clip-path: inset(0 0% 0 0); }
+
+  .contact-left p {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 40px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+  }
+
+  .contact-left p.visible { opacity: 1; }
+
+  .contact-email {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--accent-rose);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-rose);
+    padding-bottom: 4px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .contact-email.visible { opacity: 1; }
+  .contact-email:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
+
+  .contact-right {
+    padding-top: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.4s;
+  }
+
+  .contact-right.visible { opacity: 1; }
+
+  .contact-detail {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--accent-muted);
+  }
+
+  .contact-detail:last-child { border-bottom: none; }
+
+  .contact-detail .label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+
+  .contact-detail .value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-dark);
+    letter-spacing: 0.02em;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .social-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 3px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .social-links a:hover { color: var(--accent-rose); border-color: var(--accent-rose); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark-bg);
+    padding: 40px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.05em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; bottom: 48px; max-width: 90%; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+    .gallery-header { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 20px; }
+    .gallery-header-right { text-align: left; }
+    .gallery-row-1, .gallery-row-3, .gallery-row-4 { grid-template-columns: 1fr; }
+    .gallery-row-1 .gallery-img-wrap:first-child,
+    .gallery-row-1 .gallery-img-wrap:last-child { height: 320px; }
+    .gallery-row-3 .gallery-img-wrap, .gallery-row-4 .gallery-img-wrap { height: 280px; }
+    .gallery-row-2 .gallery-img-wrap { height: 360px; }
+    .full-width-row { flex-direction: column; padding: 40px 24px; gap: 32px; }
+    .full-width-row .text-block { flex: none; }
+    .full-width-row .img-wrap { width: 100%; }
+    .testimonials { padding: 80px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about { grid-template-columns: 1fr; }
+    .about-image { height: 400px; }
+    .about-content { padding: 60px 24px; }
+    .cta-section { padding: 80px 24px; }
+    #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 58px; }
+    .stat-number { font-size: 64px; }
+  }
 </style>
 </head>
 <body>
 
-<a href="#" class="nav-brand">Amy Xie</a>
+<!-- NAV -->
 <nav>
-  <div class="nav-inner">
-    <a href="#gallery">Gallery</a>
-    <a href="#stories">Stories</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </div>
+  <a href="#" class="nav-logo">Mariani Photography</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+    <li><a href="tel:9546621112">(954) 662-1112</a></li>
+  </ul>
 </nav>
 
-<section id="hero">
-  <div class="hero-bg">
-    <img id="hero-img" src="images/amy/img02.jpg" alt="Proposal photography" loading="eager">
-  </div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1 class="hero-name" id="hero-name">AMY XIE</h1>
-    <p class="hero-sub">Proposal &amp; Wedding Photography &nbsp;·&nbsp; NYC &amp; Tampa</p>
+    <p class="hero-eyebrow" id="heroEyebrow">Miami · South Florida · Est. 2004</p>
+    <h1 class="hero-name">
+      <span class="word" id="heroWord1">Mariani</span>
+      <span class="word" id="heroWord2">Photography</span>
+    </h1>
+    <p class="hero-tagline" id="heroTagline">Wedding &amp; Portrait Photography · Miami, Florida</p>
+    <a href="#gallery" class="hero-cta" id="heroCta">View the Work</a>
   </div>
 </section>
 
-<div class="marquee-strip" aria-hidden="true">
-  <div class="marquee-inner">
-    <span>NYC</span><span class="dot">·</span><span>Tampa</span><span class="dot">·</span><span>Proposals</span><span class="dot">·</span><span>Weddings</span><span class="dot">·</span><span>5,800+ Followers</span><span class="dot">·</span><span>Engagements</span><span class="dot">·</span><span>NYC</span><span class="dot">·</span><span>Tampa</span><span class="dot">·</span><span>Proposals</span><span class="dot">·</span><span>Weddings</span><span class="dot">·</span><span>5,800+ Followers</span><span class="dot">·</span><span>Engagements</span><span class="dot">·</span>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Wedding Photography</span><span class="marquee-dot">·</span>
+    <span>Miami &amp; South Florida</span><span class="marquee-dot">·</span>
+    <span>Engagements</span><span class="marquee-dot">·</span>
+    <span>Family Portraits</span><span class="marquee-dot">·</span>
+    <span>Cinematic Moments</span><span class="marquee-dot">·</span>
+    <span>Available for Destination Weddings</span><span class="marquee-dot">·</span>
+    <span>Wedding Photography</span><span class="marquee-dot">·</span>
+    <span>Miami &amp; South Florida</span><span class="marquee-dot">·</span>
+    <span>Engagements</span><span class="marquee-dot">·</span>
+    <span>Family Portraits</span><span class="marquee-dot">·</span>
+    <span>Cinematic Moments</span><span class="marquee-dot">·</span>
+    <span>Available for Destination Weddings</span><span class="marquee-dot">·</span>
   </div>
 </div>
 
-<section id="gallery">
+<!-- STATS -->
+<section class="stats">
+  <div class="stat-item">
+    <div class="stat-number">20+</div>
+    <div class="stat-label">Years of Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">500+</div>
+    <div class="stat-label">Weddings Captured</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Recommend Rate</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Counties Served</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
   <div class="gallery-header">
-    <h2 class="gallery-title">Selected Work</h2>
-    <p class="gallery-subtitle">Proposals · Engagements · Weddings</p>
+    <div>
+      <span class="section-eyebrow">Portfolio</span>
+      <h2 class="section-title">A Life of Love,<br>Documented</h2>
+    </div>
+    <p class="gallery-header-right">
+      From golden-hour ceremonies in Coral Gables to intimate celebrations on the beach at Key Biscayne — every frame tells the story only you can live.
+    </p>
   </div>
-  <div class="masonry">
-    <div class="masonry-item"><img src="images/amy/img05.jpg" alt="Proposal" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img03.jpg" alt="Engagement" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img09.jpg" alt="Wedding" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img13.jpg" alt="Couple" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img06.jpg" alt="Portrait" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img08.jpg" alt="Moment" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img10.jpg" alt="Detail" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img04.jpg" alt="Romance" loading="eager"></div>
-    <div class="masonry-item"><img src="images/amy/img07.jpg" alt="Ceremony" loading="eager"></div>
-  </div>
-</section>
 
-<section id="stories">
-  <h2 class="stories-title">Recent Stories</h2>
-  <div class="story-pair">
-    <div class="story-img"><img src="images/amy/img12.jpg" alt="NYC Rooftop Proposal" loading="eager"></div>
-    <div class="story-text">
-      <div class="story-location">NYC Rooftop · 2024</div>
-      <h3 class="story-heading">A surprise 40 floors above Manhattan</h3>
-      <p class="story-body">He spent six months planning every detail — the city lights, the timing, the ring. Amy was there to make sure none of it was forgotten.</p>
+  <!-- Row 1: large left, tall right -->
+  <div class="gallery-row gallery-row-1">
+    <div class="gallery-img-wrap">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=85" alt="Bride and groom ceremony" loading="lazy">
+      <span class="gallery-caption">Ceremony</span>
+    </div>
+    <div class="gallery-img-wrap">
+      <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=900&q=85" alt="Intimate wedding portrait" loading="lazy">
+      <span class="gallery-caption">Portraits</span>
     </div>
   </div>
-  <div class="story-pair">
-    <div class="story-img"><img src="images/amy/img11.jpg" alt="Tampa Beach Wedding" loading="eager"></div>
-    <div class="story-text">
-      <div class="story-location">Tampa Bay · 2024</div>
-      <h3 class="story-heading">Golden hour on the water</h3>
-      <p class="story-body">When the ceremony ended and the light dropped to amber, the real photographs happened. Barefoot, laughing, completely themselves.</p>
+
+  <!-- Row 2: full width editorial -->
+  <div class="full-width-row">
+    <div class="text-block">
+      <span class="section-eyebrow">The Approach</span>
+      <p>Photojournalistic in spirit, editorial in execution. Every wedding is approached as a visual story — the small gestures, the unguarded laughter, the quiet in-between moments that become the ones you return to most.</p>
+    </div>
+    <div class="img-wrap">
+      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1400&q=85" alt="Wedding reception dance" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row 3: small left, large right -->
+  <div class="gallery-row gallery-row-3">
+    <div class="gallery-img-wrap">
+      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=700&q=85" alt="Wedding rings detail" loading="lazy">
+      <span class="gallery-caption">Details</span>
+    </div>
+    <div class="gallery-img-wrap">
+      <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=1300&q=85" alt="Golden hour wedding" loading="lazy">
+      <span class="gallery-caption">Golden Hour</span>
+    </div>
+  </div>
+
+  <!-- Row 4: two equal -->
+  <div class="gallery-row gallery-row-4">
+    <div class="gallery-img-wrap">
+      <img src="https://images.unsplash.com/photo-1537907510278-bdb63aec7e0d?w=1000&q=85" alt="Family portrait Miami" loading="lazy">
+      <span class="gallery-caption">Family</span>
+    </div>
+    <div class="gallery-img-wrap">
+      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1000&q=85" alt="Bridal portrait" loading="lazy">
+      <span class="gallery-caption">Bridal</span>
+    </div>
+  </div>
+
+  <!-- Accent divider -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="accent-bar"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <p class="testimonial-quote" id="mainQuote">
+    "Amy captured every single moment we didn't even know was happening. We've watched our slideshow more times than we can count — she made our wedding look like something out of a film."
+  </p>
+  <p class="testimonial-source" id="mainQuoteSource">— Sofia &amp; Marco · Miami, FL</p>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p>"She showed up early, knew the venue better than we did, and made everyone feel so comfortable. The photos are breathtaking."</p>
+      <span class="reviewer">— Daniela R. · Coral Gables</span>
+    </div>
+    <div class="testimonial-card">
+      <p>"We hired Amy for our engagement and ended up booking her for the wedding too. She speaks Spanish, which was everything for our family."</p>
+      <span class="reviewer">— Carlos &amp; Ana · Hollywood, FL</span>
+    </div>
+    <div class="testimonial-card">
+      <p>"Five stars isn't enough. Amy is talented, professional, and just so easy to work with. Our photos are exactly who we are."</p>
+      <span class="reviewer">— Jess &amp; Tyler · Fort Lauderdale</span>
     </div>
   </div>
 </section>
 
-<div class="stats-row">
-  <div class="stat-block">
-    <div class="stat-num">5.8K</div>
-    <div class="stat-lbl">Followers</div>
+<!-- ABOUT — Magazine spread -->
+<section class="about" id="about">
+  <div class="about-image">
+    <img src="https://images.unsplash.com/photo-1524863479829-916d8e77f114?w=900&q=85" alt="Amy Mariani, photographer" loading="lazy">
   </div>
-  <div class="stat-block">
-    <div class="stat-num">2</div>
-    <div class="stat-lbl">Markets: NYC & Tampa</div>
-  </div>
-  <div class="stat-block">
-    <div class="stat-num">100%</div>
-    <div class="stat-lbl">Candid, Never Staged</div>
-  </div>
-</div>
-
-<section id="about">
-  <div class="about-inner">
-    <img class="about-portrait" src="images/amy/img01.jpg" alt="Amy Xie" loading="eager">
-    <blockquote class="about-quote">"The best photographs happen in between the poses."</blockquote>
-    <p class="about-body">Amy Xie is a proposal and wedding photographer based between New York City and Tampa. Specializing in candid, emotionally-driven images that capture the energy of a real moment — not a recreated one.</p>
-    <div class="about-tags">
-      <span class="about-tag">Proposals</span>
-      <span class="about-tag">Engagements</span>
-      <span class="about-tag">Weddings</span>
-      <span class="about-tag">NYC & Tampa</span>
+  <div class="about-content">
+    <span class="section-eyebrow">About</span>
+    <h2>Two Decades of Telling<br>Love Stories</h2>
+    <div class="about-pull-quote">
+      "I've always believed the best photos aren't posed — they're caught."
+    </div>
+    <p>
+      Established in 2004, Mariani Photography has documented over two decades of South Florida love stories — from intimate elopements in Key West to grand celebrations at Vizcaya. Amy's approach blends photojournalistic instinct with a fine-art eye, creating images that are cinematic without being contrived.
+    </p>
+    <p>
+      Bilingual in English and Spanish, she brings ease and genuine warmth to every family and couple she works with — a quality her clients note again and again.
+    </p>
+    <div class="about-details">
+      <div class="about-detail">
+        <strong>Miami</strong>
+        Home Base
+      </div>
+      <div class="about-detail">
+        <strong>Bilingual</strong>
+        EN · ES
+      </div>
+      <div class="about-detail">
+        <strong>Destination</strong>
+        Available
+      </div>
     </div>
   </div>
 </section>
 
-<section id="cta">
-  <div class="cta-eyebrow">Ready to Begin</div>
-  <h2 class="cta-heading">Let's make something<br>unforgettable.</h2>
-  <p class="cta-sub">Inquire about your date. Limited sessions available each month.</p>
-  <a href="mailto:amyxiephotography@gmail.com?subject=Photography Inquiry" class="cta-btn">Get in Touch</a>
+<!-- BOLD CTA -->
+<section class="cta-section">
+  <div class="cta-bg-text">2026</div>
+  <p class="cta-eyebrow">Limited availability this season</p>
+  <h2 class="cta-heading">Your Date is Waiting.<br>Let's Protect It.</h2>
+  <p class="cta-sub">Dates fill quickly for Miami's peak season. Reach out now to check availability and receive a custom quote for your event.</p>
+  <a href="#contact" class="cta-btn">Book Your Date</a>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
-  <div class="contact-info">
-    <h2 class="contact-heading">Start with a message.</h2>
-    <p>Tell me about your date, your vision, and what you're planning. I'll be back within 24 hours.</p>
+  <div class="contact-left">
+    <span class="section-eyebrow">Get In Touch</span>
+    <h2>Studio Inquiries</h2>
+    <p>Ready to talk about your wedding, engagement, or family session? Amy personally responds to every inquiry — usually within the same day.</p>
+    <a href="mailto:amyivette@marianiphotography.com" class="contact-email">amyivette@marianiphotography.com</a>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">Pinterest</a>
+    </div>
   </div>
-  <div class="contact-items">
-    <div class="contact-item">
-      <span class="c-label">Email</span>
-      <a href="mailto:amyxiephotography@gmail.com" class="c-value">amyxiephotography@gmail.com</a>
+  <div class="contact-right">
+    <div class="contact-detail">
+      <div class="label">Phone</div>
+      <div class="value">(954) 662-1112</div>
     </div>
-    <div class="contact-item">
-      <span class="c-label">Instagram</span>
-      <a href="https://instagram.com/amyxiephotography" class="c-value">@amyxiephotography</a>
+    <div class="contact-detail">
+      <div class="label">Studio Location</div>
+      <div class="value">Hollywood, FL 33024<br><small style="font-size:15px;color:var(--text-mid);">Serving Miami · Ft. Lauderdale · Palm Beach · Key West</small></div>
     </div>
-    <div class="contact-item">
-      <span class="c-label">Markets</span>
-      <span class="c-value">New York City &amp; Tampa, FL</span>
+    <div class="contact-detail">
+      <div class="label">Services</div>
+      <div class="value">Weddings · Engagements<br>Family · Events · Boudoir</div>
+    </div>
+    <div class="contact-detail">
+      <div class="label">Availability</div>
+      <div class="value">Now booking 2026 &amp; 2027</div>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-name">Amy Xie Photography</div>
-  <div class="footer-copy">&#169; 2026 Amy Xie Photography. Design by Lucas Blatt.</div>
-  <div class="footer-links">
-    <a href="https://instagram.com/amyxiephotography">Instagram</a>
-    <a href="mailto:amyxiephotography@gmail.com">Email</a>
-  </div>
+  <div class="footer-logo">Mariani Photography</div>
+  <div class="footer-copy">© 2026 Amy Mariani Photography. All rights reserved.</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
 </footer>
 
 <script>
-(function(){
-  // Hero parallax
-  var heroImg = document.getElementById('hero-img');
-  if(heroImg){ heroImg.addEventListener('load', function(){ heroImg.classList.add('loaded'); }); }
-
-  // Hero name letter-spacing compress
-  var heroName = document.getElementById('hero-name');
-  if(heroName){ setTimeout(function(){ heroName.classList.add('compressed'); }, 100); }
-
-  // Hero parallax on scroll
-  var hero = document.getElementById('hero');
-  window.addEventListener('scroll', function(){
-    if(heroImg){ heroImg.style.transform = 'scale(1.0) translateY(' + (window.scrollY * 0.3) + 'px)'; }
-  }, {passive:true});
-
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting) e.target.classList.add('visible');
-    });
-  }, {threshold: 0.1});
-
-  var io_masonry = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.masonry-item').forEach(function(item,i){
-          setTimeout(function(){ item.classList.add('visible'); }, i * 80);
-        });
-        io_masonry.unobserve(e.target);
-      }
-    });
-  }, {threshold: 0.05});
-
-  var io_stats = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.stat-block').forEach(function(item,i){
-          setTimeout(function(){ item.classList.add('visible'); }, i * 150);
-        });
-        io_stats.unobserve(e.target);
-      }
-    });
-  }, {threshold: 0.2});
-
-  document.querySelector('.masonry') && io_masonry.observe(document.querySelector('.masonry'));
-  document.querySelector('.stats-row') && io_stats.observe(document.querySelector('.stats-row'));
-  document.querySelectorAll('.gallery-title, .story-img, .story-text, .about-quote, .stories-title').forEach(function(el){ io.observe(el); });
-})();
-  // Show everything immediately on load
-  document.querySelectorAll("[class]").forEach(el => el.classList.add("is-visible"));
-
-// Fallback: force-reveal all animated elements (for screenshots & slow-load)
-setTimeout(function() {
-  document.querySelectorAll(
-    '.gallery-item, .photo-item, .masonry-item, .grid-item, .portfolio-item, .work-item, ' +
-    '.species-card, .show-item, .fade-rise, .stat-item, .stats-item, ' +
-    '.section-number, .section-title, .section-heading, ' +
-    '.featured-image-wrap, .featured-pull-quote, .featured-body, .location-tag, ' +
-    '.about-img, .about-bio, .about-highlight, .about-tags, .about-block, .about-col, .about-wrap, ' +
-    '.prints-row, .print-row, .prints-image, .pricing-row, ' +
-    '.cta-heading, .contact-col, .contact-block, ' +
-    '.shows-image-side img, .prints-image img, .about-image-block img, ' +
-    '.reveal-text, .reveal-image, .scroll-reveal, .anim-item, ' +
-    '.hero-subtitle, .hero-tagline, .hero-text, ' +
-    '.image-block, .text-block, .content-block, .lead-item, ' +
-    '.service-item, .testimonial-item, .bio-text, .gallery-col, ' +
-    '[class*="-item"]:not(li), [class*="-wrap"], [class*="-block"], [class*="-col"]'
-  ).forEach(function(el) {
-    el.classList.add('is-visible');
+  // Hero entrance animations
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroEyebrow').classList.add('visible');
+      document.getElementById('heroWord1').classList.add('visible');
+      setTimeout(() => {
+        document.getElementById('heroWord2').classList.add('visible');
+      }, 150);
+      setTimeout(() => {
+        document.getElementById('heroTagline').classList.add('visible');
+        document.getElementById('heroCta').classList.add('visible');
+      }, 700);
+    }, 100);
   });
-}, 200);
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  // Observe all animatable elements
+  const animated = document.querySelectorAll(
+    '.section-title, .section-eyebrow, .gallery-img-wrap img, ' +
+    '.stat-item, .testimonial-quote, .testimonial-source, ' +
+    '.testimonial-card, .about-content h2, .about-pull-quote, ' +
+    '.about-content p, .about-details, .about-image img, ' +
+    '.cta-eyebrow, .cta-heading, .cta-sub, .cta-btn, ' +
+    '.contact-left h2, .contact-left p, .contact-email, .contact-right, ' +
+    '.gallery-header-right, .full-width-row .text-block, .full-width-row .img-wrap'
+  );
+
+  animated.forEach((el, i) => {
+    observer.observe(el);
+  });
+
+  // Stagger gallery images
+  document.querySelectorAll('.gallery-img-wrap img').forEach((img, i) => {
+    img.style.transitionDelay = `${i * 80}ms`;
+  });
+
+  // Stagger stat items
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 100}ms`;
+  });
+
+  // Stagger testimonial cards
+  document.querySelectorAll('.testimonial-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 120}ms`;
+  });
 </script>
 </body>
 </html>
