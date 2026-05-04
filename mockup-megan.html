@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Megan Pena Photos — Miami Wedding Photographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F7F2EC;
+      --sand:    #EDE5D8;
+      --blush:   #C4967A;
+      --deep:    #2C2219;
+      --warm:    #8B6B52;
+      --light:   #FAF7F4;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--light);
+      color: var(--deep);
+      overflow-x: hidden;
+    }
+
+    /* ======= NAV ======= */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ======= HERO — ASYMMETRIC SPLIT ======= */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+    .hero-image img.loaded {
+      transform: scale(1.0);
+    }
+    .hero-text {
+      background: var(--deep);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 64px 52px 64px 48px;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 20px;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 28px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .hero-name.revealed {
+      clip-path: inset(0 0% 0 0);
+    }
+    .hero-tagline {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.03em;
+      max-width: 260px;
+      margin-bottom: 48px;
+    }
+    .hero-cta {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blush);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blush);
+      padding-bottom: 4px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .hero-cta:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+    .hero-vertical-text {
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      white-space: nowrap;
+    }
+    .hero-number {
+      position: absolute;
+      top: 140px;
+      right: 48px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ======= MARQUEE STRIP ======= */
+    .marquee-strip {
+      background: var(--blush);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 0 40px;
+    }
+    .marquee-inner span::before {
+      content: '·';
+      margin-right: 40px;
+      opacity: 0.5;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ======= STATS ======= */
+    #stats {
+      background: var(--cream);
+      padding: 100px 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-bottom: 1px solid rgba(44,34,25,0.1);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 40px 20px;
+      border-right: 1px solid rgba(44,34,25,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stat-item:nth-child(2) { transition-delay: 0.12s; }
+    .stat-item:nth-child(3) { transition-delay: 0.24s; }
+    .stat-item:nth-child(4) { transition-delay: 0.36s; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 7vw, 96px);
+      font-weight: 300;
+      color: var(--deep);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ======= GALLERY — EDITORIAL SCROLL ======= */
+    #gallery {
+      padding: 120px 80px;
+      background: var(--light);
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 72px;
+    }
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 300;
+      color: rgba(44,34,25,0.08);
+      line-height: 1;
+      user-select: none;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--deep);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.revealed {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    .gallery-editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    /* Row 1: full-width image */
+    .gallery-row-full img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .gallery-row-full img.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Row 2: left large + right small */
+    .gallery-row-split {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+    .gallery-row-split img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .gallery-row-split img.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Row 3: right large + left small */
+    .gallery-row-split-rev {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+    }
+    .gallery-row-split-rev img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .gallery-row-split-rev img.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Row 4: three equal */
+    .gallery-row-three {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .gallery-row-three img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .gallery-row-three img.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ======= TESTIMONIALS ======= */
+    #testimonials {
+      background: var(--deep);
+      padding: 120px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    #testimonials::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 400px;
+      font-weight: 300;
+      color: rgba(196,150,122,0.05);
+      position: absolute;
+      top: -80px;
+      left: 40px;
+      line-height: 1;
+      user-select: none;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testimonial-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .testimonial-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .testimonial-item:nth-child(2) { transition-delay: 0.15s; }
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 28px;
+    }
+    .testimonial-accent-line {
+      width: 32px;
+      height: 1px;
+      background: var(--blush);
+      margin-bottom: 16px;
+    }
+    .testimonial-name {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blush);
+    }
+    .testimonial-source {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+    }
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .testimonials-header .section-title {
+      color: #fff;
+      font-size: 42px;
+    }
+
+    /* ======= ABOUT — MAGAZINE SPREAD ======= */
+    #about {
+      padding: 140px 80px;
+      background: var(--sand);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .about-image-wrap {
+      position: relative;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .about-image-wrap.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .about-image-wrap img {
+      width: 100%;
+      height: 620px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-image-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 160px;
+      height: 160px;
+      border: 1px solid var(--blush);
+      pointer-events: none;
+    }
+    .about-content {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+    .about-content.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .about-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 20px;
+    }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--deep);
+      margin-bottom: 32px;
+    }
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--warm);
+      border-left: 2px solid var(--blush);
+      padding-left: 24px;
+      margin-bottom: 32px;
+    }
+    .about-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(44,34,25,0.75);
+      margin-bottom: 20px;
+    }
+    .about-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 36px;
+    }
+    .about-detail {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--warm);
+      text-transform: uppercase;
+    }
+    .about-detail span {
+      color: var(--deep);
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    /* ======= CTA SECTION ======= */
+    #cta {
+      background: var(--blush);
+      padding: 120px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: 'Book';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 300px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .cta-inner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 62px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 48px;
+      letter-spacing: 0.04em;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      background: var(--deep);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .cta-btn:hover {
+      background: #1a1008;
+      transform: translateY(-2px);
+    }
+
+    /* ======= CONTACT ======= */
+    #contact {
+      padding: 120px 80px 100px;
+      background: var(--cream);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .contact-left .section-title {
+      font-size: 44px;
+      margin-bottom: 24px;
+    }
+    .contact-desc {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(44,34,25,0.65);
+      margin-bottom: 40px;
+    }
+    .contact-email-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--deep);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blush);
+      padding-bottom: 4px;
+      display: inline-block;
+      transition: color 0.3s;
+    }
+    .contact-email-link:hover { color: var(--blush); }
+    .contact-right {
+      padding-top: 20px;
+    }
+    .contact-info-block {
+      margin-bottom: 32px;
+    }
+    .contact-info-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blush);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .contact-info-value {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--deep);
+      line-height: 1.5;
+    }
+    .contact-info-value a {
+      color: var(--deep);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-info-value a:hover { color: var(--blush); }
+    .social-links {
+      display: flex;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .social-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--warm);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .social-links a:hover {
+      color: var(--deep);
+      border-color: var(--deep);
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      background: var(--deep);
+      padding: 32px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-copy {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+    }
+    .footer-credit {
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+    .footer-credit a {
+      color: rgba(196,150,122,0.5);
+      text-decoration: none;
+    }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; height: auto; }
+      .hero-image { height: 60vh; }
+      .hero-text { padding: 48px 32px; }
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      #stats { grid-template-columns: 1fr 1fr; padding: 60px 32px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-row-split, .gallery-row-split-rev { grid-template-columns: 1fr; }
+      .gallery-row-three { grid-template-columns: 1fr; }
+      .gallery-row-split img, .gallery-row-split-rev img, .gallery-row-full img { height: 280px; }
+      .gallery-row-three img { height: 260px; }
+      #testimonials { padding: 80px 32px; }
+      .testimonial-grid { grid-template-columns: 1fr; gap: 48px; }
+      #about { padding: 80px 32px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-image-wrap img { height: 420px; }
+      #cta { padding: 80px 32px; }
+      #contact { padding: 80px 32px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      footer { padding: 24px 32px; flex-direction: column; gap: 12px; text-align: center; }
+      .section-header { gap: 16px; }
+      .section-number { font-size: 40px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 52px; }
+      #stats { grid-template-columns: 1fr 1fr; padding: 40px 16px; }
+      .stat-item { padding: 24px 12px; }
+      #gallery { padding: 60px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Megan Pena</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#cta">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — ASYMMETRIC SPLIT -->
+  <section id="hero">
+    <div class="hero-image">
+      <img
+        src="https://static.wixstatic.com/media/0b90a1_078cf5aba11041e8b271e8ee9eec7640~mv2_d_6000_3733_s_4_2.jpg"
+        alt="Megan Pena — Miami wedding photography"
+        loading="eager"
+        id="heroImg"
+      >
+    </div>
+    <div class="hero-text">
+      <div class="hero-number">01</div>
+      <p class="hero-eyebrow">South Florida Wedding Photography</p>
+      <h1 class="hero-name" id="heroName">Megan<br>Pena</h1>
+      <p class="hero-tagline">
+        Capturing the warmth of South Florida love stories — from first glance to first dance.
+      </p>
+      <a href="#gallery" class="hero-cta">View Work</a>
+      <span class="hero-vertical-text">Miami · South Florida · Est. 2020</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Miami Weddings</span>
+      <span>Engagement Sessions</span>
+      <span>Destination Weddings</span>
+      <span>Videography</span>
+      <span>Custom Albums</span>
+      <span>4.8 Stars · 14 Reviews</span>
+      <span>Hispanic &amp; Woman-Owned</span>
+      <span>Miami Weddings</span>
+      <span>Engagement Sessions</span>
+      <span>Destination Weddings</span>
+      <span>Videography</span>
+      <span>Custom Albums</span>
+      <span>4.8 Stars · 14 Reviews</span>
+      <span>Hispanic &amp; Woman-Owned</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <span class="stat-number">4.8</span>
+      <span class="stat-label">Star Rating</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">14+</span>
+      <span class="stat-label">Couples Reviewed</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">96%</span>
+      <span class="stat-label">Recommend</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">5+</span>
+      <span class="stat-label">Years in Miami</span>
+    </div>
+  </section>
+
+  <!-- GALLERY — EDITORIAL SCROLL -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+    <div class="gallery-editorial">
+
+      <!-- Row 1: Full width -->
+      <div class="gallery-row-full">
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_49e52c1ae605404cb787827168f96e2d~mv2_d_5698_3834_s_4_2.jpg"
+          alt="Wedding couple embrace — Miami"
+          loading="lazy"
+        >
+      </div>
+
+      <!-- Row 2: Large left + small right -->
+      <div class="gallery-row-split">
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_a5aa00e877d64f6881d32338435b3ada~mv2_d_4000_6000_s_4_2.jpg"
+          alt="Bride portrait — South Florida wedding"
+          loading="lazy"
+        >
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_54cba654fa9a4be1811b609f7347b5cf~mv2_d_3873_6000_s_4_2.jpg"
+          alt="Wedding ceremony detail"
+          loading="lazy"
+        >
+      </div>
+
+      <!-- Row 3: Small left + large right -->
+      <div class="gallery-row-split-rev">
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_00809a0e57974717b2fc690db0ebef4b~mv2_d_3168_6000_s_4_2.jpg"
+          alt="Couple wedding portrait"
+          loading="lazy"
+        >
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_883cdee019b14e1382487b9d8b275aad~mv2.jpg"
+          alt="Wedding reception moments — Miami"
+          loading="lazy"
+        >
+      </div>
+
+      <!-- Row 4: Three equal -->
+      <div class="gallery-row-three">
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_87bdbb9512b04df795659aebfe20da2d~mv2_d_3778_5820_s_4_2.jpg"
+          alt="Bride and groom — first dance"
+          loading="lazy"
+        >
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_1a3a917dd5694a52886db905882769d0~mv2_d_2769_5272_s_4_2.jpg"
+          alt="Engagement session — South Florida"
+          loading="lazy"
+        >
+        <img
+          src="https://static.wixstatic.com/media/0b90a1_08a317a28085480c8b6079c0f746d710~mv2_d_4000_6000_s_4_2.jpg"
+          alt="Wedding ceremony — outdoor Miami"
+          loading="lazy"
+        >
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS — FULL-WIDTH DARK -->
+  <section id="testimonials">
+    <div class="testimonials-header">
+      <h2 class="section-title revealed" style="color:#fff; clip-path: inset(0 0% 0 0);">What Couples Say</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-item">
+        <p class="testimonial-quote">"She knew exactly how to make us pose and not feel uncomfortable — which is really hard to do. Our photos are beyond beautiful."</p>
+        <div class="testimonial-accent-line"></div>
+        <p class="testimonial-name">Verified Couple</p>
+        <p class="testimonial-source">WeddingWire · Miami, FL</p>
+      </div>
+      <div class="testimonial-item">
+        <p class="testimonial-quote">"She makes you feel comfortable being in front of the camera. The pictures were amazing and she was professional the whole time."</p>
+        <div class="testimonial-accent-line"></div>
+        <p class="testimonial-name">Verified Couple</p>
+        <p class="testimonial-source">WeddingWire · South Florida</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT — MAGAZINE SPREAD -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <img
+          src="https://static.wixstatic.com/media/528800_9f6ecf62a3974b778084c62fd8fe00db~mv2.jpg"
+          alt="Megan Pena — Miami wedding photographer"
+          loading="lazy"
+        >
+        <div class="about-image-accent"></div>
+      </div>
+      <div class="about-content">
+        <p class="about-eyebrow">03 — The Photographer</p>
+        <h2 class="about-heading">Every love story deserves its own frame.</h2>
+        <p class="about-pull">"Megan uses your unique love story as inspiration — no two weddings look the same."</p>
+        <p class="about-body">
+          Based in Miami, Megan Peña has spent the last five years documenting South Florida's most intimate celebrations. Specializing in traditional and natural styles, she brings a warmth and ease to every session — helping couples feel genuinely at home in front of the camera.
+        </p>
+        <p class="about-body">
+          From intimate city hall ceremonies to full destination weddings, Megan offers full-day coverage, second shooter options, videography packages, and custom albums that become family heirlooms.
+        </p>
+        <div class="about-details">
+          <p class="about-detail">Based in <span>Miami, FL 33162</span></p>
+          <p class="about-detail">Available for <span>Destination Weddings</span></p>
+          <p class="about-detail">Starting at <span>$1,800</span></p>
+          <p class="about-detail">Woman-owned · <span>Hispanic/Latinx</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA — FULL-BLEED -->
+  <section id="cta">
+    <div class="cta-inner">
+      <h2 class="cta-heading">Your date is waiting.<br>Let's make it unforgettable.</h2>
+      <p class="cta-sub">Limited dates available for 2025 and 2026 — inquire now to check availability.</p>
+      <a href="mailto:contact@meganpenaphotos.com" class="cta-btn">Book Your Date</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-header" style="margin-bottom: 24px;">
+          <span class="section-number" style="font-size: 40px;">04</span>
+          <h2 class="section-title">Get In Touch</h2>
+        </div>
+        <p class="contact-desc">Ready to start planning? Reach out about your wedding date, engagement session, or destination coverage. Megan typically responds within 24 hours.</p>
+        <a href="tel:3054849198" class="contact-email-link">305-484-9198</a>
+      </div>
+      <div class="contact-right">
+        <div class="contact-info-block">
+          <span class="contact-info-label">Location</span>
+          <p class="contact-info-value">Miami, FL · South Florida · Destination Available</p>
+        </div>
+        <div class="contact-info-block">
+          <span class="contact-info-label">Portfolio</span>
+          <p class="contact-info-value">
+            <a href="https://meganpenaphotos.wixsite.com/meganpenaphotos" target="_blank">meganpenaphotos.wixsite.com</a>
+          </p>
+        </div>
+        <div class="contact-info-block">
+          <span class="contact-info-label">Reviews</span>
+          <p class="contact-info-value">
+            <a href="https://www.weddingwire.com/biz/megan-pena-photos/e82aecbe8f53fe6d.html" target="_blank">WeddingWire · 4.8/5</a>
+          </p>
+        </div>
+        <div class="social-links">
+          <a href="https://www.instagram.com/meganpenaphotography/" target="_blank">Instagram</a>
+          <a href="https://www.weddingwire.com/biz/megan-pena-photos/e82aecbe8f53fe6d.html" target="_blank">WeddingWire</a>
+          <a href="https://www.theknot.com/marketplace/megan-pena-photos-miami-fl-2042823" target="_blank">The Knot</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Megan Pena Photos</span>
+    <span class="footer-copy">© 2026 · Miami, FL</span>
+    <span class="footer-credit">Design concept by <a href="mailto:lucasblatt197703@gmail.com">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // Hero name clip-path reveal
+    const heroName = document.getElementById('heroName');
+    setTimeout(() => { heroName.classList.add('revealed'); }, 200);
+
+    // Hero image zoom settle
+    const heroImg = document.getElementById('heroImg');
+    heroImg.onload = () => heroImg.classList.add('loaded');
+    if (heroImg.complete) heroImg.classList.add('loaded');
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible', 'revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    // Section titles
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+    // Stats
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+    // Gallery images
+    document.querySelectorAll('#gallery img').forEach(el => observer.observe(el));
+
+    // Testimonials
+    document.querySelectorAll('.testimonial-item').forEach(el => observer.observe(el));
+
+    // About
+    document.querySelectorAll('.about-image-wrap, .about-content').forEach(el => observer.observe(el));
+
+    // CTA
+    document.querySelectorAll('.cta-inner').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
