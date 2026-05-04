@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jerri Phillips — Artistic Florida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F4EFE6;
+    --warm-white: #FAF8F4;
+    --dark: #1C1A17;
+    --charcoal: #2E2B26;
+    --sienna: #9B4E2E;
+    --gold: #B8892A;
+    --muted: #7A6E62;
+    --light-rule: rgba(155, 78, 46, 0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Franklin', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── VERTICAL STUDIO TEXT ── */
+  .studio-tag {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    text-transform: uppercase;
+    z-index: 100;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+
+  nav .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: #fff; }
+
+  /* ── HERO — CINEMATIC LETTERBOX ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  /* Black bars top and bottom */
+  .hero-bar-top,
+  .hero-bar-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: var(--dark);
+    z-index: 10;
+  }
+
+  .hero-bar-top {
+    top: 0;
+    height: 90px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 16px;
+  }
+
+  .hero-bar-bottom {
+    bottom: 0;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    justify-content: space-between;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    color: var(--cream);
+    line-height: 1;
+    padding-left: 60px;
+    animation: nameReveal 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  @keyframes nameReveal {
+    from { opacity: 0; letter-spacing: 0.35em; }
+    to   { opacity: 1; letter-spacing: 0.12em; }
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.7);
+    text-align: right;
+    line-height: 1.8;
+    animation: fadeUp 1s ease-out 0.8s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Thin accent line on hero image */
+  .hero-accent-line {
+    position: absolute;
+    bottom: 130px;
+    left: 60px;
+    width: 80px;
+    height: 2px;
+    background: var(--sienna);
+    z-index: 11;
+    animation: lineExpand 1s ease-out 1s both;
+    transform-origin: left;
+  }
+
+  @keyframes lineExpand {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-wrap {
+    background: var(--sienna);
+    overflow: hidden;
+    padding: 14px 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track span {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    padding: 0 40px;
+    white-space: nowrap;
+  }
+
+  .marquee-track span::after {
+    content: '·';
+    padding-left: 40px;
+    opacity: 0.5;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── STATS STRIP ── */
+  #stats {
+    background: var(--charcoal);
+    padding: 80px 60px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    align-items: flex-end;
+  }
+
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-item:nth-child(2) { transition-delay: 0.15s; }
+  .stat-item:nth-child(3) { transition-delay: 0.3s; }
+  .stat-item:nth-child(4) { transition-delay: 0.45s; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 8vw, 100px);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* ── GALLERY — STAGGERED PAIRS ── */
+  #gallery {
+    padding: 120px 60px;
+    background: var(--warm-white);
+  }
+
+  .section-header {
+    margin-bottom: 60px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(28, 26, 23, 0.06);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 700;
+    color: var(--dark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  /* Staggered pairs layout */
+  .gallery-pair {
+    display: contents;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .gallery-item.is-visible {
+    opacity: 1;
+  }
+
+  .gallery-item:nth-child(even) {
+    margin-top: 60px;
+  }
+
+  .gallery-item:nth-child(3) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.15s; }
+  .gallery-item:nth-child(6) { transition-delay: 0.25s; }
+  .gallery-item:nth-child(7) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(8) { transition-delay: 0.2s; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.03);
+  }
+
+  .gallery-item .img-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 20px 16px;
+    background: linear-gradient(transparent, rgba(28,26,23,0.7));
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.9);
+    transform: translateY(8px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .gallery-item:hover .img-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 60px;
+    border-top: 1px solid var(--light-rule);
+  }
+
+  .service-item {
+    padding: 50px 40px;
+    border-right: 1px solid var(--light-rule);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .service-item:last-child { border-right: none; }
+
+  .service-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-item:nth-child(2) { transition-delay: 0.15s; }
+  .service-item:nth-child(3) { transition-delay: 0.3s; }
+
+  .service-icon {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sienna);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .service-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  .service-price {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--sienna);
+    border-bottom: 1px solid var(--sienna);
+    padding-bottom: 2px;
+  }
+
+  /* ── ABOUT — OFFSET OVERLAP ── */
+  #about {
+    padding: 120px 60px;
+    background: var(--dark);
+  }
+
+  .about-inner {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .about-portrait-wrap {
+    position: relative;
+    display: inline-block;
+    width: 55%;
+  }
+
+  .about-portrait-wrap img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.9s ease 0.2s;
+  }
+
+  .about-portrait-wrap img.is-visible {
+    opacity: 1;
+  }
+
+  .about-text-block {
+    position: absolute;
+    bottom: -40px;
+    right: -80px;
+    width: 52%;
+    background: var(--charcoal);
+    padding: 48px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+
+  .about-text-block.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--sienna);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .about-pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    padding-left: 20px;
+    border-left: 2px solid var(--sienna);
+  }
+
+  .about-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(244, 239, 230, 0.7);
+  }
+
+  .about-detail {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(155, 78, 46, 0.3);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  /* ── CTA SECTION ── */
+  #cta {
+    padding: 120px 60px;
+    background: var(--sienna);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: 'COMMISSION';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 14vw, 180px);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.06);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.7);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-label.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 68px);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 32px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .cta-heading.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(244, 239, 230, 0.8);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+
+  .cta-sub.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    background: var(--cream);
+    color: var(--sienna);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease 0.35s, transform 0.6s ease 0.35s, background 0.25s, color 0.25s;
+  }
+
+  .cta-btn.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-btn:hover {
+    background: var(--dark);
+    color: var(--cream);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 100px 60px 80px;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-left .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    line-height: 1.2;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .contact-left .contact-heading.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .contact-tagline {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 400px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  }
+
+  .contact-tagline.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-right {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+  }
+
+  .contact-right.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-item {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--light-rule);
+  }
+
+  .contact-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .contact-item-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sienna);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .contact-item-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--dark);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item-value:hover { color: var(--sienna); }
+
+  .social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .social-link {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .social-link:hover {
+    color: var(--sienna);
+    border-color: var(--sienna);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  .footer-credit {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(122, 110, 98, 0.5);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+
+    .hero-bar-bottom { padding: 0 24px; height: 110px; }
+    .hero-name { font-size: 38px; padding-left: 24px; }
+    .hero-accent-line { left: 24px; bottom: 110px; }
+
+    #stats {
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 60px 24px;
+    }
+
+    #gallery { padding: 80px 24px; }
+    .gallery-grid { gap: 4px; }
+    .gallery-item img { height: 260px; }
+    .gallery-item:nth-child(even) { margin-top: 30px; }
+
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-item { border-right: none; border-bottom: 1px solid var(--light-rule); padding: 40px 24px; }
+    .service-item:last-child { border-bottom: none; }
+
+    #about { padding: 80px 24px; }
+    .about-portrait-wrap { width: 100%; }
+    .about-text-block { position: relative; right: auto; bottom: auto; width: 100%; margin-top: -40px; padding: 32px 24px; }
+
+    #cta { padding: 80px 24px; }
+
+    #contact { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px 60px; }
+
+    footer { flex-direction: column; gap: 12px; padding: 28px 24px; text-align: center; }
+    .studio-tag { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 32px; letter-spacing: 0.06em; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:nth-child(even) { margin-top: 0; }
+    #stats { flex-direction: column; align-items: center; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Vertical studio tag -->
+<div class="studio-tag">Studio 2026 · Ellenton, FL</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#hero" class="nav-logo">Jerri Phillips</a>
+  <ul>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — Cinematic Letterbox -->
+<section id="hero">
+  <img
+    class="hero-image"
+    src="https://static.wixstatic.com/media/826611_3877e0e140f54a0f9efba824dd0e5de4~mv2.jpg"
+    alt="Jerri Phillips portrait artwork"
+    loading="eager"
+  >
+  <div class="hero-bar-top"></div>
+  <div class="hero-bar-bottom">
+    <h1 class="hero-name">Jerri Phillips</h1>
+    <div class="hero-sub">
+      Portrait Artist &amp; Muralist<br>
+      Ellenton, Florida
+    </div>
+  </div>
+  <div class="hero-accent-line"></div>
+</section>
+
+<!-- Marquee strip -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Portrait Commissions Open</span>
+    <span>Custom Murals</span>
+    <span>Fine Art Originals</span>
+    <span>Ellenton · Florida</span>
+    <span>Historical Paintings</span>
+    <span>Artistic Florida</span>
+    <span>Portrait Commissions Open</span>
+    <span>Custom Murals</span>
+    <span>Fine Art Originals</span>
+    <span>Ellenton · Florida</span>
+    <span>Historical Paintings</span>
+    <span>Artistic Florida</span>
+  </div>
+</div>
+
+<!-- Stats strip -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">15+</span>
+    <span class="stat-label">Years of Practice</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">200+</span>
+    <span class="stat-label">Portraits Completed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">30+</span>
+    <span class="stat-label">Murals Installed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">FL</span>
+    <span class="stat-label">Manatee County</span>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Selected Works</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/4298294_orig.jpg"
+        alt="Portrait painting"
+        loading="lazy"
+      >
+      <span class="img-label">Portrait · Oil</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/9806629_orig.jpg"
+        alt="Figurative painting"
+        loading="lazy"
+      >
+      <span class="img-label">Figurative · Mixed Media</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/9768371_orig.jpg"
+        alt="Portrait artwork"
+        loading="lazy"
+      >
+      <span class="img-label">Portrait Commission</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/4448835_orig.jpg"
+        alt="Original painting"
+        loading="lazy"
+      >
+      <span class="img-label">Original Work</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/8762661_orig.jpg"
+        alt="Fine art painting"
+        loading="lazy"
+      >
+      <span class="img-label">Fine Art</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/4544618_orig.jpg"
+        alt="Studio painting"
+        loading="lazy"
+      >
+      <span class="img-label">Studio Work</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/987614_orig.jpg"
+        alt="Artwork piece"
+        loading="lazy"
+      >
+      <span class="img-label">Gallery Piece</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/5461332_orig.jpg"
+        alt="Commissioned artwork"
+        loading="lazy"
+      >
+      <span class="img-label">Commission</span>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">What I Create</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <span class="service-icon">01 — Portraiture</span>
+      <h3 class="service-name">Custom Portraits</h3>
+      <p class="service-desc">Heirloom-quality portraits in oil, acrylic, or mixed media. Individuals, couples, families, and pets — painted with attention to character, light, and lasting depth. Based on your photos or in-studio sessions.</p>
+      <span class="service-price">Commissions from $350</span>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">02 — Murals</span>
+      <h3 class="service-name">Mural Work</h3>
+      <p class="service-desc">Large-scale original murals for homes, businesses, and public spaces throughout Manatee County and the greater Tampa Bay area. From concept to installation, designed to transform a wall into a statement.</p>
+      <span class="service-price">Custom Quote</span>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">03 — Originals</span>
+      <h3 class="service-name">Fine Art Originals</h3>
+      <p class="service-desc">Available studio works including historical Florida subjects, figurative paintings, and plein air landscapes. Each piece is a one-of-a-kind original — built to last and ready to exhibit or collect.</p>
+      <span class="service-price">Inquire for Pricing</span>
+    </div>
+  </div>
+</section>
+
+<!-- About — Offset Overlap -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-portrait-wrap">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/published/5017241.jpg"
+        alt="Jerri Phillips, artist"
+        loading="lazy"
+      >
+    </div>
+    <div class="about-text-block">
+      <span class="about-label">The Artist</span>
+      <h2 class="about-title">Jerri Phillips</h2>
+      <blockquote class="about-pull-quote">
+        "Art is the intersection of skill and soul — every commission tells a story worth painting."
+      </blockquote>
+      <p class="about-body">
+        Working primarily in oil, acrylic, and mixed media, Jerri Phillips has built a practice rooted in Florida's coastal culture and community. Based in Ellenton, her studio work spans intimate portrait commissions, sweeping murals, and historically significant Florida subjects — including the 2016 Heritage Day U.S. Postal cancellation stamp design for the Palmetto Historical Park.
+      </p>
+      <p class="about-body" style="margin-top: 14px;">
+        A fixture in the Manatee County arts community, Phillips has shown work at local galleries and exhibitions, and maintains an active commission practice open to clients throughout Florida and beyond.
+      </p>
+      <div class="about-detail">
+        Studio · Ellenton, FL &nbsp;·&nbsp; Open for Commissions<br>
+        Portraits · Murals · Historical Subjects
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Additional gallery row -->
+<section style="padding: 0 60px 120px; background: var(--dark);">
+  <div class="gallery-grid" style="margin-top: 0;">
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/3864867_orig.jpg"
+        alt="Artwork"
+        loading="lazy"
+      >
+      <span class="img-label">Mural Work</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/979225_orig.jpg"
+        alt="Artwork"
+        loading="lazy"
+      >
+      <span class="img-label">Fine Art</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/8274983_orig.jpg"
+        alt="Artwork"
+        loading="lazy"
+      >
+      <span class="img-label">Portrait Study</span>
+    </div>
+    <div class="gallery-item">
+      <img
+        src="http://artisticflorida.weebly.com/uploads/4/1/6/0/41604229/5940661_orig.jpg"
+        alt="Artwork"
+        loading="lazy"
+      >
+      <span class="img-label">Studio Work</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-label">Ready to Begin</p>
+  <h2 class="cta-heading">Start Your Commission</h2>
+  <p class="cta-sub">
+    Portraits, murals, and original fine art — crafted for homes, businesses, and collections throughout Florida. Every project begins with a conversation.
+  </p>
+  <a href="mailto:artisticadventures@hotmail.com" class="cta-btn">Get in Touch</a>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="contact-heading">Inquiries</h2>
+    <p class="contact-tagline">Commission inquiries, mural projects, and studio visits welcome. Based in Ellenton — serving the greater Tampa Bay area and beyond.</p>
+  </div>
+  <div class="contact-right">
+    <div class="contact-item">
+      <span class="contact-item-label">Email</span>
+      <a href="mailto:artisticadventures@hotmail.com" class="contact-item-value">artisticadventures@hotmail.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Phone</span>
+      <a href="tel:9418095059" class="contact-item-value">(941) 809-5059</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Location</span>
+      <span class="contact-item-value" style="cursor:default;">Ellenton, FL 34222</span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Find Online</span>
+      <div class="social-links">
+        <a href="https://www.facebook.com/artisticflorida" target="_blank" rel="noopener" class="social-link">Facebook</a>
+        <a href="https://www.paypal.me/artisticflorida" target="_blank" rel="noopener" class="social-link">PayPal</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-name">Jerri Phillips · Artistic Florida</span>
+  <span class="footer-copy">© 2026 · Ellenton, FL · All Rights Reserved</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe section titles (clip-path sweep)
+  document.querySelectorAll('.section-title, .cta-heading, .contact-heading').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe gallery items (opacity fade)
+  document.querySelectorAll('.gallery-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe stat items
+  document.querySelectorAll('.stat-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe service items
+  document.querySelectorAll('.service-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe about elements
+  document.querySelectorAll('.about-portrait-wrap img, .about-text-block').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe CTA elements
+  document.querySelectorAll('.cta-label, .cta-sub, .cta-btn').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe contact elements
+  document.querySelectorAll('.contact-tagline, .contact-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Hero parallax
+  const heroImg = document.querySelector('.hero-image');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight && heroImg) {
+      heroImg.style.transform = `translateY(${scrollY * 0.3}px)`;
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
