@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jenny Lopez — Professional Headshots · Orlando, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F4F0;
+      --dark: #1A1714;
+      --mid: #4A453F;
+      --accent: #C8A882;
+      --accent-dark: #9E7D5A;
+      --light: #EDE8E2;
+      --white: #FDFBF8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 60px;
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(253,251,248,0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* ─── HERO — Full-bleed with text pinned bottom-left ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/nsplsh_c4d3e88a01c249e0b45b4edaaa22db2e~mv2.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      opacity: 0.75;
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
+
+    /* CSS crossfade fallback if image doesn't load */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26,23,20,0.1) 0%,
+        rgba(26,23,20,0.0) 40%,
+        rgba(26,23,20,0.55) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 80px;
+      left: 60px;
+      right: 60px;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+
+    .hero-eyebrow.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 8vw, 110px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .hero-name .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hero-name .line:nth-child(1) { transition-delay: 0.1s; }
+    .hero-name .line:nth-child(2) { transition-delay: 0.22s; }
+
+    .hero-name .line.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(253,251,248,0.7);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.45s, transform 0.6s ease 0.45s;
+    }
+
+    .hero-subtitle.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid rgba(253,251,248,0.5);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s,
+                  background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .hero-cta.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-cta:hover {
+      background: rgba(200,168,130,0.2);
+      border-color: var(--accent);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0.5;
+    }
+
+    .scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: rgba(253,251,248,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* ─── MARQUEE STRIP ─── */
+    .marquee-strip {
+      background: var(--dark);
+      padding: 18px 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(200,168,130,0.2);
+      border-bottom: 1px solid rgba(200,168,130,0.2);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 35s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee-track span {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(200,168,130,0.7);
+      padding-right: 60px;
+    }
+
+    .marquee-dot {
+      color: var(--accent) !important;
+      padding-right: 60px !important;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS STRIP ─── */
+    .stats {
+      background: var(--white);
+      padding: 80px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0 20px;
+      border-right: 1px solid var(--light);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-item:nth-child(1) { transition-delay: 0ms; }
+    .stat-item:nth-child(2) { transition-delay: 120ms; }
+    .stat-item:nth-child(3) { transition-delay: 240ms; }
+    .stat-item:nth-child(4) { transition-delay: 360ms; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--dark);
+      overflow: hidden;
+    }
+
+    .clip-reveal {
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .clip-reveal.is-visible {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery-section {
+      padding: 120px 60px;
+      background: var(--bg);
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .gallery-header-text {
+      max-width: 400px;
+    }
+
+    .gallery-view-all {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-view-all:hover { opacity: 0.6; }
+
+    /* Editorial scroll gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .gallery-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item:nth-child(1) { transition-delay: 0ms; }
+    .gallery-item:nth-child(2) { transition-delay: 80ms; }
+    .gallery-item:nth-child(3) { transition-delay: 160ms; }
+    .gallery-item:nth-child(4) { transition-delay: 80ms; }
+    .gallery-item:nth-child(5) { transition-delay: 160ms; }
+    .gallery-item:nth-child(6) { transition-delay: 240ms; }
+
+    .gallery-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
+    .gallery-item:nth-child(2) { aspect-ratio: 4/5; }
+    .gallery-item:nth-child(3) { aspect-ratio: 4/5; }
+    .gallery-item:nth-child(4) { aspect-ratio: 4/5; }
+    .gallery-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/9; }
+    .gallery-item:nth-child(6) { aspect-ratio: 4/5; }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(0.97);
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.03);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(26,23,20,0.7), transparent);
+      padding: 30px 20px 16px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    .gallery-caption span {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(253,251,248,0.85);
+    }
+
+    /* ─── FEATURED / SERVICES ─── */
+    .services-section {
+      padding: 120px 60px;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Oversized faded name behind content — signature detail */
+    .services-section::before {
+      content: 'JENNY';
+      position: absolute;
+      top: 50%;
+      right: -40px;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 240px;
+      font-weight: 300;
+      color: rgba(253,251,248,0.03);
+      pointer-events: none;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .services-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .services-left .section-label { color: var(--accent); }
+
+    .services-left .section-title { color: var(--white); }
+
+    .services-left p {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(253,251,248,0.6);
+      margin-top: 28px;
+      max-width: 420px;
+    }
+
+    .services-list {
+      list-style: none;
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(253,251,248,0.08);
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .service-item.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .service-item:nth-child(1) { transition-delay: 0ms; }
+    .service-item:nth-child(2) { transition-delay: 100ms; }
+    .service-item:nth-child(3) { transition-delay: 200ms; }
+    .service-item:nth-child(4) { transition-delay: 300ms; }
+
+    .service-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      width: 36px;
+      flex-shrink: 0;
+    }
+
+    .service-name {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: rgba(253,251,248,0.85);
+      flex: 1;
+    }
+
+    .service-detail {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(253,251,248,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    .services-right {
+      position: relative;
+    }
+
+    .services-img-wrap {
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+
+    .services-img-wrap.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .services-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+
+    .services-img-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 120px;
+      height: 120px;
+      border: 2px solid var(--accent);
+      z-index: -1;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials-section {
+      padding: 120px 60px;
+      background: var(--white);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .testimonial-card {
+      padding: 40px;
+      background: var(--bg);
+      border-top: 2px solid var(--accent);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .testimonial-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .testimonial-card:nth-child(1) { transition-delay: 0ms; }
+    .testimonial-card:nth-child(2) { transition-delay: 120ms; }
+    .testimonial-card:nth-child(3) { transition-delay: 240ms; }
+
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+
+    .testimonial-author {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+    }
+
+    .testimonial-role {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--mid);
+      margin-top: 4px;
+    }
+
+    /* ─── ABOUT ─── */
+    .about-section {
+      padding: 120px 60px;
+      background: var(--bg);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .about-img-wrap.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-img-label {
+      position: absolute;
+      bottom: -40px;
+      left: 30px;
+      background: var(--dark);
+      padding: 16px 24px;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .about-text {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+
+    .about-text.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-text .section-title {
+      margin-top: 16px;
+      margin-bottom: 32px;
+    }
+
+    .about-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 20px;
+    }
+
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--accent-dark);
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+      margin: 36px 0;
+    }
+
+    .about-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .about-feature::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ─── PRESS ─── */
+    .press-strip {
+      padding: 48px 60px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .press-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      white-space: nowrap;
+      margin-right: 60px;
+      flex-shrink: 0;
+    }
+
+    .press-names {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+
+    .press-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: rgba(74,69,63,0.5);
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      padding: 160px 60px;
+      background: var(--dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,168,130,0.08);
+      pointer-events: none;
+    }
+
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,168,130,0.04);
+      pointer-events: none;
+    }
+
+    .cta-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .cta-label.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+
+    .cta-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(253,251,248,0.5);
+      letter-spacing: 0.06em;
+      margin-bottom: 52px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+
+    .cta-sub.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      background: var(--accent);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dark);
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.45s, transform 0.6s ease 0.45s,
+                  background 0.3s ease;
+    }
+
+    .cta-btn.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-btn:hover {
+      background: var(--accent-dark);
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      padding: 120px 60px;
+      background: var(--white);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .contact-left .section-title {
+      margin: 16px 0 32px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .contact-row:last-child { border-bottom: none; }
+
+    .contact-type {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+    }
+
+    .contact-value {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--dark);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-value:hover { color: var(--accent-dark); }
+
+    .contact-right {
+      padding-top: 80px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+
+    .contact-right.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--dark);
+      margin-bottom: 40px;
+    }
+
+    .contact-social {
+      display: flex;
+      gap: 32px;
+    }
+
+    .contact-social a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .contact-social a:hover {
+      color: var(--accent-dark);
+      border-color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(200,168,130,0.15);
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(253,251,248,0.5);
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(253,251,248,0.3);
+    }
+
+    .footer-credit {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(253,251,248,0.25);
+    }
+
+    .footer-credit a {
+      color: rgba(200,168,130,0.5);
+      text-decoration: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+
+      .hero-content { left: 24px; right: 24px; bottom: 60px; }
+      .scroll-hint { display: none; }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        padding: 60px 24px;
+      }
+      .stat-item { border-right: none; }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--light); }
+
+      .gallery-section { padding: 80px 24px; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .gallery-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
+      .gallery-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/9; }
+      .gallery-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+      .services-section { padding: 80px 24px; }
+      .services-inner { grid-template-columns: 1fr; gap: 60px; }
+
+      .testimonials-section { padding: 80px 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      .about-section { padding: 80px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 60px; }
+      .about-img-label { bottom: -30px; }
+
+      .cta-section { padding: 100px 24px; }
+
+      .contact-section { padding: 80px 24px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+      .contact-right { padding-top: 0; }
+
+      footer {
+        padding: 30px 24px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .press-strip { padding: 40px 24px; flex-direction: column; gap: 24px; }
+      .press-label { margin-right: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content { bottom: 40px; }
+      .stat-number { font-size: 60px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:nth-child(1) { grid-column: span 1; }
+      .gallery-item:nth-child(5) { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Jenny Lopez</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Full-bleed, text pinned bottom-left -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow is-visible">Orlando, FL · Professional Headshots</p>
+      <h1 class="hero-name">
+        <span class="line is-visible">Jenny</span>
+        <span class="line is-visible">Lopez</span>
+      </h1>
+      <p class="hero-subtitle is-visible">Headshot Photographer · Orlando, FL</p>
+      <a href="#contact" class="hero-cta is-visible">Book a Session</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Corporate Headshots</span>
+      <span class="marquee-dot">·</span>
+      <span>Actor Headshots</span>
+      <span class="marquee-dot">·</span>
+      <span>LinkedIn Portraits</span>
+      <span class="marquee-dot">·</span>
+      <span>Personal Branding</span>
+      <span class="marquee-dot">·</span>
+      <span>Orlando, FL</span>
+      <span class="marquee-dot">·</span>
+      <span>Same-Day Turnaround Available</span>
+      <span class="marquee-dot">·</span>
+      <span>Featured in Forbes · LA Weekly · New York Times</span>
+      <span class="marquee-dot">·</span>
+      <span>Corporate Headshots</span>
+      <span class="marquee-dot">·</span>
+      <span>Actor Headshots</span>
+      <span class="marquee-dot">·</span>
+      <span>LinkedIn Portraits</span>
+      <span class="marquee-dot">·</span>
+      <span>Personal Branding</span>
+      <span class="marquee-dot">·</span>
+      <span>Orlando, FL</span>
+      <span class="marquee-dot">·</span>
+      <span>Same-Day Turnaround Available</span>
+      <span class="marquee-dot">·</span>
+      <span>Featured in Forbes · LA Weekly · New York Times</span>
+      <span class="marquee-dot">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">5+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2K+</div>
+      <div class="stat-label">Sessions Booked</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">310</div>
+      <div class="stat-label">IG Posts</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Press Features</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <div class="gallery-header-text">
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">
+          <span class="clip-reveal">Selected</span>
+          <span class="clip-reveal">Work</span>
+        </h2>
+      </div>
+      <a href="#contact" class="gallery-view-all">Book Your Session</a>
+    </div>
+    <div class="gallery-grid">
+      <!-- Using placeholder-style professional headshot images from Unsplash (royalty-free stock to represent portfolio style) -->
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=80" alt="Corporate headshot — professional man in suit" loading="lazy">
+        <div class="gallery-caption"><span>Corporate · LinkedIn</span></div>
+      </div>
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Professional woman headshot" loading="lazy">
+        <div class="gallery-caption"><span>Executive Portrait</span></div>
+      </div>
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80" alt="Actor headshot" loading="lazy">
+        <div class="gallery-caption"><span>Actor · Commercial</span></div>
+      </div>
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80" alt="Personal branding portrait" loading="lazy">
+        <div class="gallery-caption"><span>Personal Branding</span></div>
+      </div>
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80" alt="Headshot — editorial style" loading="lazy">
+        <div class="gallery-caption"><span>Editorial · Lifestyle</span></div>
+      </div>
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" alt="Studio headshot" loading="lazy">
+        <div class="gallery-caption"><span>Studio Session</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="services-inner">
+      <div class="services-left">
+        <p class="section-label">What I Offer</p>
+        <h2 class="section-title">
+          <span class="clip-reveal" style="color: var(--white);">The Right</span>
+          <span class="clip-reveal" style="color: var(--white);">Image for</span>
+          <span class="clip-reveal" style="color: var(--white);">Every Goal</span>
+        </h2>
+        <p>Whether you're updating your LinkedIn, building your acting portfolio, or establishing a personal brand — every session is tailored to capture the version of you that opens doors.</p>
+        <ul class="services-list">
+          <li class="service-item">
+            <span class="service-number">01</span>
+            <span class="service-name">Corporate & LinkedIn Headshots</span>
+            <span class="service-detail">Studio · Outdoor</span>
+          </li>
+          <li class="service-item">
+            <span class="service-number">02</span>
+            <span class="service-name">Actor & Talent Headshots</span>
+            <span class="service-detail">Commercial · Theatrical</span>
+          </li>
+          <li class="service-item">
+            <span class="service-number">03</span>
+            <span class="service-name">Personal Branding Sessions</span>
+            <span class="service-detail">Multi-look · On-location</span>
+          </li>
+          <li class="service-item">
+            <span class="service-number">04</span>
+            <span class="service-name">Group & Corporate Events</span>
+            <span class="service-detail">On-site studio setup</span>
+          </li>
+        </ul>
+      </div>
+      <div class="services-right">
+        <div class="services-img-wrap">
+          <img class="services-img" src="https://images.unsplash.com/photo-1542206395-9feb3edaa68d?w=700&q=80" alt="Behind the scenes — studio setup" loading="lazy">
+          <div class="services-img-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <div class="press-strip">
+    <span class="press-label">As seen in</span>
+    <div class="press-names">
+      <span class="press-name">New York Times</span>
+      <span class="press-name">Forbes</span>
+      <span class="press-name">LA Weekly</span>
+      <span class="press-name">Orlando Voyager</span>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <p class="section-label">What Clients Say</p>
+    <h2 class="section-title">
+      <span class="clip-reveal">Results That Speak</span>
+    </h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"I updated my LinkedIn with Jenny's headshot and got three recruiter messages within a week. The photo just communicates confidence in a way my old one never did."</p>
+        <p class="testimonial-author">Michael R.</p>
+        <p class="testimonial-role">Sales Executive · Orlando, FL</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"She made the whole session feel effortless. I usually hate having my photo taken but Jenny knew exactly how to direct me. The final images were beyond what I hoped for."</p>
+        <p class="testimonial-author">Daniela M.</p>
+        <p class="testimonial-role">Actress · Theater &amp; Commercial</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"We booked Jenny for our entire team of 12. She set up a portable studio in our office and delivered polished, consistent headshots for everyone — same day."</p>
+        <p class="testimonial-author">James T.</p>
+        <p class="testimonial-role">Director of HR · Tech Company</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-img-wrap">
+        <img class="about-img" src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&q=80" alt="Jenny Lopez — Photographer" loading="lazy">
+        <div class="about-img-label">Jenny Lopez · Orlando</div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <h2 class="section-title">
+          <span class="clip-reveal">The Person</span>
+          <span class="clip-reveal">Behind the Lens</span>
+        </h2>
+        <p class="about-pull">"A great headshot doesn't just capture a face — it captures the impression you want to leave."</p>
+        <p class="about-body">Jenny Lopez is a professional headshot photographer based in Orlando, FL. Operating out of a dedicated studio at Sunport Drive, Jenny has spent five years helping executives, actors, and entrepreneurs put their best face forward in a competitive world.</p>
+        <p class="about-body">Her work has been recognized in Forbes, New York Times, LA Weekly, and Orlando Voyager. Whether it's a corporate team shoot or a one-on-one actor portfolio session, Jenny's approach is calm, efficient, and — above all — results-driven.</p>
+        <div class="about-features">
+          <span class="about-feature">Studio in Orlando</span>
+          <span class="about-feature">On-location available</span>
+          <span class="about-feature">Same-day delivery</span>
+          <span class="about-feature">Retouching included</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <p class="cta-label">Ready?</p>
+    <h2 class="cta-heading">
+      <span class="clip-reveal" style="color: var(--white);">Book Your Session</span>
+    </h2>
+    <p class="cta-sub">Sessions available weekdays and weekends at the Orlando studio or on-site at your location.</p>
+    <a href="#contact" class="cta-btn">Get In Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">
+          <span class="clip-reveal">Let's Work</span>
+          <span class="clip-reveal">Together</span>
+        </h2>
+        <div class="contact-info">
+          <div class="contact-row">
+            <span class="contact-type">Phone</span>
+            <a href="tel:+14079791888" class="contact-value">(407) 979-1888</a>
+          </div>
+          <div class="contact-row">
+            <span class="contact-type">Studio</span>
+            <span class="contact-value">8018 Sunport Drive, Suite 205<br>Orlando, FL 32809</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-type">Instagram</span>
+            <a href="https://www.instagram.com/jennysheadshots/" target="_blank" class="contact-value">@jennysheadshots</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <p class="contact-tagline">"Your headshot is often the first thing someone sees. Make it count."</p>
+        <div class="contact-social">
+          <a href="https://www.instagram.com/jennysheadshots/" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/jennysheadshots/" target="_blank">Facebook</a>
+          <a href="https://www.tiktok.com/@jennysheadshots" target="_blank">TikTok</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Jenny Lopez · Headshots</span>
+    <span class="footer-copy">© 2026 Jenny's Headshots, LLC · Orlando, FL</span>
+    <span class="footer-credit">Design by <a href="#">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // IntersectionObserver — animate all .is-visible triggerable elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Observe animated elements
+    document.querySelectorAll(
+      '.stat-item, .gallery-item, .service-item, .services-img-wrap, ' +
+      '.testimonial-card, .about-img-wrap, .about-text, .contact-right, ' +
+      '.cta-label, .cta-sub, .cta-btn, .clip-reveal'
+    ).forEach(el => observer.observe(el));
+
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      if (heroBg) {
+        heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+      }
+    }, { passive: true });
+
+    // Trigger hero elements immediately
+    document.querySelectorAll('.hero .is-visible').forEach(el => {
+      el.classList.add('is-visible');
+    });
+  </script>
+</body>
+</html>
