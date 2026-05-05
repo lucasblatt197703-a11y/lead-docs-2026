@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J&amp;C Photography — Fort Payne, Alabama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F7F2EC;
+      --warm:    #EDE5D8;
+      --text:    #2A2420;
+      --muted:   #7C6F65;
+      --accent:  #B8896A;
+      --dark:    #1C1714;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--text); font-family: 'Work Sans', sans-serif; overflow-x: hidden; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(28,23,20,0.55) 0%, transparent 100%);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; letter-spacing: 0.12em;
+      color: #fff; text-decoration: none; text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.85); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; min-height: 600px;
+      overflow: hidden; display: flex; align-items: flex-end;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://static.wixstatic.com/media/535a9c_221fc93077a64cf88f83746719091993~mv2.jpg');
+      background-size: cover; background-position: center 30%;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,23,20,0.72) 0%, rgba(28,23,20,0.15) 55%, transparent 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; padding: 0 64px 72px;
+      max-width: 760px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 18px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 9vw, 108px);
+      font-weight: 300; line-height: 0.95;
+      color: #fff; letter-spacing: 0.05em;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.9s ease 0.12s, transform 0.9s ease 0.12s;
+    }
+    .hero-tagline {
+      font-size: 15px; font-weight: 300; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.75); margin-top: 20px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.28s, transform 0.7s ease 0.28s;
+    }
+    .hero-cta {
+      display: inline-block; margin-top: 32px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #fff; text-decoration: none;
+      border-bottom: 1px solid var(--accent); padding-bottom: 4px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s, color 0.3s;
+    }
+    .hero-cta:hover { color: var(--accent); }
+    .hero-loaded .hero-eyebrow,
+    .hero-loaded .hero-name,
+    .hero-loaded .hero-tagline,
+    .hero-loaded .hero-cta { opacity: 1; transform: translateY(0); }
+
+    /* ─── ACCENT LINE ─── */
+    .accent-line {
+      width: 28%; height: 1px; background: var(--accent);
+      margin: 0 auto; opacity: 0.55;
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      background: var(--dark); padding: 72px 64px;
+      display: flex; justify-content: center; gap: 96px; flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px; font-weight: 300; line-height: 1;
+      color: var(--accent); display: block;
+    }
+    .stat-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      margin-top: 8px;
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4.5vw, 56px); font-weight: 300; line-height: 1.1;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery { padding: 120px 64px; background: var(--cream); }
+    .gallery-header { margin-bottom: 64px; }
+    .gallery-header .section-title {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .gallery-header .section-title.is-visible { opacity: 1; transform: translateY(0); }
+
+    .gallery-editorial {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .gallery-row {
+      display: flex; gap: 6px;
+    }
+    .gallery-row.full-width { height: 580px; }
+    .gallery-row.split { height: 380px; }
+    .gallery-row.trio { height: 340px; }
+
+    .gallery-img {
+      flex: 1; overflow: hidden; position: relative;
+      background: var(--warm);
+      opacity: 0; transform: scale(0.97);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .gallery-img.is-visible { opacity: 1; transform: scale(1); }
+    .gallery-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease; loading: lazy;
+    }
+    .gallery-img:hover img { transform: scale(1.03); }
+    .gallery-img.wide { flex: 2.2; }
+    .gallery-img.narrow { flex: 1; }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden; background: var(--warm); padding: 18px 0; border-top: 1px solid rgba(184,137,106,0.25); border-bottom: 1px solid rgba(184,137,106,0.25);
+    }
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee 36s linear infinite;
+    }
+    .marquee-track span {
+      font-size: 11px; font-weight: 400; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 0 48px; white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: var(--dark); padding: 120px 64px; }
+    .testimonials-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .testimonials-inner .section-label { justify-content: center; display: block; margin-bottom: 16px; }
+    .testimonials-inner .section-title { color: #fff; margin-bottom: 72px; opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .testimonials-inner .section-title.is-visible { opacity: 1; transform: translateY(0); }
+    .testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .testimonial {
+      text-align: left;
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .testimonial.is-visible { opacity: 1; transform: translateY(0); }
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 300; font-style: italic;
+      line-height: 1.65; color: rgba(255,255,255,0.88);
+      border-left: 2px solid var(--accent); padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .testimonial-author {
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { padding: 140px 64px; }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .about-img-wrap {
+      position: relative;
+      opacity: 0; transform: translateX(-30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .about-img-wrap.is-visible { opacity: 1; transform: translateX(0); }
+    .about-img-wrap img {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
+    }
+    .about-accent-bar {
+      position: absolute; bottom: -18px; right: -18px;
+      width: 40%; height: 4px; background: var(--accent);
+    }
+    .about-text {
+      opacity: 0; transform: translateX(30px);
+      transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+    }
+    .about-text.is-visible { opacity: 1; transform: translateX(0); }
+    .about-text .section-label { margin-bottom: 12px; }
+    .about-text .section-title { margin-bottom: 28px; }
+    .about-body {
+      font-size: 17px; font-weight: 300; line-height: 1.8; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .about-detail {
+      font-size: 13px; letter-spacing: 0.06em; color: var(--muted);
+      display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap;
+    }
+    .about-detail-item strong {
+      display: block; font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 4px;
+    }
+
+    /* ─── CTA BAND ─── */
+    #cta {
+      background: var(--accent); padding: 100px 64px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: 'J&C';
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif; font-size: 320px; font-weight: 300;
+      color: rgba(255,255,255,0.06); pointer-events: none; white-space: nowrap;
+    }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px); font-weight: 300; line-height: 1.1;
+      color: #fff; margin-bottom: 18px; position: relative;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .cta-title.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-sub {
+      font-size: 15px; font-weight: 300; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.8); margin-bottom: 40px; position: relative;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    }
+    .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn {
+      display: inline-block; padding: 16px 44px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent); background: #fff;
+      text-decoration: none; position: relative;
+      transition: background 0.3s, color 0.3s;
+    }
+    .cta-btn:hover { background: var(--dark); color: #fff; }
+
+    /* ─── CONTACT ─── */
+    #contact { padding: 120px 64px; background: var(--warm); }
+    .contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    .contact-left .section-title { margin-bottom: 24px; }
+    .contact-left p { font-size: 17px; font-weight: 300; line-height: 1.8; color: var(--muted); max-width: 400px; }
+    .contact-info { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+    .contact-info-row { display: flex; flex-direction: column; gap: 4px; }
+    .contact-info-row span:first-child { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
+    .contact-info-row a, .contact-info-row span:last-child { font-size: 16px; font-weight: 300; color: var(--text); text-decoration: none; }
+    .contact-info-row a:hover { color: var(--accent); }
+    .contact-right {
+      display: flex; flex-direction: column; justify-content: center; gap: 20px;
+    }
+    .contact-img {
+      width: 100%; height: 340px; object-fit: cover; display: block;
+    }
+    .social-row { display: flex; gap: 28px; margin-top: 8px; }
+    .social-row a { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+    .social-row a:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark); padding: 36px 64px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    footer span {
+      font-size: 11px; letter-spacing: 0.12em; color: rgba(255,255,255,0.35);
+    }
+    .footer-credit { font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.2); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .hero-content { padding: 0 28px 56px; }
+      #stats { padding: 56px 24px; gap: 48px; }
+      .stat-num { font-size: 60px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-row.full-width { height: 380px; }
+      .gallery-row.split { height: 260px; }
+      .gallery-row.trio { height: 220px; }
+      #testimonials { padding: 80px 24px; }
+      .testimonial-grid { grid-template-columns: 1fr; gap: 36px; }
+      #about { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      #cta { padding: 80px 24px; }
+      #contact { padding: 80px 24px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      footer { padding: 28px 24px; flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .gallery-row.full-width { height: 280px; }
+      .gallery-row.split, .gallery-row.trio { height: 180px; }
+      .gallery-row { flex-direction: column; height: auto; }
+      .gallery-img { height: 260px; flex: unset; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">J&amp;C Photography</a>
+    <div class="nav-links">
+      <a href="#gallery">Portfolio</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Fort Payne, Alabama · Est. 2016</p>
+      <h1 class="hero-name">J&amp;C<br>Photography</h1>
+      <p class="hero-tagline">Newborns · Families · Portraits · Life's Milestones</p>
+      <a class="hero-cta" href="#contact">Book a Session</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat"><span class="stat-num">8+</span><span class="stat-label">Years Capturing</span></div>
+    <div class="stat" style="transition-delay:0.12s"><span class="stat-num">500+</span><span class="stat-label">Sessions Shot</span></div>
+    <div class="stat" style="transition-delay:0.24s"><span class="stat-num">5★</span><span class="stat-label">Google Rating</span></div>
+    <div class="stat" style="transition-delay:0.36s"><span class="stat-num">6</span><span class="stat-label">5-Star Reviews</span></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Moments Worth<br>Remembering</h2>
+    </div>
+
+    <div class="gallery-editorial">
+      <!-- Row 1: full-width hero image -->
+      <div class="gallery-row full-width">
+        <div class="gallery-img">
+          <img src="https://static.wixstatic.com/media/535a9c_221fc93077a64cf88f83746719091993~mv2.jpg" alt="Portrait session" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Row 2: split -->
+      <div class="gallery-row split">
+        <div class="gallery-img wide">
+          <img src="https://static.wixstatic.com/media/535a9c_9c3ee0ede51c471ea337f00eb06babb5~mv2.jpg" alt="Family portrait" loading="lazy" />
+        </div>
+        <div class="gallery-img narrow">
+          <img src="https://static.wixstatic.com/media/535a9c_7f2d42ae926941bb8ee20f00207070da~mv2.jpg" alt="Newborn photography" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Row 3: trio -->
+      <div class="gallery-row trio">
+        <div class="gallery-img">
+          <img src="https://static.wixstatic.com/media/535a9c_19aa2622152f491f84156629a90255d4~mv2.jpg" alt="Portrait" loading="lazy" />
+        </div>
+        <div class="gallery-img">
+          <img src="https://static.wixstatic.com/media/535a9c_fe3fc9514e244c3d965f7586bd52306c~mv2.jpg" alt="Session" loading="lazy" />
+        </div>
+        <div class="gallery-img">
+          <img src="https://static.wixstatic.com/media/535a9c_2ad33bf035984bf18ad69ae6927fb609~mv2.jpg" alt="Photography" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Row 4: split reversed -->
+      <div class="gallery-row split">
+        <div class="gallery-img narrow">
+          <img src="https://static.wixstatic.com/media/535a9c_00c1f3dd83fd4640b3b22940d231f228~mv2.jpg" alt="Portrait session" loading="lazy" />
+        </div>
+        <div class="gallery-img wide">
+          <img src="https://static.wixstatic.com/media/535a9c_b5941cc80927496bb0d75349bed3074a~mv2.jpg" alt="Family" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Row 5: duo -->
+      <div class="gallery-row split">
+        <div class="gallery-img">
+          <img src="https://static.wixstatic.com/media/535a9c_c1c13f069f8045a889a6e5e54f7e6ec4~mv2.jpg" alt="Photography session" loading="lazy" />
+        </div>
+        <div class="gallery-img">
+          <img src="https://static.wixstatic.com/media/535a9c_9db4ee18727f4410a7a393c91c819cfe~mv2.jpg" alt="Portrait" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Newborn Photography</span>
+      <span>·</span>
+      <span>Family Portraits</span>
+      <span>·</span>
+      <span>Children's Sessions</span>
+      <span>·</span>
+      <span>Couples</span>
+      <span>·</span>
+      <span>Special Events</span>
+      <span>·</span>
+      <span>Fort Payne, Alabama</span>
+      <span>·</span>
+      <span>DeKalb County</span>
+      <span>·</span>
+      <span>Newborn Photography</span>
+      <span>·</span>
+      <span>Family Portraits</span>
+      <span>·</span>
+      <span>Children's Sessions</span>
+      <span>·</span>
+      <span>Couples</span>
+      <span>·</span>
+      <span>Special Events</span>
+      <span>·</span>
+      <span>Fort Payne, Alabama</span>
+      <span>·</span>
+      <span>DeKalb County</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testimonials-inner">
+      <span class="section-label">Kind Words</span>
+      <h2 class="section-title">What Families Say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <p class="testimonial-quote">"Judy and Courtney captured our newborn in the most beautiful, gentle way. Every photo is a treasure we'll keep forever."</p>
+          <p class="testimonial-author">— Christy VanPelt · Fort Payne, AL</p>
+        </div>
+        <div class="testimonial" style="transition-delay:0.12s">
+          <p class="testimonial-quote">"They made our whole family feel so relaxed and comfortable. The photos turned out better than we ever imagined."</p>
+          <p class="testimonial-author">— Misty Phillips · Fort Payne, AL</p>
+        </div>
+        <div class="testimonial" style="transition-delay:0.24s">
+          <p class="testimonial-quote">"I've used a lot of photographers over the years. J&C is easily the best experience I've had — professional, warm, and incredibly talented."</p>
+          <p class="testimonial-author">— Katie O'Connor · DeKalb County</p>
+        </div>
+        <div class="testimonial" style="transition-delay:0.36s">
+          <p class="testimonial-quote">"Booked them for our family reunion and they delivered beyond expectations. Every single shot was magazine-quality."</p>
+          <p class="testimonial-author">— Carolina Alvarado · Alabama</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://static.wixstatic.com/media/535a9c_a00127e71f004fe8a7f0d8845e7fe944~mv2.jpg" alt="J&C Photography — Judy and Courtney" loading="lazy" />
+        <div class="about-accent-bar"></div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">A Mother &amp;<br>Daughter Team</h2>
+        <p class="about-body">Judy Downer photographs; Courtney Dill edits. Together they bring a unique combination of warmth and precision to every session — making clients feel at ease while delivering images that genuinely reflect the people in them.</p>
+        <p class="about-body">Based in Fort Payne, Alabama, J&C Photography has served Northeast Alabama families since 2016, earning a perfect 5-star rating through consistent care, creativity, and attention to detail.</p>
+        <div class="about-detail">
+          <div class="about-detail-item">
+            <strong>Location</strong>
+            1805B Adamsburg Rd E<br>Fort Payne, AL 35967
+          </div>
+          <div class="about-detail-item">
+            <strong>Contact</strong>
+            (256) 516-2608<br>jandcphotography2016@gmail.com
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section id="cta">
+    <h2 class="cta-title">Ready to Book<br>Your Session?</h2>
+    <p class="cta-sub">Newborns, families, couples, children — every milestone deserves images this good.</p>
+    <a class="cta-btn" href="mailto:jandcphotography2016@gmail.com">Get In Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Let's Make<br>Something Beautiful</h2>
+        <p>Every session is custom. Send a message and Judy or Courtney will be in touch within 24 hours.</p>
+        <div class="contact-info">
+          <div class="contact-info-row">
+            <span>Phone / Text</span>
+            <a href="tel:2565162608">(256) 516-2608</a>
+          </div>
+          <div class="contact-info-row">
+            <span>Email</span>
+            <a href="mailto:jandcphotography2016@gmail.com">jandcphotography2016@gmail.com</a>
+          </div>
+          <div class="contact-info-row">
+            <span>Location</span>
+            <span>Fort Payne, AL 35967</span>
+          </div>
+        </div>
+        <div class="social-row" style="margin-top:28px">
+          <a href="https://www.instagram.com/jandcphotography_2016_/" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/JandCPhotography/" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <img class="contact-img" src="https://static.wixstatic.com/media/535a9c_c1c13f069f8045a889a6e5e54f7e6ec4~mv2.jpg" alt="J&C Photography session" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>J&amp;C Photography · Fort Payne, Alabama · © 2026</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.transform = `translateY(${window.scrollY * 0.38}px)`;
+    }, { passive: true });
+
+    // Hero entrance animation
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => document.getElementById('hero').classList.add('hero-loaded'), 80);
+    });
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(
+      '.stat, .gallery-img, .gallery-header .section-title, .testimonials-inner .section-title, .testimonial, .about-img-wrap, .about-text, .cta-title, .cta-sub'
+    ).forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
