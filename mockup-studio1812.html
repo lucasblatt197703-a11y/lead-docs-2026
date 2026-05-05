@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio 1812 — Branding & Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0F0D0B;
+    --text: #EAE4DC;
+    --accent: #C4A068;
+    --mid: #1A1714;
+    --muted: #7A736A;
+    --light-bg: #F5F1EB;
+    --dark-text: #1A1714;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    background: transparent;
+    transition: background 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(15,13,11,0.92);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO — Full-bleed image, text pinned bottom-left */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/d1734f_0b4d34feaa434cf98a9d8693140908d4~mv2_d_3600_5520_s_4_2.jpg');
+    background-size: cover;
+    background-position: center top;
+    transform: scale(1.05);
+    transition: transform 0.6s ease;
+    will-change: transform;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15,13,11,0.85) 0%, rgba(15,13,11,0.3) 50%, rgba(15,13,11,0.1) 100%);
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 72px;
+    left: 64px;
+    max-width: 680px;
+  }
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(72px, 10vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    color: rgba(234,228,220,0.7);
+    margin-top: 18px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s;
+  }
+  .hero-cta {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 14px 36px;
+    border: 1px solid var(--accent);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.9s, transform 0.6s ease 0.9s, background 0.3s, color 0.3s;
+  }
+  .hero-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .hero-loaded .hero-eyebrow,
+  .hero-loaded .hero-name,
+  .hero-loaded .hero-sub,
+  .hero-loaded .hero-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Vertical text left edge */
+  .vertical-tag {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* MARQUEE STRIP */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 30s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bg);
+    margin: 0 32px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* STATS SECTION */
+  #stats {
+    background: var(--mid);
+    padding: 80px 64px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 80px;
+    line-height: 1;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* SERVICES SECTION */
+  #services {
+    padding: 120px 64px;
+    position: relative;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 72px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 80px;
+    line-height: 1;
+    color: rgba(196,160,104,0.15);
+    margin-top: -12px;
+    flex-shrink: 0;
+  }
+  .section-title-wrap {
+    flex: 1;
+  }
+  .section-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 1.1;
+    color: var(--text);
+    overflow: hidden;
+  }
+  .title-reveal {
+    display: block;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .title-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: var(--mid);
+    padding: 48px 40px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .service-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .service-card:hover {
+    background: #201D19;
+  }
+  .service-icon {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 32px;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  /* GALLERY SECTION */
+  #gallery {
+    padding: 0 0 120px;
+    background: var(--bg);
+  }
+  .gallery-header {
+    padding: 120px 64px 60px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 4px;
+    max-width: 100%;
+  }
+  .gallery-main {
+    grid-row: span 2;
+    overflow: hidden;
+    height: 700px;
+  }
+  .gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(0.95);
+    transition: transform 0.8s ease;
+    will-change: transform;
+    display: block;
+  }
+  .gallery-main.is-visible img {
+    transform: scale(1.0);
+  }
+  .gallery-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+  }
+  .gallery-thumb {
+    overflow: hidden;
+    height: 348px;
+  }
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(0.95);
+    transition: transform 0.8s ease;
+    will-change: transform;
+    display: block;
+  }
+  .gallery-thumb.is-visible img {
+    transform: scale(1.0);
+  }
+  .gallery-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .gallery-row-item {
+    overflow: hidden;
+    height: 260px;
+  }
+  .gallery-row-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(0.95);
+    transition: transform 0.8s ease;
+    will-change: transform;
+    display: block;
+  }
+  .gallery-row-item.is-visible img {
+    transform: scale(1.0);
+  }
+
+  /* ABOUT SECTION */
+  #about {
+    background: var(--light-bg);
+    padding: 120px 64px;
+    color: var(--dark-text);
+  }
+  .about-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-image-wrap {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .about-image-wrap.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-image-wrap img {
+    width: 100%;
+    height: 560px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-text-block {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .about-text-block.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #8A7A5A;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--dark-text);
+    margin-bottom: 28px;
+  }
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #4A4035;
+    margin-bottom: 24px;
+  }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #8A7A5A;
+    border-left: 2px solid #C4A068;
+    padding-left: 24px;
+    margin: 36px 0;
+  }
+  .about-services-list {
+    list-style: none;
+    margin-top: 28px;
+  }
+  .about-services-list li {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6A5E50;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(196,160,104,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .about-services-list li::after {
+    content: '→';
+    color: #C4A068;
+  }
+
+  /* BOLD CTA SECTION */
+  #cta {
+    background: var(--accent);
+    padding: 100px 64px;
+    text-align: center;
+  }
+  .cta-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(15,13,11,0.6);
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .cta-eyebrow.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: 1.05;
+    color: var(--bg);
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+  .cta-heading.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 2px solid var(--bg);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bg);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s, background 0.3s, color 0.3s;
+  }
+  .cta-btn.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cta-btn:hover {
+    background: var(--bg);
+    color: var(--accent);
+  }
+
+  /* CONTACT SECTION */
+  #contact {
+    background: var(--bg);
+    padding: 120px 64px;
+  }
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .contact-left.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 52px;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+  .contact-body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-line {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+  .contact-line strong {
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .contact-line a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-line a:hover { color: var(--accent); }
+  .contact-right {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-right.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .contact-image {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--mid);
+    padding: 40px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(196,160,104,0.15);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .footer-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    color: rgba(122,115,106,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; bottom: 48px; }
+    #stats { padding: 60px 24px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-main { height: 400px; }
+    .gallery-side { grid-template-rows: auto; }
+    .gallery-thumb { height: 280px; }
+    .gallery-row { grid-template-columns: repeat(2, 1fr); }
+    #about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-image-wrap img { height: 360px; }
+    #cta { padding: 80px 24px; }
+    #contact { padding: 80px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 32px 24px; flex-wrap: wrap; gap: 16px; }
+    .section-header { padding: 0 24px; }
+  }
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .stat-number { font-size: 56px; }
+    .gallery-row { grid-template-columns: 1fr 1fr; }
+    .gallery-row-item { height: 180px; }
+    .hero-name { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Studio 1812</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="vertical-tag">Stuart · Florida · Est. 2012</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Branding &amp; Photography Studio</p>
+    <span class="hero-name">Studio<br>1812</span>
+    <p class="hero-sub">Where brand identity meets visual storytelling — Stuart, FL</p>
+    <a href="#services" class="hero-cta">Explore Our Work</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Branding</span><span>·</span>
+    <span>Photography</span><span>·</span>
+    <span>Graphic Design</span><span>·</span>
+    <span>Logo Design</span><span>·</span>
+    <span>Video &amp; Film</span><span>·</span>
+    <span>Print Production</span><span>·</span>
+    <span>Stuart, FL</span><span>·</span>
+    <span>Branding</span><span>·</span>
+    <span>Photography</span><span>·</span>
+    <span>Graphic Design</span><span>·</span>
+    <span>Logo Design</span><span>·</span>
+    <span>Video &amp; Film</span><span>·</span>
+    <span>Print Production</span><span>·</span>
+    <span>Stuart, FL</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">Years in Business</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 0.12s;">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Sessions Completed</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 0.24s;">
+      <span class="stat-number">6</span>
+      <span class="stat-label">Service Categories</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 0.36s;">
+      <span class="stat-number">1</span>
+      <span class="stat-label">Stop Shop</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title-wrap">
+      <span class="section-eyebrow">What We Do</span>
+      <h2 class="section-title">
+        <span class="title-reveal">Full-Service Creative</span>
+        <span class="title-reveal" style="transition-delay: 0.1s;">Under One Roof</span>
+      </h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon"></div>
+      <h3 class="service-name">Brand Photography</h3>
+      <p class="service-desc">Professional photography crafted specifically for your brand identity — headshots, product, lifestyle, and commercial imagery that tells your story.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.12s;">
+      <div class="service-icon"></div>
+      <h3 class="service-name">Graphic Design &amp; Identity</h3>
+      <p class="service-desc">Logos, custom stationery, flyers, invites, and print materials. Complete visual identity systems built for lasting impression.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.24s;">
+      <div class="service-icon"></div>
+      <h3 class="service-name">Video &amp; Film</h3>
+      <p class="service-desc">Cinematic video production for events, brand films, real estate, and social content. From concept to final cut.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.12s;">
+      <div class="service-icon"></div>
+      <h3 class="service-name">Portrait &amp; Event</h3>
+      <p class="service-desc">Maternity, family, birthday, and milestone photography — every moment captured with intention and artistry.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.24s;">
+      <div class="service-icon"></div>
+      <h3 class="service-name">Print Production</h3>
+      <p class="service-desc">T-shirts, large format prints, regular print ads, and custom merchandise. Design and production handled start to finish.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.36s;">
+      <div class="service-icon"></div>
+      <h3 class="service-name">Studio Production</h3>
+      <p class="service-desc">Full studio space with professional lighting, backdrops, and equipment. Available for photography, video, and live stream production.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-header" style="margin-bottom: 0;">
+      <div class="section-num">02</div>
+      <div class="section-title-wrap">
+        <span class="section-eyebrow">Portfolio</span>
+        <h2 class="section-title">
+          <span class="title-reveal">Selected Work</span>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-main">
+      <img src="https://static.wixstatic.com/media/d1734f_0b4d34feaa434cf98a9d8693140908d4~mv2_d_3600_5520_s_4_2.jpg" alt="Portrait photography" loading="lazy">
+    </div>
+    <div class="gallery-side">
+      <div class="gallery-thumb">
+        <img src="https://static.wixstatic.com/media/d1734f_9b7773f1e8764c14997d0631ec87112b~mv2_d_2304_3456_s_2.jpg" alt="Studio portrait" loading="lazy">
+      </div>
+      <div class="gallery-thumb">
+        <img src="https://static.wixstatic.com/media/d1734f_4c7f5a89f6c3485a85bede89169bd6f8~mv2_d_2304_3456_s_2.jpg" alt="Fashion photography" loading="lazy">
+      </div>
+    </div>
+  </div>
+  <div class="gallery-row" style="padding: 0 0;">
+    <div class="gallery-row-item">
+      <img src="https://static.wixstatic.com/media/d1734f_212b569b27c34ae68187457082f7153f~mv2_d_5184_3456_s_4_2.jpg" alt="Photography work" loading="lazy">
+    </div>
+    <div class="gallery-row-item">
+      <img src="https://static.wixstatic.com/media/d1734f_bb3a3df103e54b529fd6bf71a29977a5~mv2_d_2304_3456_s_2.jpg" alt="Portrait session" loading="lazy">
+    </div>
+    <div class="gallery-row-item">
+      <img src="https://static.wixstatic.com/media/d1734f_7b9dbf162950432f82bdddecdf110650~mv2_d_3186_4779_s_4_2.jpg" alt="Professional shoot" loading="lazy">
+    </div>
+    <div class="gallery-row-item">
+      <img src="https://static.wixstatic.com/media/d1734f_cc7ec4b96e5f401d88781c5fe26ec0ad~mv2_d_3030_4545_s_4_2.jpg" alt="Studio session" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap">
+      <img src="https://static.wixstatic.com/media/d1734f_a38bc6c1d4a64c9e82be7d8735593a74~mv2_d_2304_3168_s_2.jpg" alt="Studio 1812" loading="lazy">
+    </div>
+    <div class="about-text-block">
+      <span class="about-eyebrow">03 — About the Studio</span>
+      <h2 class="about-heading">One Studio.<br>Every Creative Need.</h2>
+      <p class="about-body">Studio 1812 is Stuart, Florida's full-service creative studio — combining professional photography, graphic design, branding, and video production under one roof. For over a decade, we've been the go-to creative partner for businesses and individuals across the Treasure Coast.</p>
+      <blockquote class="about-pull-quote">"Our service list extends beyond regular services offered at any other Imaging or Photo Studio."</blockquote>
+      <p class="about-body">From maternity portraits to brand identity systems, product photography to event films — Studio 1812 handles every visual touchpoint of your story.</p>
+      <ul class="about-services-list">
+        <li>Brand Photography &amp; Headshots</li>
+        <li>Logo &amp; Graphic Design</li>
+        <li>Video Production &amp; Editing</li>
+        <li>Print &amp; Apparel Production</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section id="cta">
+  <span class="cta-eyebrow">Ready to Elevate Your Brand?</span>
+  <h2 class="cta-heading">Let's Build<br>Something Great</h2>
+  <a href="mailto:info@studio1812.com" class="cta-btn">Book a Session</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <h2 class="contact-heading">Get In Touch</h2>
+      <p class="contact-body">Based in Stuart, FL — serving the Treasure Coast and beyond. Reach out to discuss your project, check availability, or schedule a studio tour.</p>
+      <div class="contact-detail">
+        <div class="contact-line">
+          <strong>Phone</strong>
+          <a href="tel:9547806554">954.780.6554</a>
+        </div>
+        <div class="contact-line">
+          <strong>Website</strong>
+          <a href="https://studio1812.com" target="_blank">studio1812.com</a>
+        </div>
+        <div class="contact-line">
+          <strong>Location</strong>
+          Stuart, Florida — Treasure Coast
+        </div>
+        <div class="contact-line">
+          <strong>Social</strong>
+          <a href="https://www.instagram.com/studio1812/" target="_blank">@studio1812</a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <img class="contact-image" src="https://static.wixstatic.com/media/d1734f_20c02c8a49a64543bd75bae163fd816a~mv2_d_2100_1400_s_2.jpg" alt="Studio 1812 work" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Studio 1812</div>
+  <div class="footer-copy">&copy; 2026 Studio 1812 · Stuart, FL</div>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/studio1812/" target="_blank">Instagram</a></li>
+    <li><a href="https://www.facebook.com/Studio1812/" target="_blank">Facebook</a></li>
+  </ul>
+  <div class="footer-credit">Design concept by Lucas Blatt</div>
+</footer>
+
+<script>
+  // NAV scroll state
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('hero-bg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.3}px)`;
+  }, { passive: true });
+
+  // Hero entrance animation
+  setTimeout(() => {
+    document.getElementById('hero').classList.add('hero-loaded');
+  }, 100);
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  // Observe all animated elements
+  document.querySelectorAll(
+    '.stat-item, .service-card, .title-reveal, .gallery-main, .gallery-thumb, .gallery-row-item, .about-image-wrap, .about-text-block, .contact-left, .contact-right, .cta-eyebrow, .cta-heading, .cta-btn'
+  ).forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
