@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R. Taylor — Paintings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4EFE8;
+    --text: #1C1A17;
+    --accent: #7B5E3A;
+    --accent-light: #C49A6C;
+    --muted: #6B6459;
+    --dark: #0F0D0A;
+    --white: #FDFAF5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ───── NAV ───── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    mix-blend-mode: normal;
+  }
+
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+  }
+
+  nav ul a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.8);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  nav ul a:hover { color: var(--white); }
+
+  /* ───── HERO ───── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/d705e1_26116bdf0b80414a8213fdfa4fdf97c3~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.08);
+    transition: transform 0.1s linear;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15,13,10,0.35) 0%, rgba(15,13,10,0.55) 100%);
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+  }
+
+  .hero-tag {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    display: block;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(72px, 10vw, 130px);
+    letter-spacing: 0.08em;
+    line-height: 0.95;
+    color: var(--white);
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+  }
+
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: rgba(253,250,245,0.75);
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+
+  .hero-line {
+    width: 60px;
+    height: 1px;
+    background: var(--accent-light);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 16px;
+  }
+
+  .hero-loaded .hero-tag,
+  .hero-loaded .hero-name,
+  .hero-loaded .hero-sub {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ───── MARQUEE ───── */
+  .marquee-strip {
+    background: var(--dark);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    padding: 0 40px;
+  }
+
+  .marquee-inner span.sep {
+    color: var(--muted);
+    padding: 0 8px;
+    letter-spacing: 0;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ───── STATS ───── */
+  #stats {
+    background: var(--white);
+    padding: 90px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-bottom: 1px solid rgba(28,26,23,0.08);
+  }
+
+  .stat-item {
+    padding: 0 40px;
+    border-right: 1px solid rgba(28,26,23,0.1);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child  { border-right: none; }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-item:nth-child(2).is-visible { transition-delay: 0.12s; }
+  .stat-item:nth-child(3).is-visible { transition-delay: 0.24s; }
+  .stat-item:nth-child(4).is-visible { transition-delay: 0.36s; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 90px;
+    line-height: 1;
+    color: var(--text);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ───── GALLERY ───── */
+  #gallery {
+    padding: 120px 60px;
+    background: var(--bg);
+    position: relative;
+  }
+
+  /* Oversized faded name — signature detail */
+  #gallery::before {
+    content: 'TAYLOR';
+    position: absolute;
+    top: 60px;
+    right: -20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 200px;
+    letter-spacing: 0.05em;
+    color: rgba(28,26,23,0.03);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 42px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* Editorial scroll gallery */
+  .gallery-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .gallery-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-item:nth-child(1) { grid-column: 1 / 2; grid-row: 1 / 3; }
+  .gallery-item:nth-child(2) { grid-column: 2 / 3; }
+  .gallery-item:nth-child(3) { grid-column: 2 / 3; }
+  .gallery-item:nth-child(4) { grid-column: 1 / 2; }
+  .gallery-item:nth-child(5) { grid-column: 2 / 3; grid-row: 3 / 5; }
+  .gallery-item:nth-child(6) { grid-column: 1 / 2; }
+
+  .gallery-item.is-visible:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-item.is-visible:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-item.is-visible:nth-child(4) { transition-delay: 0.15s; }
+  .gallery-item.is-visible:nth-child(5) { transition-delay: 0.05s; }
+  .gallery-item.is-visible:nth-child(6) { transition-delay: 0.25s; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    object-fit: cover;
+    display: block;
+    transform: scale(0.97);
+    transition: transform 0.7s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.0);
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 20px 16px;
+    background: linear-gradient(to top, rgba(15,13,10,0.7) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-caption {
+    opacity: 1;
+  }
+
+  .gallery-caption span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.9);
+  }
+
+  /* ───── MARQUEE 2 ───── */
+  .marquee-light {
+    background: var(--accent);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-light .marquee-inner span {
+    color: rgba(253,250,245,0.85);
+  }
+
+  .marquee-light .marquee-inner span.sep {
+    color: rgba(253,250,245,0.4);
+  }
+
+  /* ───── ABOUT ───── */
+  #about {
+    padding: 140px 60px;
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-portrait {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .about-portrait.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-portrait img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    display: block;
+    transform: scale(0.97);
+    transition: transform 5s ease;
+  }
+
+  .about-portrait:hover img {
+    transform: scale(1.02);
+  }
+
+  .about-portrait::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20px;
+    right: 20px;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.4;
+    color: var(--accent);
+    border-left: 2px solid var(--accent-light);
+    padding-left: 24px;
+    margin-bottom: 36px;
+  }
+
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .about-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 40px;
+  }
+
+  .about-detail::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ───── WORK CATEGORIES ───── */
+  #categories {
+    padding: 100px 60px;
+    background: var(--bg);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .category-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .category-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .category-card.is-visible:nth-child(2) { transition-delay: 0.12s; }
+  .category-card.is-visible:nth-child(3) { transition-delay: 0.24s; }
+
+  .category-card img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+    filter: brightness(0.85);
+  }
+
+  .category-card:hover img {
+    transform: scale(1.04);
+    filter: brightness(0.7);
+  }
+
+  .category-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px 28px;
+  }
+
+  .category-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 30px;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .category-count {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.65);
+    margin-top: 6px;
+  }
+
+  .category-arrow {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(253,250,245,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .category-card:hover .category-arrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .category-arrow svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--white);
+    fill: none;
+  }
+
+  /* ───── CTA ───── */
+  #cta {
+    background: var(--dark);
+    padding: 140px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/d705e1_5572d5a643194be8aa2c03da95c15860~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    display: block;
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(46px, 6vw, 80px);
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+  }
+
+  .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-label.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid var(--accent-light);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s, background 0.3s, color 0.3s;
+  }
+
+  .cta-btn.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-btn:hover {
+    background: var(--accent-light);
+    color: var(--dark);
+  }
+
+  /* ───── CONTACT ───── */
+  #contact {
+    padding: 120px 60px;
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .contact-left.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 52px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 30px;
+  }
+
+  .contact-intro {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .contact-email:hover { border-color: var(--accent); }
+
+  .contact-phone {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 40px;
+  }
+
+  .contact-social {
+    display: flex;
+    gap: 24px;
+  }
+
+  .contact-social a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .contact-social a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .contact-right {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+
+  .gallery-info {
+    background: var(--bg);
+    padding: 40px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .gallery-info-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .gallery-info-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+
+  .gallery-info p {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .gallery-hours {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(28,26,23,0.1);
+  }
+
+  .gallery-hours p {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(253,250,245,0.06);
+  }
+
+  footer .foot-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.6);
+  }
+
+  footer .foot-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(253,250,245,0.35);
+  }
+
+  footer .foot-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(253,250,245,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+    .hero-content { bottom: 60px; left: 24px; right: 24px; }
+
+    #stats {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 60px 24px;
+    }
+    .stat-item { border-right: none; padding: 0; }
+    .stat-number { font-size: 60px; }
+
+    #gallery { padding: 80px 24px; }
+    .gallery-editorial {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(5) { grid-row: auto; grid-column: 1; }
+
+    #about {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 40px;
+    }
+    .about-portrait img { height: 380px; }
+
+    #categories { padding: 80px 24px; }
+    .categories-grid { grid-template-columns: 1fr; }
+
+    #cta { padding: 100px 24px; }
+
+    #contact {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 40px;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 12px;
+      padding: 30px 24px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    nav ul { gap: 14px; }
+    nav ul a { font-size: 10px; }
+    .hero-name { font-size: 58px; }
+    .stat-number { font-size: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">R. Taylor</a>
+  <ul>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Studio</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Florida Landscapes · Music Art · Dade City</span>
+    <span class="hero-name">Russ<br>Taylor</span>
+    <p class="hero-sub"><span class="hero-line"></span> Original Acrylic Paintings · Est. 2015</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Florida Landscapes</span><span class="sep">·</span>
+    <span>Music &amp; Jazz Art</span><span class="sep">·</span>
+    <span>Original Acrylics</span><span class="sep">·</span>
+    <span>Dade City, FL</span><span class="sep">·</span>
+    <span>Out of Our Hands Gallery</span><span class="sep">·</span>
+    <span>Available for Purchase</span><span class="sep">·</span>
+    <span>Florida Landscapes</span><span class="sep">·</span>
+    <span>Music &amp; Jazz Art</span><span class="sep">·</span>
+    <span>Original Acrylics</span><span class="sep">·</span>
+    <span>Dade City, FL</span><span class="sep">·</span>
+    <span>Out of Our Hands Gallery</span><span class="sep">·</span>
+    <span>Available for Purchase</span><span class="sep">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">20+</span>
+    <span class="stat-label">Years Painting</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">2</span>
+    <span class="stat-label">Distinct Series</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">25+</span>
+    <span class="stat-label">Artists Represented</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">1</span>
+    <span class="stat-label">Gallery, Downtown Dade City</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="gallery-editorial">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d705e1_26116bdf0b80414a8213fdfa4fdf97c3~mv2.jpg" alt="Florida Landscape" loading="lazy">
+      <div class="gallery-caption"><span>Florida Landscape</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d705e1_5572d5a643194be8aa2c03da95c15860~mv2.jpg" alt="Realism Series" loading="lazy">
+      <div class="gallery-caption"><span>Realism Series</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d705e1_fd0e1c5425e342258e4e5ffb20fb3f13~mv2.jpg" alt="Landscape Study" loading="lazy">
+      <div class="gallery-caption"><span>Landscape Study</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d705e1_2cc573026026401d95eaeded2a71041f~mv2.jpg" alt="Music Series" loading="lazy">
+      <div class="gallery-caption"><span>Music Series</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d705e1_0a9514f17e614a449a6e5b2629a92c7f~mv2.jpg" alt="Imaginative Work" loading="lazy">
+      <div class="gallery-caption"><span>Imaginative Work</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/d705e1_0f0ef6784dbe4ad4976e542154329ff0~mv2.jpg" alt="Landscape" loading="lazy">
+      <div class="gallery-caption"><span>Landscape</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee-light marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Commissions Welcome</span><span class="sep">·</span>
+    <span>Visit the Gallery</span><span class="sep">·</span>
+    <span>14245 7th St, Dade City</span><span class="sep">·</span>
+    <span>Mon–Sat 10AM–5PM</span><span class="sep">·</span>
+    <span>Original Paintings From $200</span><span class="sep">·</span>
+    <span>Commissions Welcome</span><span class="sep">·</span>
+    <span>Visit the Gallery</span><span class="sep">·</span>
+    <span>14245 7th St, Dade City</span><span class="sep">·</span>
+    <span>Mon–Sat 10AM–5PM</span><span class="sep">·</span>
+    <span>Original Paintings From $200</span><span class="sep">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-portrait">
+    <img src="https://static.wixstatic.com/media/d705e1_757d4bbc3c184d0db1d2e836b5aabbd5.jpg" alt="Russ Taylor in studio" loading="lazy">
+  </div>
+  <div class="about-text">
+    <div class="section-header" style="margin-bottom:32px;">
+      <span class="section-num">02</span>
+      <h2 class="section-title">The Artist</h2>
+    </div>
+    <p class="about-pull">"Painting what Florida actually looks like — not a postcard version of it."</p>
+    <p class="about-body">
+      Working in acrylic on canvas, Russ Taylor captures two deeply personal worlds: the rolling hills and wetlands of Central Florida's Pasco County, and the loose, joyful energy of blues, jazz, and bluegrass music. His landscapes favour loose realism — light filtered through live oak canopies, still water reflecting sky — while his music paintings embrace colour and whimsy.
+    </p>
+    <p class="about-body">
+      Taylor relocated to the west side of Florida in 2015 and in 2018 opened Out of Our Hands Gallery in historic downtown Dade City alongside his wife Lee, herself a painter. The gallery represents over 25 Florida artists working across painting, glass, ceramics, printmaking, and metalwork.
+    </p>
+    <span class="about-detail">Dade City, FL · Gallery Owner & Studio Artist</span>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Series</h2>
+  </div>
+  <div class="categories-grid">
+    <div class="category-card">
+      <img src="https://static.wixstatic.com/media/d705e1_2b44b781b44a4446b729064d7265a336~mv2.jpg" alt="Florida Realism" loading="lazy">
+      <div class="category-overlay">
+        <span class="category-name">Florida<br>Landscapes</span>
+        <span class="category-count">Loose Realism</span>
+      </div>
+      <div class="category-arrow">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+      </div>
+    </div>
+    <div class="category-card">
+      <img src="https://static.wixstatic.com/media/d705e1_66309229f5954bbf9f1248e8b9f622ce~mv2.jpg" alt="Music Art" loading="lazy">
+      <div class="category-overlay">
+        <span class="category-name">Music<br>Paintings</span>
+        <span class="category-count">Blues · Jazz · Bluegrass</span>
+      </div>
+      <div class="category-arrow">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+      </div>
+    </div>
+    <div class="category-card">
+      <img src="https://static.wixstatic.com/media/d705e1_33e805bf46ff495bbd97c1601932ac92~mv2.jpg" alt="Imaginative Work" loading="lazy">
+      <div class="category-overlay">
+        <span class="category-name">Imaginative<br>Works</span>
+        <span class="category-count">Humour &amp; Invention</span>
+      </div>
+      <div class="category-arrow">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <span class="cta-label">Commission a Painting</span>
+    <h2 class="cta-heading">Your space deserves original art.</h2>
+    <a href="mailto:info@outofourhandsgallery.com" class="cta-btn">Start a Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="contact-heading">Studio &<br>Gallery</h2>
+    <p class="contact-intro">Russ Taylor's work is available through Out of Our Hands Gallery in historic downtown Dade City, and by direct inquiry for commissions and larger pieces.</p>
+    <a href="mailto:info@outofourhandsgallery.com" class="contact-email">info@outofourhandsgallery.com</a>
+    <span class="contact-phone">(352) 437-3204</span>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/outofourhandsgallery/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/Outofourhandsgallery/" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="gallery-info">
+      <span class="gallery-info-label">Physical Gallery</span>
+      <p class="gallery-info-name">Out of Our Hands Gallery</p>
+      <p>14245 7th St<br>Dade City, FL 33523</p>
+      <div class="gallery-hours">
+        <p>Monday – Saturday</p>
+        <p>10:00 AM – 5:00 PM</p>
+        <p style="margin-top:10px;">Closed Sunday</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-name">R. Taylor Art</span>
+  <span class="foot-copy">© 2026 Russ Taylor. All Rights Reserved.</span>
+  <span class="foot-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero animations on load
+  window.addEventListener('load', () => {
+    document.getElementById('hero').classList.add('hero-loaded');
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroBg.style.backgroundPositionY = (scrollY * 0.4) + 'px';
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(
+    '.stat-item, .gallery-item, .section-title, .about-portrait, .about-text, ' +
+    '.category-card, .cta-label, .cta-heading, .cta-btn, .contact-left, .contact-right'
+  ).forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
