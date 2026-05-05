@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MJ FLIX — Miami Urban Glamour Photographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0A0A0A;
+      --dark:    #111111;
+      --charcoal:#1C1C1C;
+      --gold:    #C9A84C;
+      --gold-lt: #E8C96A;
+      --white:   #F4F0E8;
+      --grey:    #888888;
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Cormorant Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; background: var(--black); }
+    body { font-family: var(--font-body); color: var(--white); background: var(--black); overflow-x: hidden; }
+
+    /* ─── WATERMARK ─── */
+    body::before {
+      content: 'MJ FLIX';
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: var(--font-head); font-size: clamp(80px, 18vw, 220px);
+      font-weight: 700; letter-spacing: 0.12em;
+      color: var(--white); opacity: 0.028;
+      pointer-events: none; z-index: 0; white-space: nowrap;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 24px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, transparent 100%);
+    }
+    .nav-logo {
+      font-family: var(--font-head); font-size: 16px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--white);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-head); font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--grey); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; min-height: 700px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://static.wixstatic.com/media/a1782d_041f0c2a58d644b3bc2c8741ea7ac6ad~mv2.jpg'),
+                        url('https://static.wixstatic.com/media/a1782d_b2137e5703e04b1b9b38a1a9f8e4e9e8~mv2.jpg'),
+                        url('https://static.wixstatic.com/media/a1782d_20d1640209924904a57c9b570dde401a.jpg');
+      background-size: cover; background-position: center top;
+      transform: scale(1.05);
+      transition: transform 20s ease-out;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(10,10,10,0.1) 30%,
+        rgba(10,10,10,0.6) 70%,
+        rgba(10,10,10,0.95) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 48px 64px;
+      max-width: 1200px; width: 100%;
+    }
+    .hero-label {
+      font-family: var(--font-head); font-size: 11px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .hero-name {
+      display: block;
+      font-family: var(--font-head); font-weight: 700;
+      font-size: clamp(64px, 10vw, 130px);
+      line-height: 0.9; letter-spacing: -0.02em;
+      color: var(--white);
+      overflow: hidden;
+    }
+    .hero-name .char {
+      display: inline-block;
+      opacity: 0; transform: translateY(60px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .hero-sub {
+      font-family: var(--font-body); font-style: italic; font-weight: 300;
+      font-size: clamp(18px, 2.5vw, 26px); color: var(--grey);
+      margin-top: 20px; letter-spacing: 0.05em;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+    }
+    .hero-cta {
+      display: inline-block; margin-top: 36px;
+      padding: 14px 32px; border: 1px solid var(--gold);
+      font-family: var(--font-head); font-size: 11px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold); text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s, background 0.3s, color 0.3s;
+    }
+    .hero-cta:hover { background: var(--gold); color: var(--black); }
+
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      overflow: hidden; background: var(--gold); padding: 14px 0;
+      position: relative; z-index: 2;
+    }
+    .marquee-track {
+      display: flex; white-space: nowrap;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-track span {
+      font-family: var(--font-head); font-size: 11px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--black);
+      padding: 0 32px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      padding: 100px 48px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      display: block; font-family: var(--font-head); font-weight: 700;
+      font-size: clamp(52px, 7vw, 88px); line-height: 1;
+      color: var(--gold); letter-spacing: -0.02em;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-label {
+      display: block; font-family: var(--font-head); font-size: 10px;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--grey); margin-top: 10px;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery { padding: 0 0 120px; }
+    .section-header {
+      padding: 80px 48px 40px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .section-number {
+      font-family: var(--font-head); font-size: clamp(72px, 9vw, 110px);
+      font-weight: 700; color: var(--white); opacity: 0.05;
+      line-height: 1; margin-right: 24px; flex-shrink: 0;
+    }
+    .section-title-wrap { flex: 1; }
+    .section-eyebrow {
+      font-family: var(--font-head); font-size: 10px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-head); font-weight: 700;
+      font-size: clamp(28px, 4vw, 44px); line-height: 1.1;
+      color: var(--white);
+      overflow: hidden;
+    }
+    .section-title-inner {
+      display: block;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-sub {
+      font-family: var(--font-body); font-style: italic;
+      font-size: 18px; color: var(--grey); margin-top: 12px;
+    }
+
+    /* Masonry grid */
+    .gallery-masonry {
+      padding: 0 24px;
+      columns: 3; column-gap: 6px;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 6px;
+      overflow: hidden; position: relative;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: scale(0.97);
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .gallery-item.is-visible img {
+      opacity: 1; transform: scale(1.0);
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,10,10,0);
+      display: flex; align-items: flex-end; padding: 16px;
+      transition: background 0.4s;
+    }
+    .gallery-item:hover .gallery-item-overlay { background: rgba(10,10,10,0.35); }
+    .gallery-item-label {
+      font-family: var(--font-head); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--white); opacity: 0;
+      transform: translateY(8px); transition: opacity 0.4s, transform 0.4s;
+    }
+    .gallery-item:hover .gallery-item-label { opacity: 1; transform: translateY(0); }
+
+    /* ─── FEATURED STRIP ─── */
+    #featured {
+      padding: 0 48px 120px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    }
+    .featured-image {
+      overflow: hidden; position: relative;
+    }
+    .featured-image img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transform: scale(0.97); opacity: 0;
+      transition: opacity 0.8s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .featured-image.is-visible img { opacity: 1; transform: scale(1.0); }
+    .featured-image:hover img { transform: scale(1.03); }
+    .featured-image.tall { grid-row: span 2; }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 48px;
+      display: grid; grid-template-columns: 55% 45%; gap: 80px; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .about-image-wrap {
+      position: relative; overflow: hidden;
+    }
+    .about-image-wrap img {
+      width: 100%; display: block;
+      transform: scale(0.96); opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .about-image-wrap.is-visible img { opacity: 1; transform: scale(1.0); }
+    .about-line {
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 3px; background: var(--gold);
+    }
+    .about-text {}
+    .about-quote {
+      font-family: var(--font-body); font-style: italic;
+      font-size: clamp(22px, 2.5vw, 30px); line-height: 1.5;
+      color: var(--gold-lt); margin-bottom: 32px;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .about-bio {
+      font-family: var(--font-body); font-size: 18px; line-height: 1.8;
+      color: rgba(244, 240, 232, 0.75);
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+    .about-credits {
+      margin-top: 32px;
+      display: flex; flex-wrap: wrap; gap: 20px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    }
+    .about-credit-item {
+      font-family: var(--font-head); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 6px 14px; border: 1px solid rgba(201,168,76,0.4);
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      padding: 120px 48px; text-align: center;
+      background: var(--charcoal);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: 'BOOK';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-head); font-weight: 700;
+      font-size: 28vw; color: var(--white); opacity: 0.015;
+      pointer-events: none; white-space: nowrap;
+    }
+    .cta-eyebrow {
+      font-family: var(--font-head); font-size: 10px; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+      display: block;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .cta-heading {
+      font-family: var(--font-head); font-weight: 700;
+      font-size: clamp(36px, 5.5vw, 72px); line-height: 1.1;
+      color: var(--white); margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .cta-heading-inner {
+      display: block; opacity: 0; transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-sub {
+      font-family: var(--font-body); font-style: italic; font-size: 20px;
+      color: var(--grey); margin-bottom: 48px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .cta-btn {
+      display: inline-block; padding: 18px 52px;
+      background: var(--gold); color: var(--black);
+      font-family: var(--font-head); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s, background 0.3s;
+    }
+    .cta-btn:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 100px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .contact-left h3 {
+      font-family: var(--font-head); font-size: 11px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+    }
+    .contact-left p {
+      font-family: var(--font-body); font-size: 18px; line-height: 1.7;
+      color: rgba(244,240,232,0.7); margin-bottom: 32px;
+    }
+    .contact-email {
+      font-family: var(--font-head); font-size: 16px; letter-spacing: 0.05em;
+      color: var(--white); text-decoration: none;
+      border-bottom: 1px solid var(--gold); padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .contact-email:hover { color: var(--gold); }
+    .contact-right {}
+    .contact-right h3 {
+      font-family: var(--font-head); font-size: 11px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+    }
+    .contact-social {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .contact-social a {
+      font-family: var(--font-head); font-size: 13px; letter-spacing: 0.15em;
+      color: rgba(244,240,232,0.7); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-social a:hover { color: var(--gold); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #070707; padding: 32px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-logo {
+      font-family: var(--font-head); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey);
+    }
+    .footer-copy {
+      font-family: var(--font-head); font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(136,136,136,0.5);
+    }
+    .footer-credit {
+      font-family: var(--font-head); font-size: 10px; letter-spacing: 0.1em;
+      color: rgba(136,136,136,0.4);
+    }
+
+    /* ─── VISIBLE STATES ─── */
+    .is-visible .hero-label, .hero-label.is-visible { opacity: 1; transform: translateY(0); }
+    .is-visible .hero-sub, .hero-sub.is-visible { opacity: 1; transform: translateY(0); }
+    .is-visible .hero-cta, .hero-cta.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-number.is-visible { opacity: 1; transform: translateY(0); }
+    .section-title-inner.is-visible { opacity: 1; transform: translateY(0); }
+    .about-quote.is-visible { opacity: 1; transform: translateY(0); }
+    .about-bio.is-visible { opacity: 1; transform: translateY(0); }
+    .about-credits.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-heading-inner.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 48px; }
+      #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .gallery-masonry { columns: 2; padding: 0 12px; }
+      .section-header { padding: 60px 24px 32px; }
+      #featured { padding: 0 24px 80px; grid-template-columns: 1fr; }
+      .featured-image.tall { grid-row: auto; }
+      #about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      #cta { padding: 80px 24px; }
+      #contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+    }
+    @media (max-width: 480px) {
+      .gallery-masonry { columns: 1; }
+      .hero-name { font-size: clamp(48px, 14vw, 80px); }
+      #stats { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">MJ FLIX</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="mailto:mjflix@gmail.com">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <p class="hero-label" id="heroLabel">Miami · Urban Glamour · Commercial</p>
+      <h1 class="hero-name" id="heroName">MJ FLIX</h1>
+      <p class="hero-sub" id="heroSub">Visual storytelling that commands attention</p>
+      <a href="#gallery" class="hero-cta" id="heroCta">View Portfolio</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Urban Glamour</span><span>·</span>
+      <span>Miami, FL</span><span>·</span>
+      <span>Fashion</span><span>·</span>
+      <span>Music</span><span>·</span>
+      <span>Events</span><span>·</span>
+      <span>Cosplay</span><span>·</span>
+      <span>Noir</span><span>·</span>
+      <span>Commercial</span><span>·</span>
+      <span>10+ Years</span><span>·</span>
+      <span>Urban Glamour</span><span>·</span>
+      <span>Miami, FL</span><span>·</span>
+      <span>Fashion</span><span>·</span>
+      <span>Music</span><span>·</span>
+      <span>Events</span><span>·</span>
+      <span>Cosplay</span><span>·</span>
+      <span>Noir</span><span>·</span>
+      <span>Commercial</span><span>·</span>
+      <span>10+ Years</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">41K</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Sessions</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Stories Told</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <div class="section-title-wrap">
+        <span class="section-eyebrow">Portfolio</span>
+        <h2 class="section-title"><span class="section-title-inner">Selected Work</span></h2>
+        <p class="section-sub">Fashion · Glamour · Urban · Music · Events</p>
+      </div>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_043d24e0a9024a7d87e4cf2d58818512~mv2.jpg" alt="Urban Glamour Session" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Urban Glamour</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_b2137e5703e04b1b9b38a1a9f8e4e9e8~mv2.jpg" alt="Fashion Portrait" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_3577a152a0e84f03be8379e0fee92c39~mv2.jpg" alt="Miami Shoot" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Miami</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_0dc0468060e940e8bbdde76e71c8d793~mv2.jpg" alt="Noir Editorial" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Noir</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_13306b98019346c68f907c65d33a872a~mv2.jpg" alt="Music Artist" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Music</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_244d631272564fb1a8c60dc6804f1bef~mv2.jpg" alt="Glamour Portrait" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Glamour</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_2e2d39d1b4b543208f1f1e13209a1202~mv2.jpg" alt="Editorial" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Editorial</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_35905abd41834614ab6ab75aab9e4cfc~mv2.jpg" alt="Urban Style" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Urban</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_3e0c532b667a4ccfa3f52b9cdc92614a~mv2.jpg" alt="Commercial" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Commercial</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_65325a2d4b1f4d86941a91764ddab29d~mv2.jpg" alt="Lifestyle" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Lifestyle</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_6cc00ca105f64ffe9e0e1d36487c1455~mv2.jpg" alt="Cosplay" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Cosplay</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/a1782d_6f6b1b759bf54e048ab5dd5115c43915~mv2.jpg" alt="Event" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORK -->
+  <section id="featured">
+    <div class="section-header" style="grid-column: 1 / -1;">
+      <span class="section-number">02</span>
+      <div class="section-title-wrap">
+        <span class="section-eyebrow">Highlights</span>
+        <h2 class="section-title"><span class="section-title-inner">Featured Sessions</span></h2>
+      </div>
+    </div>
+    <div class="featured-image tall">
+      <img src="https://static.wixstatic.com/media/a1782d_8e6cb849623b4d53a5c8048edc0e3e92~mv2.jpg" alt="Featured Urban Glamour" loading="lazy">
+    </div>
+    <div class="featured-image">
+      <img src="https://static.wixstatic.com/media/a1782d_9c389afbc1f74a7e8226cd883ef98928~mv2.jpg" alt="Fashion Portrait" loading="lazy">
+    </div>
+    <div class="featured-image">
+      <img src="https://static.wixstatic.com/media/a1782d_a0545dfe91024eeaa44b84026b269808~mv2.jpg" alt="Commercial Work" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image-wrap" id="aboutImg">
+      <img src="https://static.wixstatic.com/media/a1782d_41da24313dad423aae1ff58fb9edcf1f~mv2_d_2160_1440_s_2.jpg" alt="MJ FLIX — Miami Photographer" loading="lazy">
+      <div class="about-line"></div>
+    </div>
+    <div class="about-text">
+      <div class="section-header" style="padding: 0 0 40px; border: none;">
+        <div class="section-title-wrap">
+          <span class="section-eyebrow">About</span>
+          <h2 class="section-title"><span class="section-title-inner">The Vision</span></h2>
+        </div>
+      </div>
+      <p class="about-quote">"Displaying vibrant sounds and urban glamour for over 10 years."</p>
+      <p class="about-bio">MJ FLIX is a Miami-based photographer and visual director known for bold compositions, high-contrast storytelling, and a signature style that fuses raw energy with cinematic glamour. With a decade behind the lens spanning fashion, music, events, cosplay, and noir — MJ's work has appeared in WorldstarHipHop, Dimepiece Magazine, and HipHop Weekly. Named Official Curvehouse Magazine Photographer and Local Photographer of the Year, MJ brings an editorial eye to every frame.</p>
+      <div class="about-credits">
+        <span class="about-credit-item">WorldstarHipHop</span>
+        <span class="about-credit-item">Dimepiece Magazine</span>
+        <span class="about-credit-item">HipHop Weekly</span>
+        <span class="about-credit-item">Curvehouse Official</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MORE GALLERY -->
+  <div style="padding: 0 24px; columns: 3; column-gap: 6px; margin-bottom: 120px;">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a1782d_a90e96775fbd461fa0497076ac30fb3f~mv2.jpg" alt="Urban Session" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Urban</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a1782d_b20233306f554f4b9439463ded80b599~mv2.jpg" alt="Glamour Editorial" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Glamour</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a1782d_4c8344b46a984fe3a4e4afe57d24956b~mv2.jpg" alt="Fashion" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a1782d_5e649b863d604ecb8da23be0544d1b45~mv2.jpg" alt="Event Coverage" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a1782d_c33805ba9d46411bbc8b69fcd86eb8dc~mv2.jpg" alt="Music Artist" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Music</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/a1782d_ef343d2b2ed54d48baf82f5b03108603~mv2.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section id="cta">
+    <span class="cta-eyebrow">Book a Session</span>
+    <h2 class="cta-heading"><span class="cta-heading-inner">Let's Make Something Iconic.</span></h2>
+    <p class="cta-sub">Fashion · Glamour · Music · Events · Commercial · Miami & Beyond</p>
+    <a href="mailto:mjflix@gmail.com" class="cta-btn">Book Now</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <h3>Get in Touch</h3>
+      <p>Based in Miami, FL. Available for local shoots, travel bookings, and commercial projects across the US. DM on Instagram for fast response.</p>
+      <a href="mailto:mjflix@gmail.com" class="contact-email">DM for inquiries</a>
+    </div>
+    <div class="contact-right">
+      <h3>Follow the Work</h3>
+      <div class="contact-social">
+        <a href="https://www.instagram.com/mjflix/" target="_blank">Instagram — @mjflix · 41K followers</a>
+        <a href="https://vimeo.com/mjflix" target="_blank">Vimeo — Video work</a>
+        <a href="https://link.me/mjflix" target="_blank">Link.me — Full portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">MJ FLIX</span>
+    <span class="footer-copy">© 2026 · Miami, FL · All Rights Reserved</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // ── Hero animations fire on load ──
+    window.addEventListener('load', () => {
+      const label = document.getElementById('heroLabel');
+      const sub   = document.getElementById('heroSub');
+      const cta   = document.getElementById('heroCta');
+
+      setTimeout(() => { label.classList.add('is-visible'); }, 200);
+      setTimeout(() => { sub.classList.add('is-visible'); }, 400);
+      setTimeout(() => { cta.classList.add('is-visible'); }, 600);
+
+      // Hero name — character reveal
+      const nameEl = document.getElementById('heroName');
+      const text = nameEl.textContent;
+      nameEl.innerHTML = '';
+      text.split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        span.style.transitionDelay = (i * 40 + 100) + 'ms';
+        nameEl.appendChild(span);
+      });
+      setTimeout(() => {
+        nameEl.querySelectorAll('.char').forEach(c => {
+          c.style.opacity = '1';
+          c.style.transform = 'translateY(0)';
+        });
+      }, 100);
+    });
+
+    // ── Hero parallax ──
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroBg.style.transform = `scale(1.05) translateY(${y * 0.35}px)`;
+      }
+    }, { passive: true });
+
+    // ── IntersectionObserver for all animated elements ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(
+      '.stat-number, .section-title-inner, .about-quote, .about-bio, ' +
+      '.about-credits, .cta-eyebrow, .cta-heading-inner, .cta-sub, .cta-btn, ' +
+      '.gallery-item, .featured-image, .about-image-wrap'
+    ).forEach(el => observer.observe(el));
+
+    // ── Stagger stats ──
+    document.querySelectorAll('.stat-number').forEach((el, i) => {
+      el.style.transitionDelay = (i * 120) + 'ms';
+    });
+  </script>
+</body>
+</html>
