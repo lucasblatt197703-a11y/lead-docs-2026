@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaime Draycott — Digital Artist · Tampa, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #1a1410;
+      --warm-white: #f5f0e8;
+      --cream: #ede8dc;
+      --amber: #c47e35;
+      --muted: #7a7068;
+      --dark: #110e0a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 56px;
+      mix-blend-mode: normal;
+    }
+
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+
+    nav ul li a {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover { color: var(--amber); }
+
+    /* HERO — Full bleed, text pinned bottom-left, no overlay */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      background:
+        linear-gradient(to top, rgba(17,14,10,0.85) 0%, rgba(17,14,10,0.3) 40%, rgba(17,14,10,0.15) 100%),
+        url('https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg') center center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 56px 64px;
+      max-width: 760px;
+    }
+
+    .hero-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hero-label.is-visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(72px, 10vw, 110px);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      color: var(--warm-white);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease 0.15s, transform 1s ease 0.15s;
+    }
+
+    .hero-name.is-visible { opacity: 1; transform: translateY(0); }
+
+    .hero-tagline {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(245,240,232,0.65);
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    }
+
+    .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 36px;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+      border-bottom: 1px solid var(--amber);
+      padding-bottom: 4px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.45s, color 0.3s ease;
+    }
+
+    .hero-cta.is-visible { opacity: 1; }
+    .hero-cta:hover { color: var(--amber); }
+
+    /* Vertical accent text */
+    .hero-vertical {
+      position: absolute;
+      right: 56px;
+      bottom: 64px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.35);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+
+    /* MARQUEE STRIP */
+    .marquee-strip {
+      background: var(--dark);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.45);
+      margin: 0 32px;
+    }
+
+    .marquee-track .accent { color: var(--amber); }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* STATS STRIP */
+    .stats {
+      background: var(--cream);
+      padding: 72px 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0 32px;
+      border-right: 1px solid rgba(26,20,16,0.12);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item:last-child { border-right: none; }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2).is-visible { transition-delay: 0.12s; }
+    .stat-item:nth-child(3).is-visible { transition-delay: 0.24s; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* SECTION COMMON */
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: rgba(26,20,16,0.05);
+      line-height: 1;
+      position: absolute;
+      left: -20px;
+      top: -20px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* GALLERY */
+    .gallery-section {
+      padding: 120px 56px;
+      background: var(--warm-white);
+    }
+
+    .gallery-header {
+      position: relative;
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .title-inner {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .title-inner.is-visible { opacity: 1; transform: translateY(0); }
+
+    .accent-line {
+      width: 60px;
+      height: 1px;
+      background: var(--amber);
+      margin-top: 16px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+
+    .accent-line.is-visible { opacity: 1; transform: scaleX(1); }
+
+    /* Masonry gallery — mixed heights, editorial */
+    .gallery-masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .gallery-item.is-visible { opacity: 1; transform: translateY(0); }
+    .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+    .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+    .gallery-item:nth-child(4) { transition-delay: 0.15s; }
+    .gallery-item:nth-child(5) { transition-delay: 0.05s; }
+    .gallery-item:nth-child(6) { transition-delay: 0.25s; }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transform: scale(0.97);
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.02); }
+
+    .gallery-item .img-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 8px 0 4px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .gallery-item:hover .img-title { opacity: 1; transform: translateY(0); }
+
+    /* Featured piece */
+    .featured-piece {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .featured-image {
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .featured-image.is-visible { opacity: 1; transform: translateY(0); }
+
+    .featured-image img {
+      width: 100%;
+      display: block;
+      transform: scale(0.97);
+      transition: transform 0.8s ease;
+    }
+
+    .featured-image:hover img { transform: scale(1.02); }
+
+    .featured-text {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+
+    .featured-text.is-visible { opacity: 1; transform: translateY(0); }
+
+    .featured-tag {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .featured-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .featured-desc {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .text-link {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--amber);
+      padding-bottom: 3px;
+      transition: color 0.3s ease;
+    }
+
+    .text-link:hover { color: var(--amber); }
+
+    /* ABOUT */
+    .about-section {
+      padding: 120px 56px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-left {
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .about-left.is-visible { opacity: 1; transform: translateY(0); }
+
+    .about-image-wrapper {
+      position: relative;
+    }
+
+    .about-image-main {
+      width: 100%;
+      display: block;
+    }
+
+    .about-image-accent {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 55%;
+      border: 6px solid var(--warm-white);
+    }
+
+    .about-right {
+      padding-top: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+
+    .about-right.is-visible { opacity: 1; transform: translateY(0); }
+
+    .about-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--amber);
+      margin-bottom: 40px;
+      border-left: 2px solid var(--amber);
+      padding-left: 24px;
+    }
+
+    .about-bio {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .about-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .about-detail {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .about-detail::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      background: var(--dark);
+      padding: 120px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background faded name */
+    .cta-bg-name {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 15vw, 180px);
+      font-weight: 300;
+      color: rgba(245,240,232,0.03);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cta-label {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 400;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .cta-label.is-visible { opacity: 1; transform: translateY(0); }
+
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--warm-white);
+      margin-bottom: 24px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    }
+
+    .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+
+    .cta-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      margin-bottom: 48px;
+      line-height: 1.6;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+
+    .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+
+    .cta-button {
+      display: inline-block;
+      padding: 16px 48px;
+      border: 1px solid var(--amber);
+      color: var(--warm-white);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 400;
+      font-family: 'Work Sans', sans-serif;
+      transition: background 0.3s ease, color 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s, background 0.3s ease;
+    }
+
+    .cta-button.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-button:hover { background: var(--amber); }
+
+    /* CONTACT */
+    .contact-section {
+      padding: 100px 56px;
+      background: var(--warm-white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .contact-left.is-visible { opacity: 1; transform: translateY(0); }
+
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .contact-sub {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .contact-email {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--amber);
+      padding-bottom: 8px;
+      margin-bottom: 32px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email:hover { color: var(--amber); }
+
+    .social-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-link:hover { color: var(--amber); }
+
+    .contact-right {
+      padding-top: 20px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+
+    .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+
+    .contact-info-block {
+      margin-bottom: 40px;
+    }
+
+    .contact-info-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .contact-info-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--ink);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      padding: 36px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: rgba(245,240,232,0.5);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(245,240,232,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-credit {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(245,240,232,0.15);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav .logo { display: none; }
+      nav ul { gap: 20px; }
+
+      .hero-content { padding: 0 24px 48px; }
+      .hero-vertical { display: none; }
+
+      .stats {
+        grid-template-columns: 1fr;
+        padding: 56px 24px;
+        gap: 32px;
+      }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(26,20,16,0.12); padding-bottom: 32px; }
+      .stat-item:last-child { border-bottom: none; }
+
+      .gallery-section { padding: 80px 24px; }
+      .gallery-masonry { columns: 2; }
+      .featured-piece { grid-template-columns: 1fr; gap: 40px; }
+      .about-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      .contact-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      .cta-section { padding: 80px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-masonry { columns: 1; }
+      .stat-number { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Jaime Draycott</div>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Full bleed, text pinned bottom-left -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-label">Tampa, Florida · Mixed Media Digital</div>
+      <h1 class="hero-name">Jaime<br>Draycott</h1>
+      <p class="hero-tagline">Digital Paintings &amp; Drawings · Prints &amp; Originals Available</p>
+      <a href="#gallery" class="hero-cta">View the Work</a>
+    </div>
+    <div class="hero-vertical">Tampa · 2026 · Available for Commissions</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Digital Paintings</span>
+      <span class="accent">·</span>
+      <span>Original Art</span>
+      <span class="accent">·</span>
+      <span>Prints Available</span>
+      <span class="accent">·</span>
+      <span>Tampa, FL</span>
+      <span class="accent">·</span>
+      <span>Commissions Welcome</span>
+      <span class="accent">·</span>
+      <span>Mixed Media</span>
+      <span class="accent">·</span>
+      <span>Photography Integration</span>
+      <span class="accent">·</span>
+      <span>Digital Paintings</span>
+      <span class="accent">·</span>
+      <span>Original Art</span>
+      <span class="accent">·</span>
+      <span>Prints Available</span>
+      <span class="accent">·</span>
+      <span>Tampa, FL</span>
+      <span class="accent">·</span>
+      <span>Commissions Welcome</span>
+      <span class="accent">·</span>
+      <span>Mixed Media</span>
+      <span class="accent">·</span>
+      <span>Photography Integration</span>
+      <span class="accent">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Years Creating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Mediums Mastered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Prints &amp; Originals</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header" style="position:relative;">
+      <span class="section-number">01</span>
+      <div class="section-title">
+        <span class="title-inner">Selected Work</span>
+      </div>
+      <div class="accent-line"></div>
+    </div>
+
+    <!-- Masonry gallery using repeats of the one real image + color variations -->
+    <div class="gallery-masonry">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_820,h_1020,al_c,q_85,usm_0.66_1.00_0.01/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Curly Q — Digital Painting" loading="lazy">
+        <div class="img-title">Curly Q</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_820,h_600,al_c,q_85/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Digital Work — Jaime Draycott" loading="lazy">
+        <div class="img-title">Digital Study I</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_820,h_900,al_c,q_85/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Mixed Media — Jaime Draycott" loading="lazy">
+        <div class="img-title">Mixed Media Series</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_820,h_700,al_c,q_85/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Original Artwork" loading="lazy">
+        <div class="img-title">Original No. 4</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_820,h_550,al_c,q_85/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Digital Drawing" loading="lazy">
+        <div class="img-title">Landscape Study</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_820,h_820,al_c,q_85/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Photography Integration" loading="lazy">
+        <div class="img-title">Photo Series</div>
+      </div>
+    </div>
+
+    <!-- Featured single piece -->
+    <div class="featured-piece">
+      <div class="featured-image">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_1200,h_800,al_c,q_90/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Curly Q — Featured Work" loading="lazy">
+      </div>
+      <div class="featured-text">
+        <div class="featured-tag">Featured Piece</div>
+        <h2 class="featured-title">Curly Q</h2>
+        <p class="featured-desc">
+          A signature digital painting from the Tampa studio — crafted with meticulous attention to form, light, and texture. Available as a limited print or original digital file.
+        </p>
+        <a href="#contact" class="text-link">Inquire About This Piece</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECOND MARQUEE STRIP -->
+  <div class="marquee-strip">
+    <div class="marquee-track" style="animation-direction: reverse;">
+      <span>Originals Available</span>
+      <span class="accent">·</span>
+      <span>Custom Commissions</span>
+      <span class="accent">·</span>
+      <span>Limited Prints</span>
+      <span class="accent">·</span>
+      <span>Digital Paintings</span>
+      <span class="accent">·</span>
+      <span>Photography</span>
+      <span class="accent">·</span>
+      <span>Tampa Florida</span>
+      <span class="accent">·</span>
+      <span>Originals Available</span>
+      <span class="accent">·</span>
+      <span>Custom Commissions</span>
+      <span class="accent">·</span>
+      <span>Limited Prints</span>
+      <span class="accent">·</span>
+      <span>Digital Paintings</span>
+      <span class="accent">·</span>
+      <span>Photography</span>
+      <span class="accent">·</span>
+      <span>Tampa Florida</span>
+      <span class="accent">·</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-left">
+      <div class="about-image-wrapper">
+        <img src="https://static.wixstatic.com/media/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg/v1/fill/w_800,h_1000,al_c,q_90/1b29be_cdcd69caeb3840bfa1d824e2e224f24b.jpeg" alt="Jaime Draycott — Artist" class="about-image-main" loading="lazy">
+      </div>
+    </div>
+    <div class="about-right">
+      <div style="position:relative; padding-left: 20px;">
+        <span class="section-number" style="left: -60px; top: -10px;">02</span>
+        <div class="section-title" style="margin-bottom: 32px;">
+          <span class="title-inner">The Artist</span>
+        </div>
+        <div class="accent-line" style="margin-bottom: 40px;"></div>
+      </div>
+      <blockquote class="about-pull-quote">
+        "An artist is an artist through and through — trained or not, an artist was born to create."
+      </blockquote>
+      <p class="about-bio">
+        Draycott is a self-taught mixed media artist based in Tampa, Florida — creating since childhood and now working primarily in digital painting and drawing. Her practice integrates photography with digital art, building layered compositions that bridge documentation and imagination.
+      </p>
+      <p class="about-bio">
+        Available for custom commissions, original works, and limited-edition prints. Each piece reflects a singular vision — color-driven, tactile, and entirely self-made.
+      </p>
+      <div class="about-details">
+        <div class="about-detail">Tampa, Florida</div>
+        <div class="about-detail">Digital Paintings &amp; Drawings</div>
+        <div class="about-detail">Photography Integration</div>
+        <div class="about-detail">Originals &amp; Prints Available</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg-name">DRAYCOTT</div>
+    <div class="cta-label">Commission a Piece</div>
+    <h2 class="cta-heading">Your Walls Deserve Original Art</h2>
+    <p class="cta-sub">Custom commissions, prints from the portfolio, or originals — get in touch to discuss your project.</p>
+    <a href="#contact" class="cta-button">Start a Conversation</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <div style="position:relative; padding-left: 20px;">
+        <span class="section-number" style="left: -60px; top: -10px;">03</span>
+        <div class="section-title" style="margin-bottom: 24px;">
+          <span class="title-inner">Get in Touch</span>
+        </div>
+        <div class="accent-line" style="margin-bottom: 32px;"></div>
+      </div>
+      <p class="contact-sub">
+        Whether you're interested in a custom commission, purchasing a print, or just want to say hello — reach out via Facebook or the form below.
+      </p>
+      <a href="https://www.facebook.com/Jaime-Draycott-Art-515368471948093/" class="contact-email" target="_blank">Facebook: Jaime Draycott Art</a>
+      <div class="social-links">
+        <a href="https://www.facebook.com/Jaime-Draycott-Art-515368471948093/" class="social-link" target="_blank">Facebook</a>
+        <a href="https://artbyjaimedraycott.wixsite.com/jaime-draycott" class="social-link" target="_blank">Portfolio</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-info-block">
+        <div class="contact-info-label">Location</div>
+        <div class="contact-info-value">Tampa, Florida</div>
+      </div>
+      <div class="contact-info-block">
+        <div class="contact-info-label">Specialty</div>
+        <div class="contact-info-value">Digital Paintings &amp; Mixed Media</div>
+      </div>
+      <div class="contact-info-block">
+        <div class="contact-info-label">Availability</div>
+        <div class="contact-info-value">Open for Commissions &amp; Print Orders</div>
+      </div>
+      <div class="contact-info-block">
+        <div class="contact-info-label">Design by</div>
+        <div class="contact-info-value" style="font-size: 14px; color: var(--muted);">Lucas Blatt · Design Concept</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Jaime Draycott</div>
+    <div class="footer-copy">© 2026 Jaime Draycott. All rights reserved.</div>
+    <div class="footer-credit">Design concept by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Observe all animated elements
+    const animatedEls = document.querySelectorAll(
+      '.hero-label, .hero-name, .hero-tagline, .hero-cta, ' +
+      '.stat-item, .title-inner, .accent-line, ' +
+      '.gallery-item, .featured-image, .featured-text, ' +
+      '.about-left, .about-right, ' +
+      '.cta-label, .cta-heading, .cta-sub, .cta-button, ' +
+      '.contact-left, .contact-right'
+    );
+
+    animatedEls.forEach(el => {
+      el.style.willChange = 'transform, opacity';
+      observer.observe(el);
+    });
+
+    // Hero parallax
+    const hero = document.querySelector('.hero');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          if (scrolled < window.innerHeight) {
+            hero.style.backgroundPositionY = (scrolled * 0.4) + 'px';
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Trigger hero animations immediately
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.hero-label, .hero-name, .hero-tagline, .hero-cta').forEach(el => {
+          el.classList.add('is-visible');
+        });
+      }, 100);
+    });
+  </script>
+</body>
+</html>
