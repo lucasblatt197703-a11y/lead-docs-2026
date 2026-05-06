@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jenn Koss Photography — Newborn · Family · Pets · Deltona, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --cream: #F9F5F0;
+      --blush: #E8C9B8;
+      --sage: #8FA68B;
+      --warm-brown: #6B4F3A;
+      --dark: #2A2220;
+      --text: #3D2B20;
+      --light-sage: #D4E0D1;
+    }
+
+    body {
+      font-family: 'Libre Franklin', sans-serif;
+      background-color: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(249, 245, 240, 0.92);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--warm-brown);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Libre Franklin', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--sage); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1566004100631-35d015d6a491?w=1800&auto=format&fit=crop&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+    .hero-image.loaded { transform: scale(1.0); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(249,245,240,0.75) 40%, rgba(249,245,240,0.1) 100%);
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 80px;
+      left: 60px;
+      max-width: 520px;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(56px, 7vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--warm-brown);
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+    }
+    .hero-tagline {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--warm-brown);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s, background 0.3s ease;
+    }
+    .hero-cta:hover { background: var(--sage); }
+    .hero-content.visible .hero-eyebrow,
+    .hero-content.visible .hero-name,
+    .hero-content.visible .hero-tagline,
+    .hero-content.visible .hero-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      background: var(--warm-brown);
+      color: var(--blush);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-track span {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0 32px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      padding: 90px 60px;
+      background: var(--light-sage);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 700;
+      color: var(--warm-brown);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .stat-sub {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text);
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 100px 40px;
+      background: var(--cream);
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400;
+      color: var(--warm-brown);
+      line-height: 1.2;
+    }
+    .section-title.reveal {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s, opacity 0.3s ease 0.1s;
+    }
+    .section-title.reveal.visible {
+      opacity: 1;
+      clip-path: inset(0 0% 0 0);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .gallery-item.visible { opacity: 1; transform: translateY(0); }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      padding: 100px 60px;
+      background: var(--dark);
+    }
+    .testimonials-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    #testimonials .section-eyebrow { color: var(--blush); }
+    #testimonials .section-title { color: #fff; }
+    #testimonials .section-header { text-align: left; margin-bottom: 60px; }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .testimonial-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .testimonial-card.visible { opacity: 1; transform: translateY(0); }
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 20px;
+    }
+    .testimonial-attr {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blush);
+    }
+    .testimonial-divider {
+      width: 30px;
+      height: 1px;
+      background: var(--blush);
+      margin-bottom: 10px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-image-wrap {
+      position: relative;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .about-image-wrap.visible { opacity: 1; transform: translateX(0); }
+    .about-image-wrap img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+    .about-accent-line {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 60%;
+      height: 3px;
+      background: var(--blush);
+    }
+    .about-text {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+    .about-text.visible { opacity: 1; transform: translateX(0); }
+    .about-text .section-header { text-align: left; margin-bottom: 28px; }
+    .about-bio {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .about-credentials {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .credential-badge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .credential-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sage);
+      flex-shrink: 0;
+    }
+    .credential-text {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--warm-brown);
+    }
+    .pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--warm-brown);
+      border-left: 2px solid var(--blush);
+      padding-left: 24px;
+      margin: 28px 0;
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      padding: 100px 60px;
+      background: var(--light-sage);
+    }
+    .services-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    #services .section-header { text-align: left; margin-bottom: 56px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .service-card {
+      background: var(--cream);
+      padding: 40px 36px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--blush);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--warm-brown);
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .service-price {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    /* ─── CTA ─── */
+    #cta {
+      padding: 120px 60px;
+      background: var(--warm-brown);
+      text-align: center;
+    }
+    #cta .section-eyebrow {
+      color: var(--blush);
+      margin-bottom: 16px;
+    }
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+    .cta-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 44px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      background: var(--blush);
+      color: var(--warm-brown);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .cta-btn:hover { background: #fff; }
+    .cta-creds {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+    .cred-item {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 100px 60px;
+      background: var(--cream);
+    }
+    .contact-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-inner .section-header { margin-bottom: 40px; }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+    .contact-link:hover { color: var(--sage); }
+    .contact-link-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .contact-link-value {
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 36px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+    }
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-credit {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+      .hero-content { left: 24px; right: 24px; bottom: 60px; }
+      #stats { padding: 60px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      #gallery { padding: 60px 16px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-image-wrap { transform: none; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      #about, #services, #testimonials, #cta, #contact { padding-left: 24px; padding-right: 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stat-number { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Jenn Koss Photography</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-image" id="heroImg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content" id="heroContent">
+      <p class="hero-eyebrow">Deltona, Florida · Est. 2009</p>
+      <h1 class="hero-name">Jenn Koss<br>Photography</h1>
+      <p class="hero-tagline">Newborn · Family · Pets<br>Capturing the moments that go by too fast.</p>
+      <a href="#contact" class="hero-cta">Book a Session</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Newborn Portraits</span><span>·</span>
+      <span>Family Sessions</span><span>·</span>
+      <span>Pet Photography</span><span>·</span>
+      <span>Maternity</span><span>·</span>
+      <span>Deltona, FL</span><span>·</span>
+      <span>APA Member Since 2013</span><span>·</span>
+      <span>Graphistudio USA</span><span>·</span>
+      <span>Newborn Portraits</span><span>·</span>
+      <span>Family Sessions</span><span>·</span>
+      <span>Pet Photography</span><span>·</span>
+      <span>Maternity</span><span>·</span>
+      <span>Deltona, FL</span><span>·</span>
+      <span>APA Member Since 2013</span><span>·</span>
+      <span>Graphistudio USA</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item" data-delay="0">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Years Experience</div>
+        <div class="stat-sub">Since 2009</div>
+      </div>
+      <div class="stat-item" data-delay="120">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Families Photographed</div>
+        <div class="stat-sub">Newborns to grandparents</div>
+      </div>
+      <div class="stat-item" data-delay="240">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Pro Credentials</div>
+        <div class="stat-sub">APA · Graphistudio USA</div>
+      </div>
+      <div class="stat-item" data-delay="360">
+        <div class="stat-number">978</div>
+        <div class="stat-label">Instagram Followers</div>
+        <div class="stat-sub">@jennkossphotos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <p class="section-eyebrow">Portfolio</p>
+      <h2 class="section-title reveal">Soft Light. Real Moments.</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" data-delay="0">
+        <img src="https://images.unsplash.com/photo-1566004100631-35d015d6a491?w=700&auto=format&fit=crop&q=80" alt="Newborn wrapped in soft blanket" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="80">
+        <img src="https://images.unsplash.com/photo-1519689373023-dd07c7988603?w=700&auto=format&fit=crop&q=80" alt="Newborn sleeping portrait" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="160">
+        <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=700&auto=format&fit=crop&q=80" alt="Family portrait session" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="240">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=700&auto=format&fit=crop&q=80" alt="Baby portrait" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="80">
+        <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=700&auto=format&fit=crop&q=80" alt="Newborn portrait" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="160">
+        <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=700&auto=format&fit=crop&q=80" alt="Family lifestyle photo" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="240">
+        <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=700&auto=format&fit=crop&q=80" alt="Baby portrait session" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="320">
+        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=700&auto=format&fit=crop&q=80" alt="Pet portrait session" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testimonials-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">What Families Say</p>
+        <h2 class="section-title reveal" style="color:#fff;">Parents Trust Jenn With Their Most Precious Moments</h2>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card" data-delay="0">
+          <div class="testimonial-divider"></div>
+          <p class="testimonial-quote">"Jenn was absolutely incredible with our two-day-old. She was patient, warm, and made us feel completely at ease. The photos are beyond anything we imagined."</p>
+          <p class="testimonial-attr">Sarah M. · Newborn Session</p>
+        </div>
+        <div class="testimonial-card" data-delay="150">
+          <div class="testimonial-divider"></div>
+          <p class="testimonial-quote">"We've used Jenn for our last three family sessions. She captures the real us — not stiff poses, just genuine moments. Every single time we're amazed."</p>
+          <p class="testimonial-attr">The Rodriguez Family · Family Session</p>
+        </div>
+        <div class="testimonial-card" data-delay="0">
+          <div class="testimonial-divider"></div>
+          <p class="testimonial-quote">"I was nervous about including our dog in the family photos but Jenn was a total pro. She got the most incredible shots of Biscuit with the kids."</p>
+          <p class="testimonial-attr">Amanda K. · Family &amp; Pet Session</p>
+        </div>
+        <div class="testimonial-card" data-delay="150">
+          <div class="testimonial-divider"></div>
+          <p class="testimonial-quote">"From start to finish Jenn made our maternity session magical. She knew exactly how to pose me and the lighting was just gorgeous."</p>
+          <p class="testimonial-attr">Danielle P. · Maternity Session</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-image-wrap">
+        <img src="https://images.unsplash.com/photo-1537819191377-d3305ffddce4?w=900&auto=format&fit=crop&q=80" alt="Jenn Koss photographer" loading="lazy">
+        <div class="about-accent-line"></div>
+      </div>
+      <div class="about-text">
+        <div class="section-header">
+          <p class="section-eyebrow">About Jenn</p>
+          <h2 class="section-title reveal">Deltona's Specialist in Life's Gentlest Moments</h2>
+        </div>
+        <p class="pull-quote">"Every baby, every family, every pet — they each deserve a session as unhurried and care-filled as the love they carry."</p>
+        <p class="about-bio">
+          Jenn Koss has been photographing the families of Central Florida since 2009, building a reputation for patience, warmth, and an instinct for the moments that parents will treasure for decades. Specializing in newborns — those first fragile days of life — Jenn's approach is calm, unhurried, and deeply personal.
+        </p>
+        <p class="about-bio">
+          Based in Deltona, FL, and serving the greater Orlando and Daytona corridor, Jenn brings professional-grade expertise to every session. Her work spans newborn portraits, family lifestyle photography, maternity, and pet photography.
+        </p>
+        <div class="about-credentials">
+          <div class="credential-badge">
+            <div class="credential-dot"></div>
+            <span class="credential-text">American Photography Association Member — Since 2013</span>
+          </div>
+          <div class="credential-badge">
+            <div class="credential-dot"></div>
+            <span class="credential-text">Graphistudio USA — Since 2009</span>
+          </div>
+          <div class="credential-badge">
+            <div class="credential-dot"></div>
+            <span class="credential-text">Specializing in High-Intensity Infant & Child Photography</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">What I Offer</p>
+        <h2 class="section-title reveal">Sessions Designed Around You</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" data-delay="0">
+          <div class="service-number">01</div>
+          <h3 class="service-name">Newborn</h3>
+          <p class="service-desc">Photographed within the first 7-14 days of life, when babies sleep longest and curl most naturally. Sessions are warm, gentle, and completely at your pace.</p>
+          <p class="service-price">Starting at $150 · 1-2 hours</p>
+        </div>
+        <div class="service-card" data-delay="120">
+          <div class="service-number">02</div>
+          <h3 class="service-name">Family</h3>
+          <p class="service-desc">From toddlers who won't sit still to grandparents who will. Jenn specializes in the beautiful chaos of real family moments — laughter, tears, all of it.</p>
+          <p class="service-price">Starting at $150 · 1-2 hours</p>
+        </div>
+        <div class="service-card" data-delay="240">
+          <div class="service-number">03</div>
+          <h3 class="service-name">Pets</h3>
+          <p class="service-desc">They're part of the family too. Jenn's patience with animals means you'll actually get that photo where your dog is looking at the camera — and smiling.</p>
+          <p class="service-price">Starting at $125 · 1 hour</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <p class="section-eyebrow">Newborns don't stay small</p>
+    <h2 class="cta-title">Book Your Session Before Those Days Are Gone</h2>
+    <p class="cta-sub">Sessions book up fast — especially for newborns. Reserve your date before your due month.</p>
+    <a href="#contact" class="cta-btn">Book Your Session Now</a>
+    <div class="cta-creds">
+      <span class="cred-item">APA Member</span>
+      <span class="cred-item">·</span>
+      <span class="cred-item">Graphistudio USA</span>
+      <span class="cred-item">·</span>
+      <span class="cred-item">Deltona, FL</span>
+      <span class="cred-item">·</span>
+      <span class="cred-item">Est. 2009</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Get In Touch</p>
+        <h2 class="section-title reveal">Let's Make Something Beautiful</h2>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:JennKossPhoto@hotmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-value">JennKossPhoto@hotmail.com</span>
+        </a>
+        <a href="tel:3863209557" class="contact-link">
+          <span class="contact-link-label">Phone</span>
+          <span class="contact-link-value">(386) 320-9557</span>
+        </a>
+        <a href="https://www.instagram.com/jennkossphotos/" target="_blank" class="contact-link">
+          <span class="contact-link-label">Instagram</span>
+          <span class="contact-link-value">@jennkossphotos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Jenn Koss Photography</span>
+    <span class="footer-copy">© 2026 · Deltona, Florida</span>
+    <span class="footer-credit">Design concept by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero entrance
+    window.addEventListener('load', () => {
+      const heroContent = document.getElementById('heroContent');
+      const heroImg = document.getElementById('heroImg');
+      setTimeout(() => {
+        heroContent.classList.add('visible');
+        heroImg.classList.add('loaded');
+      }, 100);
+    });
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || 0);
+          setTimeout(() => el.classList.add('visible'), delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Observe stats
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+    // Observe gallery items
+    document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+
+    // Observe testimonials
+    document.querySelectorAll('.testimonial-card').forEach(el => observer.observe(el));
+
+    // Observe about sections
+    document.querySelectorAll('.about-image-wrap, .about-text').forEach(el => observer.observe(el));
+
+    // Observe service cards
+    document.querySelectorAll('.service-card').forEach(el => observer.observe(el));
+
+    // Section title reveals via IntersectionObserver
+    const titleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          titleObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.section-title.reveal').forEach(el => titleObserver.observe(el));
+
+    // Hero parallax
+    const heroImage = document.querySelector('.hero-image');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        heroImage.style.backgroundPositionY = `calc(30% + ${scrollY * 0.3}px)`;
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
