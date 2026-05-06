@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C3 Art — Charles Releford III</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0A0A0A;
+      --off-black: #111111;
+      --dark: #1A1A1A;
+      --graphite: #2A2A2A;
+      --mid: #666666;
+      --light: #AAAAAA;
+      --cream: #F0EDE8;
+      --warm: #E8E4DD;
+      --accent: #C4553A;
+      --accent-light: #D4654A;
+      --white: #FAFAF8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ============ NAV ============ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+
+    nav .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+
+    nav ul a {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--cream); }
+
+    /* ============ HERO ============ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--off-black);
+    }
+
+    /* Giant faded name — signature detail */
+    #hero::before {
+      content: 'C3 ART';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(120px, 25vw, 320px);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      opacity: 0.03;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/f93df0_ae888090e51f4712a3b53e27b48e200c~mv2.jpg');
+      background-size: cover;
+      background-position: center top;
+      filter: brightness(0.35);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 48px 80px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(64px, 10vw, 120px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      display: block;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+    }
+
+    .hero-tagline {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    }
+
+    .hero-tagline span {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--light);
+    }
+
+    .hero-tagline .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 48px;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.45s, transform 0.8s ease 0.45s, background 0.2s;
+    }
+
+    .hero-cta:hover { background: var(--accent-light); }
+
+    .hero-scroll {
+      position: absolute;
+      right: 48px;
+      bottom: 80px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      transition: opacity 1s ease 0.6s;
+    }
+
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      writing-mode: vertical-rl;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: var(--mid);
+    }
+
+    /* ============ MARQUEE STRIP ============ */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0 40px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ============ STATS ============ */
+    #stats {
+      background: var(--dark);
+      padding: 100px 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 40px 48px;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item:first-child { border-left: none; }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(60px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--cream);
+      display: block;
+    }
+
+    .stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* ============ GALLERY ============ */
+    #gallery {
+      background: var(--black);
+      padding: 120px 48px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    .section-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 12px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+      loading: lazy;
+    }
+
+    .gallery-item:hover img { transform: scale(1.02); }
+
+    .gallery-item .img-caption {
+      padding: 10px 0 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ============ SERVICES ============ */
+    #services {
+      background: var(--graphite);
+      padding: 120px 48px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .service-card {
+      background: var(--dark);
+      padding: 56px 44px;
+      border-top: 3px solid transparent;
+      transition: border-color 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s;
+    }
+
+    .service-card:hover { border-top-color: var(--accent); }
+
+    .service-icon {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.7;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .service-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .service-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--light);
+    }
+
+    /* ============ LOGOS SECTION ============ */
+    #logos {
+      background: var(--black);
+      padding: 120px 48px;
+    }
+
+    .logos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .logo-item {
+      background: var(--dark);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .logo-item img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.85;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .logo-item:hover img {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    /* ============ ABOUT ============ */
+    #about {
+      background: var(--off-black);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+
+    .about-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%);
+    }
+
+    .about-content {
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .about-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .about-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--light);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+    }
+
+    .about-pull-quote {
+      border-left: 3px solid var(--accent);
+      padding-left: 24px;
+      margin: 32px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--cream);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s;
+    }
+
+    /* ============ SELECTED CLIENTS / COMMISSIONS ============ */
+    #commissions {
+      background: var(--dark);
+      padding: 120px 48px;
+    }
+
+    .commissions-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      margin-top: 64px;
+      align-items: start;
+    }
+
+    .commissions-sidebar {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .commissions-sidebar h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+
+    .commissions-sidebar p {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--light);
+      margin-bottom: 32px;
+    }
+
+    .commission-types {
+      list-style: none;
+    }
+
+    .commission-types li {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .commission-types li::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .commissions-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .commission-img-wrap {
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .commission-img-wrap img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .commission-img-wrap:hover img { transform: scale(1.03); }
+
+    /* ============ CTA SECTION ============ */
+    #cta {
+      background: var(--accent);
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: 'START';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(100px, 20vw, 240px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cta-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .cta-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--white);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+      transition: background 0.2s, color 0.2s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s, background 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* ============ CONTACT ============ */
+    #contact {
+      background: var(--off-black);
+      padding: 100px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .contact-left {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .contact-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .contact-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--light);
+      margin-bottom: 40px;
+    }
+
+    .contact-email {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+
+    .contact-email:hover { color: var(--cream); }
+
+    .social-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .social-links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .social-links a:hover { color: var(--cream); }
+
+    .contact-right {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+
+    .contact-detail {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .contact-detail-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+
+    .contact-detail-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--cream);
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      background: var(--black);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    footer .footer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--light);
+    }
+
+    footer .footer-copy {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--mid);
+    }
+
+    footer .footer-credit {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+      .hero-content { padding: 0 24px 60px; }
+      .hero-scroll { display: none; }
+      #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .stat-item { padding: 24px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-grid { columns: 2; }
+      #services { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; gap: 2px; }
+      #logos { padding: 80px 24px; }
+      .logos-grid { grid-template-columns: repeat(2, 1fr); }
+      #about { grid-template-columns: 1fr; }
+      .about-image { min-height: 400px; }
+      .about-content { padding: 60px 24px; }
+      #commissions { padding: 80px 24px; }
+      .commissions-content { grid-template-columns: 1fr; gap: 40px; }
+      .commissions-images { grid-template-columns: 1fr; }
+      #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 52px; }
+      #stats { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { columns: 1; }
+      nav ul { display: none; }
+    }
+
+    /* ============ ANIMATION CLASSES ============ */
+    .is-visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">C3 Art</div>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="heroEyebrow">Miami, FL · Full-Service Creative Studio</p>
+      <span class="hero-name" id="heroName">Charles<br>Releford III</span>
+      <div class="hero-tagline" id="heroTagline">
+        <span>Graphite &amp; Paintings</span>
+        <span class="dot"></span>
+        <span>Logo Design</span>
+        <span class="dot"></span>
+        <span>Custom Commissions</span>
+      </div>
+      <a href="#contact" class="hero-cta" id="heroCta">Start a Project</a>
+    </div>
+    <div class="hero-scroll" id="heroScroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Custom Commissions</span>
+      <span>·</span>
+      <span>Graphite Drawings</span>
+      <span>·</span>
+      <span>Logo Design</span>
+      <span>·</span>
+      <span>Miami, FL</span>
+      <span>·</span>
+      <span>Fine Art Paintings</span>
+      <span>·</span>
+      <span>Creative Services</span>
+      <span>·</span>
+      <span>C3 Art LLC</span>
+      <span>·</span>
+      <span>Custom Commissions</span>
+      <span>·</span>
+      <span>Graphite Drawings</span>
+      <span>·</span>
+      <span>Logo Design</span>
+      <span>·</span>
+      <span>Miami, FL</span>
+      <span>·</span>
+      <span>Fine Art Paintings</span>
+      <span>·</span>
+      <span>Creative Services</span>
+      <span>·</span>
+      <span>C3 Art LLC</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item" data-animate>
+      <span class="stat-number">8+</span>
+      <span class="stat-label">Years Creating</span>
+    </div>
+    <div class="stat-item" data-animate style="transition-delay: 0.1s">
+      <span class="stat-number">2.8K</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+    <div class="stat-item" data-animate style="transition-delay: 0.2s">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Disciplines</span>
+    </div>
+    <div class="stat-item" data-animate style="transition-delay: 0.3s">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Custom Designs</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title" data-animate>Selected Work</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" data-animate style="transition-delay: 0s">
+        <img src="https://static.wixstatic.com/media/f93df0_ae888090e51f4712a3b53e27b48e200c~mv2.jpg" alt="C3 Art Portfolio" loading="lazy">
+        <p class="img-caption">Graphite Series</p>
+      </div>
+      <div class="gallery-item" data-animate style="transition-delay: 0.1s">
+        <img src="https://static.wixstatic.com/media/f93df0_292f7fc34c934b2fabad8dc58170b8e6~mv2.jpg" alt="Commission Work" loading="lazy">
+        <p class="img-caption">Commission</p>
+      </div>
+      <div class="gallery-item" data-animate style="transition-delay: 0.2s">
+        <img src="https://static.wixstatic.com/media/f93df0_3eb91b283f0743e990f55fc4d7759cc3~mv2.png" alt="4ight Night" loading="lazy">
+        <p class="img-caption">4ight Night</p>
+      </div>
+      <div class="gallery-item" data-animate style="transition-delay: 0.05s">
+        <img src="https://static.wixstatic.com/media/f93df0_72a469a415cc49478aadaa4ebebaa723~mv2.jpg" alt="These Colors Don't Run" loading="lazy">
+        <p class="img-caption">These Colors Don't Run</p>
+      </div>
+      <div class="gallery-item" data-animate style="transition-delay: 0.15s">
+        <img src="https://static.wixstatic.com/media/f93df0_e7335e8c07a441d59fc6a55e7c28b0cc~mv2.jpg" alt="Drawings Series" loading="lazy">
+        <p class="img-caption">Realist Drawing</p>
+      </div>
+      <div class="gallery-item" data-animate style="transition-delay: 0.25s">
+        <img src="https://static.wixstatic.com/media/f93df0_2806c77e1f2b4d848b22b63591d52edc~mv2.png" alt="Commission Piece" loading="lazy">
+        <p class="img-caption">White Wash Series</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title" data-animate>Services</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" data-animate style="transition-delay: 0s">
+        <span class="service-icon">✦</span>
+        <h3 class="service-name">Fine Art &amp; Drawings</h3>
+        <p class="service-desc">Hyper-realistic graphite drawings capturing the beauty and complexity of life. From portraiture to still life — rendered with obsessive precision.</p>
+      </div>
+      <div class="service-card" data-animate style="transition-delay: 0.1s">
+        <span class="service-icon">◈</span>
+        <h3 class="service-name">Logo &amp; Brand Design</h3>
+        <p class="service-desc">Custom logomarks and brand identities built for longevity. Whether you're launching a business or refreshing a brand, C3 Art brings it to life.</p>
+      </div>
+      <div class="service-card" data-animate style="transition-delay: 0.2s">
+        <span class="service-icon">◐</span>
+        <h3 class="service-name">Custom Commissions</h3>
+        <p class="service-desc">Personal commissions — portraits, tributes, gifts. Work directly with Charles to create something made just for you, built to last forever.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS -->
+  <section id="logos">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title" data-animate>Logo Work</h2>
+    </div>
+    <div class="logos-grid">
+      <div class="logo-item" data-animate style="transition-delay: 0s">
+        <img src="https://static.wixstatic.com/media/f93df0_760824d4070d43e59e104dcdcd68ba51~mv2.png" alt="Logo Design 1" loading="lazy">
+      </div>
+      <div class="logo-item" data-animate style="transition-delay: 0.1s">
+        <img src="https://static.wixstatic.com/media/f93df0_d259e451f27841b4b9c31342026a34bb~mv2.png" alt="Logo Design 2" loading="lazy">
+      </div>
+      <div class="logo-item" data-animate style="transition-delay: 0.2s">
+        <img src="https://static.wixstatic.com/media/f93df0_e02b0715d8bc45c5b0fbb3192cc3d431~mv2.png" alt="Logo Design 3" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image">
+      <img src="https://static.wixstatic.com/media/f93df0_fe29f374bf0d4bf4a52db34c4ef62935~mv2.png" alt="Charles Releford III" loading="lazy">
+    </div>
+    <div class="about-content">
+      <p class="about-eyebrow">04 — About</p>
+      <h2 class="about-heading" data-animate>The Studio<br>Behind the Work</h2>
+      <p class="about-text" data-animate>C3 Art LLC is the creative studio of Charles Releford III — a Miami-based realist graphite artist originally from Griffin, GA. Specializing in rendering realistic life-forms and objects with exceptional detail, Charles has built a full-service creative practice spanning fine art, logo design, and custom commissions.</p>
+      <blockquote class="about-pull-quote" data-animate>"Art that starts conversations and lives on walls for generations."</blockquote>
+      <p class="about-text" data-animate>From intimate portrait commissions to commercial brand identities, C3 Art operates at the intersection of fine art and applied design — a rare combination in the Miami creative scene.</p>
+    </div>
+  </section>
+
+  <!-- COMMISSIONS -->
+  <section id="commissions">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title" data-animate>Commission Work</h2>
+    </div>
+    <div class="commissions-content">
+      <div class="commissions-sidebar" data-animate>
+        <h3>Every piece is made for you.</h3>
+        <p>Commissions are open for graphite drawings, paintings, and digital work. Turnaround and pricing depend on complexity and medium. Reach out to start the conversation.</p>
+        <ul class="commission-types">
+          <li>Portrait drawings</li>
+          <li>Memorial / tribute pieces</li>
+          <li>Pet portraits</li>
+          <li>Custom paintings</li>
+          <li>Concept art</li>
+          <li>Commercial illustration</li>
+        </ul>
+      </div>
+      <div class="commissions-images">
+        <div class="commission-img-wrap" data-animate style="transition-delay: 0s">
+          <img src="https://static.wixstatic.com/media/f93df0_444272ba27cc4c30a64d2e3ad33a478e~mv2.png" alt="Commission example 1" loading="lazy">
+        </div>
+        <div class="commission-img-wrap" data-animate style="transition-delay: 0.1s">
+          <img src="https://static.wixstatic.com/media/f93df0_d2cb0458d0944083ada55649eb5420a0~mv2.png" alt="Commission example 2" loading="lazy">
+        </div>
+        <div class="commission-img-wrap" data-animate style="transition-delay: 0.2s">
+          <img src="https://static.wixstatic.com/media/a3c153_1c21a3cd7c0947ce88d31a8eef96503a~mv2.png" alt="Commission example 3" loading="lazy">
+        </div>
+        <div class="commission-img-wrap" data-animate style="transition-delay: 0.3s">
+          <img src="https://static.wixstatic.com/media/a3c153_a701bcdd2cf641deba1dbf0dbe6c5487~mv2.png" alt="Commission example 4" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <h2 class="cta-heading" data-animate>Ready to start<br>a project?</h2>
+    <p class="cta-sub" data-animate>Custom drawings · Logo design · Commissions · Miami, FL</p>
+    <a href="mailto:artbycharlesreleford@gmail.com" class="cta-btn" data-animate>Get In Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left" data-animate>
+      <h2 class="contact-heading">Let's create<br>something lasting.</h2>
+      <p class="contact-text">Whether it's a commission for your home, a logo for your business, or a custom piece as a gift — C3 Art brings it to life. Based in Miami, available everywhere.</p>
+      <a href="mailto:artbycharlesreleford@gmail.com" class="contact-email">artbycharlesreleford@gmail.com</a>
+      <div class="social-links">
+        <a href="https://www.instagram.com/c3.art/" target="_blank">Instagram</a>
+        <a href="https://charlesrelefordiii.wixsite.com/c3art" target="_blank">Current Site</a>
+      </div>
+    </div>
+    <div class="contact-right" data-animate>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Location</p>
+        <p class="contact-detail-value">Miami, Florida</p>
+      </div>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Services</p>
+        <p class="contact-detail-value">Fine Art · Logos · Commissions</p>
+      </div>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Medium</p>
+        <p class="contact-detail-value">Graphite · Acrylic · Digital</p>
+      </div>
+      <div class="contact-detail">
+        <p class="contact-detail-label">Instagram</p>
+        <p class="contact-detail-value">@c3.art · 2.8K Followers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">C3 Art LLC</span>
+    <span class="footer-copy">© 2026 Charles Releford III. All rights reserved.</span>
+    <span class="footer-credit">Design concept by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero entrance animations
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroEyebrow').classList.add('is-visible');
+        document.getElementById('heroName').classList.add('is-visible');
+        document.getElementById('heroTagline').classList.add('is-visible');
+        document.getElementById('heroCta').classList.add('is-visible');
+        document.getElementById('heroScroll').classList.add('is-visible');
+      }, 100);
+    });
+
+    // Parallax on hero bg
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.backgroundPositionY = (window.scrollY * 0.35) + 'px';
+    });
+
+    // IntersectionObserver for all [data-animate] elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
