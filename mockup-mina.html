@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mina Cassandra Kuhn — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0E14;
+      --bg-alt: #0F1419;
+      --text: #F0EDE8;
+      --text-muted: #8A9BAE;
+      --accent: #2A6B7C;
+      --accent-light: #4DB8CC;
+      --teal: #1A4A5A;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: normal;
+    }
+
+    nav .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    nav a {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover { color: var(--accent-light); }
+
+    /* HERO */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/13bcc2_6ff90181e4924c3e8c0751d0b8ae9df8.jpg/v1/fill/w_1600,h_1100,al_c,q_85/file.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transition: transform 0.1s linear;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(10, 14, 20, 0.72) 0%,
+        rgba(10, 14, 20, 0.2) 60%,
+        rgba(10, 14, 20, 0.05) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 72px;
+      left: 64px;
+      max-width: 560px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .hero-eyebrow.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(56px, 7vw, 98px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: 0.18em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+    }
+
+    .hero-name.is-visible {
+      opacity: 1;
+      animation: letterSpacingCompress 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes letterSpacingCompress {
+      from { letter-spacing: 0.4em; opacity: 0; }
+      to   { letter-spacing: 0.06em; opacity: 1; }
+    }
+
+    .hero-tagline {
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(240, 237, 232, 0.75);
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+
+    .hero-tagline.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-cta {
+      margin-top: 40px;
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid var(--accent-light);
+      color: var(--accent-light);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s, background 0.3s ease, color 0.3s ease;
+    }
+
+    .hero-cta.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-cta:hover {
+      background: var(--accent-light);
+      color: var(--bg);
+    }
+
+    /* VERTICAL SIDE TEXT */
+    .vertical-text {
+      position: fixed;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+      pointer-events: none;
+      z-index: 50;
+      white-space: nowrap;
+    }
+
+    /* MARQUEE STRIP */
+    .marquee-section {
+      background: var(--teal);
+      overflow: hidden;
+      padding: 16px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-item {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      padding: 0 48px;
+      flex-shrink: 0;
+    }
+
+    .marquee-item span {
+      color: var(--accent-light);
+      margin: 0 12px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* STATS */
+    #stats {
+      padding: 100px 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      border-bottom: 1px solid rgba(42, 107, 124, 0.2);
+    }
+
+    .stat-item {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .stat-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-item:nth-child(2) { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) { transition-delay: 0.3s; }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(56px, 6vw, 88px);
+      font-weight: 700;
+      color: var(--accent-light);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* GALLERY */
+    #gallery {
+      padding: 120px 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 28px;
+      margin-bottom: 64px;
+    }
+
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 88px;
+      font-weight: 700;
+      color: rgba(42, 107, 124, 0.08);
+      line-height: 1;
+      margin-left: -8px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .section-title-inner {
+      display: block;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title-inner.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .masonry-grid {
+      columns: 3;
+      column-gap: 8px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .masonry-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .masonry-item:nth-child(2) { transition-delay: 0.1s; }
+    .masonry-item:nth-child(3) { transition-delay: 0.2s; }
+    .masonry-item:nth-child(4) { transition-delay: 0.15s; }
+    .masonry-item:nth-child(5) { transition-delay: 0.25s; }
+    .masonry-item:nth-child(6) { transition-delay: 0.05s; }
+    .masonry-item:nth-child(7) { transition-delay: 0.2s; }
+    .masonry-item:nth-child(8) { transition-delay: 0.1s; }
+    .masonry-item:nth-child(9) { transition-delay: 0.3s; }
+
+    .masonry-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+      loading: lazy;
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .masonry-item .img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 16px 16px;
+      background: linear-gradient(to top, rgba(10,14,20,0.85), transparent);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .masonry-item:hover .img-caption { opacity: 1; }
+
+    /* FEATURED WORK */
+    #featured {
+      padding: 0 64px 120px;
+    }
+
+    .featured-spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .featured-spread .spread-left {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-spread .spread-left img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .featured-spread .spread-left img.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .spread-right {
+      background: var(--bg-alt);
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+
+    .spread-right.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .spread-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 24px;
+    }
+
+    .spread-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .spread-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .spread-line {
+      width: 48px;
+      height: 1px;
+      background: var(--accent-light);
+      margin: 32px 0;
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 120px 64px;
+      background: var(--bg-alt);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 64px;
+    }
+
+    .about-image-wrap {
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .about-image-wrap.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      height: 680px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .about-text {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+
+    .about-text.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 36px;
+      padding-left: 28px;
+      border-left: 2px solid var(--accent-light);
+    }
+
+    .about-bio {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .about-tag {
+      padding: 6px 18px;
+      border: 1px solid rgba(77, 184, 204, 0.3);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+    }
+
+    /* CTA SECTION */
+    #cta {
+      background: var(--teal);
+      padding: 120px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: 'MINA';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22vw;
+      font-weight: 700;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .cta-eyebrow.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+    }
+
+    .cta-heading.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 18px 56px;
+      background: var(--accent-light);
+      color: var(--bg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s, background 0.3s ease;
+    }
+
+    .cta-button.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-button:hover {
+      background: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* CONTACT */
+    #contact {
+      padding: 100px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .contact-left.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 20px;
+    }
+
+    .contact-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+
+    .contact-email {
+      display: block;
+      font-size: 18px;
+      color: var(--accent-light);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email:hover { color: var(--white); }
+
+    .contact-location {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .contact-right {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+
+    .contact-right.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-services {
+      list-style: none;
+    }
+
+    .contact-services li {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(42, 107, 124, 0.2);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contact-services li span {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .social-links a {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover { color: var(--accent-light); }
+
+    /* FOOTER */
+    footer {
+      background: #060A0F;
+      padding: 40px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(42, 107, 124, 0.15);
+    }
+
+    .footer-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(138, 155, 174, 0.5);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(77, 184, 204, 0.4);
+      letter-spacing: 0.1em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+      .hero-content { left: 24px; bottom: 48px; }
+      #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      #gallery { padding: 80px 24px; }
+      .masonry-grid { columns: 2; }
+      #featured { padding: 0 24px 80px; }
+      .featured-spread { grid-template-columns: 1fr; }
+      #about { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-image-wrap img { height: 420px; }
+      #cta { padding: 80px 24px; }
+      #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+      .vertical-text { display: none; }
+      .section-num { font-size: 56px; }
+    }
+
+    @media (max-width: 480px) {
+      .masonry-grid { columns: 1; }
+      #stats { grid-template-columns: repeat(2, 1fr); }
+      .stat-number { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- VERTICAL SIDE TEXT -->
+  <div class="vertical-text">Portfolio 2026</div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Mina Cassandra Kuhn</div>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#cta">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Miami · Underwater &amp; Fashion Photography</p>
+      <h1 class="hero-name">Mina<br>Cassandra<br>Kuhn</h1>
+      <p class="hero-tagline">Capturing the surreal dimension where water, light,<br>and the human form converge.</p>
+      <a href="#gallery" class="hero-cta">View Portfolio</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Underwater Photography <span>·</span></span>
+      <span class="marquee-item">Fashion &amp; Editorial <span>·</span></span>
+      <span class="marquee-item">Nature &amp; Wildlife <span>·</span></span>
+      <span class="marquee-item">Miami, Florida <span>·</span></span>
+      <span class="marquee-item">Available for Commissions <span>·</span></span>
+      <span class="marquee-item">25+ Years Experience <span>·</span></span>
+      <span class="marquee-item">Caribbean &amp; South Florida <span>·</span></span>
+      <span class="marquee-item">Underwater Photography <span>·</span></span>
+      <span class="marquee-item">Fashion &amp; Editorial <span>·</span></span>
+      <span class="marquee-item">Nature &amp; Wildlife <span>·</span></span>
+      <span class="marquee-item">Miami, Florida <span>·</span></span>
+      <span class="marquee-item">Available for Commissions <span>·</span></span>
+      <span class="marquee-item">25+ Years Experience <span>·</span></span>
+      <span class="marquee-item">Caribbean &amp; South Florida <span>·</span></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <div class="stat-number">25+</div>
+      <div class="stat-label">Years Shooting</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Specialties</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Cities, NYC &amp; MIA</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Depths Explored</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2 class="section-title">
+        <span class="section-title-inner">Portfolio</span>
+      </h2>
+    </div>
+
+    <div class="masonry-grid">
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_6ff90181e4924c3e8c0751d0b8ae9df8.jpg/v1/fill/w_800,h_1067,al_c,q_80/file.jpg" alt="Underwater dream series" loading="lazy">
+        <div class="img-caption">Underwater Dream</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_307759ab391a45759c09c8940709283a.jpg/v1/fill/w_800,h_900,al_c,q_80/file.jpg" alt="Editorial fashion underwater" loading="lazy">
+        <div class="img-caption">Editorial</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_25035296f7ad45e0b7a9cf2c21a78a34.jpg/v1/fill/w_800,h_1000,al_c,q_80/file.jpg" alt="Lifestyle portrait" loading="lazy">
+        <div class="img-caption">Lifestyle</div>
+      </div>
+
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_159755585d344fdea9ea8404fdf908e4.jpg/v1/fill/w_800,h_1100,al_c,q_80/file.jpg" alt="Underwater portrait" loading="lazy">
+        <div class="img-caption">Underwater Portrait</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_68f3f50b72d74453905dca2500edb5ec.jpg/v1/fill/w_800,h_900,al_c,q_80/file.jpg" alt="Underwater fashion" loading="lazy">
+        <div class="img-caption">Underwater Fashion</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_309cdd2ee70a4ce09f6de464ebb5197f.jpg/v1/fill/w_800,h_1000,al_c,q_80/file.jpg" alt="Lifestyle session" loading="lazy">
+        <div class="img-caption">Lifestyle</div>
+      </div>
+
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_9416429d01984885928d43e8b629b7c9.jpg/v1/fill/w_800,h_1067,al_c,q_80/file.jpg" alt="Fashion portrait" loading="lazy">
+        <div class="img-caption">Fashion</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_323f0924d0914258be222dce89c5b8a8.jpg/v1/fill/w_800,h_900,al_c,q_80/file.jpg" alt="Editorial fashion" loading="lazy">
+        <div class="img-caption">Editorial Fashion</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/13bcc2_72ff89c41ddf4f13973896e3b0d369f8.jpg/v1/fill/w_800,h_1000,al_c,q_80/file.jpg" alt="Lifestyle portrait" loading="lazy">
+        <div class="img-caption">Lifestyle</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORK -->
+  <section id="featured">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2 class="section-title">
+        <span class="section-title-inner">Featured Series</span>
+      </h2>
+    </div>
+
+    <div class="featured-spread">
+      <div class="spread-left">
+        <img src="https://static.wixstatic.com/media/13bcc2_45af5dc0a1cc4d5f92e49f6720e6293a.jpg/v1/fill/w_900,h_600,al_c,q_80/file.jpg" alt="Underwater fashion series" loading="lazy">
+      </div>
+      <div class="spread-right">
+        <p class="spread-label">Signature Series</p>
+        <h3 class="spread-heading">Underwater Fashion — Where Couture Meets the Deep</h3>
+        <div class="spread-line"></div>
+        <p class="spread-body">Shooting in South Florida pools and open ocean, Mina captures the surreal moment when garment, model, and water become one. Fabric billows, hair suspends, and gravity disappears — creating images that exist nowhere else in photography.</p>
+        <p class="spread-body" style="margin-top:16px;">Each session requires precise coordination of light, current, and breath. The result is something between fashion editorial and fine art.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2 class="section-title">
+        <span class="section-title-inner">About</span>
+      </h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <img src="https://static.wixstatic.com/media/13bcc2_d54c99e19e154aa0aa65881f118de7b6.jpg/v1/fill/w_800,h_1067,al_c,q_80/file.jpg" alt="Mina Cassandra Kuhn" loading="lazy">
+      </div>
+      <div class="about-text">
+        <blockquote class="about-quote">
+          "The water transforms everything — it makes the ordinary surreal and the familiar mysterious."
+        </blockquote>
+        <p class="about-bio">
+          Mina Cassandra Kuhn began photographing underwater nature in 1997, drawn to the Caribbean's reefs and the light that filters through clear water. That curiosity evolved into a singular practice at the intersection of underwater photography and high fashion.
+        </p>
+        <p class="about-bio">
+          After studying fashion photography at The International Center of Photography and the School of Visual Arts in New York City, Mina relocated to Miami in 2005 — finding in South Florida the perfect environment for her signature work. The warm ocean, strong equatorial light, and Miami's vibrant creative community all inform her aesthetic.
+        </p>
+        <p class="about-bio">
+          Her work spans underwater portraits, editorial fashion, nature photography, and lifestyle — each series carrying the same unhurried, precise eye.
+        </p>
+        <div class="about-tags">
+          <span class="about-tag">Underwater</span>
+          <span class="about-tag">Fashion &amp; Editorial</span>
+          <span class="about-tag">Nature</span>
+          <span class="about-tag">Lifestyle</span>
+          <span class="about-tag">Miami, FL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <p class="cta-eyebrow">Let's Work Together</p>
+    <h2 class="cta-heading">Ready to Create<br>Something Extraordinary?</h2>
+    <a href="mailto:minackuhn@gmail.com" class="cta-button">Book a Session</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <p class="contact-label">Get in Touch</p>
+      <h2 class="contact-heading">Studio Inquiries</h2>
+      <a href="mailto:minackuhn@gmail.com" class="contact-email">minackuhn@gmail.com</a>
+      <p class="contact-location">Miami, Florida · Available Worldwide</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/pages/Mina-Cassandra-Kuhn-Photography/155248497872392" target="_blank">Facebook</a>
+        <a href="https://minacassandrakuhn.wixsite.com/minacassandrakuhn" target="_blank">Portfolio</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p class="contact-label">Services</p>
+      <ul class="contact-services">
+        <li>Underwater Fashion Portraits <span>Signature</span></li>
+        <li>Commercial &amp; Editorial <span>Available</span></li>
+        <li>Underwater Nature <span>Available</span></li>
+        <li>Lifestyle &amp; Portraits <span>Available</span></li>
+        <li>Workshops &amp; Collaborations <span>On Request</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Mina Cassandra Kuhn Photography</div>
+    <div class="footer-copy">© 2026 Mina Cassandra Kuhn. All rights reserved.</div>
+    <div class="footer-credit">Design concept by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // --- HERO PARALLAX ---
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+    }, { passive: true });
+
+    // --- INTERSECTION OBSERVER for all animated elements ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    // Observe all animatable elements
+    document.querySelectorAll(
+      '.hero-eyebrow, .hero-name, .hero-tagline, .hero-cta, ' +
+      '.stat-item, .section-title-inner, .masonry-item, ' +
+      '.spread-left img, .spread-right, ' +
+      '.about-image-wrap, .about-text, ' +
+      '.cta-eyebrow, .cta-heading, .cta-button, ' +
+      '.contact-left, .contact-right'
+    ).forEach(el => observer.observe(el));
+
+    // --- Hero animations fire immediately ---
+    setTimeout(() => {
+      document.querySelector('.hero-eyebrow').classList.add('is-visible');
+    }, 200);
+    setTimeout(() => {
+      document.querySelector('.hero-name').classList.add('is-visible');
+    }, 400);
+    setTimeout(() => {
+      document.querySelector('.hero-tagline').classList.add('is-visible');
+    }, 700);
+    setTimeout(() => {
+      document.querySelector('.hero-cta').classList.add('is-visible');
+    }, 900);
+  </script>
+</body>
+</html>
