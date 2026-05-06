@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Rule Photography | Michelle | Polk County, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --warm-cream: #F8F3EC;
+    --deep-brown: #2C1F14;
+    --amber-gold: #C07A2A;
+    --soft-sage: #7D8B6E;
+    --warm-tan: #D4B896;
+    --dark-forest: #1A2418;
+    --text-body: #3D2E1E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--warm-cream);
+    color: var(--text-body);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: rgba(44, 31, 20, 0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--warm-tan);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(248, 243, 236, 0.75);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--warm-tan); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/30b184_3e623dc42ca946eba2141c09b20943c5~mv2.jpg/v1/fill/w_2500,h_1908,al_c/30b184_3e623dc42ca946eba2141c09b20943c5~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+  }
+
+  .hero-image.loaded { transform: scale(1.0); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(26, 36, 24, 0.72) 0%,
+      rgba(26, 36, 24, 0.35) 55%,
+      rgba(26, 36, 24, 0.12) 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 72px;
+    max-width: 560px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+  }
+
+  .hero-content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-tagline {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber-gold);
+    margin-bottom: 18px;
+  }
+
+  .hero-name {
+    font-family: 'Lora', serif;
+    font-size: 76px;
+    font-weight: 500;
+    line-height: 1.0;
+    color: #F8F3EC;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .hero-name span { display: block; }
+  .hero-name .name-sub { font-style: italic; font-weight: 400; font-size: 56px; }
+
+  .hero-desc {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(248, 243, 236, 0.85);
+    margin-bottom: 36px;
+    max-width: 420px;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--warm-tan);
+    color: var(--warm-tan);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .hero-cta:hover {
+    background: var(--warm-tan);
+    color: var(--deep-brown);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--amber-gold);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-text {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--deep-brown);
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--deep-brown);
+    padding: 80px 72px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-item:nth-child(2) { transition-delay: 0.12s; }
+  .stat-item:nth-child(3) { transition-delay: 0.24s; }
+  .stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+  .stat-number {
+    font-family: 'Lora', serif;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--amber-gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(212, 184, 150, 0.7);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ─── SERVICES ─── */
+  #services {
+    padding: 120px 72px;
+    background: var(--warm-cream);
+  }
+
+  .section-header {
+    margin-bottom: 72px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .section-header.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-number {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber-gold);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 46px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--deep-brown);
+    max-width: 520px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1100px;
+  }
+
+  .service-card {
+    border-top: 2px solid var(--amber-gold);
+    padding-top: 32px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .service-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-card:nth-child(2) { transition-delay: 0.12s; }
+  .service-card:nth-child(3) { transition-delay: 0.24s; }
+
+  .service-image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .service-name {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--deep-brown);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #5C4332;
+  }
+
+  .service-price {
+    margin-top: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--amber-gold);
+    text-transform: uppercase;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 120px 72px;
+    background: #F2EBE0;
+  }
+
+  .gallery-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 1100px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .gallery-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.3s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.4s; }
+  .gallery-item:nth-child(6) { transition-delay: 0.5s; }
+
+  .gallery-item.large {
+    grid-column: span 2;
+    height: 520px;
+  }
+
+  .gallery-item.tall { height: 460px; }
+  .gallery-item.medium { height: 340px; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 140px 72px;
+    background: var(--warm-cream);
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .about-image-wrap.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .about-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-image-accent {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    width: 48%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 6px solid var(--warm-cream);
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .about-quote {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--amber-gold);
+    margin-bottom: 32px;
+    padding-left: 24px;
+    border-left: 3px solid var(--amber-gold);
+  }
+
+  .about-body {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #4A3525;
+    margin-bottom: 20px;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials {
+    background: var(--dark-forest);
+    padding: 100px 72px;
+  }
+
+  .testimonials-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .testimonials-inner .section-title {
+    color: var(--warm-tan);
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .testimonial-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,184,150,0.2);
+    padding: 36px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .testimonial-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .testimonial-card:nth-child(2) { transition-delay: 0.15s; }
+
+  .testimonial-text {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(248, 243, 236, 0.9);
+    margin-bottom: 20px;
+  }
+
+  .testimonial-author {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber-gold);
+  }
+
+  /* ─── CTA / PRICING ─── */
+  #pricing {
+    background: var(--amber-gold);
+    padding: 120px 72px;
+    text-align: center;
+  }
+
+  .pricing-inner {
+    max-width: 740px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .pricing-inner.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pricing-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--deep-brown);
+    opacity: 0.75;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pricing-headline {
+    font-family: 'Lora', serif;
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--deep-brown);
+    margin-bottom: 24px;
+  }
+
+  .pricing-sub {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(44, 31, 20, 0.8);
+    margin-bottom: 48px;
+  }
+
+  .pricing-cta {
+    display: inline-block;
+    padding: 18px 52px;
+    background: var(--deep-brown);
+    color: var(--warm-tan);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .pricing-cta:hover {
+    background: var(--dark-forest);
+    transform: translateY(-2px);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 140px 72px;
+    background: var(--warm-cream);
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1100px;
+    align-items: start;
+  }
+
+  .contact-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .contact-left.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-body {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #4A3525;
+    margin-bottom: 40px;
+  }
+
+  .contact-item {
+    margin-bottom: 20px;
+  }
+
+  .contact-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--soft-sage);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .contact-value {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--deep-brown);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  .contact-value:hover { color: var(--amber-gold); }
+
+  .contact-image-col {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .contact-image-col.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--deep-brown);
+    padding: 40px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--warm-tan);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(212, 184, 150, 0.5);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-social a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(212, 184, 150, 0.6);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  .footer-social a:hover { color: var(--warm-tan); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+
+    .hero-content {
+      left: 24px;
+      right: 24px;
+      bottom: 60px;
+      max-width: 100%;
+    }
+
+    .hero-name { font-size: 52px; }
+    .hero-name .name-sub { font-size: 40px; }
+
+    #stats, #services, #gallery, #about, #testimonials, #pricing, #contact {
+      padding: 80px 24px;
+    }
+
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .gallery-editorial { grid-template-columns: 1fr; }
+    .gallery-item.large { grid-column: span 1; height: 320px; }
+    .about-layout { grid-template-columns: 1fr; gap: 48px; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .section-title { font-size: 34px; }
+    .pricing-headline { font-size: 38px; }
+    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 40px; }
+    .hero-name .name-sub { font-size: 32px; }
+    .stat-number { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Golden Rule Photography</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-image" id="heroImg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content is-visible" id="heroContent">
+    <p class="hero-tagline">Natural Light · Polk County, Florida</p>
+    <h1 class="hero-name">
+      <span>Golden Rule</span>
+      <span class="name-sub">Photography</span>
+    </h1>
+    <p class="hero-desc">Outdoor portraits, small business imagery, and wildlife photography — all in the natural beauty of central Florida. No sitting fee.</p>
+    <a href="#contact" class="hero-cta">Book a Session</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-text">Available for Bookings</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Lake Wales, FL</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Small Business Photography</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Outdoor Portraits</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Wildlife Photography</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">No Sitting Fee</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Available for Bookings</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Lake Wales, FL</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Small Business Photography</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Outdoor Portraits</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">Wildlife Photography</span>
+    <span class="marquee-text">·</span>
+    <span class="marquee-text">No Sitting Fee</span>
+    <span class="marquee-text">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">0$</span>
+      <span class="stat-label">Sitting Fee</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Natural Light</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Specialties</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">FL</span>
+      <span class="stat-label">Polk County Based</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-number">01 — Services</span>
+    <h2 class="section-title">What Michelle<br>Photographs</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <img
+        src="https://static.wixstatic.com/media/30b184_51a3e83749104ca0a676701cd0a3dd88~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90/30b184_51a3e83749104ca0a676701cd0a3dd88~mv2.jpg"
+        alt="Small Business Photography"
+        class="service-image"
+        loading="lazy"
+      >
+      <h3 class="service-name">Small Business</h3>
+      <p class="service-desc">Professional imagery that tells your brand's story — headshots, product shots, storefronts, and team portraits for Polk County businesses.</p>
+      <p class="service-price">No sitting fee · prints from $25</p>
+    </div>
+    <div class="service-card">
+      <img
+        src="https://static.wixstatic.com/media/30b184_a891900cf50042c680acd33695383903~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90/30b184_a891900cf50042c680acd33695383903~mv2.jpg"
+        alt="Outdoor Portrait Photography"
+        class="service-image"
+        loading="lazy"
+      >
+      <h3 class="service-name">Outdoor Portraits</h3>
+      <p class="service-desc">Families, individuals, seniors, couples, and groups in natural light across Polk County's most beautiful outdoor settings.</p>
+      <p class="service-price">No sitting fee · all ages welcome</p>
+    </div>
+    <div class="service-card">
+      <img
+        src="https://static.wixstatic.com/media/30b184_9ea81574758d425cb921606d4ff8c2ac~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90/30b184_9ea81574758d425cb921606d4ff8c2ac~mv2.jpg"
+        alt="Wildlife Photography"
+        class="service-image"
+        loading="lazy"
+      >
+      <h3 class="service-name">Wildlife</h3>
+      <p class="service-desc">Florida's wild places captured with patience and care — from native birds to local fauna in their natural habitats throughout central Florida.</p>
+      <p class="service-price">Fine art prints available</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-number">02 — Gallery</span>
+    <h2 class="section-title">Recent Work</h2>
+  </div>
+  <div class="gallery-editorial">
+    <div class="gallery-item large">
+      <img
+        src="https://static.wixstatic.com/media/30b184_3e623dc42ca946eba2141c09b20943c5~mv2.jpg/v1/fill/w_1400,h_900,al_c,q_90/30b184_3e623dc42ca946eba2141c09b20943c5~mv2.jpg"
+        alt="Golden Rule Photography — Featured Work"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item tall">
+      <img
+        src="https://static.wixstatic.com/media/30b184_28e790dc1a00454b93caca392ba4a6d8~mv2.jpg/v1/fill/w_700,h_600,al_c,q_90/30b184_28e790dc1a00454b93caca392ba4a6d8~mv2.jpg"
+        alt="Portrait photography"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item tall">
+      <img
+        src="https://static.wixstatic.com/media/30b184_0c4de46889674c38aaed6c90a2bf3da1~mv2.jpg/v1/fill/w_700,h_600,al_c,q_90/30b184_0c4de46889674c38aaed6c90a2bf3da1~mv2.jpg"
+        alt="Outdoor photography"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item medium">
+      <img
+        src="https://static.wixstatic.com/media/30b184_e9e7421ad136402fb0c53635445f7f66~mv2.jpg/v1/fill/w_700,h_500,al_c,q_90/30b184_e9e7421ad136402fb0c53635445f7f66~mv2.jpg"
+        alt="Natural light photography"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item medium">
+      <img
+        src="https://static.wixstatic.com/media/30b184_8ae9a182e4f049f6b751ca04303c8230~mv2.jpg/v1/fill/w_700,h_500,al_c,q_90/30b184_8ae9a182e4f049f6b751ca04303c8230~mv2.jpg"
+        alt="Florida photography"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item tall">
+      <img
+        src="https://static.wixstatic.com/media/30b184_6d2ea2a6608c4168a8bcdb24758f2ed6~mv2.jpg/v1/fill/w_700,h_600,al_c,q_90/30b184_6d2ea2a6608c4168a8bcdb24758f2ed6~mv2.jpg"
+        alt="Golden Rule Photography portfolio"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item tall">
+      <img
+        src="https://static.wixstatic.com/media/30b184_64f67d913a454cf9b30d1e835a4e2d0b~mv2.jpg/v1/fill/w_700,h_600,al_c,q_90/30b184_64f67d913a454cf9b30d1e835a4e2d0b~mv2.jpg"
+        alt="Portfolio work"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item tall">
+      <img
+        src="https://static.wixstatic.com/media/30b184_77b36740071d47e2894937788ca27013~mv2.jpg/v1/fill/w_700,h_600,al_c,q_90/30b184_77b36740071d47e2894937788ca27013~mv2.jpg"
+        alt="Wildlife and nature photography"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-layout">
+    <div class="about-image-wrap">
+      <img
+        src="https://static.wixstatic.com/media/30b184_f62baeef3a754928a260b5722b252349~mv2.jpg/v1/fill/w_700,h_900,al_c,q_90/30b184_f62baeef3a754928a260b5722b252349~mv2.jpg"
+        alt="Michelle — Golden Rule Photography"
+        class="about-image"
+        loading="lazy"
+      >
+      <img
+        src="https://static.wixstatic.com/media/30b184_3b52d7f232874dcdaeb4425e26cfe1c5~mv2.jpg/v1/fill/w_400,h_400,al_c,q_90/30b184_3b52d7f232874dcdaeb4425e26cfe1c5~mv2.jpg"
+        alt="Florida natural light"
+        class="about-image-accent"
+        loading="lazy"
+      >
+    </div>
+    <div class="about-text">
+      <div class="section-header" style="margin-bottom: 36px;">
+        <span class="section-number">03 — About</span>
+        <h2 class="section-title">The Photographer Behind the Lens</h2>
+      </div>
+      <p class="about-quote">"Named for the golden ratio — and for the way every client deserves to be treated."</p>
+      <p class="about-body">Michelle photographs small businesses, families, and wildlife across Polk County using only natural light in beautiful outdoor settings. Based in Lake Wales, she brings a patient, unhurried approach to every session.</p>
+      <p class="about-body">Golden Rule Photography was built on a simple belief: great images shouldn't come with hidden costs. No sitting fees. No pressure. Just honest work done right.</p>
+      <p class="about-body">Serving Lake Wales, Lakeland, Winter Haven, and all surrounding areas in central Florida.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-header" style="margin-bottom: 60px;">
+      <span class="section-number" style="color: var(--amber-gold);">04 — Kind Words</span>
+      <h2 class="section-title" style="color: var(--warm-tan); text-align: center;">What Clients Say</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Michelle has a real eye for natural light. She found angles I never would have thought of and made our whole team feel completely at ease. The photos were exactly what our business needed."</p>
+        <p class="testimonial-author">— Small Business Client, Polk County</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"I was nervous about family portraits but Michelle made it so relaxed and natural. The outdoor setting was gorgeous and the photos came out better than I imagined. And no sitting fee — can't beat that."</p>
+        <p class="testimonial-author">— Family Portrait Client, Lake Wales</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / PRICING -->
+<section id="pricing">
+  <div class="pricing-inner">
+    <span class="pricing-eyebrow">No Sitting Fee · Polk County</span>
+    <h2 class="pricing-headline">Professional Photography, Honestly Priced</h2>
+    <p class="pricing-sub">Outdoor sessions with no sitting fee in and around Polk County. You only pay for the prints and digital files you love. Tipping is always appreciated to help cover fuel.</p>
+    <a href="#contact" class="pricing-cta">Schedule Your Session</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-left">
+      <div class="section-header" style="margin-bottom: 40px;">
+        <span class="section-number">05 — Get in Touch</span>
+        <h2 class="section-title">Let's Make<br>Something Great</h2>
+      </div>
+      <p class="contact-body">Ready to book a session or just have a question? Michelle responds quickly and loves talking about photography. Reach out any time.</p>
+
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <a href="mailto:Michelle@GoldenRulePhotography.com" class="contact-value">Michelle@GoldenRulePhotography.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Phone / Text</span>
+        <a href="tel:3039176522" class="contact-value">303-917-6522</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Location</span>
+        <span class="contact-value" style="cursor: default;">Lake Wales, FL 33859 · Serving all of Polk County</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Social</span>
+        <a href="https://www.instagram.com/golden_rule_photography/" target="_blank" rel="noopener" class="contact-value">@golden_rule_photography</a>
+      </div>
+    </div>
+
+    <div class="contact-image-col">
+      <img
+        src="https://static.wixstatic.com/media/30b184_91444d62028841d182da7e4f857312e6~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90/30b184_91444d62028841d182da7e4f857312e6~mv2.jpg"
+        alt="Golden Rule Photography — Contact"
+        class="contact-img"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Golden Rule Photography</span>
+  <span class="footer-copy">© 2026 Michelle · Lake Wales, FL · Design by Lucas Blatt</span>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/golden_rule_photography/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/GoldenRulePhotographyCom" target="_blank" rel="noopener">Facebook</a>
+  </div>
+</footer>
+
+<script>
+  // Hero image load animation
+  const heroImg = document.getElementById('heroImg');
+  const heroContent = document.getElementById('heroContent');
+  setTimeout(() => { heroImg.classList.add('loaded'); }, 100);
+
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe all animated elements
+  const animated = document.querySelectorAll(
+    '.stat-item, .section-header, .service-card, .gallery-item, ' +
+    '.about-image-wrap, .about-text, .testimonial-card, ' +
+    '.pricing-inner, .contact-left, .contact-image-col'
+  );
+  animated.forEach(el => observer.observe(el));
+
+  // Hero parallax
+  const heroSection = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroImg.style.backgroundPositionY = `calc(30% + ${scrollY * 0.3}px)`;
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
