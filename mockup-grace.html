@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grace Jicha Photography — Florida Wedding & Elopement Photographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5EFE6;
+    --warm-white: #FAF7F3;
+    --dark: #1C1712;
+    --warm-mid: #8C7B6B;
+    --accent: #B8895A;
+    --light-text: #5C4F42;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+  nav ul a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: #fff; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/a287c3_5e7d7a5d8e7f48bca757410a1c32cd35~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transform: scale(1.05);
+    transition: transform 0s;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(20,15,10,0.75) 0%,
+      rgba(20,15,10,0.25) 45%,
+      rgba(20,15,10,0.1) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 72px;
+    max-width: 640px;
+  }
+  .hero-content .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 9vw, 108px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.15s, transform 1s ease 0.15s;
+  }
+  .hero-content .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s;
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    writing-mode: vertical-rl;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    opacity: 0;
+    transition: opacity 1s ease 0.7s;
+  }
+
+  .hero-loaded .hero-content .hero-eyebrow,
+  .hero-loaded .hero-content h1,
+  .hero-loaded .hero-content .hero-tagline,
+  .hero-loaded .hero-scroll-hint {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ACCENT LINE */
+  .accent-line {
+    width: 30%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .accent-line.visible { opacity: 1; transform: scaleX(1); }
+
+  /* STATS SECTION */
+  .stats-section {
+    background: var(--dark);
+    padding: 80px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+  }
+  .stat-item {
+    text-align: center;
+    flex: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-item .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+    display: block;
+  }
+  .stat-divider {
+    width: 1px;
+    height: 80px;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  /* GALLERY SECTION */
+  .gallery-section {
+    padding: 120px 0;
+    background: var(--warm-white);
+  }
+  .gallery-header {
+    padding: 0 72px;
+    margin-bottom: 64px;
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+  }
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: rgba(184, 137, 90, 0.12);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.02em;
+    overflow: hidden;
+  }
+  .section-title-inner {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section-title-inner.visible { opacity: 1; transform: translateY(0); }
+
+  /* Editorial Scroll Gallery */
+  .gallery-editorial {
+    padding: 0 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .gallery-row {
+    display: grid;
+    gap: 16px;
+  }
+  .gallery-row-1 { grid-template-columns: 1fr; }
+  .gallery-row-2 { grid-template-columns: 2fr 1fr; align-items: start; }
+  .gallery-row-3 { grid-template-columns: 1fr 2fr; align-items: start; }
+  .gallery-row-4 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .gallery-item.visible { opacity: 1; transform: translateY(0); }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    transform: scale(0.97);
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+  .gallery-item:hover img { transform: scale(1.02); }
+  .gallery-item.tall img { height: 520px; }
+  .gallery-item.medium img { height: 380px; }
+  .gallery-item.short img { height: 280px; }
+  .gallery-item.full img { height: 600px; }
+
+  /* TESTIMONIALS */
+  .testimonials-section {
+    padding: 120px 72px;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials-section::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 400px;
+    color: rgba(255,255,255,0.02);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .testimonials-header {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+  .testimonials-header .section-number { color: rgba(184,137,90,0.12); }
+  .testimonials-header .section-title { color: rgba(255,255,255,0.9); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .testimonial-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .testimonial-item.visible { opacity: 1; transform: translateY(0); }
+  .testimonial-item .stars {
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+  }
+  .testimonial-item blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .testimonial-item cite {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0 48px;
+  }
+  .marquee-track span::after {
+    content: '·';
+    margin-left: 48px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ABOUT SECTION */
+  .about-section {
+    padding: 120px 0;
+    background: var(--cream);
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 0;
+  }
+  .about-image-col {
+    position: relative;
+    padding-right: 0;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .about-image-col.visible { opacity: 1; transform: translateX(0); }
+  .about-image-col img {
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-text-col {
+    padding: 80px 72px 80px 72px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+  }
+  .about-text-col.visible { opacity: 1; transform: translateX(0); }
+  .about-text-col .section-number { font-size: 64px; color: rgba(184,137,90,0.12); display: block; margin-bottom: -12px; }
+  .about-text-col h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--dark);
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+  .about-text-col .pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.5;
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    margin-bottom: 32px;
+  }
+  .about-text-col p {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--light-text);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .about-text-col .features-list {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .about-text-col .features-list li {
+    list-style: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--warm-mid);
+    padding-left: 20px;
+    position: relative;
+  }
+  .about-text-col .features-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* PUBLICATIONS */
+  .pub-section {
+    padding: 48px 72px;
+    background: var(--warm-white);
+    border-top: 1px solid rgba(184,137,90,0.15);
+    border-bottom: 1px solid rgba(184,137,90,0.15);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .pub-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    flex-shrink: 0;
+  }
+  .pub-items {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .pub-items span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--warm-mid);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 140px 72px;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cta-section::before {
+    content: 'BOOK';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 280px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.02);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+  .cta-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .cta-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+  .cta-heading.visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: background 0.3s ease, color 0.3s ease, opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+  }
+  .cta-btn.visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--accent); color: #fff; }
+
+  /* CONTACT SECTION */
+  .contact-section {
+    padding: 120px 72px;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+  .contact-left p {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--light-text);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .contact-email {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    margin-bottom: 32px;
+    transition: opacity 0.2s;
+  }
+  .contact-email:hover { opacity: 0.7; }
+  .social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .social-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .social-links a:hover { color: var(--accent); }
+  .contact-right {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-right.visible { opacity: 1; transform: translateY(0); }
+  .contact-right img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 36px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  footer .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+  }
+  footer .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+    .hero-content { left: 28px; bottom: 64px; }
+    .stats-section { padding: 60px 28px; flex-wrap: wrap; gap: 32px; }
+    .stat-divider { display: none; }
+    .gallery-section, .testimonials-section, .about-section, .cta-section { padding-left: 0; padding-right: 0; }
+    .gallery-header { padding: 0 28px; }
+    .gallery-editorial { padding: 0 28px; }
+    .gallery-row-2, .gallery-row-3, .gallery-row-4 { grid-template-columns: 1fr; }
+    .testimonials-section { padding: 80px 28px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-text-col { padding: 48px 28px; }
+    .pub-section { padding: 40px 28px; flex-direction: column; gap: 20px; }
+    .cta-section { padding: 100px 28px; }
+    .contact-section { grid-template-columns: 1fr; padding: 80px 28px; gap: 40px; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .hero-content h1 { font-size: 52px; }
+    .section-number { font-size: 56px; }
+    .section-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Grace Jicha</a>
+  <ul>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Florida Wedding &amp; Elopement Photography</p>
+    <h1>Grace<br>Jicha</h1>
+    <p class="hero-tagline">Candid. Unposed. Genuinely yours.</p>
+  </div>
+  <p class="hero-scroll-hint">Scroll to explore</p>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stat-item">
+    <span class="stat-number">7+</span>
+    <span class="stat-label">Years Shooting</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item" style="transition-delay: 0.1s;">
+    <span class="stat-number">150+</span>
+    <span class="stat-label">Weddings &amp; Elopements</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item" style="transition-delay: 0.2s;">
+    <span class="stat-number">5</span>
+    <span class="stat-label">States + Destinations</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item" style="transition-delay: 0.3s;">
+    <span class="stat-number">100%</span>
+    <span class="stat-label">5-Star Reviews</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title"><span class="section-title-inner">The Work</span></h2>
+  </div>
+
+  <div class="gallery-editorial">
+    <!-- Row 1: Full width -->
+    <div class="gallery-row gallery-row-1">
+      <div class="gallery-item full">
+        <img src="https://static.wixstatic.com/media/a287c3_716f2a40e9404ec2aec0a0657a86badb~mv2.jpg" alt="Wedding ceremony moment" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 2: Large left, small right -->
+    <div class="gallery-row gallery-row-2">
+      <div class="gallery-item tall" style="transition-delay: 0.05s;">
+        <img src="https://static.wixstatic.com/media/a287c3_449bfe8da1e746d5a66ea2ba13adcad5~mv2.jpg" alt="Romantic wedding portrait" loading="lazy">
+      </div>
+      <div class="gallery-item short" style="transition-delay: 0.1s;">
+        <img src="https://static.wixstatic.com/media/a287c3_bc467bf986b2461da3fa14c443f1a41a~mv2.jpg" alt="Candid wedding detail" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 3: Small left, large right -->
+    <div class="gallery-row gallery-row-3">
+      <div class="gallery-item medium" style="transition-delay: 0.05s;">
+        <img src="https://static.wixstatic.com/media/a287c3_2424647a4d7c4e538021c5bfe6a24949~mv2.jpg" alt="Elopement couple" loading="lazy">
+      </div>
+      <div class="gallery-item tall" style="transition-delay: 0.1s;">
+        <img src="https://static.wixstatic.com/media/a287c3_bbfdd732f0ef484186df93da17927621~mv2.jpg" alt="Wedding storytelling moment" loading="lazy">
+      </div>
+    </div>
+    <!-- Row 4: Three equal -->
+    <div class="gallery-row gallery-row-4">
+      <div class="gallery-item medium" style="transition-delay: 0.05s;">
+        <img src="https://static.wixstatic.com/media/a287c3_44122b74df3a4a2a838a4da40bfbe386~mv2.jpg" alt="Wedding reception" loading="lazy">
+      </div>
+      <div class="gallery-item medium" style="transition-delay: 0.1s;">
+        <img src="https://static.wixstatic.com/media/a287c3_5e7d7a5d8e7f48bca757410a1c32cd35~mv2.jpg" alt="Couple portrait" loading="lazy">
+      </div>
+      <div class="gallery-item medium" style="transition-delay: 0.15s;">
+        <img src="https://static.wixstatic.com/media/a287c3_449bfe8da1e746d5a66ea2ba13adcad5~mv2.jpg" alt="Wedding moments" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCENT LINE -->
+<div class="accent-line" style="margin: 0 auto; display: block;"></div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title"><span class="section-title-inner" style="color: rgba(255,255,255,0.9);">What Couples Say</span></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-item">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Grace has the most incredible eye for capturing the real moments — not the posed ones. We looked at our photos and cried because she got everything we felt that day."</blockquote>
+      <cite>— Samantha &amp; Michael, Tampa Wedding</cite>
+    </div>
+    <div class="testimonial-item" style="transition-delay: 0.1s;">
+      <div class="stars">★★★★★</div>
+      <blockquote>"We eloped in the Florida keys with Grace and she made the whole thing feel like a celebration. Our gallery is exactly who we are — raw, joyful, and completely ours."</blockquote>
+      <cite>— Jess &amp; Tyler, Florida Keys Elopement</cite>
+    </div>
+    <div class="testimonial-item" style="transition-delay: 0.2s;">
+      <div class="stars">★★★★★</div>
+      <blockquote>"I was nervous about being photographed but Grace put us completely at ease. She's not just a photographer — she's a vibe. We felt like ourselves the whole day."</blockquote>
+      <cite>— Amber &amp; Chris, Central Florida</cite>
+    </div>
+    <div class="testimonial-item" style="transition-delay: 0.3s;">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Featured on Marry Me Tampa Bay was a dream, and Grace made sure we looked every bit as amazing as we felt. Worth every single penny."</blockquote>
+      <cite>— Danielle &amp; Ryan, Tampa Bay Wedding</cite>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Available for Bookings 2025 &amp; 2026</span>
+    <span>Lakeland &amp; Central Florida</span>
+    <span>Destination Weddings Welcome</span>
+    <span>Photojournalistic Style</span>
+    <span>Featured: Marry Me Tampa Bay</span>
+    <span>Available for Bookings 2025 &amp; 2026</span>
+    <span>Lakeland &amp; Central Florida</span>
+    <span>Destination Weddings Welcome</span>
+    <span>Photojournalistic Style</span>
+    <span>Featured: Marry Me Tampa Bay</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-image-col">
+      <img src="https://static.wixstatic.com/media/a287c3_bc467bf986b2461da3fa14c443f1a41a~mv2.jpg" alt="Grace Jicha, photographer" loading="lazy">
+    </div>
+    <div class="about-text-col">
+      <span class="section-number">03</span>
+      <h2>The Photographer Behind the Lens</h2>
+      <p class="pull-quote">"People look their best when they are genuinely enjoying each moment of their day."</p>
+      <p>Grace Jicha is a Central Florida–based wedding and elopement photographer specializing in candid, unposed imagery that captures love as it actually feels. Drawing on a background in journalism, her work prioritizes authentic storytelling over picture-perfect poses.</p>
+      <p>Since her first paid shoot in 2016, Grace has photographed weddings and elopements across Florida and beyond — from intimate beachside ceremonies to full-scale venue celebrations. Her images have been featured in <em>Marry Me Tampa Bay</em>, one of the region's leading wedding publications.</p>
+      <ul class="features-list">
+        <li>Wedding coverage starting at $2,700</li>
+        <li>Elopement + intimate ceremony packages</li>
+        <li>Timeline planning &amp; outfit styling assistance</li>
+        <li>Destination weddings welcome</li>
+        <li>1-on-1 photographer coaching available</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<div class="pub-section">
+  <span class="pub-label">As Featured In</span>
+  <div class="pub-items">
+    <span>Marry Me Tampa Bay</span>
+    <span>·</span>
+    <span>Central Florida Wedding Guide</span>
+    <span>·</span>
+    <span>OrlandoVoyager</span>
+  </div>
+</div>
+
+<!-- ACCENT LINE -->
+<div class="accent-line" style="display: block; margin: 0 auto;"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-eyebrow">Let's Tell Your Story</p>
+  <h2 class="cta-heading">Your wedding day deserves to be remembered exactly as it felt.</h2>
+  <a href="mailto:gracejichaphotos@gmail.com" class="cta-btn">Book Your Date</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-left">
+    <h2>Inquiries &amp; Availability</h2>
+    <p>Now booking 2025 and 2026 weddings &amp; elopements across Florida and beyond. Reach out to check your date — I'd love to hear about your plans.</p>
+    <a class="contact-email" href="mailto:gracejichaphotos@gmail.com">gracejichaphotos@gmail.com</a>
+    <div class="social-links">
+      <a href="https://instagram.com/gracejichaphoto" target="_blank">Instagram</a>
+      <a href="https://facebook.com/gracejichaa" target="_blank">Facebook</a>
+      <a href="https://pinterest.com/gracejichaa" target="_blank">Pinterest</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <img src="https://static.wixstatic.com/media/a287c3_2424647a4d7c4e538021c5bfe6a24949~mv2.jpg" alt="Grace Jicha wedding photography" loading="lazy">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Grace Jicha Photography</span>
+  <span class="footer-copy">© 2026 · Lakeland, Florida</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+  }, { passive: true });
+
+  // Hero load animation
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelector('.hero').classList.add('hero-loaded');
+    }, 100);
+  });
+  // Fallback if load already fired
+  if (document.readyState === 'complete') {
+    setTimeout(() => document.querySelector('.hero').classList.add('hero-loaded'), 100);
+  }
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe all animated elements
+  document.querySelectorAll(
+    '.stat-item, .gallery-item, .testimonial-item, .about-image-col, .about-text-col, ' +
+    '.cta-eyebrow, .cta-heading, .cta-btn, .contact-right, .section-title-inner, .accent-line'
+  ).forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
