@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T.M. Burris — Original Florida Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F4EFE6;     /* warm linen — Florida morning light */
+      --bg-dark:   #1C2018;     /* forest dark — deep Ocala night */
+      --text:      #2A2A22;     /* near-black, warm */
+      --text-mid:  #5C5845;     /* muted bark */
+      --accent:    #6B8F71;     /* cypress green */
+      --accent2:   #B8792A;     /* Florida amber / sunrise ochre */
+      --light:     #E8E2D4;     /* pale sand */
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Work Sans', sans-serif; overflow-x: hidden; }
+
+    /* ── ANIMATED ELEMENTS START HIDDEN ─────────────────────────── */
+    .reveal       { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.vis   { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal-left.vis { opacity: 1; transform: translateX(0); }
+    .img-reveal   { opacity: 0; transform: scale(0.95); transition: opacity 0.9s ease, transform 0.9s ease; will-change: transform, opacity; }
+    .img-reveal.vis { opacity: 1; transform: scale(1); }
+
+    /* ── NAV ──────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px;
+      background: transparent;
+      mix-blend-mode: normal;
+    }
+    nav::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(244,239,230,0.85) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 600; letter-spacing: 0.12em;
+      color: var(--text); text-decoration: none; position: relative; z-index: 1;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 40px; position: relative; z-index: 1; }
+    .nav-links a {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text); text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO — ASYMMETRIC SPLIT ────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-col {
+      position: relative; overflow: hidden;
+    }
+    .hero-img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+      transition: transform 12s ease;
+    }
+    #hero:hover .hero-img { transform: scale(1.04); }
+    .hero-image-col::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 70%, var(--bg) 100%);
+      pointer-events: none;
+    }
+    .hero-text-col {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 60px 60px 50px; position: relative;
+    }
+    .hero-section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px; font-weight: 300; line-height: 1;
+      color: var(--accent); opacity: 0.08;
+      position: absolute; top: 80px; left: -20px;
+      pointer-events: none; user-select: none;
+    }
+    .hero-tagline {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+    .hero-tagline.vis { opacity: 1; transform: translateY(0); }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(60px, 7vw, 96px);
+      font-weight: 300; line-height: 1.0;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-bottom: 28px;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s;
+    }
+    .hero-name.vis { opacity: 1; transform: translateY(0); }
+    .hero-name em { font-style: italic; color: var(--accent2); }
+    .hero-desc {
+      font-size: 15px; font-weight: 300; line-height: 1.8;
+      color: var(--text-mid); max-width: 340px;
+      margin-bottom: 48px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+    }
+    .hero-desc.vis { opacity: 1; transform: translateY(0); }
+    .hero-cta {
+      display: inline-block;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text);
+      text-decoration: none; padding: 14px 0;
+      border-bottom: 1px solid var(--accent2);
+      transition: color 0.3s, border-color 0.3s;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease 0.65s, transform 0.7s ease 0.65s, color 0.3s, border-color 0.3s;
+    }
+    .hero-cta.vis { opacity: 1; transform: translateY(0); }
+    .hero-cta:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── MARQUEE STRIP ──────────────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--bg-dark); overflow: hidden;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .marquee-inner {
+      display: flex; gap: 0;
+      animation: marquee 35s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-inner span {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      padding: 0 48px;
+    }
+    .marquee-inner span strong { color: var(--accent); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ──────────────────────────────────────────────────── */
+    #stats {
+      padding: 100px 60px;
+      position: relative;
+    }
+    .stats-section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 180px; font-weight: 300;
+      color: var(--accent); opacity: 0.05;
+      position: absolute; left: -30px; top: 20px;
+      pointer-events: none; user-select: none; line-height: 1;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; max-width: 900px; margin: 0 auto;
+      text-align: center;
+    }
+    .stat-item {
+      padding: 40px 20px;
+      border-right: 1px solid var(--light);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px; font-weight: 300; line-height: 1;
+      color: var(--accent2);
+    }
+    .stat-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-mid);
+      margin-top: 10px;
+    }
+
+    /* ── GALLERY ────────────────────────────────────────────────── */
+    #gallery {
+      padding: 0 40px 100px;
+      position: relative;
+    }
+    .section-header {
+      display: flex; align-items: baseline; gap: 24px;
+      padding: 80px 20px 48px;
+      position: relative;
+    }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 96px; font-weight: 300; line-height: 1;
+      color: var(--accent); opacity: 0.12;
+      user-select: none; min-width: 80px; text-align: right;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px; font-weight: 300; letter-spacing: 0.06em;
+      color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--accent2); }
+    .masonry-grid {
+      columns: 3; column-gap: 8px;
+    }
+    .masonry-item {
+      break-inside: avoid; margin-bottom: 8px; position: relative;
+      overflow: hidden; cursor: pointer;
+    }
+    .masonry-item img {
+      width: 100%; display: block;
+      transition: transform 0.6s ease;
+    }
+    .masonry-item:hover img { transform: scale(1.03); }
+    .masonry-item .caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 40px 20px 16px;
+      background: linear-gradient(to top, rgba(28,32,24,0.75) 0%, transparent 100%);
+      opacity: 0; transition: opacity 0.4s ease;
+      font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.9);
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+    }
+    .masonry-item:hover .caption { opacity: 1; }
+
+    /* ── ABOUT ──────────────────────────────────────────────────── */
+    #about {
+      padding: 40px 60px 120px;
+      background: var(--light);
+    }
+    .about-layout {
+      display: grid; grid-template-columns: 45% 55%;
+      gap: 80px; align-items: center;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .about-image-wrap { position: relative; }
+    .about-image-wrap img {
+      width: 100%; display: block;
+      filter: saturate(0.85) contrast(1.05);
+    }
+    .about-accent-line {
+      position: absolute; top: -20px; left: -20px;
+      width: 60px; height: 3px; background: var(--accent2);
+    }
+    .about-text { padding: 0 20px; }
+    .about-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 300; font-style: italic;
+      line-height: 1.5; color: var(--accent2);
+      border-left: 2px solid var(--accent2);
+      padding-left: 24px; margin-bottom: 36px;
+    }
+    .about-bio {
+      font-size: 16px; font-weight: 300; line-height: 1.85;
+      color: var(--text-mid); margin-bottom: 28px;
+    }
+    .about-detail {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent);
+    }
+
+    /* ── COMMISSIONS ────────────────────────────────────────────── */
+    #commissions {
+      padding: 100px 60px;
+      position: relative;
+    }
+    .commission-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .commission-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 300;
+      margin-bottom: 20px; color: var(--text);
+    }
+    .commission-info p {
+      font-size: 15px; font-weight: 300; line-height: 1.85;
+      color: var(--text-mid); margin-bottom: 24px;
+    }
+    .commission-list {
+      list-style: none; padding: 0;
+    }
+    .commission-list li {
+      font-size: 13px; font-weight: 400; color: var(--text-mid);
+      padding: 10px 0; border-bottom: 1px solid var(--light);
+      display: flex; justify-content: space-between;
+    }
+    .commission-list li span { color: var(--accent2); font-weight: 500; }
+    .commission-img { overflow: hidden; }
+    .commission-img img { width: 100%; display: block; }
+
+    /* ── CTA BAND ────────────────────────────────────────────────── */
+    #cta-band {
+      background: var(--bg-dark);
+      padding: 120px 60px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #cta-band::before {
+      content: 'FLORIDA';
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 280px; font-weight: 300;
+      color: rgba(255,255,255,0.025);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none; white-space: nowrap; letter-spacing: 0.1em;
+    }
+    #cta-band h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 6vw, 80px); font-weight: 300;
+      color: #fff; letter-spacing: 0.05em; line-height: 1.1;
+      margin-bottom: 20px; position: relative;
+    }
+    #cta-band p {
+      font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.55);
+      max-width: 480px; margin: 0 auto 48px; line-height: 1.75;
+      position: relative;
+    }
+    .btn-primary {
+      display: inline-block;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--bg-dark);
+      background: var(--accent2);
+      padding: 18px 48px; text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+    .btn-primary:hover { background: var(--accent); color: #fff; }
+    .btn-secondary {
+      display: inline-block;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
+      text-decoration: none; margin-left: 32px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      transition: color 0.3s, border-color 0.3s; position: relative;
+    }
+    .btn-secondary:hover { color: #fff; border-color: #fff; }
+
+    /* ── CONTACT ────────────────────────────────────────────────── */
+    #contact {
+      padding: 100px 60px;
+      background: var(--bg);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .contact-left {}
+    .contact-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px; font-weight: 300; color: var(--text);
+      margin-bottom: 20px;
+    }
+    .contact-left p {
+      font-size: 15px; font-weight: 300; line-height: 1.8;
+      color: var(--text-mid); max-width: 400px; margin-bottom: 36px;
+    }
+    .contact-link {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; color: var(--accent2); text-decoration: none;
+      margin-bottom: 8px; transition: color 0.3s;
+    }
+    .contact-link:hover { color: var(--accent); }
+    .contact-right {}
+    .contact-right .section-num { font-size: 120px; opacity: 0.07; }
+    .social-links { display: flex; gap: 32px; margin-top: 40px; }
+    .social-links a {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-mid);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .social-links a:hover { color: var(--accent); }
+
+    /* ── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--bg-dark);
+      padding: 32px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p {
+      font-size: 12px; font-weight: 400; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+    }
+    footer a {
+      font-size: 12px; color: rgba(255,255,255,0.2); text-decoration: none;
+      letter-spacing: 0.12em; transition: color 0.3s;
+    }
+    footer a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ── VERTICAL ACCENT ──────────────────────────────────────────  */
+    .vert-text {
+      position: fixed; left: 20px; top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--accent);
+      opacity: 0.4; pointer-events: none; z-index: 50;
+      white-space: nowrap;
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; grid-template-rows: 60vh auto; }
+      .hero-image-col { height: 60vh; }
+      .hero-image-col::after { background: none; }
+      .hero-text-col { padding: 48px 28px; }
+      .hero-section-num { display: none; }
+      nav { padding: 20px 28px; }
+      .nav-links { gap: 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .masonry-grid { columns: 2; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      .commission-layout { grid-template-columns: 1fr; }
+      #contact { grid-template-columns: 1fr; }
+      #cta-band { padding: 80px 28px; }
+      #stats, #gallery, #commissions, #about, #contact { padding-left: 28px; padding-right: 28px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .vert-text { display: none; }
+    }
+    @media (max-width: 480px) {
+      .masonry-grid { columns: 1; }
+      .hero-name { font-size: 48px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="vert-text">Original Florida Art · 2026</div>
+
+  <!-- ── NAV ──────────────────────────────────────────────────── -->
+  <nav>
+    <a href="#hero" class="nav-logo">T.M. Burris</a>
+    <div class="nav-links">
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+      <a href="#commissions">Commissions</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-image-col">
+      <img
+        class="hero-img"
+        src="https://images.unsplash.com/photo-1518611540400-6b85a0704342?w=1400&q=85&fit=crop"
+        alt="Florida cypress swamp at golden hour — T.M. Burris painting reference"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-text-col">
+      <div class="hero-section-num">01</div>
+      <div class="hero-tagline reveal" id="ht1">Silver Springs, Florida</div>
+      <h1 class="hero-name" id="ht2">T.M.<br/><em>Burris</em></h1>
+      <p class="hero-desc" id="ht3">
+        Original subtropical Florida landscapes painted on canvas.
+        Each piece captures the light, water, and wild heart of Old Florida —
+        one brushstroke at a time.
+      </p>
+      <a href="#gallery" class="hero-cta" id="ht4">View the Collection</a>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ───────────────────────────────────────────────── -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <span>Original Acrylic Paintings</span>
+      <span>·</span>
+      <span>Silver Springs, Florida</span>
+      <span>·</span>
+      <span><strong>Etsy Shop</strong></span>
+      <span>·</span>
+      <span>Custom Commissions Available</span>
+      <span>·</span>
+      <span>9×12 &amp; 8×10 Canvas Boards</span>
+      <span>·</span>
+      <span>Subtropical Landscapes</span>
+      <span>·</span>
+      <span>Ocala National Forest</span>
+      <span>·</span>
+      <!-- duplicate for seamless loop -->
+      <span>Original Acrylic Paintings</span>
+      <span>·</span>
+      <span>Silver Springs, Florida</span>
+      <span>·</span>
+      <span><strong>Etsy Shop</strong></span>
+      <span>·</span>
+      <span>Custom Commissions Available</span>
+      <span>·</span>
+      <span>9×12 &amp; 8×10 Canvas Boards</span>
+      <span>·</span>
+      <span>Subtropical Landscapes</span>
+      <span>·</span>
+      <span>Ocala National Forest</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- ── STATS ─────────────────────────────────────────────────── -->
+  <section id="stats">
+    <div class="stats-section-num">02</div>
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Originals Sold</div>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:0.1s">
+        <div class="stat-num">$7</div>
+        <div class="stat-label">Patreon Support / mo</div>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:0.2s">
+        <div class="stat-num">9×12</div>
+        <div class="stat-label">Signature Canvas Size</div>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:0.3s">
+        <div class="stat-num">BFA</div>
+        <div class="stat-label">Graphic Design</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ───────────────────────────────────────────────── -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title reveal">The <em>Collection</em></h2>
+    </div>
+    <div class="masonry-grid">
+
+      <div class="masonry-item img-reveal">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&fit=crop"
+             alt="Moss-draped cypress at Silver River" loading="lazy" />
+        <div class="caption">Silver River, Early Morning</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1518611540400-6b85a0704342?w=800&q=80&fit=crop"
+             alt="Florida wetlands at sunset, warm golden light" loading="lazy" />
+        <div class="caption">Wetlands at Golden Hour</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.2s">
+        <img src="https://images.unsplash.com/photo-1567473432-80c55f3e1b41?w=800&q=80&fit=crop"
+             alt="Subtropical Florida palms and blue sky" loading="lazy" />
+        <div class="caption">Ocala Skyline, Midday</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.05s">
+        <img src="https://images.unsplash.com/photo-1624728405595-8d3c25617975?w=800&q=80&fit=crop"
+             alt="Calm Florida river reflection, green canopy" loading="lazy" />
+        <div class="caption">Spring Run Reflection</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.15s">
+        <img src="https://images.unsplash.com/photo-1485470733090-0aae1788d5af?w=800&q=80&fit=crop"
+             alt="Cypress trees and morning mist on water" loading="lazy" />
+        <div class="caption">Mist on the Ocklawaha</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.25s">
+        <img src="https://images.unsplash.com/photo-1513569771920-c9e1d31714af?w=800&q=80&fit=crop"
+             alt="Tropical palms and Florida blue sky painting" loading="lazy" />
+        <div class="caption">Tropical Canopy, May</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop"
+             alt="River bank with Spanish moss and sunlight" loading="lazy" />
+        <div class="caption">Spanish Moss at Sunrise</div>
+      </div>
+
+      <div class="masonry-item img-reveal" style="transition-delay:0.2s">
+        <img src="https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=800&q=80&fit=crop"
+             alt="Florida nature, wild grasses and warm light" loading="lazy" />
+        <div class="caption">Wild Prairie, Late Summer</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title reveal">About <em>the Artist</em></h2>
+    </div>
+    <div class="about-layout">
+      <div class="about-image-wrap img-reveal">
+        <div class="about-accent-line"></div>
+        <img
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80&fit=crop&crop=center"
+          alt="T.M. Burris in the field, Silver Springs"
+          loading="lazy"
+        />
+      </div>
+      <div class="about-text">
+        <blockquote class="about-pull-quote reveal-left">
+          "Born and raised in Central Florida — the light here is something you can't invent."
+        </blockquote>
+        <p class="about-bio reveal">
+          T.M. Burris — "Mrs. B" — lives in a small cabin on the edge of the Ocala National Forest
+          in Silver Springs, Florida. Her subtropical landscapes are painted from life and from
+          her own DSLR photography, taken on flat boat trips, hikes, and road trips through
+          the state she has called home her entire life.
+        </p>
+        <p class="about-bio reveal" style="transition-delay:0.15s">
+          A career-pivot artist who returned to school in her fifties to earn a BFA in Graphic Design,
+          Burris brings a designer's eye for composition to every canvas board. Her work is
+          available in 9×12 and 8×10 formats — portable, intimate, made to live on real walls.
+        </p>
+        <div class="about-detail reveal" style="transition-delay:0.25s">
+          Silver Springs, FL · Ocala National Forest · BFA Graphic Design
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMMISSIONS ───────────────────────────────────────────── -->
+  <section id="commissions">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title reveal">Custom <em>Commissions</em></h2>
+    </div>
+    <div class="commission-layout">
+      <div class="commission-info">
+        <h3 class="reveal">Bring your Florida memory to canvas.</h3>
+        <p class="reveal" style="transition-delay:0.1s">
+          Have a spot you love — a river bend, a backyard live oak, a stretch of road
+          you drive every morning? Commissions are open. Send a photo and let's talk
+          about turning your Florida moment into a painting that lasts.
+        </p>
+        <ul class="commission-list reveal" style="transition-delay:0.2s">
+          <li>8×10 Original Acrylic on Canvas Board <span>From $40</span></li>
+          <li>9×12 Original Acrylic on Canvas Board <span>From $55</span></li>
+          <li>Custom Reference Photo Commission <span>Inquire</span></li>
+          <li>Patreon: Florida Photography Downloads <span>$7/mo</span></li>
+        </ul>
+        <div style="margin-top: 36px;" class="reveal" style="transition-delay:0.3s">
+          <a href="mailto:tmburris@originalfloridaart.com" class="hero-cta">Commission a Piece →</a>
+        </div>
+      </div>
+      <div class="commission-img img-reveal">
+        <img
+          src="https://images.unsplash.com/photo-1624728405595-8d3c25617975?w=800&q=80&fit=crop"
+          alt="Florida waterway commission reference"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BAND ──────────────────────────────────────────────── -->
+  <section id="cta-band">
+    <h2 class="reveal">Own an Original.</h2>
+    <p class="reveal" style="transition-delay:0.15s">
+      Every painting is one-of-a-kind. When it sells, it's gone.
+      Browse available work in the Etsy shop or commission something made just for you.
+    </p>
+    <div class="reveal" style="transition-delay:0.3s">
+      <a href="https://www.etsy.com/shop/OriginalFloridaArt" class="btn-primary" target="_blank">
+        Shop Original Paintings
+      </a>
+      <a href="#contact" class="btn-secondary">Commission a Piece</a>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="contact-left">
+      <div class="section-header" style="padding-top:0; padding-left:0;">
+        <span class="section-num" style="font-size:72px; opacity:0.1;">06</span>
+        <h2 class="section-title reveal" style="font-size:42px;">Get In <em>Touch</em></h2>
+      </div>
+      <p class="reveal" style="transition-delay:0.1s">
+        Commission inquiries, Patreon questions, or just want to talk about Florida —
+        reach out below.
+      </p>
+      <a href="mailto:tmburris@originalfloridaart.com" class="contact-link reveal" style="transition-delay:0.2s">
+        tmburris@originalfloridaart.com
+      </a>
+      <a href="https://www.etsy.com/shop/OriginalFloridaArt" class="contact-link reveal" style="transition-delay:0.25s" target="_blank">
+        Etsy: OriginalFloridaArt
+      </a>
+      <a href="https://www.patreon.com/OldFloridaArtist" class="contact-link reveal" style="transition-delay:0.3s" target="_blank">
+        Patreon: OldFloridaArtist
+      </a>
+      <div class="social-links reveal" style="transition-delay:0.4s">
+        <a href="https://www.etsy.com/shop/OriginalFloridaArt" target="_blank">Etsy</a>
+        <a href="https://www.patreon.com/OldFloridaArtist" target="_blank">Patreon</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <img
+        src="https://images.unsplash.com/photo-1485470733090-0aae1788d5af?w=700&q=80&fit=crop"
+        alt="Silver Springs Florida cypress morning"
+        loading="lazy"
+        class="img-reveal"
+        style="width:100%; display:block;"
+      />
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
+  <footer>
+    <p>© 2026 T.M. Burris — Original Florida Art. Silver Springs, FL.</p>
+    <a href="https://lucasblatt.com" target="_blank">Design by Lucas Blatt</a>
+  </footer>
+
+  <!-- ── ANIMATIONS ────────────────────────────────────────────── -->
+  <script>
+    // Hero entrance — fire on load
+    window.addEventListener('load', () => {
+      ['ht1','ht2','ht3','ht4'].forEach((id, i) => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('vis');
+        }, 200 + i * 150);
+      });
+    });
+
+    // IntersectionObserver for scroll reveals
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('vis');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .img-reveal').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
