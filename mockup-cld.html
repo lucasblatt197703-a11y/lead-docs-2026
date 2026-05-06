@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLD Photography — Central Florida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --warm-cream: #FAF6F1;
+  --deep-brown: #2C1E14;
+  --amber: #C47B3A;
+  --warm-sand: #E8DDD0;
+  --light-text: #7A6A5A;
+  --white: #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--warm-cream); color: var(--deep-brown); overflow-x: hidden; }
+
+/* ============ NAV ============ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px;
+  background: transparent;
+  transition: background 0.4s ease, padding 0.4s ease;
+}
+nav.scrolled { background: rgba(250,246,241,0.96); backdrop-filter: blur(8px); padding: 16px 48px; border-bottom: 1px solid rgba(196,123,58,0.15); }
+.nav-logo { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); text-decoration: none; transition: color 0.3s; }
+nav.scrolled .nav-logo { color: var(--deep-brown); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.9); text-decoration: none; transition: color 0.3s; }
+nav.scrolled .nav-links a { color: var(--light-text); }
+.nav-links a:hover { color: var(--amber); }
+.nav-cta { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); border: 1px solid rgba(255,255,255,0.6); padding: 10px 22px; text-decoration: none; transition: all 0.3s; }
+nav.scrolled .nav-cta { color: var(--deep-brown); border-color: var(--amber); }
+.nav-cta:hover { background: var(--amber); border-color: var(--amber); color: var(--white) !important; }
+
+/* ============ HERO ============ */
+#hero {
+  position: relative; height: 100vh; width: 100%;
+  overflow: hidden; display: flex; align-items: flex-end;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://static.wixstatic.com/media/7a3ca5_754000620b8a42598ef075d0cd9a4144~mv2.jpg/v1/fill/w_1920,h_1080,al_c,q_85/photo.jpg');
+  background-size: cover; background-position: center top;
+  transform: scale(1.05);
+  transition: transform 0.1s linear;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(44,30,20,0.78) 0%, rgba(44,30,20,0.2) 50%, transparent 100%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 60px 70px;
+  max-width: 800px;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+.hero-content.is-visible { opacity: 1; transform: translateY(0); }
+.hero-eyebrow { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; }
+.hero-name {
+  font-family: 'Outfit', sans-serif; font-weight: 700;
+  font-size: clamp(56px, 8vw, 96px);
+  line-height: 1.0; letter-spacing: -0.01em;
+  color: var(--white);
+  letter-spacing: 0.08em;
+}
+.hero-subtitle { font-family: 'DM Sans', sans-serif; font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.8); margin-top: 16px; letter-spacing: 0.02em; }
+.hero-divider { width: 48px; height: 2px; background: var(--amber); margin: 28px 0; }
+.hero-scroll-hint { font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+/* ============ ACCENT LINE ============ */
+.accent-line { display: block; width: 30%; height: 1px; background: var(--amber); margin: 0 auto; opacity: 0.6; }
+
+/* ============ STATS ============ */
+#stats {
+  background: var(--deep-brown); padding: 80px 60px;
+  display: flex; justify-content: center; gap: 80px; flex-wrap: wrap;
+}
+.stat-item { text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.stat-item.is-visible { opacity: 1; transform: translateY(0); }
+.stat-num { font-family: 'Outfit', sans-serif; font-size: 80px; font-weight: 700; line-height: 1; color: var(--white); }
+.stat-num span { font-size: 40px; color: var(--amber); vertical-align: super; }
+.stat-label { font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+/* ============ MARQUEE ============ */
+.marquee-strip {
+  background: var(--amber); overflow: hidden; padding: 14px 0;
+  white-space: nowrap;
+}
+.marquee-inner { display: inline-block; animation: marquee 35s linear infinite; }
+.marquee-inner span { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white); padding: 0 40px; }
+@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+/* ============ SERVICES ============ */
+#services { padding: 120px 60px; }
+.section-header { margin-bottom: 70px; }
+.section-num { font-family: 'Outfit', sans-serif; font-size: 80px; font-weight: 700; color: rgba(44,30,20,0.05); line-height: 1; margin-bottom: -30px; }
+.section-title { font-family: 'Outfit', sans-serif; font-size: 36px; font-weight: 600; letter-spacing: -0.01em; color: var(--deep-brown); opacity: 0; transform: translateX(-20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.section-title.is-visible { opacity: 1; transform: translateX(0); }
+.section-sub { font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--light-text); margin-top: 10px; font-weight: 300; }
+
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.service-card { position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: pointer; }
+.service-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; loading: lazy; }
+.service-card:hover img { transform: scale(1.04); }
+.service-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(44,30,20,0.85) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; }
+.service-name { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 600; color: var(--white); letter-spacing: 0.02em; }
+.service-desc { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 6px; font-weight: 300; }
+.service-card.wide { grid-column: span 2; }
+
+/* ============ GALLERY ============ */
+#gallery { padding: 0 0 120px; background: var(--warm-cream); }
+.gallery-header { padding: 80px 60px 60px; }
+.gallery-editorial { display: flex; flex-direction: column; gap: 4px; }
+.gallery-row { display: flex; gap: 4px; }
+.gallery-row.row-a { height: 500px; }
+.gallery-row.row-b { height: 360px; }
+.gallery-item { overflow: hidden; position: relative; opacity: 0; transition: opacity 0.9s ease, transform 0.9s ease; }
+.gallery-item.is-visible { opacity: 1; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.gallery-item:hover img { transform: scale(1.03); }
+.gallery-item.large { flex: 2.2; }
+.gallery-item.small { flex: 1; }
+.gallery-item.medium { flex: 1.4; }
+
+/* ============ TESTIMONIALS ============ */
+#testimonials {
+  background: var(--deep-brown); padding: 100px 60px;
+  text-align: center;
+}
+.testimonial-quote { font-family: 'DM Sans', sans-serif; font-size: 22px; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 760px; margin: 0 auto; font-weight: 300; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.testimonial-quote.is-visible { opacity: 1; transform: translateY(0); }
+.testimonial-author { font-family: 'Outfit', sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-top: 28px; }
+.testimonial-stars { color: var(--amber); font-size: 18px; margin-bottom: 32px; letter-spacing: 4px; }
+
+/* ============ ABOUT ============ */
+#about { padding: 120px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-image-wrap { position: relative; }
+.about-image-wrap img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; display: block; }
+.about-badge {
+  position: absolute; bottom: -24px; right: -24px;
+  background: var(--amber); color: var(--white);
+  font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 20px 28px; text-align: center; line-height: 1.6;
+}
+.about-text { opacity: 0; transform: translateX(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.about-text.is-visible { opacity: 1; transform: translateX(0); }
+.about-eyebrow { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+.about-heading { font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 600; line-height: 1.15; color: var(--deep-brown); margin-bottom: 28px; }
+.about-body { font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.75; color: var(--light-text); font-weight: 300; }
+.about-body p + p { margin-top: 18px; }
+.about-meta { margin-top: 40px; display: flex; gap: 40px; flex-wrap: wrap; }
+.about-meta-item { }
+.about-meta-label { font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+.about-meta-val { font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--deep-brown); }
+
+/* ============ CTA ============ */
+#cta {
+  background: var(--amber); padding: 100px 60px;
+  text-align: center;
+}
+.cta-heading { font-family: 'Outfit', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 700; color: var(--white); letter-spacing: -0.01em; line-height: 1.1; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+.cta-sub { font-family: 'DM Sans', sans-serif; font-size: 18px; color: rgba(255,255,255,0.8); margin-top: 16px; font-weight: 300; }
+.cta-btn {
+  display: inline-block; margin-top: 48px;
+  font-family: 'Outfit', sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--white); color: var(--amber); padding: 18px 48px; text-decoration: none;
+  transition: all 0.3s; font-weight: 600;
+}
+.cta-btn:hover { background: var(--deep-brown); color: var(--white); }
+.cta-note { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 18px; }
+
+/* ============ CONTACT ============ */
+#contact { padding: 120px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.contact-left .section-num { font-size: 80px; }
+.contact-info { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+.contact-item-label { font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+.contact-item-val { font-family: 'DM Sans', sans-serif; font-size: 17px; color: var(--deep-brown); text-decoration: none; }
+.contact-item-val:hover { color: var(--amber); }
+.contact-area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 40px; }
+.contact-area { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--light-text); padding: 10px 14px; border: 1px solid var(--warm-sand); background: var(--warm-cream); }
+.contact-right { opacity: 0; transform: translateX(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.contact-right.is-visible { opacity: 1; transform: translateX(0); }
+.contact-right img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--deep-brown); padding: 40px 60px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+}
+.footer-name { font-family: 'Outfit', sans-serif; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.footer-copy { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.4); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--amber); }
+.footer-credit { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.25); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 24px 50px; }
+  #stats { padding: 60px 24px; gap: 40px; }
+  .stat-num { font-size: 56px; }
+  #services { padding: 80px 24px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card.wide { grid-column: span 1; }
+  #gallery { padding: 0 0 80px; }
+  .gallery-header { padding: 60px 24px 40px; }
+  .gallery-row.row-a, .gallery-row.row-b { height: 240px; flex-direction: column; height: auto; }
+  .gallery-row { flex-direction: column; }
+  #about { padding: 80px 24px; grid-template-columns: 1fr; gap: 40px; }
+  .about-badge { bottom: -16px; right: 16px; }
+  #cta { padding: 80px 24px; }
+  #contact { padding: 80px 24px; grid-template-columns: 1fr; }
+  footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 44px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .contact-area-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">CLD Photography</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Book a Session</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content" id="heroContent">
+    <div class="hero-eyebrow">Central Florida Photographer</div>
+    <div class="hero-name">CLD<br>Photography</div>
+    <div class="hero-divider"></div>
+    <div class="hero-subtitle">Family · Lifestyle · Business · Events · Maitland, FL</div>
+    <div style="margin-top: 40px;">
+      <div class="hero-scroll-hint">Scroll to explore</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-num">10<span>+</span></div>
+    <div class="stat-label">Years of Experience</div>
+  </div>
+  <div class="stat-item" style="transition-delay: 0.15s;">
+    <div class="stat-num">500<span>+</span></div>
+    <div class="stat-label">Sessions Captured</div>
+  </div>
+  <div class="stat-item" style="transition-delay: 0.30s;">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Service Categories</div>
+  </div>
+  <div class="stat-item" style="transition-delay: 0.45s;">
+    <div class="stat-num">92<span>%</span></div>
+    <div class="stat-label">Client Satisfaction</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Family Portraits</span><span>·</span>
+    <span>Lifestyle Photography</span><span>·</span>
+    <span>Business &amp; Headshots</span><span>·</span>
+    <span>Weddings &amp; Engagements</span><span>·</span>
+    <span>Boudoir Photography</span><span>·</span>
+    <span>Holiday Mini Sessions</span><span>·</span>
+    <span>Maitland · Lake Mary · Orlando · Longwood · Mount Dora · Clermont</span><span>·</span>
+    <span>Family Portraits</span><span>·</span>
+    <span>Lifestyle Photography</span><span>·</span>
+    <span>Business &amp; Headshots</span><span>·</span>
+    <span>Weddings &amp; Engagements</span><span>·</span>
+    <span>Boudoir Photography</span><span>·</span>
+    <span>Holiday Mini Sessions</span><span>·</span>
+    <span>Maitland · Lake Mary · Orlando · Longwood · Mount Dora · Clermont</span><span>·</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">What I Shoot</h2>
+    <p class="section-sub">Every session tailored to you — from golden-hour families to professional headshots.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card wide">
+      <img src="https://static.wixstatic.com/media/7a3ca5_38f17c32780d4fc3b948ccf2e443f1d8~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/photo.jpg" alt="Family & Lifestyle" loading="lazy">
+      <div class="service-overlay">
+        <div class="service-name">Family &amp; Lifestyle</div>
+        <div class="service-desc">Authentic moments, Florida light, and real connections.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/7a3ca5_518bf563a74f4ef594c2f910b4c8c63a~mv2.jpg/v1/fill/w_800,h_1200,al_c,q_85/photo.jpg" alt="Business & Headshots" loading="lazy">
+      <div class="service-overlay">
+        <div class="service-name">Business &amp; Headshots</div>
+        <div class="service-desc">Professional imagery for your brand and team.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/7a3ca5_944fd1837b874233b766ba5b8c2c8047~mv2.jpg/v1/fill/w_800,h_1200,al_c,q_85/photo.jpg" alt="Weddings & Engagements" loading="lazy">
+      <div class="service-overlay">
+        <div class="service-name">Weddings &amp; Engagements</div>
+        <div class="service-desc">Timeless documentation of your most important day.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/7a3ca5_8a12d2c330044cba8b7d182c27398cb7~mv2.jpg/v1/fill/w_800,h_1200,al_c,q_85/photo.jpg" alt="Events" loading="lazy">
+      <div class="service-overlay">
+        <div class="service-name">Events &amp; Milestones</div>
+        <div class="service-desc">Graduations, holidays, birthdays, and more.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/7a3ca5_8b34f19b0d034564a6ddb0b88702ba85~mv2.jpg/v1/fill/w_800,h_1200,al_c,q_85/photo.jpg" alt="Maternity & Newborn" loading="lazy">
+      <div class="service-overlay">
+        <div class="service-name">Maternity &amp; Newborn</div>
+        <div class="service-desc">Those fleeting early days, preserved forever.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<span class="accent-line"></span>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">Recent Work</h2>
+  </div>
+  <div class="gallery-editorial">
+    <div class="gallery-row row-a">
+      <div class="gallery-item large">
+        <img src="https://static.wixstatic.com/media/7a3ca5_095d26adc20d46f7916ed07408d2f3e3~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/photo.jpg" alt="Family session" loading="lazy">
+      </div>
+      <div class="gallery-item small">
+        <img src="https://static.wixstatic.com/media/7a3ca5_91121d934d5641ddb737bc7dc1183e29~mv2.jpg/v1/fill/w_800,h_900,al_c,q_85/photo.jpg" alt="Portrait" loading="lazy">
+      </div>
+      <div class="gallery-item small">
+        <img src="https://static.wixstatic.com/media/7a3ca5_ca50763998a5458baaf5e8ca7d25da86~mv2.jpg/v1/fill/w_800,h_900,al_c,q_85/photo.jpg" alt="Lifestyle session" loading="lazy">
+      </div>
+    </div>
+    <div class="gallery-row row-b">
+      <div class="gallery-item small">
+        <img src="https://static.wixstatic.com/media/7a3ca5_30b7b12b23e24fbe8af8feb51bce5386~mv2.jpg/v1/fill/w_800,h_600,al_c,q_85/photo.jpg" alt="Session" loading="lazy">
+      </div>
+      <div class="gallery-item medium">
+        <img src="https://static.wixstatic.com/media/7a3ca5_1764e4115646448fa0faf97a7a15da09~mv2.jpg/v1/fill/w_1000,h_600,al_c,q_85/photo.jpg" alt="Photography" loading="lazy">
+      </div>
+      <div class="gallery-item large">
+        <img src="https://static.wixstatic.com/media/7a3ca5_2be2896989c54d249d43f5211c8f42ef~mv2.jpg/v1/fill/w_1200,h_600,al_c,q_85/photo.jpg" alt="Family portrait" loading="lazy">
+      </div>
+    </div>
+    <div class="gallery-row row-b">
+      <div class="gallery-item medium">
+        <img src="https://static.wixstatic.com/media/7a3ca5_dc25c33b287c48aebfb65dde145ed6ab~mv2.jpg/v1/fill/w_1000,h_600,al_c,q_85/photo.jpg" alt="Session" loading="lazy">
+      </div>
+      <div class="gallery-item small">
+        <img src="https://static.wixstatic.com/media/7a3ca5_61d58b78e0fd4e71949d2eb170b8a018~mv2.jpg/v1/fill/w_800,h_600,al_c,q_85/photo.jpg" alt="Portrait" loading="lazy">
+      </div>
+      <div class="gallery-item large">
+        <img src="https://static.wixstatic.com/media/7a3ca5_528a7fe82ce6409293b6557ae34c8b51~mv2.jpg/v1/fill/w_1200,h_600,al_c,q_85/photo.jpg" alt="Photography session" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonial-stars">★★★★★</div>
+  <blockquote class="testimonial-quote">
+    "We had a fabulous time with Cara! She made us all feel really comfortable and made our session a lot of fun. Three of us would rather not have our pictures taken and she made us relax and have fun with it. Thank you so much for the beautiful pictures!"
+  </blockquote>
+  <div class="testimonial-author">— Jennifer S., Family Session</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <img src="https://static.wixstatic.com/media/7a3ca5_a86b59336dd246fc9ac5560b10e11f33~mv2.jpg/v1/fill/w_800,h_1100,al_c,q_85/photo.jpg" alt="Cara Dezso — CLD Photography" loading="lazy">
+    <div class="about-badge">Est. 2015<br>Maitland, FL</div>
+  </div>
+  <div class="about-text">
+    <div class="section-num">03</div>
+    <div class="about-eyebrow">Meet the Photographer</div>
+    <h2 class="about-heading">Hi, I'm Cara.</h2>
+    <div class="about-body">
+      <p>Family and lifestyle photographer based in Maitland, FL. I established CLD Photography in 2015 out of a love for capturing life's most important moments — from new babies to milestone events, family gatherings to corporate headshots.</p>
+      <p>A mother of three myself, I understand the value of authentic, unhurried sessions where everyone feels comfortable. My daughter Gavriella often joins as a second shooter, bringing an extra set of eyes and energy to every session.</p>
+      <p>When we're not behind a camera, you'll find us kayaking, camping, or being beach bums somewhere along the Florida coast.</p>
+    </div>
+    <div class="about-meta">
+      <div class="about-meta-item">
+        <div class="about-meta-label">Based in</div>
+        <div class="about-meta-val">Maitland, FL</div>
+      </div>
+      <div class="about-meta-item">
+        <div class="about-meta-label">Coverage Area</div>
+        <div class="about-meta-val">All of Central Florida</div>
+      </div>
+      <div class="about-meta-item">
+        <div class="about-meta-label">Mini Sessions</div>
+        <div class="about-meta-val">From $250</div>
+      </div>
+      <div class="about-meta-item">
+        <div class="about-meta-label">1-Hour Session</div>
+        <div class="about-meta-val">$425</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<span class="accent-line"></span>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="cta-heading">Ready to Book Your Session?</h2>
+  <p class="cta-sub">Serving families and businesses across Central Florida since 2015.</p>
+  <a href="mailto:cldphotofamily@gmail.com" class="cta-btn">Book a Session</a>
+  <p class="cta-note">25% deposit required · Same-week availability varies by season</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-info">
+      <div>
+        <div class="contact-item-label">Email</div>
+        <a href="mailto:cldphotofamily@gmail.com" class="contact-item-val">cldphotofamily@gmail.com</a>
+      </div>
+      <div>
+        <div class="contact-item-label">Phone</div>
+        <a href="tel:4079498314" class="contact-item-val">(407) 949-8314</a>
+      </div>
+      <div>
+        <div class="contact-item-label">Base Location</div>
+        <a class="contact-item-val" href="#contact">Maitland, FL 32751</a>
+      </div>
+      <div>
+        <div class="contact-item-label">Service Areas</div>
+        <div class="contact-area-grid">
+          <div class="contact-area">Lake Mary</div>
+          <div class="contact-area">Altamonte Springs</div>
+          <div class="contact-area">Maitland</div>
+          <div class="contact-area">Longwood</div>
+          <div class="contact-area">Mount Dora</div>
+          <div class="contact-area">Clermont</div>
+          <div class="contact-area">Orlando</div>
+          <div class="contact-area">Greater Central FL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <img src="https://static.wixstatic.com/media/7a3ca5_6f164cc717354fd2a93dbd34e910f9a3~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/photo.jpg" alt="Photography session" loading="lazy">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">CLD Photography</div>
+  <div class="footer-copy">© 2026 CLD Photography. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/cld.photofamily/" target="_blank">Instagram</a>
+    <a href="https://www.facebook.com/cld.photofamily/" target="_blank">Facebook</a>
+  </div>
+  <div class="footer-credit">Design concept by Lucas Blatt</div>
+</footer>
+
+<script>
+// Nav scroll state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Hero parallax
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+}, { passive: true });
+
+// Hero content entrance
+const heroContent = document.getElementById('heroContent');
+setTimeout(() => heroContent.classList.add('is-visible'), 200);
+
+// IntersectionObserver for all animated elements
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+// Observe animated elements
+document.querySelectorAll(
+  '.stat-item, .section-title, .gallery-item, .testimonial-quote, .about-text, .contact-right, .cta-heading'
+).forEach(el => observer.observe(el));
+
+// Staggered gallery items
+document.querySelectorAll('.gallery-item').forEach((item, i) => {
+  item.style.transitionDelay = `${(i % 3) * 100}ms`;
+});
+</script>
+</body>
+</html>
