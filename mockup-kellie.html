@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kellie Marie Photography — Tampa Wedding & Event Photographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F8F4EF;
+    --warm-white: #FDFAF6;
+    --blush: #D4A090;
+    --champagne: #C9A97A;
+    --deep: #2C2520;
+    --mid: #6B5B52;
+    --light-text: #9B8B83;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Work Sans', sans-serif; background: var(--warm-white); color: var(--deep); overflow-x: hidden; }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+
+  .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+  .img-reveal { opacity: 0; transition: opacity 1.1s ease; }
+  .img-reveal.is-visible { opacity: 1; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 60px;
+    background: rgba(253,250,246,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,169,122,0.15);
+    transition: padding 0.4s ease;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--deep);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--champagne); }
+
+  /* ─── 01 HERO — Full bleed, text pinned bottom-left ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://static.wixstatic.com/media/c84767_982767a8da0a46efafe05405650f6b7a~mv2.jpg/v1/fill/w_1400,h_900,al_c,q_85,enc_auto/c84767_982767a8da0a46efafe05405650f6b7a~mv2.jpg');
+    background-size: cover;
+    background-position: center top;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+    will-change: transform;
+  }
+  .hero-bg.is-loaded { transform: scale(1.0); }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(44,37,32,0.65) 0%, rgba(44,37,32,0.1) 60%, transparent 100%);
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 80px; left: 60px;
+    color: white;
+    max-width: 640px;
+  }
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .hero-tag.is-visible { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 108px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+  }
+  .hero-name.is-visible { opacity: 1; transform: translateY(0); }
+  .hero-name em { font-style: italic; font-weight: 300; color: var(--blush); display: block; }
+
+  .hero-sub {
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 36px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.7s;
+  }
+  .hero-sub.is-visible { opacity: 1; }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 14px 40px;
+    border: 1px solid rgba(201,169,122,0.8);
+    color: var(--champagne);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s, background 0.3s ease, color 0.3s ease;
+  }
+  .hero-cta.is-visible { opacity: 1; transform: translateY(0); }
+  .hero-cta:hover { background: var(--champagne); color: white; }
+
+  .hero-section-number {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    user-select: none;
+  }
+
+  /* ─── MARQUEE STRIP ─── */
+  .marquee-strip {
+    background: var(--deep);
+    overflow: hidden;
+    padding: 16px 0;
+  }
+  .marquee-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+  .marquee-inner span {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    padding: 0 40px;
+  }
+  .marquee-inner span.dot { color: var(--blush); padding: 0 10px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION NUMBERS (signature detail) ─── */
+  .section-wrap { position: relative; }
+  .section-num {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 140px;
+    font-weight: 300;
+    color: rgba(44,37,32,0.04);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    top: -20px;
+    left: -20px;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* ─── 02 STATS ─── */
+  #stats {
+    background: var(--cream);
+    padding: 100px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--champagne);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* ─── 03 GALLERY — Editorial scroll ─── */
+  #gallery {
+    padding: 120px 0;
+    background: var(--warm-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-header {
+    padding: 0 60px 60px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+  .section-title-wrap { position: relative; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--deep);
+  }
+  .section-title em { font-style: italic; color: var(--blush); }
+  .section-subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    margin-top: 10px;
+  }
+
+  /* Gallery rows — alternating editorial layout */
+  .gallery-row {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 6px;
+    padding: 0 6px;
+  }
+  .gallery-row-1 { grid-template-columns: 2fr 1fr 1fr; }
+  .gallery-row-2 { grid-template-columns: 1fr 1fr 2fr; }
+  .gallery-row-3 { grid-template-columns: 1fr 2fr 1fr; }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    background: var(--cream);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  .gallery-row-1 .gallery-item:first-child { height: 520px; }
+  .gallery-row-1 .gallery-item:not(:first-child) { height: 520px; }
+  .gallery-row-2 .gallery-item:last-child { height: 480px; }
+  .gallery-row-2 .gallery-item:not(:last-child) { height: 480px; }
+  .gallery-row-3 .gallery-item:nth-child(2) { height: 440px; }
+  .gallery-row-3 .gallery-item:not(:nth-child(2)) { height: 440px; }
+
+  /* ─── 04 TESTIMONIALS ─── */
+  #testimonials {
+    background: var(--deep);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials-inner { position: relative; z-index: 1; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 60px;
+  }
+  .testimonial-item {}
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(253,250,246,0.9);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .testimonial-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--champagne);
+    margin-bottom: 16px;
+  }
+  .testimonial-author {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--champagne);
+  }
+  .testimonial-event {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--blush);
+    margin-top: 4px;
+  }
+
+  /* ─── 05 ABOUT — Magazine spread ─── */
+  #about {
+    padding: 140px 0;
+    background: var(--warm-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .about-image-wrap {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+  }
+  .about-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .about-content {
+    padding: 80px;
+    position: relative;
+  }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--blush);
+    line-height: 1.4;
+    margin-bottom: 40px;
+    border-left: 2px solid var(--champagne);
+    padding-left: 30px;
+  }
+  .about-bio {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--mid);
+    margin-bottom: 24px;
+  }
+  .about-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 36px;
+  }
+  .credential-item {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    padding-left: 20px;
+    position: relative;
+  }
+  .credential-item::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--blush);
+  }
+
+  /* ─── 06 PACKAGES ─── */
+  #packages {
+    background: var(--cream);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 70px;
+    position: relative;
+    z-index: 1;
+  }
+  .package-card {
+    background: var(--warm-white);
+    padding: 50px 40px;
+    position: relative;
+  }
+  .package-card.featured {
+    background: var(--deep);
+    color: white;
+  }
+  .package-type {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 16px;
+  }
+  .package-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 8px;
+  }
+  .package-card.featured .package-name { color: white; }
+  .package-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--champagne);
+    margin-bottom: 30px;
+    line-height: 1;
+  }
+  .package-price span {
+    font-size: 18px;
+    font-weight: 400;
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .package-features {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+  .package-features li {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--mid);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(44,37,32,0.07);
+    padding-left: 18px;
+    position: relative;
+  }
+  .package-card.featured .package-features li { color: rgba(253,250,246,0.7); border-color: rgba(253,250,246,0.1); }
+  .package-features li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--champagne);
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .package-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border: 1px solid var(--champagne);
+    color: var(--champagne);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .package-btn:hover, .package-card.featured .package-btn { background: var(--champagne); color: white; }
+
+  /* ─── 07 BOLD CTA ─── */
+  #cta {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://static.wixstatic.com/media/c84767_9a9f61f4a4824e33858f06ff8f6b32ff~mv2.jpg/v1/fill/w_1400,h_600,al_c,q_85,enc_auto/c84767_9a9f61f4a4824e33858f06ff8f6b32ff~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .cta-overlay {
+    position: absolute; inset: 0;
+    background: rgba(44,37,32,0.78);
+  }
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 80px 60px;
+    width: 100%;
+  }
+  .cta-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 24px;
+  }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 6vw, 80px);
+    font-weight: 300;
+    font-style: italic;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cta-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 48px;
+    letter-spacing: 0.04em;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 60px;
+    background: var(--champagne);
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .cta-btn:hover { background: var(--blush); transform: translateY(-2px); }
+
+  /* ─── 08 CONTACT ─── */
+  #contact {
+    background: var(--warm-white);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-left .contact-intro {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--mid);
+    margin: 24px 0 40px;
+  }
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .contact-detail-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    min-width: 70px;
+  }
+  .contact-detail-value {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--deep);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-detail-value:hover { color: var(--champagne); }
+  .contact-social { display: flex; gap: 24px; margin-top: 40px; }
+  .contact-social a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-social a:hover { color: var(--champagne); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--light-text);
+  }
+  .form-input, .form-textarea {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--deep);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(44,37,32,0.2);
+    padding: 12px 0;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--champagne); }
+  .form-textarea { resize: none; height: 100px; }
+  .form-submit {
+    align-self: flex-start;
+    padding: 14px 40px;
+    background: var(--deep);
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.3s;
+  }
+  .form-submit:hover { background: var(--champagne); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--deep);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champagne);
+  }
+  .footer-copy {
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(253,250,246,0.4);
+    letter-spacing: 0.08em;
+  }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(253,250,246,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--champagne); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { bottom: 60px; left: 24px; right: 24px; }
+    .hero-name { font-size: 56px; }
+    .hero-section-number { display: none; }
+    #stats { padding: 70px 24px; }
+    .stats-grid { grid-template-columns: repeat(2,1fr); gap: 30px; }
+    #gallery { padding: 80px 0; }
+    .gallery-header { padding: 0 24px 40px; }
+    .gallery-row-1, .gallery-row-2, .gallery-row-3 { grid-template-columns: 1fr 1fr; }
+    .gallery-row-1 .gallery-item:first-child,
+    .gallery-row-2 .gallery-item:last-child,
+    .gallery-row-3 .gallery-item:nth-child(2) { grid-column: 1 / -1; height: 300px; }
+    .gallery-row-1 .gallery-item:not(:first-child),
+    .gallery-row-2 .gallery-item:not(:last-child),
+    .gallery-row-3 .gallery-item:not(:nth-child(2)) { height: 200px; }
+    #testimonials { padding: 80px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 40px; }
+    #about { padding: 80px 0; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-image-wrap { height: 400px; }
+    .about-content { padding: 50px 24px; }
+    #packages { padding: 80px 24px; }
+    .packages-grid { grid-template-columns: 1fr; gap: 16px; }
+    .cta-content { padding: 60px 24px; }
+    #contact { padding: 80px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 24px; }
+    .footer-links { justify-content: center; }
+    .section-num { font-size: 80px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 44px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-number { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Kellie Marie</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#packages">Investment</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- 01 HERO -->
+<section id="hero" class="section-wrap">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag" id="heroTag">Tampa, Florida · Wedding &amp; Events</p>
+    <h1 class="hero-name" id="heroName">Kellie Marie<em>Photography</em></h1>
+    <p class="hero-sub" id="heroSub">Capturing your love story — from intimate elopements to grand celebrations</p>
+    <a href="#contact" class="hero-cta" id="heroCta">Begin Your Story</a>
+  </div>
+  <div class="hero-section-number">01</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Wedding Photography</span><span class="dot">·</span>
+    <span>Engagements</span><span class="dot">·</span>
+    <span>Events &amp; Quinceañeras</span><span class="dot">·</span>
+    <span>Tampa Bay &amp; Destination</span><span class="dot">·</span>
+    <span>In Business Since 2002</span><span class="dot">·</span>
+    <span>Purple Heart Foundation</span><span class="dot">·</span>
+    <span>Published Photographer</span><span class="dot">·</span>
+    <span>Wedding Photography</span><span class="dot">·</span>
+    <span>Engagements</span><span class="dot">·</span>
+    <span>Events &amp; Quinceañeras</span><span class="dot">·</span>
+    <span>Tampa Bay &amp; Destination</span><span class="dot">·</span>
+    <span>In Business Since 2002</span><span class="dot">·</span>
+    <span>Purple Heart Foundation</span><span class="dot">·</span>
+    <span>Published Photographer</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- 02 STATS -->
+<section id="stats" class="section-wrap">
+  <div class="section-num">02</div>
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number">20+</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.12s">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">Couples Celebrated</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.24s">
+      <div class="stat-number">3</div>
+      <div class="stat-label">States Covered</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.36s">
+      <div class="stat-number">5★</div>
+      <div class="stat-label">Average Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 GALLERY -->
+<section id="gallery" class="section-wrap">
+  <div class="section-num">03</div>
+  <div class="gallery-header">
+    <div class="section-title-wrap">
+      <h2 class="section-title reveal"><em>Portfolio</em> &amp; Work</h2>
+      <p class="section-subtitle reveal">Selected weddings, engagements &amp; events</p>
+    </div>
+    <a href="#contact" style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--champagne);text-decoration:none;" class="reveal">View All Work →</a>
+  </div>
+
+  <!-- Row 1 -->
+  <div class="gallery-row gallery-row-1">
+    <div class="gallery-item img-reveal">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_9635ac6f0a2a41cebd3a7f0ebf63563b~mv2.jpg/v1/fill/w_800,h_1067,al_c,q_85,enc_auto/c84767_9635ac6f0a2a41cebd3a7f0ebf63563b~mv2.jpg" alt="Wedding couple portrait">
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0.1s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_8a9221c589a142b9ad64ec5adf6dde08~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_auto/c84767_8a9221c589a142b9ad64ec5adf6dde08~mv2.jpg" alt="Wedding moment">
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0.2s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_04bd7bafe75a40d8a77a707d07b86c14~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_auto/c84767_04bd7bafe75a40d8a77a707d07b86c14~mv2.jpg" alt="Wedding ceremony">
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="gallery-row gallery-row-2">
+    <div class="gallery-item img-reveal" style="transition-delay:0.05s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_a15bfacfcda742ddaad10685d918dde5~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_auto/c84767_a15bfacfcda742ddaad10685d918dde5~mv2.jpg" alt="Bride portrait">
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0.15s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_bc03b7ad20004f768f7d2619529be765~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_auto/c84767_bc03b7ad20004f768f7d2619529be765~mv2.jpg" alt="Wedding couple">
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0.25s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_737bcbcbc7d246988a27846e1a5ba569~mv2.jpg/v1/fill/w_900,h_800,al_c,q_85,enc_auto/c84767_737bcbcbc7d246988a27846e1a5ba569~mv2.jpg" alt="Wedding reception">
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="gallery-row gallery-row-3">
+    <div class="gallery-item img-reveal">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_03cd6bb763c64b1ba14e9d1ed7ad7987~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_auto/c84767_03cd6bb763c64b1ba14e9d1ed7ad7987~mv2.jpg" alt="Engagement session">
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0.1s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_e01a957c1a20439fb118f1f5cf79492b~mv2.jpg/v1/fill/w_900,h_800,al_c,q_85,enc_auto/c84767_e01a957c1a20439fb118f1f5cf79492b~mv2.jpg" alt="Wedding details">
+    </div>
+    <div class="gallery-item img-reveal" style="transition-delay:0.2s">
+      <img loading="lazy" src="https://static.wixstatic.com/media/c84767_add151d5c50645d99e4f7dbe6d573dfa~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_auto/c84767_add151d5c50645d99e4f7dbe6d573dfa~mv2.jpg" alt="Wedding portrait">
+    </div>
+  </div>
+</section>
+
+<!-- 04 TESTIMONIALS -->
+<section id="testimonials" class="section-wrap">
+  <div class="section-num" style="color:rgba(253,250,246,0.03)">04</div>
+  <div class="testimonials-inner">
+    <h2 class="section-title reveal" style="color:var(--champagne)"><em>What couples</em> are saying</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-item reveal">
+        <p class="testimonial-quote">"Kellie captured every emotion of our day — from the nervous laughter before the ceremony to the tears during our first dance. She has a gift for finding the real moments."</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-author">Jessica &amp; Marcus T.</p>
+        <p class="testimonial-event">Tampa Garden Wedding, 2024</p>
+      </div>
+      <div class="testimonial-item reveal" style="transition-delay:0.15s">
+        <p class="testimonial-quote">"She is extremely nice and professional. We had such a great time — she made us feel so comfortable in front of the camera. Highly recommend for anyone looking to capture their love story."</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-author">Amanda &amp; Derek R.</p>
+        <p class="testimonial-event">Outdoor Ceremony, 2023</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ABOUT -->
+<section id="about" class="section-wrap">
+  <div class="section-num">05</div>
+  <div class="about-grid">
+    <div class="about-image-wrap reveal-left">
+      <img loading="lazy"
+        src="https://static.wixstatic.com/media/c84767_2fd6a4c123c6451fa5024d19c6e5cb60~mv2.jpg/v1/fill/w_700,h_900,al_c,q_85,enc_auto/c84767_2fd6a4c123c6451fa5024d19c6e5cb60~mv2.jpg"
+        alt="Kellie Marie Photography — photographer portrait">
+    </div>
+    <div class="about-content reveal-right">
+      <p style="font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);margin-bottom:20px">About Kellie</p>
+      <blockquote class="about-pull-quote">"This is not a job for me — this is a passion I never get tired with."</blockquote>
+      <p class="about-bio">With over two decades behind the lens, Kellie Marie has built her reputation on one simple belief: love stories deserve to be told authentically. Recently relocated to Tampa Bay, she brings her deep experience from North Carolina and South Carolina to the Florida wedding market — along with the warmth and candor that have made her a trusted name in the industry.</p>
+      <p class="about-bio">From garden ceremonies along the Hillsborough River to destination elopements across the coast, Kellie invests her whole heart in every session. Her work spans weddings, engagements, quinceañeras, and events — all captured with her signature natural-light style.</p>
+      <div class="about-credentials">
+        <span class="credential-item">In business since 2002</span>
+        <span class="credential-item">Lead Photographer, Purple Heart Foundation</span>
+        <span class="credential-item">Published Photographer — Fayetteville NC Press</span>
+        <span class="credential-item">Serving Tampa Bay, Destination &amp; Beyond</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 PACKAGES -->
+<section id="packages" class="section-wrap">
+  <div class="section-num">06</div>
+  <div style="position:relative;z-index:1">
+    <h2 class="section-title reveal"><em>Investment</em></h2>
+    <p class="section-subtitle reveal">Transparent pricing — no hidden fees</p>
+  </div>
+  <div class="packages-grid">
+    <div class="package-card reveal">
+      <p class="package-type">Essential</p>
+      <h3 class="package-name">Intimate</h3>
+      <div class="package-price"><span>$</span>900</div>
+      <ul class="package-features">
+        <li>4 Hours of Coverage</li>
+        <li>1 Location / Ceremony Only</li>
+        <li>Online Gallery — 200+ Images</li>
+        <li>Print Release Included</li>
+        <li>7-Day Turnaround</li>
+      </ul>
+      <a href="#contact" class="package-btn">Inquire</a>
+    </div>
+    <div class="package-card featured reveal" style="transition-delay:0.12s">
+      <p class="package-type">Most Popular</p>
+      <h3 class="package-name">Full Day</h3>
+      <div class="package-price"><span>$</span>1,900</div>
+      <ul class="package-features">
+        <li>8 Hours of Coverage</li>
+        <li>Ceremony + Reception</li>
+        <li>Engagement Session</li>
+        <li>Online Gallery — 500+ Images</li>
+        <li>Print Release + USB Drive</li>
+      </ul>
+      <a href="#contact" class="package-btn">Inquire</a>
+    </div>
+    <div class="package-card reveal" style="transition-delay:0.24s">
+      <p class="package-type">Premium</p>
+      <h3 class="package-name">Destination</h3>
+      <div class="package-price"><span>$</span>2,500+</div>
+      <ul class="package-features">
+        <li>Full-Day Coverage</li>
+        <li>Travel Included (US)</li>
+        <li>Engagement Session</li>
+        <li>Online Gallery — Unlimited</li>
+        <li>Canvas Print + Album</li>
+      </ul>
+      <a href="#contact" class="package-btn">Inquire</a>
+    </div>
+  </div>
+</section>
+
+<!-- 07 CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <p class="cta-tag reveal">Now Booking Tampa Bay &amp; Beyond — 2025 / 2026</p>
+    <h2 class="cta-heading reveal">Let's tell your<br>love story.</h2>
+    <p class="cta-sub reveal">Reach out today — your date may still be available</p>
+    <a href="#contact" class="cta-btn reveal">Check My Date</a>
+  </div>
+</section>
+
+<!-- 08 CONTACT -->
+<section id="contact" class="section-wrap">
+  <div class="section-num">08</div>
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p style="font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);">Get In Touch</p>
+      <h2 class="section-title reveal" style="margin-top:16px">Studio <em>Inquiries</em></h2>
+      <p class="contact-intro reveal">Ready to book or just have questions? Kellie personally responds to every inquiry — usually within 24 hours.</p>
+      <div class="reveal">
+        <div class="contact-detail">
+          <span class="contact-detail-label">Email</span>
+          <a href="mailto:kellie.kmphotography@gmail.com" class="contact-detail-value">kellie.kmphotography@gmail.com</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Phone</span>
+          <a href="tel:7138535594" class="contact-detail-value">713-853-5594</a>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Location</span>
+          <span class="contact-detail-value">Tampa, Florida &amp; Destination</span>
+        </div>
+      </div>
+      <div class="contact-social reveal">
+        <a href="https://www.facebook.com/kelliemariephotog" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/kellie.kmphotography" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <form class="contact-form reveal" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wedding / Event Date</label>
+          <input type="text" class="form-input" placeholder="Month DD, YYYY">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell Me About Your Day</label>
+          <textarea class="form-textarea" placeholder="Venue, vision, any details you'd like to share..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Inquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Kellie Marie Photography</div>
+  <p class="footer-copy">© 2026 · Tampa, Florida · All Rights Reserved</p>
+  <div class="footer-links">
+    <a href="#gallery">Work</a>
+    <a href="#packages">Investment</a>
+    <a href="#contact">Contact</a>
+    <a href="#" style="color:rgba(253,250,246,0.2);font-size:10px">Design by Lucas Blatt</a>
+  </div>
+</footer>
+
+<script>
+// Hero entrance animations
+window.addEventListener('load', () => {
+  document.getElementById('heroBg').classList.add('is-loaded');
+  setTimeout(() => { document.getElementById('heroTag').classList.add('is-visible'); }, 200);
+  setTimeout(() => { document.getElementById('heroName').classList.add('is-visible'); }, 400);
+  setTimeout(() => { document.getElementById('heroSub').classList.add('is-visible'); }, 700);
+  setTimeout(() => { document.getElementById('heroCta').classList.add('is-visible'); }, 900);
+});
+
+// IntersectionObserver for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .img-reveal').forEach(el => {
+  observer.observe(el);
+});
+
+// Parallax on hero
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('heroBg');
+  if (hero) {
+    hero.style.backgroundPositionY = (window.scrollY * 0.35) + 'px';
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
