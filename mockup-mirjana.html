@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mirjana Novak Cesar — Fiber Art, Paintings & Sculpture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    background-color: #F4EFE8;
+    color: #2A2118;
+    overflow-x: hidden;
+  }
+
+  /* ===== GHOST NAME WATERMARK ===== */
+  body::before {
+    content: "MIRJANA";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 20vw, 280px);
+    font-weight: 300;
+    color: #2A2118;
+    opacity: 0.03;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
+    letter-spacing: 0.15em;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: multiply;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #F4EFE8;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #F4EFE8;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+
+  /* ===== HERO — MOSAIC GRID ===== */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: #1C160E;
+  }
+  .hero-mosaic {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+  }
+  .mosaic-img {
+    overflow: hidden;
+    position: relative;
+  }
+  .mosaic-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+  .mosaic-img:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .mosaic-img:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .mosaic-img:nth-child(3) { grid-column: 3; grid-row: 1; }
+  .mosaic-img:nth-child(4) { grid-column: 2 / 4; grid-row: 2; }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(28,22,14,0.72) 0%, rgba(28,22,14,0.35) 60%, rgba(28,22,14,0.55) 100%);
+    z-index: 2;
+  }
+  .hero-text {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    z-index: 3;
+    color: #F4EFE8;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.1s, transform 1s ease 0.1s, letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 0.1s;
+  }
+  .hero-name.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.12em;
+  }
+  .hero-sub {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 20px;
+    color: #C8B99A;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+  .hero-sub.is-visible { opacity: 1; transform: translateY(0); }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    margin-top: 10px;
+    color: #E8DFD0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s;
+  }
+  .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    z-index: 3;
+    color: #C8B99A;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0.7;
+  }
+
+  /* ===== STATS ===== */
+  #stats {
+    background: #2A2118;
+    padding: 64px 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.1s; }
+  .stat-item:nth-child(3) { transition-delay: 0.2s; }
+  .stat-item:nth-child(4) { transition-delay: 0.3s; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 300;
+    color: #C8B99A;
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A7A68;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ===== MARQUEE STRIP ===== */
+  .marquee-strip {
+    background: #C8B99A;
+    overflow: hidden;
+    padding: 14px 0;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #2A2118;
+    margin-right: 60px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ===== GALLERY ===== */
+  #gallery {
+    padding: 120px 60px;
+    background: #F4EFE8;
+    position: relative;
+    z-index: 1;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: #2A2118;
+    opacity: 0.08;
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    color: #2A2118;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1), opacity 0.3s ease;
+  }
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+  .gallery-staggered {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+  .gallery-pair {
+    display: grid;
+    gap: 16px;
+  }
+  .gallery-pair.left-big { grid-template-columns: 2fr 1fr; align-items: end; }
+  .gallery-pair.right-big { grid-template-columns: 1fr 2fr; align-items: start; }
+  .gallery-pair.full { grid-template-columns: 1fr 1fr 1fr; }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .gallery-item.is-visible { opacity: 1; transform: translateY(0); }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    min-height: 260px;
+  }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(28,22,14,0.8) 0%, transparent 100%);
+    padding: 32px 20px 16px;
+    color: #F4EFE8;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; }
+
+  /* ===== ABOUT ===== */
+  #about {
+    padding: 140px 80px 120px;
+    background: #EDE7DC;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .about-image-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .about-image-wrap.is-visible { opacity: 1; transform: translateY(0); }
+  .about-image-wrap img {
+    width: 100%;
+    display: block;
+  }
+  .about-accent-line {
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
+    width: 60%;
+    height: 3px;
+    background: #C8B99A;
+  }
+  .about-content {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+  .about-content.is-visible { opacity: 1; transform: translateY(0); }
+  .about-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #C8B99A;
+    margin-bottom: 20px;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3vw, 48px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #2A2118;
+    margin-bottom: 28px;
+  }
+  .about-bio {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #4A3B2C;
+    margin-bottom: 20px;
+  }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: #2A2118;
+    border-left: 2px solid #C8B99A;
+    padding-left: 24px;
+    margin: 32px 0;
+    line-height: 1.5;
+  }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .about-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A7A68;
+    border: 1px solid #C8B99A;
+    padding: 6px 14px;
+  }
+
+  /* ===== STUDIO / EVENTS ===== */
+  #studio {
+    padding: 100px 80px;
+    background: #2A2118;
+    color: #F4EFE8;
+    position: relative;
+    z-index: 1;
+  }
+  .studio-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .studio-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .studio-left.is-visible { opacity: 1; transform: translateY(0); }
+  .studio-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    letter-spacing: 0.03em;
+  }
+  .studio-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #C8B99A;
+    margin-bottom: 20px;
+  }
+  .studio-detail {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8A7A68;
+    margin-top: 12px;
+  }
+  .studio-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .studio-right.is-visible { opacity: 1; transform: translateY(0); }
+  .event-card {
+    border-top: 1px solid rgba(200,185,154,0.3);
+    padding: 28px 0;
+  }
+  .event-card:first-child { border-top: none; }
+  .event-date {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #C8B99A;
+    margin-bottom: 8px;
+  }
+  .event-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #F4EFE8;
+  }
+  .event-sub {
+    font-size: 13px;
+    color: #8A7A68;
+    margin-top: 4px;
+  }
+
+  /* ===== CTA SECTION ===== */
+  #cta {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .cta-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28,22,14,0.78);
+  }
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px;
+    max-width: 700px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .cta-content.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #C8B99A;
+    margin-bottom: 20px;
+  }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    color: #F4EFE8;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .cta-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #C8B99A;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    border: 1px solid #C8B99A;
+    color: #F4EFE8;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .cta-btn:hover {
+    background: #C8B99A;
+    color: #2A2118;
+  }
+
+  /* ===== CONTACT ===== */
+  #contact {
+    padding: 100px 80px;
+    background: #F4EFE8;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .contact-left.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: #2A2118;
+    margin-bottom: 28px;
+  }
+  .contact-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #6B5B48;
+    margin-bottom: 32px;
+  }
+  .contact-email-link {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #2A2118;
+    text-decoration: none;
+    border-bottom: 1px solid #C8B99A;
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-email-link:hover { color: #C8B99A; }
+  .contact-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-info-block {
+    margin-bottom: 32px;
+  }
+  .contact-info-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #C8B99A;
+    margin-bottom: 8px;
+  }
+  .contact-info-value {
+    font-size: 15px;
+    font-weight: 300;
+    color: #2A2118;
+    line-height: 1.6;
+  }
+  .social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .social-link {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A7A68;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: #2A2118; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1C160E;
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #8A7A68;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: #4A3B2C;
+    letter-spacing: 0.1em;
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: #4A3B2C;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-text { left: 24px; bottom: 60px; }
+    #stats {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 48px 24px;
+    }
+    #gallery { padding: 80px 24px; }
+    .gallery-pair.left-big,
+    .gallery-pair.right-big,
+    .gallery-pair.full {
+      grid-template-columns: 1fr;
+    }
+    #about {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 48px;
+    }
+    #studio {
+      padding: 80px 24px;
+    }
+    .studio-inner { grid-template-columns: 1fr; gap: 48px; }
+    .cta-content { padding: 48px 24px; }
+    #contact {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 48px;
+    }
+    footer {
+      flex-direction: column;
+      gap: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 52px; }
+    .stat-number { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">MNC</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#studio">Studio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — MOSAIC GRID -->
+<section id="hero">
+  <div class="hero-mosaic">
+    <div class="mosaic-img">
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/lilac-sky-mirjana-cesar.jpg"
+           alt="Lilac Sky" loading="eager" />
+    </div>
+    <div class="mosaic-img">
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/inverno-iii-mirjana-cesar.jpg"
+           alt="Inverno III" loading="eager" />
+    </div>
+    <div class="mosaic-img">
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/peacock-in-blue-mirjana-cesar.jpg"
+           alt="Peacock in Blue" loading="eager" />
+    </div>
+    <div class="mosaic-img">
+      <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/solace-by-the-sea-mirjana-cesar.jpg"
+           alt="Solace by the Sea" loading="eager" />
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <h1 class="hero-name">Mirjana<br />Novak Cesar</h1>
+    <p class="hero-sub">Fiber Art · Painting · Sculpture · Orlando, FL</p>
+    <p class="hero-tagline">Croatian-born. Florida-rooted. Work made to be felt.</p>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">20+</span>
+    <span class="stat-label">Years Creating</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">1375</span>
+    <span class="stat-label">Etsy Sales</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">2</span>
+    <span class="stat-label">Galleries</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">5★</span>
+    <span class="stat-label">Star Seller</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Fiber Art</span>
+    <span>·</span>
+    <span>Mixed Media Painting</span>
+    <span>·</span>
+    <span>Soft Sculpture</span>
+    <span>·</span>
+    <span>Art Jewelry</span>
+    <span>·</span>
+    <span>Florida CraftArt Gallery</span>
+    <span>·</span>
+    <span>Faith Arts Village Orlando</span>
+    <span>·</span>
+    <span>Open Studio Every First Friday</span>
+    <span>·</span>
+    <span>Commissions Welcome</span>
+    <span>·</span>
+    <span>Fiber Art</span>
+    <span>·</span>
+    <span>Mixed Media Painting</span>
+    <span>·</span>
+    <span>Soft Sculpture</span>
+    <span>·</span>
+    <span>Art Jewelry</span>
+    <span>·</span>
+    <span>Florida CraftArt Gallery</span>
+    <span>·</span>
+    <span>Faith Arts Village Orlando</span>
+    <span>·</span>
+    <span>Open Studio Every First Friday</span>
+    <span>·</span>
+    <span>Commissions Welcome</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Selected Works</h2>
+  </div>
+  <div class="gallery-staggered">
+
+    <!-- Pair 1: left big -->
+    <div class="gallery-pair left-big">
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/pastoral-dream-mirjana-cesar.jpg"
+             alt="Pastoral Dream" loading="lazy" style="min-height:460px;" />
+        <div class="gallery-caption">Pastoral Dream</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/tiger-mirjana-cesar.jpg"
+             alt="Tiger" loading="lazy" style="min-height:320px;" />
+        <div class="gallery-caption">Tiger</div>
+      </div>
+    </div>
+
+    <!-- Pair 2: right big -->
+    <div class="gallery-pair right-big">
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/elephant-mirjana-cesar.jpg"
+             alt="Elephant" loading="lazy" style="min-height:300px;" />
+        <div class="gallery-caption">Elephant</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/whispers-of-dune-and-brush-mirjana-cesar.jpg"
+             alt="Whispers of Dune and Brush" loading="lazy" style="min-height:460px;" />
+        <div class="gallery-caption">Whispers of Dune and Brush</div>
+      </div>
+    </div>
+
+    <!-- Pair 3: three across -->
+    <div class="gallery-pair full">
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/great-blue-heron-mirjana-cesar.jpg"
+             alt="Great Blue Heron" loading="lazy" style="min-height:340px;" />
+        <div class="gallery-caption">Great Blue Heron</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/zebra-mirjana-cesar.jpg"
+             alt="Zebra" loading="lazy" style="min-height:340px;" />
+        <div class="gallery-caption">Zebra</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://render.pixels.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/onyx-mirjana-cesar.jpg"
+             alt="Onyx" loading="lazy" style="min-height:340px;" />
+        <div class="gallery-caption">Onyx</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <img src="https://mirjanacesar.weebly.com/uploads/7/1/9/7/7197847/img-1909-copy_orig.jpeg"
+         alt="Mirjana Novak Cesar" loading="lazy" />
+    <div class="about-accent-line"></div>
+  </div>
+  <div class="about-content">
+    <p class="about-eyebrow">About the Artist</p>
+    <h2 class="about-heading">Tactile, layered,<br />unmistakably her own</h2>
+    <p class="about-bio">
+      Born in Zagreb, Croatia and rooted in Orlando, Florida, Mirjana Novak Cesar works across fiber art, mixed media painting, soft sculpture, and art jewelry — disciplines united by an insistence on texture as meaning. Her Croatian-inspired landscapes and nature-driven canvases are built up in layers: thread, fiber, acrylic, and found material pressed into surfaces that reward close looking.
+    </p>
+    <p class="about-bio">
+      A resident artist at Faith Arts Village Orlando (Studio #238), Mirjana's work is represented at Florida CraftArt Gallery in St. Petersburg and featured in numerous issues of Stampington & Company magazines. Her Etsy shop — active since 2008 — carries wearable fiber art and OOAK jewelry to collectors across the country.
+    </p>
+    <blockquote class="about-pull-quote">
+      "The work should feel like something — not just look like it."
+    </blockquote>
+    <div class="about-tags">
+      <span class="about-tag">Fiber Art</span>
+      <span class="about-tag">Mixed Media</span>
+      <span class="about-tag">Soft Sculpture</span>
+      <span class="about-tag">Art Jewelry</span>
+      <span class="about-tag">Florida CraftArt</span>
+      <span class="about-tag">Faith Arts Village</span>
+    </div>
+  </div>
+</section>
+
+<!-- STUDIO / EVENTS -->
+<section id="studio">
+  <div class="studio-inner">
+    <div class="studio-left">
+      <h2 class="studio-heading">Studio & Open House</h2>
+      <p class="studio-body">
+        Mirjana's studio/gallery at Faith Arts Village Orlando is open to the public every First Friday and First Saturday of the month — a chance to see work in progress, meet the artist, and browse originals and wearable art directly.
+      </p>
+      <p class="studio-detail">Studio #238 · 221 E Colonial Dr · Orlando, FL 32801</p>
+      <p class="studio-detail" style="margin-top:8px;">First Friday &amp; Saturday Monthly · Walk-ins Welcome</p>
+      <br /><br />
+      <p class="studio-body">
+        Commissions are open. Pet portraits, custom fiber works, and landscape paintings in the Croatian tradition. Inquire by email for availability and lead times.
+      </p>
+    </div>
+    <div class="studio-right">
+      <div class="event-card">
+        <p class="event-date">Monthly · Every First Weekend</p>
+        <p class="event-title">Open Studio at FAVO</p>
+        <p class="event-sub">Faith Arts Village Orlando · Studio #238</p>
+      </div>
+      <div class="event-card">
+        <p class="event-date">Ongoing · St. Petersburg, FL</p>
+        <p class="event-title">Florida CraftArt Gallery</p>
+        <p class="event-sub">501 Central Ave · Represented Works on View</p>
+      </div>
+      <div class="event-card">
+        <p class="event-date">Online · Est. 2008</p>
+        <p class="event-title">Etsy Shop: cesart64</p>
+        <p class="event-sub">Wearable Art · OOAK Jewelry · 1,375+ Sales · Star Seller</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg">
+    <img src="https://faithartsvillage.com/wp-content/uploads/2026/02/BeforeTheRainMirjanaCesar-1022x1024.png"
+         alt="Before the Rain" loading="lazy" />
+  </div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <p class="cta-eyebrow">Commissions Open</p>
+    <h2 class="cta-heading">Commission a Piece</h2>
+    <p class="cta-body">
+      Original paintings, fiber art, and sculpture made to your vision. Whether it's a landscape that holds a memory or a portrait of a beloved animal — Mirjana works with collectors directly to make something lasting.
+    </p>
+    <a href="mailto:mirjanacesar@yahoo.com" class="cta-btn">Begin a Conversation</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="contact-heading">Inquiries &<br />Commissions</h2>
+    <p class="contact-body">
+      For original work, commissions, exhibition inquiries, or to arrange a studio visit during open hours, reach out directly.
+    </p>
+    <a href="mailto:mirjanacesar@yahoo.com" class="contact-email-link">mirjanacesar@yahoo.com</a>
+  </div>
+  <div class="contact-right">
+    <div class="contact-info-block">
+      <p class="contact-info-label">Studio</p>
+      <p class="contact-info-value">Faith Arts Village Orlando<br />Studio #238 · 221 E Colonial Dr<br />Orlando, FL 32801</p>
+    </div>
+    <div class="contact-info-block">
+      <p class="contact-info-label">Gallery</p>
+      <p class="contact-info-value">Florida CraftArt<br />501 Central Ave, St. Petersburg, FL</p>
+    </div>
+    <div class="contact-info-block">
+      <p class="contact-info-label">Online Shop</p>
+      <p class="contact-info-value">etsy.com/shop/cesart64</p>
+    </div>
+    <div class="social-links">
+      <a href="https://instagram.com/mirjana.n.c" class="social-link" target="_blank">Instagram</a>
+      <a href="https://www.threads.com/@mirjana.n.c" class="social-link" target="_blank">Threads</a>
+      <a href="https://mirjana-cesar.pixels.com/" class="social-link" target="_blank">Pixels</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Mirjana Novak Cesar</span>
+  <span class="footer-copy">© 2026 All Rights Reserved</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // ===== INTERSECTION OBSERVER ANIMATIONS =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Stagger gallery items within their parent pair
+        if (entry.target.classList.contains('gallery-pair')) {
+          const items = entry.target.querySelectorAll('.gallery-item');
+          items.forEach((item, i) => {
+            setTimeout(() => item.classList.add('is-visible'), i * 120);
+          });
+        }
+      }
+    });
+  }, { threshold: 0.08 });
+
+  // Hero animations
+  document.querySelectorAll('.hero-name, .hero-sub, .hero-tagline').forEach(el => {
+    setTimeout(() => el.classList.add('is-visible'), 200);
+  });
+
+  // Observe everything else
+  document.querySelectorAll(
+    '.stat-item, .section-title, .gallery-pair, .about-image-wrap, .about-content, .studio-left, .studio-right, .cta-content, .contact-left, .contact-right'
+  ).forEach(el => observer.observe(el));
+
+  // Mosaic slow zoom on load
+  document.querySelectorAll('.mosaic-img img').forEach((img, i) => {
+    setTimeout(() => { img.style.transform = 'scale(1.04)'; }, 300 + i * 200);
+  });
+</script>
+</body>
+</html>
