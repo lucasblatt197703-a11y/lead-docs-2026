@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Dawn Photography | Tampa, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Karla:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* === RESET & BASE === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0e0c0b;
+  color: #d4ccc4;
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* === GRAIN TEXTURE OVERLAY === */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* === NAVIGATION === */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(14,12,11,0.9) 0%, transparent 100%);
+}
+.nav-logo {
+  font-family: 'Italiana', serif;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  color: #e8e0d4;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  color: #9e9488;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover { color: #d4ccc4; }
+
+/* === HERO — CINEMATIC LETTERBOX === */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #0e0c0b;
+}
+.hero-image {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://static.wixstatic.com/media/bf2b51_0c32e9ad797240cd852cd4b7d539b59a.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_0c32e9ad797240cd852cd4b7d539b59a.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  will-change: transform;
+}
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(14,12,11,0.38);
+}
+/* Letterbox bars */
+.letterbox-top, .letterbox-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 2;
+  background: #0e0c0b;
+}
+.letterbox-top { top: 0; height: 90px; }
+.letterbox-bottom { bottom: 0; height: 90px; display: flex; align-items: center; padding: 0 60px; justify-content: space-between; }
+
+.hero-name-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  justify-content: space-between;
+  background: #0e0c0b;
+}
+.hero-name {
+  font-family: 'Italiana', serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8e0d4;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+.hero-name.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-tagline {
+  font-family: 'Karla', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7a6f65;
+  opacity: 0;
+  transition: opacity 1.4s ease 0.3s;
+}
+.hero-tagline.is-visible { opacity: 1; }
+
+/* Center hero text block */
+.hero-center-text {
+  position: absolute;
+  bottom: 130px;
+  left: 60px;
+  z-index: 3;
+}
+.hero-specialty {
+  font-family: 'Karla', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #9e9488;
+  margin-bottom: 14px;
+  opacity: 0;
+  transition: opacity 1.0s ease 0.6s;
+}
+.hero-specialty.is-visible { opacity: 1; }
+.hero-scroll-hint {
+  position: absolute;
+  right: 60px;
+  bottom: 130px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5a5048;
+}
+.scroll-line {
+  width: 40px;
+  height: 1px;
+  background: #5a5048;
+}
+
+/* === MARQUEE STRIP === */
+.marquee-strip {
+  background: #161210;
+  border-top: 1px solid #1e1a17;
+  border-bottom: 1px solid #1e1a17;
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marquee 35s linear infinite;
+}
+.marquee-track span {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5a5048;
+  margin: 0 30px;
+}
+.marquee-track span.dot {
+  color: #8b7355;
+  margin: 0 10px;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* === STATS SECTION === */
+#stats {
+  padding: 100px 60px;
+  background: #0e0c0b;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  border-bottom: 1px solid #1e1a17;
+}
+.stat-item {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.stat-item.is-visible { opacity: 1; transform: translateY(0); }
+.stat-item:nth-child(2) { transition-delay: 0.1s; }
+.stat-item:nth-child(3) { transition-delay: 0.2s; }
+.stat-item:nth-child(4) { transition-delay: 0.3s; }
+.stat-number {
+  font-family: 'Italiana', serif;
+  font-size: 80px;
+  line-height: 1;
+  color: #e8e0d4;
+  display: block;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #5a5048;
+  margin-top: 8px;
+  display: block;
+}
+
+/* === GALLERY SECTION — EDITORIAL SCROLL === */
+#gallery {
+  padding: 0;
+  background: #0e0c0b;
+}
+.gallery-header {
+  padding: 90px 60px 50px;
+  display: flex;
+  align-items: baseline;
+  gap: 30px;
+}
+.section-num {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #3a332e;
+  font-family: 'Karla', sans-serif;
+}
+.section-title {
+  font-family: 'Italiana', serif;
+  font-size: 40px;
+  color: #e8e0d4;
+  font-weight: 400;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s ease;
+}
+.section-title.is-visible {
+  opacity: 1;
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Editorial gallery alternating large/small */
+.gallery-row {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.gallery-row.row-1 { grid-template-columns: 2fr 1fr; }
+.gallery-row.row-2 { grid-template-columns: 1fr; }
+.gallery-row.row-3 { grid-template-columns: 1fr 1.5fr 1fr; }
+.gallery-row.row-last { grid-template-columns: 1.2fr 1fr; }
+
+.gallery-item {
+  overflow: hidden;
+  position: relative;
+  background: #161210;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.gallery-item.is-visible { opacity: 1; transform: translateY(0); }
+.gallery-item:nth-child(2) { transition-delay: 0.12s; }
+.gallery-item:nth-child(3) { transition-delay: 0.24s; }
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  transform: scale(1.04);
+  transition: transform 0.7s ease;
+}
+.gallery-item:hover img { transform: scale(1.0); }
+.gallery-item.tall img { height: 680px; object-fit: cover; }
+.gallery-item.medium img { height: 450px; object-fit: cover; }
+.gallery-item.short img { height: 360px; object-fit: cover; }
+.gallery-item.full img { height: 580px; object-fit: cover; }
+
+/* === TESTIMONIALS === */
+#testimonials {
+  background: #0b0908;
+  padding: 110px 60px;
+  border-top: 1px solid #1e1a17;
+  border-bottom: 1px solid #1e1a17;
+}
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 60px;
+  align-items: start;
+  max-width: 1000px;
+}
+.testimonial-divider {
+  background: #2a2420;
+  width: 1px;
+}
+.testimonial-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.testimonial-item.is-visible { opacity: 1; transform: translateY(0); }
+.testimonial-item:last-child { transition-delay: 0.18s; }
+.testimonial-quote {
+  font-family: 'Karla', sans-serif;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.75;
+  color: #c4bab0;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+.testimonial-author {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5a5048;
+}
+.testimonial-section-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #3a332e;
+  margin-bottom: 50px;
+}
+
+/* === ABOUT === */
+#about {
+  padding: 120px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+.about-portrait {
+  position: relative;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 1.0s ease, transform 1.0s ease;
+}
+.about-portrait.is-visible { opacity: 1; transform: translateX(0); }
+.about-portrait img {
+  width: 100%;
+  display: block;
+  height: 600px;
+  object-fit: cover;
+  object-position: center top;
+}
+.about-portrait::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid #2a2420;
+  z-index: -1;
+}
+.about-text {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 1.0s ease 0.2s, transform 1.0s ease 0.2s;
+}
+.about-text.is-visible { opacity: 1; transform: translateX(0); }
+.about-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5a5048;
+  margin-bottom: 20px;
+}
+.about-text h2 {
+  font-family: 'Italiana', serif;
+  font-size: 52px;
+  font-weight: 400;
+  color: #e8e0d4;
+  line-height: 1.15;
+  margin-bottom: 30px;
+}
+.about-text p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #8b8078;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.about-pull-quote {
+  font-family: 'Karla', sans-serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.7;
+  color: #a09488;
+  border-left: 2px solid #3d3028;
+  padding-left: 24px;
+  margin: 36px 0;
+  font-weight: 300;
+}
+
+/* === SERVICES === */
+#services {
+  background: #0b0908;
+  padding: 110px 60px;
+  border-top: 1px solid #1e1a17;
+}
+.services-header {
+  margin-bottom: 70px;
+  display: flex;
+  align-items: baseline;
+  gap: 30px;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.service-card {
+  background: #0f0d0c;
+  padding: 50px 40px;
+  border: 1px solid #1e1a17;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.service-card.is-visible { opacity: 1; transform: translateY(0); }
+.service-card:nth-child(2) { transition-delay: 0.12s; }
+.service-card:nth-child(3) { transition-delay: 0.24s; }
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #8b7355 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.service-card:hover::before { opacity: 1; }
+.service-number {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #3a332e;
+  margin-bottom: 30px;
+  display: block;
+}
+.service-title {
+  font-family: 'Italiana', serif;
+  font-size: 32px;
+  color: #e8e0d4;
+  font-weight: 400;
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+.service-desc {
+  font-size: 15px;
+  color: #6b6058;
+  line-height: 1.75;
+  font-weight: 300;
+}
+.service-includes {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid #1e1a17;
+}
+.service-includes li {
+  font-size: 13px;
+  color: #5a5048;
+  letter-spacing: 0.05em;
+  line-height: 2;
+  list-style: none;
+  padding-left: 16px;
+  position: relative;
+}
+.service-includes li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #3a332e;
+}
+
+/* === CTA === */
+#cta {
+  background: #161210;
+  padding: 130px 60px;
+  text-align: center;
+  border-top: 1px solid #1e1a17;
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: 'SUMMER DAWN';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Italiana', serif;
+  font-size: 160px;
+  color: #e8e0d4;
+  opacity: 0.02;
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.2em;
+}
+.cta-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #5a5048;
+  margin-bottom: 28px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.cta-eyebrow.is-visible { opacity: 1; }
+.cta-heading {
+  font-family: 'Italiana', serif;
+  font-size: 72px;
+  font-weight: 400;
+  color: #e8e0d4;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.0s ease 0.15s, transform 1.0s ease 0.15s;
+}
+.cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+.cta-sub {
+  font-size: 16px;
+  color: #6b6058;
+  margin-bottom: 50px;
+  font-weight: 300;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s;
+}
+.cta-sub.is-visible { opacity: 1; }
+.cta-btn {
+  display: inline-block;
+  padding: 16px 52px;
+  border: 1px solid #8b7355;
+  color: #c4a87a;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-family: 'Karla', sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.cta-btn:hover {
+  background: #8b7355;
+  color: #0e0c0b;
+}
+
+/* === CONTACT === */
+#contact {
+  padding: 100px 60px;
+  background: #0e0c0b;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  border-top: 1px solid #1e1a17;
+}
+.contact-col h3 {
+  font-family: 'Italiana', serif;
+  font-size: 36px;
+  color: #e8e0d4;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+.contact-col p {
+  font-size: 15px;
+  color: #6b6058;
+  margin-bottom: 30px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+.contact-email {
+  display: block;
+  font-family: 'Italiana', serif;
+  font-size: 22px;
+  color: #c4a87a;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+.contact-email:hover { color: #e8d4aa; }
+.contact-phone {
+  display: block;
+  font-size: 14px;
+  color: #5a5048;
+  margin-top: 14px;
+  letter-spacing: 0.1em;
+}
+.social-links {
+  margin-top: 40px;
+  display: flex;
+  gap: 28px;
+}
+.social-links a {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5a5048;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.social-links a:hover { color: #9e9488; }
+.contact-areas h4 {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #3a332e;
+  margin-bottom: 18px;
+}
+.contact-areas ul {
+  list-style: none;
+}
+.contact-areas li {
+  font-size: 14px;
+  color: #6b6058;
+  line-height: 2;
+  font-weight: 300;
+}
+
+/* === FOOTER === */
+footer {
+  background: #080706;
+  padding: 40px 60px;
+  border-top: 1px solid #1a1612;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'Italiana', serif;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #3a332e;
+}
+.footer-copy {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #2a2420;
+}
+.footer-credit {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #2a2420;
+}
+
+/* === DIVIDER LINE === */
+.section-divider {
+  width: 60px;
+  height: 1px;
+  background: #8b7355;
+  margin: 20px 0 50px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  nav { padding: 24px 24px; }
+  .nav-links { gap: 20px; }
+  .hero-name { font-size: 22px; }
+  #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+  .stat-number { font-size: 56px; }
+  .gallery-row.row-1, .gallery-row.row-3, .gallery-row.row-last {
+    grid-template-columns: 1fr;
+  }
+  .gallery-header { padding: 60px 24px 30px; }
+  #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+  .about-text h2 { font-size: 38px; }
+  #services { padding: 80px 24px; }
+  .services-grid { grid-template-columns: 1fr; }
+  #cta { padding: 90px 24px; }
+  .cta-heading { font-size: 46px; }
+  #contact { grid-template-columns: 1fr; padding: 70px 24px; gap: 50px; }
+  footer { padding: 30px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  .testimonial-grid { grid-template-columns: 1fr; }
+  .testimonial-divider { display: none; }
+  #testimonials { padding: 70px 24px; }
+  .hero-name-bar { padding: 0 24px; }
+  .letterbox-bottom { padding: 0 24px; }
+  .hero-center-text { left: 24px; }
+  .hero-scroll-hint { right: 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 17px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="nav-logo">Summer Dawn</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Inquire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — CINEMATIC LETTERBOX -->
+<section id="hero">
+  <div class="hero-image" id="heroParallax"></div>
+  <div class="letterbox-top"></div>
+  <div class="hero-center-text">
+    <p class="hero-specialty is-anim">Tampa, FL &nbsp;·&nbsp; Wedding &amp; Portrait Photography</p>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+  <div class="hero-name-bar">
+    <span class="hero-name is-anim" id="heroName">Summer Dawn Photography</span>
+    <span class="hero-tagline is-anim">Photojournalistic &nbsp;·&nbsp; Tampa 2026</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Wedding Photography</span><span class="dot">·</span>
+    <span>Boudoir</span><span class="dot">·</span>
+    <span>Portraits</span><span class="dot">·</span>
+    <span>Tampa, FL</span><span class="dot">·</span>
+    <span>Award-Winning</span><span class="dot">·</span>
+    <span>Photojournalistic</span><span class="dot">·</span>
+    <span>2026 Bookings Open</span><span class="dot">·</span>
+    <span>Wedding Photography</span><span class="dot">·</span>
+    <span>Boudoir</span><span class="dot">·</span>
+    <span>Portraits</span><span class="dot">·</span>
+    <span>Tampa, FL</span><span class="dot">·</span>
+    <span>Award-Winning</span><span class="dot">·</span>
+    <span>Photojournalistic</span><span class="dot">·</span>
+    <span>2026 Bookings Open</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">10+</span>
+    <span class="stat-label">Years Experience</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">200+</span>
+    <span class="stat-label">Weddings Captured</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Portrait Sessions</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">Award</span>
+    <span class="stat-label">Winning Portrait Photography</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+
+  <!-- Row 1: large left, small right -->
+  <div class="gallery-row row-1">
+    <div class="gallery-item tall">
+      <img src="https://static.wixstatic.com/media/bf2b51_4d36d4e62def5f883a290820fe2472b0.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_4d36d4e62def5f883a290820fe2472b0.jpg" alt="Wedding photography" loading="lazy">
+    </div>
+    <div class="gallery-item tall">
+      <img src="https://static.wixstatic.com/media/bf2b51_880601cfa23f81e3e0b24685133a9f7c.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_880601cfa23f81e3e0b24685133a9f7c.jpg" alt="Portrait photography" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row 2: full-width single -->
+  <div class="gallery-row row-2">
+    <div class="gallery-item full">
+      <img src="https://static.wixstatic.com/media/bf2b51_0cfb0febc5035d591021dbf3159cff67.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_0cfb0febc5035d591021dbf3159cff67.jpg" alt="Photojournalistic wedding" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row 3: three columns -->
+  <div class="gallery-row row-3">
+    <div class="gallery-item medium">
+      <img src="https://static.wixstatic.com/media/bf2b51_b345a411076b78e8ab1d81c52640f34f.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_b345a411076b78e8ab1d81c52640f34f.jpg" alt="Portrait session" loading="lazy">
+    </div>
+    <div class="gallery-item medium">
+      <img src="https://static.wixstatic.com/media/bf2b51_41998790304ecf4025db223818501723.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_41998790304ecf4025db223818501723.jpg" alt="Photography" loading="lazy">
+    </div>
+    <div class="gallery-item medium">
+      <img src="https://static.wixstatic.com/media/bf2b51_29df860623aff7399cf01a4ad05f3e95.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_29df860623aff7399cf01a4ad05f3e95.jpg" alt="Portrait" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row last: two columns -->
+  <div class="gallery-row row-last">
+    <div class="gallery-item medium">
+      <img src="https://static.wixstatic.com/media/bf2b51_7681d49e3017ed73f6d040b77ddb71f9.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_7681d49e3017ed73f6d040b77ddb71f9.jpg" alt="Wedding moment" loading="lazy">
+    </div>
+    <div class="gallery-item medium">
+      <img src="https://static.wixstatic.com/media/bf2b51_0c32e9ad797240cd852cd4b7d539b59a.jpg/v1/fill/w_1200,h_800,al_c,q_85,usm_0.66_1.00_0.01/bf2b51_0c32e9ad797240cd852cd4b7d539b59a.jpg" alt="Photography session" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <p class="testimonial-section-label">Client Stories</p>
+  <div class="testimonial-grid">
+    <div class="testimonial-item">
+      <p class="testimonial-quote">"Summer captured things we didn't even notice happening in real time. Every photo tells the whole story of that day. We cry every time we look through our gallery."</p>
+      <span class="testimonial-author">— Jessica &amp; Michael, Tampa Wedding 2024</span>
+    </div>
+    <div class="testimonial-divider"></div>
+    <div class="testimonial-item">
+      <p class="testimonial-quote">"I've never felt so comfortable in front of a camera. Summer has a way of making you forget she's there — and then every single photo is a revelation."</p>
+      <span class="testimonial-author">— Amanda R., Portrait Client</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-portrait">
+    <img src="https://live.staticflickr.com/8563/28414444522_10489d7e6f.jpg" alt="Summer Dawn photographer" loading="lazy">
+  </div>
+  <div class="about-text">
+    <p class="about-eyebrow">02 &nbsp;·&nbsp; The Photographer</p>
+    <h2>Summer<br>Dawn Urso</h2>
+    <div class="section-divider"></div>
+    <p>Based in Tampa, Summer Dawn Urso is an award-winning photographer specializing in photojournalistic weddings, portraiture, and boudoir. With over a decade behind the lens, her approach is documentary at its core — capturing the unguarded, the fleeting, the real.</p>
+    <div class="about-pull-quote">"You don't make a photograph just with a camera. You bring to the act of photography all the pictures you have seen, the books you have read, the music you have heard, the people you have loved."</div>
+    <p>Her work spans weddings, portraits, maternity, newborns, boudoir, and events — always with an eye for the moment that only happens once.</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Services</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-number">01</span>
+      <h3 class="service-title">Wedding Photography</h3>
+      <p class="service-desc">Photojournalistic documentation of your wedding day — candid, cinematic, and entirely yours. No posed stiffness. Just real moments as they unfold.</p>
+      <ul class="service-includes">
+        <li>Full-day coverage</li>
+        <li>Engagement session</li>
+        <li>Online gallery delivery</li>
+        <li>Print-ready high-res files</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-number">02</span>
+      <h3 class="service-title">Portraits &amp; Lifestyle</h3>
+      <p class="service-desc">Family, children, maternity, newborn, headshots, and lifestyle sessions. Natural light, natural expressions — documentary style applied to every phase of life.</p>
+      <ul class="service-includes">
+        <li>1–2 hour sessions</li>
+        <li>Multiple settings</li>
+        <li>Wardrobe guidance</li>
+        <li>Gallery within 3 weeks</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-number">03</span>
+      <h3 class="service-title">Boudoir &amp; Pinup</h3>
+      <p class="service-desc">Tasteful, classic, empowering. A private experience designed to make you feel as extraordinary as you are. Every session handled with complete discretion.</p>
+      <ul class="service-includes">
+        <li>Private studio session</li>
+        <li>Hair &amp; makeup guidance</li>
+        <li>Proofing &amp; selection</li>
+        <li>Luxury print options</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-eyebrow is-anim">2026 Bookings</p>
+  <h2 class="cta-heading is-anim">Let's Tell<br>Your Story.</h2>
+  <p class="cta-sub is-anim">Limited dates available. Tampa Bay and destination weddings welcome.</p>
+  <a href="mailto:SummerDawnStudios@gmail.com" class="cta-btn">Begin the Conversation</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-col">
+    <h3>Get in Touch</h3>
+    <p>For weddings, portraits, and boudoir inquiries. Response within 24 hours.</p>
+    <a href="mailto:SummerDawnStudios@gmail.com" class="contact-email">SummerDawnStudios@gmail.com</a>
+    <span class="contact-phone">352.228.5233</span>
+    <div class="social-links">
+      <a href="#">Facebook</a>
+      <a href="#">Flickr</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="contact-col contact-areas">
+    <h4>Service Areas</h4>
+    <ul>
+      <li>Tampa Bay, FL</li>
+      <li>St. Petersburg</li>
+      <li>Clearwater</li>
+      <li>Sarasota</li>
+      <li>Destination Weddings</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Summer Dawn Photography</span>
+  <span class="footer-copy">&copy; 2026 Summer Dawn Studios</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+// === HERO ANIMATIONS — fire on load ===
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('heroName').classList.add('is-visible');
+    document.querySelectorAll('.hero-tagline, .hero-specialty').forEach(el => el.classList.add('is-visible'));
+  }, 200);
+});
+
+// === HERO PARALLAX ===
+const heroImg = document.getElementById('heroParallax');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    heroImg.style.transform = `translateY(${scrollY * 0.35}px)`;
+  }
+}, { passive: true });
+
+// === INTERSECTION OBSERVER — all other animations ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe all animated elements
+const animTargets = document.querySelectorAll(
+  '.stat-item, .gallery-item, .testimonial-item, .about-portrait, .about-text, .service-card, .cta-eyebrow, .cta-heading, .cta-sub, .section-title'
+);
+animTargets.forEach(el => observer.observe(el));
+
+// Stagger gallery items within each row
+document.querySelectorAll('.gallery-row').forEach(row => {
+  const items = row.querySelectorAll('.gallery-item');
+  items.forEach((item, i) => {
+    item.style.transitionDelay = `${i * 0.1}s`;
+  });
+});
+</script>
+</body>
+</html>
