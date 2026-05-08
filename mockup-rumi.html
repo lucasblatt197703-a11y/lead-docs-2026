@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rumi Grey Images — Boudoir & Portrait Photography, Jacksonville FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal: #1a1714;
+      --dark: #0e0c0b;
+      --cream: #f0ebe3;
+      --warm-white: #faf7f4;
+      --gold: #b8905c;
+      --blush: #c9a49a;
+      --mid: #2e2926;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Karla', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+
+    nav .logo {
+      font-family: 'Italiana', serif;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      color: var(--cream);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    nav ul a {
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240,235,227,0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav ul a:hover { color: var(--gold); }
+
+    /* HERO — Cinematic letterbox */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .hero-bar {
+      background: var(--dark);
+      height: 80px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bar-top {
+      /* Studio name in top bar */
+    }
+
+    .hero-bar-bottom {
+      /* Tagline in bottom bar */
+    }
+
+    .hero-studio-name {
+      font-family: 'Italiana', serif;
+      font-size: 90px;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      text-transform: uppercase;
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s ease, transform 1.2s ease, letter-spacing 1.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .hero-studio-name.loaded {
+      opacity: 1;
+      transform: translateY(0);
+      letter-spacing: 0.22em;
+    }
+
+    .hero-image-wrap {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      transform: scale(1.06);
+      transition: transform 8s ease;
+    }
+
+    .hero-image-wrap img.loaded {
+      transform: scale(1.0);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(14,12,11,0.15) 0%, rgba(14,12,11,0.05) 50%, rgba(14,12,11,0.2) 100%);
+      pointer-events: none;
+    }
+
+    .hero-tagline {
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(240,235,227,0.6);
+    }
+
+    .hero-bar-bottom .hero-tagline {
+      color: rgba(240,235,227,0.55);
+    }
+
+    /* MARQUEE STRIP */
+    .marquee-strip {
+      background: var(--gold);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dark);
+      padding: 0 28px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* STATS SECTION */
+    #stats {
+      background: var(--charcoal);
+      padding: 80px 48px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      border-right: 1px solid rgba(184,144,92,0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item:last-child { border-right: none; }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+
+    .stat-num {
+      font-family: 'Italiana', serif;
+      font-size: 90px;
+      line-height: 1;
+      color: var(--cream);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* GALLERY SECTION */
+    #gallery {
+      background: var(--dark);
+      padding: 120px 0;
+      position: relative;
+    }
+
+    /* Ghost background name */
+    #gallery::before {
+      content: 'RUMI GREY';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Italiana', serif;
+      font-size: 220px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.02;
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 70px;
+      padding: 0 48px;
+    }
+
+    .section-num {
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 16px;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.1s;
+    }
+
+    .section-num.is-visible { opacity: 1; }
+
+    .section-title {
+      font-family: 'Italiana', serif;
+      font-size: 52px;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      text-transform: uppercase;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    /* Editorial scroll gallery */
+    .gallery-editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .gallery-row {
+      display: grid;
+      min-height: 500px;
+    }
+
+    .gallery-row.full-width {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-row.split-left {
+      grid-template-columns: 60% 40%;
+    }
+
+    .gallery-row.split-right {
+      grid-template-columns: 40% 60%;
+    }
+
+    .gallery-row.triple {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out, transform 0.6s ease;
+    }
+
+    .gallery-item img.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    .gallery-text-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: var(--charcoal);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .gallery-text-block.is-visible { opacity: 1; transform: translateY(0); }
+
+    .gallery-text-block .label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .gallery-text-block h3 {
+      font-family: 'Italiana', serif;
+      font-size: 38px;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .gallery-text-block p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(240,235,227,0.65);
+      max-width: 320px;
+    }
+
+    .gallery-text-block .price-tag {
+      margin-top: 28px;
+      display: inline-block;
+      font-family: 'Italiana', serif;
+      font-size: 28px;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    /* SECOND MARQUEE */
+    .marquee-strip-dark {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(184,144,92,0.15);
+      border-bottom: 1px solid rgba(184,144,92,0.15);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-strip-dark .marquee-inner {
+      animation: marquee 50s linear infinite reverse;
+    }
+
+    .marquee-strip-dark span {
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(184,144,92,0.6);
+      padding: 0 28px;
+    }
+
+    /* ABOUT SECTION */
+    #about {
+      background: var(--charcoal);
+      padding: 140px 0;
+      position: relative;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+
+    .about-image-wrap img.is-visible { clip-path: inset(0 0 0 0); }
+
+    .about-text {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+
+    .about-text.is-visible { opacity: 1; transform: translateY(0); }
+
+    .about-text .section-num {
+      display: block;
+      text-align: left;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .about-text .section-num.is-visible { opacity: 1; }
+
+    .about-text .section-title {
+      text-align: left;
+      margin-bottom: 32px;
+    }
+
+    .about-text blockquote {
+      font-family: 'Italiana', serif;
+      font-size: 26px;
+      font-style: italic;
+      color: var(--gold);
+      line-height: 1.4;
+      border-left: 2px solid var(--gold);
+      padding-left: 24px;
+      margin: 0 0 32px 0;
+      letter-spacing: 0.02em;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: rgba(240,235,227,0.7);
+      margin-bottom: 20px;
+    }
+
+    .about-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px 0;
+    }
+
+    .about-spec {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-spec-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(184,144,92,0.15);
+      color: rgba(240,235,227,0.55);
+    }
+
+    .about-spec-row strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    /* SERVICES SECTION */
+    #services {
+      background: var(--dark);
+      padding: 140px 48px;
+      position: relative;
+    }
+
+    #services::before {
+      content: 'IMAGES';
+      position: absolute;
+      bottom: 20px;
+      right: 40px;
+      font-family: 'Italiana', serif;
+      font-size: 180px;
+      color: var(--cream);
+      opacity: 0.02;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--charcoal);
+      padding: 56px 44px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .service-card.is-visible { opacity: 1; transform: translateY(0); }
+    .service-card:nth-child(2) { transition-delay: 0.12s; }
+    .service-card:nth-child(3) { transition-delay: 0.24s; }
+
+    .service-num {
+      font-family: 'Italiana', serif;
+      font-size: 72px;
+      color: rgba(184,144,92,0.15);
+      line-height: 1;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .service-name {
+      font-family: 'Italiana', serif;
+      font-size: 32px;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(240,235,227,0.55);
+      margin-bottom: 28px;
+    }
+
+    .service-price {
+      font-family: 'Italiana', serif;
+      font-size: 40px;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+
+    .service-price span {
+      font-family: 'Karla', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,235,227,0.4);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* CTA SECTION */
+    #cta {
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cta .cta-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    #cta .cta-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: brightness(0.35) saturate(0.7);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px 48px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .cta-content.is-visible { opacity: 1; transform: translateY(0); }
+
+    .cta-content .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .cta-content h2 {
+      font-family: 'Italiana', serif;
+      font-size: 72px;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .cta-content .sub {
+      font-size: 15px;
+      color: rgba(240,235,227,0.6);
+      letter-spacing: 0.06em;
+      margin-bottom: 44px;
+      display: block;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 16px 48px;
+      border: 1px solid var(--gold);
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* CONTACT SECTION */
+    #contact {
+      background: var(--charcoal);
+      padding: 140px 48px;
+    }
+
+    .contact-layout {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-layout .section-num { display: block; text-align: center; }
+
+    .contact-layout .section-title {
+      text-align: center;
+      margin: 0 auto 48px;
+    }
+
+    .contact-layout p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: rgba(240,235,227,0.6);
+      margin-bottom: 48px;
+    }
+
+    .contact-email {
+      font-family: 'Italiana', serif;
+      font-size: 32px;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 48px;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email:hover { color: var(--cream); }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .social-links a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,235,227,0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover { color: var(--gold); }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(184,144,92,0.15);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer .footer-name {
+      font-family: 'Italiana', serif;
+      font-size: 16px;
+      letter-spacing: 0.14em;
+      color: rgba(240,235,227,0.4);
+      text-transform: uppercase;
+    }
+
+    footer .footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: rgba(240,235,227,0.25);
+      text-transform: uppercase;
+    }
+
+    footer .footer-credit {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: rgba(184,144,92,0.3);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { display: none; }
+
+      .hero-studio-name { font-size: 42px; letter-spacing: 0.08em; }
+      .hero-bar { height: 60px; }
+
+      #stats { padding: 60px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(184,144,92,0.2); }
+      .stat-num { font-size: 64px; }
+
+      #gallery { padding: 80px 0; }
+      .gallery-row.split-left,
+      .gallery-row.split-right { grid-template-columns: 1fr; }
+      .gallery-row.triple { grid-template-columns: 1fr; }
+      .gallery-text-block { padding: 48px 28px; }
+
+      .about-layout { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
+      .about-image-wrap img { height: 400px; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      #services { padding: 80px 24px; }
+
+      .cta-content h2 { font-size: 44px; }
+
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+
+      .section-title { font-size: 38px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-studio-name { font-size: 30px; }
+      .stat-num { font-size: 52px; }
+      .cta-content h2 { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">Rumi Grey</a>
+    <ul>
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Sessions</a></li>
+      <li><a href="#contact">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Cinematic letterbox -->
+  <section id="hero">
+    <!-- Top black bar with studio name -->
+    <div class="hero-bar hero-bar-top">
+      <h1 class="hero-studio-name" id="heroName">Rumi Grey Images</h1>
+    </div>
+
+    <!-- Full-bleed image -->
+    <div class="hero-image-wrap">
+      <img
+        id="heroImg"
+        src="https://static.wixstatic.com/media/3fbc9e_720b1c8045b64c3db1583422b612216e~mv2_d_5184_3456_s_4_2.jpg"
+        alt="Rumi Grey Images — Boudoir Photography"
+        loading="eager"
+      >
+      <div class="hero-overlay"></div>
+    </div>
+
+    <!-- Bottom black bar with tagline -->
+    <div class="hero-bar hero-bar-bottom">
+      <p class="hero-tagline">Boudoir · Portrait · Bridal · Jacksonville, FL</p>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Boudoir</span><span>·</span>
+      <span>Bridal</span><span>·</span>
+      <span>Portrait</span><span>·</span>
+      <span>Jacksonville, FL</span><span>·</span>
+      <span>Intimate Portraiture</span><span>·</span>
+      <span>Luxury Experience</span><span>·</span>
+      <span>Boudoir</span><span>·</span>
+      <span>Bridal</span><span>·</span>
+      <span>Portrait</span><span>·</span>
+      <span>Jacksonville, FL</span><span>·</span>
+      <span>Intimate Portraiture</span><span>·</span>
+      <span>Luxury Experience</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-num">8+</span>
+        <span class="stat-label">Years of Experience</span>
+      </div>
+      <div class="stat-item" style="transition-delay: 0.12s;">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Sessions Completed</span>
+      </div>
+      <div class="stat-item" style="transition-delay: 0.24s;">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Specialties</span>
+      </div>
+      <div class="stat-item" style="transition-delay: 0.36s;">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Luxury Studio</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY — Editorial scroll -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-num">01 — Portfolio</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+
+    <div class="gallery-editorial">
+
+      <!-- Row 1: full width -->
+      <div class="gallery-row full-width" style="height: 580px;">
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_d460188b0f4344b2a49a996605d0bdaa~mv2_d_3456_4320_s_4_2.jpg"
+            alt="Boudoir portrait"
+            loading="lazy"
+          >
+        </div>
+      </div>
+
+      <!-- Row 2: 60% image left, text right -->
+      <div class="gallery-row split-left">
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_fc1680a72c8d43ff9d20def777f874ff~mv2.jpg"
+            alt="Portrait photography"
+            loading="lazy"
+          >
+        </div>
+        <div class="gallery-text-block">
+          <span class="label">Boudoir Experience</span>
+          <h3>Intimate.<br>Empowering.<br>Yours.</h3>
+          <p>A full boudoir session in our Jacksonville studio — thoughtfully lit, artfully composed, entirely private.</p>
+          <span class="price-tag">from $325</span>
+        </div>
+      </div>
+
+      <!-- Row 3: text left, 60% image right -->
+      <div class="gallery-row split-right">
+        <div class="gallery-text-block">
+          <span class="label">Bridal Boudoir</span>
+          <h3>The most<br>beautiful gift.</h3>
+          <p>A timeless gift for your partner — or simply a celebration of yourself as you step into a new chapter.</p>
+          <span class="price-tag">from $500</span>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_1f78d07d68c247ceaed79c68978d8f5a~mv2.jpg"
+            alt="Bridal boudoir"
+            loading="lazy"
+          >
+        </div>
+      </div>
+
+      <!-- Row 4: three equal columns -->
+      <div class="gallery-row triple" style="height: 460px;">
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_af00d55f3abb43fb80ed51cf107ea5a8~mv2.jpg"
+            alt="Portrait session"
+            loading="lazy"
+          >
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_307cae07361e4c1d8496d8278bb715cf~mv2_d_3450_2760_s_4_2.jpg"
+            alt="Natural light portrait"
+            loading="lazy"
+          >
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_a95ed7baa5ca42ed8e22598945dfc6d9~mv2_d_2592_1728_s_2.jpg"
+            alt="Outdoor portrait"
+            loading="lazy"
+          >
+        </div>
+      </div>
+
+      <!-- Row 5: full width -->
+      <div class="gallery-row full-width" style="height: 520px;">
+        <div class="gallery-item">
+          <img
+            src="https://static.wixstatic.com/media/3fbc9e_6f817f1450b14981923f0fad681dd756~mv2_d_5000_3333_s_4_2.jpg"
+            alt="Boudoir session"
+            loading="lazy"
+          >
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECOND MARQUEE -->
+  <div class="marquee-strip-dark" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Available for Bookings</span><span>·</span>
+      <span>Ponte Vedra Beach</span><span>·</span>
+      <span>Jacksonville FL</span><span>·</span>
+      <span>Bachelorette &amp; Bridal Parties</span><span>·</span>
+      <span>Outdoor Natural Light</span><span>·</span>
+      <span>Studio Sessions</span><span>·</span>
+      <span>Available for Bookings</span><span>·</span>
+      <span>Ponte Vedra Beach</span><span>·</span>
+      <span>Jacksonville FL</span><span>·</span>
+      <span>Bachelorette &amp; Bridal Parties</span><span>·</span>
+      <span>Outdoor Natural Light</span><span>·</span>
+      <span>Studio Sessions</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-layout">
+      <div class="about-image-wrap">
+        <img
+          src="https://static.wixstatic.com/media/3fbc9e_a144911684254a9b96403fc8b547829e~mv2.jpg"
+          alt="Kyle Martiny — Rumi Grey Images"
+          loading="lazy"
+        >
+      </div>
+      <div class="about-text">
+        <span class="section-num">02 — About</span>
+        <h2 class="section-title">The Artist</h2>
+        <blockquote>"Every woman deserves to see herself the way I see her through my lens."</blockquote>
+        <p>Kyle Martiny is the photographer behind Rumi Grey Images — a Jacksonville-based portrait studio specializing in boudoir, bridal, and intimate portraiture. With a background in outdoor natural light photography and an eye for warmth and authenticity, Kyle creates images that feel both timeless and deeply personal.</p>
+        <p>Serving Jacksonville, Ponte Vedra Beach, and all of Northeast Florida, Rumi Grey Images is the studio of choice for women who want to feel extraordinary in front of the camera.</p>
+        <div class="about-divider"></div>
+        <div class="about-spec">
+          <div class="about-spec-row">
+            <span>Location</span>
+            <strong>Jacksonville, FL</strong>
+          </div>
+          <div class="about-spec-row">
+            <span>Specialty</span>
+            <strong>Boudoir · Bridal · Portrait</strong>
+          </div>
+          <div class="about-spec-row">
+            <span>Studio</span>
+            <strong>Private — By Appointment</strong>
+          </div>
+          <div class="about-spec-row">
+            <span>Sessions</span>
+            <strong>Studio &amp; Outdoor</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header services-header">
+      <span class="section-num">03 — Sessions</span>
+      <h2 class="section-title">The Experience</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-num">01</span>
+        <div class="service-name">Mini Session</div>
+        <p class="service-desc">Perfect for a quick portrait session. Ideal for headshots, personal branding, or a first boudoir experience.</p>
+        <div class="service-price">$125 <span>starting price</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02</span>
+        <div class="service-name">Boudoir Experience</div>
+        <p class="service-desc">A full studio session with wardrobe, hair &amp; makeup styling guidance, and your most flattering looks captured beautifully.</p>
+        <div class="service-price">$325 <span>starting price</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03</span>
+        <div class="service-name">All Out Session</div>
+        <p class="service-desc">The complete luxury experience. Maximum time, multiple looks, full digital gallery, and premium print options.</p>
+        <div class="service-price">$500 <span>starting price</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section id="cta">
+    <div class="cta-bg">
+      <img
+        src="https://static.wixstatic.com/media/3fbc9e_fc1680a72c8d43ff9d20def777f874ff~mv2.jpg"
+        alt="Book your session"
+        loading="lazy"
+      >
+    </div>
+    <div class="cta-content">
+      <span class="eyebrow">Reserve Your Date</span>
+      <h2>Your story,<br>beautifully told.</h2>
+      <span class="sub">Limited sessions available each month.</span>
+      <a href="mailto:rumigreyimages@gmail.com" class="btn-primary">Book Your Session</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-layout">
+      <span class="section-num">04 — Contact</span>
+      <h2 class="section-title">Inquiries</h2>
+      <p>Ready to see yourself in a new light? Reach out to discuss availability, packages, and everything that goes into your session experience.</p>
+      <a href="mailto:rumigreyimages@gmail.com" class="contact-email">rumigreyimages@gmail.com</a>
+      <div class="social-links">
+        <a href="https://www.instagram.com/rumigreyimages" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://rumigreyimages.wixsite.com/rgimages" target="_blank" rel="noopener">Current Site</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Rumi Grey Images</span>
+    <span class="footer-copy">&copy; 2026 · Jacksonville, FL</span>
+    <span class="footer-credit">Design concept by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero name entrance animation
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroName').classList.add('loaded');
+        document.getElementById('heroImg').classList.add('loaded');
+      }, 100);
+    });
+
+    // IntersectionObserver for all scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Stat items
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+    // Section numbers and titles
+    document.querySelectorAll('.section-num, .section-title').forEach(el => observer.observe(el));
+
+    // Gallery images (trigger earlier)
+    const imgObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('is-visible');
+          }, i * 80);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.gallery-item img, .about-image-wrap img').forEach(el => imgObserver.observe(el));
+
+    // Text blocks
+    document.querySelectorAll('.gallery-text-block, .about-text, .cta-content').forEach(el => observer.observe(el));
+
+    // Service cards with stagger
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card').forEach(el => cardObserver.observe(el));
+
+    // Hero parallax
+    const heroImageWrap = document.querySelector('.hero-image-wrap img');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (heroImageWrap && scrollY < window.innerHeight) {
+        heroImageWrap.style.transform = `scale(1.0) translateY(${scrollY * 0.3}px)`;
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
