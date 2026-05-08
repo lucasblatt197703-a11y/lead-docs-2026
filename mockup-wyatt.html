@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wyatt Peck Photography — Daytona Beach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #F8F5F0;
+    --black: #0E0E0E;
+    --ocean: #1A3A4A;
+    --gold: #C8963C;
+    --sand: #D4BC8E;
+    --mid: #6B7B8A;
+    --light: #EDE8E1;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Libre Franklin', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ============ VERTICAL LABEL ============ */
+  .vertical-label {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center center;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--mid);
+    text-transform: uppercase;
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(248,245,240,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ============ HERO ============ */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--ocean);
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(14,14,14,0.55) 0%,
+      rgba(14,14,14,0.2) 60%,
+      rgba(14,14,14,0.05) 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 72px;
+    left: 60px;
+    max-width: 650px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 88px;
+    font-weight: 900;
+    line-height: 0.92;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+
+  .hero-sub {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(248,245,240,0.8);
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 14px 36px;
+    border: 1px solid var(--gold);
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.9s, transform 0.6s ease 0.9s, background 0.3s, color 0.3s;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .hero-loaded .hero-eyebrow,
+  .hero-loaded .hero-name,
+  .hero-loaded .hero-sub,
+  .hero-loaded .hero-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(248,245,240,0.5);
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(248,245,240,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gold);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { left: -100%; }
+    50% { left: 0; }
+    100% { left: 100%; }
+  }
+
+  /* ============ MARQUEE ============ */
+  .marquee-strip {
+    background: var(--ocean);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(248,245,240,0.6);
+    padding: 0 40px;
+  }
+
+  .marquee-inner span.dot {
+    color: var(--gold);
+    padding: 0;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ============ STATS ============ */
+  #stats {
+    background: var(--white);
+    padding: 80px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-bottom: 1px solid rgba(14,14,14,0.1);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 40px 20px;
+    border-right: 1px solid rgba(14,14,14,0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+
+  .stat-item:nth-child(2) { transition-delay: 0.1s; }
+  .stat-item:nth-child(3) { transition-delay: 0.2s; }
+  .stat-item:nth-child(4) { transition-delay: 0.3s; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--ocean);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ============ WORK SECTION ============ */
+  #work {
+    padding: 120px 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 64px;
+    overflow: hidden;
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--black);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* Staggered pairs gallery */
+  .gallery-pairs {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .gallery-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .gallery-pair.is-visible { opacity: 1; transform: translateY(0); }
+  .gallery-pair:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-pair:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-pair:nth-child(4) { transition-delay: 0.1s; }
+
+  /* Alternating vertical offset */
+  .gallery-pair:nth-child(odd) .img-right { margin-top: 60px; }
+  .gallery-pair:nth-child(even) .img-left { margin-top: 60px; }
+
+  .gallery-img-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gallery-img-wrap img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .gallery-img-wrap.is-visible img {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.9s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .gallery-img-wrap:hover img { transform: scale(1.03); }
+
+  .img-caption {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 14px;
+  }
+
+  /* ============ CTA STRIP ============ */
+  .cta-strip {
+    background: var(--ocean);
+    padding: 80px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .cta-strip-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--white);
+    max-width: 520px;
+    line-height: 1.2;
+  }
+
+  .cta-strip-text em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 44px;
+    background: var(--gold);
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .cta-btn:hover {
+    background: var(--sand);
+    transform: translateY(-2px);
+  }
+
+  /* ============ ABOUT ============ */
+  #about {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    background: var(--light);
+  }
+
+  .about-img-side {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-img-side.is-visible { opacity: 1; transform: translateX(0); }
+
+  .about-img-side img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-accent-line {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  .about-text-side {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .about-text-side.is-visible { opacity: 1; transform: translateX(0); }
+
+  .about-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .about-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ocean);
+    margin-bottom: 28px;
+  }
+
+  .about-body {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+
+  .about-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ocean);
+    border-left: 3px solid var(--gold);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+
+  .about-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .credential-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ocean);
+    letter-spacing: 0.05em;
+  }
+
+  .credential-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ============ SERVICES ============ */
+  #services {
+    padding: 120px 60px;
+    background: var(--white);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+
+  .service-card {
+    position: relative;
+    overflow: hidden;
+    height: 420px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+  .service-card:nth-child(2) { transition-delay: 0.15s; }
+  .service-card:nth-child(3) { transition-delay: 0.3s; }
+
+  .service-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .service-card:hover img { transform: scale(1.05); }
+
+  .service-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,30,45,0.85) 0%, rgba(10,30,45,0) 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 32px 28px;
+  }
+
+  .service-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .service-sub {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 6px;
+  }
+
+  /* ============ BIG CTA ============ */
+  #cta {
+    background: var(--black);
+    padding: 140px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: 'WYATT PECK';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 160px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.08em;
+  }
+
+  .cta-eyebrow {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 62px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 32px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-sub {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: rgba(248,245,240,0.6);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+
+  .cta-main-btn {
+    display: inline-block;
+    padding: 20px 60px;
+    background: var(--gold);
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    opacity: 0;
+    transform: translateY(20px);
+    /* transition handled below */
+  }
+
+  .cta-main-btn.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s, background 0.3s;
+  }
+
+  .cta-eyebrow.is-visible,
+  .cta-headline.is-visible,
+  .cta-sub.is-visible {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============ CONTACT ============ */
+  #contact {
+    padding: 100px 60px;
+    background: var(--light);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--ocean);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .contact-text p {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--black);
+    margin-bottom: 36px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-item {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ocean);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.3s;
+  }
+
+  .contact-item:hover { color: var(--gold); }
+
+  .contact-item-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    min-width: 80px;
+  }
+
+  .contact-form-side {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .contact-form-side.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-social {
+    margin-top: 40px;
+    display: flex;
+    gap: 24px;
+  }
+
+  .social-link {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .social-link:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ocean);
+    padding: 32px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+
+  .footer-copy {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(248,245,240,0.5);
+  }
+
+  .footer-credit {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(248,245,240,0.4);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .vertical-label { display: none; }
+
+    .hero-content { left: 24px; bottom: 60px; max-width: 90%; }
+    .hero-name { font-size: 52px; }
+
+    #stats {
+      grid-template-columns: 1fr 1fr;
+      padding: 40px 24px;
+    }
+
+    .stat-item { border: none; border-bottom: 1px solid rgba(14,14,14,0.1); }
+    .stat-number { font-size: 48px; }
+
+    #work { padding: 60px 24px; }
+
+    .gallery-pairs { gap: 40px; }
+    .gallery-pair {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .gallery-pair:nth-child(odd) .img-right,
+    .gallery-pair:nth-child(even) .img-left { margin-top: 0; }
+
+    .gallery-img-wrap img { height: 280px; }
+
+    .cta-strip {
+      flex-direction: column;
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .cta-strip-text { font-size: 30px; }
+
+    #about {
+      grid-template-columns: 1fr;
+      padding: 60px 24px;
+      gap: 40px;
+    }
+    .about-img-side img { height: 400px; }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .service-card { height: 300px; }
+
+    #services { padding: 60px 24px; }
+
+    #cta { padding: 80px 24px; }
+    .cta-headline { font-size: 38px; }
+    #cta::before { font-size: 60px; }
+
+    #contact {
+      grid-template-columns: 1fr;
+      padding: 60px 24px;
+      gap: 48px;
+    }
+    .contact-text h2 { font-size: 30px; }
+
+    footer {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+      padding: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 40px; }
+    .stat-number { font-size: 38px; }
+    .section-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Vertical label -->
+<div class="vertical-label">Daytona Beach &nbsp;&middot;&nbsp; Commercial &nbsp;&middot;&nbsp; 2026</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#hero" class="nav-logo">Wyatt Peck</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <img
+    class="hero-img"
+    src="https://static.wixstatic.com/media/a0c5f8_fe68f596e9ab438da8b773d84cb4f889~mv2.jpg"
+    alt="Wyatt Peck Photography hero"
+    loading="eager"
+  />
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Daytona Beach, Florida</p>
+    <h1 class="hero-name">Wyatt<br>Peck</h1>
+    <p class="hero-sub">Commercial &nbsp;·&nbsp; Wedding &nbsp;·&nbsp; Portrait &nbsp;·&nbsp; Editorial</p>
+    <a href="#work" class="hero-cta">View Work</a>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Commercial Photography</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Wedding &amp; Portraits</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Editorial</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Architecture</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Product Photography</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Daytona Beach, FL</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Commercial Photography</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Wedding &amp; Portraits</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Editorial</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Architecture</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Product Photography</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+    <span>Daytona Beach, FL</span><span class="dot">&nbsp;&middot;&nbsp;</span>
+  </div>
+</div>
+
+<!-- Stats -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">14+</span>
+    <span class="stat-label">Years Experience</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">5+</span>
+    <span class="stat-label">Specialties</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">B.B.A.</span>
+    <span class="stat-label">Stetson University</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">FL</span>
+    <span class="stat-label">Daytona Beach Based</span>
+  </div>
+</section>
+
+<!-- Work / Gallery -->
+<section id="work">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+
+  <div class="gallery-pairs">
+
+    <!-- Pair 1: commercial + wedding -->
+    <div class="gallery-pair">
+      <div class="img-left">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_a8578342ae3f4cb986a04feee21bf485~mv2.jpg"
+            alt="Commercial photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Commercial</p>
+      </div>
+      <div class="img-right">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_bea7a5a7ffbc4ceba2320805acade9db~mv2_d_2000_1333_s_2.jpg"
+            alt="Wedding photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Wedding</p>
+      </div>
+    </div>
+
+    <!-- Pair 2: products + portrait -->
+    <div class="gallery-pair">
+      <div class="img-left">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_226b840f924e41f1a65b9c8bc6d4c7b1~mv2.jpg"
+            alt="Product photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Products</p>
+      </div>
+      <div class="img-right">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_903c71af0afb437fb4b4e9bcd53b5235~mv2_d_1333_2000_s_2.jpg"
+            alt="Portrait photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Portraiture</p>
+      </div>
+    </div>
+
+    <!-- Pair 3: architecture + editorial -->
+    <div class="gallery-pair">
+      <div class="img-left">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_346d911b2863438e8abae16a45b99b79~mv2_d_3867_2578_s_4_2.jpg"
+            alt="Architecture photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Architecture</p>
+      </div>
+      <div class="img-right">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_ceb8ff6442514740b5737b1cf1546a84~mv2.jpg"
+            alt="Editorial photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Editorial</p>
+      </div>
+    </div>
+
+    <!-- Pair 4: family + wedding 2 -->
+    <div class="gallery-pair">
+      <div class="img-left">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_5e74af77123a4b58b159e3050ad2ada6~mv2.jpg"
+            alt="Family photography"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Family</p>
+      </div>
+      <div class="img-right">
+        <div class="gallery-img-wrap">
+          <img
+            src="https://static.wixstatic.com/media/a0c5f8_0c9f1a85d40142cf974b38d9265ccf34~mv2.jpg"
+            alt="Wedding ceremony"
+            loading="lazy"
+          />
+        </div>
+        <p class="img-caption">Wedding</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA strip -->
+<div class="cta-strip">
+  <p class="cta-strip-text">
+    Every image tells a story.<br>
+    Let's tell <em>yours.</em>
+  </p>
+  <a href="#contact" class="cta-btn">Get in Touch</a>
+</div>
+
+<!-- Services -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">What I Shoot</h2>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <img
+        src="https://static.wixstatic.com/media/a0c5f8_3128834e95724226a7c40af4dabe563f~mv2.jpg"
+        alt="Commercial photography"
+        loading="lazy"
+      />
+      <div class="service-overlay">
+        <div>
+          <div class="service-label">Commercial</div>
+          <div class="service-sub">Brands &amp; Products</div>
+        </div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img
+        src="https://static.wixstatic.com/media/a0c5f8_64e1d32925a64a9eabc97b87b764a953~mv2_d_2000_3000_s_2.jpg"
+        alt="Wedding photography"
+        loading="lazy"
+      />
+      <div class="service-overlay">
+        <div>
+          <div class="service-label">Wedding</div>
+          <div class="service-sub">Full Day Coverage</div>
+        </div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img
+        src="https://static.wixstatic.com/media/a0c5f8_e1c0e0d2635149db88dd2c3e6059eb2d~mv2_d_5344_3236_s_4_2.jpg"
+        alt="Portrait photography"
+        loading="lazy"
+      />
+      <div class="service-overlay">
+        <div>
+          <div class="service-label">Portraiture</div>
+          <div class="service-sub">Personal &amp; Editorial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about-img-side">
+    <img
+      src="https://static.wixstatic.com/media/a0c5f8_1f442fcd2c884d52bf12bb4e66256048~mv2_d_2500_1667_s_2.jpg"
+      alt="Wyatt Peck"
+      loading="lazy"
+    />
+    <div class="about-accent-line"></div>
+  </div>
+  <div class="about-text-side">
+    <p class="about-eyebrow">03 &nbsp; About</p>
+    <h2 class="about-headline">Built for the work.<br>Wired for photography.</h2>
+    <p class="about-body">
+      Wyatt Peck has been behind the lens since 2011, building a versatile practice that spans commercial campaigns, wedding days, editorial sessions, and architectural documentation. Trained at Daytona State College and Stetson University, he brings both technical rigor and entrepreneurial clarity to every project.
+    </p>
+    <blockquote class="about-quote">
+      "I want to bring you the quality that you deserve."
+    </blockquote>
+    <div class="about-credentials">
+      <div class="credential-item">
+        <span class="credential-dot"></span>
+        <span>A.S. Photographic Studies — Daytona State College, 2017</span>
+      </div>
+      <div class="credential-item">
+        <span class="credential-dot"></span>
+        <span>B.B.A. Entrepreneurship — Stetson University, 2020</span>
+      </div>
+      <div class="credential-item">
+        <span class="credential-dot"></span>
+        <span>Commercial &amp; Wedding photographer since 2011</span>
+      </div>
+      <div class="credential-item">
+        <span class="credential-dot"></span>
+        <span>Based in Daytona Beach, FL · Available statewide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Big CTA -->
+<section id="cta">
+  <p class="cta-eyebrow">Book a Session</p>
+  <h2 class="cta-headline">Your vision. Professional execution.</h2>
+  <p class="cta-sub">
+    Whether it's a product launch, a wedding day, or a portrait session — let's create images that work as hard as you do.
+  </p>
+  <a href="mailto:Wyatt@WyattPeckPhotography.com" class="cta-main-btn">Start a Project</a>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-text">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title" style="font-size:30px;">Get in Touch</h2>
+    </div>
+    <p>
+      Ready to collaborate? Reach out and let's talk about your project — commercial, wedding, portrait, or something entirely different.
+    </p>
+    <div class="contact-details">
+      <a href="mailto:Wyatt@WyattPeckPhotography.com" class="contact-item">
+        <span class="contact-item-label">Email</span>
+        <span>Wyatt@WyattPeckPhotography.com</span>
+      </a>
+      <a href="tel:3862996315" class="contact-item">
+        <span class="contact-item-label">Phone</span>
+        <span>(386) 299-6315</span>
+      </a>
+      <div class="contact-item">
+        <span class="contact-item-label">Location</span>
+        <span>Daytona Beach, FL</span>
+      </div>
+    </div>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/wyattpeckphoto" target="_blank" class="social-link">Instagram</a>
+      <a href="https://wyattpeckphotography.com" target="_blank" class="social-link">Website</a>
+    </div>
+  </div>
+  <div class="contact-form-side">
+    <img
+      src="https://static.wixstatic.com/media/a0c5f8_5c6eac9ed98540ec8068abcc8ac0aede~mv2.jpg"
+      alt="Contact"
+      loading="lazy"
+      style="width:100%; height:380px; object-fit:cover; display:block;"
+    />
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-name">Wyatt Peck Photography</div>
+  <div class="footer-copy">&copy; 2026 Wyatt Peck Photography LLC · Daytona Beach, FL</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+// Hero load animation
+window.addEventListener('load', () => {
+  document.getElementById('hero').classList.add('hero-loaded');
+});
+
+// Hero parallax
+const heroImg = document.querySelector('.hero-img');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    heroImg.style.transform = `translateY(${scrollY * 0.35}px)`;
+  }
+}, { passive: true });
+
+// IntersectionObserver for all scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      // Stagger gallery image wraps in same pair
+      if (entry.target.classList.contains('gallery-pair')) {
+        const wraps = entry.target.querySelectorAll('.gallery-img-wrap');
+        wraps.forEach((wrap, i) => {
+          setTimeout(() => wrap.classList.add('is-visible'), i * 120);
+        });
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe elements
+document.querySelectorAll(
+  '.stat-item, .gallery-pair, .section-title, .about-img-side, .about-text-side, .service-card, .cta-eyebrow, .cta-headline, .cta-sub, .cta-main-btn, .contact-form-side'
+).forEach(el => observer.observe(el));
+
+// Separate observer for gallery img wraps (lower threshold)
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      imgObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.gallery-img-wrap').forEach(el => imgObserver.observe(el));
+</script>
+</body>
+</html>
