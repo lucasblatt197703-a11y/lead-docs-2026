@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brittany Preble Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #F7F3EE;
+      --warm-white: #FDFAF6;
+      --gold:    #C9A97A;
+      --dusk:    #5A4A3A;
+      --deep:    #2C1F14;
+      --coastal: #8BA8A0;
+      --mist:    #E8DDD4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--deep);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 56px;
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO — full-bleed image, text pinned bottom-left ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/d481a1_ebfb63da30a94ec9856df74c909431a4~mv2_d_7360_4912_s_4_2.jpg/v1/fill/w_1600,h_1067,al_c,q_85/d481a1_ebfb63da30a94ec9856df74c909431a4~mv2_d_7360_4912_s_4_2.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      will-change: transform;
+    }
+
+    /* subtle bottom gradient so text is readable without overlay */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      background: linear-gradient(to top, rgba(30,18,10,0.72) 0%, transparent 100%);
+    }
+
+    .hero-text {
+      position: absolute;
+      bottom: 72px;
+      left: 64px;
+      z-index: 2;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 88px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      display: block;
+      /* letter-spacing animation */
+      transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hero-name.animate-ls { letter-spacing: 0.05em; }
+
+    .hero-sub {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 18px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 80px;
+      right: 60px;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      writing-mode: vertical-lr;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* ── SECTION DIVIDER LINE ────────────────────────────── */
+    .section-line {
+      display: block;
+      width: 30%;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto;
+    }
+
+    /* ── MARQUEE STRIP ───────────────────────────────────── */
+    .marquee-strip {
+      background: var(--deep);
+      padding: 16px 0;
+      overflow: hidden;
+    }
+
+    .marquee-inner {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: marquee 40s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee-inner span {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 0 32px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ───────────────────────────────────────────── */
+    .stats {
+      padding: 100px 64px;
+      background: var(--sand);
+      text-align: center;
+    }
+
+    .stats-inner {
+      display: flex;
+      justify-content: center;
+      gap: 96px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item { display: flex; flex-direction: column; align-items: center; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 96px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--dusk);
+      /* clip-path animation starts here */
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .stat-number.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--coastal);
+      margin-top: 12px;
+      font-weight: 400;
+    }
+
+    /* ── SECTION TITLE ───────────────────────────────────── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--dusk);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      display: block;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ── GALLERY — masonry ────────────────────────────────── */
+    .gallery {
+      padding: 80px 48px 120px;
+      background: var(--warm-white);
+    }
+
+    .masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      display: block;
+      /* image mask reveal from bottom */
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+
+    .masonry-item.is-visible { clip-path: inset(0 0 0 0); }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .masonry-item:hover img { transform: scale(1.02); }
+
+    /* ── DIVIDER ──────────────────────────────────────────── */
+    .divider { text-align: center; padding: 40px 0; }
+
+    /* ── ABOUT — side-by-side minimal ───────────────────── */
+    .about {
+      padding: 120px 64px;
+      background: var(--sand);
+    }
+
+    .about-inner {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-portrait {
+      flex: 0 0 42%;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out 0.1s;
+    }
+
+    .about-portrait.is-visible { clip-path: inset(0 0 0 0); }
+
+    .about-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-divider-line {
+      flex: 0 0 1px;
+      background: var(--gold);
+      margin: 0 56px;
+    }
+
+    .about-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+
+    .about-text.is-visible { opacity: 1; transform: translateY(0); }
+
+    .about-text .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .about-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--dusk);
+      line-height: 1.2;
+      margin-bottom: 28px;
+      letter-spacing: 0.06em;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--dusk);
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--coastal);
+      line-height: 1.6;
+      border-left: 2px solid var(--gold);
+      padding-left: 24px;
+      margin: 32px 0;
+    }
+
+    /* ── CTA SECTION ─────────────────────────────────────── */
+    .cta-section {
+      padding: 140px 64px;
+      background: var(--dusk);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/d481a1_684117a549a0430fadb32a18cb8063a5~mv2.jpg/v1/fill/w_1400,h_600,al_c,q_80/d481a1_684117a549a0430fadb32a18cb8063a5~mv2.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      opacity: 0.25;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .cta-content.is-visible { opacity: 1; transform: translateY(0); }
+
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 58px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: 0.08em;
+      margin-bottom: 40px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 52px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 400;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .cta-btn:hover {
+      background: var(--gold);
+      color: var(--deep);
+    }
+
+    /* ── CONTACT ─────────────────────────────────────────── */
+    .contact {
+      padding: 100px 64px;
+      background: var(--warm-white);
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--dusk);
+      margin-bottom: 16px;
+    }
+
+    .contact p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--coastal);
+      letter-spacing: 0.04em;
+      margin-bottom: 40px;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--dusk);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+
+    .contact-email:hover { color: var(--gold); }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      margin-top: 40px;
+      list-style: none;
+    }
+
+    .social-links a {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--coastal);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover { color: var(--gold); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: var(--deep);
+      padding: 36px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    footer .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+    }
+
+    footer .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 22px 28px; }
+      .nav-links { gap: 24px; }
+      .hero-name { font-size: 54px; }
+      .hero-text { left: 28px; bottom: 52px; }
+      .hero-scroll { display: none; }
+      .stats { padding: 72px 28px; }
+      .stats-inner { gap: 48px; }
+      .stat-number { font-size: 64px; }
+      .gallery { padding: 60px 20px 80px; }
+      .masonry { columns: 2; }
+      .about { padding: 80px 28px; }
+      .about-inner { flex-direction: column; }
+      .about-portrait { flex: none; height: 400px; }
+      .about-divider-line { width: 30%; height: 1px; margin: 40px 0; }
+      .cta-section { padding: 100px 28px; }
+      .cta-heading { font-size: 38px; }
+      .contact { padding: 80px 28px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 40px; letter-spacing: 0.12em; }
+      .masonry { columns: 1; }
+      .stats-inner { gap: 36px; }
+      .stat-number { font-size: 52px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Brittany Preble</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Inquiries</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — full-bleed, text pinned bottom-left -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-text">
+      <span class="hero-name" id="heroName">Brittany Preble</span>
+      <span class="hero-sub">Wedding &amp; Portrait Photographer &nbsp;·&nbsp; Northwest Florida</span>
+    </div>
+    <span class="hero-scroll">Scroll to explore</span>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Weddings</span><span>·</span>
+      <span>Portraits</span><span>·</span>
+      <span>Northwest Florida</span><span>·</span>
+      <span>Pensacola Beach</span><span>·</span>
+      <span>Destin</span><span>·</span>
+      <span>30A</span><span>·</span>
+      <span>Gulf Coast</span><span>·</span>
+      <span>Destination</span><span>·</span>
+      <!-- duplicate for seamless loop -->
+      <span>Weddings</span><span>·</span>
+      <span>Portraits</span><span>·</span>
+      <span>Northwest Florida</span><span>·</span>
+      <span>Pensacola Beach</span><span>·</span>
+      <span>Destin</span><span>·</span>
+      <span>30A</span><span>·</span>
+      <span>Gulf Coast</span><span>·</span>
+      <span>Destination</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-number" data-target="200">200+</span>
+        <span class="stat-label">Sessions &amp; Weddings</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="6">6+</span>
+        <span class="stat-label">Years Shooting</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="4">4</span>
+        <span class="stat-label">Gulf Coast Counties</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER -->
+  <div class="divider"><span class="section-line"></span></div>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="section-header">
+      <span class="section-eyebrow">Portfolio</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+    <div class="masonry">
+      <div class="masonry-item" style="transition-delay: 0ms;">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_ebfb63da30a94ec9856df74c909431a4~mv2_d_7360_4912_s_4_2.jpg/v1/fill/w_800,h_534,al_c,q_80/d481a1_ebfb63da30a94ec9856df74c909431a4~mv2_d_7360_4912_s_4_2.jpg"
+          alt="Wedding — Northwest Florida"
+          loading="lazy">
+      </div>
+      <div class="masonry-item" style="transition-delay: 100ms;">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_bcb209f051c842fc95eb34ce7aacb8ba~mv2_d_3281_4921_s_4_2.jpg/v1/fill/w_600,h_900,al_c,q_80/d481a1_bcb209f051c842fc95eb34ce7aacb8ba~mv2_d_3281_4921_s_4_2.jpg"
+          alt="Portrait session"
+          loading="lazy">
+      </div>
+      <div class="masonry-item" style="transition-delay: 200ms;">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_88edb7acdda84295b0b4dd200b8982da~mv2.jpg/v1/fill/w_700,h_467,al_c,q_80/d481a1_88edb7acdda84295b0b4dd200b8982da~mv2.jpg"
+          alt="Gulf Coast wedding"
+          loading="lazy">
+      </div>
+      <div class="masonry-item" style="transition-delay: 300ms;">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_4b9cfbaa93e54713ac5192b7a189ca26~mv2.jpg/v1/fill/w_800,h_534,al_c,q_80/d481a1_4b9cfbaa93e54713ac5192b7a189ca26~mv2.jpg"
+          alt="Couples photography"
+          loading="lazy">
+      </div>
+      <div class="masonry-item" style="transition-delay: 400ms;">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_684117a549a0430fadb32a18cb8063a5~mv2.jpg/v1/fill/w_700,h_467,al_c,q_80/d481a1_684117a549a0430fadb32a18cb8063a5~mv2.jpg"
+          alt="Wedding portrait"
+          loading="lazy">
+      </div>
+      <div class="masonry-item" style="transition-delay: 100ms;">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_bcb209f051c842fc95eb34ce7aacb8ba~mv2_d_3281_4921_s_4_2.jpg/v1/fill/w_600,h_800,al_c,q_80/d481a1_bcb209f051c842fc95eb34ce7aacb8ba~mv2_d_3281_4921_s_4_2.jpg"
+          alt="Florida beach portrait"
+          loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER -->
+  <div class="divider"><span class="section-line"></span></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-portrait">
+        <img
+          src="https://static.wixstatic.com/media/d481a1_ebfb63da30a94ec9856df74c909431a4~mv2_d_7360_4912_s_4_2.jpg/v1/fill/w_700,h_900,al_c,q_80/d481a1_ebfb63da30a94ec9856df74c909431a4~mv2_d_7360_4912_s_4_2.jpg"
+          alt="Brittany Preble"
+          loading="lazy">
+      </div>
+      <div class="about-divider-line"></div>
+      <div class="about-text">
+        <span class="eyebrow">About</span>
+        <h2>Light, Feeling,<br>& Gulf Coast Magic</h2>
+        <blockquote class="about-quote">
+          "I believe every couple deserves images that feel as real as the moment they lived."
+        </blockquote>
+        <p>
+          Brittany Preble is a lifestyle photographer based on the Northwest Florida Panhandle, serving the coastal communities of Pensacola, Destin, Fort Walton Beach, and 30A. With a specialty in weddings and portraits, her work is defined by genuine emotion, golden-hour light, and the unhurried beauty of the Gulf Coast.
+        </p>
+        <p>
+          Available for weddings, engagements, family sessions, and destination travel across Florida and beyond.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE 2 -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Available for Destination Weddings</span><span>·</span>
+      <span>Engagements</span><span>·</span>
+      <span>Family Sessions</span><span>·</span>
+      <span>Gulf Coast · 30A · Destin · Pensacola</span><span>·</span>
+      <span>Available for Destination Weddings</span><span>·</span>
+      <span>Engagements</span><span>·</span>
+      <span>Family Sessions</span><span>·</span>
+      <span>Gulf Coast · 30A · Destin · Pensacola</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact-cta">
+    <div class="cta-bg"></div>
+    <div class="cta-content">
+      <p class="cta-eyebrow">Book Your Session</p>
+      <h2 class="cta-heading">Your day,<br>beautifully remembered.</h2>
+      <a href="mailto:brittanypreblephotography@gmail.com" class="cta-btn">Start a Conversation</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <h2>Inquiries</h2>
+    <p>Weddings · Portraits · Elopements · Gulf Coast &amp; Beyond</p>
+    <a href="mailto:brittanypreblephotography@gmail.com" class="contact-email">
+      brittanypreblephotography@gmail.com
+    </a>
+    <ul class="social-links">
+      <li><a href="https://www.instagram.com/brittany_preble_photography/" target="_blank">Instagram</a></li>
+      <li><a href="https://brittanypreblephotog.wixsite.com/brittanypreblephotog" target="_blank">Current Site</a></li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Brittany Preble Photography</span>
+    <span class="footer-copy">&copy; 2026 · Northwest Florida</span>
+    <span class="footer-credit">Design concept by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // ── Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.backgroundPositionY = (window.scrollY * 0.4) + 'px';
+    }, { passive: true });
+
+    // ── Hero name letter-spacing animate on load
+    const heroName = document.getElementById('heroName');
+    setTimeout(() => { heroName.classList.add('animate-ls'); }, 120);
+
+    // ── IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Section titles (clip-path sweep)
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+    // Eyebrows (fade + rise)
+    document.querySelectorAll('.section-eyebrow').forEach(el => observer.observe(el));
+
+    // Stat numbers (clip-path sweep)
+    document.querySelectorAll('.stat-number').forEach((el, i) => {
+      el.style.transitionDelay = (i * 140) + 'ms';
+      observer.observe(el);
+    });
+
+    // Masonry items (image mask reveal from bottom)
+    document.querySelectorAll('.masonry-item').forEach(el => observer.observe(el));
+
+    // About portrait
+    document.querySelectorAll('.about-portrait').forEach(el => observer.observe(el));
+
+    // About text
+    document.querySelectorAll('.about-text').forEach(el => observer.observe(el));
+
+    // CTA content
+    document.querySelectorAll('.cta-content').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
