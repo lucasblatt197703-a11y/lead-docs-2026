@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muddy Mama Photography — Fort Myers, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --warm-cream: #F7F2EA;
+      --deep-earth: #2C1F14;
+      --golden-hour: #C8892A;
+      --sage-green: #6B7C5A;
+      --sunset-rust: #A94A2B;
+      --light-linen: #EDE7D9;
+      --mid-brown: #7A5C3A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--warm-cream);
+      color: var(--deep-earth);
+      overflow-x: hidden;
+    }
+
+    /* ===================== NAV ===================== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      mix-blend-mode: normal;
+      background: rgba(247, 242, 234, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(44, 31, 20, 0.08);
+    }
+    .nav-logo {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--deep-earth);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--deep-earth);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--golden-hour);
+    }
+
+    /* ===================== HERO — ASYMMETRIC SPLIT ===================== */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-side {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+    .hero-image-side img.loaded {
+      transform: scale(1.0);
+    }
+    .hero-text-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 56px 80px 56px;
+      background: var(--warm-cream);
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--golden-hour);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Lora', serif;
+      font-size: 78px;
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: 0.06em;
+      color: var(--deep-earth);
+      margin-bottom: 8px;
+      writing-mode: horizontal-tb;
+    }
+    .hero-name-line {
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .hero-name-line.visible { clip-path: inset(0 0% 0 0); }
+    .hero-name-line:nth-child(2) { transition-delay: 0.15s; }
+
+    .hero-tagline {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--mid-brown);
+      margin-top: 28px;
+      margin-bottom: 48px;
+      max-width: 320px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+    }
+    .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-cream);
+      background: var(--sunset-rust);
+      padding: 16px 36px;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.25s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.55s, transform 0.8s ease 0.55s, background 0.25s;
+    }
+    .hero-cta.visible { opacity: 1; transform: translateY(0); }
+    .hero-cta:hover { background: var(--golden-hour); }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid-brown);
+      opacity: 0.6;
+    }
+    .hero-scroll-hint::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--mid-brown);
+    }
+
+    /* ===================== MARQUEE ===================== */
+    .marquee-strip {
+      background: var(--deep-earth);
+      color: var(--warm-cream);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin: 0 32px;
+      opacity: 0.85;
+    }
+    .marquee-inner span.dot {
+      color: var(--golden-hour);
+      margin: 0 8px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===================== STATS ===================== */
+    #stats {
+      background: var(--light-linen);
+      padding: 80px 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .section-number-bg {
+      position: absolute;
+      top: -20px;
+      left: 48px;
+      font-family: 'Lora', serif;
+      font-size: 180px;
+      font-weight: 700;
+      color: var(--deep-earth);
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+      select: none;
+    }
+    .stat-item {
+      padding: 40px 32px;
+      border-left: 1px solid rgba(44, 31, 20, 0.12);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item:first-child { border-left: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2) { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) { transition-delay: 0.3s; }
+    .stat-number {
+      font-family: 'Lora', serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--golden-hour);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid-brown);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ===================== GALLERY ===================== */
+    #gallery {
+      padding: 120px 60px;
+      position: relative;
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+    .section-num {
+      font-family: 'Lora', serif;
+      font-size: 96px;
+      font-weight: 700;
+      color: var(--deep-earth);
+      opacity: 0.06;
+      line-height: 0.85;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 38px;
+      font-weight: 600;
+      color: var(--deep-earth);
+      line-height: 1.1;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+    .section-subtitle {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--mid-brown);
+      margin-top: 12px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+    .section-subtitle.visible { opacity: 1; transform: translateY(0); }
+
+    .masonry-grid {
+      columns: 3;
+      column-gap: 12px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .masonry-item.visible img {
+      clip-path: inset(0% 0 0 0);
+    }
+    .masonry-item:nth-child(2) { transition-delay: 0.1s; }
+    .masonry-item:nth-child(3) { transition-delay: 0.2s; }
+    .masonry-item:nth-child(4) { transition-delay: 0.15s; }
+    .masonry-item:nth-child(5) { transition-delay: 0.25s; }
+    .masonry-item:nth-child(6) { transition-delay: 0.05s; }
+    .masonry-item:nth-child(7) { transition-delay: 0.2s; }
+    .masonry-item:nth-child(8) { transition-delay: 0.1s; }
+
+    .masonry-item .img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 16px 16px;
+      background: linear-gradient(transparent, rgba(44,31,20,0.6));
+      color: rgba(247,242,234,0.9);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .masonry-item:hover .img-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===================== FEATURED WORK ===================== */
+    #featured {
+      padding: 80px 0;
+      background: var(--deep-earth);
+      overflow: hidden;
+    }
+    .featured-inner {
+      padding: 0 60px;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 60px;
+    }
+    .featured-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .featured-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .featured-item:hover img { transform: scale(1.03); }
+    .featured-item.tall {
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+    .featured-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-family: 'Lora', serif;
+      font-size: 13px;
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(247,242,234,0.9);
+      letter-spacing: 0.06em;
+    }
+
+    .featured-title .section-title {
+      color: var(--warm-cream);
+    }
+    .featured-title .section-num {
+      color: var(--warm-cream);
+    }
+    .featured-title .section-subtitle {
+      color: rgba(237,231,217,0.7);
+    }
+
+    /* ===================== ABOUT ===================== */
+    #about {
+      padding: 140px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .about-image-wrap.visible {
+      clip-path: inset(0% 0 0 0);
+    }
+    .about-image-wrap img {
+      width: 100%;
+      display: block;
+    }
+    .about-vertical-line {
+      position: absolute;
+      left: -24px;
+      top: 40px;
+      bottom: 40px;
+      width: 1px;
+      background: var(--golden-hour);
+    }
+    .about-text {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    }
+    .about-text.visible { opacity: 1; transform: translateX(0); }
+
+    .about-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--golden-hour);
+      margin-bottom: 20px;
+    }
+    .about-heading {
+      font-family: 'Lora', serif;
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--deep-earth);
+      margin-bottom: 28px;
+    }
+    .about-body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--mid-brown);
+      margin-bottom: 24px;
+    }
+    .about-pullquote {
+      font-family: 'Lora', serif;
+      font-size: 20px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--golden-hour);
+      line-height: 1.5;
+      border-left: 3px solid var(--golden-hour);
+      padding-left: 20px;
+      margin: 32px 0;
+    }
+    .about-contact-info {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .about-contact-info a {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--sage-green);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .about-contact-info a:hover { color: var(--golden-hour); }
+
+    /* ===================== SERVICES ===================== */
+    #services {
+      background: var(--light-linen);
+      padding: 120px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      border: 1px solid rgba(44,31,20,0.12);
+    }
+    .service-card {
+      padding: 48px 40px;
+      border-right: 1px solid rgba(44,31,20,0.12);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .service-card:last-child { border-right: none; }
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-card:nth-child(2) { transition-delay: 0.1s; }
+    .service-card:nth-child(3) { transition-delay: 0.2s; }
+
+    .service-num {
+      font-family: 'Lora', serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--golden-hour);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .service-name {
+      font-family: 'Lora', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--deep-earth);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .service-desc {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--mid-brown);
+    }
+
+    /* ===================== BOLD CTA ===================== */
+    #cta-section {
+      background: var(--sunset-rust);
+      padding: 120px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .cta-heading {
+      font-family: 'Lora', serif;
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--warm-cream);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+    .cta-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    }
+    .cta-right.visible { opacity: 1; transform: translateX(0); }
+    .cta-subtext {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(247,242,234,0.85);
+      margin-bottom: 40px;
+    }
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sunset-rust);
+      background: var(--warm-cream);
+      padding: 18px 44px;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .cta-btn:hover {
+      background: var(--deep-earth);
+      color: var(--warm-cream);
+    }
+
+    /* ===================== CONTACT ===================== */
+    #contact {
+      padding: 120px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .contact-left.visible { opacity: 1; transform: translateY(0); }
+    .contact-right {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .contact-right.visible { opacity: 1; transform: translateY(0); }
+    .contact-heading {
+      font-family: 'Lora', serif;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--deep-earth);
+      margin-bottom: 24px;
+    }
+    .contact-desc {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--mid-brown);
+      margin-bottom: 40px;
+    }
+    .contact-link {
+      display: block;
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--golden-hour);
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--sunset-rust); }
+    .contact-detail {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--mid-brown);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .contact-area {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage-green);
+      margin-top: 32px;
+    }
+    .contact-image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: var(--deep-earth);
+      padding: 48px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(247,242,234,0.08);
+    }
+    .footer-logo {
+      font-family: 'Lora', serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,242,234,0.9);
+    }
+    .footer-copy {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      color: rgba(247,242,234,0.4);
+      letter-spacing: 0.05em;
+    }
+    .footer-credit {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      color: rgba(247,242,234,0.3);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 768px) {
+      #hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-image-side {
+        height: 55vw;
+        min-height: 280px;
+      }
+      .hero-text-side {
+        padding: 60px 28px 60px;
+      }
+      .hero-name { font-size: 52px; }
+      nav { padding: 18px 24px; }
+      .nav-links { gap: 20px; }
+      #stats {
+        grid-template-columns: 1fr 1fr;
+        padding: 60px 28px;
+      }
+      #gallery { padding: 80px 24px; }
+      .masonry-grid { columns: 2; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      #about { padding: 80px 28px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid rgba(44,31,20,0.12); }
+      #services { padding: 80px 28px; }
+      #cta-section { grid-template-columns: 1fr; padding: 80px 28px; gap: 32px; }
+      .cta-heading { font-size: 38px; }
+      #contact { grid-template-columns: 1fr; padding: 80px 28px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 36px 24px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+      .featured-inner { padding: 0 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 40px; }
+      #stats { grid-template-columns: 1fr 1fr; padding: 48px 16px; }
+      .stat-number { font-size: 52px; }
+      .masonry-grid { columns: 1; }
+      .section-num { font-size: 64px; }
+      .section-title { font-size: 28px; }
+      .contact-heading { font-size: 34px; }
+      .cta-heading { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Muddy Mama Photography</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Sessions</a></li>
+      <li><a href="#contact">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Asymmetric Split -->
+  <section id="hero">
+    <div class="hero-image-side">
+      <img
+        src="https://static.wixstatic.com/media/d952ee_13019b8603ed4288ac0764aae6f96c45~mv2.jpg"
+        alt="Family outdoor photography by Muddy Mama Photography"
+        loading="eager"
+        id="hero-img"
+      >
+    </div>
+    <div class="hero-text-side">
+      <p class="hero-eyebrow">Fort Myers, Florida · Family Photography</p>
+      <h1 class="hero-name">
+        <span class="hero-name-line">Muddy</span>
+        <span class="hero-name-line">Mama</span>
+      </h1>
+      <p class="hero-tagline">Real families. Real moments. The kind of photos you'll want framed on every wall in your house.</p>
+      <a href="#contact" class="hero-cta">Book a Session</a>
+      <div class="hero-scroll-hint">Scroll to explore</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Family</span><span class="dot">·</span>
+      <span>Lifestyle</span><span class="dot">·</span>
+      <span>Outdoor Sessions</span><span class="dot">·</span>
+      <span>Fort Myers, FL</span><span class="dot">·</span>
+      <span>Nature & Wildlife</span><span class="dot">·</span>
+      <span>Kids & Newborns</span><span class="dot">·</span>
+      <span>Southwest Florida</span><span class="dot">·</span>
+      <span>Family</span><span class="dot">·</span>
+      <span>Lifestyle</span><span class="dot">·</span>
+      <span>Outdoor Sessions</span><span class="dot">·</span>
+      <span>Fort Myers, FL</span><span class="dot">·</span>
+      <span>Nature & Wildlife</span><span class="dot">·</span>
+      <span>Kids & Newborns</span><span class="dot">·</span>
+      <span>Southwest Florida</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="section-number-bg">01</div>
+    <div class="stat-item">
+      <span class="stat-number">200+</span>
+      <span class="stat-label">Families Photographed</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">Years of Experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">SW</span>
+      <span class="stat-label">Florida Based</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Muddy Moments</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <h2 class="section-title">The Portfolio</h2>
+        <p class="section-subtitle">Outdoor sessions · Family lifestyle · Nature & wildlife</p>
+      </div>
+    </div>
+    <div class="masonry-grid">
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_9ed84bdeacba482f86bef344a8a743c1~mv2.jpg" alt="Family outdoor session" loading="lazy">
+        <div class="img-caption">Family Session</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_248bf6ac86614c83b5e0900d82d3e2bc~mv2.jpg" alt="Outdoor lifestyle photography" loading="lazy">
+        <div class="img-caption">Outdoor Lifestyle</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_5b4e0ec531a3484ab542b47c2771aa78~mv2.jpg" alt="Nature photography" loading="lazy">
+        <div class="img-caption">Nature & Wildlife</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_12f2c6a636b241ccb4b660730ae84876~mv2.jpg" alt="Family portrait" loading="lazy">
+        <div class="img-caption">Family Portrait</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_b83319eb33f148f5a211a7410d4e9f5b~mv2.jpg" alt="Lifestyle session" loading="lazy">
+        <div class="img-caption">Lifestyle</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_58a9d49af9ca409699950e3827cb5112~mv2.jpg" alt="Outdoor family" loading="lazy">
+        <div class="img-caption">Outdoor Family</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_757a936cac42462db4d513628b64beb3~mv2.jpg" alt="Photography session" loading="lazy">
+        <div class="img-caption">Session</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://static.wixstatic.com/media/d952ee_6870d0c77e764b249f778b2cf3e01efb~mv2.jpg" alt="Family photography Fort Myers" loading="lazy">
+        <div class="img-caption">Fort Myers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED DARK SECTION -->
+  <section id="featured">
+    <div class="featured-inner">
+      <div class="section-header featured-title">
+        <span class="section-num">03</span>
+        <div>
+          <h2 class="section-title">Featured Work</h2>
+          <p class="section-subtitle">Selected sessions from Southwest Florida</p>
+        </div>
+      </div>
+      <div class="featured-grid">
+        <div class="featured-item tall">
+          <img src="https://static.wixstatic.com/media/d952ee_d1dd8a83a17d4d3295ee086106a23fd1~mv2.jpg" alt="Featured family photography" loading="lazy">
+          <div class="featured-label">Southwest Florida Family</div>
+        </div>
+        <div class="featured-item">
+          <img src="https://static.wixstatic.com/media/d952ee_2583b40042cf4d869d086f41b9bff4a8~mv2.jpg" alt="Featured outdoor session" loading="lazy">
+          <div class="featured-label">Outdoor Lifestyle</div>
+        </div>
+        <div class="featured-item">
+          <img src="https://static.wixstatic.com/media/d952ee_c8f0eb4a62564b71bf7d7233d8a24eb0~mv2.jpg" alt="Featured portrait" loading="lazy">
+          <div class="featured-label">Family Portrait</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT — Side-by-side minimal -->
+  <section id="about">
+    <div class="section-number-bg" style="opacity:0.03;">04</div>
+    <div class="about-layout">
+      <div class="about-image-wrap">
+        <img src="https://static.wixstatic.com/media/d952ee_4c03a9c3a9c043b98a106b1bc0fea2ca~mv2.jpg" alt="Muddy Mama Photography portrait" loading="lazy">
+        <div class="about-vertical-line"></div>
+      </div>
+      <div class="about-text">
+        <p class="about-label">About Muddy Mama Photography</p>
+        <h2 class="about-heading">We chase the golden hour and don't mind getting a little muddy</h2>
+        <p class="about-body">Muddy Mama Photography is a Fort Myers-based family photography studio specializing in outdoor lifestyle sessions across Southwest Florida. The work celebrates real family moments — kids running barefoot, siblings splashing in puddles, parents laughing with their eyes closed.</p>
+        <blockquote class="about-pullquote">"The best portraits happen when everyone forgets the camera is there."</blockquote>
+        <p class="about-body">Serving Fort Myers, Cape Coral, Naples, and the surrounding Gulf Coast communities — from golden hour beach sessions to nature trail adventures.</p>
+        <div class="about-contact-info">
+          <a href="mailto:muddymama@yahoo.com">muddymama@yahoo.com</a>
+          <a href="tel:2398504360">(239) 850-4360</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-number-bg">05</div>
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <h2 class="section-title">Sessions</h2>
+        <p class="section-subtitle">Every package includes fully edited digital images</p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-num">01 — Sessions</span>
+        <h3 class="service-name">Family Lifestyle</h3>
+        <p class="service-desc">Outdoor sessions capturing your family the way they actually are — genuine, playful, and full of life. Fort Myers and surrounding areas.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02 — Sessions</span>
+        <h3 class="service-name">Nature & Wildlife</h3>
+        <p class="service-desc">Southwest Florida's natural beauty on film. From the mangroves to the beach, we document the wild side of this remarkable coast.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03 — Sessions</span>
+        <h3 class="service-name">Truck & Events</h3>
+        <p class="service-desc">Commercial photography for food trucks, small businesses, and community events across the Fort Myers area.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section id="cta-section">
+    <h2 class="cta-heading">Real families. Real moments. Really beautiful.</h2>
+    <div class="cta-right">
+      <p class="cta-subtext">Stop settling for posed portraits in front of a white backdrop. Your family deserves photos that actually look like you — joyful, messy, and completely real.</p>
+      <a href="mailto:muddymama@yahoo.com" class="cta-btn">Book Your Session</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <h2 class="contact-heading">Let's make something you'll love</h2>
+      <p class="contact-desc">Ready to book, or just have questions? Reach out — no pressure, no forms. Just an email or a call.</p>
+      <a href="mailto:muddymama@yahoo.com" class="contact-link">muddymama@yahoo.com</a>
+      <a href="tel:2398504360" class="contact-link">(239) 850-4360</a>
+      <p class="contact-detail" style="margin-top:20px;">Available Mon–Sat · Response within 24 hrs</p>
+      <p class="contact-area">Fort Myers · Cape Coral · Naples · Southwest Florida</p>
+    </div>
+    <div class="contact-right">
+      <img
+        src="https://static.wixstatic.com/media/d952ee_164ea291e3ca49a69c7540077f78d750~mv2.jpg"
+        alt="Muddy Mama Photography contact"
+        class="contact-image"
+        loading="lazy"
+      >
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Muddy Mama Photography</div>
+    <div class="footer-copy">&copy; 2026 · Fort Myers, Florida</div>
+    <div class="footer-credit">Design by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // Hero image zoom on load
+    const heroImg = document.getElementById('hero-img');
+    heroImg.addEventListener('load', () => { heroImg.classList.add('loaded'); });
+    if (heroImg.complete) heroImg.classList.add('loaded');
+
+    // Hero text entrance
+    setTimeout(() => {
+      document.querySelectorAll('.hero-eyebrow, .hero-cta, .hero-tagline').forEach(el => el.classList.add('visible'));
+      document.querySelectorAll('.hero-name-line').forEach(el => el.classList.add('visible'));
+    }, 200);
+
+    // Intersection Observer for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe all animated elements
+    document.querySelectorAll(
+      '.section-title, .section-subtitle, .stat-item, .masonry-item, ' +
+      '.about-image-wrap, .about-text, .service-card, ' +
+      '.cta-heading, .cta-right, .contact-left, .contact-right'
+    ).forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
