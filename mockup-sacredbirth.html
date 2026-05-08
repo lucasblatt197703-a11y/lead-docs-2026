@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sacred Surrender Birth Photography — Sarasota, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  /* ===========================
+     RESET & BASE
+  =========================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #F5EEE6;   /* warm linen — from birth photo backgrounds */
+    --brown:    #3A2A1E;   /* deep warm brown — shadow tones in delivery photos */
+    --blush:    #C8907A;   /* soft blush — skin tones, birth warmth */
+    --sage:     #8E9E8A;   /* sage — secondary soft tone */
+    --offwhite: #FBF7F3;   /* near-white for section alternation */
+    --dark:     #1E1410;   /* near-black for footer/dark sections */
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 17px;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--brown);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===========================
+     NAV
+  =========================== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: multiply;
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    text-decoration: none;
+    font-weight: 400;
+    transition: opacity 0.25s;
+  }
+
+  .nav-links a:hover { opacity: 0.65; }
+
+  /* ===========================
+     HERO — MOSAIC GRID
+  =========================== */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .hero-mosaic {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    gap: 3px;
+    opacity: 0.85;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+
+  #hero:hover .hero-img { transform: scale(1.03); }
+
+  .mosaic-cell-1 { grid-column: 1; grid-row: 1 / 3; }
+  .mosaic-cell-2 { grid-column: 2; grid-row: 1; }
+  .mosaic-cell-3 { grid-column: 3; grid-row: 1; }
+  .mosaic-cell-4 { grid-column: 2 / 4; grid-row: 2; }
+
+  .hero-text-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 60px 60px 56px;
+    background: linear-gradient(to top, rgba(30,20,16,0.72) 0%, rgba(30,20,16,0.0) 100%);
+    z-index: 10;
+  }
+
+  .hero-studio-name {
+    font-family: 'Lora', serif;
+    font-size: 72px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--offwhite);
+    line-height: 1.05;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.2s ease, transform 1.2s ease, letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hero-studio-name.loaded {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.17em;
+  }
+
+  .hero-tagline {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(251,247,243,0.75);
+    font-weight: 400;
+    margin-top: 14px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s;
+  }
+
+  .hero-tagline.loaded { opacity: 1; transform: translateY(0); }
+
+  .hero-accent-line {
+    width: 32%;
+    height: 1px;
+    background: var(--blush);
+    margin: 20px 0;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.9s, width 1s ease 0.8s;
+    width: 0;
+  }
+
+  .hero-accent-line.loaded {
+    opacity: 1;
+    width: 32%;
+  }
+
+  .hero-scroll-cue {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(251,247,243,0.5);
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.8s ease 1.3s;
+  }
+
+  .hero-scroll-cue.loaded { opacity: 1; }
+
+  /* ===========================
+     MARQUEE STRIP
+  =========================== */
+  .marquee-strip {
+    background: var(--blush);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 38s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    font-weight: 400;
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ===========================
+     STATS SECTION
+  =========================== */
+  #stats {
+    background: var(--offwhite);
+    padding: 80px 60px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.12s; }
+  .stat-item:nth-child(3) { transition-delay: 0.24s; }
+  .stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+  .stat-number {
+    font-family: 'Lora', serif;
+    font-size: 88px;
+    font-weight: 400;
+    color: var(--blush);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brown);
+    font-weight: 600;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* ===========================
+     GALLERY — EDITORIAL SCROLL
+  =========================== */
+  #gallery {
+    padding: 120px 0 80px;
+    background: var(--cream);
+  }
+
+  .section-header {
+    padding: 0 60px;
+    margin-bottom: 60px;
+  }
+
+  .section-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--blush);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 38px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--brown);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .section-divider {
+    width: 30%;
+    height: 1px;
+    background: var(--blush);
+    margin: 20px 60px 0;
+  }
+
+  /* Editorial scroll gallery */
+  .gallery-editorial {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .gallery-row-full {
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-row-full.is-visible { clip-path: inset(0 0 0 0); }
+
+  .gallery-row-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-row-full:hover img { transform: scale(1.02); }
+
+  .gallery-row-split {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    gap: 4px;
+    height: 55vh;
+  }
+
+  .gallery-row-split-rev {
+    display: grid;
+    grid-template-columns: 1fr 60%;
+    gap: 4px;
+    height: 55vh;
+  }
+
+  .gallery-cell {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-cell.is-visible { clip-path: inset(0 0 0 0); }
+  .gallery-cell:nth-child(2) { transition-delay: 0.1s; }
+
+  .gallery-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-cell:hover img { transform: scale(1.02); }
+
+  /* ===========================
+     ABOUT — CENTERED EDITORIAL
+  =========================== */
+  #about {
+    padding: 140px 60px;
+    background: var(--offwhite);
+  }
+
+  .about-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-inner.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-portrait-wrap {
+    width: 220px;
+    height: 280px;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-portrait-wrap.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-portrait-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-pullquote {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--blush);
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+
+  .about-bio {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--brown);
+    margin-bottom: 24px;
+  }
+
+  .about-details {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blush);
+    font-weight: 600;
+  }
+
+  /* ===========================
+     SERVICES SECTION
+  =========================== */
+  #services {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .service-card {
+    padding: 40px 32px;
+    border-top: 1px solid rgba(200,144,122,0.3);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+  .service-card:nth-child(2) { transition-delay: 0.15s; }
+  .service-card:nth-child(3) { transition-delay: 0.3s; }
+
+  .service-number {
+    font-family: 'Lora', serif;
+    font-size: 60px;
+    font-weight: 400;
+    color: rgba(200,144,122,0.2);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .service-name {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--brown);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(58,42,30,0.75);
+  }
+
+  /* ===========================
+     CTA SECTION
+  =========================== */
+  #cta {
+    padding: 140px 60px;
+    background: var(--dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/c2db0b_b4dbf6d03f5b4a0bb668a0f5566add3e~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .cta-inner.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-eyebrow {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .cta-headline {
+    font-family: 'Lora', serif;
+    font-size: 46px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--offwhite);
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-headline.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(251,247,243,0.65);
+    line-height: 1.65;
+    margin-bottom: 44px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    text-decoration: none;
+    border: 1px solid var(--blush);
+    padding: 18px 44px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--blush);
+    color: var(--offwhite);
+  }
+
+  /* ===========================
+     CONTACT
+  =========================== */
+  #contact {
+    padding: 120px 60px;
+    background: var(--offwhite);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .contact-left.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-title {
+    font-family: 'Lora', serif;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--brown);
+    margin-bottom: 24px;
+  }
+
+  .contact-desc {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(58,42,30,0.75);
+    margin-bottom: 32px;
+  }
+
+  .contact-email-link {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--blush);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s;
+    display: inline-block;
+  }
+
+  .contact-email-link:hover { border-color: var(--blush); }
+
+  .contact-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-info-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blush);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .info-value {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--brown);
+  }
+
+  /* ===========================
+     FOOTER
+  =========================== */
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-name {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(251,247,243,0.5);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-copy {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    color: rgba(251,247,243,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-credit {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    color: rgba(251,247,243,0.25);
+    letter-spacing: 0.08em;
+  }
+
+  /* ===========================
+     RESPONSIVE
+  =========================== */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .hero-studio-name { font-size: 44px; }
+    .hero-text-overlay { padding: 40px 24px 40px; }
+
+    #stats { padding: 60px 24px; gap: 40px; }
+    .stat-number { font-size: 64px; }
+
+    .section-header { padding: 0 24px; }
+    .section-divider { margin: 16px 24px 0; }
+
+    #gallery { padding: 80px 0 60px; }
+    .gallery-row-full { height: 50vw; }
+    .gallery-row-split, .gallery-row-split-rev {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+    .gallery-row-split .gallery-cell:last-child,
+    .gallery-row-split-rev .gallery-cell:first-child {
+      display: none;
+    }
+    .gallery-cell { height: 55vw; }
+
+    #about { padding: 80px 24px; }
+    .about-portrait-wrap { width: 160px; height: 200px; }
+    .about-pullquote { font-size: 18px; }
+
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 24px; }
+
+    #cta { padding: 100px 24px; }
+    .cta-headline { font-size: 32px; }
+
+    #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    .contact-title { font-size: 34px; }
+
+    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-studio-name { font-size: 32px; }
+    .hero-text-overlay { padding: 30px 20px 36px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Sacred Surrender</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — MOSAIC GRID -->
+<section id="hero">
+  <div class="hero-mosaic">
+    <!-- Tall left cell -->
+    <div class="mosaic-cell-1">
+      <img class="hero-img"
+        src="https://static.wixstatic.com/media/c2db0b_a5b036ce804c4056b824209a756a4c0f~mv2_d_3216_2136_s_2.jpg"
+        alt="Birth photography — labor and delivery moment"
+        loading="eager">
+    </div>
+    <!-- Top center -->
+    <div class="mosaic-cell-2">
+      <img class="hero-img"
+        src="https://static.wixstatic.com/media/c2db0b_2ac14286de0441779bbbfc9ebf64e235~mv2_d_3216_2136_s_2.jpg"
+        alt="First moments — newborn birth photo"
+        loading="eager">
+    </div>
+    <!-- Top right -->
+    <div class="mosaic-cell-3">
+      <img class="hero-img"
+        src="https://static.wixstatic.com/media/c2db0b_86cd5a31bccd4b98866b01142411a074~mv2_d_3216_2136_s_2.jpg"
+        alt="Sacred birth — hospital delivery photography"
+        loading="eager">
+    </div>
+    <!-- Wide bottom -->
+    <div class="mosaic-cell-4">
+      <img class="hero-img"
+        src="https://static.wixstatic.com/media/c2db0b_b4dbf6d03f5b4a0bb668a0f5566add3e~mv2.jpg"
+        alt="Birth story — maternal photography"
+        loading="eager">
+    </div>
+  </div>
+
+  <div class="hero-text-overlay">
+    <h1 class="hero-studio-name" id="heroName">Sacred Surrender</h1>
+    <div class="hero-accent-line" id="heroLine"></div>
+    <p class="hero-tagline" id="heroTagline">Birth Photography &nbsp;·&nbsp; Sarasota, Florida</p>
+    <p class="hero-scroll-cue" id="heroScroll">Scroll to explore</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Birth Photography</span>
+    <span>·</span>
+    <span>Sarasota, FL</span>
+    <span>·</span>
+    <span>In-Hospital</span>
+    <span>·</span>
+    <span>Home Births</span>
+    <span>·</span>
+    <span>Birth Center</span>
+    <span>·</span>
+    <span>Sacred Moments</span>
+    <span>·</span>
+    <span>Your Story, Beautifully Told</span>
+    <span>·</span>
+    <span>Birth Photography</span>
+    <span>·</span>
+    <span>Sarasota, FL</span>
+    <span>·</span>
+    <span>In-Hospital</span>
+    <span>·</span>
+    <span>Home Births</span>
+    <span>·</span>
+    <span>Birth Center</span>
+    <span>·</span>
+    <span>Sacred Moments</span>
+    <span>·</span>
+    <span>Your Story, Beautifully Told</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats" aria-label="Studio highlights">
+  <div class="stat-item">
+    <span class="stat-number">7+</span>
+    <span class="stat-label">Years Documenting Birth</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">3</span>
+    <span class="stat-label">Birth Settings</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">24/7</span>
+    <span class="stat-label">On-Call Availability</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">FL</span>
+    <span class="stat-label">Sarasota + Surrounding Area</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-title">The Moments That Last Forever</h2>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="gallery-editorial" style="margin-top: 48px;">
+    <!-- Full width -->
+    <div class="gallery-row-full">
+      <img
+        src="https://static.wixstatic.com/media/c2db0b_25e35fd35fcc4900b64f402337bfc1bf~mv2.jpg"
+        alt="Birth story — labor and delivery photography"
+        loading="lazy">
+    </div>
+
+    <!-- Split: large left, small right -->
+    <div class="gallery-row-split">
+      <div class="gallery-cell">
+        <img
+          src="https://static.wixstatic.com/media/c2db0b_d4f657834d6145c09c630bbb2cb01535~mv2.jpg"
+          alt="Newborn first moments — birth photography"
+          loading="lazy">
+      </div>
+      <div class="gallery-cell">
+        <img
+          src="https://static.wixstatic.com/media/c2db0b_922b6c71372f4789a54a5eebf40d27f2~mv2.jpg"
+          alt="Sacred birth — maternal photography"
+          loading="lazy">
+      </div>
+    </div>
+
+    <!-- Full width -->
+    <div class="gallery-row-full">
+      <img
+        src="https://static.wixstatic.com/media/c2db0b_1fbf869aca2e4afb9dbd51f615834604~mv2.jpg"
+        alt="Birth documentary — Sarasota birth photographer"
+        loading="lazy">
+    </div>
+
+    <!-- Split reversed: small left, large right -->
+    <div class="gallery-row-split-rev">
+      <div class="gallery-cell">
+        <img
+          src="https://static.wixstatic.com/media/c2db0b_0eb070c187374ec3a2148fdd519483c9~mv2.png"
+          alt="Birth photograph — first breath of life"
+          loading="lazy">
+      </div>
+      <div class="gallery-cell">
+        <img
+          src="https://static.wixstatic.com/media/c2db0b_86cd5a31bccd4b98866b01142411a074~mv2_d_3216_2136_s_2.jpg"
+          alt="Hospital birth photography — Sarasota FL"
+          loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header" style="text-align:center; padding: 0 60px;">
+    <span class="section-label" style="display:block; text-align:center;">About</span>
+    <h2 class="section-title" style="display:inline-block; clip-path: inset(0 100% 0 0);">A Witness to the Sacred</h2>
+  </div>
+  <div class="section-divider" style="margin: 16px auto 0; float:none; display:block; width:30%;"></div>
+
+  <div style="height: 60px;"></div>
+
+  <div class="about-portrait-wrap">
+    <img
+      src="https://static.wixstatic.com/media/c2db0b_a8645e0bb9fe451ebf5acd4ad412f1e6~mv2_d_1463_1593_s_2.png"
+      alt="Sacred Surrender Birth Photography — portrait"
+      loading="lazy">
+  </div>
+
+  <div class="about-inner">
+    <p class="about-pullquote">"Throughout the waves of labor until your baby's first breath — every moment, beautifully preserved."</p>
+    <p class="about-bio">Specializing in the sacred moments of labor and delivery, Sacred Surrender Birth Photography documents the raw beauty of birth in all its forms — hospital, birth center, and home. Based in Sarasota, Florida, the studio approaches each birth as a documentary fine art experience: unhurried, reverent, and completely present.</p>
+    <p class="about-bio">No two births are alike. Every image is a testament to the strength of families and the miracle of new life — captured with warmth, intimacy, and deep respect for the sacred space of childbirth.</p>
+    <p class="about-details">Sarasota, FL &nbsp;·&nbsp; Available Statewide &nbsp;·&nbsp; 24/7 On-Call</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-label">Services</span>
+    <h2 class="section-title">How We Work Together</h2>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <h3 class="service-name">Birth Photography</h3>
+      <p class="service-desc">Full documentary coverage from active labor through your baby's first moments. In-hospital, birth center, and home birth. Delivered as a gallery of high-resolution images you'll treasure forever.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <h3 class="service-name">Birthing Video</h3>
+      <p class="service-desc">A cinematic short film of your birth story — the sounds, the emotion, the raw beauty of bringing life into the world. Paired with photography for the complete story of your birth.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <h3 class="service-name">Doula Services</h3>
+      <p class="service-desc">Support beyond the lens. As a trained doula, Sacred Surrender can provide both physical and emotional support through labor, ensuring you feel held, seen, and celebrated every step of the way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <span class="cta-eyebrow">Your birth story awaits</span>
+    <h2 class="cta-headline">The moment that changes everything, beautifully preserved.</h2>
+    <p class="cta-sub">Birth happens once. Inquire now to reserve your date and ensure your story is documented with the intimacy and artistry it deserves.</p>
+    <a href="mailto:sacredbirthphotograpy@gmail.com" class="cta-button">Reserve Your Date</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="contact-title">Let's Talk About Your Birth</h2>
+    <p class="contact-desc">Every birth is unique, and so is every client relationship. Reach out to discuss your due date, your vision, and how Sacred Surrender can be there to document your most sacred day.</p>
+    <a href="mailto:sacredbirthphotograpy@gmail.com" class="contact-email-link">sacredbirthphotograpy@gmail.com</a>
+  </div>
+  <div class="contact-right">
+    <div class="contact-info-block">
+      <div class="contact-info-item">
+        <span class="info-label">Location</span>
+        <span class="info-value">Sarasota, Florida</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="info-label">Phone</span>
+        <span class="info-value">740.581.2068</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="info-label">Coverage</span>
+        <span class="info-value">In-Hospital · Home Birth · Birth Center</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="info-label">Availability</span>
+        <span class="info-value">On-call 24/7 · Booking 2026</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="info-label">Follow</span>
+        <span class="info-value"><a href="https://www.instagram.com/sacredbirthservices" target="_blank" style="color: var(--blush); text-decoration: none;">@sacredbirthservices</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Sacred Surrender Birth Photography</span>
+  <span class="footer-copy">© 2026 All rights reserved · Sarasota, FL</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // ---- Hero entrance animation ----
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('loaded');
+      document.getElementById('heroLine').classList.add('loaded');
+    }, 100);
+    setTimeout(() => {
+      document.getElementById('heroTagline').classList.add('loaded');
+    }, 300);
+    setTimeout(() => {
+      document.getElementById('heroScroll').classList.add('loaded');
+    }, 800);
+  });
+
+  // ---- IntersectionObserver for scroll reveals ----
+  const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+  const imgOptions = { threshold: 0.05 };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  const imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        imgObserver.unobserve(entry.target);
+      }
+    });
+  }, imgOptions);
+
+  // Observe text/UI elements
+  document.querySelectorAll(
+    '.stat-item, .about-inner, .about-portrait-wrap, .service-card, .cta-inner, .contact-left, .contact-right, .section-title, .cta-headline'
+  ).forEach(el => observer.observe(el));
+
+  // Observe image containers
+  document.querySelectorAll(
+    '.gallery-row-full, .gallery-cell'
+  ).forEach(el => imgObserver.observe(el));
+
+  // ---- Parallax on hero ----
+  const hero = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      hero.style.backgroundPositionY = (scrollY * 0.35) + 'px';
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
