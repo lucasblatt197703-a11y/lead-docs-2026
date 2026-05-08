@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don Moon — Abstract Industrial Painting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0E0E0E;
+    --surface: #161616;
+    --text: #E8E2D9;
+    --text-muted: #8A8480;
+    --accent: #B8612A;
+    --accent-warm: #C97D3E;
+    --light: #F0EAE0;
+    --mid: #1E1C1A;
+    --border: rgba(232,226,217,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    background: transparent;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ─── VERTICAL EDGE LABEL ─── */
+  .edge-label {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(232,226,217,0.2);
+    white-space: nowrap;
+    z-index: 50;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/5fc78b_31e96fcdc9874aa79fd864ae9fdb0715.jpg');
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    transform: scale(1.08);
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(14,14,14,0.5) 0%,
+      rgba(14,14,14,0.1) 40%,
+      rgba(14,14,14,0.65) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+  .hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(64px, 9vw, 120px);
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    color: var(--light);
+    display: block;
+    overflow: hidden;
+  }
+  .hero-name .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  .hero-tagline {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    color: rgba(232,226,217,0.65);
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 1.2s, transform 0.6s ease 1.2s;
+  }
+  .hero-eyebrow.visible, .hero-tagline.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── MARQUEE STRIP ─── */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+    padding: 0 48px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--surface);
+    padding: 80px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+  }
+  .stat-item {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--light);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 12px;
+    display: block;
+  }
+
+  /* ─── SECTION TITLES ─── */
+  .section-title-wrap {
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .section-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 52px);
+    letter-spacing: -0.02em;
+    color: var(--light);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1);
+    display: block;
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* ─── GALLERY ─── */
+  #gallery {
+    padding: 120px 60px;
+    background: var(--bg);
+  }
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .gallery-description {
+    max-width: 380px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .gallery-description.visible { opacity: 1; transform: translateY(0); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: var(--mid);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 16px;
+    background: linear-gradient(to top, rgba(14,14,14,0.9), transparent);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .gallery-item:hover .gallery-item-info { opacity: 1; transform: translateY(0); }
+  .gallery-item-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+  .gallery-item-medium {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* Large featured items */
+  .gallery-item.featured {
+    grid-column: span 2;
+    aspect-ratio: 8/5;
+  }
+
+  /* ─── FEATURED WORK ─── */
+  #featured {
+    padding: 0 0 120px;
+    background: var(--bg);
+  }
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
+  }
+  .featured-image {
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76,0,0.24,1);
+  }
+  .featured-image.visible { clip-path: inset(0 0% 0 0); }
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .featured-text {
+    background: var(--surface);
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .featured-quote {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(22px, 2.5vw, 34px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--light);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .featured-quote.visible { opacity: 1; transform: translateY(0); }
+  .featured-attribution {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+  }
+  .featured-attribution.visible { opacity: 1; transform: translateY(0); }
+  .featured-details {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s;
+  }
+  .featured-details.visible { opacity: 1; transform: translateY(0); }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  .detail-label { color: var(--text-muted); text-transform: uppercase; }
+  .detail-value { color: var(--light); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 120px 60px;
+    background: var(--mid);
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-image {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s cubic-bezier(0.76,0,0.24,1);
+  }
+  .about-image.visible { clip-path: inset(0 0 0 0); }
+  .about-image-label {
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    background: var(--accent);
+    padding: 12px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+  .about-text {
+    padding-top: 80px;
+  }
+  .about-body {
+    font-size: 16px;
+    color: rgba(232,226,217,0.75);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .about-body.visible { opacity: 1; transform: translateY(0); }
+  .about-body + .about-body { transition-delay: 0.2s; }
+  .about-material {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+  }
+  .about-material.visible { opacity: 1; transform: translateY(0); }
+  .material-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 60px;
+  }
+
+  /* ─── CTA SECTION ─── */
+  #cta {
+    background: var(--surface);
+    padding: 140px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(100px, 18vw, 260px);
+    letter-spacing: -0.05em;
+    color: rgba(232,226,217,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cta-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .cta-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .cta-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 72px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--light);
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .cta-heading.visible { opacity: 1; transform: translateY(0); }
+  .cta-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+  }
+  .cta-sub.visible { opacity: 1; transform: translateY(0); }
+  .cta-button {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 20px 48px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s, background 0.2s ease;
+  }
+  .cta-button.visible { opacity: 1; transform: translateY(0); }
+  .cta-button:hover { background: var(--accent-warm); }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--bg);
+    padding: 100px 60px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3.5vw, 48px);
+    letter-spacing: -0.02em;
+    color: var(--light);
+    margin-bottom: 24px;
+  }
+  .contact-body {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .contact-email {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--accent-warm);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-email:hover { color: var(--light); border-color: var(--light); }
+  .contact-social {
+    margin-top: 32px;
+    display: flex;
+    gap: 24px;
+  }
+  .contact-social a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-social a:hover { color: var(--text); }
+  .contact-info-list { list-style: none; }
+  .contact-info-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .contact-info-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .contact-info-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--light);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080808;
+    padding: 32px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+  .footer-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(138,132,128,0.5);
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(138,132,128,0.35);
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .edge-label { display: none; }
+    .hero-content { left: 24px; right: 24px; bottom: 60px; }
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 40px 24px; }
+    .stat-item { padding: 32px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+    #gallery { padding: 80px 24px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item.featured { grid-column: span 2; }
+    #featured { padding: 0 0 80px; }
+    .featured-inner { grid-template-columns: 1fr; }
+    .featured-image { min-height: 300px; }
+    .featured-text { padding: 48px 24px; }
+    #about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-text { padding-top: 0; }
+    #cta { padding: 100px 24px; }
+    #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    .gallery-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .section-divider { margin: 0 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item.featured { grid-column: span 1; aspect-ratio: 4/5; }
+    .hero-name { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Vertical edge label -->
+<div class="edge-label">Abstract · Industrial · 2026</div>
+
+<!-- Nav -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Don Moon</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="hero-eyebrow">St. Petersburg, FL — Abstract Industrial Painting</div>
+    <div class="hero-name" id="hero-name">
+      <span>D</span><span>o</span><span>n</span>&nbsp;<span>M</span><span>o</span><span>o</span><span>n</span>
+    </div>
+    <div class="hero-tagline visible" id="hero-tagline">Oil &amp; Enamel on Industrial Aluminum</div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Available Works</span>
+    <span>·</span>
+    <span>Oil &amp; Enamel on Industrial Aluminum</span>
+    <span>·</span>
+    <span>Abstract Expressionism</span>
+    <span>·</span>
+    <span>St. Petersburg, FL</span>
+    <span>·</span>
+    <span>Commission Inquiries Welcome</span>
+    <span>·</span>
+    <span>Available Works</span>
+    <span>·</span>
+    <span>Oil &amp; Enamel on Industrial Aluminum</span>
+    <span>·</span>
+    <span>Abstract Expressionism</span>
+    <span>·</span>
+    <span>St. Petersburg, FL</span>
+    <span>·</span>
+    <span>Commission Inquiries Welcome</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- Stats -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">20+</span>
+    <span class="stat-label">Years Active</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">100+</span>
+    <span class="stat-label">Works Created</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">2</span>
+    <span class="stat-label">Primary Mediums</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">AL</span>
+    <span class="stat-label">Industrial Aluminum</span>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <span class="section-number">01</span>
+      <div class="section-title-wrap">
+        <span class="section-title" id="gallery-title">Selected Works</span>
+      </div>
+    </div>
+    <div class="gallery-description" id="gallery-desc">
+      Works in oil and enamel on reclaimed industrial aluminum. Each piece is shaped by the material itself — its weight, texture, and industrial history become part of the composition.
+    </div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item featured">
+      <img src="https://static.wixstatic.com/media/5fc78b_322fd8a73ad843a380bb13eb392ccf59~mv2_d_2840_2862_s_4_2.jpg" alt="Abstract Industrial Painting" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Abstract Composition</div>
+        <div class="gallery-item-medium">Oil &amp; enamel on aluminum</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/5fc78b_0aee310de06b40f9ac79ec86da718a49~mv2_d_2896_2162_s_2.jpg" alt="Abstract Industrial Painting" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Industrial Study</div>
+        <div class="gallery-item-medium">Oil &amp; enamel on aluminum</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/5fc78b_a8daac8f32d7421faeef54068cb6a9ea~mv2_d_2846_2460_s_4_2.jpg" alt="Abstract Painting" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Composition Study</div>
+        <div class="gallery-item-medium">Oil &amp; enamel on aluminum</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/5fc78b_ad254446f68446368611db66dc65978e~mv2_d_2476_3169_s_4_2.jpg" alt="Abstract Work" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Vertical Study</div>
+        <div class="gallery-item-medium">Oil on aluminum</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/5fc78b_1c3331db339c491abbe699e63c0b8378~mv2_d_2225_2836_s_2.jpg" alt="Abstract Work" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Vertical Form</div>
+        <div class="gallery-item-medium">Oil &amp; enamel on aluminum</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/5fc78b_066856ebb4504a428ed24ef40a13f5fa~mv2_d_3060_2317_s_2.jpg" alt="Abstract Painting" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Horizontal Study</div>
+        <div class="gallery-item-medium">Oil &amp; enamel on aluminum</div>
+      </div>
+    </div>
+    <div class="gallery-item featured">
+      <img src="https://static.wixstatic.com/media/5fc78b_44559e0f90ec42a8bd16bcb0acdf9a64~mv2_d_3024_4032_s_4_2.jpg" alt="Abstract Work" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Large Vertical</div>
+        <div class="gallery-item-medium">Oil on aluminum, 24&quot; x 32&quot;</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/5fc78b_0d2f68b5d98347de97584d7dd1728391~mv2.jpg" alt="Abstract Painting" loading="lazy">
+      <div class="gallery-item-info">
+        <div class="gallery-item-title">Study</div>
+        <div class="gallery-item-medium">Oil &amp; enamel on aluminum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Featured / Quote Section -->
+<section id="featured">
+  <div class="featured-inner">
+    <div class="featured-image" id="feat-img">
+      <img src="https://static.wixstatic.com/media/5fc78b_826f284b1cc842c3b3dbfa363f1e7b2e.jpg" alt="Don Moon Featured Work" loading="lazy">
+    </div>
+    <div class="featured-text">
+      <div class="featured-quote" id="feat-quote">
+        "As I hover over the piece and change my viewpoint I see things that interest me and I pull them out through addition and subtraction. I am in my painting and it's in me."
+      </div>
+      <div class="featured-attribution" id="feat-attr">— Don Moon</div>
+      <div class="featured-details" id="feat-details">
+        <div class="detail-row">
+          <span class="detail-label">Medium</span>
+          <span class="detail-value">Oil &amp; Enamel on Aluminum</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Based in</span>
+          <span class="detail-value">St. Petersburg, FL</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Available</span>
+          <span class="detail-value">Select Works · Commissions Open</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Style</span>
+          <span class="detail-value">Abstract Expressionism</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap">
+      <img
+        src="https://static.wixstatic.com/media/5fc78b_3e62d0563bf44eaa825fee62201d5761.jpg"
+        alt="Don Moon"
+        class="about-image"
+        id="about-img"
+        loading="lazy"
+      >
+      <div class="about-image-label">St. Petersburg, FL</div>
+    </div>
+    <div class="about-text">
+      <span class="section-number">02</span>
+      <div class="section-title-wrap">
+        <span class="section-title" id="about-title">The Artist</span>
+      </div>
+      <p class="about-body" id="about-body-1" style="margin-top: 32px;">
+        Working in oil and enamel on reclaimed industrial aluminum, Don Moon creates abstract works rooted in materiality and process. Based in St. Petersburg, Florida, Moon's practice is defined by the tension between control and accident — the surface itself becomes a collaborator.
+      </p>
+      <p class="about-body" id="about-body-2">
+        Each piece evolves through layers of addition and subtraction, with the painter moving across the surface, responding intuitively to color, form, and the particular resistance of metal. The industrial substrate — aluminum salvaged and repurposed — carries its own history into every work.
+      </p>
+      <div class="about-material" id="about-tags">
+        <span class="material-tag">Oil on Aluminum</span>
+        <span class="material-tag">Enamel</span>
+        <span class="material-tag">Abstract Expressionism</span>
+        <span class="material-tag">Industrial</span>
+        <span class="material-tag">Mixed Media</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-text">MOON</div>
+  <div class="cta-eyebrow" id="cta-eye">Inquiries</div>
+  <h2 class="cta-heading" id="cta-head">Collect a Moon.<br>Commission a Vision.</h2>
+  <p class="cta-sub" id="cta-sub">Original works available and commissions open. Each piece is a one-of-a-kind work on industrial aluminum — impossible to replicate.</p>
+  <a href="mailto:DonMoonArt@gmail.com" class="cta-button" id="cta-btn">Get In Touch</a>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div>
+    <span class="section-number">03</span>
+    <h2 class="contact-heading">Studio &amp; Inquiries</h2>
+    <p class="contact-body">For acquisition inquiries, commission discussions, or exhibition opportunities — reach out directly.</p>
+    <a href="mailto:DonMoonArt@gmail.com" class="contact-email">DonMoonArt@gmail.com</a>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/donmoonart/" target="_blank">Instagram</a>
+      <a href="https://donmoonart.wixsite.com/donmoon" target="_blank">Portfolio</a>
+    </div>
+  </div>
+  <ul class="contact-info-list">
+    <li>
+      <span class="contact-info-label">Location</span>
+      <span class="contact-info-value">St. Petersburg / Clearwater, FL</span>
+    </li>
+    <li>
+      <span class="contact-info-label">Practice</span>
+      <span class="contact-info-value">Abstract Expressionism</span>
+    </li>
+    <li>
+      <span class="contact-info-label">Materials</span>
+      <span class="contact-info-value">Oil, Enamel, Industrial Aluminum</span>
+    </li>
+    <li>
+      <span class="contact-info-label">Commissions</span>
+      <span class="contact-info-value">Currently Open</span>
+    </li>
+  </ul>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-name">Don Moon Art &amp; Design</span>
+  <span class="footer-copy">&copy; 2026 Don Moon. All rights reserved.</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Hero parallax
+  const heroBg = document.getElementById('hero-bg');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY < window.innerHeight) {
+      heroBg.style.transform = `scale(1.08) translateY(${window.scrollY * 0.3}px)`;
+    }
+  }, { passive: true });
+
+  // Hero name character reveal
+  const heroName = document.getElementById('hero-name');
+  const chars = heroName.querySelectorAll('span');
+  chars.forEach((char, i) => {
+    setTimeout(() => {
+      char.style.transition = `opacity 0.5s ease ${i * 60}ms, transform 0.6s cubic-bezier(0.34,1.56,0.64,1) ${i * 60}ms`;
+      char.style.opacity = '1';
+      char.style.transform = 'translateY(0)';
+    }, 200 + i * 60);
+  });
+
+  // Show eyebrow after name
+  setTimeout(() => {
+    document.getElementById('hero-eyebrow').classList.add('visible');
+  }, 800);
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Stagger stat items
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.stat-item');
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 100);
+        });
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  statObserver.observe(document.getElementById('stats'));
+
+  // Stagger gallery items
+  const galleryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.gallery-item');
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 100);
+        });
+        galleryObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  galleryObserver.observe(document.querySelector('.gallery-grid'));
+
+  // Observe section titles
+  ['gallery-title', 'about-title'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Observe gallery description
+  observer.observe(document.getElementById('gallery-desc'));
+
+  // Featured section
+  ['feat-img', 'feat-quote', 'feat-attr', 'feat-details'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // About section
+  observer.observe(document.getElementById('about-img'));
+  observer.observe(document.getElementById('about-body-1'));
+  observer.observe(document.getElementById('about-body-2'));
+  observer.observe(document.getElementById('about-tags'));
+
+  // CTA section
+  ['cta-eye', 'cta-head', 'cta-sub', 'cta-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>
+</body>
+</html>
