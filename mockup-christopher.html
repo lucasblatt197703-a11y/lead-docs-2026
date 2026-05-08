@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christopher Ramos Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --warm-white: #FAF7F2;
+    --brown: #3D2B1F;
+    --gold: #C9996C;
+    --brown-light: #6B4E3D;
+    --cream: #F0EBE3;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--brown);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    mix-blend-mode: multiply;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  /* HERO — Stacked editorial */
+  .hero {
+    height: 100vh;
+    min-height: 700px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/4c1fc4_daf0d388fb6843efab64346f4ae1f048.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30, 18, 10, 0.72) 0%, rgba(30, 18, 10, 0.15) 55%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 60px 72px;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--warm-white);
+    line-height: 0.9;
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .hero-name.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-name span.letter-animate {
+    display: inline-block;
+    letter-spacing: inherit;
+  }
+
+  .hero-tagline {
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.75);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s;
+  }
+
+  .hero-tagline.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.6);
+    z-index: 2;
+  }
+
+  .hero-scroll-hint::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: rgba(250,247,242,0.4);
+  }
+
+  /* DIVIDER LINE */
+  .section-divider {
+    width: 30%;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 60px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+
+  .section-divider.is-visible {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* STATS SECTION */
+  .stats {
+    padding: 100px 60px;
+    background: var(--warm-white);
+  }
+
+  .stats-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* MARQUEE STRIP */
+  .marquee-strip {
+    background: var(--brown);
+    padding: 18px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* GALLERY SECTION */
+  .gallery {
+    padding: 80px 0 80px;
+  }
+
+  .gallery-header {
+    padding: 0 60px 60px;
+    display: flex;
+    align-items: flex-end;
+    gap: 30px;
+  }
+
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--brown);
+    opacity: 0.06;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-bottom: -6px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--brown);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* Editorial scroll gallery */
+  .gallery-editorial {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .gallery-row-full {
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-row-full.is-visible {
+    clip-path: inset(0% 0 0 0);
+  }
+
+  .gallery-row-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .gallery-row-full:hover img {
+    transform: scale(1.02);
+  }
+
+  .gallery-row-split {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 4px;
+    height: 55vh;
+  }
+
+  .gallery-row-split.flip {
+    grid-template-columns: 40% 60%;
+  }
+
+  .gallery-split-item {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-split-item:nth-child(2) {
+    transition-delay: 0.12s;
+  }
+
+  .gallery-split-item.is-visible {
+    clip-path: inset(0% 0 0 0);
+  }
+
+  .gallery-split-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .gallery-split-item:hover img {
+    transform: scale(1.02);
+  }
+
+  .gallery-caption {
+    padding: 12px 60px 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ABOUT SECTION */
+  .about {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .about-image-wrap.is-visible {
+    clip-path: inset(0% 0 0 0);
+  }
+
+  .about-image-wrap img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-content {
+    padding-top: 40px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .about-content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--brown);
+    margin-bottom: 30px;
+  }
+
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1.6;
+    border-left: 2px solid var(--gold);
+    padding-left: 24px;
+    margin-bottom: 30px;
+  }
+
+  .about-bio {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--brown-light);
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+
+  .about-credentials {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .about-credentials li {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .about-credentials li::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* FEATURED WORK / TESTIMONIAL */
+  .testimonial-section {
+    padding: 100px 60px;
+    background: var(--brown);
+    text-align: center;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .testimonial-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .testimonial-attr {
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.2s;
+  }
+
+  .testimonial-attr.is-visible {
+    opacity: 1;
+  }
+
+  /* MORE GALLERY — second set */
+  .gallery-second {
+    padding: 80px 0;
+    background: var(--warm-white);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 160px 60px;
+    background: var(--cream);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px;
+    font-weight: 300;
+    color: var(--brown);
+    opacity: 0.03;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.1;
+    margin-bottom: 40px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-heading.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--brown-light);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 50px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+  }
+
+  .cta-sub.is-visible { opacity: 1; }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid var(--brown);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--brown);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-btn:hover {
+    background: var(--brown);
+    color: var(--warm-white);
+  }
+
+  /* CONTACT SECTION */
+  .contact {
+    padding: 100px 60px;
+    background: var(--brown);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .contact-left p {
+    font-size: 15px;
+    color: rgba(250, 247, 242, 0.6);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-item {
+    border-top: 1px solid rgba(250,247,242,0.12);
+    padding-top: 20px;
+  }
+
+  .contact-item-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .contact-item a,
+  .contact-item span {
+    font-size: 15px;
+    color: var(--warm-white);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .contact-item a:hover { color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: #1C1209;
+    padding: 36px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.5);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(250,247,242,0.3);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 28px;
+  }
+
+  .footer-social a {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-social a:hover { color: var(--gold); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 22px 28px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; }
+    .hero-content { padding: 0 28px 56px; }
+    .hero-name { font-size: 52px; }
+    .stats { padding: 60px 28px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .stat-number { font-size: 44px; }
+    .gallery-header { padding: 0 28px 40px; }
+    .gallery-caption { padding: 10px 28px 0; }
+    .gallery-row-full { height: 50vh; }
+    .gallery-row-split { height: 35vh; }
+    .about { padding: 80px 28px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-heading { font-size: 32px; }
+    .testimonial-section { padding: 70px 28px; }
+    .testimonial-quote { font-size: 24px; }
+    .cta-section { padding: 100px 28px; }
+    .cta-heading { font-size: 44px; }
+    .cta-bg-text { font-size: 120px; }
+    .contact { padding: 80px 28px; grid-template-columns: 1fr; gap: 50px; }
+    .contact-left h2 { font-size: 38px; }
+    footer { padding: 28px; flex-direction: column; gap: 14px; text-align: center; }
+    .footer-social { justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 38px; letter-spacing: 0.12em; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .gallery-row-split { grid-template-columns: 1fr !important; height: auto; }
+    .gallery-split-item { height: 40vw; }
+    .section-number { font-size: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Christopher Ramos</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <span class="hero-name" id="heroName">Christopher Ramos</span>
+    <p class="hero-tagline" id="heroTagline">Wedding Photography &nbsp;&middot;&nbsp; South Florida &nbsp;&middot;&nbsp; Tennessee &nbsp;&middot;&nbsp; Colorado</p>
+  </div>
+  <div class="hero-scroll-hint">Scroll</div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number">8K</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 0.1s">
+      <span class="stat-number">10+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 0.2s">
+      <span class="stat-number">3</span>
+      <span class="stat-label">States Covered</span>
+    </div>
+    <div class="stat-item" style="transition-delay: 0.3s">
+      <span class="stat-number" style="font-size: 34px; padding-top: 10px;">Knot</span>
+      <span class="stat-label">Creative Partner</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Weddings</span><span>·</span>
+    <span>The Knot Creative Partner</span><span>·</span>
+    <span>Florida</span><span>·</span>
+    <span>Tennessee</span><span>·</span>
+    <span>Colorado</span><span>·</span>
+    <span>Destination Weddings</span><span>·</span>
+    <span>Boca Raton</span><span>·</span>
+    <span>Documentary Style</span><span>·</span>
+    <span>Weddings</span><span>·</span>
+    <span>The Knot Creative Partner</span><span>·</span>
+    <span>Florida</span><span>·</span>
+    <span>Tennessee</span><span>·</span>
+    <span>Colorado</span><span>·</span>
+    <span>Destination Weddings</span><span>·</span>
+    <span>Boca Raton</span><span>·</span>
+    <span>Documentary Style</span><span>·</span>
+  </div>
+</div>
+
+<!-- GALLERY SECTION -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+
+  <div class="gallery-editorial">
+    <!-- Full width -->
+    <div class="gallery-row-full">
+      <img src="https://static.wixstatic.com/media/4c1fc4_a72941849bd94c33b076f7e6b067ed4f.jpg" alt="Wedding ceremony" loading="lazy">
+    </div>
+    <p class="gallery-caption">Ceremony — South Florida</p>
+
+    <!-- Split: 60/40 -->
+    <div class="gallery-row-split" style="margin-top: 4px;">
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_c29c8a5d8c2d4748984253c4cde79e7f.jpg" alt="Wedding couple" loading="lazy">
+      </div>
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_eaaed060e5e84420964c352ea89fb230.jpg" alt="Bridal portrait" loading="lazy">
+      </div>
+    </div>
+    <p class="gallery-caption">Portraits &amp; Moments</p>
+
+    <!-- Full width -->
+    <div class="gallery-row-full" style="margin-top: 4px;">
+      <img src="https://static.wixstatic.com/media/4c1fc4_09aca090428e483e81f33ebdbc9e2cd5.jpg" alt="Reception dance" loading="lazy">
+    </div>
+    <p class="gallery-caption">Reception — Tennessee</p>
+
+    <!-- Split flip: 40/60 -->
+    <div class="gallery-row-split flip" style="margin-top: 4px;">
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_1acc8d3530b34a48a848b6efbfff1d3a.jpg" alt="Wedding detail" loading="lazy">
+      </div>
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_539e6415689a4dcaa3253931360b8c02.jpg" alt="Couple portrait" loading="lazy">
+      </div>
+    </div>
+    <p class="gallery-caption">Details &amp; Atmosphere</p>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="margin: 40px 60px;"></div>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <p class="testimonial-quote">"Christopher has this rare ability to disappear into the room and reappear with moments you didn't know happened — moments you'll spend the rest of your life being grateful he caught."</p>
+  <span class="testimonial-attr">— Past Client &nbsp;&middot;&nbsp; Florida</span>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap">
+      <img src="https://static.wixstatic.com/media/4c1fc4_6b40d4a76b5146839c35cf425c0f6069.jpg" alt="Christopher Ramos" loading="lazy">
+    </div>
+    <div class="about-content">
+      <span class="about-eyebrow">02 &nbsp;—&nbsp; About</span>
+      <h2 class="about-heading">A documentary eye.<br>An editorial sensibility.</h2>
+      <p class="about-pull-quote">"I don't pose moments. I find them."</p>
+      <p class="about-bio">A Knot Creative Partner based in South Florida, Christopher Ramos documents wedding days with quiet attention and precise timing. Working across Florida, Tennessee, and Colorado, his images sit at the intersection of photojournalism and fine art portraiture — candid, but composed. Real, but beautiful.</p>
+      <p class="about-bio" style="margin-top: 16px;">Available for destination commissions worldwide.</p>
+      <ul class="about-credentials">
+        <li>The Knot Creative Partner</li>
+        <li>Destination Weddings — FL / TN / CO</li>
+        <li>8,000 Instagram Followers</li>
+        <li>Based in Boca Raton, Florida</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY SECOND SET -->
+<section class="gallery-second">
+  <div class="gallery-header">
+    <span class="section-number">03</span>
+    <h2 class="section-title">More Stories</h2>
+  </div>
+  <div class="gallery-editorial">
+    <div class="gallery-row-split">
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_7028af4df2cc4a11981ad0bbdd221cff.jpg" alt="Wedding moment" loading="lazy">
+      </div>
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_b536d6372b144fe8b6e0fb6d2007723e.jpg" alt="Ceremony detail" loading="lazy">
+      </div>
+    </div>
+    <p class="gallery-caption">Colorado &amp; Tennessee</p>
+
+    <div class="gallery-row-full" style="margin-top: 4px;">
+      <img src="https://static.wixstatic.com/media/4c1fc4_bf3d25bb7a4c48518a2c56ace8ecd6e4.jpg" alt="Couple walking" loading="lazy">
+    </div>
+    <p class="gallery-caption">Golden Hour — Florida</p>
+
+    <div class="gallery-row-split flip" style="margin-top: 4px;">
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_948e016f28fd47b0b10fa6fb50c75728.jpg" alt="Reception" loading="lazy">
+      </div>
+      <div class="gallery-split-item">
+        <img src="https://static.wixstatic.com/media/4c1fc4_fc57c9ca143746ff9ef48f2a376de611.jpg" alt="Wedding portraits" loading="lazy">
+      </div>
+    </div>
+    <p class="gallery-caption">Celebrations</p>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="margin: 0 60px 0;"></div>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="cta-bg-text">Stories</div>
+  <span class="cta-eyebrow">Ready to begin?</span>
+  <h2 class="cta-heading">Your wedding story,<br>beautifully told.</h2>
+  <p class="cta-sub">Every couple has a story worth preserving with the same care they put into building it. Let's talk about yours.</p>
+  <a href="mailto:hello@christopher-ramos.com" class="cta-btn">Begin Your Inquiry</a>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <h2>Get In Touch</h2>
+    <p>Available for weddings in Florida, Tennessee, Colorado, and destinations worldwide. All inquiries answered within 24 hours.</p>
+  </div>
+  <div class="contact-right">
+    <div class="contact-item">
+      <span class="contact-item-label">Email</span>
+      <a href="mailto:hello@christopher-ramos.com">hello@christopher-ramos.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Instagram</span>
+      <a href="https://instagram.com/chrisramosphotos" target="_blank">@chrisramosphotos</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Coverage</span>
+      <span>Florida &nbsp;&middot;&nbsp; Tennessee &nbsp;&middot;&nbsp; Colorado &nbsp;&middot;&nbsp; Destination</span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Based In</span>
+      <span>Boca Raton, Florida</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Christopher Ramos Photography</span>
+  <span class="footer-copy">&copy; 2026</span>
+  <div class="footer-social">
+    <a href="https://instagram.com/chrisramosphotos" target="_blank">Instagram</a>
+    <a href="mailto:hello@christopher-ramos.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroBg.style.backgroundPositionY = (scrollY * 0.4) + 'px';
+    }
+  }, { passive: true });
+
+  // Hero name + tagline entrance
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('is-visible');
+      document.getElementById('heroTagline').classList.add('is-visible');
+    }, 150);
+  });
+
+  // IntersectionObserver for all animated elements
+  const revealEls = document.querySelectorAll(
+    '.stat-item, .section-title, .gallery-row-full, .gallery-split-item, ' +
+    '.about-image-wrap, .about-content, .testimonial-quote, .testimonial-attr, ' +
+    '.cta-heading, .cta-sub, .section-divider'
+  );
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
