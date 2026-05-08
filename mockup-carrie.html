@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrie Scruggs Photography — Jacksonville, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #F7F2EB;
+    --warm:     #EDE5D8;
+    --taupe:    #C5B49A;
+    --sienna:   #A0694A;
+    --charcoal: #2B2420;
+    --dark:     #1A1210;
+    --mid:      #7A6355;
+    --light-text: #9C8878;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--charcoal); font-family: 'Work Sans', sans-serif; overflow-x: hidden; }
+
+  /* ── ANIMATIONS ── */
+  .reveal-text {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .reveal-text.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .reveal-img {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .reveal-img.is-visible { clip-path: inset(0 0 0 0); }
+
+  .fade-rise {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-rise.is-visible { opacity: 1; transform: translateY(0); }
+
+  .stagger-1 { transition-delay: 0ms; }
+  .stagger-2 { transition-delay: 120ms; }
+  .stagger-3 { transition-delay: 240ms; }
+  .stagger-4 { transition-delay: 360ms; }
+
+  /* ── SECTION NUMBERS ── */
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(80px, 12vw, 160px);
+    font-weight: 300;
+    color: var(--taupe);
+    opacity: 0.18;
+    line-height: 1;
+    position: absolute;
+    left: -20px;
+    top: -30px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(247,242,235,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--sienna); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/904bbf_40ec4fe10616419baf599117271cf2b2~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,18,16,0.55) 0%, rgba(26,18,16,0.1) 50%, transparent 100%);
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    max-width: 680px;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 8vw, 90px);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: #F7F2EB;
+    line-height: 1.05;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.3);
+    will-change: letter-spacing;
+    transition: letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hero-name.loaded { letter-spacing: 0.08em; }
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: rgba(247,242,235,0.8);
+    margin-top: 18px;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    right: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+  }
+  .hero-scroll span {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(247,242,235,0.6);
+    font-family: 'Work Sans', sans-serif;
+    writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(247,242,235,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--taupe);
+    animation: scrollDrop 2s ease infinite;
+  }
+  @keyframes scrollDrop {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-strip {
+    background: var(--sienna);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+  .marquee-inner span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: rgba(247,242,235,0.9);
+    padding: 0 40px;
+    text-transform: uppercase;
+  }
+  .marquee-inner .dot {
+    color: rgba(247,242,235,0.5);
+    padding: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS ── */
+  #stats {
+    background: var(--charcoal);
+    padding: 100px 64px;
+  }
+  .stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(60px, 8vw, 100px);
+    font-weight: 300;
+    color: var(--taupe);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(247,242,235,0.5);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ── GALLERY ── */
+  #gallery {
+    padding: 140px 48px;
+    background: var(--cream);
+    position: relative;
+  }
+  .gallery-header {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+  }
+  .gallery-title-block { position: relative; padding-left: 20px; }
+  .section-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sienna);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.1;
+    overflow: hidden;
+  }
+  .gallery-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--mid);
+    max-width: 280px;
+    line-height: 1.7;
+    text-align: right;
+  }
+  .masonry-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    columns: 3;
+    column-gap: 8px;
+  }
+  .masonry-item {
+    display: block;
+    break-inside: avoid;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .masonry-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.6s ease;
+    will-change: transform;
+  }
+  .masonry-item:hover img { transform: scale(1.03); }
+  .masonry-item .img-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26,18,16,0.7), transparent);
+    padding: 30px 16px 14px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .masonry-item:hover .img-title { opacity: 1; transform: translateY(0); }
+  .masonry-item .img-title span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(247,242,235,0.9);
+  }
+
+  /* ── DIVIDER LINE ── */
+  .accent-line {
+    width: 30%;
+    height: 1px;
+    background: var(--sienna);
+    margin: 0 auto;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 160px 64px;
+    background: var(--warm);
+    position: relative;
+  }
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-image-wrap img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-image-accent {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    width: 60%;
+    height: 60%;
+    border: 1px solid var(--sienna);
+    z-index: -1;
+  }
+  .about-text { position: relative; }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--sienna);
+    line-height: 1.5;
+    margin-bottom: 36px;
+    padding-left: 28px;
+    border-left: 2px solid var(--sienna);
+  }
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.85;
+    margin-bottom: 32px;
+  }
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .about-detail {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light-text);
+  }
+  .about-detail strong {
+    color: var(--charcoal);
+    font-weight: 600;
+  }
+
+  /* ── FEATURED ── */
+  #featured {
+    padding: 140px 64px;
+    background: var(--cream);
+    position: relative;
+  }
+  .featured-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .featured-header {
+    position: relative;
+    margin-bottom: 70px;
+    padding-left: 20px;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px;
+  }
+  .featured-main {
+    grid-row: 1 / 3;
+    overflow: hidden;
+  }
+  .featured-main img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .featured-main:hover img { transform: scale(1.03); }
+  .featured-side {
+    overflow: hidden;
+  }
+  .featured-side img {
+    width: 100%;
+    height: 296px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .featured-side:hover img { transform: scale(1.03); }
+
+  /* ── CTA ── */
+  #cta {
+    background: var(--charcoal);
+    padding: 140px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: 'CES';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40vw;
+    font-weight: 300;
+    color: rgba(197,180,154,0.04);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sienna);
+    display: block;
+    margin-bottom: 28px;
+  }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 7vw, 80px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(247,242,235,0.6);
+    max-width: 480px;
+    margin: 0 auto 52px;
+    line-height: 1.7;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 16px 52px;
+    border: 1px solid var(--sienna);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-button:hover {
+    background: var(--sienna);
+    color: var(--cream);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 140px 64px;
+    background: var(--warm);
+    position: relative;
+  }
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left { position: relative; padding-left: 20px; }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+  .contact-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .contact-right { padding-top: 20px; }
+  .contact-info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .contact-info-item {}
+  .contact-info-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sienna);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .contact-info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--charcoal);
+  }
+  .contact-info-value a {
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-info-value a:hover { color: var(--sienna); }
+  .social-links {
+    display: flex;
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .social-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .social-links a:hover { color: var(--sienna); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 40px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: rgba(247,242,235,0.5);
+  }
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(247,242,235,0.3);
+    letter-spacing: 0.1em;
+  }
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(247,242,235,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links li:nth-child(n+3) { display: none; }
+    .hero-content { bottom: 48px; left: 28px; right: 28px; }
+    .hero-scroll { display: none; }
+    #stats { padding: 80px 24px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    #gallery { padding: 100px 24px; }
+    .gallery-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .gallery-sub { text-align: left; max-width: 100%; }
+    .masonry-grid { columns: 2; }
+    #about { padding: 100px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 48px; }
+    .about-image-wrap img { height: 400px; }
+    .about-image-accent { display: none; }
+    #featured { padding: 100px 24px; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .featured-main { grid-row: auto; }
+    .featured-main img, .featured-side img { height: 280px; }
+    #cta { padding: 100px 24px; }
+    #contact { padding: 100px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 42px; }
+    .masonry-grid { columns: 1; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat-number { font-size: 54px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">CES Photography</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#featured">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — Full-bleed image, text pinned bottom-left, no overlay -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Jacksonville · Florida · Est. 2006</span>
+    <h1 class="hero-name" id="heroName">Carrie Scruggs<br>Photography</h1>
+    <p class="hero-tagline">Family &amp; Commercial Photography &nbsp;·&nbsp; Published Nationally</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Commercial Photography</span><span class="dot">·</span>
+    <span>Jacksonville, FL</span><span class="dot">·</span>
+    <span>Nationally Published</span><span class="dot">·</span>
+    <span>IKEA &amp; Walmart Catalogs</span><span class="dot">·</span>
+    <span>Saint Johns · Saint Augustine</span><span class="dot">·</span>
+    <span>Custom Print Packages</span><span class="dot">·</span>
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Commercial Photography</span><span class="dot">·</span>
+    <span>Jacksonville, FL</span><span class="dot">·</span>
+    <span>Nationally Published</span><span class="dot">·</span>
+    <span>IKEA &amp; Walmart Catalogs</span><span class="dot">·</span>
+    <span>Saint Johns · Saint Augustine</span><span class="dot">·</span>
+    <span>Custom Print Packages</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-inner">
+    <div class="stat-item fade-rise stagger-1">
+      <span class="stat-number">18+</span>
+      <span class="stat-label">Years Behind the Lens</span>
+    </div>
+    <div class="stat-item fade-rise stagger-2">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Families Photographed</span>
+    </div>
+    <div class="stat-item fade-rise stagger-3">
+      <span class="stat-number">2</span>
+      <span class="stat-label">National Catalog Features</span>
+    </div>
+    <div class="stat-item fade-rise stagger-4">
+      <span class="stat-number">4</span>
+      <span class="stat-label">Florida Counties Served</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="gallery-title-block">
+      <span class="section-number">01</span>
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title reveal-text">Family<br><em>Gallery</em></h2>
+    </div>
+    <p class="gallery-sub fade-rise">
+      Authentic moments, beautifully preserved. Every session tells the story of where your family is right now.
+    </p>
+  </div>
+  <div class="masonry-grid">
+    <div class="masonry-item reveal-img stagger-1">
+      <img src="https://static.wixstatic.com/media/904bbf_40ec4fe10616419baf599117271cf2b2~mv2.jpg" alt="Family portrait — warm natural light" loading="lazy">
+      <div class="img-title"><span>Family Portrait</span></div>
+    </div>
+    <div class="masonry-item reveal-img stagger-2">
+      <img src="https://static.wixstatic.com/media/904bbf_dab2ec2833be454294672ff90d84ec39~mv2.jpg" alt="Family session — outdoor" loading="lazy">
+      <div class="img-title"><span>Outdoor Session</span></div>
+    </div>
+    <div class="masonry-item reveal-img stagger-3">
+      <img src="https://static.wixstatic.com/media/904bbf_a52e83c1e4054235b2afa9a5084d0f96~mv2.jpg" alt="Children photography" loading="lazy">
+      <div class="img-title"><span>Children &amp; Family</span></div>
+    </div>
+    <div class="masonry-item reveal-img stagger-2">
+      <img src="https://static.wixstatic.com/media/904bbf_9c0acafa1244428fa6f96b362409eb29~mv2.jpg" alt="Family photography Jacksonville" loading="lazy">
+      <div class="img-title"><span>Jacksonville Session</span></div>
+    </div>
+    <div class="masonry-item reveal-img stagger-1">
+      <img src="https://static.wixstatic.com/media/904bbf_7127933f0c00c0677fde5be0677a7a4d.png" alt="Portrait photography" loading="lazy">
+      <div class="img-title"><span>Portrait</span></div>
+    </div>
+    <div class="masonry-item reveal-img stagger-3">
+      <img src="https://static.wixstatic.com/media/904bbf_2eaebca285fb486dbbebb8445801aec3~mv2.png" alt="CES Photography branding" loading="lazy">
+      <div class="img-title"><span>CES Photography</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="accent-line"></div>
+
+<!-- FEATURED WORK -->
+<section id="featured">
+  <div class="featured-inner">
+    <div class="featured-header">
+      <span class="section-number">02</span>
+      <span class="section-label">Selected Work</span>
+      <h2 class="section-title reveal-text">Published &amp;<br><em>Featured Work</em></h2>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-main reveal-img">
+        <img src="https://static.wixstatic.com/media/904bbf_40ec4fe10616419baf599117271cf2b2~mv2.jpg" alt="Featured — Family session" loading="lazy">
+      </div>
+      <div class="featured-side reveal-img stagger-2">
+        <img src="https://static.wixstatic.com/media/904bbf_dab2ec2833be454294672ff90d84ec39~mv2.jpg" alt="Featured — Outdoor family" loading="lazy">
+      </div>
+      <div class="featured-side reveal-img stagger-3">
+        <img src="https://static.wixstatic.com/media/904bbf_a52e83c1e4054235b2afa9a5084d0f96~mv2.jpg" alt="Featured — Children" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap fade-rise">
+      <img src="https://static.wixstatic.com/media/904bbf_9c0acafa1244428fa6f96b362409eb29~mv2.jpg" alt="Carrie Scruggs — Portrait" loading="lazy">
+      <div class="about-image-accent"></div>
+    </div>
+    <div class="about-text">
+      <span class="section-number">03</span>
+      <span class="section-label">About</span>
+      <blockquote class="about-pull-quote reveal-text">
+        "I love seeing stacks of photographs all over my house — that's how much I love what I do."
+      </blockquote>
+      <p class="about-body fade-rise stagger-1">
+        Based in Jacksonville, Florida, Carrie Scruggs has spent nearly two decades documenting the quiet, real moments that define family life. Her work has appeared in national retail catalogs for IKEA and Walmart, and she serves communities across Saint Johns, Jacksonville, Switzerland, and Saint Augustine.
+      </p>
+      <p class="about-body fade-rise stagger-2">
+        A film photographer at heart, Scruggs brings an unhurried, tactile sensibility to every session — the belief that the best photographs are the ones you'll still be looking at in thirty years.
+      </p>
+      <div class="about-details fade-rise stagger-3">
+        <div class="about-detail"><strong>Location:</strong> Jacksonville, FL · North Florida</div>
+        <div class="about-detail"><strong>Specialty:</strong> Family &amp; Commercial Photography</div>
+        <div class="about-detail"><strong>Published:</strong> IKEA &amp; Walmart National Catalogs</div>
+        <div class="about-detail"><strong>Contact:</strong> 904-770-5806</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <span class="cta-label">Book Your Session</span>
+    <h2 class="cta-heading reveal-text">Let's Make Something<br><em>Worth Keeping</em></h2>
+    <p class="cta-sub fade-rise">
+      Sessions starting at $300. Jacksonville, Saint Johns, Saint Augustine, and surrounding areas. 50% due at booking.
+    </p>
+    <a href="mailto:carrie@cesphotography.com" class="cta-button">Inquire Now</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-number">04</span>
+      <span class="section-label">Inquiries</span>
+      <h2 class="contact-heading reveal-text">Get in<br><em>Touch</em></h2>
+      <p class="contact-body fade-rise">
+        Available for family portrait sessions, commercial bookings, and extended family packages across North Florida. Sessions typically book 2–4 weeks in advance.
+      </p>
+    </div>
+    <div class="contact-right">
+      <div class="contact-info-row">
+        <div class="contact-info-item fade-rise stagger-1">
+          <span class="contact-info-label">Email</span>
+          <p class="contact-info-value"><a href="mailto:carrie@cesphotography.com">carrie@cesphotography.com</a></p>
+        </div>
+        <div class="contact-info-item fade-rise stagger-2">
+          <span class="contact-info-label">Phone</span>
+          <p class="contact-info-value"><a href="tel:9047705806">904-770-5806</a></p>
+        </div>
+        <div class="contact-info-item fade-rise stagger-3">
+          <span class="contact-info-label">Location</span>
+          <p class="contact-info-value">Jacksonville · Saint Johns, FL</p>
+        </div>
+        <div class="contact-info-item fade-rise stagger-4">
+          <span class="contact-info-label">Sessions From</span>
+          <p class="contact-info-value">$300 — Mini Package</p>
+        </div>
+      </div>
+      <div class="social-links fade-rise">
+        <a href="https://www.instagram.com/carriescruggs" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://cscrugg0.wixsite.com/cesphotography/blog" target="_blank" rel="noopener">Blog</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Carrie Scruggs Photography</span>
+  <span class="footer-copy">© 2026 · All Rights Reserved</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+  }, { passive: true });
+
+  // Hero name letter-spacing animate on load
+  const heroName = document.getElementById('heroName');
+  setTimeout(() => { heroName.classList.add('loaded'); }, 100);
+
+  // IntersectionObserver for all animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal-text, .reveal-img, .fade-rise').forEach(el => {
+    observer.observe(el);
+    el.style.willChange = 'transform, opacity, clip-path';
+  });
+</script>
+</body>
+</html>
