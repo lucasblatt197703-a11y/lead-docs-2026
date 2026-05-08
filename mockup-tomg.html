@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tom Goldsmith Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F5F1EC;
+      --dark: #1A2B3C;
+      --emerald: #2A7A5A;
+      --sand: #D4C9B8;
+      --gold: #B8965A;
+      --text: #2C3A42;
+      --light-text: #7A8A90;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/dd8a6a_8a71296b5c464485bd6c9c4f4836f239.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_8a71296b5c464485bd6c9c4f4836f239.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26, 43, 60, 0.72) 0%,
+        rgba(26, 43, 60, 0.2) 50%,
+        transparent 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 60px 72px;
+      max-width: 800px;
+    }
+    .hero-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .hero-label.visible { opacity: 1; transform: translateY(0); }
+    .hero-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(52px, 8vw, 95px);
+      line-height: 0.95;
+      color: #fff;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.15s;
+    }
+    .hero-name.visible { clip-path: inset(0 0% 0 0); }
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.75);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.6s;
+    }
+    .hero-sub.visible { opacity: 1; }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.5);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-hint::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: rgba(255,255,255,0.4);
+    }
+
+    /* ── DIVIDER LINE ── */
+    .section-line {
+      display: block;
+      width: 30%;
+      height: 1px;
+      background: var(--emerald);
+      margin: 0 auto 0 60px;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-strip {
+      background: var(--dark);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 38s linear infinite;
+    }
+    .marquee-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      padding: 0 32px;
+    }
+    .marquee-dot {
+      color: var(--gold);
+      margin: 0 8px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ── */
+    #stats {
+      padding: 90px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--dark);
+    }
+    .stat-item {
+      padding: 40px 32px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(52px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .stat-number span { color: var(--gold); }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 10px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      padding: 80px 60px 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    .section-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      min-width: 32px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--dark);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+    /* ── WEDDINGS SECTION ── */
+    #weddings {
+      padding: 0 60px 100px;
+    }
+    .weddings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px;
+      margin-top: 40px;
+    }
+    .wedding-featured {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+    .wedding-featured img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      display: block;
+    }
+    .wedding-secondary img {
+      width: 100%;
+      height: 276px;
+      object-fit: cover;
+      display: block;
+    }
+    .weddings-grid .img-wrap {
+      overflow: hidden;
+    }
+    .weddings-grid .img-wrap img {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out, transform 0.6s ease;
+      will-change: transform, clip-path;
+    }
+    .weddings-grid .img-wrap img.visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .weddings-grid .img-wrap:hover img {
+      transform: scale(1.03);
+    }
+    .wedding-caption {
+      padding: 10px 0 0;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light-text);
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      margin: 0 60px;
+    }
+    .section-divider hr {
+      border: none;
+      border-top: 1px solid var(--sand);
+    }
+
+    /* ── PORTRAITS / GALLERY SECTION ── */
+    #gallery {
+      padding: 0 60px 100px;
+    }
+    .gallery-editorial {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 40px;
+    }
+    .gallery-editorial .img-wrap {
+      overflow: hidden;
+    }
+    .gallery-editorial .img-wrap img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out, transform 0.5s ease;
+      will-change: transform, clip-path;
+    }
+    .gallery-editorial .img-wrap img.visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .gallery-editorial .img-wrap:hover img {
+      transform: scale(1.03);
+    }
+    .gallery-editorial .tall img {
+      height: 480px;
+    }
+
+    /* ── REAL ESTATE ── */
+    #realestate {
+      padding: 0 60px 100px;
+    }
+    .realestate-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 40px;
+    }
+    .realestate-grid .img-wrap {
+      overflow: hidden;
+    }
+    .realestate-grid .img-wrap img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.85s ease-out, transform 0.5s ease;
+      will-change: transform, clip-path;
+    }
+    .realestate-grid .img-wrap img.visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .realestate-grid .img-wrap:hover img {
+      transform: scale(1.04);
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 100px 60px;
+      background: #fff;
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1200px;
+    }
+    .about-img-col .img-wrap {
+      overflow: hidden;
+    }
+    .about-img-col img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+      will-change: clip-path;
+    }
+    .about-img-col img.visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .about-text-col {
+      padding-top: 40px;
+    }
+    .about-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .about-eyebrow.visible { opacity: 1; }
+    .about-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--dark);
+      margin-bottom: 28px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .about-heading.visible { clip-path: inset(0 0% 0 0); }
+    .about-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #4A5A62;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .about-body.visible { opacity: 1; transform: translateY(0); }
+    .about-pull-quote {
+      border-left: 2px solid var(--emerald);
+      padding-left: 20px;
+      margin: 32px 0;
+      font-family: 'DM Sans', sans-serif;
+      font-style: italic;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--dark);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.4s;
+    }
+    .about-pull-quote.visible { opacity: 1; }
+    .about-specialties {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.5s;
+    }
+    .about-specialties.visible { opacity: 1; }
+    .specialty-tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1px solid var(--sand);
+      color: var(--text);
+    }
+
+    /* ── CTA SECTION ── */
+    #cta {
+      background: var(--dark);
+      padding: 120px 60px;
+      text-align: center;
+    }
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .cta-eyebrow.visible { opacity: 1; }
+    .cta-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(36px, 5vw, 62px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+    .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 44px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.3s;
+    }
+    .cta-sub.visible { opacity: 1; }
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 44px;
+      background: var(--emerald);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.5s;
+    }
+    .cta-btn.visible { opacity: 1; }
+    .cta-btn:hover { background: #1d5c42; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .contact-img-col .img-wrap {
+      overflow: hidden;
+    }
+    .contact-img-col img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+    .contact-img-col img.visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .contact-text-col {}
+    .contact-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .contact-eyebrow.visible { opacity: 1; }
+    .contact-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 20px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+    .contact-heading.visible { clip-path: inset(0 0% 0 0); }
+    .contact-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #4A5A62;
+      margin-bottom: 36px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.2s;
+    }
+    .contact-body.visible { opacity: 1; }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.35s;
+    }
+    .contact-links.visible { opacity: 1; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--emerald); }
+    .contact-link-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--light-text);
+      min-width: 80px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em;
+    }
+    .footer-credit a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 48px; }
+      .hero-name { font-size: clamp(40px, 10vw, 70px); }
+      #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; }
+      .section-header { padding: 60px 24px 16px; }
+      #weddings, #gallery, #realestate { padding: 0 24px 80px; }
+      .weddings-grid { grid-template-columns: 1fr; }
+      .wedding-featured { grid-row: auto; }
+      .wedding-featured img { height: 300px; }
+      .wedding-secondary img { height: 220px; }
+      .gallery-editorial { grid-template-columns: 1fr 1fr; }
+      .gallery-editorial .img-wrap img { height: 200px; }
+      .gallery-editorial .tall img { height: 240px; }
+      .realestate-grid { grid-template-columns: 1fr 1fr; }
+      #about { padding: 60px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-col img { height: 340px; }
+      #cta { padding: 80px 24px; }
+      #contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      .contact-img-col img { height: 280px; }
+      .section-line { margin-left: 24px; }
+      .section-divider { margin: 0 24px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-editorial { grid-template-columns: 1fr; }
+      .realestate-grid { grid-template-columns: 1fr; }
+      #stats { grid-template-columns: 1fr 1fr; }
+      .stat-item { padding: 28px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Tom Goldsmith Photography</a>
+    <ul class="nav-links">
+      <li><a href="#weddings">Weddings</a></li>
+      <li><a href="#gallery">Portraits</a></li>
+      <li><a href="#realestate">Real Estate</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-label">Port St. Joe, Florida · Gulf Coast</p>
+      <h1 class="hero-name">Tom Goldsmith<br>Photography</h1>
+      <p class="hero-sub">Weddings &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Real Estate &nbsp;·&nbsp; Landscapes</p>
+    </div>
+    <div class="hero-scroll-hint">Scroll</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <span class="marquee-text">Weddings <span class="marquee-dot">·</span> Real Estate <span class="marquee-dot">·</span> Portraits <span class="marquee-dot">·</span> Port St. Joe, FL <span class="marquee-dot">·</span> Landscapes <span class="marquee-dot">·</span> Gulf County <span class="marquee-dot">·</span> Family Sessions <span class="marquee-dot">·</span> Commercial Photography <span class="marquee-dot">·</span></span>
+      <span class="marquee-text">Weddings <span class="marquee-dot">·</span> Real Estate <span class="marquee-dot">·</span> Portraits <span class="marquee-dot">·</span> Port St. Joe, FL <span class="marquee-dot">·</span> Landscapes <span class="marquee-dot">·</span> Gulf County <span class="marquee-dot">·</span> Family Sessions <span class="marquee-dot">·</span> Commercial Photography <span class="marquee-dot">·</span></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item" data-delay="0">
+      <div class="stat-number">5<span>+</span></div>
+      <div class="stat-label">Specialties</div>
+    </div>
+    <div class="stat-item" data-delay="120">
+      <div class="stat-number">Gulf<br>Coast</div>
+      <div class="stat-label">Based In</div>
+    </div>
+    <div class="stat-item" data-delay="240">
+      <div class="stat-number">All<br>Seasons</div>
+      <div class="stat-label">Availability</div>
+    </div>
+    <div class="stat-item" data-delay="360">
+      <div class="stat-number">PSJ<span>·FL</span></div>
+      <div class="stat-label">Port St. Joe</div>
+    </div>
+  </section>
+
+  <!-- WEDDINGS -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title reveal-title">Weddings</h2>
+  </div>
+  <span class="section-line"></span>
+  <section id="weddings">
+    <div class="weddings-grid">
+      <div class="wedding-featured img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_ae6b739cae474c668b41a8cafe3b6788.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_ae6b739cae474c668b41a8cafe3b6788.jpg" alt="Wedding photography" loading="lazy" />
+      </div>
+      <div class="wedding-secondary img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_939d21549fec456298b0c2d77a3ab768.jpg/v1/fill/w_975,h_680,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dd8a6a_939d21549fec456298b0c2d77a3ab768.jpg" alt="Wedding couple" loading="lazy" />
+      </div>
+      <div class="wedding-secondary img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_5f0f12bfc2f8420eb5b6309f1a4acaf9.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_5f0f12bfc2f8420eb5b6309f1a4acaf9.jpg" alt="Wedding ceremony" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- PORTRAITS & GALLERY -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title reveal-title">Portraits &amp; Families</h2>
+  </div>
+  <span class="section-line"></span>
+  <section id="gallery">
+    <div class="gallery-editorial">
+      <div class="img-wrap tall">
+        <img src="https://static.wixstatic.com/media/dd8a6a_8a71296b5c464485bd6c9c4f4836f239.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_8a71296b5c464485bd6c9c4f4836f239.jpg" alt="Portrait session" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_b87ba78a92ef4f86a770b891ee19b013.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_b87ba78a92ef4f86a770b891ee19b013.jpg" alt="Family portrait" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_c9e819452d184086a67811a6268fc27a.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_c9e819452d184086a67811a6268fc27a.jpg" alt="Outdoor portrait" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_7148ae377c4e4710b7381871a2e4f4e4.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_7148ae377c4e4710b7381871a2e4f4e4.jpg" alt="Portrait" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_0c4ccd230cb544a18159cb64d8b24e49.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_0c4ccd230cb544a18159cb64d8b24e49.jpg" alt="Family session" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_11beaf7b1b1e43489c958eb20c81c66a.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_11beaf7b1b1e43489c958eb20c81c66a.jpg" alt="Portrait session" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><hr /></div>
+
+  <!-- REAL ESTATE -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title reveal-title">Real Estate</h2>
+  </div>
+  <span class="section-line"></span>
+  <section id="realestate">
+    <div class="realestate-grid">
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_62caa3c93ed04822b62234703aaf47a0.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_62caa3c93ed04822b62234703aaf47a0.jpg" alt="Real estate photography" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_2102fe46bdc1434eae9360b71ece2ab5.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_2102fe46bdc1434eae9360b71ece2ab5.jpg" alt="Property photography" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_3c1a09b37218444d93997fc1f83db832.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_3c1a09b37218444d93997fc1f83db832.jpg" alt="Real estate interior" loading="lazy" />
+      </div>
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_d26e5b30ca784cb9a6379399e5e18670.jpg/v1/fill/w_900,h_600,al_c,q_85/dd8a6a_d26e5b30ca784cb9a6379399e5e18670.jpg" alt="Property listing" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-img-col">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/dd8a6a_56ba14214c9143dd8c5aa6e82e2d648b.jpg/v1/fill/w_971,h_583,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dd8a6a_56ba14214c9143dd8c5aa6e82e2d648b.jpg" alt="Tom Goldsmith — Photographer" loading="lazy" />
+        </div>
+      </div>
+      <div class="about-text-col">
+        <p class="about-eyebrow">About</p>
+        <h2 class="about-heading reveal-title">Gulf Coast<br>Visual Storyteller</h2>
+        <p class="about-body">Tom Goldsmith Photography serves the Gulf Coast with a versatile eye and a quiet dedication to craft. Based in Port St. Joe, Florida, Tom brings local knowledge and genuine warmth to every session — whether it's a wedding on the emerald water, a family portrait at sunset, or a real estate listing that needs to stop the scroll.</p>
+        <blockquote class="about-pull-quote">"The Gulf Coast light is unlike anywhere else. I've built a career around capturing it."</blockquote>
+        <div class="about-specialties">
+          <span class="specialty-tag">Weddings</span>
+          <span class="specialty-tag">Portraits</span>
+          <span class="specialty-tag">Real Estate</span>
+          <span class="specialty-tag">Landscapes</span>
+          <span class="specialty-tag">Wildlife</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-inner">
+      <p class="cta-eyebrow">Let's Work Together</p>
+      <h2 class="cta-heading">Your Story Deserves Gulf Coast Light.</h2>
+      <p class="cta-sub">Weddings, portraits, real estate, and everything in between. Serving Port St. Joe, Wewahitchka, Mexico Beach, and the Florida Panhandle.</p>
+      <a href="mailto:contact@tomgphotography.com" class="cta-btn">Book a Session</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-img-col">
+      <div class="img-wrap">
+        <img src="https://static.wixstatic.com/media/dd8a6a_601e667f89cf4bfcb9a26a1c5134c853.jpg/v1/fill/w_970,h_596,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dd8a6a_601e667f89cf4bfcb9a26a1c5134c853.jpg" alt="Gulf Coast landscape" loading="lazy" />
+      </div>
+    </div>
+    <div class="contact-text-col">
+      <p class="contact-eyebrow">Inquiries</p>
+      <h2 class="contact-heading reveal-title">Get In Touch</h2>
+      <p class="contact-body">Ready to book or just have questions? Reach out — I'd love to hear about your project. Currently booking weddings and portrait sessions for 2026.</p>
+      <div class="contact-links">
+        <a href="https://tomgphotography.wixsite.com/portfolio/contact" class="contact-link">
+          <span class="contact-link-label">Booking</span>
+          <span>Contact Form</span>
+        </a>
+        <a href="https://www.facebook.com/tomgoldsmithphotography" class="contact-link" target="_blank" rel="noopener">
+          <span class="contact-link-label">Facebook</span>
+          <span>Tom Goldsmith Photography</span>
+        </a>
+        <a href="https://tomgphotography.wixsite.com/portfolio" class="contact-link" target="_blank" rel="noopener">
+          <span class="contact-link-label">Portfolio</span>
+          <span>tomgphotography.wixsite.com</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Tom Goldsmith Photography</span>
+    <span class="footer-copy">© 2026 · Port St. Joe, FL</span>
+    <span class="footer-credit">Design concept by <a href="#">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+    }, { passive: true });
+
+    // Hero entrance animations
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.hero-label').classList.add('visible');
+        document.querySelector('.hero-name').classList.add('visible');
+        document.querySelector('.hero-sub').classList.add('visible');
+      }, 80);
+    });
+
+    // IntersectionObserver for all reveal elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || '0');
+          setTimeout(() => {
+            el.classList.add('visible');
+          }, delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Image observer (lower threshold for earlier trigger)
+    const imgObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const idx = parseInt(el.dataset.imgIdx || '0');
+          setTimeout(() => {
+            el.classList.add('visible');
+          }, idx * 100);
+          imgObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    // Title reveals
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+    // Stat items
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+    // About elements
+    document.querySelectorAll('.about-eyebrow, .about-heading, .about-body, .about-pull-quote, .about-specialties').forEach(el => observer.observe(el));
+
+    // CTA elements
+    document.querySelectorAll('.cta-eyebrow, .cta-heading, .cta-sub, .cta-btn').forEach(el => observer.observe(el));
+
+    // Contact elements
+    document.querySelectorAll('.contact-eyebrow, .contact-heading, .contact-body, .contact-links').forEach(el => observer.observe(el));
+
+    // Images - stagger each
+    document.querySelectorAll('.img-wrap img').forEach((img, i) => {
+      img.dataset.imgIdx = i % 4; // stagger within groups of 4
+      imgObserver.observe(img);
+    });
+  </script>
+</body>
+</html>
