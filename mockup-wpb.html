@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WPB Photography — Angelo Schillaci Sr.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0D1117;
+    --bg-2: #111820;
+    --text: #E8E0D4;
+    --text-muted: #8A8278;
+    --accent: #C4870A;
+    --accent-2: #4A7C7A;
+    --light: #F0EAE0;
+    --white: #FAFAF8;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
+  nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,17,23,0.8) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    position: relative;
+  }
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO — Full-bleed image with text pinned bottom-left */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/3e461b_581aa79b21344131850657433ec3e7fd~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transform: scale(1.08);
+    transition: transform 12s ease-out;
+  }
+  .hero-bg.loaded { transform: scale(1.0); }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,17,23,0.85) 0%,
+      rgba(13,17,23,0.2) 50%,
+      rgba(13,17,23,0.1) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+    max-width: 700px;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 9vw, 108px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.4s;
+    display: block;
+  }
+  .hero-name.visible { clip-path: inset(0 0% 0 0); }
+  .hero-tagline {
+    margin-top: 24px;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease 1.0s, transform 0.8s ease 1.0s;
+  }
+  .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 60px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    writing-mode: vertical-rl;
+    opacity: 0;
+    transition: opacity 1s ease 1.5s;
+  }
+  .hero-scroll-hint.visible { opacity: 0.6; }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--bg);
+    font-weight: 500;
+    padding: 0 40px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* STATS */
+  .stats {
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* GALLERY */
+  .gallery-section {
+    padding: 0 60px 120px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* Masonry grid */
+  .gallery-masonry {
+    columns: 3;
+    column-gap: 8px;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .gallery-item.visible { clip-path: inset(0 0 0 0); }
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: scale(1.05);
+    transition: transform 0.6s ease;
+    loading: lazy;
+  }
+  .gallery-item:hover img { transform: scale(1.0); }
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13,17,23,0);
+    transition: background 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+  .gallery-item:hover .gallery-item-overlay { background: rgba(13,17,23,0.4); }
+  .gallery-item-title {
+    color: var(--white);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .gallery-item:hover .gallery-item-title { opacity: 1; transform: translateY(0); }
+
+  /* FEATURED — editorial full-bleed */
+  .featured-section {
+    padding: 0 0 120px;
+    position: relative;
+  }
+  .featured-image-wrap {
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+  }
+  .featured-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+    display: block;
+  }
+  .featured-image-wrap.visible img { transform: scale(1.0); }
+  .featured-caption {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--bg);
+    padding: 40px 60px;
+    max-width: 420px;
+  }
+  .featured-caption h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .featured-caption p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .featured-caption .accent-line {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  /* ABOUT */
+  .about-section {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-image-wrap {
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+  }
+  .about-image-wrap.visible { clip-path: inset(0 0 0 0); }
+  .about-image-wrap img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-image-accent {
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    right: 16px;
+    bottom: 16px;
+    border: 1px solid var(--accent);
+    z-index: -1;
+  }
+  .about-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .about-text.visible { opacity: 1; transform: translateY(0); }
+  .about-text .section-title { margin-bottom: 32px; }
+  .about-bio {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .about-bio strong {
+    color: var(--white);
+    font-weight: 400;
+  }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1.5;
+    margin: 32px 0;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+  }
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .about-detail {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .about-detail span { color: var(--text); margin-left: 8px; }
+
+  /* SPECIALTIES */
+  .specialties-section {
+    padding: 80px 60px;
+    background: var(--bg-2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .specialty-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .specialty-item.visible { opacity: 1; transform: translateY(0); }
+  .specialty-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .specialty-item:hover img { transform: scale(1.0); }
+  .specialty-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 16px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 160px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(100px, 18vw, 220px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.02);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .cta-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 700px;
+    margin-bottom: 32px;
+    position: relative;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .cta-section h2.visible { clip-path: inset(0 0% 0 0); }
+  .cta-section p {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.4s;
+  }
+  .cta-section p.visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+  }
+  .cta-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    padding: 80px 60px;
+    background: var(--bg-2);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .contact-left h2.visible { clip-path: inset(0 0% 0 0); }
+  .contact-left p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+  }
+  .contact-left p.visible { opacity: 1; }
+  .contact-link {
+    display: block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    margin-bottom: 12px;
+    transition: opacity 0.3s ease;
+  }
+  .contact-link:hover { opacity: 0.7; }
+  .contact-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .contact-right.visible { opacity: 1; transform: translateY(0); }
+  .contact-right img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #080C10;
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--white);
+    letter-spacing: 0.1em;
+  }
+  .footer-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .footer-right {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+  .footer-right a {
+    color: var(--accent);
+    text-decoration: none;
+    opacity: 0.7;
+  }
+
+  /* Thin accent divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 60px;
+    margin: 0 0 0;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+  .divider-text {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .hero-content { left: 24px; right: 24px; bottom: 60px; }
+    .hero-scroll-hint { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+    .gallery-section { padding: 0 24px 80px; }
+    .gallery-masonry { columns: 2; }
+    .featured-caption { position: static; max-width: 100%; }
+    .about-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    .specialties-grid { grid-template-columns: repeat(2, 1fr); }
+    .cta-section { padding: 100px 24px; }
+    .contact-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 48px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
+    .divider { padding: 0 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-masonry { columns: 1; }
+    .specialties-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-number { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">WPB Photography</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#specialties">Specialties</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="heroEyebrow">Jupiter · West Palm Beach, FL</p>
+    <span class="hero-name" id="heroName">Angelo<br>Schillaci</span>
+    <p class="hero-tagline" id="heroTagline">Fine Art &amp; Nature Photography — South Florida</p>
+  </div>
+  <p class="hero-scroll-hint" id="heroScroll">Scroll</p>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Landscape</span><span>·</span>
+    <span>Nature</span><span>·</span>
+    <span>Portrait</span><span>·</span>
+    <span>Product</span><span>·</span>
+    <span>Travel</span><span>·</span>
+    <span>Jupiter, FL</span><span>·</span>
+    <span>Fine Art Photography</span><span>·</span>
+    <span>Available for Commissions</span><span>·</span>
+    <span>Landscape</span><span>·</span>
+    <span>Nature</span><span>·</span>
+    <span>Portrait</span><span>·</span>
+    <span>Product</span><span>·</span>
+    <span>Travel</span><span>·</span>
+    <span>Jupiter, FL</span><span>·</span>
+    <span>Fine Art Photography</span><span>·</span>
+    <span>Available for Commissions</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat-item" data-delay="0">
+    <span class="stat-number">5+</span>
+    <span class="stat-label">Years Active</span>
+  </div>
+  <div class="stat-item" data-delay="120">
+    <span class="stat-number">5</span>
+    <span class="stat-label">Specialties</span>
+  </div>
+  <div class="stat-item" data-delay="240">
+    <span class="stat-number">FL</span>
+    <span class="stat-label">Jupiter / West Palm Beach</span>
+  </div>
+  <div class="stat-item" data-delay="360">
+    <span class="stat-number">∞</span>
+    <span class="stat-label">Prints Available</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Portfolio</h2>
+  </div>
+  <div class="gallery-masonry">
+    <div class="gallery-item" data-delay="0">
+      <img src="https://static.wixstatic.com/media/3e461b_baa55c1c5d7247deac70546889fa4182~mv2.jpg" alt="Landscape" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Landscape</span></div>
+    </div>
+    <div class="gallery-item" data-delay="100">
+      <img src="https://static.wixstatic.com/media/3e461b_f9718857c1024cdea58dee4e4a4b39cc~mv2.jpg" alt="Nature" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Nature</span></div>
+    </div>
+    <div class="gallery-item" data-delay="200">
+      <img src="https://static.wixstatic.com/media/3e461b_93f9a1f558b14c9e973c0216169a8863~mv2.jpg" alt="Wildlife" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Wildlife</span></div>
+    </div>
+    <div class="gallery-item" data-delay="100">
+      <img src="https://static.wixstatic.com/media/3e461b_ef52a185cfc74f7d8953b72c35cb6e01~mv2.jpg" alt="Fine Art" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Fine Art</span></div>
+    </div>
+    <div class="gallery-item" data-delay="200">
+      <img src="https://static.wixstatic.com/media/3e461b_15e3ec179e8042efb0ea8f6d02e5f138~mv2.jpg" alt="Travel" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Travel</span></div>
+    </div>
+    <div class="gallery-item" data-delay="300">
+      <img src="https://static.wixstatic.com/media/3e461b_8ee98a3e15a74d928419d85c849548e1~mv2.jpg" alt="South Florida" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">South Florida</span></div>
+    </div>
+    <div class="gallery-item" data-delay="0">
+      <img src="https://static.wixstatic.com/media/3e461b_b62e34e13ea240c8b9cf97cd3b48d97b~mv2.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Portrait</span></div>
+    </div>
+    <div class="gallery-item" data-delay="100">
+      <img src="https://static.wixstatic.com/media/ce714cf444404a7295a9798473f790fa.jpg" alt="Seascape" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Seascape</span></div>
+    </div>
+    <div class="gallery-item" data-delay="200">
+      <img src="https://static.wixstatic.com/media/8e839412a0014991a3ad102537366370.jpg" alt="Nature Study" loading="lazy">
+      <div class="gallery-item-overlay"><span class="gallery-item-title">Nature Study</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-text">Featured Work</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- FEATURED -->
+<section class="featured-section">
+  <div class="featured-image-wrap" id="featuredWrap">
+    <img src="https://static.wixstatic.com/media/11062b_d013b164dadb47ec8e746ab178aacfbbf000.jpg" alt="Featured landscape" loading="lazy">
+    <div class="featured-caption">
+      <div class="accent-line"></div>
+      <h3>Jupiter &amp; South Florida</h3>
+      <p>Where the Atlantic meets the Loxahatchee River — Angelo's home territory. Each frame captures the layered light and wild stillness of Florida's east coast, from pre-dawn intracoastal to golden-hour ocean.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="specialties-section" id="specialties">
+  <div class="section-header" style="padding: 0;">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Specialties</h2>
+  </div>
+  <div class="specialties-grid">
+    <div class="specialty-item" data-delay="0">
+      <img src="https://static.wixstatic.com/media/7e479d05d6e340e890bb5f4245eca025.jpg" alt="Landscape" loading="lazy">
+      <span class="specialty-label">Landscape</span>
+    </div>
+    <div class="specialty-item" data-delay="100">
+      <img src="https://static.wixstatic.com/media/05fde66f5fad46b6ac59b8bfca60be8d.jpg" alt="Nature" loading="lazy">
+      <span class="specialty-label">Nature</span>
+    </div>
+    <div class="specialty-item" data-delay="200">
+      <img src="https://static.wixstatic.com/media/249ede3cdd734da0a6927e7df1b5da96.jpg" alt="Portrait" loading="lazy">
+      <span class="specialty-label">Portrait</span>
+    </div>
+    <div class="specialty-item" data-delay="300">
+      <img src="https://static.wixstatic.com/media/b682e40483514be4b0a92cefe8991d66.jpg" alt="Product" loading="lazy">
+      <span class="specialty-label">Product</span>
+    </div>
+    <div class="specialty-item" data-delay="400">
+      <img src="https://static.wixstatic.com/media/4b96f593e4f34e53b5d63a69ddde804b.jpg" alt="Travel" loading="lazy">
+      <span class="specialty-label">Travel</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-image-wrap" id="aboutImgWrap">
+    <div class="about-image-accent"></div>
+    <img src="https://static.wixstatic.com/media/11062b_2f15a230bb5148e2b97a01cebba8a974f000.jpg" alt="Angelo Schillaci Sr." loading="lazy">
+  </div>
+  <div class="about-text" id="aboutText">
+    <div class="section-header" style="margin-bottom: 32px;">
+      <span class="section-number">03</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <p class="about-bio">
+      Angelo Schillaci Sr. is a Jupiter-based photographer whose work spans the full breadth of South Florida's natural and human landscape. <strong>Rooted in the light and terrain of the Treasure Coast</strong>, his images move from intimate nature studies to wide-open seascapes, product work, and portraiture.
+    </p>
+    <blockquote class="about-pull-quote">
+      "Local Photography Authority for social events, deals, groups, shops &amp; photographers."
+    </blockquote>
+    <p class="about-bio">
+      Working under the WPB Photography banner since 2019, Angelo documents the distinctive light and ecology of Jupiter, West Palm Beach, and the surrounding Treasure Coast — offering fine art prints, commercial work, and event coverage.
+    </p>
+    <div class="about-details">
+      <p class="about-detail">Location <span>Jupiter / West Palm Beach, FL</span></p>
+      <p class="about-detail">Phone <span>561.847.6661</span></p>
+      <p class="about-detail">Instagram <span>@wpb_photos</span></p>
+      <p class="about-detail">Services <span>Fine Art Prints · Commercial · Events</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <span class="cta-bg-text">WPB</span>
+  <h2 id="ctaHeading">Let's make something<br>worth printing.</h2>
+  <p id="ctaBody">Whether you're looking for fine art prints, commercial photography, or coverage of your next event — Angelo brings a practiced eye and deep knowledge of South Florida's unique light.</p>
+  <a href="mailto:wpbphotography@gmail.com" class="cta-btn">Get In Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-left">
+    <h2 id="contactHeading">Inquiries</h2>
+    <p id="contactIntro">Based in Jupiter, FL. Available for fine art commissions, product photography, portrait sessions, and event coverage throughout South Florida.</p>
+    <a href="tel:5618476661" class="contact-link">561.847.6661</a>
+    <a href="https://www.instagram.com/wpb_photos/" class="contact-link">@wpb_photos</a>
+    <a href="https://wpbphotography.wixsite.com/angelo" class="contact-link" style="font-size:14px; font-family:'Work Sans', sans-serif; margin-top: 20px; color: var(--text-muted);">WPBphotography.com · Jupiter, FL</a>
+  </div>
+  <div class="contact-right" id="contactRight">
+    <img src="https://static.wixstatic.com/media/11062b_8253f7e649914c6a85db751924a263ad~mv2.jpeg" alt="WPB Photography" loading="lazy">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">WPB Photography</div>
+  <div class="footer-meta">© 2026 Angelo Schillaci Sr. · Jupiter, FL · All Rights Reserved</div>
+  <div class="footer-right">
+    Design by <a href="#">Lucas Blatt</a>
+  </div>
+</footer>
+
+<script>
+// Hero entrance
+window.addEventListener('load', () => {
+  const heroBg = document.getElementById('heroBg');
+  const heroEyebrow = document.getElementById('heroEyebrow');
+  const heroName = document.getElementById('heroName');
+  const heroTagline = document.getElementById('heroTagline');
+  const heroScroll = document.getElementById('heroScroll');
+
+  setTimeout(() => {
+    if (heroBg) heroBg.classList.add('loaded');
+    if (heroEyebrow) heroEyebrow.classList.add('visible');
+  }, 100);
+  setTimeout(() => { if (heroName) heroName.classList.add('visible'); }, 300);
+  setTimeout(() => { if (heroTagline) heroTagline.classList.add('visible'); }, 1000);
+  setTimeout(() => { if (heroScroll) heroScroll.classList.add('visible'); }, 1400);
+});
+
+// Hero parallax
+window.addEventListener('scroll', () => {
+  const heroBg = document.getElementById('heroBg');
+  if (heroBg) {
+    heroBg.style.backgroundPositionY = (window.scrollY * 0.35) + 'px';
+  }
+}, { passive: true });
+
+// IntersectionObserver for all animated elements
+const observeEls = (selector, threshold = 0.15) => {
+  const els = document.querySelectorAll(selector);
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => entry.target.classList.add('visible'), Number(delay));
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold });
+  els.forEach(el => obs.observe(el));
+};
+
+observeEls('.section-title', 0.1);
+observeEls('.stat-item', 0.1);
+observeEls('.gallery-item', 0.05);
+observeEls('.specialty-item', 0.05);
+observeEls('#featuredWrap', 0.1);
+observeEls('#aboutImgWrap', 0.1);
+observeEls('#aboutText', 0.1);
+observeEls('#ctaHeading', 0.15);
+observeEls('#ctaBody', 0.15);
+observeEls('#contactHeading', 0.15);
+observeEls('#contactIntro', 0.15);
+observeEls('#contactRight', 0.1);
+</script>
+</body>
+</html>
