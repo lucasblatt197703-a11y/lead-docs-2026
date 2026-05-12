@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alese Monahan — Family Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F8F4EE;
+      --warm-white: #FDFAF6;
+      --charcoal: #2C2722;
+      --dusty-rose: #C49A8A;
+      --taupe: #A89680;
+      --dark: #1A1512;
+      --light-taupe: #EAE3D8;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--warm-white);
+      color: var(--charcoal);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ======== HERO — Cinematic letterbox ======== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      background-color: var(--dark);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/101b14_817789d124ff4f46ae0a7c653dc36943%7Emv2_d_6000_4000_s_4_2.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+      will-change: transform;
+    }
+    .hero-bg.loaded { transform: scale(1.0); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(26,21,18,0.55) 0%,
+        rgba(26,21,18,0.15) 40%,
+        rgba(26,21,18,0.45) 100%
+      );
+    }
+    /* Letterbox bars */
+    .hero-bar-top, .hero-bar-bottom {
+      position: absolute;
+      left: 0; right: 0;
+      height: 90px;
+      background: var(--dark);
+      z-index: 3;
+    }
+    .hero-bar-top { top: 0; }
+    .hero-bar-bottom { bottom: 0; }
+
+    nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      z-index: 10;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--cream);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(248,244,238,0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    .hero-content {
+      position: absolute;
+      bottom: 90px;
+      left: 60px;
+      z-index: 5;
+      padding: 28px 0;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 8vw, 108px);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      text-transform: uppercase;
+      overflow: hidden;
+    }
+    .hero-name-inner {
+      display: block;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 1.1s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+    }
+    .hero-name-inner.revealed {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .hero-sub {
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+    }
+    .hero-sub.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-line {
+      width: 0;
+      height: 1px;
+      background: var(--dusty-rose);
+      margin-top: 20px;
+      transition: width 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.8s;
+    }
+    .hero-line.revealed { width: 120px; }
+
+    /* ======== MARQUEE STRIP ======== */
+    .marquee-strip {
+      background: var(--dark);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 16px 0;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      padding: 0 40px;
+    }
+    .marquee-inner span.accent { color: var(--dusty-rose); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ======== STATS ======== */
+    .stats {
+      background: var(--cream);
+      padding: 80px 60px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 40px 20px;
+      border-right: 1px solid var(--light-taupe);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(60px, 7vw, 90px);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--charcoal);
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-top: 10px;
+    }
+
+    /* ======== GALLERY ======== */
+    .gallery-section {
+      padding: 120px 0;
+      background: var(--warm-white);
+    }
+    .section-header {
+      padding: 0 60px 60px;
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: var(--light-taupe);
+      line-height: 1;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      overflow: hidden;
+    }
+    .section-title-inner {
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title-inner.revealed { clip-path: inset(0 0% 0 0); }
+
+    /* Editorial scroll gallery */
+    .gallery-editorial {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 4px;
+      padding: 0;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      background: var(--light-taupe);
+    }
+    .gallery-item.wide { grid-column: 1 / -1; }
+    .gallery-item.tall { aspect-ratio: 3/4; }
+    .gallery-item.landscape { aspect-ratio: 5/3; }
+    .gallery-item.square { aspect-ratio: 1/1; }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.95s cubic-bezier(0.76, 0, 0.24, 1), transform 0.6s ease;
+      will-change: clip-path, transform;
+    }
+    .gallery-item img.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(26,21,18,0.7), transparent);
+      padding: 30px 24px 20px;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+    .gallery-caption span {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+
+    /* ======== ABOUT ======== */
+    .about-section {
+      padding: 160px 60px;
+      background: var(--dark);
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-image-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .about-image-wrap img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+      will-change: clip-path;
+    }
+    .about-image-wrap img.is-visible { clip-path: inset(0 0 0 0); }
+    .about-accent-line {
+      width: 0;
+      height: 2px;
+      background: var(--dusty-rose);
+      margin-bottom: 32px;
+      transition: width 1s ease 0.3s;
+    }
+    .about-accent-line.is-visible { width: 60px; }
+    .about-text { padding-top: 40px; }
+    .about-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .about-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4.5vw, 62px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .about-heading-inner {
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.35s;
+    }
+    .about-heading-inner.is-visible { clip-path: inset(0 0% 0 0); }
+    .about-body {
+      font-size: 17px;
+      line-height: 1.85;
+      color: rgba(248,244,238,0.72);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+    }
+    .about-body.is-visible { opacity: 1; transform: translateY(0); }
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--dusty-rose);
+      border-left: 2px solid var(--dusty-rose);
+      padding-left: 24px;
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.6s, transform 0.7s ease 0.6s;
+    }
+    .about-pull.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ======== SPECIALTIES ======== */
+    .specialties {
+      padding: 120px 60px;
+      background: var(--cream);
+    }
+    .specialties-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 60px;
+    }
+    .spec-item {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--light-taupe);
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .spec-item.is-visible { opacity: 1; transform: scale(1); }
+    .spec-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .spec-item:hover img { transform: scale(1.05); }
+    .spec-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,21,18,0.75) 0%, transparent 50%);
+    }
+    .spec-label {
+      position: absolute;
+      bottom: 28px;
+      left: 24px;
+      right: 24px;
+    }
+    .spec-label h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+      text-transform: uppercase;
+    }
+    .spec-label p {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-top: 6px;
+    }
+
+    /* ======== BOLD CTA ======== */
+    .cta-section {
+      background: var(--charcoal);
+      padding: 120px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(100px, 14vw, 200px);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.025);
+      white-space: nowrap;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 24px;
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 36px;
+      overflow: hidden;
+    }
+    .cta-heading-inner {
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-heading-inner.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-size: 16px;
+      color: rgba(248,244,238,0.6);
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 48px;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      border: 1px solid var(--dusty-rose);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+    .cta-btn:hover {
+      background: var(--dusty-rose);
+      color: var(--dark);
+    }
+
+    /* ======== CONTACT / FOOTER ======== */
+    .contact-section {
+      padding: 100px 60px 80px;
+      background: var(--dark);
+    }
+    .contact-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .contact-sub {
+      font-size: 13px;
+      color: var(--taupe);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .contact-item {
+      margin-bottom: 20px;
+    }
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-bottom: 6px;
+    }
+    .contact-value {
+      font-size: 15px;
+      color: var(--cream);
+    }
+    .contact-value a {
+      color: var(--cream);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196,154,138,0.4);
+      transition: border-color 0.3s;
+    }
+    .contact-value a:hover { border-color: var(--dusty-rose); }
+    .social-links {
+      display: flex;
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .social-links a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .social-links a:hover { color: var(--dusty-rose); }
+
+    .footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(168,150,128,0.5);
+      letter-spacing: 0.1em;
+    }
+    .footer-credit {
+      font-size: 10px;
+      color: rgba(168,150,128,0.3);
+      letter-spacing: 0.12em;
+    }
+
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-content { left: 24px; }
+      .stats { padding: 60px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--light-taupe); }
+      .section-header { padding: 0 24px 40px; }
+      .gallery-editorial { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: 1; }
+      .about-section { padding: 80px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .specialties { padding: 80px 24px; }
+      .spec-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 80px 24px; }
+      .contact-section { padding: 80px 24px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer { flex-direction: column; gap: 12px; padding: 24px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 52px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .hero-bar-top, .hero-bar-bottom { height: 60px; }
+      nav { height: 60px; }
+      .hero-content { bottom: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO — Cinematic Letterbox -->
+  <section class="hero" id="home">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-bar-top"></div>
+    <div class="hero-bar-bottom"></div>
+
+    <nav>
+      <a href="#home" class="nav-logo">Alese Monahan</a>
+      <ul class="nav-links">
+        <li><a href="#gallery">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#sessions">Sessions</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <h1 class="hero-name">
+        <span class="hero-name-inner" id="heroName1">Alese</span>
+      </h1>
+      <h1 class="hero-name">
+        <span class="hero-name-inner" id="heroName2" style="transition-delay: 0.15s;">Monahan</span>
+      </h1>
+      <p class="hero-sub" id="heroSub">Family · Portrait · Wedding Photography</p>
+      <div class="hero-line" id="heroLine"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Family Sessions</span><span class="accent">·</span>
+      <span>Newborn Portraits</span><span class="accent">·</span>
+      <span>Weddings</span><span class="accent">·</span>
+      <span>School Photography</span><span class="accent">·</span>
+      <span>Senior Portraits</span><span class="accent">·</span>
+      <span>Dance</span><span class="accent">·</span>
+      <span>My Family Photography, LLC</span><span class="accent">·</span>
+      <span>Family Sessions</span><span class="accent">·</span>
+      <span>Newborn Portraits</span><span class="accent">·</span>
+      <span>Weddings</span><span class="accent">·</span>
+      <span>School Photography</span><span class="accent">·</span>
+      <span>Senior Portraits</span><span class="accent">·</span>
+      <span>Dance</span><span class="accent">·</span>
+      <span>My Family Photography, LLC</span><span class="accent">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Sessions Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Session Types</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1K+</div>
+        <div class="stat-label">Prints Per Year</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">
+        <span class="section-title-inner">Portfolio</span>
+      </h2>
+    </div>
+    <div class="gallery-editorial">
+      <!-- Wide hero image -->
+      <div class="gallery-item wide landscape">
+        <img src="https://static.wixstatic.com/media/101b14_817789d124ff4f46ae0a7c653dc36943%7Emv2_d_6000_4000_s_4_2.jpg" alt="Family portrait" loading="lazy">
+        <div class="gallery-caption"><span>Families</span></div>
+      </div>
+      <!-- Row 2 -->
+      <div class="gallery-item tall">
+        <img src="https://static.wixstatic.com/media/101b14_68a0db3aeb244822beb45bd307e5653b~mv2_d_3594_5391_s_4_2.jpg" alt="Wedding portrait" loading="lazy">
+        <div class="gallery-caption"><span>Weddings</span></div>
+      </div>
+      <div class="gallery-item tall">
+        <img src="https://static.wixstatic.com/media/101b14_aa726e72d77d4922a1dbefebbe15d02e~mv2_d_2670_4005_s_4_2.jpg" alt="Portrait" loading="lazy">
+        <div class="gallery-caption"><span>Portraits</span></div>
+      </div>
+      <!-- Row 3 — landscape -->
+      <div class="gallery-item wide landscape">
+        <img src="https://static.wixstatic.com/media/101b14_52b62549eeed4f5c90656067c336e83f~mv2_d_5391_3594_s_4_2.jpg" alt="Wedding ceremony" loading="lazy">
+        <div class="gallery-caption"><span>Wedding Day</span></div>
+      </div>
+      <!-- Row 4 -->
+      <div class="gallery-item square">
+        <img src="https://static.wixstatic.com/media/101b14_9492ba8ee5934af7b3acc6b57c8a679c~mv2_d_3599_5399_s_4_2.jpg" alt="Portrait session" loading="lazy">
+        <div class="gallery-caption"><span>Portraits</span></div>
+      </div>
+      <div class="gallery-item square">
+        <img src="https://static.wixstatic.com/media/101b14_7efe6f7ba47a40fd82b731226dd6e200~mv2_d_5391_3594_s_4_2.jpg" alt="Wedding" loading="lazy">
+        <div class="gallery-caption"><span>Weddings</span></div>
+      </div>
+      <!-- Row 5 — tall pair -->
+      <div class="gallery-item tall">
+        <img src="https://static.wixstatic.com/media/101b14_0bd58ce6e05046949505d89b18175dec~mv2_d_3594_5391_s_4_2.jpg" alt="Wedding portrait" loading="lazy">
+        <div class="gallery-caption"><span>Wedding Portraits</span></div>
+      </div>
+      <div class="gallery-item tall">
+        <img src="https://static.wixstatic.com/media/101b14_9699a808754e485681e2fddbdca581d0~mv2_d_5391_3594_s_4_2.jpg" alt="Outdoor family" loading="lazy">
+        <div class="gallery-caption"><span>Families</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-image-wrap">
+        <img src="https://static.wixstatic.com/media/101b14_911f805adb394064bd2829c204f68e35~mv2_d_3277_4915_s_4_2.jpg" alt="Portrait" loading="lazy">
+      </div>
+      <div class="about-text">
+        <div class="about-accent-line"></div>
+        <p class="about-eyebrow">About</p>
+        <h2 class="about-heading">
+          <span class="about-heading-inner">Alese<br>Monahan</span>
+        </h2>
+        <p class="about-body">
+          Mother, artist, problem solver — and photographer. Alese Monahan began her photography journey in high school, apprenticing under a working photographer before the craft was even a career path. What started as a volunteer gig taking preschool class photos became a calling.
+        </p>
+        <blockquote class="about-pull">
+          "I take and print over 1,000 photos of my family every year. It wasn't until I volunteered to take the class photos that I realized I was meant for this."
+        </blockquote>
+        <p class="about-body" style="transition-delay: 0.7s;">
+          Working across family sessions, weddings, school photography, dance recitals, and senior portraits, My Family Photography, LLC brings warmth and intention to every frame.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALTIES (mini gallery) -->
+  <section class="specialties" id="sessions">
+    <div class="specialties-inner">
+      <div class="section-header" style="padding: 0 0 60px;">
+        <span class="section-num">02</span>
+        <h2 class="section-title">
+          <span class="section-title-inner">Sessions</span>
+        </h2>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <img src="https://static.wixstatic.com/media/101b14_ef209473529843f19b9ce27eec1d4bac~mv2_d_2716_3395_s_4_2.jpg" alt="Families" loading="lazy">
+          <div class="spec-overlay"></div>
+          <div class="spec-label">
+            <h3>Families</h3>
+            <p>Sessions from $30</p>
+          </div>
+        </div>
+        <div class="spec-item">
+          <img src="https://static.wixstatic.com/media/101b14_af83542e5c744455949e651f97655b59~mv2_d_3594_5391_s_4_2.jpg" alt="Weddings" loading="lazy">
+          <div class="spec-overlay"></div>
+          <div class="spec-label">
+            <h3>Weddings</h3>
+            <p>Custom packages</p>
+          </div>
+        </div>
+        <div class="spec-item">
+          <img src="https://static.wixstatic.com/media/101b14_e6ed7e829a86430b897466eb46a093b3~mv2_d_2716_3395_s_4_2.jpg" alt="Seniors" loading="lazy">
+          <div class="spec-overlay"></div>
+          <div class="spec-label">
+            <h3>Seniors &amp; Dance</h3>
+            <p>Portrait sessions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section class="cta-section">
+    <div class="cta-bg-text">Memories</div>
+    <div class="cta-inner">
+      <p class="cta-eyebrow">Book a Session</p>
+      <h2 class="cta-heading">
+        <span class="cta-heading-inner">Every family<br>deserves their story told.</span>
+      </h2>
+      <p class="cta-sub">Sessions available for families, weddings, seniors, school portraits, dance recitals, and more. Prints available from $5.</p>
+      <a href="mailto:MyFamilyPhotographyLLC@gmail.com" class="cta-btn">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div>
+        <h2 class="contact-heading">Inquiries</h2>
+        <p class="contact-sub">Ready to book a session or have a question? Reach out — Alese responds to every message personally.</p>
+        <div class="contact-item">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">
+            <a href="mailto:MyFamilyPhotographyLLC@gmail.com">MyFamilyPhotographyLLC@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">
+            <a href="tel:8043057139">804-305-7139</a>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://www.instagram.com/alesemonahan/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/myfamilyphotographyllc" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-item">
+          <div class="contact-label">Session Range</div>
+          <div class="contact-value" style="font-size: 28px; font-family: 'Cormorant Garamond', serif; color: var(--dusty-rose);">$30 – $80</div>
+        </div>
+        <div class="contact-item" style="margin-top: 32px;">
+          <div class="contact-label">Print Pricing</div>
+          <div class="contact-value" style="color: rgba(248,244,238,0.6); font-size: 14px; line-height: 2;">
+            4×6 — $5<br>
+            5×7 — $7<br>
+            8×10 — $10<br>
+            Wallets (8) — $4
+          </div>
+        </div>
+        <div class="contact-item" style="margin-top: 32px;">
+          <div class="contact-label">Specialty Items</div>
+          <div class="contact-value" style="color: rgba(248,244,238,0.6); font-size: 14px; line-height: 2;">
+            Coffee Mug — $22<br>
+            Reusable Bag — $18<br>
+            Glass Ornament — $25
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-copy">© 2026 My Family Photography, LLC · Alese Monahan</span>
+    <span class="footer-credit">Site design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero entrance animation
+    window.addEventListener('load', () => {
+      document.getElementById('heroBg').classList.add('loaded');
+      setTimeout(() => {
+        document.getElementById('heroName1').classList.add('revealed');
+        document.getElementById('heroName2').classList.add('revealed');
+      }, 200);
+      setTimeout(() => {
+        document.getElementById('heroSub').classList.add('revealed');
+        document.getElementById('heroLine').classList.add('revealed');
+      }, 400);
+    });
+
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        heroBg.style.backgroundPositionY = `calc(30% + ${scrollY * 0.35}px)`;
+      }
+    }, { passive: true });
+
+    // IntersectionObserver for all reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Section titles
+    document.querySelectorAll('.section-title-inner').forEach(el => observer.observe(el));
+
+    // Stats items — stagger
+    document.querySelectorAll('.stat-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 120}ms`;
+      observer.observe(el);
+    });
+
+    // Gallery images
+    document.querySelectorAll('.gallery-item img').forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 3) * 100}ms`;
+      observer.observe(el);
+    });
+
+    // About elements
+    document.querySelectorAll('.about-image-wrap img, .about-accent-line, .about-heading-inner, .about-eyebrow, .about-body, .about-pull').forEach(el => observer.observe(el));
+
+    // Spec items — stagger
+    document.querySelectorAll('.spec-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 150}ms`;
+      observer.observe(el);
+    });
+
+    // CTA heading
+    document.querySelectorAll('.cta-heading-inner').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
