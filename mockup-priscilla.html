@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priscilla Davila Photography — Tampa Bay, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F2EC;
+    --warm-white: #FAF7F4;
+    --dark: #1C1712;
+    --mid: #3D3228;
+    --dust: #C8B99A;
+    --blush: #D4A898;
+    --charcoal: #2A2320;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 52px;
+    mix-blend-mode: normal;
+  }
+  nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(28,23,18,0.4) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.92);
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    position: relative;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: #fff; }
+
+  /* ─── HERO: FULL-BLEED, TEXT PINNED BOTTOM-LEFT ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/639289_b9c1ea34307742e08dc55192cd017cc6~mv2_d_6240_4160_s_4_2.jpg/v1/fill/w_2500,h_1666,al_c/639289_b9c1ea34307742e08dc55192cd017cc6~mv2_d_6240_4160_s_4_2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transform: scale(1.08);
+    transition: transform 0.1s linear;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(28,23,18,0.78) 0%,
+      rgba(28,23,18,0.25) 45%,
+      rgba(28,23,18,0.05) 100%
+    );
+  }
+  .hero-text {
+    position: absolute;
+    bottom: 72px;
+    left: 60px;
+    right: 60px;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 9vw, 118px);
+    font-weight: 300;
+    line-height: 0.9;
+    color: #fff;
+    letter-spacing: 0.06em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--blush);
+  }
+  .hero-tagline {
+    margin-top: 22px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .hero-text.loaded .hero-eyebrow,
+  .hero-text.loaded .hero-name,
+  .hero-text.loaded .hero-tagline {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 72px;
+    right: 60px;
+    z-index: 2;
+    writing-mode: vertical-rl;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 60px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--dark);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--dust);
+    letter-spacing: 0.12em;
+    padding: 0 36px;
+  }
+  .marquee-inner span.dot {
+    color: var(--blush);
+    font-style: normal;
+    padding: 0 8px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  .stats {
+    background: var(--cream);
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    border-bottom: 1px solid rgba(200,185,154,0.3);
+  }
+  .stat-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-top: 8px;
+  }
+
+  /* ─── GALLERY: EDITORIAL SCROLL ─── */
+  .gallery {
+    padding: 120px 0;
+    background: var(--warm-white);
+  }
+  .section-header {
+    padding: 0 60px;
+    margin-bottom: 72px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 300;
+    color: rgba(28,23,18,0.06);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-right: 24px;
+    flex-shrink: 0;
+  }
+  .section-title-wrap {
+    flex: 1;
+  }
+  .section-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .section-label-inner {
+    display: block;
+    transform: translateX(-100%);
+    transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-label-inner.is-visible {
+    transform: translateX(0);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.04em;
+    overflow: hidden;
+  }
+  .section-title-inner {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title-inner.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+  .section-link {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    border-bottom: 1px solid var(--dust);
+    padding-bottom: 2px;
+    transition: color 0.3s;
+  }
+  .section-link:hover { color: var(--blush); }
+
+  /* Editorial scroll gallery */
+  .gallery-editorial {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .gallery-row {
+    display: grid;
+    align-items: center;
+  }
+  .gallery-row-1 {
+    grid-template-columns: 60% 40%;
+  }
+  .gallery-row-2 {
+    grid-template-columns: 35% 65%;
+    margin-top: -40px;
+  }
+  .gallery-row-3 {
+    grid-template-columns: 50% 50%;
+    margin-top: -40px;
+  }
+  .gallery-img-wrap {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .gallery-img-wrap.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+  .gallery-img-wrap:nth-child(2) { transition-delay: 0.12s; }
+  .gallery-img-wrap:nth-child(3) { transition-delay: 0.24s; }
+  .gallery-img-wrap:nth-child(4) { transition-delay: 0.1s; }
+  .gallery-img-wrap:nth-child(5) { transition-delay: 0.22s; }
+  .gallery-img-wrap:nth-child(6) { transition-delay: 0.34s; }
+  .gallery-img {
+    width: 100%;
+    display: block;
+    transform: scale(1.05);
+    transition: transform 0.7s ease;
+    will-change: transform;
+  }
+  .gallery-img-wrap:hover .gallery-img {
+    transform: scale(1.02);
+  }
+  .gallery-img-wrap.portrait { aspect-ratio: 3/4; }
+  .gallery-img-wrap.landscape { aspect-ratio: 4/3; }
+  .gallery-img-wrap.square { aspect-ratio: 1/1; }
+  .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gallery-caption-block {
+    padding: 60px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .gallery-caption-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--dust);
+    margin-bottom: 16px;
+  }
+  .gallery-caption-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+  .gallery-caption-desc {
+    margin-top: 14px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #7A6D62;
+    line-height: 1.8;
+    max-width: 280px;
+  }
+
+  /* ─── SPECIALTY GRID ─── */
+  .specialty {
+    background: var(--dark);
+    padding: 120px 60px;
+  }
+  .specialty .section-number { color: rgba(255,255,255,0.04); }
+  .specialty .section-label { color: var(--dust); }
+  .specialty .section-title { color: #fff; }
+  .specialty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .specialty-item {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .specialty-item.is-visible { clip-path: inset(0 0 0 0); }
+  .specialty-item:nth-child(2) { transition-delay: 0.1s; }
+  .specialty-item:nth-child(3) { transition-delay: 0.2s; }
+  .specialty-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,23,18,0.7) 0%, transparent 50%);
+    transition: opacity 0.4s;
+  }
+  .specialty-item img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.05);
+    transition: transform 6s ease;
+  }
+  .specialty-item:hover img { transform: scale(1.0); }
+  .specialty-label {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    z-index: 2;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.06em;
+  }
+  .specialty-sub {
+    display: block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 4px;
+  }
+
+  /* ─── FEATURED / HIGHLIGHT ─── */
+  .featured {
+    background: var(--cream);
+    padding: 140px 0;
+  }
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    align-items: center;
+    min-height: 600px;
+  }
+  .featured-img-wrap {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+  }
+  .featured-img-wrap.is-visible { clip-path: inset(0 0 0 0); }
+  .featured-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .featured-content {
+    padding: 60px 72px 60px 60px;
+  }
+  .featured-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .featured-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .featured-title-inner {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.15s;
+  }
+  .featured-title-inner.is-visible { clip-path: inset(0 0% 0 0); }
+  .featured-text {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.9;
+    max-width: 420px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+  .featured-text.is-visible { opacity: 1; transform: translateY(0); }
+  .featured-quote {
+    margin-top: 40px;
+    padding-left: 22px;
+    border-left: 2px solid var(--blush);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.45s, transform 0.6s ease 0.45s;
+  }
+  .featured-quote.is-visible { opacity: 1; transform: translateY(0); }
+  .featured-quote cite {
+    display: block;
+    margin-top: 12px;
+    font-family: 'Work Sans', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dust);
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    background: var(--warm-white);
+    padding: 140px 60px;
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+  }
+  .about-portrait {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+  }
+  .about-portrait.is-visible { clip-path: inset(0 0 0 0); }
+  .about-portrait img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .about-portrait-accent {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid var(--blush);
+    pointer-events: none;
+    opacity: 0.4;
+  }
+  .about-content {
+    padding-top: 40px;
+  }
+  .about-content .section-label-inner {
+    color: var(--dust);
+  }
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.9;
+    margin-top: 32px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+  .about-body.is-visible { opacity: 1; transform: translateY(0); }
+  .about-details {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+  }
+  .about-details.is-visible { opacity: 1; transform: translateY(0); }
+  .detail-item { }
+  .detail-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-bottom: 5px;
+  }
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--dark);
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials {
+    background: var(--charcoal);
+    padding: 120px 60px;
+    overflow: hidden;
+  }
+  .testimonials .section-number { color: rgba(255,255,255,0.04); }
+  .testimonials .section-label-inner { color: var(--dust); }
+  .testimonials .section-title-inner { color: #fff; clip-path: inset(0 100% 0 0); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 72px;
+  }
+  .testimonial-item {
+    padding: 44px 44px;
+    border: 1px solid rgba(200,185,154,0.15);
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .testimonial-item.is-visible { opacity: 1; transform: translateY(0); }
+  .testimonial-item:nth-child(2) { transition-delay: 0.15s; }
+  .testimonial-quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    color: var(--blush);
+    line-height: 0.5;
+    margin-bottom: 24px;
+    opacity: 0.6;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.7;
+  }
+  .testimonial-source {
+    margin-top: 28px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dust);
+  }
+
+  /* ─── BOLD CTA ─── */
+  .cta-section {
+    background: var(--blush);
+    padding: 140px 60px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'BOOK';
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 260px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .cta-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(28,23,18,0.6);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .cta-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+    max-width: 700px;
+    margin-bottom: 44px;
+    overflow: hidden;
+  }
+  .cta-title-inner {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+  .cta-title-inner.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--dark);
+    padding: 18px 44px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: background 0.3s, opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  }
+  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--mid); }
+  .cta-note {
+    margin-top: 20px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    color: rgba(28,23,18,0.5);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--warm-white);
+    padding: 140px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-left { }
+  .contact-right {
+    padding-top: 80px;
+  }
+  .contact-email {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 300;
+    color: var(--dark);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--dust);
+    padding-bottom: 12px;
+    margin-top: 32px;
+    transition: color 0.3s, border-color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: color 0.3s, border-color 0.3s, opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  }
+  .contact-email.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-email:hover { color: var(--blush); border-color: var(--blush); }
+  .contact-details {
+    margin-top: 44px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+  }
+  .contact-details.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-detail-row {
+    display: flex;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(200,185,154,0.3);
+  }
+  .contact-detail-row:first-child { border-top: 1px solid rgba(200,185,154,0.3); }
+  .contact-detail-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dust);
+    width: 90px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .contact-detail-value {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+  .contact-social {
+    margin-top: 32px;
+    display: flex;
+    gap: 28px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+  }
+  .contact-social.is-visible { opacity: 1; transform: translateY(0); }
+  .social-link {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .social-link:hover { color: var(--blush); }
+  .contact-map-placeholder {
+    background: var(--cream);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .map-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--dust);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200,185,154,0.12);
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+  }
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .hero-text { left: 24px; right: 24px; bottom: 48px; }
+    .hero-scroll { display: none; }
+    .stats { grid-template-columns: 1fr 1fr; padding: 72px 24px; }
+    .stat-number { font-size: 64px; }
+    .gallery { padding: 80px 0; }
+    .section-header { padding: 0 24px; margin-bottom: 48px; }
+    .section-number { font-size: 64px; }
+    .gallery-row-1,
+    .gallery-row-2,
+    .gallery-row-3 { grid-template-columns: 1fr; margin-top: 0; }
+    .gallery-caption-block { padding: 32px 24px; }
+    .specialty { padding: 80px 24px; }
+    .specialty-grid { grid-template-columns: 1fr; gap: 2px; }
+    .featured-inner { grid-template-columns: 1fr; }
+    .featured-img-wrap { height: 400px; }
+    .featured-content { padding: 40px 24px; }
+    .about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .testimonials { padding: 80px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .cta-section { padding: 100px 24px; }
+    .cta-section::before { font-size: 120px; right: -10px; }
+    .contact { grid-template-columns: 1fr; padding: 80px 24px; }
+    .contact-right { padding-top: 0; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 58px; }
+    .stats { grid-template-columns: 1fr 1fr; padding: 48px 20px; }
+    .stat-number { font-size: 52px; }
+    .cta-title { font-size: 48px; }
+    nav { padding: 16px 20px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Priscilla Davila</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: Full-bleed, text pinned bottom-left, no overlay except bottom gradient -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-text" id="heroText">
+    <p class="hero-eyebrow">Tampa Bay, Florida</p>
+    <h1 class="hero-name">Priscilla<br><em>Davila</em></h1>
+    <p class="hero-tagline">Portrait · Wedding · Family Photography</p>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Portraits</span><span class="dot">·</span>
+    <span>Weddings</span><span class="dot">·</span>
+    <span>Engagements</span><span class="dot">·</span>
+    <span>Families</span><span class="dot">·</span>
+    <span>Tampa Bay, FL</span><span class="dot">·</span>
+    <span>Natural Light</span><span class="dot">·</span>
+    <span>On Location</span><span class="dot">·</span>
+    <span>Portraits</span><span class="dot">·</span>
+    <span>Weddings</span><span class="dot">·</span>
+    <span>Engagements</span><span class="dot">·</span>
+    <span>Families</span><span class="dot">·</span>
+    <span>Tampa Bay, FL</span><span class="dot">·</span>
+    <span>Natural Light</span><span class="dot">·</span>
+    <span>On Location</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat-item">
+    <div class="stat-number">8+</div>
+    <div class="stat-label">Years of Experience</div>
+  </div>
+  <div class="stat-item" style="transition-delay:0.1s;">
+    <div class="stat-number">5★</div>
+    <div class="stat-label">WeddingWire Rating</div>
+  </div>
+  <div class="stat-item" style="transition-delay:0.2s;">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Counties Served</div>
+  </div>
+  <div class="stat-item" style="transition-delay:0.3s;">
+    <div class="stat-number">∞</div>
+    <div class="stat-label">Moments Preserved</div>
+  </div>
+</section>
+
+<!-- GALLERY: Editorial Scroll -->
+<section class="gallery" id="gallery">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <div class="section-title-wrap">
+      <div class="section-label"><span class="section-label-inner">Selected Work</span></div>
+      <h2 class="section-title"><span class="section-title-inner">Portfolio</span></h2>
+    </div>
+    <a href="#contact" class="section-link">Book a session</a>
+  </div>
+
+  <div class="gallery-editorial">
+    <!-- Row 1: Large left landscape, small right with caption -->
+    <div class="gallery-row gallery-row-1">
+      <div class="gallery-img-wrap landscape">
+        <img class="gallery-img" src="https://static.wixstatic.com/media/639289_b9c1ea34307742e08dc55192cd017cc6~mv2_d_6240_4160_s_4_2.jpg/v1/fill/w_2500,h_1666,al_c/639289_b9c1ea34307742e08dc55192cd017cc6~mv2_d_6240_4160_s_4_2.jpg" alt="Wedding portrait" loading="lazy">
+      </div>
+      <div class="gallery-caption-block">
+        <span class="gallery-caption-num">01 / Wedding</span>
+        <h3 class="gallery-caption-title">Love in the Golden Hour</h3>
+        <p class="gallery-caption-desc">Capturing the candid in-between moments — the ones that outlast any posed photograph.</p>
+      </div>
+    </div>
+
+    <!-- Row 2: Caption left, large right portrait -->
+    <div class="gallery-row gallery-row-2">
+      <div class="gallery-caption-block">
+        <span class="gallery-caption-num">02 / Portrait</span>
+        <h3 class="gallery-caption-title">Quiet Connection</h3>
+        <p class="gallery-caption-desc">Natural light. Real locations. No studio props or backdrops — just you, the light, and the moment.</p>
+      </div>
+      <div class="gallery-img-wrap portrait">
+        <img class="gallery-img" src="https://static.wixstatic.com/media/639289_21f81215565d4f9bbf5cd9995ab174d6~mv2_d_2547_3820_s_4_2.jpg/v1/fill/w_1600,h_1600/639289_21f81215565d4f9bbf5cd9995ab174d6~mv2_d_2547_3820_s_4_2.jpg" alt="Portrait session" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Row 3: Two equal images -->
+    <div class="gallery-row gallery-row-3">
+      <div class="gallery-img-wrap landscape">
+        <img class="gallery-img" src="https://static.wixstatic.com/media/639289_38e863273ed44096bf0ecbdb063f9f24~mv2_d_5401_3922_s_4_2.jpg/v1/fill/w_1600,h_1600/639289_38e863273ed44096bf0ecbdb063f9f24~mv2_d_5401_3922_s_4_2.jpg" alt="Couple session" loading="lazy">
+      </div>
+      <div class="gallery-img-wrap landscape">
+        <img class="gallery-img" src="https://static.wixstatic.com/media/639289_a379b9123f904b7f8d152db68b4f5e90~mv2_d_6084_4040_s_4_2.jpg/v1/fill/w_1600,h_1600/639289_a379b9123f904b7f8d152db68b4f5e90~mv2_d_6084_4040_s_4_2.jpg" alt="Wedding ceremony" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTY GRID (dark section) -->
+<section class="specialty">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <div class="section-title-wrap">
+      <div class="section-label"><span class="section-label-inner">What I Do</span></div>
+      <h2 class="section-title"><span class="section-title-inner">Specialties</span></h2>
+    </div>
+  </div>
+  <div class="specialty-grid">
+    <div class="specialty-item">
+      <img src="https://static.wixstatic.com/media/639289_34a40f953b97480e9f2d1d4c04d2ce52~mv2.jpg/v1/fill/w_1600,h_1600/639289_34a40f953b97480e9f2d1d4c04d2ce52~mv2.jpg" alt="Weddings" loading="lazy">
+      <div class="specialty-label">
+        <span class="specialty-sub">01</span>
+        Weddings
+      </div>
+    </div>
+    <div class="specialty-item">
+      <img src="https://static.wixstatic.com/media/639289_324a3202a280465d8fb23e5a85a5ec5f~mv2_d_5982_3918_s_4_2.jpg/v1/fill/w_1600,h_1600/639289_324a3202a280465d8fb23e5a85a5ec5f~mv2_d_5982_3918_s_4_2.jpg" alt="Portraits" loading="lazy">
+      <div class="specialty-label">
+        <span class="specialty-sub">02</span>
+        Portraits
+      </div>
+    </div>
+    <div class="specialty-item">
+      <img src="https://static.wixstatic.com/media/639289_348923e5181f4c7da012a58c38d1ec44~mv2.jpg/v1/fill/w_1600,h_1600/639289_348923e5181f4c7da012a58c38d1ec44~mv2.jpg" alt="Families" loading="lazy">
+      <div class="specialty-label">
+        <span class="specialty-sub">03</span>
+        Families
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED (warm cream) -->
+<section class="featured" id="work">
+  <div class="featured-inner">
+    <div class="featured-img-wrap">
+      <img src="https://static.wixstatic.com/media/639289_38e863273ed44096bf0ecbdb063f9f24~mv2_d_5401_3922_s_4_2.jpg/v1/fill/w_1600,h_1600/639289_38e863273ed44096bf0ecbdb063f9f24~mv2_d_5401_3922_s_4_2.jpg" alt="Featured portrait" loading="lazy">
+    </div>
+    <div class="featured-content">
+      <p class="featured-eyebrow">The Approach</p>
+      <h2 class="featured-title">
+        <span class="featured-title-inner">Every frame<br>tells the truth</span>
+      </h2>
+      <p class="featured-text">
+        Natural light. Real locations. Working primarily on location throughout the Tampa Bay area — from Palm Harbor and Tarpon Springs to New Port Richey and Hudson — Priscilla brings a calm, unhurried presence to every session. No forced smiles, no studio stiffness.
+      </p>
+      <blockquote class="featured-quote">
+        "She captured the love between my husband and I effortlessly. I would recommend her every time!"
+        <cite>— Nicollette, Wedding Client</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-portrait">
+      <div class="about-portrait-accent"></div>
+      <img src="https://static.wixstatic.com/media/639289_b9c1ea34307742e08dc55192cd017cc6~mv2_d_6240_4160_s_4_2.jpg/v1/fill/w_2500,h_1666,al_c/639289_b9c1ea34307742e08dc55192cd017cc6~mv2_d_6240_4160_s_4_2.jpg" alt="Priscilla Davila" loading="lazy">
+    </div>
+    <div class="about-content">
+      <div class="section-label"><span class="section-label-inner">03 / About</span></div>
+      <h2 class="section-title"><span class="section-title-inner">The Photographer</span></h2>
+      <p class="about-body">
+        Priscilla Davila is a natural light portrait and wedding photographer based in the Tampa Bay area of Florida. Photographing life's milestones from a deeply personal perspective — as a parent and partner herself — she understands that the images from these days are the ones that matter most, years from now. Her work is warm, unforced, and rooted in real connection.
+      </p>
+      <div class="about-details">
+        <div class="detail-item">
+          <div class="detail-label">Location</div>
+          <div class="detail-value">Hudson / Palm Harbor, FL</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Specialties</div>
+          <div class="detail-value">Weddings · Portraits · Family</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Service Area</div>
+          <div class="detail-value">Pasco · Pinellas · Hernando</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Style</div>
+          <div class="detail-value">Natural Light · On Location</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <div class="section-title-wrap">
+      <div class="section-label"><span class="section-label-inner">Client Stories</span></div>
+      <h2 class="section-title"><span class="section-title-inner">What They Say</span></h2>
+    </div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-item">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">She captured the love between my husband and I effortlessly. She went above and beyond on our wedding day — I would recommend her every time!</p>
+      <p class="testimonial-source">— Nicollette · Wedding</p>
+    </div>
+    <div class="testimonial-item">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">I just sent her a few shots of what I wanted and she executed them perfectly. She remembered all of what I wanted without me reminding her — truly professional.</p>
+      <p class="testimonial-source">— Ali · Portrait Session</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section class="cta-section" id="book">
+  <p class="cta-eyebrow">Now Booking 2026</p>
+  <h2 class="cta-title">
+    <span class="cta-title-inner">Let's make<br>something<br>beautiful.</span>
+  </h2>
+  <a href="mailto:info@priscilladavilaphotography.com" class="cta-btn">Get in Touch</a>
+  <p class="cta-note">Serving Palm Harbor · Tarpon Springs · New Port Richey · Hudson · and beyond</p>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="section-label"><span class="section-label-inner">05 / Contact</span></div>
+    <h2 class="section-title"><span class="section-title-inner">Inquiries</span></h2>
+    <a href="mailto:info@priscilladavilaphotography.com" class="contact-email">
+      info@priscilladavila<br>photography.com
+    </a>
+    <div class="contact-social">
+      <a href="#" class="social-link">Instagram</a>
+      <a href="#" class="social-link">Facebook</a>
+      <a href="#" class="social-link">WeddingWire</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="contact-details">
+      <div class="contact-detail-row">
+        <span class="contact-detail-label">Phone</span>
+        <span class="contact-detail-value">352-442-0327</span>
+      </div>
+      <div class="contact-detail-row">
+        <span class="contact-detail-label">Area</span>
+        <span class="contact-detail-value">Tampa Bay, Suncoast — FL</span>
+      </div>
+      <div class="contact-detail-row">
+        <span class="contact-detail-label">Sessions</span>
+        <span class="contact-detail-value">Portraits · Families · Couples<br>Engagements · Weddings</span>
+      </div>
+      <div class="contact-detail-row">
+        <span class="contact-detail-label">Booking</span>
+        <span class="contact-detail-value">On Location · Flexible scheduling</span>
+      </div>
+    </div>
+    <div class="contact-map-placeholder">
+      <span class="map-label">Tampa Bay Area, Florida</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Priscilla Davila Photography</span>
+  <span class="footer-copy">© 2026 All Rights Reserved</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero load animation
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroText').classList.add('loaded');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    heroBg.style.transform = `scale(1.08) translateY(${scrollY * 0.4}px)`;
+  }, { passive: true });
+
+  // IntersectionObserver for all animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  // Observe elements
+  document.querySelectorAll(
+    '.stat-item, .gallery-img-wrap, .section-label-inner, .section-title-inner, ' +
+    '.specialty-item, .featured-img-wrap, .featured-eyebrow, .featured-text, .featured-quote, ' +
+    '.featured-title-inner, .about-portrait, .about-body, .about-details, ' +
+    '.testimonial-item, .cta-eyebrow, .cta-title-inner, .cta-btn, ' +
+    '.contact-email, .contact-details, .contact-social'
+  ).forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
