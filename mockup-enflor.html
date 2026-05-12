@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>En Flor Boudoir | Coconut Creek, Florida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Karla:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0d0b;
+      --bg-alt: #161310;
+      --text: #f0ece4;
+      --text-muted: #9a8f82;
+      --accent: #c9a96e;
+      --accent-dark: #9e7b44;
+      --divider: #2a2420;
+      --section-pad: 120px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Karla', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+      background: linear-gradient(to bottom, rgba(15,13,11,0.92) 0%, transparent 100%);
+      transition: background 0.4s ease;
+    }
+    .nav-logo {
+      font-family: 'Italiana', serif;
+      font-size: 22px;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 44px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── HERO: CINEMATIC LETTERBOX ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/e732f6_088e505d82d4420f91b0b87bcbe4e077~mv2_d_3240_4938_s_4_2.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      transform: scale(1.05);
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(15,13,11,0.55) 0%,
+        rgba(15,13,11,0.05) 40%,
+        rgba(15,13,11,0.05) 60%,
+        rgba(15,13,11,0.85) 100%
+      );
+    }
+    /* Letterbox bars */
+    .hero-bar-top,
+    .hero-bar-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 90px;
+      background: var(--bg);
+      z-index: 2;
+    }
+    .hero-bar-top { top: 0; }
+    .hero-bar-bottom { bottom: 0; display: flex; align-items: center; padding: 0 56px; justify-content: space-between; }
+
+    .hero-name {
+      position: absolute;
+      bottom: 90px;
+      left: 56px;
+      right: 56px;
+      z-index: 3;
+      padding-bottom: 32px;
+    }
+    .hero-name h1 {
+      font-family: 'Italiana', serif;
+      font-size: clamp(64px, 10vw, 120px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      line-height: 0.9;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .hero-name h1.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-tagline {
+      margin-top: 20px;
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 400;
+      opacity: 0;
+      transition: opacity 1.4s ease 0.4s;
+    }
+    .hero-tagline.visible { opacity: 1; }
+
+    .hero-bar-bottom-text {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .hero-scroll {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      background: var(--accent);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-track span {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bg);
+      font-weight: 500;
+      padding: 0 48px;
+    }
+    .marquee-track span.dot::after {
+      content: '·';
+      margin-left: 48px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      padding: 100px 56px;
+      border-bottom: 1px solid var(--divider);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .stat-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stat-item:nth-child(2) { transition-delay: 0.12s; }
+    .stat-item:nth-child(3) { transition-delay: 0.24s; }
+    .stat-item:nth-child(4) { transition-delay: 0.36s; }
+    .stat-number {
+      font-family: 'Italiana', serif;
+      font-size: clamp(64px, 8vw, 96px);
+      line-height: 1;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    /* ─── SECTION TITLES ─── */
+    .section-title-wrap {
+      overflow: hidden;
+      margin-bottom: 64px;
+    }
+    .section-number {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Italiana', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+    .section-title.visible {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    /* ─── GALLERY: EDITORIAL SCROLL ─── */
+    .gallery-section {
+      padding: var(--section-pad) 0;
+    }
+    .gallery-header {
+      padding: 0 56px;
+    }
+    .gallery-grid {
+      padding: 48px 56px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .gallery-row {
+      display: grid;
+      gap: 12px;
+    }
+    .gallery-row.row-1 { grid-template-columns: 2fr 1fr; }
+    .gallery-row.row-2 { grid-template-columns: 1fr 1fr 1fr; }
+    .gallery-row.row-3 { grid-template-columns: 1fr 2fr; }
+    .gallery-row.row-4 { grid-template-columns: 1fr; }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      will-change: clip-path;
+      transition: clip-path 0.9s ease-out;
+    }
+    .gallery-item.visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+      loading: lazy;
+    }
+    .gallery-row.row-1 .gallery-item { height: 600px; }
+    .gallery-row.row-2 .gallery-item { height: 440px; }
+    .gallery-row.row-3 .gallery-item { height: 520px; }
+    .gallery-row.row-4 .gallery-item { height: 480px; }
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    /* ─── EXPERIENCE SECTION ─── */
+    .experience-section {
+      padding: var(--section-pad) 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-top: 1px solid var(--divider);
+    }
+    .experience-text .section-title-wrap {
+      margin-bottom: 40px;
+    }
+    .experience-text p {
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+    .experience-text p:last-child { margin-bottom: 0; }
+    .experience-image {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      will-change: clip-path;
+      transition: clip-path 0.9s ease-out 0.2s;
+    }
+    .experience-image.visible { clip-path: inset(0 0 0 0); }
+    .experience-image img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ─── SERVICES ─── */
+    .services-section {
+      padding: var(--section-pad) 56px;
+      background: var(--bg-alt);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+      border: 1px solid var(--divider);
+    }
+    .service-card {
+      padding: 48px 40px;
+      border-right: 1px solid var(--divider);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .service-card:last-child { border-right: none; }
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-card:nth-child(2) { transition-delay: 0.15s; }
+    .service-card:nth-child(3) { transition-delay: 0.3s; }
+    .service-icon {
+      font-family: 'Italiana', serif;
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .service-name {
+      font-family: 'Italiana', serif;
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .service-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* ─── FEATURED PORTRAIT ─── */
+    .featured-section {
+      padding: 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: 700px;
+    }
+    .featured-image {
+      overflow: hidden;
+    }
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .featured-content {
+      background: var(--bg-alt);
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-quote {
+      font-family: 'Italiana', serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .featured-quote.visible { opacity: 1; transform: translateY(0); }
+    .featured-attr {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 48px;
+      opacity: 0;
+      transition: opacity 0.9s ease 0.2s;
+    }
+    .featured-attr.visible { opacity: 1; }
+    .featured-body {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      opacity: 0;
+      transition: opacity 0.9s ease 0.35s;
+    }
+    .featured-body.visible { opacity: 1; }
+
+    /* ─── ABOUT ─── */
+    .about-section {
+      padding: var(--section-pad) 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image {
+      overflow: hidden;
+      clip-path: inset(0 100% 0 0);
+      will-change: clip-path;
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .about-image.visible { clip-path: inset(0 0 0 0); }
+    .about-image img {
+      width: 100%;
+      height: 640px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-accent-line {
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      right: -20px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.6s;
+    }
+    .about-accent-line.visible { opacity: 1; }
+    .about-content { padding-top: 20px; }
+    .about-content .section-title-wrap { margin-bottom: 48px; }
+    .about-body {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .about-body.visible { opacity: 1; transform: translateY(0); }
+    .about-body:nth-child(3) { transition-delay: 0.15s; }
+    .about-detail {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--divider);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .about-detail-item { }
+    .about-detail-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .about-detail-value {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    .testimonial-section {
+      padding: 100px 56px;
+      background: var(--bg-alt);
+      text-align: center;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+    }
+    .testimonial-quote {
+      font-family: 'Italiana', serif;
+      font-size: clamp(24px, 3vw, 38px);
+      font-style: italic;
+      max-width: 860px;
+      margin: 0 auto 40px;
+      line-height: 1.5;
+      color: var(--text);
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .testimonial-quote.visible { opacity: 1; }
+    .testimonial-source {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 1s ease 0.3s;
+    }
+    .testimonial-source.visible { opacity: 1; }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      padding: 140px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Italiana', serif;
+      font-size: clamp(120px, 20vw, 240px);
+      color: rgba(201, 169, 110, 0.04);
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+    }
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+    .cta-section .section-number { margin-bottom: 28px; }
+    .cta-section h2 {
+      font-family: 'Italiana', serif;
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 32px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+    .cta-section h2.visible { clip-path: inset(0 0 0 0); }
+    .cta-body {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 52px;
+      line-height: 1.8;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.3s;
+    }
+    .cta-body.visible { opacity: 1; }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 56px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 400;
+      font-family: 'Karla', sans-serif;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .cta-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      padding: var(--section-pad) 56px;
+      background: var(--bg-alt);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      border-top: 1px solid var(--divider);
+    }
+    .contact-info { }
+    .contact-info .section-title-wrap { margin-bottom: 40px; }
+    .contact-line {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .contact-line.visible { opacity: 1; transform: translateY(0); }
+    .contact-line:nth-child(3) { transition-delay: 0.1s; }
+    .contact-line:nth-child(4) { transition-delay: 0.2s; }
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .contact-value {
+      font-size: 16px;
+      color: var(--text);
+    }
+    .contact-value a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--divider);
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+    .contact-value a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .contact-image {
+      overflow: hidden;
+    }
+    .contact-image img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080604;
+      padding: 48px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--divider);
+    }
+    .footer-brand {
+      font-family: 'Italiana', serif;
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 22px 24px; }
+      .nav-links { gap: 24px; }
+      .hero-bar-top, .hero-bar-bottom { height: 60px; }
+      .hero-name { left: 24px; right: 24px; bottom: 60px; }
+      .hero-bar-bottom { padding: 0 24px; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 64px 24px; }
+      .gallery-grid { padding: 48px 24px 0; }
+      .gallery-row.row-1, .gallery-row.row-3 { grid-template-columns: 1fr; }
+      .gallery-row.row-2 { grid-template-columns: 1fr 1fr; }
+      .gallery-row.row-1 .gallery-item { height: 380px; }
+      .gallery-row.row-2 .gallery-item { height: 280px; }
+      .gallery-row.row-3 .gallery-item { height: 360px; }
+      .gallery-row.row-4 .gallery-item { height: 340px; }
+      .gallery-header { padding: 0 24px; }
+      .experience-section, .about-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+      .featured-section { grid-template-columns: 1fr; }
+      .featured-image img { height: 460px; }
+      .featured-content { padding: 56px 32px; }
+      .services-section { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid var(--divider); }
+      .service-card:last-child { border-bottom: none; }
+      .testimonial-section { padding: 80px 24px; }
+      .cta-section { padding: 100px 24px; }
+      .contact-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      footer { flex-direction: column; gap: 24px; padding: 40px 24px; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .hero-name h1 { font-size: 52px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat-number { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">En Flor Boudoir</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Book a Shoot</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: CINEMATIC LETTERBOX -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-bar-top"></div>
+    <div class="hero-name">
+      <h1 id="heroTitle">En Flor<br>Boudoir</h1>
+      <p class="hero-tagline" id="heroTagline">Boudoir Photography · Coconut Creek, Florida</p>
+    </div>
+    <div class="hero-bar-bottom">
+      <span class="hero-bar-bottom-text">Broward County · Est. 2018</span>
+      <span class="hero-scroll">Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Boudoir Photography</span>
+      <span class="dot">Coconut Creek FL</span>
+      <span>Empowering Every Woman</span>
+      <span class="dot">In Studio · On Location · In Home</span>
+      <span>Bridal Boudoir</span>
+      <span class="dot">Broward County</span>
+      <span>En Flor Boudoir</span>
+      <span class="dot">2026</span>
+      <!-- duplicate for seamless loop -->
+      <span>Boudoir Photography</span>
+      <span class="dot">Coconut Creek FL</span>
+      <span>Empowering Every Woman</span>
+      <span class="dot">In Studio · On Location · In Home</span>
+      <span>Bridal Boudoir</span>
+      <span class="dot">Broward County</span>
+      <span>En Flor Boudoir</span>
+      <span class="dot">2026</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" id="stats">
+    <div class="stat-item">
+      <span class="stat-number">7+</span>
+      <span class="stat-label">Years of Experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Sessions Captured</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Creative Professionals</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Client Satisfaction</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <div class="section-title-wrap">
+        <p class="section-number">01 — Portfolio</p>
+        <h2 class="section-title">The Work</h2>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <!-- Row 1: large left, small right -->
+      <div class="gallery-row row-1">
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_7586d9675c5f4f3b874b1a9de1a50dd2~mv2_d_3456_5184_s_4_2.jpg" alt="Boudoir portrait" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_ee535b87eca749b781117c484273985e~mv2_d_3456_5184_s_4_2.jpg" alt="Intimate portrait" loading="lazy">
+        </div>
+      </div>
+      <!-- Row 2: three equal -->
+      <div class="gallery-row row-2">
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_6ae608c628674d0987c470de42285667~mv2_d_2943_4573_s_4_2.jpg" alt="Studio boudoir" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_d430efaede0c4ed9b13403e925d20836~mv2_d_3456_5184_s_4_2.jpg" alt="Boudoir session" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_aacfb6d728314437a3060e48a9d8f681~mv2_d_3265_4898_s_4_2.jpg" alt="Portrait photography" loading="lazy">
+        </div>
+      </div>
+      <!-- Row 3: small left, large right -->
+      <div class="gallery-row row-3">
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_1367c6f55486481b969ee1af54c6f500~mv2_d_3265_4898_s_4_2.jpg" alt="Boudoir art" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://static.wixstatic.com/media/e732f6_088e505d82d4420f91b0b87bcbe4e077~mv2_d_3240_4938_s_4_2.jpg" alt="Empowering photography" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE SECTION -->
+  <section class="experience-section" id="experience">
+    <div class="experience-text">
+      <div class="section-title-wrap">
+        <p class="section-number">02 — The Experience</p>
+        <h2 class="section-title">More Than a Photo Shoot</h2>
+      </div>
+      <p class="about-body">En Flor Boudoir is a safe, celebratory space built for every body. Each session is a full-service experience — from custom hair and makeup to the final gallery — designed around you and no one else.</p>
+      <p class="about-body">Whether you're booking as a gift, a personal milestone, or simply because you deserve it, every detail is tailored to how you want to feel: powerful, tender, radiant, or all three at once.</p>
+    </div>
+    <div class="experience-image">
+      <img src="https://static.wixstatic.com/media/e732f6_a507d648445f4a769c82c5d4c2488bfa~mv2.jpg" alt="Boudoir experience" loading="lazy">
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-title-wrap">
+      <p class="section-number">03 — Services</p>
+      <h2 class="section-title">What We Offer</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">I</div>
+        <h3 class="service-name">In-Studio Sessions</h3>
+        <p class="service-desc">Fully lit, professionally styled studio environment in Coconut Creek. Wardrobe styling available. Includes hair and makeup by our on-call artists.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">II</div>
+        <h3 class="service-name">On Location</h3>
+        <p class="service-desc">Your home, a boutique hotel, or a curated venue of your choice. We bring the studio to you — lights, styling, and all. Serving all of Broward County.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">III</div>
+        <h3 class="service-name">Bridal Boudoir</h3>
+        <p class="service-desc">The ultimate gift to yourself — or a private album for your partner. Timed around your wedding date for the most memorable portraits of your life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED QUOTE + IMAGE -->
+  <section class="featured-section">
+    <div class="featured-image">
+      <img src="https://static.wixstatic.com/media/e732f6_17b61f1287d345889fde7af0ef0adb00~mv2_d_4277_3456_s_4_2.jpg" alt="Featured boudoir work" loading="lazy">
+    </div>
+    <div class="featured-content">
+      <p class="section-number">04 — Philosophy</p>
+      <blockquote class="featured-quote">"Every woman feels empowered in different ways — and this is where you get to discover yours."</blockquote>
+      <p class="featured-attr">— Mikaela Gabriel, Photographer</p>
+      <p class="featured-body">En Flor Boudoir was built on the belief that boudoir photography is not about the images. It's about how you feel standing in front of the camera — seen, celebrated, and completely yourself.</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="testimonial-section" id="testimonials">
+    <blockquote class="testimonial-quote">"I took some pics with Mikaela and they came out absolutely terrific!! A+++++++++! Very affordable and the most fun I've had. 10/10 recommend."</blockquote>
+    <p class="testimonial-source">— Real Client Review</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-image-wrap">
+      <div class="about-image">
+        <img src="https://static.wixstatic.com/media/e732f6_56d36f8b1f224232afdae6ae6d72125d~mv2_d_3456_3407_s_4_2.jpg" alt="Mikaela Gabriel - Photographer" loading="lazy">
+      </div>
+      <div class="about-accent-line"></div>
+    </div>
+    <div class="about-content">
+      <div class="section-title-wrap">
+        <p class="section-number">05 — About</p>
+        <h2 class="section-title">Mikaela Gabriel</h2>
+      </div>
+      <p class="about-body">Mikaela Gabriel is a boudoir photographer based in Coconut Creek, Florida, serving clients throughout Broward County. Her work centers on intimacy, light, and the quiet power that surfaces when women feel truly at ease.</p>
+      <p class="about-body">With a full creative team — including on-location makeup artists and hair stylists — En Flor Boudoir offers a complete transformation experience, not just a photo session.</p>
+      <div class="about-detail">
+        <div class="about-detail-item">
+          <p class="about-detail-label">Location</p>
+          <p class="about-detail-value">Coconut Creek, FL</p>
+        </div>
+        <div class="about-detail-item">
+          <p class="about-detail-label">Coverage</p>
+          <p class="about-detail-value">All of Broward County</p>
+        </div>
+        <div class="about-detail-item">
+          <p class="about-detail-label">Specialties</p>
+          <p class="about-detail-value">Boudoir · Bridal · On Location</p>
+        </div>
+        <div class="about-detail-item">
+          <p class="about-detail-label">Instagram</p>
+          <p class="about-detail-value"><a href="https://instagram.com/enflorboudoir" target="_blank">@enflorboudoir</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="book">
+    <div class="cta-bg-text" aria-hidden="true">Book</div>
+    <div class="cta-content">
+      <p class="section-number">06 — Ready?</p>
+      <h2>Book Your Session</h2>
+      <p class="cta-body">Sessions book fast. Reach out to check availability — whether you're ready now or just curious about what an En Flor session looks like for you.</p>
+      <a href="mailto:enflorboudoir@gmail.com" class="cta-btn">Inquire Now</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-info">
+      <div class="section-title-wrap">
+        <p class="section-number">07 — Get In Touch</p>
+        <h2 class="section-title">Studio Inquiries</h2>
+      </div>
+      <div class="contact-line">
+        <span class="contact-label">Email</span>
+        <span class="contact-value"><a href="mailto:enflorboudoir@gmail.com">enflorboudoir@gmail.com</a></span>
+      </div>
+      <div class="contact-line">
+        <span class="contact-label">Phone</span>
+        <span class="contact-value"><a href="tel:9547150248">954-715-0248</a></span>
+      </div>
+      <div class="contact-line">
+        <span class="contact-label">Location</span>
+        <span class="contact-value">Coconut Creek, Florida<br>Broward County</span>
+      </div>
+      <div class="contact-line">
+        <span class="contact-label">Instagram</span>
+        <span class="contact-value">
+          <a href="https://instagram.com/enflorboudoir" target="_blank">@enflorboudoir</a><br>
+          <a href="https://instagram.com/MikaelaGabriel_" target="_blank">@MikaelaGabriel_</a>
+        </span>
+      </div>
+    </div>
+    <div class="contact-image">
+      <img src="https://static.wixstatic.com/media/e732f6_10f23c3766294aee96e562d9be59b6b3~mv2.jpg" alt="Contact En Flor Boudoir" loading="lazy">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">En Flor Boudoir</span>
+    <span class="footer-copy">© 2026 En Flor Boudoir · Coconut Creek, FL · Design by Lucas Blatt</span>
+    <ul class="footer-links">
+      <li><a href="https://instagram.com/enflorboudoir" target="_blank">Instagram</a></li>
+      <li><a href="https://www.facebook.com/En-Flor-Boudoir-738416646517064/" target="_blank">Facebook</a></li>
+      <li><a href="mailto:enflorboudoir@gmail.com">Email</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // --- HERO ANIMATIONS ---
+    const heroTitle = document.getElementById('heroTitle');
+    const heroTagline = document.getElementById('heroTagline');
+    setTimeout(() => { heroTitle.classList.add('visible'); }, 200);
+    setTimeout(() => { heroTagline.classList.add('visible'); }, 500);
+
+    // --- HERO PARALLAX ---
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.3}px)`;
+    }, { passive: true });
+
+    // --- INTERSECTION OBSERVER ---
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -60px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    const selectors = [
+      '.section-title',
+      '.gallery-item',
+      '.stat-item',
+      '.experience-image',
+      '.about-image',
+      '.about-accent-line',
+      '.about-body',
+      '.contact-line',
+      '.featured-quote',
+      '.featured-attr',
+      '.featured-body',
+      '.service-card',
+      '.testimonial-quote',
+      '.testimonial-source',
+      '.cta-section h2',
+      '.cta-body',
+    ];
+
+    selectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => observer.observe(el));
+    });
+
+    // Stagger gallery items within each row
+    document.querySelectorAll('.gallery-row .gallery-item').forEach((item, i) => {
+      item.style.transitionDelay = `${(i % 3) * 100}ms`;
+    });
+  </script>
+</body>
+</html>
