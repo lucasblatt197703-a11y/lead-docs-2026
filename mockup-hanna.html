@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hannah Pannell — Portrait Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F2EDE6;
+    --warm-white: #FAF8F5;
+    --dark: #1A1714;
+    --mid: #3D3530;
+    --accent: #B8846A;
+    --muted: #8A7A72;
+    --light-rule: rgba(26,23,20,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
+
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--warm-white);
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  nav ul a:hover { opacity: 1; }
+
+  /* ─── HERO — CINEMATIC LETTERBOX ─── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 680px;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/3073433_orig.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transform-origin: center;
+  }
+
+  /* Cinematic bars */
+  .hero::before,
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 13vh;
+    background: var(--dark);
+    z-index: 2;
+  }
+  .hero::before { top: 0; }
+  .hero::after { bottom: 0; }
+
+  .hero-content {
+    position: absolute;
+    bottom: 13vh;
+    left: 0; right: 0;
+    z-index: 3;
+    padding: 0 48px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 9vw, 108px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: 0.08em;
+    color: var(--warm-white);
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .hero-name.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .hero-name span {
+    display: block;
+    font-style: italic;
+    font-size: 0.55em;
+    letter-spacing: 0.22em;
+    font-weight: 300;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+
+  .hero-meta {
+    text-align: right;
+    color: rgba(250,248,245,0.6);
+  }
+
+  .hero-meta p {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: calc(13vh + 24px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-scroll span {
+    width: 1px;
+    height: 48px;
+    background: var(--accent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ─── MARQUEE STRIP ─── */
+  .marquee-strip {
+    background: var(--dark);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.4);
+    padding: 0 32px;
+  }
+
+  .marquee-inner span.dot {
+    color: var(--accent);
+    padding: 0 8px;
+    letter-spacing: 0;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS SECTION ─── */
+  .stats {
+    background: var(--cream);
+    padding: 80px 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-bottom: 1px solid var(--light-rule);
+  }
+
+  .stat-item {
+    padding: 32px 24px;
+    border-right: 1px solid var(--light-rule);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-item:nth-child(2) { transition-delay: 120ms; }
+  .stat-item:nth-child(3) { transition-delay: 240ms; }
+  .stat-item:nth-child(4) { transition-delay: 360ms; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* ─── GALLERY SECTION ─── */
+  .gallery-section {
+    padding: 120px 48px;
+    background: var(--warm-white);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* Staggered editorial gallery */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-item.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; transition-delay: 0ms; }
+  .gallery-item:nth-child(2) { grid-column: 3; grid-row: 1; transition-delay: 100ms; }
+  .gallery-item:nth-child(3) { grid-column: 1; grid-row: 2; transition-delay: 200ms; }
+  .gallery-item:nth-child(4) { grid-column: 2 / 4; grid-row: 2; transition-delay: 300ms; }
+  .gallery-item:nth-child(5) { grid-column: 1 / 2; grid-row: 3; transition-delay: 100ms; }
+  .gallery-item:nth-child(6) { grid-column: 2 / 4; grid-row: 3; transition-delay: 200ms; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    min-height: 280px;
+    max-height: 420px;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery-item-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 16px;
+    background: linear-gradient(transparent, rgba(26,23,20,0.6));
+    color: var(--warm-white);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-item-label { opacity: 1; }
+
+  /* ─── FEATURED WORK ─── */
+  .featured {
+    background: var(--dark);
+    padding: 120px 0;
+    overflow: hidden;
+  }
+
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .featured-image {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 1s ease-out;
+  }
+
+  .featured-image.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 500px;
+    transition: transform 8s ease;
+  }
+
+  .featured-image:hover img {
+    transform: scale(1.03);
+  }
+
+  .featured-text {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    transition-delay: 200ms;
+  }
+
+  .featured-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .featured-label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .featured-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--warm-white);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+
+  .featured-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(250,248,245,0.55);
+    max-width: 400px;
+    margin-bottom: 48px;
+  }
+
+  .featured-rule {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 32px;
+  }
+
+  .featured-series {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .featured-series-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: rgba(250,248,245,0.6);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .featured-series-item .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--accent);
+    font-style: italic;
+    min-width: 28px;
+  }
+
+  /* ─── ABOUT SECTION ─── */
+  .about {
+    padding: 140px 48px;
+    background: var(--cream);
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 1s ease-out;
+  }
+
+  .about-image-wrap.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .about-image-wrap img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    max-height: 600px;
+  }
+
+  .about-accent-line {
+    position: absolute;
+    top: -20px; left: -20px;
+    width: 60px; height: 60px;
+    border-top: 2px solid var(--accent);
+    border-left: 2px solid var(--accent);
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: 300ms;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-text .section-num {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    letter-spacing: 0.03em;
+  }
+
+  .about-heading em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .about-body {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--mid);
+    margin-bottom: 24px;
+  }
+
+  .about-pull-quote {
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    margin: 40px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  .about-detail {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2.2;
+  }
+
+  /* ─── SECOND MARQUEE ─── */
+  .marquee-strip-2 {
+    background: var(--accent);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner-2 {
+    display: inline-block;
+    animation: marquee2 30s linear infinite;
+  }
+
+  .marquee-inner-2 span {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    padding: 0 28px;
+  }
+
+  @keyframes marquee2 {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    background: var(--dark);
+    padding: 140px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(100px, 14vw, 220px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.08em;
+    user-select: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 88px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.05;
+    margin-bottom: 40px;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+  }
+
+  .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-sub {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(250,248,245,0.5);
+    max-width: 520px;
+    margin: 0 auto 56px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+  }
+
+  .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid var(--accent);
+    color: var(--warm-white);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s, background 0.3s, color 0.3s;
+  }
+
+  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--accent); color: var(--warm-white); }
+
+  /* ─── CONTACT SECTION ─── */
+  .contact {
+    background: var(--warm-white);
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .contact-divider {
+    background: var(--light-rule);
+    height: 200px;
+    margin-top: 8px;
+  }
+
+  .contact-left {
+    padding-right: 80px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .contact-left.is-visible { opacity: 1; transform: translateX(0); }
+
+  .contact-right {
+    padding-left: 80px;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .contact-right.is-visible { opacity: 1; transform: translateX(0); }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+  }
+
+  .contact-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--mid);
+    margin-bottom: 40px;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-size: 15px;
+    color: var(--dark);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    transition: color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--accent); }
+
+  .contact-info-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    margin-top: 32px;
+  }
+
+  .contact-info-value {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  .contact-social {
+    margin-top: 32px;
+    display: flex;
+    gap: 24px;
+  }
+
+  .contact-social a {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-social a:hover { color: var(--accent); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: rgba(250,248,245,0.5);
+  }
+
+  footer .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(250,248,245,0.3);
+  }
+
+  footer .footer-credit {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(250,248,245,0.25);
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav .logo { font-size: 13px; }
+    nav ul { gap: 20px; }
+
+    .hero-content { padding: 0 24px 28px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .hero-meta { text-align: left; }
+
+    .stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--light-rule); }
+    .stat-item:nth-child(odd) { border-right: 1px solid var(--light-rule); }
+
+    .gallery-section { padding: 80px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(1) { grid-column: 1 / 3; }
+    .gallery-item:nth-child(4) { grid-column: 1 / 3; }
+    .gallery-item:nth-child(6) { grid-column: 1 / 3; }
+
+    .featured-inner { grid-template-columns: 1fr; }
+    .featured-text { padding: 48px 24px; }
+
+    .about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+
+    .cta-section { padding: 100px 24px; }
+
+    .contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    .contact-divider { display: none; }
+    .contact-left { padding-right: 0; }
+    .contact-right { padding-left: 0; }
+
+    footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 52px; }
+    nav ul { display: none; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:nth-child(n) { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Hannah Pannell</div>
+  <ul>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — CINEMATIC LETTERBOX -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="hero-name" id="heroName">
+      <span>Portrait Photography</span>
+      Hannah<br>Pannell
+    </div>
+    <div class="hero-meta">
+      <p>Merritt Island, FL</p>
+      <p>Available for Bookings</p>
+      <p>Prints &amp; Sessions</p>
+    </div>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Portrait Sessions</span><span class="dot">·</span>
+    <span>Beach &amp; Outdoor</span><span class="dot">·</span>
+    <span>Studio Photography</span><span class="dot">·</span>
+    <span>Senior Portraits</span><span class="dot">·</span>
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Fine Art Prints</span><span class="dot">·</span>
+    <span>Merritt Island, FL</span><span class="dot">·</span>
+    <span>Portrait Sessions</span><span class="dot">·</span>
+    <span>Beach &amp; Outdoor</span><span class="dot">·</span>
+    <span>Studio Photography</span><span class="dot">·</span>
+    <span>Senior Portraits</span><span class="dot">·</span>
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Fine Art Prints</span><span class="dot">·</span>
+    <span>Merritt Island, FL</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat-item">
+    <div class="stat-number">8+</div>
+    <div class="stat-label">Years Shooting</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">6</div>
+    <div class="stat-label">Portrait Series</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">∞</div>
+    <div class="stat-label">Stories Captured</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">FL</div>
+    <div class="stat-label">Space Coast</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/4097945_orig.jpg" alt="Portrait session" loading="lazy">
+      <div class="gallery-item-label">Beach Session</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/7695897_orig.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-item-label">Studio Work</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/5989602_orig.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-item-label">Outdoor Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/6448723_orig.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-item-label">Lake Session</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/3370904_orig.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-item-label">Senior Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/6527890_orig.jpg" alt="Dance portrait" loading="lazy">
+      <div class="gallery-item-label">Dance</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED / TESTIMONIAL -->
+<section class="featured">
+  <div class="featured-inner">
+    <div class="featured-image">
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/2364141.jpg" alt="Featured portrait" loading="lazy">
+    </div>
+    <div class="featured-text">
+      <p class="featured-label">The Work</p>
+      <blockquote class="featured-quote">"I enjoy capturing a moment of a person's life so they can relive it over and over."</blockquote>
+      <div class="featured-rule"></div>
+      <p class="featured-desc">From candid beach sessions to composed studio portraits, every shoot is built around the individual — their story, their light, their moment in time.</p>
+      <div class="featured-series">
+        <div class="featured-series-item"><span class="num">01</span> Balloon Festival · Maine</div>
+        <div class="featured-series-item"><span class="num">02</span> Beach Series · Cocoa Beach</div>
+        <div class="featured-series-item"><span class="num">03</span> Studio Paintwork</div>
+        <div class="featured-series-item"><span class="num">04</span> Lake Michigan Sessions</div>
+        <div class="featured-series-item"><span class="num">05</span> Dance Portraits</div>
+        <div class="featured-series-item"><span class="num">06</span> Family &amp; Senior</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap">
+      <div class="about-accent-line"></div>
+      <img src="https://hannahandthehen.weebly.com/uploads/5/8/2/3/58231463/1219456.jpg" alt="Hannah Pannell" loading="lazy">
+    </div>
+    <div class="about-text">
+      <span class="section-num">02</span>
+      <h2 class="about-heading">The art of<br><em>being seen</em></h2>
+      <p class="about-body">Hannah Pannell is a portrait photographer based in Merritt Island, Florida. With a camera in hand since age twelve, she builds images around stillness and truth — setting up scenes that unfold into stories, one frame at a time.</p>
+      <blockquote class="about-pull-quote">"I've always been struck by photography — the way it holds a moment still."</blockquote>
+      <p class="about-body">Working across beach environments, studio spaces, and natural landscapes of the Space Coast, Hannah brings the same unhurried attention to every subject — whether it's a senior portrait or a family's afternoon in the sun.</p>
+      <div class="about-detail">
+        Based in Merritt Island, FL<br>
+        Available for Portrait Sessions<br>
+        Fine Art Prints Available<br>
+        Commissions Open
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee-strip-2" aria-hidden="true">
+  <div class="marquee-inner-2">
+    <span>Book Your Session</span>
+    <span>·</span>
+    <span>Merritt Island</span>
+    <span>·</span>
+    <span>Space Coast, FL</span>
+    <span>·</span>
+    <span>Portraits · Prints · Stories</span>
+    <span>·</span>
+    <span>2026</span>
+    <span>·</span>
+    <span>Book Your Session</span>
+    <span>·</span>
+    <span>Merritt Island</span>
+    <span>·</span>
+    <span>Space Coast, FL</span>
+    <span>·</span>
+    <span>Portraits · Prints · Stories</span>
+    <span>·</span>
+    <span>2026</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- BOLD CTA -->
+<section class="cta-section">
+  <div class="cta-bg-text" aria-hidden="true">Portrait</div>
+  <p class="cta-eyebrow">Ready When You Are</p>
+  <h2 class="cta-heading">Let's make<br>something lasting.</h2>
+  <p class="cta-sub">Every portrait is a collaboration. Whether it's a single session or a series — reach out and let's talk about what you have in mind.</p>
+  <a href="mailto:hannahpmarie96@gmail.com" class="cta-btn">Book a Session</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <span class="section-num">03</span>
+    <h2 class="contact-heading">Get in<br>Touch</h2>
+    <p class="contact-body">For booking inquiries, print orders, or general questions — Hannah typically responds within 24 hours.</p>
+    <a href="mailto:hannahpmarie96@gmail.com" class="contact-email">hannahpmarie96@gmail.com</a>
+    <p class="contact-info-label">Location</p>
+    <p class="contact-info-value">Merritt Island, Florida<br>Space Coast</p>
+    <p class="contact-info-label">Sessions</p>
+    <p class="contact-info-value">Portraits · Beach · Studio · Family</p>
+  </div>
+  <div class="contact-divider"></div>
+  <div class="contact-right">
+    <p class="contact-info-label">Services</p>
+    <p class="contact-info-value" style="font-size:15px; line-height:2.2; color: var(--mid);">Portrait Sessions<br>Senior Portraits<br>Family Photography<br>Beach &amp; Outdoor Sessions<br>Fine Art Prints</p>
+    <div class="contact-social">
+      <a href="https://hannahandthehen.weebly.com" target="_blank">Website</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Hannah Pannell Photography</div>
+  <div class="footer-copy">&copy; 2026 — All rights reserved</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+  // ── Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    if (heroBg) {
+      heroBg.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+    }
+  }, { passive: true });
+
+  // ── Hero name clip-path reveal on load
+  const heroName = document.getElementById('heroName');
+  setTimeout(() => { if (heroName) heroName.classList.add('is-visible'); }, 200);
+
+  // ── IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Stat items
+  document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+  // Section titles (clip-path)
+  document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+  // Gallery items (clip-path from bottom)
+  document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+
+  // Featured image + text
+  document.querySelectorAll('.featured-image, .featured-text').forEach(el => observer.observe(el));
+
+  // About elements
+  document.querySelectorAll('.about-image-wrap, .about-text').forEach(el => observer.observe(el));
+
+  // CTA elements
+  document.querySelectorAll('.cta-eyebrow, .cta-heading, .cta-sub, .cta-btn').forEach(el => observer.observe(el));
+
+  // Contact elements
+  document.querySelectorAll('.contact-left, .contact-right').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
