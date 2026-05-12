@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julie Waters Photography · Valrico, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #F5EFE6;
+    --sand:     #E8DDD0;
+    --warm:     #C8A882;
+    --bark:     #7A5C42;
+    --deep:     #2E1F14;
+    --blush:    #D4A99A;
+    --white:    #FDFAF6;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--deep); font-family: 'Work Sans', sans-serif; overflow-x: hidden; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 60px;
+    mix-blend-mode: multiply;
+  }
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-weight: 400; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--white);
+  }
+  nav ul { list-style: none; display: flex; gap: 40px; }
+  nav ul a {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--white);
+    text-decoration: none; opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  nav ul a:hover { opacity: 1; }
+
+  /* ─── HERO — CINEMATIC LETTERBOX ─── */
+  #hero {
+    position: relative; height: 100vh; overflow: hidden;
+    background: var(--deep);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://static.wixstatic.com/media/e0e381_eabfb8c1c4ae4300827796d9f0cf7666~mv2_d_3474_2432_s_4_2.jpg');
+    background-size: cover; background-position: center 30%;
+    will-change: transform;
+  }
+  .hero-bar-top, .hero-bar-bottom {
+    position: absolute; left: 0; right: 0; height: 120px;
+    background: var(--deep); z-index: 2;
+  }
+  .hero-bar-top { top: 0; display: flex; align-items: flex-end; padding: 0 60px 20px; }
+  .hero-bar-bottom { bottom: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 60px; }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px; font-weight: 300;
+    letter-spacing: 0.45em;
+    color: var(--white);
+    text-transform: uppercase;
+    line-height: 1;
+    opacity: 0;
+    will-change: letter-spacing, opacity;
+    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.8s ease;
+  }
+  .hero-name.loaded {
+    letter-spacing: 0.12em;
+    opacity: 1;
+  }
+  .hero-tagline {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--warm); font-weight: 400;
+  }
+  .hero-scroll-hint {
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); font-weight: 300;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-scroll-hint::before {
+    content: ''; display: block; width: 40px; height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--bark); color: var(--cream);
+    overflow: hidden; white-space: nowrap;
+    padding: 14px 0; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-inner span { margin-right: 60px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--white); padding: 100px 60px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px; font-weight: 300; line-height: 1;
+    color: var(--bark);
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: opacity, transform;
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--warm); margin-top: 8px; font-weight: 400;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  }
+  .stat-item.is-visible .stat-num,
+  .stat-item.is-visible .stat-label { opacity: 1; transform: none; }
+
+  /* ─── INTRO ─── */
+  #intro { padding: 120px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .intro-text-wrap { padding-right: 40px; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--warm); margin-bottom: 24px; display: flex; align-items: center; gap: 16px;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--warm); }
+  .section-label.is-visible { opacity: 1; transform: none; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; line-height: 1.15;
+    color: var(--deep); margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .section-body {
+    font-size: 16px; line-height: 1.8; color: #6B5240; font-weight: 300;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    will-change: opacity, transform;
+  }
+  .section-body.is-visible { opacity: 1; transform: none; }
+  .intro-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease;
+    will-change: clip-path;
+  }
+  .intro-img.is-visible { clip-path: inset(0 0 0 0); }
+
+  /* ─── GALLERY ─── */
+  #gallery { padding: 80px 0; background: var(--sand); }
+  .gallery-header { padding: 0 60px 60px; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .gallery-item {
+    overflow: hidden; position: relative; cursor: pointer;
+    background: var(--deep);
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; aspect-ratio: 3/4;
+    transform: scale(1.05);
+    transition: transform 0.7s ease;
+    loading: lazy;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path, transform;
+  }
+  .gallery-item.is-visible img { clip-path: inset(0 0 0 0); }
+  .gallery-item:hover img { transform: scale(1.0); }
+  .gallery-item.wide { grid-column: span 2; }
+  .gallery-item.wide img { aspect-ratio: 16/10; }
+  .gallery-item.tall { }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(46,31,20,0.7));
+    color: var(--white); padding: 40px 20px 16px;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    font-weight: 400;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; transform: none; }
+
+  /* ─── FEATURED SECTION ─── */
+  #featured {
+    padding: 140px 60px;
+    display: grid; grid-template-columns: 5fr 4fr; gap: 100px; align-items: center;
+  }
+  .featured-img-wrap { position: relative; }
+  .featured-img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease;
+    will-change: clip-path;
+  }
+  .featured-img.is-visible { clip-path: inset(0 0 0 0); }
+  .featured-accent {
+    position: absolute; bottom: -30px; right: -30px;
+    width: 180px; height: 180px;
+    border: 1px solid var(--warm);
+    opacity: 0.4;
+  }
+  .featured-text { padding-left: 20px; }
+  .pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-style: italic; font-weight: 300;
+    color: var(--bark); line-height: 1.5;
+    border-left: 2px solid var(--warm); padding-left: 28px;
+    margin-bottom: 32px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+  .pull-quote.is-visible { opacity: 1; transform: none; }
+  .quote-attr {
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--warm); margin-top: 16px; font-style: normal; font-weight: 400;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--deep); color: var(--white);
+    padding: 140px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+  }
+  .about-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .about-img.is-visible { clip-path: inset(0 0% 0 0); }
+  #about .section-label { color: var(--warm); }
+  #about .section-title { color: var(--white); }
+  #about .section-body { color: rgba(255,255,255,0.65); }
+  .about-detail-row {
+    display: flex; gap: 40px; margin-top: 40px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+    will-change: opacity, transform;
+  }
+  .about-detail-row.is-visible { opacity: 1; transform: none; }
+  .about-detail { flex: 1; }
+  .about-detail-label {
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--warm); margin-bottom: 6px;
+  }
+  .about-detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 300; color: var(--white);
+  }
+
+  /* ─── SERVICES ─── */
+  #services { padding: 140px 60px; background: var(--white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    margin-top: 80px;
+  }
+  .service-card {
+    padding: 60px 40px; border: 1px solid var(--sand);
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .service-card:nth-child(2) { transition-delay: 0.12s; }
+  .service-card:nth-child(3) { transition-delay: 0.24s; }
+  .service-card.is-visible { opacity: 1; transform: none; }
+  .service-card:hover { background: var(--cream); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; font-weight: 300; color: var(--sand);
+    line-height: 1; margin-bottom: 20px;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 400; color: var(--deep);
+    margin-bottom: 16px; line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 14px; line-height: 1.7; color: #8A6E5A; font-weight: 300;
+  }
+
+  /* ─── MARQUEE 2 ─── */
+  .marquee-strip-light {
+    background: var(--cream); color: var(--bark);
+    border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand);
+    overflow: hidden; white-space: nowrap;
+    padding: 14px 0; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400;
+  }
+  .marquee-inner-slow {
+    display: inline-block;
+    animation: marquee 55s linear infinite;
+  }
+  .marquee-inner-slow span { margin-right: 60px; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials {
+    background: var(--bark); color: var(--cream);
+    padding: 120px 60px; text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-style: italic; font-weight: 300;
+    max-width: 820px; margin: 0 auto 28px;
+    line-height: 1.55;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .testimonial-quote.is-visible { clip-path: inset(0 0% 0 0); }
+  .testimonial-attr {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(245,239,230,0.5); font-weight: 400;
+    opacity: 0; transition: opacity 0.5s ease 0.6s;
+  }
+  .testimonial-attr.is-visible { opacity: 1; }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: var(--deep);
+    padding: 160px 60px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #cta::before {
+    content: 'JULIE WATERS';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 180px; font-weight: 600;
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap; pointer-events: none;
+    letter-spacing: 0.15em;
+  }
+  .cta-label {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--warm); margin-bottom: 28px;
+    opacity: 0; transition: opacity 0.6s ease;
+  }
+  .cta-label.is-visible { opacity: 1; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; font-weight: 300; color: var(--white);
+    line-height: 1.1; margin-bottom: 20px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .cta-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-size: 16px; color: rgba(255,255,255,0.5); font-weight: 300;
+    margin-bottom: 56px; line-height: 1.6;
+    opacity: 0; transition: opacity 0.7s ease 0.3s;
+  }
+  .cta-sub.is-visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    border: 1px solid var(--warm); color: var(--warm);
+    text-decoration: none; padding: 18px 56px;
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    font-weight: 400; font-family: 'Work Sans', sans-serif;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0; transition: opacity 0.7s ease 0.5s, background 0.3s, color 0.3s;
+  }
+  .cta-btn.is-visible { opacity: 1; }
+  .cta-btn:hover { background: var(--warm); color: var(--deep); }
+
+  /* ─── CONTACT ─── */
+  #contact { padding: 120px 60px; background: var(--cream); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    margin-top: 80px; align-items: start;
+  }
+  .contact-info-item {
+    margin-bottom: 32px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .contact-info-item:nth-child(2) { transition-delay: 0.12s; }
+  .contact-info-item:nth-child(3) { transition-delay: 0.24s; }
+  .contact-info-item.is-visible { opacity: 1; transform: none; }
+  .contact-info-label {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--warm); margin-bottom: 8px;
+  }
+  .contact-info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; color: var(--deep);
+    text-decoration: none;
+  }
+  .contact-info-value:hover { color: var(--bark); }
+  .contact-map-placeholder {
+    background: var(--sand); height: 300px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm);
+  }
+  .social-row { display: flex; gap: 28px; margin-top: 40px; }
+  .social-link {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bark); text-decoration: none; font-weight: 400;
+    opacity: 0.7; transition: opacity 0.2s;
+  }
+  .social-link:hover { opacity: 1; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--deep); color: rgba(255,255,255,0.4);
+    padding: 32px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; letter-spacing: 0.1em;
+  }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: var(--warm); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+    .hero-name { font-size: 42px; }
+    .hero-bar-top, .hero-bar-bottom { padding: 0 24px; height: 80px; }
+    #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; gap: 30px; }
+    .stat-num { font-size: 56px; }
+    #intro { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    .intro-text-wrap { padding-right: 0; }
+    #gallery .gallery-header { padding: 0 24px 40px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item.wide { grid-column: span 2; }
+    #featured { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    .featured-accent { display: none; }
+    #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .testimonial-quote { font-size: 24px; }
+    #testimonials { padding: 80px 24px; }
+    .cta-title { font-size: 44px; }
+    #cta { padding: 100px 24px; }
+    #contact { padding: 80px 24px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .section-title { font-size: 38px; }
+    .pull-quote { font-size: 22px; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 30px; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item.wide { grid-column: span 1; }
+    .gallery-item img { aspect-ratio: 4/3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Julie Waters Photography</div>
+  <ul>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Sessions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — CINEMATIC LETTERBOX -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-bar-top">
+    <h1 class="hero-name" id="heroName">Julie Waters</h1>
+  </div>
+  <div class="hero-bar-bottom">
+    <span class="hero-tagline">Portrait Photography · Valrico, Florida</span>
+    <span class="hero-scroll-hint">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Family Portraits</span>
+    <span>·</span>
+    <span>Senior Sessions</span>
+    <span>·</span>
+    <span>Maternity</span>
+    <span>·</span>
+    <span>Newborn</span>
+    <span>·</span>
+    <span>Valrico, FL</span>
+    <span>·</span>
+    <span>Tampa Bay Area</span>
+    <span>·</span>
+    <span>Family Portraits</span>
+    <span>·</span>
+    <span>Senior Sessions</span>
+    <span>·</span>
+    <span>Maternity</span>
+    <span>·</span>
+    <span>Newborn</span>
+    <span>·</span>
+    <span>Valrico, FL</span>
+    <span>·</span>
+    <span>Tampa Bay Area</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-num">3+</div>
+    <div class="stat-label">Years in Florida</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100s</div>
+    <div class="stat-label">Families Photographed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Session Types</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">1</div>
+    <div class="stat-label">Dedicated Photographer</div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="intro-text-wrap">
+    <p class="section-label">The Work</p>
+    <h2 class="section-title">Moments that<br>belong to you<br>forever.</h2>
+    <p class="section-body">
+      Based in Valrico, Florida, Julie Waters photographs the quiet, honest moments families actually want to keep — the glance between siblings, the way a parent holds their child's hand, the laugh that catches everyone off guard. Relocated from Ohio, she brings a heartfelt, unhurried approach to every session.
+    </p>
+  </div>
+  <img
+    class="intro-img"
+    src="https://static.wixstatic.com/media/e0e381_920a5f5a75f54ce69154d638f1d8f8f6~mv2_d_1384_2064_s_2.jpg"
+    alt="Family portrait by Julie Waters Photography"
+    loading="lazy"
+  >
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="gallery-grid">
+
+    <div class="gallery-item wide">
+      <img src="https://static.wixstatic.com/media/e0e381_eabfb8c1c4ae4300827796d9f0cf7666~mv2_d_3474_2432_s_4_2.jpg" alt="Family session" loading="lazy">
+      <div class="gallery-caption">Family</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/e0e381_d2a0399187b04af6a693e9ba791154b6~mv2_d_2400_3406_s_4_2.jpg" alt="Senior portrait" loading="lazy">
+      <div class="gallery-caption">Senior Portrait</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/e0e381_cbf198dc69a144959373c80bac288032~mv2_d_1456_2098_s_2.jpg" alt="Portrait session" loading="lazy">
+      <div class="gallery-caption">Portrait</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/e0e381_3d24f1aec70c43c28dc33653f31ad3e4~mv2_d_2400_3169_s_4_2.jpg" alt="Family portrait" loading="lazy">
+      <div class="gallery-caption">Family</div>
+    </div>
+
+    <div class="gallery-item wide">
+      <img src="https://static.wixstatic.com/media/e0e381_925e56cec9db4656ab60ed5a0d7329e6~mv2_d_3600_2718_s_4_2.jpg" alt="Family outdoor session" loading="lazy">
+      <div class="gallery-caption">Outdoor Session</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/e0e381_3d8da4ec46df4d1ba26467bb82516675~mv2_d_2388_1621_s_2.jpg" alt="Family session" loading="lazy">
+      <div class="gallery-caption">Family</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/e0e381_0ae888b27ed144e6a6358c7e97e5b14b~mv2_d_2400_3220_s_4_2.jpg" alt="Portrait" loading="lazy">
+      <div class="gallery-caption">Portrait</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/e0e381_d564fb9c2a9e43ee81e3af1e4ec4b4ad~mv2_d_2732_2408_s_4_2.jpg" alt="Family outdoors" loading="lazy">
+      <div class="gallery-caption">Family</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURED / TESTIMONIAL -->
+<section id="featured">
+  <div class="featured-img-wrap">
+    <img
+      class="featured-img"
+      src="https://static.wixstatic.com/media/e0e381_d2a0399187b04af6a693e9ba791154b6~mv2_d_2400_3406_s_4_2.jpg"
+      alt="Portrait session by Julie Waters"
+      loading="lazy"
+    >
+    <div class="featured-accent"></div>
+  </div>
+  <div class="featured-text">
+    <p class="section-label">Client Words</p>
+    <blockquote class="pull-quote">
+      "She made us feel completely at ease. The photos look like us — not like a stock photo family."
+      <cite class="quote-attr">— Tampa Bay Client, 2025</cite>
+    </blockquote>
+    <p class="section-body">
+      Every session is approached with patience and genuine curiosity. The goal isn't a perfect pose — it's the moment right before, and right after.
+    </p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <img
+    class="about-img"
+    src="https://static.wixstatic.com/media/e0e381_cbf198dc69a144959373c80bac288032~mv2_d_1456_2098_s_2.jpg"
+    alt="Julie Waters photographer"
+    loading="lazy"
+  >
+  <div>
+    <p class="section-label">The Photographer</p>
+    <h2 class="section-title">Julie Waters</h2>
+    <p class="section-body">
+      Originally from Ohio, Julie relocated to Valrico, Florida with a single purpose: to photograph the moments families carry with them forever. Specializing in family and senior portraits, she works across the Tampa Bay area with a calm, patient presence that puts even the most camera-shy clients at ease.
+    </p>
+    <div class="about-detail-row">
+      <div class="about-detail">
+        <div class="about-detail-label">Based In</div>
+        <div class="about-detail-value">Valrico, FL</div>
+      </div>
+      <div class="about-detail">
+        <div class="about-detail-label">Specialty</div>
+        <div class="about-detail-value">Family · Senior Portraits</div>
+      </div>
+      <div class="about-detail">
+        <div class="about-detail-label">Region</div>
+        <div class="about-detail-value">Tampa Bay Area</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">Sessions</p>
+  <h2 class="section-title">What We Offer</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Family Portraits</div>
+      <div class="service-desc">Outdoor or natural light studio sessions for families of any size. Relaxed, candid, and centered on connection rather than perfection.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Senior Portraits</div>
+      <div class="service-desc">Milestone sessions for high school seniors. Multiple looks, multiple locations — portraits that actually look like them.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Maternity &amp; Newborn</div>
+      <div class="service-desc">Gentle, unhurried sessions celebrating new life. From the final weeks of pregnancy through the first days of parenthood.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee-strip-light">
+  <div class="marquee-inner-slow">
+    <span>Book Your Session</span>
+    <span>·</span>
+    <span>Valrico · Tampa Bay · Brandon · Plant City</span>
+    <span>·</span>
+    <span>Family Portraits · Senior Sessions · Maternity · Newborn</span>
+    <span>·</span>
+    <span>Book Your Session</span>
+    <span>·</span>
+    <span>Valrico · Tampa Bay · Brandon · Plant City</span>
+    <span>·</span>
+    <span>Family Portraits · Senior Sessions · Maternity · Newborn</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <blockquote class="testimonial-quote">
+    "The photos came back and I cried. Every single one. She captured something about our family I didn't even know was there."
+  </blockquote>
+  <p class="testimonial-attr">— Family Session Client · Valrico, FL</p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-label">Ready When You Are</p>
+  <h2 class="cta-title">Let's Make<br>Your Session.</h2>
+  <p class="cta-sub">Limited availability each month.<br>Serving Valrico, Tampa Bay, Brandon, and surrounding areas.</p>
+  <a href="mailto:julie@juliewatersphotography.com" class="cta-btn">Book a Session</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Get In Touch</p>
+  <h2 class="section-title">Inquiries</h2>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Email</div>
+        <a href="mailto:julie@juliewatersphotography.com" class="contact-info-value">julie@juliewatersphotography.com</a>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Location</div>
+        <span class="contact-info-value">Valrico, FL · Tampa Bay Area</span>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Follow</div>
+        <div class="social-row">
+          <a href="https://instagram.com/juliewaters" class="social-link">Instagram</a>
+          <a href="http://www.facebook.com/juliewatersphotography" class="social-link">Facebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-map-placeholder">
+      Tampa Bay Area · Valrico, FL 33596
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Julie Waters Photography · Valrico, FL</span>
+  <span>Design by <a href="mailto:lucasblatt197703@gmail.com">Lucas Blatt</a></span>
+</footer>
+
+<script>
+  // Hero name letter-spacing animate on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('loaded');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `translateY(${scrollY * 0.35}px)`;
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(
+    '.stat-item, .section-label, .section-title, .section-body, ' +
+    '.intro-img, .gallery-item, .featured-img, .pull-quote, ' +
+    '.about-img, .about-detail-row, .service-card, ' +
+    '.testimonial-quote, .testimonial-attr, ' +
+    '.cta-label, .cta-title, .cta-sub, .cta-btn, ' +
+    '.contact-info-item'
+  ).forEach(el => observer.observe(el));
+
+  // Gallery items stagger
+  document.querySelectorAll('.gallery-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80}ms`;
+  });
+</script>
+</body>
+</html>
