@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabby Girdner Photography | Lifestyle Photographer | Central Florida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F3EF;
+      --text: #2C2420;
+      --accent: #B8896A;
+      --muted: #9E8E84;
+      --dark: #1A1210;
+      --light: #EDE8E3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+      transition: background 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(247, 243, 239, 0.95);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s;
+    }
+
+    nav.scrolled .nav-logo { color: var(--text); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO — Mosaic layout */
+    .hero {
+      height: 100vh;
+      min-height: 700px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      transition: transform 8s ease;
+    }
+
+    .hero-left img.loaded { transform: scale(1.0); }
+
+    .hero-right {
+      display: grid;
+      grid-template-rows: 60% 40%;
+      overflow: hidden;
+    }
+
+    .hero-right-top {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      transition: transform 8s ease 0.3s;
+    }
+
+    .hero-right-top img.loaded { transform: scale(1.0); }
+
+    .hero-right-bottom {
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-text-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px 48px 48px;
+      background: linear-gradient(to top, rgba(26,18,16,0.85) 0%, transparent 100%);
+      z-index: 10;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7vw, 100px);
+      font-weight: 300;
+      line-height: 0.9;
+      color: #fff;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+
+    .hero-name.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-tagline {
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 16px;
+      opacity: 0;
+      transition: opacity 1.2s ease 0.4s;
+    }
+
+    .hero-tagline.visible { opacity: 1; }
+
+    .hero-bottom-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-bottom-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.2;
+    }
+
+    .hero-bottom-text p {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
+    /* MARQUEE */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 0 32px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* STATS */
+    .stats {
+      padding: 100px 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: var(--bg);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 40px 20px;
+      border-right: 1px solid var(--light);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* SECTION INTRO */
+    .section-intro {
+      padding: 0 48px 60px;
+      display: flex;
+      align-items: flex-start;
+      gap: 80px;
+    }
+
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 300;
+      color: var(--light);
+      line-height: 0.8;
+      min-width: 80px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .section-number.visible { opacity: 1; }
+
+    .section-heading-block { flex: 1; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section-label.visible { opacity: 1; transform: translateX(0); }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+    /* GALLERY */
+    .gallery-section {
+      padding: 0 48px 120px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 6px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+
+    .gallery-item.visible { clip-path: inset(0 0 0 0); }
+
+    .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; aspect-ratio: 4/3; }
+    .gallery-item:nth-child(2) { grid-column: 3; grid-row: 1; aspect-ratio: 3/4; }
+    .gallery-item:nth-child(3) { grid-column: 1; grid-row: 2; aspect-ratio: 3/4; }
+    .gallery-item:nth-child(4) { grid-column: 2 / 4; grid-row: 2; aspect-ratio: 4/3; }
+    .gallery-item:nth-child(5) { grid-column: 1 / 2; grid-row: 3; aspect-ratio: 4/5; }
+    .gallery-item:nth-child(6) { grid-column: 2 / 3; grid-row: 3; aspect-ratio: 4/5; }
+    .gallery-item:nth-child(7) { grid-column: 3; grid-row: 3; aspect-ratio: 4/5; }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 20px 20px;
+      background: linear-gradient(to top, rgba(26,18,16,0.7) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-overlay-text {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* FEATURED / ABOUT */
+    .about-section {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      background: var(--dark);
+    }
+
+    .about-image-wrap {
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+
+    .about-image-wrap.visible { clip-path: inset(0 0 0 0); }
+
+    .about-image-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    .about-accent-line {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+    }
+
+    .about-content { color: rgba(255,255,255,0.9); }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 2.5vw, 34px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .about-quote.visible { opacity: 1; transform: translateY(0); }
+
+    .about-bio {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.2s;
+    }
+
+    .about-bio.visible { opacity: 1; }
+
+    .about-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .about-detail-item.visible { opacity: 1; }
+
+    .about-detail-item::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* SERVICES */
+    .services-section {
+      padding: 120px 48px;
+      background: var(--bg);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--light);
+      margin-top: 60px;
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 48px 36px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: 0.4;
+      margin-bottom: 20px;
+    }
+
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 14px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      padding: 160px 48px;
+      background: var(--accent);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 15vw, 200px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.1em;
+    }
+
+    .cta-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 24px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .cta-label.visible { opacity: 1; }
+
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    }
+
+    .cta-heading.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      border: 2px solid rgba(255,255,255,0.9);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .cta-btn:hover {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    /* CONTACT */
+    .contact-section {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left { }
+
+    .contact-info { margin-top: 48px; }
+
+    .contact-item {
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .contact-item.visible { opacity: 1; transform: translateX(0); }
+
+    .contact-item-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .contact-item-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .contact-item-value a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      transition: color 0.3s;
+    }
+
+    .contact-item-value a:hover { color: var(--accent); }
+
+    .contact-right {
+      padding-top: 40px;
+    }
+
+    .contact-image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .contact-image.visible { opacity: 1; }
+
+    /* SOCIAL LINKS */
+    .social-links {
+      display: flex;
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .social-links a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-credit {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .footer-credit a { color: rgba(255,255,255,0.3); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60vh 40vh;
+        height: auto;
+      }
+
+      .hero-right { display: none; }
+      .hero-left { grid-row: 1; }
+      .hero-text-overlay { padding: 40px 24px 32px; }
+
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--light); padding: 28px; }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--light); }
+
+      .section-intro { padding: 0 24px 40px; gap: 20px; }
+      .section-number { font-size: 60px; }
+
+      .gallery-section { padding: 0 24px 80px; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4/5 !important; }
+
+      .about-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      .services-section { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 100px 24px; }
+      .contact-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      .contact-right { display: none; }
+
+      footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .hero-name { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">Gabby Girdner</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Mosaic 2-column layout -->
+  <section class="hero">
+    <div class="hero-left">
+      <img id="hero-img-left"
+        src="https://static.wixstatic.com/media/9714f7_f4b873c9da2641a4a11459ebdf3c7b6f~mv2_d_5472_3648_s_4_2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/9714f7_f4b873c9da2641a4a11459ebdf3c7b6f~mv2_d_5472_3648_s_4_2.jpg"
+        alt="Lifestyle photography Central Florida"
+        loading="eager">
+      <div class="hero-text-overlay">
+        <h1 class="hero-name" id="hero-name">Gabby Girdner<br>Photography</h1>
+        <p class="hero-tagline" id="hero-tagline">Lifestyle Photographer · Saint Cloud, Florida</p>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-top">
+        <img id="hero-img-right"
+          src="https://static.wixstatic.com/media/9714f7_d42fcd9aa60b45529e4c089a31818bb0~mv2_d_3457_5063_s_4_2.jpg/v1/fit/w_1920,h_2812,q_90,enc_avif,quality_auto/9714f7_d42fcd9aa60b45529e4c089a31818bb0~mv2_d_3457_5063_s_4_2.jpg"
+          alt="Family photography"
+          loading="eager">
+      </div>
+      <div class="hero-right-bottom">
+        <div class="hero-bottom-text">
+          <h2>Candid moments,<br>preserved forever.</h2>
+          <p>Central Florida · Est. 2018</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Weddings</span><span>·</span>
+      <span>Families</span><span>·</span>
+      <span>Engagements</span><span>·</span>
+      <span>Maternity</span><span>·</span>
+      <span>Seniors</span><span>·</span>
+      <span>Children</span><span>·</span>
+      <span>Central Florida</span><span>·</span>
+      <span>Weddings</span><span>·</span>
+      <span>Families</span><span>·</span>
+      <span>Engagements</span><span>·</span>
+      <span>Maternity</span><span>·</span>
+      <span>Seniors</span><span>·</span>
+      <span>Children</span><span>·</span>
+      <span>Central Florida</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">7+</div>
+      <div class="stat-label">Years Shooting</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5K</div>
+      <div class="stat-label">Instagram Followers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100+</div>
+      <div class="stat-label">Sessions Delivered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">FL</div>
+      <div class="stat-label">Central Florida</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-intro">
+      <div class="section-number">01</div>
+      <div class="section-heading-block">
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_5f0dee2748fa4bcfb60967894318e1da~mv2_d_3384_5472_s_4_2.jpg/v1/fill/w_1046,h_1210,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/9714f7_5f0dee2748fa4bcfb60967894318e1da~mv2_d_3384_5472_s_4_2.jpg"
+          alt="Family portrait Central Florida"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Family · Natural Light</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_c972d8907d964f48adf8602b1c4f9ef1~mv2_d_3648_5472_s_4_2.jpg/v1/fit/w_1920,h_2880,q_90,enc_avif,quality_auto/9714f7_c972d8907d964f48adf8602b1c4f9ef1~mv2_d_3648_5472_s_4_2.jpg"
+          alt="Portrait photography"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Portrait</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_4f71c9afc4994512b487e88bc3a78aa2~mv2_d_3456_4978_s_4_2.jpg/v1/fit/w_1440,h_2073,q_90,enc_avif,quality_auto/9714f7_4f71c9afc4994512b487e88bc3a78aa2~mv2_d_3456_4978_s_4_2.jpg"
+          alt="Lifestyle photography"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Lifestyle</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_592125358b144f54a1e37dfcf8a7b2af~mv2_d_3456_4609_s_4_2.jpg/v1/fit/w_1920,h_2564,q_90,enc_avif,quality_auto/9714f7_592125358b144f54a1e37dfcf8a7b2af~mv2_d_3456_4609_s_4_2.jpg"
+          alt="Engagement photography Florida"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Engagement</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_9a35a9189d2149b8ace6c5933c1c4fad~mv2_d_3456_4700_s_4_2.jpg/v1/fit/w_1440,h_1962,q_90,enc_avif,quality_auto/9714f7_9a35a9189d2149b8ace6c5933c1c4fad~mv2_d_3456_4700_s_4_2.jpg"
+          alt="Maternity photography"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Maternity</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_049bd79341a84d07ba712c311963997c~mv2_d_4991_3309_s_4_2.jpg/v1/fit/w_2880,h_1914,q_90,enc_avif,quality_auto/9714f7_049bd79341a84d07ba712c311963997c~mv2_d_4991_3309_s_4_2.jpg"
+          alt="Wedding photography Orlando"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Wedding</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/9714f7_bce18868568a440284b01398b75f7c3a~mv2_d_3592_4699_s_4_2.jpg/v1/fit/w_3591,h_4698,q_90,enc_avif,quality_auto/9714f7_bce18868568a440284b01398b75f7c3a~mv2_d_3592_4699_s_4_2.jpg"
+          alt="Children photography"
+          loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-overlay-text">Children</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-image-wrap">
+      <div class="about-accent-line"></div>
+      <img
+        src="https://static.wixstatic.com/media/9714f7_94dacc08717540e79f5c201e0f6ef5df~mv2_d_5472_3648_s_4_2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/9714f7_94dacc08717540e79f5c201e0f6ef5df~mv2_d_5472_3648_s_4_2.jpg"
+        alt="Gabby Girdner photographer"
+        loading="lazy">
+    </div>
+    <div class="about-content">
+      <p class="section-label visible" style="color: var(--accent);">About</p>
+      <h2 class="section-title" style="color: #fff; margin-bottom: 36px;">02</h2>
+      <p class="about-quote">"My goal is to capture people as they truly are — candid moments that make us real, human, and unique."</p>
+      <p class="about-bio">Based in Saint Cloud, Florida, Gabby Girdner Photography specializes in lifestyle photography that celebrates authentic connection. Working with families, couples, seniors, and children across Central Florida, Gabby brings an unhurried, documentary approach to every session.</p>
+      <div class="about-details">
+        <div class="about-detail-item">Based in Saint Cloud, Florida</div>
+        <div class="about-detail-item">Weddings · Families · Engagements</div>
+        <div class="about-detail-item">Maternity · Seniors · Children</div>
+        <div class="about-detail-item">Listed on The Knot · PartySlate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-intro">
+      <div class="section-number">03</div>
+      <div class="section-heading-block">
+        <p class="section-label">What I Offer</p>
+        <h2 class="section-title">Sessions</h2>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3 class="service-name">Family & Children</h3>
+        <p class="service-desc">Candid lifestyle sessions that capture the real energy of your family — not stiff poses, but genuine moments of connection and laughter.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3 class="service-name">Weddings & Engagements</h3>
+        <p class="service-desc">Full wedding day coverage and engagement sessions throughout Central Florida. Documentary style, beautifully lit, timeless.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3 class="service-name">Maternity & Newborn</h3>
+        <p class="service-desc">Intimate sessions that honor the quiet beauty of new beginnings. Natural light, real emotion, no props that overshadow the person.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg-text">Book</div>
+    <p class="cta-label">Ready to Start?</p>
+    <h2 class="cta-heading">Let's Create<br>Something Real</h2>
+    <a href="mailto:GabbyGirdner@me.com" class="cta-btn">Book a Session</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <div class="section-intro" style="padding: 0 0 40px;">
+        <div class="section-number">04</div>
+        <div class="section-heading-block">
+          <p class="section-label">Get In Touch</p>
+          <h2 class="section-title">Inquiries</h2>
+        </div>
+      </div>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <p class="contact-item-label">Email</p>
+          <p class="contact-item-value"><a href="mailto:GabbyGirdner@me.com">GabbyGirdner@me.com</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Phone</p>
+          <p class="contact-item-value"><a href="tel:+13216243390">(321) 624-3390</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Location</p>
+          <p class="contact-item-value">Saint Cloud · Central Florida</p>
+        </div>
+      </div>
+
+      <div class="social-links">
+        <a href="https://www.instagram.com/gabbygirdnerphotography/" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/gabbygirdnerphotography/" target="_blank">Facebook</a>
+        <a href="https://www.theknot.com/marketplace/gabby-girdner-photography-saint-cloud-fl-2015532" target="_blank">The Knot</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <img class="contact-image"
+        src="https://static.wixstatic.com/media/9714f7_723c1b40616c4d80b66f3be2267a9316~mv2_d_4966_3324_s_4_2.jpg/v1/fit/w_4800,h_3220,q_90,enc_avif,quality_auto/9714f7_723c1b40616c4d80b66f3be2267a9316~mv2_d_4966_3324_s_4_2.jpg"
+        alt="Gabby Girdner Photography sample work"
+        loading="lazy">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Gabby Girdner Photography</span>
+    <span class="footer-copy">© 2026 · Saint Cloud, Florida</span>
+    <span class="footer-credit">Design by <a href="#">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hero image scale-in on load
+    const heroLeft = document.getElementById('hero-img-left');
+    const heroRight = document.getElementById('hero-img-right');
+    const heroName = document.getElementById('hero-name');
+    const heroTagline = document.getElementById('hero-tagline');
+
+    setTimeout(() => {
+      heroLeft?.classList.add('loaded');
+      heroRight?.classList.add('loaded');
+      heroName?.classList.add('visible');
+      heroTagline?.classList.add('visible');
+    }, 150);
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe all animated elements
+    document.querySelectorAll(
+      '.stat-item, .section-label, .section-title, .section-number, ' +
+      '.gallery-item, .about-image-wrap, .about-quote, .about-bio, ' +
+      '.about-detail-item, .service-card, .cta-label, .cta-heading, ' +
+      '.contact-item, .contact-image'
+    ).forEach((el, i) => {
+      // Stagger children
+      if (el.classList.contains('gallery-item') || el.classList.contains('stat-item') ||
+          el.classList.contains('service-card') || el.classList.contains('about-detail-item') ||
+          el.classList.contains('contact-item')) {
+        el.style.transitionDelay = (i % 4) * 0.1 + 's';
+      }
+      observer.observe(el);
+    });
+
+    // Parallax on hero
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (heroLeft) {
+        heroLeft.style.transform = `scale(1.0) translateY(${scrollY * 0.2}px)`;
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
