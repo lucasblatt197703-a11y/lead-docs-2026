@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angela DiBella Photography — Tallahassee, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F8F4F0;
+      --text: #1A1612;
+      --accent: #8B6347;
+      --light: #E8DDD4;
+      --mid: #B8A090;
+      --dark: #2C1F14;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: normal;
+      background: transparent;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    /* ===== HERO — CINEMATIC LETTERBOX ===== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/30fa26_ae0595e14faa41e6982aa4ffebdc3cec~mv2_d_3264_4928_s_4_2.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+      will-change: transform;
+    }
+
+    .hero-bg.loaded { transform: scale(1.0); }
+
+    /* Letterbox bars */
+    .letterbox-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      background: var(--dark);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+
+    .letterbox-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 120px;
+      background: var(--dark);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+    }
+
+    .hero-title-bar {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 56px);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hero-title-bar.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-subtitle-bar {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hero-cta-bar {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--accent);
+      color: #C8A882;
+      letter-spacing: 0.05em;
+    }
+
+    /* Dark overlay in middle area */
+    .hero-overlay {
+      position: absolute;
+      inset: 80px 0 120px 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 100%);
+      z-index: 1;
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee-inner span {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 0 32px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===== STATS ===== */
+    #stats {
+      background: var(--dark);
+      padding: 80px 48px;
+    }
+
+    .stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      text-align: center;
+    }
+
+    .stat-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .stat-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-item:nth-child(2) { transition-delay: 0.12s; }
+    .stat-item:nth-child(3) { transition-delay: 0.24s; }
+    .stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 6vw, 96px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 10px;
+    }
+
+    /* ===== GALLERY ===== */
+    #gallery {
+      padding: 120px 48px;
+      background: var(--bg);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: var(--light);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 400;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+
+    .section-title.is-visible {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    /* Editorial scroll gallery: alternating large + small */
+    .gallery-editorial {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+
+    .gallery-item.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+    .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+    .gallery-item:nth-child(4) { transition-delay: 0.3s; }
+    .gallery-item:nth-child(5) { transition-delay: 0.15s; }
+    .gallery-item:nth-child(6) { transition-delay: 0.25s; }
+
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.03);
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.0);
+    }
+
+    .gallery-item .img-wrap {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item.tall .img-wrap { min-height: 640px; }
+    .gallery-item.wide .img-wrap { min-height: 380px; }
+
+    /* ===== ABOUT ===== */
+    #about {
+      padding: 140px 48px;
+      background: var(--light);
+    }
+
+    .about-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+
+    .about-img-wrap.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .about-img-wrap img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    .about-content {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+      transition-delay: 0.2s;
+    }
+
+    .about-content.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .about-eyebrow {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--dark);
+      margin-bottom: 32px;
+    }
+
+    .about-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #4A3D32;
+      margin-bottom: 28px;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+      border-left: 2px solid var(--accent);
+      padding-left: 20px;
+      margin: 32px 0;
+      line-height: 1.5;
+    }
+
+    /* ===== SERVICES ===== */
+    #services {
+      padding: 120px 48px;
+      background: var(--bg);
+    }
+
+    .services-grid {
+      max-width: 1200px;
+      margin: 64px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .service-card.is-visible { opacity: 1; transform: translateY(0); }
+    .service-card:nth-child(2) { transition-delay: 0.12s; }
+    .service-card:nth-child(3) { transition-delay: 0.24s; }
+    .service-card:nth-child(4) { transition-delay: 0.36s; }
+    .service-card:nth-child(5) { transition-delay: 0.48s; }
+    .service-card:nth-child(6) { transition-delay: 0.60s; }
+
+    .service-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      transition: transform 0.5s ease;
+    }
+
+    .service-card:hover .service-img {
+      transform: scale(1.0);
+    }
+
+    .service-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,15,8,0.85) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 24px;
+    }
+
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .service-desc {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    /* ===== CTA SECTION ===== */
+    #cta {
+      padding: 160px 48px;
+      background: var(--dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 18vw, 240px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.02);
+      white-space: nowrap;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .cta-inner.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-eyebrow {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    /* Accent = #C8A882 for dark backgrounds */
+    .cta-eyebrow { color: #C8A882; }
+
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .cta-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 48px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      border: 1px solid rgba(200,168,130,0.6);
+      color: #C8A882;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .cta-btn:hover {
+      background: rgba(200,168,130,0.15);
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      padding: 100px 48px;
+      background: var(--light);
+    }
+
+    .contact-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-email-link {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 3vw, 40px);
+      font-weight: 400;
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--mid);
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+      transition: color 0.3s;
+    }
+
+    .contact-email-link:hover { color: var(--accent); }
+
+    .contact-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .contact-detail-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+
+    .contact-detail-value {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--dark);
+    }
+
+    .contact-social {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .contact-social a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .contact-social a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .footer-credit {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-credit a {
+      color: rgba(200,168,130,0.5);
+      text-decoration: none;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .letterbox-top { padding: 0 24px; }
+      .letterbox-bottom { padding: 0 24px; flex-direction: column; gap: 4px; justify-content: center; }
+      #stats { padding: 60px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-editorial { grid-template-columns: 1fr; }
+      .gallery-item.tall { grid-row: span 1; }
+      .gallery-item.wide { grid-column: span 1; }
+      #about { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      #services { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      #cta { padding: 100px 24px; }
+      #contact { padding: 60px 24px; }
+      .contact-details { grid-template-columns: 1fr; }
+      footer { padding: 28px 24px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .letterbox-bottom { height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Angela DiBella</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#services">Sessions</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — CINEMATIC LETTERBOX -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+
+    <!-- Top bar -->
+    <div class="letterbox-top">
+      <span class="hero-title-bar" id="heroTitle">Angela DiBella Photography</span>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="letterbox-bottom">
+      <span class="hero-subtitle-bar">Tallahassee, Florida &nbsp;·&nbsp; Portraits &nbsp;·&nbsp; Newborn &nbsp;·&nbsp; Weddings &nbsp;·&nbsp; Family</span>
+      <span class="hero-cta-bar">"Capturing moments of today that will wow your heart tomorrow"</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>No Time Limit Sessions</span>
+      <span>·</span>
+      <span>Professional Editing</span>
+      <span>·</span>
+      <span>Tallahassee, FL</span>
+      <span>·</span>
+      <span>Newborn &amp; Family</span>
+      <span>·</span>
+      <span>Weddings &amp; Events</span>
+      <span>·</span>
+      <span>No Time Limit Sessions</span>
+      <span>·</span>
+      <span>Professional Editing</span>
+      <span>·</span>
+      <span>Tallahassee, FL</span>
+      <span>·</span>
+      <span>Newborn &amp; Family</span>
+      <span>·</span>
+      <span>Weddings &amp; Events</span>
+      <span>·</span>
+      <span>No Time Limit Sessions</span>
+      <span>·</span>
+      <span>Professional Editing</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Session Types</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Time Limits Per Session</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Best Images Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Tally</div>
+        <div class="stat-label">Based in Tallahassee, FL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Portfolio</h2>
+    </div>
+    <div class="gallery-editorial">
+      <!-- Tall left column -->
+      <div class="gallery-item tall">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/30fa26_ae0595e14faa41e6982aa4ffebdc3cec~mv2_d_3264_4928_s_4_2.jpg" alt="Portrait session" loading="lazy">
+        </div>
+      </div>
+      <!-- Right column, two stacked -->
+      <div class="gallery-item">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/30fa26_ab246c9999fa4fb9b4e770187651db25~mv2_d_3089_4982_s_4_2.jpg" alt="Newborn session" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/30fa26_5546c509053941858d37813687009118~mv2.jpg" alt="Family session" loading="lazy">
+        </div>
+      </div>
+      <!-- Wide bottom -->
+      <div class="gallery-item wide">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/603cae2713b247d18fa4b641bcb64149.jpg" alt="Wedding photography" loading="lazy">
+        </div>
+      </div>
+      <!-- Second row -->
+      <div class="gallery-item">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/415fed4e07af40f098cc8106297fd586.jpg" alt="Maternity session" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="img-wrap">
+          <img src="https://static.wixstatic.com/media/0612cdf0d3e84fc3acb3ae4787016749.jpg" alt="Fresh 48 birth photography" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://static.wixstatic.com/media/a896d9_dbd47e2377514569abc9d14c4a130be5.jpg" alt="Angela DiBella — Tallahassee photographer" loading="lazy">
+      </div>
+      <div class="about-content">
+        <p class="about-eyebrow">About the Photographer</p>
+        <h2 class="about-heading">Angela DiBella</h2>
+        <p class="about-body">
+          Based in Tallahassee, Florida, Angela DiBella has built her practice around one simple belief: that every family deserves photography that actually looks like them. A self-taught photographer who fell in love with film in high school, she now specializes in newborn, family, and birth photography — sessions with no time limits and no pressure.
+        </p>
+        <blockquote class="about-quote">
+          "Capturing the moments of today that will wow your heart tomorrow."
+        </blockquote>
+        <p class="about-body">
+          Angela is the only photographer in Tallahassee who delivers all best images — professionally edited and yours to keep. From Fresh 48 birth sessions to wedding collections, she brings the same unhurried, warm presence to every shoot.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Sessions</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <img class="service-img" src="https://static.wixstatic.com/media/30fa26_5546c509053941858d37813687009118~mv2.jpg" alt="Family & Children" loading="lazy">
+        <div class="service-overlay">
+          <div class="service-name">Family &amp; Children</div>
+          <div class="service-desc">Natural, unhurried sessions capturing your family as they really are</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://static.wixstatic.com/media/032f05d50cc94a72b840b039bde1e7e8.jpg" alt="Newborn" loading="lazy">
+        <div class="service-overlay">
+          <div class="service-name">Newborn</div>
+          <div class="service-desc">They're only this small once — preserve every detail</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://static.wixstatic.com/media/415fed4e07af40f098cc8106297fd586.jpg" alt="Maternity" loading="lazy">
+        <div class="service-overlay">
+          <div class="service-name">Maternity</div>
+          <div class="service-desc">Capturing one of the most important times in your life</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://static.wixstatic.com/media/0612cdf0d3e84fc3acb3ae4787016749.jpg" alt="Fresh 48" loading="lazy">
+        <div class="service-overlay">
+          <div class="service-name">Fresh 48</div>
+          <div class="service-desc">Birth and those first 48 hours — siblings, family, the real story</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://static.wixstatic.com/media/603cae2713b247d18fa4b641bcb64149.jpg" alt="Wedding Collection" loading="lazy">
+        <div class="service-overlay">
+          <div class="service-name">Wedding Collection</div>
+          <div class="service-desc">Customizable packages, payment plans available</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="service-img" src="https://static.wixstatic.com/media/e98f31bc9fa2460493a0cd3bb7ead3f6.jpg" alt="Grow With Me Package" loading="lazy">
+        <div class="service-overlay">
+          <div class="service-name">Grow With Me</div>
+          <div class="service-desc">Multi-session milestones — 3 months, 6 months, one year and beyond</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg-text">moments</div>
+    <div class="cta-inner">
+      <p class="cta-eyebrow">Ready to Book</p>
+      <h2 class="cta-heading">Let's Create<br>Something Lasting</h2>
+      <p class="cta-sub">
+        No time limits. All your best images. Affordable professional photography for every family in Tallahassee and the surrounding areas.
+      </p>
+      <a href="mailto:angeladibellaphotography@gmail.com" class="cta-btn">Book Your Session</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Get in Touch</h2>
+      </div>
+      <a href="mailto:angeladibellaphotography@gmail.com" class="contact-email-link">angeladibellaphotography@gmail.com</a>
+      <div class="contact-details">
+        <div>
+          <p class="contact-detail-label">Location</p>
+          <p class="contact-detail-value">Tallahassee, Florida</p>
+        </div>
+        <div>
+          <p class="contact-detail-label">Availability</p>
+          <p class="contact-detail-value">Booking 2026 Sessions</p>
+        </div>
+        <div>
+          <p class="contact-detail-label">Sessions</p>
+          <p class="contact-detail-value">Newborn · Family · Weddings<br>Maternity · Fresh 48</p>
+        </div>
+        <div>
+          <p class="contact-detail-label">Policy</p>
+          <p class="contact-detail-value">No time limits<br>All best images included</p>
+        </div>
+      </div>
+      <div class="contact-social">
+        <a href="https://www.facebook.com/angeladibellaphotography" target="_blank">Facebook</a>
+        <a href="mailto:angeladibellaphotography@gmail.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Angela DiBella Photography &nbsp;·&nbsp; © 2026</span>
+    <span class="footer-credit">Design concept by <a href="#">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // Hero entrance animation
+    window.addEventListener('load', () => {
+      const heroBg = document.getElementById('heroBg');
+      const heroTitle = document.getElementById('heroTitle');
+      setTimeout(() => {
+        heroBg.classList.add('loaded');
+        heroTitle.classList.add('visible');
+      }, 100);
+    });
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(
+      '.stat-item, .gallery-item, .section-title, .about-img-wrap, .about-content, .service-card, .cta-inner, .contact-inner'
+    ).forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
