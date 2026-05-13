@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carolina Irais Photography — Orlando, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ivory:   #F5EFE8;
+    --stone:   #2B2520;
+    --warm:    #9C6B4E;
+    --blush:   #C4967A;
+    --mist:    #E8DDD3;
+    --light:   #F9F5F1;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--light);
+    color: var(--stone);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 52px;
+    mix-blend-mode: normal;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #fff; }
+
+  /* HERO — Full-bleed with text pinned bottom-left */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    will-change: transform;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: -10%;
+    background-image: url('https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/3a297c81-da96-4b10-b68b-52a45632f53c/9A0A9725+%281%29.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(30,20,16,0.72) 0%,
+      rgba(30,20,16,0.2) 50%,
+      rgba(30,20,16,0.05) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 72px;
+    left: 52px;
+    right: 52px;
+  }
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .hero-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(64px, 9vw, 108px);
+    line-height: 0.92;
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-transform: uppercase;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+  }
+  .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .hero-tagline {
+    margin-top: 24px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.65);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s;
+  }
+  .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 52px;
+    writing-mode: vertical-rl;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: rgba(255,255,255,0.35);
+  }
+
+  /* MARQUEE STRIP */
+  .marquee-strip {
+    background: var(--warm);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    padding: 0 40px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* STATS */
+  .stats {
+    background: var(--stone);
+    padding: 80px 52px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 24px 0;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.12s; }
+  .stat-item:nth-child(3) { transition-delay: 0.24s; }
+  .stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7vw, 88px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--blush);
+    display: block;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* SECTION TITLES */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.1;
+    color: var(--stone);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+  .section-title.light-title { color: #fff; }
+
+  /* FEATURED — editorial scroll */
+  .featured {
+    padding: 120px 0 0;
+    background: var(--light);
+  }
+  .featured-header {
+    padding: 0 52px 60px;
+    max-width: 500px;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 4px;
+  }
+  .feat-img {
+    overflow: hidden;
+    position: relative;
+  }
+  .feat-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: clip-path;
+  }
+  .feat-img.is-visible img { clip-path: inset(0 0 0 0); }
+  .feat-img:nth-child(2) img { transition-delay: 0.1s; }
+  .feat-img:nth-child(3) img { transition-delay: 0.2s; }
+  .feat-img:nth-child(4) img { transition-delay: 0.3s; }
+
+  .feat-main { grid-row: 1 / 3; height: 680px; }
+  .feat-side { height: 336px; }
+
+  .feat-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    background: rgba(30,20,16,0.45);
+    padding: 6px 12px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* GALLERY — masonry */
+  .gallery {
+    padding: 120px 52px;
+    background: var(--ivory);
+  }
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 52px;
+  }
+  .gallery-grid {
+    columns: 3;
+    column-gap: 6px;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    filter: saturate(0.92);
+    transition: filter 0.5s ease, transform 0.6s ease;
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+    transition: clip-path 0.85s ease;
+  }
+  .gallery-item.is-visible img { clip-path: inset(0 0 0 0); }
+  .gallery-item:nth-child(2) img { transition-delay: 0.07s; }
+  .gallery-item:nth-child(3) img { transition-delay: 0.14s; }
+  .gallery-item:nth-child(4) img { transition-delay: 0.21s; }
+  .gallery-item:nth-child(5) img { transition-delay: 0.28s; }
+  .gallery-item:nth-child(6) img { transition-delay: 0.35s; }
+  .gallery-item:hover img { filter: saturate(1.05); }
+
+  .gallery-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: rgba(43,37,32,0.4);
+    letter-spacing: 0.08em;
+  }
+
+  /* TESTIMONIAL */
+  .testimonial {
+    background: var(--stone);
+    padding: 100px 52px;
+    text-align: center;
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.88);
+    max-width: 820px;
+    margin: 0 auto 32px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .testimonial-quote.is-visible { opacity: 1; transform: translateY(0); }
+  .testimonial-source {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blush);
+    opacity: 0;
+    transition: opacity 0.9s ease 0.2s;
+  }
+  .testimonial-source.is-visible { opacity: 1; }
+
+  /* ABOUT — magazine spread */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+    background: var(--light);
+  }
+  .about-image {
+    overflow: hidden;
+  }
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .about-image.is-visible img { clip-path: inset(0 0% 0 0); }
+  .about-text {
+    padding: 100px 72px 100px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .about-body {
+    margin-top: 28px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(43,37,32,0.75);
+    max-width: 440px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .about-body.is-visible { opacity: 1; transform: translateY(0); }
+  .about-pull {
+    margin-top: 36px;
+    padding-left: 24px;
+    border-left: 2px solid var(--blush);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--warm);
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s;
+  }
+  .about-pull.is-visible { opacity: 1; }
+
+  /* SERVICES */
+  .services {
+    background: var(--mist);
+    padding: 120px 52px;
+  }
+  .services-header { margin-bottom: 60px; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--ivory);
+    padding: 40px 32px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+  .service-card:nth-child(2) { transition-delay: 0.1s; }
+  .service-card:nth-child(3) { transition-delay: 0.2s; }
+  .service-card:nth-child(4) { transition-delay: 0.3s; }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: rgba(156,107,78,0.2);
+    display: block;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--stone);
+    margin-bottom: 12px;
+  }
+  .service-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(43,37,32,0.6);
+  }
+  .service-price {
+    margin-top: 20px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--warm);
+    padding: 120px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(80px, 15vw, 200px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.05);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cta-section .section-label { color: rgba(255,255,255,0.6); }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5.5vw, 68px);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 36px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid rgba(255,255,255,0.8);
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+  }
+  .cta-btn:hover {
+    background: #fff;
+    color: var(--warm);
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--stone);
+    padding: 100px 52px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .contact-left .section-title { color: #fff; }
+  .contact-tagline {
+    margin-top: 24px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.5);
+    max-width: 380px;
+  }
+  .contact-right {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+  .contact-item {
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .contact-item-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .contact-item a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-item a:hover { color: var(--blush); }
+
+  /* FOOTER */
+  footer {
+    background: #1A1310;
+    padding: 32px 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em;
+  }
+  .footer-credit {
+    font-size: 10px;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.06em;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; }
+    .hero-content { left: 24px; right: 24px; bottom: 52px; }
+    .hero-scroll { display: none; }
+    .stats { grid-template-columns: repeat(2,1fr); padding: 52px 24px; }
+    .feat-main { height: 420px; }
+    .feat-side { height: 206px; }
+    .featured-header { padding: 0 24px 40px; }
+    .gallery { padding: 80px 24px; }
+    .gallery-grid { columns: 2; }
+    .about { grid-template-columns: 1fr; }
+    .about-image { height: 400px; }
+    .about-text { padding: 60px 24px; }
+    .services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .cta-section { padding: 80px 24px; }
+    .contact { grid-template-columns: 1fr; gap: 48px; padding: 72px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .feat-main { grid-row: auto; height: 320px; }
+    .gallery-grid { columns: 1; }
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Carolina Irais</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Central Florida · Elopement &amp; Wedding Photographer</span>
+    <h1 class="hero-name">Carolina<br>Irais</h1>
+    <p class="hero-tagline">Documentary. Candid. Emotion-filled. — Orlando, FL &amp; Beyond</p>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Elopements</span><span>·</span>
+    <span>Weddings</span><span>·</span>
+    <span>Engagements</span><span>·</span>
+    <span>Orlando, FL</span><span>·</span>
+    <span>Puerto Rico</span><span>·</span>
+    <span>Destination</span><span>·</span>
+    <span>5.0 Stars · 13 Reviews</span><span>·</span>
+    <span>Top 10 Elopement Photographer</span><span>·</span>
+    <span>Elopements</span><span>·</span>
+    <span>Weddings</span><span>·</span>
+    <span>Engagements</span><span>·</span>
+    <span>Orlando, FL</span><span>·</span>
+    <span>Puerto Rico</span><span>·</span>
+    <span>Destination</span><span>·</span>
+    <span>5.0 Stars · 13 Reviews</span><span>·</span>
+    <span>Top 10 Elopement Photographer</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat-item">
+    <span class="stat-number">5.0</span>
+    <span class="stat-label">Star Rating</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">13+</span>
+    <span class="stat-label">Reviews</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">2.9K</span>
+    <span class="stat-label">Instagram Followers</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">Top<br>10</span>
+    <span class="stat-label">Elopement Photographer, Orlando</span>
+  </div>
+</section>
+
+<!-- FEATURED WORK -->
+<section class="featured" id="work">
+  <div class="featured-header">
+    <span class="section-label">Featured Work</span>
+    <h2 class="section-title">Love Stories, Told Honestly</h2>
+  </div>
+  <div class="featured-grid">
+    <div class="feat-img feat-main">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/745c6864-1d25-44c8-8217-d7f7198e3531/9A0A3719.jpg" alt="Wedding couple — golden hour portrait" loading="lazy">
+      <span class="feat-label">Weddings</span>
+    </div>
+    <div class="feat-img feat-side">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/db1942df-e138-41f3-b371-554410513a2b/EB9A9349.jpg" alt="Ceremony moment, natural light" loading="lazy">
+      <span class="feat-label">Ceremony</span>
+    </div>
+    <div class="feat-img feat-side">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/1526c4f5-5ec7-43d1-8d28-642fe4e148e0/EB9A3441.jpg" alt="Intimate elopement portrait" loading="lazy">
+      <span class="feat-label">Elopements</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <div>
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title">Every Frame, A Feeling</h2>
+    </div>
+    <span class="gallery-count">Selected Work</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/e93652f6-e372-464a-a0b4-802fe9e5b743/9A0A4436.jpg" alt="Couple portrait" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/1a609051-b49f-4542-adc4-a6372ea6f9ba/EB9A3106.jpg" alt="Wedding ceremony" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/9084f651-288a-4164-9059-ba9512bdf1cf/9A0A2481.jpg" alt="Intimate moment" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/28844888-54e1-4dd7-934b-24e13449bafd/9A0A0059.jpg" alt="Candid portrait" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/a9ddab8a-0808-4a47-8e42-6201fa84b927/9A0A2995.jpg" alt="Outdoor ceremony" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/fc40ac09-a0ec-48f0-8512-06727cb8fa8a/9A0A3588.jpg" alt="Engagement session" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/f0d7650b-fed9-4f20-9181-862b01ea4827/243A0087.jpg" alt="Reception moment" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/73722c59-800a-4dd7-b0e7-42de77fa5ec5/9A0A0111.jpg" alt="Romantic portrait" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <p class="testimonial-quote">"Carolina made us feel so comfortable and at ease. She captured moments we didn't even know were happening — and they turned out to be our favorites."</p>
+  <span class="testimonial-source">— Wedding Client · 5 Stars · WeddingWire</span>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image">
+    <img src="https://images.squarespace-cdn.com/content/v1/60ad7d2cb2bc3444baae95b3/ed451425-275f-425b-89fd-9b28196eb078/9A0A9277.jpg" alt="Carolina Irais — portrait" loading="lazy">
+  </div>
+  <div class="about-text">
+    <span class="section-label">About</span>
+    <h2 class="section-title">The Photographer</h2>
+    <p class="about-body">
+      Carolina Irais is a Central Florida elopement and wedding photographer whose approach is equal parts documentary and cinematic — she finds the unguarded glance, the quiet moment between vows, the laugh that catches everyone off guard. Born in Puerto Rico, based in Orlando, she photographs couples across Florida and beyond.
+    </p>
+    <p class="about-pull">
+      "I want you to look back at these images in twenty years and feel exactly what you felt that day."
+    </p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <span class="section-label">Services</span>
+    <h2 class="section-title">What I Offer</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <div class="service-name">Elopements</div>
+      <p class="service-desc">Intimate ceremonies for two. Full coverage of your private moment, wherever you choose to do it.</p>
+      <span class="service-price">Starting at $500</span>
+    </div>
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <div class="service-name">Weddings</div>
+      <p class="service-desc">Full-day coverage with second shooter, high-res gallery, and complimentary engagement session.</p>
+      <span class="service-price">Starting at $1,500</span>
+    </div>
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <div class="service-name">Engagements</div>
+      <p class="service-desc">A relaxed session that gets you comfortable in front of the camera before the big day.</p>
+      <span class="service-price">Included with wedding packages</span>
+    </div>
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <div class="service-name">Destination</div>
+      <p class="service-desc">Puerto Rico, beach elopements, mountain ceremonies. Wherever your story takes you.</p>
+      <span class="service-price">Travel available</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg-text">Together</div>
+  <span class="section-label">Book Your Date</span>
+  <h2 class="cta-heading">Your story deserves<br>to be told beautifully.</h2>
+  <a href="mailto:carolina@carolinairaisphotography.com" class="cta-btn">Start a Conversation</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <span class="section-label">Get In Touch</span>
+    <h2 class="section-title light-title">Let's Talk<br>About Your Day</h2>
+    <p class="contact-tagline">Based in Orlando, FL — available throughout Central Florida, Puerto Rico, and destination weddings worldwide.</p>
+  </div>
+  <div class="contact-right">
+    <div class="contact-item">
+      <span class="contact-item-label">Instagram</span>
+      <a href="https://instagram.com/carolinairaisphoto" target="_blank">@carolinairaisphoto</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Phone</span>
+      <a href="tel:4072094838">(407) 209-4838</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Website</span>
+      <a href="https://carolinairaisphotography.com" target="_blank">carolinairaisphotography.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Location</span>
+      <a href="#">Orlando, Florida</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Carolina Irais Photography</span>
+  <span class="footer-copy">© 2026 Carolina Irais Photography · Orlando, FL</span>
+  <span class="footer-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroBg.style.transform = `translateY(${scrollY * 0.38}px)`;
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  // Observe all animated elements
+  const animated = document.querySelectorAll(
+    '.hero-eyebrow, .hero-name, .hero-tagline, ' +
+    '.stat-item, .section-title, .feat-img, .gallery-item, ' +
+    '.testimonial-quote, .testimonial-source, .about-image, ' +
+    '.about-body, .about-pull, .service-card, .cta-heading, ' +
+    '.contact-right'
+  );
+  animated.forEach(el => observer.observe(el));
+
+  // Hero entrance on load
+  setTimeout(() => {
+    document.querySelector('.hero-eyebrow').classList.add('is-visible');
+    document.querySelector('.hero-name').classList.add('is-visible');
+    document.querySelector('.hero-tagline').classList.add('is-visible');
+  }, 150);
+</script>
+</body>
+</html>
