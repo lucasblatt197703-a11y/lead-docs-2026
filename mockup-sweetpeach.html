@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Peach Photography — Gioia Doukas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5EDE0;
+    --warm-white: #FAF6F0;
+    --dark: #1A1410;
+    --brown: #3D2B1F;
+    --peach: #D4896A;
+    --peach-light: #E8B99A;
+    --text: #2C1F14;
+    --muted: #7A6458;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- HERO: Asymmetric split — image 60% left, text 40% right ---- */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 700px;
+    display: grid;
+    grid-template-columns: 60% 40%;
+  }
+
+  .hero-image-panel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-image-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+    will-change: transform;
+  }
+
+  .hero-image-panel img.loaded {
+    transform: scale(1.0);
+  }
+
+  .hero-text-panel {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 50px;
+    position: relative;
+  }
+
+  .hero-nav {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .hero-nav a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .hero-nav a:hover { color: var(--peach); }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(54px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: 0.04em;
+    color: var(--dark);
+    margin-bottom: 8px;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1) 0.1s, opacity 0.1s;
+  }
+
+  .hero-name.is-visible {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--peach);
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+
+  .hero-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--peach);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.5s ease 0.6s, transform 0.6s ease 0.6s;
+  }
+
+  .hero-location {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s;
+  }
+
+  .hero-cta {
+    margin-top: 48px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dark);
+    text-decoration: none;
+    border: 1px solid var(--dark);
+    padding: 14px 32px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--dark);
+    color: var(--cream);
+  }
+
+  .is-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transform: scaleX(1) !important;
+  }
+
+  /* ---- STATS STRIP ---- */
+  #stats {
+    background: var(--dark);
+    padding: 48px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+  }
+
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--peach-light);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+    display: block;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 60px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ---- MARQUEE ---- */
+  .marquee-strip {
+    background: var(--peach);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+
+  .marquee-text {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---- GALLERY ---- */
+  #gallery {
+    padding: 120px 0;
+    background: var(--warm-white);
+  }
+
+  .section-header {
+    padding: 0 80px;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.04);
+    line-height: 1;
+    margin-right: -20px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .section-title-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.1;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.1s;
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+
+  /* Editorial scroll gallery — alternating large/small */
+  .gallery-editorial {
+    padding: 0 80px;
+  }
+
+  .gallery-row {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .gallery-row.row-1 {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 560px;
+  }
+
+  .gallery-row.row-2 {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 380px;
+  }
+
+  .gallery-row.row-3 {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 480px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, opacity 0.1s;
+    will-change: transform;
+    cursor: pointer;
+  }
+
+  .gallery-item.is-visible {
+    clip-path: inset(0% 0 0 0);
+    opacity: 1;
+  }
+
+  .gallery-item:nth-child(2) { transition-delay: 100ms; }
+  .gallery-item:nth-child(3) { transition-delay: 200ms; }
+  .gallery-item:nth-child(4) { transition-delay: 100ms; }
+  .gallery-item:nth-child(5) { transition-delay: 200ms; }
+  .gallery-item:nth-child(6) { transition-delay: 300ms; }
+  .gallery-item:nth-child(7) { transition-delay: 100ms; }
+  .gallery-item:nth-child(8) { transition-delay: 200ms; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.03);
+  }
+
+  .gallery-item-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 20px 20px;
+    background: linear-gradient(transparent, rgba(20,12,6,0.55));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-item-caption { opacity: 1; }
+
+  .gallery-item-caption span {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* ---- FEATURED WORK ---- */
+  #featured {
+    padding: 100px 80px;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .featured-image {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .featured-image.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .featured-image-accent {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--peach);
+    z-index: -1;
+  }
+
+  .featured-text {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+
+  .featured-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .featured-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.35;
+    margin-bottom: 32px;
+  }
+
+  .featured-quote em {
+    color: var(--peach);
+    font-style: normal;
+  }
+
+  .featured-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .featured-line {
+    width: 60px;
+    height: 1px;
+    background: var(--peach);
+    margin-bottom: 24px;
+  }
+
+  /* ---- ABOUT ---- */
+  #about {
+    padding: 120px 80px;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-image-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .about-image-wrap.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-image-wrap img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-image-label {
+    position: absolute;
+    bottom: -16px;
+    left: 32px;
+    background: var(--peach);
+    color: var(--warm-white);
+    padding: 10px 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .about-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+
+  .about-detail {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  /* ---- CTA SECTION ---- */
+  #cta-section {
+    padding: 100px 80px;
+    background: var(--dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta-section::before {
+    content: 'SWEET PEACH';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 180px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.02);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-bottom: 24px;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dark);
+    background: var(--peach-light);
+    text-decoration: none;
+    padding: 18px 48px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: background 0.3s, color 0.3s, opacity 0.6s ease 0.35s, transform 0.6s ease 0.35s;
+  }
+
+  .cta-btn:hover {
+    background: var(--peach);
+    color: var(--warm-white);
+  }
+
+  .cta-section-visible .cta-eyebrow,
+  .cta-section-visible .cta-heading,
+  .cta-section-visible .cta-sub,
+  .cta-section-visible .cta-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- CONTACT ---- */
+  #contact {
+    padding: 100px 80px;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .contact-left.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-right {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .contact-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .contact-link {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--peach);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+
+  .contact-link:hover { color: var(--brown); }
+
+  .contact-info-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    margin-top: 28px;
+    display: block;
+  }
+
+  .contact-social {
+    display: flex;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .contact-social a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-social a:hover { color: var(--peach); }
+
+  .contact-form-note {
+    background: var(--warm-white);
+    border-left: 3px solid var(--peach);
+    padding: 32px 32px;
+  }
+
+  .contact-form-note p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .contact-form-note .note-small {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: #120E0A;
+    padding: 40px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.06em;
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    #hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: 50vh auto;
+      height: auto;
+    }
+
+    .hero-text-panel {
+      padding: 60px 32px;
+    }
+
+    .hero-nav {
+      display: none;
+    }
+
+    #stats {
+      padding: 40px 24px;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .stat-divider { display: none; }
+
+    .section-header { padding: 0 24px; }
+
+    .gallery-editorial { padding: 0 16px; }
+
+    .gallery-row.row-1 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 280px;
+    }
+
+    .gallery-row.row-2 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px;
+    }
+
+    .gallery-row.row-3 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 250px;
+    }
+
+    #featured {
+      grid-template-columns: 1fr;
+      padding: 60px 24px;
+      gap: 40px;
+    }
+
+    #about {
+      grid-template-columns: 1fr;
+      padding: 60px 24px;
+      gap: 48px;
+    }
+
+    #cta-section { padding: 80px 24px; }
+
+    #contact {
+      grid-template-columns: 1fr;
+      padding: 60px 24px;
+      gap: 48px;
+    }
+
+    footer {
+      padding: 32px 24px;
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .section-number { font-size: 80px; }
+    .hero-name { font-size: 48px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-row.row-2 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 220px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO: Asymmetric split -->
+<section id="hero">
+  <div class="hero-image-panel">
+    <img
+      src="https://static.wixstatic.com/media/0dfbc0_444212ec6ae342e9b7deaba356b320b1~mv2.jpg/v1/fill/w_1400,h_900,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_444212ec6ae342e9b7deaba356b320b1.jpg"
+      alt="Sweet Peach Photography"
+      loading="eager"
+      id="hero-img"
+    >
+  </div>
+
+  <div class="hero-text-panel">
+    <nav class="hero-nav">
+      <a href="#gallery">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <span class="hero-eyebrow" id="hero-eyebrow">Florida · Est. 2018</span>
+    <h1 class="hero-name" id="hero-name">
+      Sweet<br><em>Peach</em><br>Photography
+    </h1>
+    <p class="hero-tagline" id="hero-tagline">
+      Portraits that feel like<br>a warm afternoon
+    </p>
+    <div class="hero-divider" id="hero-divider"></div>
+    <p class="hero-location" id="hero-location">Newborn · Family · Portrait · Florida</p>
+    <div class="hero-cta" id="hero-cta">
+      <a href="#contact" class="btn-primary">Book a Session</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">8+</span>
+    <span class="stat-label">Years Experience</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Sessions Captured</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-number">100%</span>
+    <span class="stat-label">Client Satisfaction</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-number">FL</span>
+    <span class="stat-label">Based in Florida</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-text">Newborn Photography · Family Portraits · Maternity Sessions · Milestone Memories · Florida ·</span>
+    <span class="marquee-text">Newborn Photography · Family Portraits · Maternity Sessions · Milestone Memories · Florida ·</span>
+    <span class="marquee-text">Newborn Photography · Family Portraits · Maternity Sessions · Milestone Memories · Florida ·</span>
+    <span class="marquee-text">Newborn Photography · Family Portraits · Maternity Sessions · Milestone Memories · Florida ·</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <div class="section-title-wrap">
+      <span class="section-eyebrow">Portfolio</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+  </div>
+
+  <div class="gallery-editorial">
+    <!-- Row 1: large left, small right -->
+    <div class="gallery-row row-1">
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_772b20a7dce3469fa0acfef2b953cee0~mv2.jpg/v1/fill/w_800,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_772b20a7dce3469fa0acfef2b953cee0.jpg"
+          alt="Family portrait session"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Family Portraits</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_1ed0889c338f42f1a4992ddd214c96f1~mv2.jpg/v1/fill/w_800,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_1ed0889c338f42f1a4992ddd214c96f1.jpg"
+          alt="Newborn photography"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Newborn Sessions</span></div>
+      </div>
+    </div>
+
+    <!-- Row 2: three equal -->
+    <div class="gallery-row row-2">
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_1773357319294b12904c1f4ce5fc8e47~mv2.jpg/v1/fill/w_800,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_1773357319294b12904c1f4ce5fc8e47.jpg"
+          alt="Portrait session"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Portraits</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_89498e72f17e40f4be3ccfacf371f132~mv2_d_5184_2571_s_4_2.jpg/v1/fill/w_800,h_533,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_89498e72f17e40f4be3ccfacf371f132.jpg"
+          alt="Outdoor photography"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Outdoor Sessions</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_07e0e88e14304049b54adbfcbec6e7d6~mv2.jpg/v1/fill/w_800,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_07e0e88e14304049b54adbfcbec6e7d6.jpg"
+          alt="Family photography"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Families</span></div>
+      </div>
+    </div>
+
+    <!-- Row 3: small left, large right -->
+    <div class="gallery-row row-3">
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_44c5274461e64352b8df0ebbc2308ebe~mv2.jpg/v1/fill/w_800,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_44c5274461e64352b8df0ebbc2308ebe.jpg"
+          alt="Candid moments"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Candid Moments</span></div>
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://static.wixstatic.com/media/0dfbc0_bd160dc7d6904823aa3c635d61121672~mv2.jpg/v1/fill/w_800,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_bd160dc7d6904823aa3c635d61121672.jpg"
+          alt="Session moments"
+          loading="lazy"
+        >
+        <div class="gallery-item-caption"><span>Moments</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED / PULL QUOTE -->
+<section id="featured">
+  <div class="featured-image">
+    <img
+      src="https://static.wixstatic.com/media/0dfbc0_15166cd9fb9d4ddaa662bfd61f0c56b3~mv2_d_4898_3265_s_4_2.jpg/v1/fill/w_600,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_15166cd9fb9d4ddaa662bfd61f0c56b3.jpg"
+      alt="Photography session"
+      loading="lazy"
+    >
+    <div class="featured-image-accent"></div>
+  </div>
+  <div class="featured-text">
+    <div class="featured-line"></div>
+    <blockquote class="featured-quote">
+      "Every family has a story worth <em>remembering.</em>"
+    </blockquote>
+    <p class="featured-body">
+      Specializing in newborn, family, and portrait photography across Florida, Sweet Peach Photography brings warmth, patience, and an eye for authentic connection to every session. Whether it's a brand-new baby or a growing family, the goal is always the same — photographs you'll treasure for a lifetime.
+    </p>
+    <a href="#contact" class="btn-primary">View Availability</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <span class="section-eyebrow">02 · About</span>
+    <h2 class="section-title" style="margin-bottom: 32px;">Behind the<br>Lens</h2>
+    <p class="about-body">
+      Gioia Doukas is a Florida-based photographer with a gift for capturing the fleeting, irreplaceable moments of early life. Working primarily with newborns, young families, and milestone portraits, her approach is unhurried and warm — creating space for genuine emotion rather than posed perfection.
+    </p>
+    <p class="about-detail">
+      Based throughout Florida and available for travel, Gioia brings her signature style — soft natural light, warm tones, and a genuine connection with her subjects — to every session. Her work reflects a belief that the best photographs feel like memory, not performance.
+    </p>
+    <a href="mailto:Gioia.doukas@gmail.com" class="btn-primary">Say Hello</a>
+  </div>
+  <div class="about-image-wrap">
+    <img
+      src="https://static.wixstatic.com/media/0dfbc0_c51271e2192d460994fc7614ab09e0c8~mv2.jpg/v1/fill/w_600,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/0dfbc0_c51271e2192d460994fc7614ab09e0c8.jpg"
+      alt="Gioia Doukas — Sweet Peach Photography"
+      loading="lazy"
+    >
+    <div class="about-image-label">Florida · Available Statewide</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-section">
+  <span class="cta-eyebrow">Ready to Begin?</span>
+  <h2 class="cta-heading">Let's Create<br>Something Beautiful</h2>
+  <p class="cta-sub">Sessions available across Florida · Newborn · Family · Portraits</p>
+  <a href="mailto:Gioia.doukas@gmail.com" class="cta-btn">Book Your Session</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <span class="section-eyebrow">03 · Inquiries</span>
+    <h2 class="contact-heading">Get<br>In Touch</h2>
+    <p class="contact-body">
+      Every session starts with a conversation. Reach out to discuss your vision, ask about availability, or simply say hello.
+    </p>
+    <span class="contact-info-label">Email</span>
+    <a href="mailto:Gioia.doukas@gmail.com" class="contact-link">Gioia.doukas@gmail.com</a>
+    <span class="contact-info-label">Phone</span>
+    <a href="tel:2035126603" class="contact-link">203-512-6603</a>
+    <div class="contact-social">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="contact-form-note">
+      <p>"I love working with families who want something real — not perfect, just real. If that sounds like you, I'd love to hear from you."</p>
+      <span class="note-small">— Gioia Doukas, Sweet Peach Photography</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Sweet Peach Photography</div>
+  <div class="footer-copy">© 2026 · Florida</div>
+  <div class="footer-credit">Design concept by Lucas Blatt</div>
+</footer>
+
+<script>
+  // Hero entrance animations
+  window.addEventListener('load', function() {
+    // Hero image zoom
+    const heroImg = document.getElementById('hero-img');
+    if (heroImg) {
+      setTimeout(() => heroImg.classList.add('loaded'), 100);
+    }
+
+    // Hero text stagger
+    const heroEls = [
+      { el: document.getElementById('hero-eyebrow'), delay: 200 },
+      { el: document.getElementById('hero-name'), delay: 400 },
+      { el: document.getElementById('hero-tagline'), delay: 700 },
+      { el: document.getElementById('hero-divider'), delay: 900 },
+      { el: document.getElementById('hero-location'), delay: 1000 },
+      { el: document.getElementById('hero-cta'), delay: 1100 },
+    ];
+
+    heroEls.forEach(({ el, delay }) => {
+      if (el) {
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0) scaleX(1)';
+        }, delay);
+      }
+    });
+
+    // Hero name clip-path reveal
+    const heroName = document.getElementById('hero-name');
+    if (heroName) {
+      setTimeout(() => heroName.classList.add('is-visible'), 500);
+    }
+  });
+
+  // Scroll-based IntersectionObserver animations
+  const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+  const imageOptions = { threshold: 0.05 };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        imageObserver.unobserve(entry.target);
+      }
+    });
+  }, imageOptions);
+
+  // Observe section titles
+  document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+  // Observe text blocks
+  document.querySelectorAll('.about-text, .about-image-wrap, .featured-text, .contact-left, .contact-right').forEach(el => observer.observe(el));
+
+  // Observe gallery items (image reveal)
+  document.querySelectorAll('.gallery-item').forEach(el => imageObserver.observe(el));
+
+  // Observe featured image
+  document.querySelectorAll('.featured-image').forEach(el => observer.observe(el));
+
+  // Observe stats
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 120}ms`;
+    observer.observe(el);
+  });
+
+  // CTA section observer
+  const ctaSection = document.getElementById('cta-section');
+  if (ctaSection) {
+    const ctaObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('cta-section-visible');
+          ctaObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    ctaObserver.observe(ctaSection);
+  }
+
+  // Hero parallax (subtle)
+  const heroImagePanel = document.querySelector('.hero-image-panel');
+  if (heroImagePanel) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      if (scrollY < window.innerHeight) {
+        const heroImgEl = heroImagePanel.querySelector('img');
+        if (heroImgEl) {
+          heroImgEl.style.transform = `scale(1.0) translateY(${scrollY * 0.2}px)`;
+        }
+      }
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
