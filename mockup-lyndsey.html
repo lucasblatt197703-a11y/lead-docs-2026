@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lyndsey Lou Photography — Baldwin, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0D0D0D;
+    --warm-bg: #111111;
+    --text: #F0EDE8;
+    --muted: #8A8580;
+    --accent: #C8A96A;
+    --dark: #080808;
+    --mid: #1A1A1A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.85) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--accent); }
+
+  /* ---- HERO — Full-bleed cinematic, text pinned bottom-left ---- */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b1fe9a_eca4067f18354f1a85e9d2c6b68610d5~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.08);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,13,13,0.92) 0%,
+      rgba(13,13,13,0.4) 50%,
+      rgba(13,13,13,0.1) 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 64px;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(68px, 8vw, 108px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    display: block;
+    overflow: hidden;
+  }
+
+  .hero-name span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hero-name span.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-tagline {
+    margin-top: 24px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: rgba(240,237,232,0.6);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+  }
+
+  .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-cta {
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.7s, transform 0.7s ease 0.7s;
+  }
+
+  .hero-cta.visible { opacity: 1; transform: translateY(0); }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 40px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    color: var(--dark);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: var(--text);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(0.7); }
+  }
+
+  /* ---- MARQUEE ---- */
+  .marquee-strip {
+    overflow: hidden;
+    background: var(--accent);
+    padding: 14px 0;
+  }
+
+  .marquee-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-inner span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dark);
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---- STATS ---- */
+  #stats {
+    padding: 100px 64px;
+    background: var(--mid);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .stat-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .stat-label {
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ---- SERVICES ---- */
+  #services {
+    padding: 120px 64px;
+    background: var(--bg);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: transform, opacity;
+  }
+
+  .section-label.visible { opacity: 1; transform: translateY(0); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    max-width: 700px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  .services-grid {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+
+  .service-card.visible { clip-path: inset(0% 0 0 0); }
+  .service-card:nth-child(2) { transition-delay: 0.12s; }
+  .service-card:nth-child(3) { transition-delay: 0.24s; }
+  .service-card:nth-child(4) { transition-delay: 0.1s; }
+  .service-card:nth-child(5) { transition-delay: 0.22s; }
+  .service-card:nth-child(6) { transition-delay: 0.34s; }
+
+  .service-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transition: transform 0.7s ease;
+    loading: lazy;
+  }
+
+  .service-card:hover img { transform: scale(1.0); }
+
+  .service-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.88) 0%, transparent 55%);
+  }
+
+  .service-card-text {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    right: 28px;
+  }
+
+  .service-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  .service-card-sub {
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ---- GALLERY ---- */
+  #gallery {
+    padding: 120px 0;
+    background: var(--dark);
+  }
+
+  .gallery-header {
+    padding: 0 64px;
+    margin-bottom: 64px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .gallery-header-left {}
+
+  .gallery-header-right {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 280px;
+    line-height: 1.7;
+  }
+
+  /* Editorial scroll gallery — alternating large/small */
+  .gallery-editorial {
+    padding: 0 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: transform, opacity;
+  }
+
+  .gallery-item.visible { opacity: 1; transform: translateY(0); }
+  .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.15s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.25s; }
+  .gallery-item:nth-child(6) { transition-delay: 0.3s; }
+
+  .gallery-item.tall { grid-row: span 2; }
+  .gallery-item.wide { grid-column: span 2; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 300px;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  /* ---- ABOUT ---- */
+  #about {
+    padding: 140px 64px;
+    background: var(--mid);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: transform, opacity;
+  }
+
+  .about-image-wrap.visible { opacity: 1; transform: translateX(0); }
+
+  .about-image-wrap img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  .about-accent-line {
+    position: absolute;
+    bottom: -24px;
+    left: -24px;
+    width: 60%;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .about-content {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    will-change: transform, opacity;
+  }
+
+  .about-content.visible { opacity: 1; transform: translateX(0); }
+
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--text);
+    margin-bottom: 40px;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+  }
+
+  .about-bio {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(240,237,232,0.65);
+  }
+
+  .about-detail {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .detail-item {}
+
+  .detail-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .detail-value {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* ---- TESTIMONIALS ---- */
+  #testimonials {
+    padding: 120px 64px;
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: transform, opacity;
+  }
+
+  .testimonial-text.visible { opacity: 1; transform: translateY(0); }
+
+  .testimonial-source {
+    margin-top: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    will-change: transform, opacity;
+  }
+
+  .testimonial-source.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---- CTA ---- */
+  #cta {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b1fe9a_9540df1f5dd7483e87d147b021ed7d50~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.08);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8,8,8,0.75);
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px 40px;
+  }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+
+  .cta-title.visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-size: 15px;
+    color: rgba(240,237,232,0.6);
+    margin-bottom: 48px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+
+  .cta-sub.visible { opacity: 1; }
+
+  /* ---- CONTACT ---- */
+  #contact {
+    padding: 120px 64px;
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left {}
+
+  .contact-info {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-line {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  .contact-line.visible { opacity: 1; transform: translateY(0); }
+  .contact-line:nth-child(2) { transition-delay: 0.1s; }
+  .contact-line:nth-child(3) { transition-delay: 0.2s; }
+  .contact-line:nth-child(4) { transition-delay: 0.3s; }
+
+  .contact-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .contact-value {
+    font-size: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-value:hover { color: var(--accent); }
+
+  .contact-right {
+    padding-top: 20px;
+  }
+
+  .booking-note {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(240,237,232,0.55);
+    margin-top: 48px;
+  }
+
+  .social-links {
+    margin-top: 56px;
+    display: flex;
+    gap: 32px;
+  }
+
+  .social-links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .social-links a:hover { color: var(--accent); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 32px 64px;
+    background: var(--bg);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    color: rgba(240,237,232,0.4);
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(240,237,232,0.2);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(240,237,232,0.3);
+  }
+
+  /* ---- SECTION NUMBER DECORATORS ---- */
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    position: absolute;
+    top: 40px;
+    right: 64px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---- MOBILE ---- */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; }
+    .hero-content { left: 24px; bottom: 60px; }
+    .hero-scroll-hint { display: none; }
+    #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; gap: 32px; }
+    .stat-number { font-size: 56px; }
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    #gallery { padding: 80px 0; }
+    .gallery-header { padding: 0 24px; flex-direction: column; gap: 24px; align-items: flex-start; }
+    .gallery-editorial { padding: 0 24px; grid-template-columns: 1fr; }
+    .gallery-item.tall { grid-row: auto; }
+    #about { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    #testimonials { padding: 80px 24px; }
+    #cta { min-height: 360px; }
+    #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+    .section-number { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 52px; }
+    .services-grid { grid-template-columns: 1fr; }
+    #stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Lyndsey Lou Photography</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — full-bleed, text bottom-left -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="heroEyebrow">Baldwin · Jacksonville, FL</div>
+    <div class="hero-name">
+      <span id="heroLine1">Lyndsey Lou</span>
+    </div>
+    <div class="hero-name" style="margin-top:4px">
+      <span id="heroLine2" style="transition-delay:0.18s; font-style:italic; color: var(--accent);">Photography</span>
+    </div>
+    <div class="hero-tagline" id="heroTagline">On-site sports · dance · events · Jacksonville area</div>
+    <div class="hero-cta" id="heroCta">
+      <a href="#contact" class="btn-primary">Book a Session</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>On-Site Photography</span>
+    <span>·</span>
+    <span>Sports &amp; Leagues</span>
+    <span>·</span>
+    <span>Dance Recitals</span>
+    <span>·</span>
+    <span>Team &amp; Individual Portraits</span>
+    <span>·</span>
+    <span>Vendor Events</span>
+    <span>·</span>
+    <span>Baldwin · Jacksonville · FL</span>
+    <span>·</span>
+    <span>On-Site Photography</span>
+    <span>·</span>
+    <span>Sports &amp; Leagues</span>
+    <span>·</span>
+    <span>Dance Recitals</span>
+    <span>·</span>
+    <span>Team &amp; Individual Portraits</span>
+    <span>·</span>
+    <span>Vendor Events</span>
+    <span>·</span>
+    <span>Baldwin · Jacksonville · FL</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item" data-delay="0">
+    <div class="stat-number">7+</div>
+    <div class="stat-label">Years Active</div>
+  </div>
+  <div class="stat-item" data-delay="100">
+    <div class="stat-number">50+</div>
+    <div class="stat-label">Teams Shot</div>
+  </div>
+  <div class="stat-item" data-delay="200">
+    <div class="stat-number">6</div>
+    <div class="stat-label">Session Types</div>
+  </div>
+  <div class="stat-item" data-delay="300">
+    <div class="stat-number">904</div>
+    <div class="stat-label">Area Code · JAX</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="position:relative;">
+  <span class="section-number">01</span>
+  <div class="section-label">What I Shoot</div>
+  <div class="section-title">Every sport.<br>Every milestone.<br>Every frame.</div>
+  <div class="services-grid" style="margin-top:80px;">
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/b1fe9a_703ed5bf854a472e9c2253787f52b664~mv2.jpg" alt="Dance Photography" loading="lazy">
+      <div class="service-card-overlay"></div>
+      <div class="service-card-text">
+        <div class="service-card-title">Dance</div>
+        <div class="service-card-sub">Recitals &amp; Performances</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/b1fe9a_eca4067f18354f1a85e9d2c6b68610d5~mv2.jpg" alt="Sports Teams" loading="lazy">
+      <div class="service-card-overlay"></div>
+      <div class="service-card-text">
+        <div class="service-card-title">Team Sports</div>
+        <div class="service-card-sub">Leagues &amp; Organizations</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/b1fe9a_05818d5bd41e4c09baebf149b912a46c~mv2.jpg" alt="Individual Sessions" loading="lazy">
+      <div class="service-card-overlay"></div>
+      <div class="service-card-text">
+        <div class="service-card-title">Individual</div>
+        <div class="service-card-sub">Portrait Sessions</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/b1fe9a_6d3490b328644b49a73e99a92c4c92a6~mv2.jpg" alt="Fire Sessions" loading="lazy">
+      <div class="service-card-overlay"></div>
+      <div class="service-card-text">
+        <div class="service-card-title">Fire Sessions</div>
+        <div class="service-card-sub">Signature Specialty</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/b1fe9a_fe0b46ef675c4260884e919c4bafb8b8~mv2.jpg" alt="Organizations" loading="lazy">
+      <div class="service-card-overlay"></div>
+      <div class="service-card-text">
+        <div class="service-card-title">Organizations</div>
+        <div class="service-card-sub">Events &amp; Groups</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://static.wixstatic.com/media/b1fe9a_d159062e678c44df8c23335b02a18acc~mv2.jpg" alt="Team Photos" loading="lazy">
+      <div class="service-card-overlay"></div>
+      <div class="service-card-text">
+        <div class="service-card-title">Team Portraits</div>
+        <div class="service-card-sub">Group &amp; Team Packages</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="gallery-header-left">
+      <div class="section-label">Portfolio</div>
+      <div class="section-title">Selected Work</div>
+    </div>
+    <div class="gallery-header-right">
+      On-site photography for sports leagues, dance studios, and events across the Jacksonville, FL area. Every shoot is customized for your group.
+    </div>
+  </div>
+  <div class="gallery-editorial">
+    <div class="gallery-item tall">
+      <img src="https://static.wixstatic.com/media/b1fe9a_9540df1f5dd7483e87d147b021ed7d50~mv2.jpg" alt="Sports Photography" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/f2ad06b5acb34b2d90defab482289d22.jpg" alt="Event Photography" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/30d9cca4ab2c4735a696d1f88a45a719.jpg" alt="Dance Photography" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/b1fe9a_bdf56405c8e541e19d678acfd7fbebee~mv2.jpg" alt="Leagues Photography" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/2e75308d100749cfb79b4250f09ac579.jpg" alt="Little League" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="position:relative;">
+  <span class="section-number">03</span>
+  <div class="about-image-wrap">
+    <img src="https://static.wixstatic.com/media/b1fe9a_5ed79f0600414bf29eb187605bb0c2c5~mv2.jpg" alt="Lyndsey Lou Photography" loading="lazy">
+    <div class="about-accent-line"></div>
+  </div>
+  <div class="about-content">
+    <div class="section-label">The Photographer</div>
+    <div class="about-pull-quote">"Capturing the moments that matter — from the final out to the closing curtain."</div>
+    <p class="about-bio">
+      Lyndsey Lou Photography specializes in on-site photography for sports leagues, dance recitals, and community events across the Jacksonville, Florida area. Based in Baldwin, FL, Lyndsey brings the studio experience directly to your field, gym, or stage — so no one misses a shot.
+    </p>
+    <p class="about-bio" style="margin-top:16px;">
+      From Elm Street Little League to Hilliard Parks &amp; Recreation, Lyndsey has built long-term relationships with local organizations that trust her to document their seasons, celebrations, and milestone moments.
+    </p>
+    <div class="about-detail">
+      <div class="detail-item">
+        <div class="detail-label">Based In</div>
+        <div class="detail-value">Baldwin, FL</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Service Area</div>
+        <div class="detail-value">Jacksonville Metro</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Phone</div>
+        <div class="detail-value"><a href="tel:9045210502" style="color:inherit;text-decoration:none;">(904) 521-0502</a></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Booking</div>
+        <div class="detail-value">Available Now</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label">From Clients</div>
+  <div class="testimonial-text">
+    "She showed up on time, nailed every shot, and the photos were delivered faster than I expected. Our whole league loves them."
+  </div>
+  <div class="testimonial-source">— League Coordinator · Baldwin, FL</div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg" id="ctaBg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <div class="section-label" style="color: var(--accent);">Ready?</div>
+    <div class="cta-title">Book your session<br>this season.</div>
+    <div class="cta-sub">Sports · Dance · Events · Organizations · Individuals</div>
+    <a href="mailto:LyndseyLouPhotography@Gmail.com" class="btn-primary">Get In Touch</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="position:relative;">
+  <span class="section-number">05</span>
+  <div class="contact-left">
+    <div class="section-label">Contact</div>
+    <div class="section-title">Let's work<br>together.</div>
+    <div class="contact-info">
+      <div class="contact-line">
+        <span class="contact-label">Email</span>
+        <a href="mailto:LyndseyLouPhotography@Gmail.com" class="contact-value">LyndseyLouPhotography<br>@Gmail.com</a>
+      </div>
+      <div class="contact-line">
+        <span class="contact-label">Phone</span>
+        <a href="tel:9045210502" class="contact-value">(904) 521-0502</a>
+      </div>
+      <div class="contact-line">
+        <span class="contact-label">Location</span>
+        <span class="contact-value">Baldwin, FL · Jacksonville Area</span>
+      </div>
+    </div>
+    <div class="social-links">
+      <a href="https://facebook.com/LyndseyLouPhotography" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://instagram.com/LyndseyLouPhoto" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="section-label" style="margin-top: 60px;">How it works</div>
+    <p class="about-bio" style="margin-top: 24px;">
+      Reach out with your event date and type. Lyndsey will confirm availability, discuss your package options, and show up ready to shoot — on-site, on time, every time.
+    </p>
+    <p class="booking-note">
+      Serving Baldwin, Jacksonville, Hilliard, and surrounding Northeast Florida communities. Available for league packages, one-time events, and ongoing seasonal contracts.
+    </p>
+    <div style="margin-top: 56px;">
+      <a href="mailto:LyndseyLouPhotography@Gmail.com" class="btn-primary">Book Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Lyndsey Lou Photography</div>
+  <div class="footer-copy">© 2026 · Baldwin, FL</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+  // Hero entrance animations
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroEyebrow').classList.add('visible');
+      document.getElementById('heroLine1').classList.add('visible');
+    }, 100);
+    setTimeout(() => {
+      document.getElementById('heroLine2').classList.add('visible');
+    }, 280);
+    setTimeout(() => {
+      document.getElementById('heroTagline').classList.add('visible');
+    }, 500);
+    setTimeout(() => {
+      document.getElementById('heroCta').classList.add('visible');
+    }, 700);
+  });
+
+  // Parallax hero
+  const heroBg = document.getElementById('heroBg');
+  const ctaBg = document.getElementById('ctaBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (heroBg) heroBg.style.transform = `scale(1.08) translateY(${scrollY * 0.25}px)`;
+  }, { passive: true });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+        setTimeout(() => el.classList.add('visible'), delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const observerEarly = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observerEarly.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Observe all animated elements
+  document.querySelectorAll('.stat-item, .gallery-item, .contact-line').forEach(el => observer.observe(el));
+  document.querySelectorAll('.section-label, .section-title, .service-card, .about-image-wrap, .about-content, .testimonial-text, .testimonial-source, .cta-title, .cta-sub').forEach(el => observerEarly.observe(el));
+</script>
+</body>
+</html>
