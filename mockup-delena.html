@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delena Brandon — Portrait Photography · Tampa, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5EFE6;
+      --warm-white: #FAF6F0;
+      --dark: #1A1612;
+      --charcoal: #2E2821;
+      --accent: #B87B5E;
+      --muted: #8A7968;
+      --light-border: rgba(26,22,18,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+      background: transparent;
+      transition: background 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(250,246,240,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--light-border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-logo { color: var(--dark); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255,255,255,0.85);
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ===== HERO — Full-bleed with text pinned bottom-left ===== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/7170eb_62b9073dcf4f4c5cab927bfe067f8f58~mv2_d_4000_6000_s_4_2.jpg');
+      background-size: cover;
+      background-position: center top;
+      will-change: transform;
+      transform: scale(1.05);
+      transition: transform 12s ease;
+    }
+    .hero-bg.loaded { transform: scale(1.0); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(20,16,12,0.88) 0%,
+        rgba(20,16,12,0.28) 45%,
+        rgba(20,16,12,0.05) 100%
+      );
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 64px;
+      left: 64px;
+      right: 64px;
+    }
+    .hero-eyebrow {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 9vw, 118px);
+      font-weight: 300;
+      line-height: 0.92;
+      color: #FFFFFF;
+      letter-spacing: 0.06em;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+    }
+    .hero-name span {
+      display: block;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+    }
+    .hero-tagline {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.6);
+      max-width: 400px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.65s, transform 0.8s ease 0.65s;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 64px;
+      right: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.9s;
+    }
+    .hero-scroll span {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 64px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4));
+      animation: scrollLine 2s ease infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+    .hero-content.visible .hero-eyebrow,
+    .hero-content.visible .hero-name,
+    .hero-content.visible .hero-tagline { opacity: 1; transform: translateY(0); }
+    .hero-scroll.visible { opacity: 1; }
+
+    /* ===== MARQUEE STRIP ===== */
+    .marquee-strip {
+      background: var(--dark);
+      padding: 18px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 36s linear infinite;
+    }
+    .marquee-text {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      display: inline-block;
+      padding-right: 60px;
+    }
+    .marquee-text .dot { color: var(--accent); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      padding: 100px 80px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-bottom: 1px solid var(--light-border);
+    }
+    .stat-item {
+      padding: 40px 32px;
+      border-right: 1px solid var(--light-border);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(1) { transition-delay: 0ms; }
+    .stat-item:nth-child(2) { transition-delay: 100ms; }
+    .stat-item:nth-child(3) { transition-delay: 200ms; }
+    .stat-item:nth-child(4) { transition-delay: 300ms; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: rgba(26,22,18,0.06);
+      line-height: 1;
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--light-border);
+      margin-bottom: 6px;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-section {
+      padding: 120px 80px;
+      background: var(--warm-white);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item.visible { clip-path: inset(0 0 0 0); }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      transition: transform 0.7s ease;
+      aspect-ratio: 2/3;
+      will-change: transform;
+    }
+    .gallery-item.tall img { aspect-ratio: unset; height: 100%; }
+    .gallery-item.wide img { aspect-ratio: 16/9; }
+    .gallery-item:hover img { transform: scale(1.0); }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(20,16,12,0.65), transparent);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover .gallery-caption { transform: translateY(0); }
+    .gallery-caption span {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ===== ABOUT ===== */
+    .about-section {
+      padding: 140px 80px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .about-image-wrap.visible { opacity: 1; transform: translateX(0); }
+    .about-image-wrap img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-accent-box {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 140px;
+      height: 140px;
+      border: 1px solid var(--accent);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .about-text {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+    .about-text.visible { opacity: 1; transform: translateX(0); }
+    .about-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .about-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: 0.03em;
+      color: var(--dark);
+      margin-bottom: 28px;
+    }
+    .about-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.5;
+      padding-left: 24px;
+      border-left: 2px solid var(--accent);
+      margin-bottom: 40px;
+    }
+    .about-services {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .service-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dark);
+      padding: 8px 18px;
+      border: 1px solid var(--light-border);
+    }
+
+    /* ===== FEATURED IMAGE ===== */
+    .featured-section {
+      position: relative;
+      height: 80vh;
+      overflow: hidden;
+    }
+    .featured-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/7170eb_e7f1a553e98141c5888dba4e419a09af~mv2_d_6000_4000_s_4_2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .featured-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(20,16,12,0.42);
+    }
+    .featured-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .featured-text.visible { opacity: 1; }
+    .featured-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 300;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.35;
+      max-width: 800px;
+    }
+    .featured-attr {
+      margin-top: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      padding: 140px 80px;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .cta-left {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .cta-left.visible { opacity: 1; transform: translateY(0); }
+    .cta-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 0.95;
+      color: #fff;
+      letter-spacing: 0.04em;
+      margin-bottom: 32px;
+    }
+    .cta-headline em {
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+    }
+    .cta-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.45);
+      max-width: 480px;
+    }
+    .cta-right {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .cta-right.visible { opacity: 1; transform: translateY(0); }
+    .cta-price-box {
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 48px;
+      margin-bottom: 32px;
+    }
+    .cta-price-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .cta-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .cta-price-sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.6;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 44px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.3s ease;
+    }
+    .cta-btn:hover { background: #A86D50; }
+    .cta-note {
+      margin-top: 16px;
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-section {
+      padding: 120px 80px;
+      background: var(--warm-white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      border-top: 1px solid var(--light-border);
+    }
+    .contact-left {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .contact-left.visible { opacity: 1; transform: translateY(0); }
+    .contact-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 28px;
+    }
+    .contact-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .contact-link {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--dark);
+      text-decoration: none;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--light-border);
+      margin-bottom: 20px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-right {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+    .contact-right.visible { opacity: 1; transform: translateY(0); }
+    .contact-gallery-mini {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .contact-gallery-mini img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+    .contact-gallery-mini img:first-child {
+      grid-column: span 2;
+      aspect-ratio: 16/7;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      padding: 48px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.55);
+    }
+    .footer-copy {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.25);
+    }
+    .footer-socials {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-socials a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-socials a:hover { color: var(--accent); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 20px 28px; }
+      .nav-logo { font-size: 14px; }
+      .nav-links { gap: 20px; }
+      .hero-content { bottom: 40px; left: 32px; right: 32px; }
+      .hero-scroll { display: none; }
+      .stats { grid-template-columns: 1fr 1fr; padding: 60px 32px; }
+      .gallery-section, .about-section, .cta-section, .contact-section { padding: 80px 32px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .gallery-item.wide { grid-column: span 2; }
+      .gallery-item.tall { grid-row: span 1; }
+      .about-section { grid-template-columns: 1fr; gap: 48px; }
+      .about-image-wrap img { height: 400px; }
+      .cta-section { grid-template-columns: 1fr; gap: 48px; }
+      .contact-section { grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 36px 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 52px; }
+      .stats { grid-template-columns: 1fr 1fr; padding: 48px 24px; }
+      .stat-number { font-size: 56px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="mainNav">
+    <a href="#" class="nav-logo">Delena Faith</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#book">Sessions</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content" id="heroContent">
+      <p class="hero-eyebrow">Tampa · Brandon, Florida</p>
+      <h1 class="hero-name">
+        Delena<br><span>Brandon</span>
+      </h1>
+      <p class="hero-tagline">Portrait photographer documenting family, life, and the people who matter most.</p>
+    </div>
+    <div class="hero-scroll" id="heroScroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="marquee-text">Family Portraits <span class="dot">·</span> Senior Pictures <span class="dot">·</span> Newborn Sessions <span class="dot">·</span> Maternity <span class="dot">·</span> Anniversary <span class="dot">·</span> Tampa &amp; Brandon FL <span class="dot">·</span> Available for Booking <span class="dot">·</span></span>
+      <span class="marquee-text">Family Portraits <span class="dot">·</span> Senior Pictures <span class="dot">·</span> Newborn Sessions <span class="dot">·</span> Maternity <span class="dot">·</span> Anniversary <span class="dot">·</span> Tampa &amp; Brandon FL <span class="dot">·</span> Available for Booking <span class="dot">·</span></span>
+      <span class="marquee-text">Family Portraits <span class="dot">·</span> Senior Pictures <span class="dot">·</span> Newborn Sessions <span class="dot">·</span> Maternity <span class="dot">·</span> Anniversary <span class="dot">·</span> Tampa &amp; Brandon FL <span class="dot">·</span> Available for Booking <span class="dot">·</span></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" id="statsSection">
+    <div class="stat-item">
+      <div class="stat-number">8+</div>
+      <div class="stat-label">Years Behind the Lens</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">40+</div>
+      <div class="stat-label">Edited Images Per Session</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2h</div>
+      <div class="stat-label">Max Session Length</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5+</div>
+      <div class="stat-label">Portrait Specialties</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title" data-reveal>Portfolio</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item tall" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_4b9e952b2bcf404f99150cbfbe3ca831~mv2_d_4000_6000_s_4_2.jpg" alt="Portrait session" loading="lazy">
+        <div class="gallery-caption"><span>Portrait Session</span></div>
+      </div>
+      <div class="gallery-item" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_633686327fef4142adaef15e5d607de9~mv2_d_4000_6000_s_4_2.jpg" alt="Senior portraits" loading="lazy">
+        <div class="gallery-caption"><span>Senior Portraits</span></div>
+      </div>
+      <div class="gallery-item" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_f569b7278ca34c0a8739d95b4251d116~mv2_d_4000_6000_s_4_2.jpg" alt="Family photography" loading="lazy">
+        <div class="gallery-caption"><span>Family Session</span></div>
+      </div>
+      <div class="gallery-item wide" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_e7f1a553e98141c5888dba4e419a09af~mv2_d_6000_4000_s_4_2.jpg" alt="Outdoor portrait" loading="lazy">
+        <div class="gallery-caption"><span>Outdoor Portraits</span></div>
+      </div>
+      <div class="gallery-item" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_a8dabd15931944239d7951d9c550380b~mv2_d_4000_6000_s_4_2.jpg" alt="Portrait" loading="lazy">
+        <div class="gallery-caption"><span>Portrait</span></div>
+      </div>
+      <div class="gallery-item" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_aaca29f25aa442d38da7948948d1c2dc~mv2_d_4000_6000_s_4_2.jpg" alt="Lifestyle portraits" loading="lazy">
+        <div class="gallery-caption"><span>Lifestyle Session</span></div>
+      </div>
+      <div class="gallery-item" data-reveal-img>
+        <img src="https://static.wixstatic.com/media/7170eb_dce51f3af3974f9ca88ac40ee896c750~mv2_d_4000_6000_s_4_2.jpg" alt="Portrait photography" loading="lazy">
+        <div class="gallery-caption"><span>Portrait</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-image-wrap" data-reveal-left>
+      <img src="https://static.wixstatic.com/media/7170eb_36576941ef654ccc8fb876aa0e06b998~mv2.jpg" alt="Delena Brandon" loading="lazy">
+      <div class="about-accent-box"></div>
+    </div>
+    <div class="about-text" data-reveal-right>
+      <span class="about-eyebrow">02 &nbsp;/&nbsp; About</span>
+      <h2 class="about-headline">Capturing<br><em style="font-style:italic;">the moments<br>that matter</em></h2>
+      <p class="about-body">Delena Brandon has been photographing families, seniors, and milestones in Tampa and Brandon, Florida since 2017. Her approach is natural, unhurried, and focused on genuine connection — the kind that shows up in the final images.</p>
+      <blockquote class="about-pull">"Low cost, high quality. Available for family portraits, senior pictures, newborn, maternity, anniversary, and so much more."</blockquote>
+      <div class="about-services">
+        <span class="service-tag">Family Portraits</span>
+        <span class="service-tag">Senior Pictures</span>
+        <span class="service-tag">Newborn</span>
+        <span class="service-tag">Maternity</span>
+        <span class="service-tag">Anniversary</span>
+        <span class="service-tag">Tampa &amp; Brandon Area</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PARALLAX -->
+  <section class="featured-section" id="featured">
+    <div class="featured-bg"></div>
+    <div class="featured-overlay"></div>
+    <div class="featured-text" data-reveal-fade>
+      <p class="featured-quote">"Photography is a reality so subtle that it becomes more real than reality."</p>
+      <p class="featured-attr">— Alfred Stieglitz</p>
+    </div>
+  </section>
+
+  <!-- CTA / BOOK -->
+  <section class="cta-section" id="book">
+    <div class="cta-left" data-reveal-up>
+      <span class="cta-eyebrow">03 &nbsp;/&nbsp; Book a Session</span>
+      <h2 class="cta-headline">Your story,<br><em>beautifully</em><br>told.</h2>
+      <p class="cta-body">Premium portrait photography at a price that makes sense. Every session includes fully edited digital images delivered within one to two weeks. Serving Tampa, Brandon, and surrounding areas.</p>
+    </div>
+    <div class="cta-right" data-reveal-up>
+      <div class="cta-price-box">
+        <span class="cta-price-label">Session Pricing</span>
+        <div class="cta-price">$100</div>
+        <p class="cta-price-sub">Includes 40+ fully edited digital images<br>1–2 hour session · Tampa &amp; Brandon area<br>Family · Senior · Newborn · Maternity · Anniversary</p>
+      </div>
+      <a href="mailto:delenafaithphotography@gmail.com" class="cta-btn">Book Your Session</a>
+      <p class="cta-note">Message to discuss your photography needs</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left" data-reveal-up>
+      <span class="contact-label">04 &nbsp;/&nbsp; Inquiries</span>
+      <h2 class="contact-heading">Let's work<br>together.</h2>
+      <p class="contact-body">Ready to book your session or have questions? Get in touch and we'll find the right time and location for your portraits.</p>
+      <a href="https://www.instagram.com/delenafaithphotography/" class="contact-link" target="_blank">@delenafaithphotography</a>
+      <a href="https://www.facebook.com/delenafaithphotography/" class="contact-link" target="_blank">Facebook</a>
+      <a href="https://delenacook9.wixsite.com/mysite/contact" class="contact-link" target="_blank">Contact Form</a>
+    </div>
+    <div class="contact-right" data-reveal-up>
+      <div class="contact-gallery-mini">
+        <img src="https://static.wixstatic.com/media/7170eb_8345cf4fc9a24bebbf10b6939cd2aa03~mv2_d_6000_4000_s_4_2.jpg" alt="Photography sample" loading="lazy">
+        <img src="https://static.wixstatic.com/media/7170eb_df71c26726694574bef64d32301fb33f~mv2_d_4000_6000_s_4_2.jpg" alt="Portrait" loading="lazy">
+        <img src="https://static.wixstatic.com/media/7170eb_0630b4f94c744479a11903754ef497c2~mv2_d_4000_6000_s_4_2.jpg" alt="Portrait" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Delena Faith Photography</span>
+    <span class="footer-copy">&copy; 2026 &nbsp;·&nbsp; Tampa, FL &nbsp;·&nbsp; Design by Lucas Blatt</span>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/delenafaithphotography/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/delenafaithphotography/" target="_blank">Facebook</a>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll behavior
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Hero entrance
+    const heroBg = document.getElementById('heroBg');
+    const heroContent = document.getElementById('heroContent');
+    const heroScroll = document.getElementById('heroScroll');
+    setTimeout(() => {
+      heroBg.classList.add('loaded');
+      heroContent.classList.add('visible');
+      heroScroll.classList.add('visible');
+    }, 120);
+
+    // IntersectionObserver for all reveal elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    const imgObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 100);
+          imgObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    // Section titles
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+    // Gallery items
+    document.querySelectorAll('[data-reveal-img]').forEach(el => imgObserver.observe(el));
+    // Stats
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+    // About
+    document.querySelectorAll('[data-reveal-left], [data-reveal-right]').forEach(el => observer.observe(el));
+    // Fade
+    document.querySelectorAll('[data-reveal-fade]').forEach(el => observer.observe(el));
+    // Up
+    document.querySelectorAll('[data-reveal-up]').forEach(el => observer.observe(el));
+    // Contact
+    document.querySelectorAll('.contact-left, .contact-right').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
