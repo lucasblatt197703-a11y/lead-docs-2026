@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colleen Kydd Photography — Fort Myers, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4EDE4;
+    --text: #1C1512;
+    --accent: #C8764A;
+    --light: #E8DDD3;
+    --dark: #1C1512;
+    --mid: #7A6559;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+  }
+
+  nav ul a {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  nav ul a:hover { color: #fff; }
+
+  /* HERO — Full-bleed image, name stacked editorial, text pinned bottom-left */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/0df9e1_c27cfec895bd42a682ef7229a4bea0fc~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.65) 0%,
+      rgba(0,0,0,0.1) 50%,
+      transparent 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+    z-index: 10;
+  }
+
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(64px, 8vw, 110px);
+    line-height: 0.9;
+    color: #fff;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+  }
+
+  .hero-sub {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+
+  .hero-sub span {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hero-sub .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    writing-mode: vertical-lr;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(255,255,255,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: var(--accent);
+    animation: scrollDown 2s ease-in-out 1.5s infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .loaded .hero-tagline,
+  .loaded .hero-name,
+  .loaded .hero-sub {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--dark);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    padding: 0 40px;
+  }
+
+  .marquee-track span.dot {
+    color: var(--accent);
+    padding: 0 10px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* STATS */
+  #stats {
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--light);
+  }
+
+  .stat-item {
+    padding: 60px 40px;
+    background: var(--bg);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(60px, 6vw, 90px);
+    line-height: 1;
+    color: var(--text);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .stat-accent {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(60px, 6vw, 90px);
+    line-height: 1;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* GALLERY */
+  #gallery {
+    padding: 100px 0 0;
+    background: var(--bg);
+  }
+
+  .section-header {
+    padding: 0 60px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .section-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    color: var(--text);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .section-link {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--text);
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .section-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Editorial scroll gallery */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 6px;
+    padding: 0 6px 6px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    background: var(--light);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+
+  .gallery-item.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .gallery-item:nth-child(1) { grid-column: span 7; aspect-ratio: 4/3; }
+  .gallery-item:nth-child(2) { grid-column: span 5; aspect-ratio: 3/4; }
+  .gallery-item:nth-child(3) { grid-column: span 4; aspect-ratio: 3/4; }
+  .gallery-item:nth-child(4) { grid-column: span 4; aspect-ratio: 1/1; }
+  .gallery-item:nth-child(5) { grid-column: span 4; aspect-ratio: 4/3; }
+  .gallery-item:nth-child(6) { grid-column: span 5; aspect-ratio: 4/3; }
+  .gallery-item:nth-child(7) { grid-column: span 7; aspect-ratio: 16/9; }
+  .gallery-item:nth-child(8) { grid-column: span 6; aspect-ratio: 4/3; }
+  .gallery-item:nth-child(9) { grid-column: span 6; aspect-ratio: 4/3; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.05);
+    transition: transform 0.7s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.0);
+  }
+
+  /* FEATURED WORK — editorial pair */
+  #featured {
+    padding: 120px 60px;
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .featured-image {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .featured-image.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featured-image .img-label {
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    background: var(--accent);
+    padding: 8px 20px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .featured-text {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+
+  .featured-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .featured-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(24px, 2.5vw, 36px);
+    line-height: 1.4;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 40px;
+  }
+
+  .featured-quote span {
+    color: var(--accent);
+  }
+
+  .featured-body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 48px;
+  }
+
+  .featured-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--accent);
+    transition: color 0.3s;
+  }
+
+  .featured-cta:hover { color: var(--accent); }
+
+  /* ABOUT */
+  #about {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 100px;
+    align-items: center;
+    background: var(--bg);
+  }
+
+  .about-image-wrap {
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .about-image-wrap.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-image {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 6s ease;
+  }
+
+  .about-image-wrap:hover .about-image img {
+    transform: scale(1.0);
+  }
+
+  .about-number {
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 120px;
+    line-height: 1;
+    color: var(--light);
+    z-index: -1;
+    user-select: none;
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-text .section-eyebrow { margin-bottom: 16px; }
+
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 8px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+  }
+
+  .about-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .about-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 32px;
+  }
+
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--mid);
+    margin-bottom: 48px;
+  }
+
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid var(--light);
+    padding-top: 32px;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .detail-label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: var(--text);
+  }
+
+  /* SERVICES */
+  #services {
+    padding: 100px 60px;
+    background: var(--light);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 60px 48px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .service-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-card:nth-child(2) { transition-delay: 0.1s; }
+  .service-card:nth-child(3) { transition-delay: 0.2s; }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 48px;
+    color: var(--light);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .service-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--mid);
+    margin-bottom: 32px;
+  }
+
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .service-price-label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 4px;
+  }
+
+  /* CTA SECTION */
+  #cta {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    background: var(--dark);
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/0df9e1_e5eff96675424ee794ccc210dff83c00~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    padding: 100px 60px;
+    max-width: 800px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .cta-content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 5vw, 70px);
+    line-height: 1;
+    color: #fff;
+    margin-bottom: 32px;
+  }
+
+  .cta-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cta-body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 20px 48px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .cta-button:hover {
+    background: #b5623a;
+    transform: translateY(-2px);
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 120px 60px;
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .contact-left {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .contact-left.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--mid);
+    margin-top: 24px;
+    margin-bottom: 48px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-row .label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .contact-row a,
+  .contact-row span {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-row a:hover { color: var(--accent); }
+
+  .contact-right {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+  }
+
+  .contact-right.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .contact-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 6s ease;
+  }
+
+  .contact-right:hover .contact-image img {
+    transform: scale(1.0);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+
+    .hero-content { bottom: 60px; left: 24px; right: 24px; }
+    .hero-scroll { right: 24px; }
+
+    #stats {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 60px 24px;
+    }
+
+    .stat-item { padding: 40px 24px; }
+
+    #gallery { padding: 60px 0 0; }
+    .section-header { padding: 0 24px 40px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(n) { grid-column: span 1; aspect-ratio: 1/1; }
+    .gallery-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
+
+    #featured {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 48px;
+    }
+
+    #about {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 48px;
+    }
+
+    .about-number { display: none; }
+
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+
+    #cta .cta-content { padding: 80px 24px; }
+
+    #contact {
+      grid-template-columns: 1fr;
+      padding: 80px 24px;
+      gap: 48px;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+      padding: 32px 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 52px; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">Colleen Kydd</a>
+  <ul>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#services">Investment</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <p class="hero-tagline">Fort Myers &amp; Southwest Florida</p>
+    <h1 class="hero-name">Colleen<br>Kydd</h1>
+    <div class="hero-sub">
+      <span>Photography</span>
+      <div class="divider"></div>
+      <span>Family · Weddings · Sunsets</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Golden Hour</span><span class="dot">·</span>
+    <span>Weddings &amp; Elopements</span><span class="dot">·</span>
+    <span>Fort Myers, FL</span><span class="dot">·</span>
+    <span>Southwest Florida</span><span class="dot">·</span>
+    <span>Sunset Photography</span><span class="dot">·</span>
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Golden Hour</span><span class="dot">·</span>
+    <span>Weddings &amp; Elopements</span><span class="dot">·</span>
+    <span>Fort Myers, FL</span><span class="dot">·</span>
+    <span>Southwest Florida</span><span class="dot">·</span>
+    <span>Sunset Photography</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">5+</span>
+    <span class="stat-label">Years Capturing</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-accent">800+</span>
+    <span class="stat-label">Instagram Followers</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">24hr</span>
+    <span class="stat-label">Sneak Peak Delivery</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-accent">SWFL</span>
+    <span class="stat-label">Fort Myers &amp; Beyond</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <div>
+      <span class="section-eyebrow">Portfolio</span>
+      <h2 class="section-title">Recent Work</h2>
+    </div>
+    <a href="#contact" class="section-link">Book a Session →</a>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_65d5145357454698b808c03d5fbeb043~mv2.jpg" alt="Family beach session Fort Myers" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_2598c9636c774acb8c20e44dbe1d84a1~mv2.jpg" alt="Sunset portrait session" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_d76d96813c824ffd81e0e1d7e4858b15~mv2.jpg" alt="Golden hour lifestyle portrait" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_997701d0630142f58bde7602a61409a5~mv2.jpg" alt="Family lifestyle photo session" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_869eb7087bf54a20b0376da66faac5d4~mv2.jpg" alt="Candid family moment sunset" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_782c88b1792b46e78e21b5bd04fc049c~mv2.jpg" alt="Beach family photography" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_3830a859af46498285116f5df25c87c6~mv2.jpg" alt="Vibrant sunset family portrait" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_55999f6bf07f4e8fb2976ea7a60937c0~mv2.jpg" alt="SWFL portrait session" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/0df9e1_901e1f959bfd499eb98758b928be0760~mv2.jpg" alt="Couple at sunset Fort Myers" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED — QUOTE + IMAGE -->
+<section id="featured">
+  <div class="featured-image">
+    <img src="https://static.wixstatic.com/media/0df9e1_ba6dc5f26d984b2e93b7cfdcdcbb88e9~mv2.jpg" alt="Featured portrait session">
+    <div class="img-label">Golden Hour · SWFL</div>
+  </div>
+  <div class="featured-text">
+    <p class="featured-quote">"The beach at golden hour is my favorite place to capture your moments — the sun lighting the sky on fire over the ocean."</p>
+    <p class="featured-body">
+      Working the light the way only Southwest Florida delivers it — warm, vivid, sky-on-fire sunsets that turn a simple family session into something you'd frame and hang. Specializing in moments that feel natural, not posed.
+    </p>
+    <a href="#contact" class="featured-cta">Book Your Session →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <span class="about-number">02</span>
+    <div class="about-image">
+      <img src="https://static.wixstatic.com/media/0df9e1_406322f795c5446e8aeac8ed9f80c87d~mv2.jpg" alt="Colleen Kydd photographer" loading="lazy">
+    </div>
+  </div>
+  <div class="about-text">
+    <span class="section-eyebrow">About</span>
+    <h2 class="about-title">Colleen Kydd</h2>
+    <p class="about-subtitle">Fort Myers, FL · Southwest Florida</p>
+    <p class="about-body">
+      Colleen Kydd is a Fort Myers-based photographer specializing in family portraits, special events, and golden hour sunset sessions throughout Southwest Florida. Her work prioritizes authenticity — putting people at ease so the real moments shine through. Drawn to the rich, vibrant colors of the SWFL coast, her photography carries a distinctive warmth: bright yet moody, emotional and dreamy.
+    </p>
+    <div class="about-details">
+      <div class="detail-row">
+        <span class="detail-label">Based in</span>
+        <span class="detail-value">Fort Myers, FL</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Specialty</span>
+        <span class="detail-value">Family · Sunsets · Weddings</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Contact</span>
+        <span class="detail-value">440-666-9235</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <div>
+      <span class="section-eyebrow">Investment</span>
+      <h2 class="section-title">Sessions &amp; Packages</h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 class="service-name">Standard Session</h3>
+      <p class="service-desc">Up to 60 minutes at the location of your choice. 40 professionally edited digital images delivered within two weeks, with a sneak peek within 48 hours. Includes wardrobe/styling assistance.</p>
+      <div class="service-price">$300</div>
+      <div class="service-price-label">$50 deposit to book · Venmo, PayPal, Cash</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 class="service-name">Weddings &amp; Elopements</h3>
+      <p class="service-desc">Intimate beach weddings starting at 2 hours. Standard weddings from 4 hours of coverage. Custom packages available — contact to discuss your vision.</p>
+      <div class="service-price">from $600</div>
+      <div class="service-price-label">Intimate beach · $1,200+ for standard</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 class="service-name">Events &amp; Brands</h3>
+      <p class="service-desc">Events, brands, products — if you have a creative vision, let's make it happen. Every brand and event package is custom-built to your specific needs.</p>
+      <div class="service-price">Custom</div>
+      <div class="service-price-label">Contact for a personalized quote</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-content">
+    <span class="cta-eyebrow">Let's Create Together</span>
+    <h2 class="cta-title">Your moments<br>deserve to <em>last.</em></h2>
+    <p class="cta-body">Whether it's a family session on the beach at golden hour, an intimate elopement, or a brand shoot — Colleen captures the real, the warm, and the memorable.</p>
+    <a href="mailto:colleenkyddphotography@gmail.com" class="cta-button">Book Your Session</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <span class="section-eyebrow">Get In Touch</span>
+    <h2 class="section-title" style="color: var(--text);">Let's Chat</h2>
+    <p class="contact-intro">"Having a camera pointed in your face isn't always comfortable — my style prioritizes your comfort above everything."</p>
+    <div class="contact-info">
+      <div class="contact-row">
+        <span class="label">Email</span>
+        <a href="mailto:colleenkyddphotography@gmail.com">colleenkyddphotography@gmail.com</a>
+      </div>
+      <div class="contact-row">
+        <span class="label">Phone</span>
+        <a href="tel:4406669235">440-666-9235</a>
+      </div>
+      <div class="contact-row">
+        <span class="label">Instagram</span>
+        <a href="https://instagram.com/colleenkyddphotography" target="_blank">@colleenkyddphotography</a>
+      </div>
+      <div class="contact-row">
+        <span class="label">Location</span>
+        <span>Fort Myers, FL · Southwest Florida</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="contact-image">
+      <img src="https://static.wixstatic.com/media/0df9e1_155ea236254c47678aa1ae02d8c58631~mv2.jpg" alt="Colleen Kydd Photography contact" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Colleen Kydd Photography</span>
+  <span class="footer-copy">© 2026 · Fort Myers, FL · Design by Lucas Blatt</span>
+  <div class="footer-links">
+    <a href="https://instagram.com/colleenkyddphotography" target="_blank">Instagram</a>
+    <a href="mailto:colleenkyddphotography@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  // Page load animations
+  window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const observerImages = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('is-visible');
+        }, entry.target.dataset.delay || 0);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Observe stats
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.1}s`;
+    observer.observe(el);
+  });
+
+  // Observe gallery items
+  document.querySelectorAll('.gallery-item').forEach((el, i) => {
+    el.dataset.delay = i * 80;
+    observerImages.observe(el);
+  });
+
+  // Observe section titles
+  document.querySelectorAll('.section-title, .about-title').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Observe other elements
+  document.querySelectorAll('.featured-image, .featured-text, .about-image-wrap, .about-text, .service-card, .cta-content, .contact-left, .contact-right').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
