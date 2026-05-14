@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heather Callejas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0D0C0A;
+    --surface:  #141210;
+    --text:     #E8E0D4;
+    --muted:    #8A8078;
+    --accent:   #C9956A;
+    --accent2:  #8B6F52;
+    --light:    #F5F0E8;
+    --line:     rgba(201,149,106,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+  }
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--light);
+    text-decoration: none;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+  }
+  nav ul li a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  nav ul li a:hover { color: var(--accent); }
+
+  /* ── HERO ────────────────────────────────── */
+  /* Cinematic letterbox layout — image fills center, black bars top/bottom, name in bottom bar */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 80px 1fr 120px;
+    overflow: hidden;
+  }
+  .hero-image-wrap {
+    grid-row: 1 / 4;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+    display: block;
+  }
+  .hero-image-wrap.loaded img { transform: scale(1); }
+
+  .hero-bar-top {
+    grid-row: 1;
+    position: relative;
+    z-index: 10;
+    background: rgba(13,12,10,0.82);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+  }
+  .hero-bar-bottom {
+    grid-row: 3;
+    position: relative;
+    z-index: 10;
+    background: rgba(13,12,10,0.88);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 60px 28px;
+    gap: 40px;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(56px, 8vw, 100px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--light);
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease, letter-spacing 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .hero-name.visible {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.08em;
+  }
+  .hero-tagline {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 1.2s ease 0.4s;
+    white-space: nowrap;
+  }
+  .hero-tagline.visible { opacity: 1; }
+  .hero-scroll-hint {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 1.2s ease 0.8s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-scroll-hint.visible { opacity: 1; }
+  .hero-scroll-hint::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  /* ── MARQUEE STRIP ────────────────────────── */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-track span {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bg);
+    font-weight: 500;
+    padding: 0 40px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── STATS ────────────────────────────────── */
+  .stats {
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
+  }
+  .stat-block {
+    background: var(--surface);
+    padding: 60px 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-block.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stat-block:nth-child(2) { transition-delay: 0.12s; }
+  .stat-block:nth-child(3) { transition-delay: 0.24s; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(60px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 12px;
+    display: block;
+  }
+
+  /* ── PORTFOLIO ────────────────────────────── */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+  .section-label.visible { clip-path: inset(0 0% 0 0); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: 0.05em;
+    color: var(--light);
+    margin-top: 16px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1) 0.1s;
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  .portfolio {
+    padding: 120px 60px;
+  }
+  .portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .portfolio-header-text {}
+  .portfolio-count {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s;
+  }
+  .portfolio-count.visible { opacity: 1; }
+
+  /* Staggered editorial grid — alternating large/small */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 4px;
+  }
+  .grid-item {
+    overflow: hidden;
+    position: relative;
+    background: var(--surface);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .grid-item.visible { clip-path: inset(0 0 0 0); }
+  .grid-item:nth-child(2) { transition-delay: 0.1s; }
+  .grid-item:nth-child(3) { transition-delay: 0.2s; }
+  .grid-item:nth-child(4) { transition-delay: 0.1s; }
+  .grid-item:nth-child(5) { transition-delay: 0.2s; }
+  .grid-item:nth-child(6) { transition-delay: 0.3s; }
+  .grid-item:nth-child(7) { transition-delay: 0.1s; }
+  .grid-item:nth-child(8) { transition-delay: 0.2s; }
+
+  /* Layout: asymmetric editorial */
+  .grid-item.large  { grid-column: span 8; }
+  .grid-item.medium { grid-column: span 4; }
+  .grid-item.third  { grid-column: span 4; }
+  .grid-item.half   { grid-column: span 6; }
+  .grid-item.full   { grid-column: span 12; }
+
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 340px;
+    transform: scale(1.04);
+    transition: transform 0.7s ease;
+  }
+  .grid-item:hover img { transform: scale(1.0); }
+  .grid-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13,12,10,0);
+    transition: background 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+  .grid-item:hover .grid-item-overlay {
+    background: rgba(13,12,10,0.5);
+  }
+  .grid-item-caption {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .grid-item:hover .grid-item-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MUSIC SECTION ─────────────────────────── */
+  .music {
+    background: var(--surface);
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .music-visual {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+  .music-visual.visible { clip-path: inset(0 0 0 0); }
+  .music-visual img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    display: block;
+  }
+  .music-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--line);
+    pointer-events: none;
+  }
+  .music-content {}
+  .music-content .section-label { margin-bottom: 24px; }
+  .music-content .section-title { margin-bottom: 32px; }
+  .music-body {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .music-body.visible { opacity: 1; transform: translateY(0); }
+  .album-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+  }
+  .album-card.visible { opacity: 1; transform: translateY(0); }
+  .album-art {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .album-info {}
+  .album-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--light);
+    margin-bottom: 4px;
+  }
+  .album-meta {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .album-link {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .album-link:hover { text-decoration: underline; }
+
+  /* ── ABOUT ────────────────────────────────── */
+  .about {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .about-portrait {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .about-portrait.visible { opacity: 1; transform: translateX(0); }
+  .about-portrait img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  /* Signature detail: vertical text rotated on left edge */
+  .about-portrait::before {
+    content: 'Jacksonville · Florida · 2026';
+    position: absolute;
+    left: -52px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .about-content {}
+  .about-content .section-label { margin-bottom: 24px; }
+  .about-content .section-title { margin-bottom: 40px; }
+  .about-bio {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+  .about-bio.visible { opacity: 1; transform: translateY(0); }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1.5;
+    padding-left: 28px;
+    border-left: 2px solid var(--accent);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+    margin-bottom: 40px;
+  }
+  .about-quote.visible { opacity: 1; transform: translateY(0); }
+  .about-links {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.6s;
+  }
+  .about-links.visible { opacity: 1; }
+  .social-link {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .social-link:hover { color: var(--accent); }
+
+  /* ── TESTIMONIAL ──────────────────────────── */
+  .testimonial {
+    background: var(--surface);
+    padding: 100px 60px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .testimonial blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--light);
+    max-width: 800px;
+    margin: 0 auto 32px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .testimonial blockquote.visible { opacity: 1; transform: translateY(0); }
+  .testimonial cite {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-style: normal;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+  .testimonial cite.visible { opacity: 1; }
+
+  /* ── BOOKING CTA ──────────────────────────── */
+  .cta {
+    padding: 140px 60px;
+    background: #1A150F;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta::before {
+    content: 'HEATHER';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 20vw, 260px);
+    font-weight: 300;
+    color: rgba(201,149,106,0.04);
+    letter-spacing: 0.15em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .cta-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76,0,0.24,1);
+  }
+  .cta-label.visible { clip-path: inset(0 0% 0 0); }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 300;
+    color: var(--light);
+    line-height: 1.1;
+    max-width: 700px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76,0,0.24,1) 0.15s;
+  }
+  .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+  .cta-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 460px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+  .cta-sub.visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.6s, background 0.3s ease, color 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-btn.visible { opacity: 1; }
+  .cta-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ── CONTACT ──────────────────────────────── */
+  .contact {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    border-top: 1px solid var(--line);
+  }
+  .contact-info {}
+  .contact-info .section-label { margin-bottom: 24px; }
+  .contact-info .section-title { margin-bottom: 32px; }
+  .contact-detail {
+    display: block;
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease, color 0.3s ease;
+  }
+  .contact-detail.visible { opacity: 1; transform: translateY(0); }
+  .contact-detail:nth-child(2) { transition-delay: 0.1s; }
+  .contact-detail:nth-child(3) { transition-delay: 0.2s; }
+  .contact-detail:hover { color: var(--accent); }
+  .contact-note {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-top: 32px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+  .contact-note.visible { opacity: 1; }
+
+  .contact-social {}
+  .contact-social .section-label { margin-bottom: 24px; }
+  .contact-social-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .social-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .social-item.visible { opacity: 1; transform: translateX(0); }
+  .social-item:nth-child(2) { transition-delay: 0.1s; }
+  .social-item:nth-child(3) { transition-delay: 0.2s; }
+  .social-item:nth-child(4) { transition-delay: 0.3s; }
+  .social-name {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .social-handle {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .social-handle:hover { color: var(--accent); }
+
+  /* ── FOOTER ───────────────────────────────── */
+  footer {
+    background: #0A0908;
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--line);
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .footer-copy {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+  .footer-credit {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    opacity: 0.4;
+    text-decoration: none;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { gap: 20px; }
+    nav ul li a { font-size: 10px; }
+
+    .hero-bar-bottom { padding: 0 24px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hero-name { font-size: 48px; }
+
+    .stats { padding: 60px 24px; grid-template-columns: 1fr; gap: 2px; }
+    .stat-block { padding: 40px 24px; }
+
+    .portfolio { padding: 80px 24px; }
+    .portfolio-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .grid-item.large, .grid-item.medium, .grid-item.third, .grid-item.half, .grid-item.full {
+      grid-column: span 2;
+    }
+    .grid-item.medium { grid-column: span 1; }
+
+    .music { padding: 80px 24px; grid-template-columns: 1fr; gap: 40px; }
+
+    .about { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    .about-portrait::before { display: none; }
+    .about-portrait img { height: 400px; }
+
+    .testimonial { padding: 60px 24px; }
+
+    .cta { padding: 100px 24px; }
+
+    .contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 60px; }
+
+    footer { padding: 28px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 36px; }
+    nav ul { gap: 16px; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .grid-item.medium { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Heather Callejas</a>
+  <ul>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — Cinematic letterbox layout -->
+<section class="hero">
+  <div class="hero-image-wrap" id="heroWrap">
+    <img
+      src="https://static.wixstatic.com/media/6063d9_9587de9d9bec45ed9c468c7dbd2386f9.jpg"
+      alt="Heather Callejas"
+      loading="eager"
+      id="heroImg"
+    >
+  </div>
+  <div class="hero-bar-top"></div>
+  <div class="hero-bar-bottom">
+    <h1 class="hero-name" id="heroName">Heather Callejas</h1>
+    <span class="hero-tagline" id="heroTagline">Model · Singer · Songwriter · Jacksonville, FL</span>
+    <span class="hero-scroll-hint" id="heroScroll">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Model</span><span>·</span>
+    <span>Singer</span><span>·</span>
+    <span>Songwriter</span><span>·</span>
+    <span>Musician</span><span>·</span>
+    <span>Jacksonville, Florida</span><span>·</span>
+    <span>Lovely December</span><span>·</span>
+    <span>Available for Bookings</span><span>·</span>
+    <span>Model</span><span>·</span>
+    <span>Singer</span><span>·</span>
+    <span>Songwriter</span><span>·</span>
+    <span>Musician</span><span>·</span>
+    <span>Jacksonville, Florida</span><span>·</span>
+    <span>Lovely December</span><span>·</span>
+    <span>Available for Bookings</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat-block">
+    <span class="stat-num">10+</span>
+    <span class="stat-label">Years Performing</span>
+  </div>
+  <div class="stat-block">
+    <span class="stat-num">1.4K</span>
+    <span class="stat-label">Facebook Followers</span>
+  </div>
+  <div class="stat-block">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Stories to Tell</span>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header">
+    <div class="portfolio-header-text">
+      <p class="section-label">Visual Portfolio</p>
+      <h2 class="section-title">The Work</h2>
+    </div>
+    <span class="portfolio-count">Selected Images</span>
+  </div>
+
+  <div class="portfolio-grid">
+    <!-- Row 1: large + medium -->
+    <div class="grid-item large">
+      <img src="https://static.wixstatic.com/media/6063d9_ea319609e78b4877bae03a1de9509aea.jpeg" alt="Editorial" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Editorial</span></div>
+    </div>
+    <div class="grid-item medium">
+      <img src="https://static.wixstatic.com/media/6063d9_7ed95b84dde5495896d028fabf16829a.jpg" alt="Portrait" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Portrait</span></div>
+    </div>
+
+    <!-- Row 2: three columns -->
+    <div class="grid-item third">
+      <img src="https://static.wixstatic.com/media/6063d9_c3fdbda30c2f4b69ab08e29676ed5960.jpg" alt="Fashion" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Fashion</span></div>
+    </div>
+    <div class="grid-item third">
+      <img src="https://static.wixstatic.com/media/6063d9_f77aa0e2a62b42ebbf8df912ee070f0e.jpg" alt="Lifestyle" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Lifestyle</span></div>
+    </div>
+    <div class="grid-item third">
+      <img src="https://static.wixstatic.com/media/6063d9_57adb79301044dd3b86a37bac630458e.jpg" alt="Model" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Model</span></div>
+    </div>
+
+    <!-- Row 3: medium + large -->
+    <div class="grid-item medium">
+      <img src="https://static.wixstatic.com/media/6063d9_56786f23564948ad9f4105914d43ccd0.jpg" alt="Studio" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Studio</span></div>
+    </div>
+    <div class="grid-item large">
+      <img src="https://static.wixstatic.com/media/6063d9_f3fb725d84d44f9abcf4392a28b4a86f.jpeg" alt="Campaign" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Campaign</span></div>
+    </div>
+
+    <!-- Row 4: half + half -->
+    <div class="grid-item half">
+      <img src="https://static.wixstatic.com/media/6063d9_3666d87f51994e4d9ed62bae92795837.jpg" alt="Outdoor" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Outdoor</span></div>
+    </div>
+    <div class="grid-item half">
+      <img src="https://static.wixstatic.com/media/6063d9_047e5f573f834aa6bc286eba818c37e4.jpg" alt="Creative" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-caption">Creative</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC SECTION -->
+<section class="music" id="music">
+  <div class="music-visual">
+    <img
+      src="https://static.wixstatic.com/media/6063d9_3882d85cd46243e89c3f75ea34c2067f.jpg"
+      alt="Lovely December"
+      loading="lazy"
+    >
+  </div>
+  <div class="music-content">
+    <p class="section-label">Music</p>
+    <h2 class="section-title">Lovely December</h2>
+    <p class="music-body">
+      As vocalist and co-writer for Lovely December (formerly Dust to Dust), Heather performs with guitarist Rudy Vega across Central and Northeast Florida — from gallery openings and private events to wedding receptions and live venue stages.
+    </p>
+    <div class="album-card">
+      <img
+        src="https://is1-ssl.mzstatic.com/image/thumb/Music1/v4/2b/86/94/2b8694ed-42d6-eb16-a38c-ab82c7a73355/889211651900.jpg/1200x630wp-60.jpg"
+        alt="La Luna"
+        class="album-art"
+        loading="lazy"
+      >
+      <div class="album-info">
+        <div class="album-title">La Luna</div>
+        <div class="album-meta">Original · Dust to Dust · 2015</div>
+        <a href="https://music.apple.com/us/album/la-luna-single/1006947043" class="album-link" target="_blank" rel="noopener">Stream on Apple Music →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-portrait">
+    <img
+      src="https://static.wixstatic.com/media/6063d9_44a32388769f491a882b55bdfd785106.jpeg"
+      alt="Heather Callejas"
+      loading="lazy"
+    >
+  </div>
+  <div class="about-content">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Multi-Disciplinary Creative</h2>
+    <p class="about-bio">
+      Heather Callejas is a Jacksonville, Florida–based model, singer, and songwriter whose work spans fashion editorial, commercial modeling, and live acoustic performance. Combining a strong visual presence with a genuine musical voice, she brings a rare dual creative identity to every project.
+    </p>
+    <blockquote class="about-quote">
+      "Music and modeling are two different ways of telling the same story."
+    </blockquote>
+    <div class="about-links">
+      <a href="https://www.facebook.com/CallejasHeather" class="social-link" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://soundcloud.com/heather-c-13" class="social-link" target="_blank" rel="noopener">SoundCloud</a>
+      <a href="https://www.youtube.com/user/callejas129" class="social-link" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://twitter.com/HeatherCallejas" class="social-link" target="_blank" rel="noopener">Twitter / X</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <blockquote>"News4Jax had Dust to Dust perform La Luna on their morning show River City Live — a natural, effortless stage presence."</blockquote>
+  <cite>— News4Jax · River City Live</cite>
+</section>
+
+<!-- BOOKING CTA -->
+<section class="cta">
+  <p class="cta-label">Availability</p>
+  <h2 class="cta-heading">Accepting Model &amp; Performance Bookings</h2>
+  <p class="cta-sub">Available for editorial shoots, commercial work, live events, gallery openings, weddings, and private performances across Florida.</p>
+  <a href="mailto:heathercallejas@email.com" class="cta-btn">Send Inquiry</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">Inquiries</h2>
+    <a href="mailto:heathercallejas@email.com" class="contact-detail">heathercallejas@email.com</a>
+    <a href="https://www.facebook.com/CallejasHeather" class="contact-detail" target="_blank" rel="noopener">facebook.com/CallejasHeather</a>
+    <p class="contact-note">For modeling bookings, music performance requests, or general inquiries. All messages are reviewed personally.</p>
+  </div>
+  <div class="contact-social">
+    <p class="section-label">Connect</p>
+    <div class="contact-social-grid">
+      <div class="social-item">
+        <span class="social-name">Facebook</span>
+        <a href="https://www.facebook.com/CallejasHeather" class="social-handle" target="_blank" rel="noopener">CallejasHeather</a>
+      </div>
+      <div class="social-item">
+        <span class="social-name">SoundCloud</span>
+        <a href="https://soundcloud.com/heather-c-13" class="social-handle" target="_blank" rel="noopener">heather-c-13</a>
+      </div>
+      <div class="social-item">
+        <span class="social-name">YouTube</span>
+        <a href="https://www.youtube.com/user/callejas129" class="social-handle" target="_blank" rel="noopener">callejas129</a>
+      </div>
+      <div class="social-item">
+        <span class="social-name">Twitter / X</span>
+        <a href="https://twitter.com/HeatherCallejas" class="social-handle" target="_blank" rel="noopener">@HeatherCallejas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Heather Callejas</span>
+  <span class="footer-copy">© 2026</span>
+  <a href="#" class="footer-credit">Design by Lucas Blatt</a>
+</footer>
+
+<script>
+  // Hero entrance
+  window.addEventListener('load', () => {
+    const wrap = document.getElementById('heroWrap');
+    const name = document.getElementById('heroName');
+    const tagline = document.getElementById('heroTagline');
+    const scroll = document.getElementById('heroScroll');
+    wrap.classList.add('loaded');
+    setTimeout(() => name.classList.add('visible'), 100);
+    setTimeout(() => tagline.classList.add('visible'), 400);
+    setTimeout(() => scroll.classList.add('visible'), 800);
+  });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  const selectors = [
+    '.section-label', '.section-title',
+    '.stat-block', '.grid-item',
+    '.music-visual', '.music-body', '.album-card',
+    '.about-portrait', '.about-bio', '.about-quote', '.about-links',
+    '.testimonial blockquote', '.testimonial cite',
+    '.cta-label', '.cta-heading', '.cta-sub', '.cta-btn',
+    '.portfolio-count', '.contact-detail', '.contact-note', '.social-item'
+  ];
+
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => observer.observe(el));
+  });
+
+  // Parallax on hero
+  window.addEventListener('scroll', () => {
+    const heroImg = document.getElementById('heroImg');
+    if (heroImg) {
+      heroImg.style.transform = `scale(1.04) translateY(${window.scrollY * 0.15}px)`;
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
