@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashley Howard Photography — Volusia County, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4F0EA;
+    --dark: #1C1A17;
+    --text: #2E2B26;
+    --accent: #8B6F47;
+    --mid: #6E6258;
+    --light: #E8E0D4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+  }
+
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #F4F0EA;
+    text-decoration: none;
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  nav .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,240,234,0.85);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.3s;
+  }
+
+  nav .nav-links a:hover { color: #F4F0EA; }
+
+  /* ── HERO — Full bleed image, name pinned bottom-left ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background-color: var(--dark);
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/7b9356_dfbcb54bc23f4a2689a3d8a370335df4~mv2_d_5184_3456_s_4_2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+    will-change: transform;
+  }
+
+  .hero-image.loaded { transform: scale(1.0); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,26,23,0.75) 0%, rgba(28,26,23,0.15) 50%, rgba(28,26,23,0.05) 100%);
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .hero-name-block h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(68px, 9vw, 108px);
+    line-height: 0.9;
+    color: #F4F0EA;
+    letter-spacing: 0.06em;
+    /* Animate letter-spacing on load */
+    letter-spacing: 0.3em;
+    transition: letter-spacing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hero-name-block h1.ls-settled { letter-spacing: 0.06em; }
+
+  .hero-name-block .hero-sub {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244,240,234,0.7);
+    margin-top: 18px;
+    font-weight: 400;
+  }
+
+  .hero-scroll-hint {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,240,234,0.5);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    margin-bottom: 8px;
+  }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip {
+    background: var(--accent);
+    overflow: hidden;
+    padding: 14px 0;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track span {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #F4F0EA;
+    font-weight: 400;
+    padding: 0 50px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS ── */
+  #stats {
+    background: var(--dark);
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-item {
+    padding: 40px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: transform, opacity;
+  }
+
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 90px;
+    font-weight: 300;
+    color: #F4F0EA;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,240,234,0.45);
+    margin-top: 12px;
+    display: block;
+    font-weight: 400;
+  }
+
+  /* ── GALLERY ── */
+  #gallery {
+    padding: 140px 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 60px;
+    overflow: hidden;
+  }
+
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--dark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* Masonry gallery grid */
+  .gallery-masonry {
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+
+  .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.02); }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 16px 16px;
+    background: linear-gradient(to top, rgba(28,26,23,0.7), transparent);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,234,0.8);
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+  }
+
+  .gallery-item:hover .gallery-caption { transform: translateY(0); }
+
+  /* ── ABOUT — Magazine spread ── */
+  #about {
+    padding: 0 0 140px;
+    background: var(--bg);
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .about-image-col {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s ease-out;
+    will-change: clip-path;
+  }
+
+  .about-image-col.is-visible { clip-path: inset(0 0 0 0); }
+
+  .about-image-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .about-text-col {
+    padding: 80px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    will-change: transform, opacity;
+  }
+
+  .about-text-col.is-visible { opacity: 1; transform: translateX(0); }
+
+  .about-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  .about-text-col h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 32px;
+    letter-spacing: 0.02em;
+  }
+
+  .about-text-col p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--mid);
+    max-width: 460px;
+    margin-bottom: 20px;
+  }
+
+  .pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    margin: 32px 0;
+    line-height: 1.5;
+  }
+
+  /* ── SPECIALTY SECTIONS ── */
+  #specialties {
+    background: var(--light);
+    padding: 140px 60px;
+  }
+
+  .specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .specialty-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: transform, opacity;
+  }
+
+  .specialty-card.is-visible { opacity: 1; transform: translateY(0); }
+  .specialty-card:nth-child(2) { transition-delay: 0.12s; }
+  .specialty-card:nth-child(3) { transition-delay: 0.24s; }
+
+  .specialty-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .specialty-card:hover img { transform: scale(1.04); }
+
+  .specialty-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,26,23,0.8) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 32px;
+  }
+
+  .specialty-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: #F4F0EA;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── CTA SECTION ── */
+  #cta {
+    background: var(--dark);
+    padding: 160px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Faded name background */
+  #cta::before {
+    content: 'ASHLEY';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28vw;
+    font-weight: 300;
+    color: rgba(244,240,234,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+
+  #cta .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 400;
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  #cta .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 300;
+    color: #F4F0EA;
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  }
+
+  #cta .cta-sub {
+    font-size: 15px;
+    color: rgba(244,240,234,0.5);
+    margin-bottom: 52px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  }
+
+  #cta .cta-button {
+    display: inline-block;
+    padding: 18px 52px;
+    border: 1px solid rgba(244,240,234,0.4);
+    color: #F4F0EA;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: background 0.3s, border-color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s, background 0.3s, border-color 0.3s;
+  }
+
+  #cta .cta-button:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  #cta.in-view .cta-eyebrow,
+  #cta.in-view .cta-heading,
+  #cta.in-view .cta-sub,
+  #cta.in-view .cta-button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 140px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 50px;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .contact-left p {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.8;
+    max-width: 380px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .contact-item {
+    border-bottom: 1px solid var(--light);
+    padding-bottom: 28px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  .contact-item.is-visible { opacity: 1; transform: translateX(0); }
+  .contact-item:nth-child(2) { transition-delay: 0.1s; }
+  .contact-item:nth-child(3) { transition-delay: 0.2s; }
+
+  .contact-item .ci-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 400;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .contact-item a,
+  .contact-item span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--dark);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .contact-item a:hover { color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  footer .foot-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244,240,234,0.5);
+  }
+
+  footer .foot-copy {
+    font-size: 11px;
+    color: rgba(244,240,234,0.25);
+    letter-spacing: 0.1em;
+  }
+
+  footer .foot-credit {
+    font-size: 11px;
+    color: rgba(244,240,234,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ACCENT LINE ── */
+  .accent-rule {
+    width: 30%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav .nav-links { gap: 20px; }
+
+    .hero-content { left: 24px; right: 24px; bottom: 50px; }
+    .hero-name-block h1 { font-size: 54px; }
+
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 30px 20px; }
+    .stat-num { font-size: 64px; }
+
+    #gallery { padding: 80px 24px; }
+    .gallery-masonry { columns: 2; }
+
+    .about-inner { grid-template-columns: 1fr; }
+    .about-image-col { height: 350px; }
+    .about-text-col { padding: 48px 24px; }
+    .about-text-col h2 { font-size: 32px; }
+
+    #specialties { padding: 80px 24px; }
+    .specialties-grid { grid-template-columns: 1fr; }
+
+    #cta { padding: 100px 24px; }
+
+    #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    .contact-left h2 { font-size: 36px; }
+
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 36px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name-block h1 { font-size: 40px; }
+    #stats { grid-template-columns: 1fr; }
+    .gallery-masonry { columns: 1; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">Ashley Howard</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#cta">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-image" id="heroImg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-name-block">
+      <h1 id="heroName">Ashley<br>Howard</h1>
+      <p class="hero-sub">Volusia County, Florida &nbsp;·&nbsp; Photography</p>
+    </div>
+    <div class="hero-scroll-hint">Scroll</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Weddings</span><span>·</span>
+    <span>Family Portraits</span><span>·</span>
+    <span>Landscapes</span><span>·</span>
+    <span>Surf Photography</span><span>·</span>
+    <span>Pet Portraits</span><span>·</span>
+    <span>Engagements</span><span>·</span>
+    <span>Volusia County, FL</span><span>·</span>
+    <span>Weddings</span><span>·</span>
+    <span>Family Portraits</span><span>·</span>
+    <span>Landscapes</span><span>·</span>
+    <span>Surf Photography</span><span>·</span>
+    <span>Pet Portraits</span><span>·</span>
+    <span>Engagements</span><span>·</span>
+    <span>Volusia County, FL</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-num">10+</span>
+    <span class="stat-label">Years in Florida</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">7</span>
+    <span class="stat-label">Specialties</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">BFA</span>
+    <span class="stat-label">University of North Florida</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">3+</span>
+    <span class="stat-label">Gallery Exhibitions</span>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="gallery-masonry">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_8b9e36aae97f48b79658c750dcfb2997.jpg" loading="lazy" alt="Florida Landscape">
+      <div class="gallery-caption">Florida Landscape</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_5fe9f0f93d164112826d0e2c3b98f51a.jpg" loading="lazy" alt="Surf Photography">
+      <div class="gallery-caption">Surf</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_8fc9bf03c5ff4d838b2b7563a54af96e.jpg" loading="lazy" alt="Portrait">
+      <div class="gallery-caption">Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_c8090521e40f42699f34a29ed771e46d.jpg" loading="lazy" alt="Canine Portrait">
+      <div class="gallery-caption">Canine Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_70af79733bab429f9c791a6d71508326.jpg" loading="lazy" alt="Landscape">
+      <div class="gallery-caption">Landscape</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_ae03d4ed938e4d9dba744baca969ea73.jpg" loading="lazy" alt="Nature">
+      <div class="gallery-caption">Nature</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_704a39f51cf94d129a9e2a3b61ed6fcf.jpg" loading="lazy" alt="Family">
+      <div class="gallery-caption">Family Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_987fb2ed6d5542c7b0672b68e389effe.jpg" loading="lazy" alt="Beach">
+      <div class="gallery-caption">Beach Session</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/7b9356_c2b0c8eebeac4d83b9d49246f76f945e.jpg" loading="lazy" alt="Alternative">
+      <div class="gallery-caption">Alternative</div>
+    </div>
+  </div>
+</section>
+
+<div class="accent-rule"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-image-col">
+      <img src="https://static.wixstatic.com/media/7b9356_dfbcb54bc23f4a2689a3d8a370335df4~mv2_d_5184_3456_s_4_2.jpg" loading="lazy" alt="Ashley Howard Photography">
+    </div>
+    <div class="about-text-col">
+      <span class="about-eyebrow">02 — The Photographer</span>
+      <h2>Light, place,<br>and natural truth.</h2>
+      <p>Ashley Howard is a Volusia County–based photographer working across portraiture, landscape, wedding, and wildlife. A graduate of the University of North Florida with a BFA in Photography, her work is rooted in natural light and the distinct character of Florida's coastline.</p>
+      <div class="pull-quote">"Her work has been displayed in galleries in Jacksonville — CoRK Arts District, Monroe Gallery, and UNF's Gallery of Art."</div>
+      <p>Serving Ponce Inlet, Daytona Beach, New Smyrna Beach, Port Orange, Ormond Beach, and surrounding Volusia County areas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section id="specialties">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">What I Do</h2>
+  </div>
+  <div class="specialties-grid">
+    <div class="specialty-card">
+      <img src="https://static.wixstatic.com/media/7b9356_69171ff673274035961269afb5bf8727.jpg" loading="lazy" alt="Weddings">
+      <div class="specialty-overlay">
+        <span class="specialty-label">Weddings &amp; Engagements</span>
+      </div>
+    </div>
+    <div class="specialty-card">
+      <img src="https://static.wixstatic.com/media/7b9356_9cb9a1f29e654394868d04d1afc66e99.jpg" loading="lazy" alt="Surf">
+      <div class="specialty-overlay">
+        <span class="specialty-label">Surf Photography</span>
+      </div>
+    </div>
+    <div class="specialty-card">
+      <img src="https://static.wixstatic.com/media/7b9356_f65e5c1ef9a64cc397e9a49cc8ee847f.jpg" loading="lazy" alt="Family">
+      <div class="specialty-overlay">
+        <span class="specialty-label">Family &amp; Pet Portraits</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-eyebrow">04 — Book a Session</p>
+  <h2 class="cta-heading">Let's make something<br>worth keeping.</h2>
+  <p class="cta-sub">Weddings from $1,200 · Portrait sessions from $300 · Engagement shoots from $350</p>
+  <a href="mailto:roxxanne98@gmail.com" class="cta-button">Get In Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2>Ready to book?</h2>
+    <p>Based in Port Orange, available throughout Volusia County and beyond. Reach out to discuss your vision.</p>
+  </div>
+  <div class="contact-details">
+    <div class="contact-item">
+      <span class="ci-label">Email</span>
+      <a href="mailto:roxxanne98@gmail.com">roxxanne98@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="ci-label">Phone</span>
+      <span>(386) 631-3487</span>
+    </div>
+    <div class="contact-item">
+      <span class="ci-label">Location</span>
+      <span>Port Orange, FL</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-name">Ashley Howard Photography</span>
+  <span class="foot-copy">© 2026</span>
+  <span class="foot-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+// Hero letter-spacing animate on load
+setTimeout(() => {
+  const n = document.getElementById('heroName');
+  if (n) n.classList.add('ls-settled');
+  // Hero image parallax + scale
+  const hi = document.getElementById('heroImg');
+  if (hi) hi.classList.add('loaded');
+}, 100);
+
+// Parallax on hero
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('heroImg');
+  if (hero) {
+    hero.style.backgroundPositionY = (window.scrollY * 0.35) + 'px';
+  }
+}, { passive: true });
+
+// IntersectionObserver for all animated elements
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      // For section titles use clip-path, already handled via is-visible class
+    }
+  });
+}, { threshold: 0.1 });
+
+// Observe all animated elements
+document.querySelectorAll('.stat-item, .gallery-item, .section-title, .about-image-col, .about-text-col, .specialty-card, .contact-item').forEach(el => observer.observe(el));
+
+// Stagger gallery items
+document.querySelectorAll('.gallery-item').forEach((item, i) => {
+  item.style.transitionDelay = (i * 80) + 'ms';
+});
+
+// CTA section observer (separate because it uses in-view class on parent)
+const ctaObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.15 });
+
+const ctaSec = document.getElementById('cta');
+if (ctaSec) ctaObserver.observe(ctaSec);
+</script>
+
+</body>
+</html>
