@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leslie Jean Photography — Ocala, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===================== RESET & BASE ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F2EDE6;   /* warm linen — drawn from Leslie's fern/leaf tones */
+      --bg-dark:   #1C1912;   /* deep forest dark */
+      --text:      #2A2318;   /* warm near-black */
+      --accent:    #5C7A4E;   /* muted sage green — pulled from fern & moss in her work */
+      --accent2:   #8B6914;   /* warm amber — from dried botanical tones */
+      --light:     #FAF7F2;   /* near-white parchment */
+      --mid:       #B8A898;   /* warm grey */
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    /* ===================== NOISE TEXTURE OVERLAY ===================== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ===================== NAVIGATION ===================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      mix-blend-mode: normal;
+    }
+
+    nav.scrolled {
+      background: rgba(242, 237, 230, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(92, 122, 78, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 15px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--light);
+      text-decoration: none;
+    }
+
+    nav.scrolled .nav-logo { color: var(--text); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 242, 0.85);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ===================== HERO — FULL BLEED, TEXT PINNED BOTTOM-LEFT ===================== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=2000&q=90');
+      background-size: cover;
+      background-position: center;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(28, 25, 18, 0.72) 0%,
+        rgba(28, 25, 18, 0.18) 55%,
+        transparent 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 72px;
+      left: 64px;
+      max-width: 620px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+
+    .hero-tag.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(72px, 9vw, 108px);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      color: var(--light);
+      margin-bottom: 22px;
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      will-change: clip-path, opacity;
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s, opacity 0.4s ease 0.1s;
+    }
+
+    .hero-name.visible {
+      clip-path: inset(0 0% 0 0);
+      opacity: 1;
+    }
+
+    .hero-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 242, 0.7);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
+    }
+
+    .hero-sub.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      right: 48px;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 242, 0.5);
+      writing-mode: vertical-rl;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: rgba(250, 247, 242, 0.4);
+    }
+
+    /* ===================== MARQUEE STRIP ===================== */
+    .marquee-strip {
+      background: var(--accent);
+      overflow: hidden;
+      padding: 10px 0;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 32s linear infinite;
+    }
+
+    .marquee-item {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--light);
+      padding: 0 40px;
+    }
+
+    .marquee-item::after {
+      content: '·';
+      padding-left: 40px;
+      opacity: 0.6;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ===================== INTRO / STATEMENT ===================== */
+    #statement {
+      padding: 120px 64px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .statement-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .statement-label.visible { opacity: 1; transform: translateY(0); }
+
+    .statement-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(26px, 3.2vw, 38px);
+      line-height: 1.45;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+
+    .statement-text.visible { opacity: 1; transform: translateY(0); }
+
+    .statement-text em {
+      font-style: italic;
+      color: var(--accent2);
+    }
+
+    /* ===================== GALLERY — EDITORIAL MASONRY ===================== */
+    #gallery {
+      padding: 60px 48px 120px;
+      background: var(--light);
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 48px;
+      padding: 0 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 36px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .section-title span {
+      display: block;
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s ease;
+    }
+
+    .section-title span.visible {
+      clip-path: inset(0 0% 0 0);
+      opacity: 1;
+    }
+
+    .gallery-count {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 10px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+      opacity: 0;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+    }
+
+    .gallery-item img.visible {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 18px 16px;
+      background: linear-gradient(transparent, rgba(28, 25, 18, 0.6));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    .gallery-caption-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--light);
+      letter-spacing: 0.04em;
+    }
+
+    /* Feature row — two wide images */
+    .gallery-feature {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .gallery-feature .gallery-item { margin-bottom: 0; }
+
+    /* ===================== STATS STRIP ===================== */
+    #stats {
+      background: var(--bg-dark);
+      padding: 72px 64px;
+    }
+
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(64px, 7vw, 96px);
+      line-height: 1;
+      color: var(--light);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-num sup {
+      font-size: 0.4em;
+      vertical-align: super;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 8px;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 60px;
+      background: rgba(250, 247, 242, 0.12);
+    }
+
+    /* ===================== ABOUT — MAGAZINE SPREAD ===================== */
+    #about {
+      padding: 140px 0 120px;
+      overflow: hidden;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .about-img-wrap {
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .about-img-wrap.visible { opacity: 1; transform: translateX(0); }
+
+    .about-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      min-height: 560px;
+    }
+
+    .about-text {
+      padding: 56px 0 56px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+
+    .about-text.visible { opacity: 1; transform: translateX(0); }
+
+    .about-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 100px;
+      font-weight: 300;
+      color: var(--bg);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: -24px;
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 36px;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .about-title span {
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .about-title span.visible { clip-path: inset(0 0% 0 0); }
+
+    .about-bio {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.85;
+      color: #4A3F34;
+      margin-bottom: 28px;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.55;
+      color: var(--accent2);
+      border-left: 2px solid var(--accent);
+      padding-left: 22px;
+      margin: 32px 0 36px;
+    }
+
+    .about-details {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .about-detail {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .about-detail strong {
+      display: block;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    /* ===================== FEATURED WORKS ===================== */
+    #works {
+      padding: 100px 64px 120px;
+      background: var(--bg);
+    }
+
+    .works-header {
+      margin-bottom: 60px;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .work-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .work-item.visible { opacity: 1; transform: scale(1); }
+
+    .work-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .work-item:hover img { transform: scale(1.06); }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 25, 18, 0);
+      transition: background 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 28px;
+    }
+
+    .work-item:hover .work-overlay {
+      background: rgba(28, 25, 18, 0.52);
+    }
+
+    .work-info {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .work-item:hover .work-info { opacity: 1; transform: translateY(0); }
+
+    .work-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--light);
+      letter-spacing: 0.04em;
+    }
+
+    .work-medium {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 4px;
+    }
+
+    /* ===================== KEATS QUOTE SECTION ===================== */
+    #quote-section {
+      padding: 100px 64px;
+      background: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #quote-section::before {
+      content: '"';
+      position: absolute;
+      top: -40px;
+      left: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 280px;
+      color: rgba(255,255,255,0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .quote-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .big-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(24px, 3.2vw, 36px);
+      line-height: 1.5;
+      color: var(--light);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .big-quote.visible { opacity: 1; transform: translateY(0); }
+
+    .quote-attribution {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 242, 0.6);
+    }
+
+    /* ===================== CTA SECTION ===================== */
+    #cta {
+      background: var(--bg-dark);
+      padding: 140px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Faded background name */
+    #cta::before {
+      content: 'LESLIE JEAN';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 12vw, 160px);
+      font-weight: 300;
+      color: rgba(250, 247, 242, 0.03);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.1em;
+    }
+
+    .cta-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 22px;
+    }
+
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.15;
+      color: var(--light);
+      margin-bottom: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    .cta-sub {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--mid);
+      margin-bottom: 48px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bg-dark);
+      background: var(--light);
+      padding: 18px 44px;
+      text-decoration: none;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .cta-btn:hover {
+      background: var(--accent);
+      color: var(--light);
+    }
+
+    /* ===================== CONTACT ===================== */
+    #contact {
+      padding: 120px 64px 100px;
+      background: var(--bg);
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left .section-title { margin-bottom: 28px; }
+
+    .contact-tagline {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.75;
+      color: #4A3F34;
+      margin-bottom: 48px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .contact-item-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .contact-item-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .contact-item-value:hover { color: var(--accent); }
+
+    .contact-right {
+      padding-top: 8px;
+    }
+
+    .contact-divider-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 40px;
+    }
+
+    .contact-exhibitions {
+      margin-bottom: 48px;
+    }
+
+    .contact-exhibitions h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 18px;
+    }
+
+    .exhibition-item {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(92, 122, 78, 0.15);
+    }
+
+    .exhibition-item:last-child { border-bottom: none; }
+
+    .exhibition-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .exhibition-meta {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+    }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: var(--bg-dark);
+      padding: 36px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 242, 0.7);
+    }
+
+    .footer-copy {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250, 247, 242, 0.3);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-credit {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      color: rgba(250, 247, 242, 0.25);
+      letter-spacing: 0.1em;
+      text-align: right;
+    }
+
+    /* ===================== MOBILE ===================== */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+
+      .hero-content { left: 28px; bottom: 52px; }
+      .hero-scroll { display: none; }
+
+      #statement {
+        grid-template-columns: 1fr;
+        padding: 72px 28px;
+        gap: 24px;
+      }
+
+      .gallery-grid { columns: 2; }
+
+      #stats { padding: 60px 28px; }
+      .stats-inner { flex-wrap: wrap; gap: 36px; }
+      .stat-divider { display: none; }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        padding: 0 28px;
+      }
+      .about-img-wrap img { min-height: 300px; }
+      .about-text { padding: 40px 0 0; }
+
+      .works-grid { grid-template-columns: 1fr; }
+      #works { padding: 72px 28px; }
+
+      #cta { padding: 100px 28px; }
+      #contact { padding: 72px 28px; }
+
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+
+      footer {
+        padding: 28px 24px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { columns: 1; }
+      .hero-name { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">Leslie Jean Photography</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#contact">Inquiries</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — full bleed, text pinned bottom-left -->
+  <section id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">An Artist Through the Lens</span>
+      <h1 class="hero-name">Leslie Jean<br>Photography</h1>
+      <p class="hero-sub">Fine Art · Macro · Ocala, Florida</p>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <!-- Duplicated for seamless loop -->
+      <span class="marquee-item">Flora & Nature</span>
+      <span class="marquee-item">Macro Photography</span>
+      <span class="marquee-item">Ocala, Florida</span>
+      <span class="marquee-item">Fine Art Prints</span>
+      <span class="marquee-item">Gallery Exhibited</span>
+      <span class="marquee-item">Custom Sessions</span>
+      <span class="marquee-item">Flora & Nature</span>
+      <span class="marquee-item">Macro Photography</span>
+      <span class="marquee-item">Ocala, Florida</span>
+      <span class="marquee-item">Fine Art Prints</span>
+      <span class="marquee-item">Gallery Exhibited</span>
+      <span class="marquee-item">Custom Sessions</span>
+    </div>
+  </div>
+
+  <!-- ARTIST STATEMENT -->
+  <section id="statement">
+    <p class="statement-label">Statement</p>
+    <p class="statement-text">
+      Most alive in nature, where the <em>creative spark</em> embarks upon its unbeaten path —
+      capturing the stillness and liveliness of raw beauty into images worthy of reverence.
+    </p>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <h2 class="section-title"><span>Selected Work</span></h2>
+      <span class="gallery-count">Flora · Botanical · Nature</span>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://www.ocalagazette.com/wp-content/uploads/2022/01/No-Room-in-Frame-By-Leslie-Wengler_cmyk-683x1024.jpg"
+             alt="No Room in Frame — macro botanical" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">No Room in Frame</p></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=900&q=85"
+             alt="Botanical detail" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Memories of My Aunt Linda</p></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=85"
+             alt="Green nature macro" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Just Us Two</p></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=900&q=85"
+             alt="Flora detail" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Shrimp</p></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=900&q=85"
+             alt="Forest floor macro" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Untitled Study I</p></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=900&q=85"
+             alt="Botanical fine art" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Untitled Study II</p></div>
+      </div>
+    </div>
+
+    <div class="gallery-feature">
+      <div class="gallery-item">
+        <img src="https://www.ocalagazette.com/wp-content/uploads/2022/01/Flight-of-the-Hummingbirds-Leslie-Wengler_cmyk.jpg"
+             alt="Flight of the Hummingbirds" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Flight of the Hummingbirds</p></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1485217988980-11786ced9454?w=900&q=85"
+             alt="Moss and fern detail" loading="lazy">
+        <div class="gallery-caption"><p class="gallery-caption-text">Untitled Study III</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">15<sup>+</sup></div>
+        <div class="stat-label">Years Behind the Lens</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Solo Exhibition</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">3<sup>+</sup></div>
+        <div class="stat-label">Gallery Shows</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Stories in Every Frame</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT — MAGAZINE SPREAD -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-img-wrap">
+        <img src="https://www.ocalagazette.com/wp-content/uploads/2022/01/Leslie-Wengler_cmyk.jpg"
+             alt="Leslie Jean Wengler — Ocala fine art photographer"
+             loading="lazy">
+      </div>
+      <div class="about-text">
+        <div class="about-number">02</div>
+        <h2 class="about-title"><span>The Photographer</span></h2>
+        <p class="about-bio">
+          Leslie Jean Wengler is a fine art photographer based in Ocala, Florida, working primarily through
+          the intimate language of the macro lens. Her work invites the viewer into a botanical universe
+          that flourishes inside ordinary bushes, grass blades, and garden beds — where pistils, petals,
+          stamens, and dewdrops share real estate in a colorful, alternate world.
+        </p>
+        <blockquote class="about-quote">
+          "I knew I wanted to be a photographer since I was 9, but most of my inspiration comes from
+          the written word — John Keats, Ralph Waldo Emerson, Walt Whitman."
+        </blockquote>
+        <p class="about-bio">
+          A Ringling College of Art and Design alumna, Wengler returned to her lens after years of
+          ministry work to debut her first solo exhibition — <em>Flora: A State of Whim</em> — at
+          NOMA Gallery, Ocala. Her work has since been selected for display in the Florida State Capitol.
+        </p>
+        <div class="about-details">
+          <div class="about-detail">
+            <strong>Ocala, Florida</strong>
+            Location
+          </div>
+          <div class="about-detail">
+            <strong>Nikon Macro</strong>
+            Medium
+          </div>
+          <div class="about-detail">
+            <strong>NOMA Gallery</strong>
+            Exhibition Venue
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORKS -->
+  <section id="works">
+    <div class="works-header">
+      <h2 class="section-title"><span>Recent Work</span></h2>
+    </div>
+    <div class="works-grid">
+      <div class="work-item">
+        <img src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800&q=85"
+             alt="Macro photography study" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-info">
+            <p class="work-title">Morning Study</p>
+            <p class="work-medium">Fine Art Print · 2024</p>
+          </div>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=85"
+             alt="Botanical detail" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-info">
+            <p class="work-title">Botanical Series</p>
+            <p class="work-medium">Fine Art Print · 2024</p>
+          </div>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85"
+             alt="Nature bokeh" loading="lazy">
+        <div class="work-overlay">
+          <div class="work-info">
+            <p class="work-title">Light Study</p>
+            <p class="work-medium">Fine Art Print · 2024</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEATS QUOTE -->
+  <section id="quote-section">
+    <div class="quote-inner">
+      <p class="big-quote">"A thing of beauty is a joy forever: its loveliness increases; it will never pass into nothingness."</p>
+      <p class="quote-attribution">— John Keats, Endymion · A guiding philosophy</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <p class="cta-label">Available Now</p>
+    <h2 class="cta-headline">Fine Art Prints<br>& Custom Sessions</h2>
+    <p class="cta-sub">Limited edition prints and bespoke portrait sessions available throughout Central Florida.</p>
+    <a href="mailto:lesliejean412@gmail.com" class="cta-btn">Begin an Inquiry</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <h2 class="section-title"><span>Inquiries</span></h2>
+        <p class="contact-tagline">
+          For fine art print purchases, portrait sessions, or gallery inquiries,
+          reach out directly. All sessions are by appointment.
+        </p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <span class="contact-item-label">Email</span>
+            <a href="mailto:lesliejean412@gmail.com" class="contact-item-value">lesliejean412@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Phone</span>
+            <a href="tel:+13523042176" class="contact-item-value">(352) 304-2176</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Location</span>
+            <span class="contact-item-value">Ocala, Florida</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="contact-divider-line"></div>
+        <div class="contact-exhibitions">
+          <h4>Exhibition History</h4>
+          <div class="exhibition-item">
+            <p class="exhibition-title">Flora: A State of Whim</p>
+            <p class="exhibition-meta">NOMA Gallery · Ocala, FL · 2022</p>
+          </div>
+          <div class="exhibition-item">
+            <p class="exhibition-title">Group Exhibition</p>
+            <p class="exhibition-meta">ArtCastle · NOMA Gallery · 2020</p>
+          </div>
+          <div class="exhibition-item">
+            <p class="exhibition-title">Florida State Capitol Display</p>
+            <p class="exhibition-meta">Selected by Rep. Joe Harding · 2022</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Leslie Jean Photography</span>
+    <span class="footer-copy">© 2026 Leslie Jean Wengler</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // ---- Nav scroll state ----
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    // ---- Hero parallax ----
+    const heroBg = document.getElementById('hero-bg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrollY * 0.35}px)`;
+      }
+    }, { passive: true });
+
+    // ---- Hero entrance animations ----
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.hero-tag').classList.add('visible');
+        document.querySelector('.hero-name').classList.add('visible');
+      }, 200);
+      setTimeout(() => {
+        document.querySelector('.hero-sub').classList.add('visible');
+      }, 900);
+    });
+
+    // ---- IntersectionObserver for scroll reveals ----
+    const observerOpts = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOpts);
+
+    // Observe text elements
+    document.querySelectorAll(
+      '.statement-label, .statement-text, .section-title span, .stat-item, ' +
+      '.about-img-wrap, .about-text, .about-title span, .work-item, ' +
+      '.big-quote, .contact-left, .contact-right'
+    ).forEach(el => observer.observe(el));
+
+    // Stagger gallery images
+    const imgObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, (entry.target.dataset.delay || 0) * 1);
+          imgObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.gallery-item img').forEach((img, i) => {
+      img.dataset.delay = i * 100;
+      imgObserver.observe(img);
+    });
+
+    // Stagger stat items
+    document.querySelectorAll('.stat-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.12}s`;
+    });
+
+    // Stagger work items
+    document.querySelectorAll('.work-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.15}s`;
+    });
+  </script>
+
+</body>
+</html>
