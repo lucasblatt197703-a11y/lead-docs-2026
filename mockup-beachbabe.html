@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beach Babe Photography — Lacey | Cocoa, FL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #F2EDE6;
+      --driftwood: #C4A882;
+      --ocean:   #3D6B74;
+      --charcoal: #1E1E1E;
+      --warm-white: #FAF8F4;
+      --mist:    #8CA8AD;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 150px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 60px;
+      mix-blend-mode: normal;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--driftwood); }
+
+    /* ─── HERO — Full-bleed with text pinned bottom-left ─── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/17f075_6e3c75fbf4a7489f9ab946ef5a13934e~mv2_d_3648_5472_s_4_2.jpg/v1/fill/w_1600,h_1200,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_6e3c75fbf4a7489f9ab946ef5a13934e~mv2_d_3648_5472_s_4_2.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1.0); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(20, 20, 20, 0.65) 0%,
+        rgba(20, 20, 20, 0.2) 50%,
+        transparent 100%
+      );
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 80px;
+      left: 60px;
+      max-width: 700px;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--driftwood);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(64px, 9vw, 110px);
+      line-height: 0.95;
+      letter-spacing: 0.05em;
+      color: var(--warm-white);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+    }
+    .hero-name.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-tagline {
+      margin-top: 24px;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+    }
+    .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 36px;
+      padding: 14px 32px;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--warm-white);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, border-color 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s, background 0.3s, border-color 0.3s;
+    }
+    .hero-cta.visible { opacity: 1; transform: translateY(0); }
+    .hero-cta:hover { background: rgba(255,255,255,0.1); border-color: var(--driftwood); }
+
+    /* ─── MARQUEE STRIP ─── */
+    .marquee-strip {
+      background: var(--ocean);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      padding: 0 40px;
+    }
+    .marquee-inner span.dot { color: var(--driftwood); padding: 0 10px; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      background: var(--charcoal);
+      padding: 90px 60px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(56px, 7vw, 90px);
+      color: var(--driftwood);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 120px 60px;
+      background: var(--warm-white);
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      overflow: hidden;
+    }
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: rgba(30,30,30,0.05);
+      line-height: 1;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 38px;
+      line-height: 1;
+      color: var(--charcoal);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+    .section-sub {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-bottom: 6px;
+    }
+
+    .gallery-masonry {
+      columns: 3;
+      column-gap: 12px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      cursor: pointer;
+    }
+    .gallery-item.visible { clip-path: inset(0 0 0 0); }
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transform: scale(1.03);
+      transition: transform 0.6s ease;
+      loading: lazy;
+    }
+    .gallery-item:hover img { transform: scale(1.0); }
+
+    /* ─── ABOUT — Magazine spread ─── */
+    #about {
+      padding: 140px 60px;
+      background: var(--sand);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+    .about-image-wrap.visible { clip-path: inset(0 0 0 0); }
+    .about-image-wrap img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-accent-line {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 80px;
+      height: 3px;
+      background: var(--driftwood);
+    }
+    .about-text {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+    .about-text.visible { opacity: 1; transform: translateY(0); }
+    .about-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ocean);
+      margin-bottom: 24px;
+    }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 32px;
+    }
+    .about-body {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #4a4a4a;
+      margin-bottom: 28px;
+    }
+    .about-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ocean);
+      border-left: 3px solid var(--driftwood);
+      padding-left: 20px;
+      margin: 32px 0;
+      line-height: 1.5;
+    }
+    .about-detail {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+
+    /* ─── SPECIALTIES ─── */
+    #specialties {
+      padding: 100px 60px;
+      background: var(--warm-white);
+    }
+    .specialties-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 60px auto 0;
+    }
+    .specialty-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .specialty-item.visible { clip-path: inset(0 0 0 0); }
+    .specialty-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 0.7s ease;
+      display: block;
+    }
+    .specialty-item:hover img { transform: scale(1.0); }
+    .specialty-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20,20,20,0.6) 0%, transparent 50%);
+    }
+    .specialty-label {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--warm-white);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── PRICING ─── */
+    #pricing {
+      background: var(--charcoal);
+      padding: 120px 60px;
+    }
+    #pricing .section-title { color: var(--warm-white); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1000px;
+      margin: 60px auto 0;
+    }
+    .pricing-card {
+      background: rgba(255,255,255,0.04);
+      padding: 48px 36px;
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .pricing-card.visible { opacity: 1; transform: translateY(0); }
+    .pricing-card.featured {
+      background: rgba(196,168,130,0.12);
+      border-color: var(--driftwood);
+    }
+    .price-name {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--driftwood);
+      margin-bottom: 20px;
+    }
+    .price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      font-weight: 300;
+      color: var(--warm-white);
+      line-height: 1;
+    }
+    .price-duration {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin: 8px 0 28px;
+    }
+    .price-features {
+      list-style: none;
+      text-align: left;
+    }
+    .price-features li {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .price-features li::before {
+      content: '—';
+      color: var(--driftwood);
+      flex-shrink: 0;
+    }
+    .price-note {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      padding: 160px 60px;
+      background: var(--ocean);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 15vw, 180px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.03);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .cta-eyebrow.visible { opacity: 1; transform: translateY(0); }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 300;
+      color: var(--warm-white);
+      line-height: 1.15;
+      margin-bottom: 48px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+    .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--warm-white);
+      color: var(--ocean);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s, transform 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s, background 0.3s;
+    }
+    .cta-btn.visible { opacity: 1; transform: translateY(0); }
+    .cta-btn:hover { background: var(--sand); transform: translateY(-2px); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 120px 60px;
+      background: var(--warm-white);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1000px;
+      margin: 60px auto 0;
+    }
+    .contact-info {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .contact-info.visible { opacity: 1; transform: translateY(0); }
+    .contact-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-bottom: 8px;
+    }
+    .contact-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 32px;
+      text-decoration: none;
+      display: block;
+    }
+    .contact-value:hover { color: var(--ocean); }
+    .contact-note {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #666;
+      font-style: italic;
+    }
+    .contact-image {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out 0.2s;
+    }
+    .contact-image.visible { clip-path: inset(0 0 0 0); }
+    .contact-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--charcoal);
+      padding: 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .hero-content { bottom: 48px; left: 24px; right: 24px; }
+      .hero-name { font-size: clamp(48px, 12vw, 80px); }
+      #stats { padding: 60px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      .stat-item { border-right: none; }
+      #gallery { padding: 80px 24px; }
+      .gallery-masonry { columns: 2; }
+      #about { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      #specialties { padding: 80px 24px; }
+      .specialties-grid { grid-template-columns: 1fr; }
+      #pricing { padding: 80px 24px; }
+      .pricing-grid { grid-template-columns: 1fr; gap: 16px; }
+      #cta { padding: 100px 24px; }
+      #contact { padding: 80px 24px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 36px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-masonry { columns: 1; }
+      .hero-name { font-size: 52px; }
+      .section-title { font-size: 28px; }
+      .about-heading { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">BBP</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Portfolio</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="eyebrow">Lifestyle · Family · Maternity · Newborn</p>
+      <h1 class="hero-name" id="heroName">Beach Babe<br>Photography</h1>
+      <p class="hero-tagline" id="heroTagline">Cocoa, FL — Capturing life's most precious moments</p>
+      <a href="#gallery" class="hero-cta" id="heroCta">View Portfolio</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Lifestyle Photography</span><span class="dot">·</span>
+      <span>Cocoa, FL</span><span class="dot">·</span>
+      <span>Family Sessions</span><span class="dot">·</span>
+      <span>Maternity</span><span class="dot">·</span>
+      <span>Newborns</span><span class="dot">·</span>
+      <span>Couples &amp; Engagement</span><span class="dot">·</span>
+      <span>Space Coast</span><span class="dot">·</span>
+      <span>Beach Babe Photography</span><span class="dot">·</span>
+      <!-- duplicate for seamless loop -->
+      <span>Lifestyle Photography</span><span class="dot">·</span>
+      <span>Cocoa, FL</span><span class="dot">·</span>
+      <span>Family Sessions</span><span class="dot">·</span>
+      <span>Maternity</span><span class="dot">·</span>
+      <span>Newborns</span><span class="dot">·</span>
+      <span>Couples &amp; Engagement</span><span class="dot">·</span>
+      <span>Space Coast</span><span class="dot">·</span>
+      <span>Beach Babe Photography</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">15+</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Sessions Captured</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Specialties</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">FL</span>
+        <span class="stat-label">Space Coast Based</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <div>
+        <p class="section-sub">Selected Work</p>
+        <h2 class="section-title">Portfolio</h2>
+      </div>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/17f075_5f96d81180f2439fadfc818ed13ae425~mv2.jpg/v1/fill/w_800,h_1200,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_5f96d81180f2439fadfc818ed13ae425~mv2.jpg" alt="Family portrait" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/17f075_6e3c75fbf4a7489f9ab946ef5a13934e~mv2_d_3648_5472_s_4_2.jpg/v1/fill/w_800,h_1200,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_6e3c75fbf4a7489f9ab946ef5a13934e~mv2_d_3648_5472_s_4_2.jpg" alt="Portrait session" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/17f075_54d8ab67a59040029e15a90b9eeb76c0.jpg/v1/fill/w_800,h_1000,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_54d8ab67a59040029e15a90b9eeb76c0.jpg" alt="Lifestyle session" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/17f075_7ba0a463ea3a439196b2ad1328083d85.jpg/v1/fill/w_800,h_1000,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_7ba0a463ea3a439196b2ad1328083d85.jpg" alt="Outdoor session" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/17f075_903447e02e9a4ee2aa12e159c7ff53b2.jpg/v1/fill/w_800,h_1000,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_903447e02e9a4ee2aa12e159c7ff53b2.jpg" alt="Portrait" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/17f075_482c98b37bcd4c5aa5c69045668fe80d.jpg/v1/fill/w_800,h_1000,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_482c98b37bcd4c5aa5c69045668fe80d.jpg" alt="Children session" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <img src="https://static.wixstatic.com/media/17f075_bde477faa5e84fa6b1d0e3f531a1df7e~mv2.jpg/v1/fill/w_800,h_1000,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_bde477faa5e84fa6b1d0e3f531a1df7e~mv2.jpg" alt="Lacey — Beach Babe Photography" loading="lazy">
+        <div class="about-accent-line"></div>
+      </div>
+      <div class="about-text">
+        <p class="about-eyebrow">02 — About the Photographer</p>
+        <h2 class="about-heading">Meet<br>Lacey</h2>
+        <p class="about-body">A digital photographer based on Florida's Space Coast, Lacey built Beach Babe Photography around a single belief: every ordinary moment deserves to be remembered beautifully. Raised on the island of Oahu and rooted in Cocoa since 2009, she brings a warm, unhurried approach to every session — whether it's a newborn's first hours or a family's last summer before college.</p>
+        <blockquote class="about-pull-quote">"Time passes quickly and as it does our memories tend to fade."</blockquote>
+        <p class="about-detail">Cocoa, FL · Space Coast · Est. 2009</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALTIES -->
+  <section id="specialties">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <div>
+          <p class="section-sub">What We Do</p>
+          <h2 class="section-title">Specialties</h2>
+        </div>
+      </div>
+    </div>
+    <div class="specialties-grid" style="max-width:1200px; margin:60px auto 0;">
+      <div class="specialty-item">
+        <img src="https://static.wixstatic.com/media/17f075_5f96d81180f2439fadfc818ed13ae425~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_5f96d81180f2439fadfc818ed13ae425~mv2.jpg" alt="Family" loading="lazy">
+        <div class="specialty-overlay"></div>
+        <span class="specialty-label">Family</span>
+      </div>
+      <div class="specialty-item">
+        <img src="https://static.wixstatic.com/media/17f075_903447e02e9a4ee2aa12e159c7ff53b2.jpg/v1/fill/w_600,h_800,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_903447e02e9a4ee2aa12e159c7ff53b2.jpg" alt="Maternity" loading="lazy">
+        <div class="specialty-overlay"></div>
+        <span class="specialty-label">Maternity</span>
+      </div>
+      <div class="specialty-item">
+        <img src="https://static.wixstatic.com/media/17f075_482c98b37bcd4c5aa5c69045668fe80d.jpg/v1/fill/w_600,h_800,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_482c98b37bcd4c5aa5c69045668fe80d.jpg" alt="Children" loading="lazy">
+        <div class="specialty-overlay"></div>
+        <span class="specialty-label">Children</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div style="max-width:1000px; margin:0 auto;">
+      <div class="section-header">
+        <span class="section-number" style="color:rgba(255,255,255,0.04);">04</span>
+        <div>
+          <p class="section-sub" style="color:rgba(255,255,255,0.3);">Investment</p>
+          <h2 class="section-title" style="color:var(--warm-white);">Packages</h2>
+        </div>
+      </div>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <p class="price-name">Sea Breeze</p>
+        <div class="price-amount">$150</div>
+        <p class="price-duration">30-minute session</p>
+        <ul class="price-features">
+          <li>1 Location</li>
+          <li>Unlimited props</li>
+          <li>1 Wardrobe selection</li>
+          <li>Professional editing</li>
+          <li>Online gallery + print release</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <p class="price-name">Sunset — Popular</p>
+        <div class="price-amount">$225</div>
+        <p class="price-duration">1-hour session</p>
+        <ul class="price-features">
+          <li>1 Location</li>
+          <li>Unlimited props</li>
+          <li>Unlimited wardrobe changes</li>
+          <li>Professional editing</li>
+          <li>Online gallery + print release</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <p class="price-name">Tidal Wave</p>
+        <div class="price-amount">$375</div>
+        <p class="price-duration">2-hour session</p>
+        <ul class="price-features">
+          <li>2 Locations</li>
+          <li>Unlimited props</li>
+          <li>Unlimited wardrobe changes</li>
+          <li>Professional editing</li>
+          <li>Online gallery + print release</li>
+        </ul>
+      </div>
+    </div>
+    <p class="price-note">Newborn, wedding, and event pricing available upon inquiry. 50% retainer secures your date.</p>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg-text">Memories</div>
+    <p class="cta-eyebrow">Ready when you are</p>
+    <h2 class="cta-heading">Let's capture<br>something beautiful.</h2>
+    <a href="mailto:BeachBabePhotography@gmail.com" class="cta-btn">Book Your Session</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div style="max-width:1000px; margin:0 auto;">
+      <div class="section-header">
+        <span class="section-number">05</span>
+        <div>
+          <p class="section-sub">Get in Touch</p>
+          <h2 class="section-title">Contact</h2>
+        </div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="contact-label">Email</p>
+        <a href="mailto:BeachBabePhotography@gmail.com" class="contact-value">BeachBabePhotography<br>@gmail.com</a>
+
+        <p class="contact-label">Phone</p>
+        <a href="tel:8087411201" class="contact-value">(808) 741-1201</a>
+
+        <p class="contact-label">Location</p>
+        <span class="contact-value" style="pointer-events:none;">Cocoa, FL<br>Brevard County &amp; Surrounding</span>
+
+        <p class="contact-note">For fastest response, please message via Facebook or email directly.</p>
+
+        <div style="margin-top:32px;">
+          <a href="https://www.facebook.com/BeachBabePhotography" target="_blank" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ocean); text-decoration:none;">Facebook →</a>
+        </div>
+      </div>
+      <div class="contact-image">
+        <img src="https://static.wixstatic.com/media/17f075_7ba0a463ea3a439196b2ad1328083d85.jpg/v1/fill/w_800,h_700,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/17f075_7ba0a463ea3a439196b2ad1328083d85.jpg" alt="Beach Babe Photography" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Beach Babe Photography</span>
+    <span class="footer-copy">© 2026 · Cocoa, FL</span>
+    <span class="footer-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero entrance animations
+    window.addEventListener('load', () => {
+      const heroBg = document.getElementById('heroBg');
+      if (heroBg) heroBg.classList.add('loaded');
+
+      setTimeout(() => document.getElementById('eyebrow').classList.add('visible'), 300);
+      setTimeout(() => document.getElementById('heroName').classList.add('visible'), 500);
+      setTimeout(() => document.getElementById('heroTagline').classList.add('visible'), 800);
+      setTimeout(() => document.getElementById('heroCta').classList.add('visible'), 1000);
+    });
+
+    // IntersectionObserver for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    // Observe all animated elements
+    document.querySelectorAll(
+      '.section-title, .stat-item, .gallery-item, .about-image-wrap, .about-text, ' +
+      '.specialty-item, .pricing-card, .cta-eyebrow, .cta-heading, .cta-btn, ' +
+      '.contact-info, .contact-image'
+    ).forEach((el, i) => {
+      // Stagger stat items and gallery items
+      if (el.classList.contains('stat-item') || el.classList.contains('gallery-item') || el.classList.contains('pricing-card') || el.classList.contains('specialty-item')) {
+        el.style.transitionDelay = `${i * 0.08}s`;
+      }
+      observer.observe(el);
+    });
+
+    // Parallax on hero
+    const hero = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        hero.style.backgroundPositionY = `calc(20% + ${scrollY * 0.3}px)`;
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
