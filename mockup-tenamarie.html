@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miss Tena Marie — Psychic Medium & Paranormal Investigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0E0B12;
+    --surface: #16111E;
+    --text: #E8E2D9;
+    --text-muted: #9A9098;
+    --accent: #9B6B9B;
+    --accent-light: #C49FC4;
+    --gold: #C4A882;
+    --dark: #080610;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(8,6,16,0.9) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent-light); }
+
+  /* ── HERO — FULL BLEED, TEXT BOTTOM LEFT ── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b2c0a7_f250e5d729e347e29625d31e4c472ab8.jpg/v1/fill/w_1200,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b2c0a7_f250e5d729e347e29625d31e4c472ab8.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8,6,16,1) 0%,
+      rgba(8,6,16,0.7) 35%,
+      rgba(8,6,16,0.1) 70%,
+      rgba(8,6,16,0) 100%
+    );
+  }
+
+  /* Vertical decorative line */
+  .hero-line {
+    position: absolute;
+    left: 48px;
+    top: 120px;
+    bottom: 220px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--accent) 40%, var(--gold) 70%, transparent);
+    opacity: 0.5;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 64px 80px 80px;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 9vw, 114px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .hero-name span {
+    display: block;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, opacity;
+  }
+
+  .hero-name .line2 {
+    color: var(--accent-light);
+    font-style: italic;
+    padding-left: 0.15em;
+    transition-delay: 0.12s;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+
+  .hero-cta::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .hero-cta:hover::after { width: 72px; }
+
+  .hero-loaded .hero-eyebrow,
+  .hero-loaded .hero-name span,
+  .hero-loaded .hero-sub,
+  .hero-loaded .hero-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-inner span {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    padding: 0 40px;
+  }
+
+  .marquee-inner span.sep {
+    color: rgba(255,255,255,0.4);
+    padding: 0 8px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS ── */
+  #stats {
+    background: var(--surface);
+    padding: 80px 80px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-item {
+    padding: 40px 32px;
+    border-right: 1px solid rgba(155,107,155,0.15);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: transform, opacity;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent-light);
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── ABOUT / PORTRAIT ── */
+  #about {
+    padding: 140px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.3s ease;
+    will-change: clip-path, opacity;
+  }
+
+  .about-image-wrap.is-visible {
+    opacity: 1;
+    clip-path: inset(0% 0 0 0);
+  }
+
+  .about-image-wrap img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-image-caption {
+    position: absolute;
+    bottom: -16px;
+    right: -24px;
+    background: var(--accent);
+    padding: 16px 24px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    will-change: transform, opacity;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: rgba(155,107,155,0.08);
+    line-height: 1;
+    margin-bottom: -20px;
+    display: block;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .clip-reveal {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+
+  .clip-reveal.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .about-bio {
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .about-pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--accent-light);
+    line-height: 1.5;
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+
+  .about-details {
+    display: flex;
+    gap: 40px;
+    margin-top: 36px;
+  }
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .detail-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .detail-value {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    padding: 120px 80px;
+    background: var(--surface);
+  }
+
+  .services-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 72px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+  .service-card:nth-child(2) { transition-delay: 0.1s; }
+  .service-card:nth-child(3) { transition-delay: 0.2s; }
+  .service-card:nth-child(4) { transition-delay: 0.15s; }
+  .service-card:nth-child(5) { transition-delay: 0.25s; }
+  .service-card:nth-child(6) { transition-delay: 0.35s; }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── MEDIA / GALLERY ── */
+  #media {
+    padding: 140px 80px;
+  }
+
+  .media-header {
+    margin-bottom: 64px;
+  }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 4px;
+  }
+
+  .media-item {
+    overflow: hidden;
+    background: var(--surface);
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out, opacity 0.2s ease;
+    will-change: clip-path, opacity;
+  }
+
+  .media-item.is-visible {
+    opacity: 1;
+    clip-path: inset(0% 0 0 0);
+  }
+
+  .media-item:nth-child(1) { grid-row: 1 / 3; transition-delay: 0ms; }
+  .media-item:nth-child(2) { transition-delay: 100ms; }
+  .media-item:nth-child(3) { transition-delay: 200ms; }
+  .media-item:nth-child(4) { transition-delay: 150ms; }
+  .media-item:nth-child(5) { transition-delay: 250ms; }
+
+  .media-item img {
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+    loading: lazy;
+  }
+
+  .media-item:hover img { transform: scale(1.03); }
+
+  .media-item-label {
+    padding: 14px 18px;
+    background: var(--surface);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── TESTIMONIAL ── */
+  #testimonial {
+    padding: 120px 80px;
+    background: var(--dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonial-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    font-weight: 300;
+    color: rgba(155,107,155,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.1em;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text);
+    max-width: 780px;
+    margin: 0 auto 40px;
+    line-height: 1.45;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: transform, opacity;
+  }
+
+  .testimonial-quote.is-visible { opacity: 1; transform: translateY(0); }
+
+  .testimonial-attribution {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── CTA SECTION ── */
+  #cta {
+    padding: 140px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .cta-heading em {
+    font-style: italic;
+    color: var(--accent-light);
+  }
+
+  .cta-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: transform, opacity;
+  }
+
+  .cta-right.is-visible { opacity: 1; transform: translateX(0); }
+
+  .cta-desc {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 18px 48px;
+    background: var(--accent);
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+  }
+
+  .cta-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 100px 80px;
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left h2 {
+    margin-bottom: 16px;
+  }
+
+  .contact-left p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .contact-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 80px;
+  }
+
+  .contact-value {
+    font-size: 15px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .contact-value:hover { color: var(--accent-light); }
+
+  .contact-right {
+    padding-top: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: transform, opacity;
+  }
+
+  .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+
+  .reading-card {
+    background: var(--bg);
+    padding: 48px 40px;
+    border-top: 2px solid var(--accent);
+  }
+
+  .reading-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .reading-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .reading-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .reading-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(155,107,155,0.12);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .reading-option-name { color: var(--text); }
+
+  .book-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent-light);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .book-btn:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 48px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(155,107,155,0.1);
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(154,144,152,0.5);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--accent-light); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 24px; }
+
+    #hero { min-height: 100svh; }
+    .hero-content { padding: 0 28px 64px 28px; }
+    .hero-line { left: 20px; }
+
+    #stats { padding: 60px 28px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(155,107,155,0.15); }
+    .stat-item:nth-child(odd) { border-right: 1px solid rgba(155,107,155,0.15); }
+
+    #about { padding: 80px 28px; grid-template-columns: 1fr; gap: 56px; }
+    .about-details { flex-direction: column; gap: 20px; }
+    .about-image-wrap img { height: 420px; }
+    .about-image-caption { right: 0; }
+
+    #services { padding: 80px 28px; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+
+    #media { padding: 80px 28px; }
+    .media-grid { grid-template-columns: 1fr; }
+    .media-item:nth-child(1) { grid-row: auto; }
+
+    #testimonial { padding: 80px 28px; }
+
+    #cta { padding: 80px 28px; grid-template-columns: 1fr; gap: 48px; }
+
+    #contact { padding: 80px 28px; grid-template-columns: 1fr; gap: 56px; }
+
+    footer { padding: 40px 28px; flex-direction: column; gap: 20px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    .hero-name { font-size: 56px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-item:nth-child(odd) { border-right: none; }
+    h2 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Miss Tena Marie</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#contact">Readings</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Psychic Medium · Old Town, Florida · Since 1980</p>
+    <h1 class="hero-name">
+      <span class="line1">Miss Tena</span>
+      <span class="line2">Marie</span>
+    </h1>
+    <p class="hero-sub">Internationally renowned psychic medium &amp; paranormal investigator</p>
+    <a href="#contact" class="hero-cta">Request a Reading</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Psychic Readings</span><span class="sep">·</span>
+    <span>Mediumship</span><span class="sep">·</span>
+    <span>Cold Case Facilitation</span><span class="sep">·</span>
+    <span>Paranormal Investigation</span><span class="sep">·</span>
+    <span>Pet Psychic</span><span class="sep">·</span>
+    <span>Law Enforcement Consulting</span><span class="sep">·</span>
+    <span>Old Town, Florida</span><span class="sep">·</span>
+    <span>Serving Clients Worldwide</span><span class="sep">·</span>
+    <span>Psychic Readings</span><span class="sep">·</span>
+    <span>Mediumship</span><span class="sep">·</span>
+    <span>Cold Case Facilitation</span><span class="sep">·</span>
+    <span>Paranormal Investigation</span><span class="sep">·</span>
+    <span>Pet Psychic</span><span class="sep">·</span>
+    <span>Law Enforcement Consulting</span><span class="sep">·</span>
+    <span>Old Town, Florida</span><span class="sep">·</span>
+    <span>Serving Clients Worldwide</span><span class="sep">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">45+</span>
+      <span class="stat-label">Years of Practice</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">1000s</span>
+      <span class="stat-label">Readings Given</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">Cold<br>Cases</span>
+      <span class="stat-label">Law Enforcement Assisted</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">Intl</span>
+      <span class="stat-label">Clients Worldwide</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <img
+      src="https://static.wixstatic.com/media/2da7bd_e7f77ac6eb0f45d7b6df8c0bbc9f1b2c~mv2.png/v1/fill/w_600,h_900,al_c,lg_1,q_85,enc_avif,quality_auto/rs%3Dw_400%2Ccg_true.png"
+      alt="Miss Tena Marie — Psychic Medium"
+      loading="lazy"
+    >
+    <div class="about-image-caption">Old Town, FL</div>
+  </div>
+  <div class="about-text">
+    <span class="section-number">01</span>
+    <span class="section-label">The Medium</span>
+    <h2 class="clip-reveal">A gift shaped<br>by four decades</h2>
+    <p class="about-bio">
+      Tena Marie Weber has resided in Florida since 1980, developing her natural intuitive gifts into a disciplined practice spanning psychic mediumship, cold case facilitation, and paranormal investigation.
+    </p>
+    <blockquote class="about-pull">
+      "Amazingly gifted in her psychic abilities — very down to earth, kind, and not at all judgmental."
+    </blockquote>
+    <p class="about-bio">
+      Founder of the Dixie Boo Research &amp; Gulf Coast Paranormal Resource, she has volunteered countless hours assisting law enforcement throughout the Florida Panhandle. Her practice serves clients locally in Old Town and internationally by phone and online.
+    </p>
+    <div class="about-details">
+      <div class="detail-item">
+        <span class="detail-label">Location</span>
+        <span class="detail-value">Old Town, FL</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Sessions</span>
+        <span class="detail-value">In-Person · Phone · Online</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Hours</span>
+        <span class="detail-value">Wed–Sat, 11AM–4PM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <span class="section-number" style="font-size:60px;margin-bottom:-10px;display:block;">02</span>
+      <span class="section-label">What Tena Offers</span>
+      <h2 class="clip-reveal" style="max-width:480px;">Readings &amp; Investigations</h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">✦</span>
+      <h3 class="service-title">Psychic Readings</h3>
+      <p class="service-desc">Confidential, authentic readings covering relationships, employment, finances, and life direction. Available in-person, by phone, or online.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">◯</span>
+      <h3 class="service-title">Mediumship</h3>
+      <p class="service-desc">Connecting with those who have passed. Healing messages and closure for those seeking communication with loved ones.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⬡</span>
+      <h3 class="service-title">Cold Case Facilitation</h3>
+      <p class="service-desc">Assisting law enforcement and families with missing persons cases and unresolved investigations across Florida and beyond.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">△</span>
+      <h3 class="service-title">Paranormal Investigation</h3>
+      <p class="service-desc">On-location paranormal investigation through the Gulf Coast Paranormal Resource. Residential, commercial, and historical sites.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">◈</span>
+      <h3 class="service-title">Pet Psychic</h3>
+      <p class="service-desc">Readings for your animals — understanding behavior, health concerns, emotional state, and connection across the veil for departed pets.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">✧</span>
+      <h3 class="service-title">Inner Child Healing</h3>
+      <p class="service-desc">Intuitive sessions focused on emotional healing, trauma processing, and reconnecting with the authentic self through spiritual guidance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA / GALLERY -->
+<section id="media">
+  <div class="media-header">
+    <span class="section-number">03</span>
+    <span class="section-label">Practice &amp; Presence</span>
+    <h2 class="clip-reveal">A life in the work</h2>
+  </div>
+  <div class="media-grid">
+    <div class="media-item">
+      <img
+        src="https://static.wixstatic.com/media/b2c0a7_8dc42278c3c848adaf21829dc4af0402.png/v1/fill/w_800,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b2c0a7_8dc42278c3c848adaf21829dc4af0402.png"
+        alt="Miss Tena Marie reading"
+        loading="lazy"
+      >
+    </div>
+    <div class="media-item">
+      <img
+        src="https://static.wixstatic.com/media/b2c0a7_0917c4bc7ed44de88093483e14366a08.png/v1/fill/w_500,h_400,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b2c0a7_0917c4bc7ed44de88093483e14366a08.png"
+        alt="Tena Marie — psychic medium"
+        loading="lazy"
+      >
+      <div class="media-item-label">Psychic Medium</div>
+    </div>
+    <div class="media-item">
+      <img
+        src="https://static.wixstatic.com/media/b2c0a7_f250e5d729e347e29625d31e4c472ab8.jpg/v1/fill/w_500,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/b2c0a7_f250e5d729e347e29625d31e4c472ab8.jpg"
+        alt="Paranormal investigation"
+        loading="lazy"
+      >
+      <div class="media-item-label">Paranormal</div>
+    </div>
+    <div class="media-item">
+      <img
+        src="https://static.wixstatic.com/media/b2c0a7_0917c4bc7ed44de88093483e14366a08.png/v1/fill/w_500,h_360,al_c,q_85,enc_avif,quality_auto/b2c0a7_0917c4bc7ed44de88093483e14366a08.png"
+        alt="Tena Marie practice"
+        loading="lazy"
+      >
+      <div class="media-item-label">Reading Session</div>
+    </div>
+    <div class="media-item">
+      <img
+        src="https://static.wixstatic.com/media/b2c0a7_8dc42278c3c848adaf21829dc4af0402.png/v1/fill/w_500,h_360,al_c,lg_1,q_85,enc_avif,quality_auto/b2c0a7_8dc42278c3c848adaf21829dc4af0402.png"
+        alt="Gulf Coast Florida"
+        loading="lazy"
+      >
+      <div class="media-item-label">Gulf Coast, FL</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <div class="testimonial-bg-text">TENA MARIE</div>
+  <div class="testimonial-stars">★★★★★</div>
+  <blockquote class="testimonial-quote">
+    "I felt instantly comfortable with her and totally connected in the first few seconds of the call. Her accuracy was undeniable — she knew things no one could have known."
+  </blockquote>
+  <p class="testimonial-attribution">Verified Client Review &nbsp;·&nbsp; Florida</p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-left">
+    <span class="section-number">04</span>
+    <h2 class="cta-heading">
+      Your questions<br>
+      deserve <em>real</em><br>
+      answers.
+    </h2>
+  </div>
+  <div class="cta-right">
+    <p class="cta-desc">
+      Whether you're seeking clarity on relationships, career, or connection with those who have passed — Tena Marie offers confidential, authentic readings by phone, online, or in-person at her Old Town, Florida studio.
+    </p>
+    <a href="mailto:dixieboo2@yahoo.com?subject=Reading%20Request" class="cta-button">Request a Reading</a>
+    <p class="cta-note">Or call: (352) 440-9280 · Wed–Sat, 11AM–4PM EST</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="clip-reveal">Book your<br>session</h2>
+    <p>All readings are confidential. Sessions available in-person at Old Town, FL or remotely by phone and video call. Reach out to confirm availability and special pricing.</p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <a href="mailto:dixieboo2@yahoo.com" class="contact-value">dixieboo2@yahoo.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Phone</span>
+        <a href="tel:3524400073" class="contact-value">(352) 440-9280</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Address</span>
+        <span class="contact-value">Old Town, FL 32680</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Hours</span>
+        <span class="contact-value">Wednesday – Saturday · 11AM–4PM</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Payment</span>
+        <span class="contact-value">CashApp · $TenaWeber8</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="reading-card">
+      <h3>Reading Types</h3>
+      <p>Tena offers a range of reading formats. Contact for current pricing specials.</p>
+      <div class="reading-options">
+        <div class="reading-option">
+          <span class="reading-option-name">Psychic Reading</span>
+          <span>Phone · Online · In-Person</span>
+        </div>
+        <div class="reading-option">
+          <span class="reading-option-name">Mediumship Session</span>
+          <span>Connecting with loved ones</span>
+        </div>
+        <div class="reading-option">
+          <span class="reading-option-name">Pet Psychic</span>
+          <span>Living &amp; passed animals</span>
+        </div>
+        <div class="reading-option">
+          <span class="reading-option-name">Cold Case Consult</span>
+          <span>Law enforcement &amp; families</span>
+        </div>
+        <div class="reading-option">
+          <span class="reading-option-name">Paranormal Investigation</span>
+          <span>Gulf Coast Paranormal Resource</span>
+        </div>
+      </div>
+      <a href="mailto:dixieboo2@yahoo.com?subject=Reading%20Request" class="book-btn">Contact for Availability</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Miss Tena Marie</span>
+  <span class="footer-copy">© 2026 · Old Town, Florida · All rights reserved</span>
+  <div class="footer-links">
+    <a href="https://www.facebook.com/PsychicTenaMarie/" target="_blank">Facebook</a>
+    <a href="https://www.blogtalkradio.com/psychictenamarie" target="_blank">Radio</a>
+    <a href="mailto:dixieboo2@yahoo.com">Email</a>
+    <a href="tel:3524400073">Call</a>
+    <a href="#" style="opacity:0.4;font-size:10px;">Design by Lucas Blatt</a>
+  </div>
+</footer>
+
+<script>
+  // Hero entrance on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelector('#hero').classList.add('hero-loaded');
+    }, 100);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      heroBg.style.backgroundPositionY = (scrollY * 0.35) + 'px';
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for scroll animations
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -60px 0px' };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Elements to animate
+  const animateEls = document.querySelectorAll(
+    '.stat-item, .about-image-wrap, .about-text, .media-item, ' +
+    '.testimonial-quote, .cta-right, .contact-right, .clip-reveal, .service-card'
+  );
+
+  animateEls.forEach(el => observer.observe(el));
+
+  // Stagger stat items
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.1) + 's';
+  });
+</script>
+</body>
+</html>
