@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eddie Mae Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #F7F3EE;
+    --warm-white: #FDFAF6;
+    --text:     #2C2420;
+    --muted:    #8A7A72;
+    --blush:    #D4A898;
+    --sage:     #8E9E8B;
+    --dark:     #1A1410;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    transition: background 0.4s ease;
+  }
+  nav.scrolled { background: rgba(247,243,238,0.95); backdrop-filter: blur(8px); }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--warm-white);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--text); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(253,250,246,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--muted); }
+  .nav-links a:hover { color: var(--blush); }
+
+  /* ── HERO — Full-bleed image, text pinned bottom-left ──── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/866240_dcca126303dc4e32b64e2dbac773f2e3~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.08);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(26,20,16,0.72) 0%,
+      rgba(26,20,16,0.25) 45%,
+      transparent 80%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  }
+  .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 9vw, 108px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: 0.08em;
+    color: var(--warm-white);
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+  }
+  .hero-name.visible { clip-path: inset(0 0% 0 0); }
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,250,246,0.7);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.6s, transform 0.7s ease 0.6s;
+  }
+  .hero-sub.visible { opacity: 1; transform: translateY(0); }
+  .hero-scroll {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: rgba(253,250,246,0.5);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(253,250,246,0.3);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(0.6); }
+  }
+
+  /* ── MARQUEE STRIP ─────────────────────── */
+  .marquee-strip {
+    background: var(--blush);
+    color: var(--warm-white);
+    overflow: hidden;
+    padding: 14px 0;
+  }
+  .marquee-inner {
+    display: flex;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-text {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-right: 80px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS SECTION ─────────────────────── */
+  #stats {
+    background: var(--warm-white);
+    padding: 100px 60px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.12s; }
+  .stat-item:nth-child(3) { transition-delay: 0.24s; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(60px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ── GALLERY ───────────────────────────── */
+  #gallery {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section-label.visible { opacity: 1; transform: translateX(0); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 60px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* Editorial scroll gallery — alternating large/small */
+  .gallery-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: clip-path;
+    cursor: pointer;
+  }
+  .gallery-item.visible { clip-path: inset(0 0 0 0); }
+  .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.3s; }
+  .gallery-item--large {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.04);
+    transition: transform 0.7s ease;
+  }
+  .gallery-item--large img { min-height: 600px; }
+  .gallery-item:not(.gallery-item--large) img { min-height: 280px; }
+  .gallery-item:hover img { transform: scale(1.0); }
+
+  /* ── ABOUT ─────────────────────────────── */
+  #about {
+    padding: 140px 60px;
+    background: var(--dark);
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-image-wrap {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: clip-path;
+  }
+  .about-image-wrap.visible { clip-path: inset(0 0 0 0); }
+  .about-image-wrap img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  /* Accent line detail */
+  .about-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 60%;
+    height: 3px;
+    background: var(--blush);
+    z-index: 2;
+  }
+  .about-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .about-text.visible { opacity: 1; transform: translateY(0); }
+  .about-text .section-label { color: var(--blush); }
+  .about-text .section-title { color: var(--warm-white); clip-path: none; opacity: 1; }
+  .about-bio {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(253,250,246,0.65);
+    margin-bottom: 32px;
+  }
+  .about-bio em {
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: rgba(253,250,246,0.85);
+  }
+  .about-detail {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    opacity: 0.8;
+  }
+
+  /* ── SERVICES ──────────────────────────── */
+  #services {
+    padding: 120px 60px;
+    background: var(--warm-white);
+  }
+  .services-header {
+    margin-bottom: 70px;
+    max-width: 600px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .service-item {
+    border-top: 1px solid rgba(44,36,32,0.12);
+    padding-top: 28px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .service-item.visible { opacity: 1; transform: translateY(0); }
+  .service-item:nth-child(2) { transition-delay: 0.1s; }
+  .service-item:nth-child(3) { transition-delay: 0.2s; }
+  .service-item:nth-child(4) { transition-delay: 0.3s; }
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: rgba(44,36,32,0.08);
+    display: block;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .service-name {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .service-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ── CTA SECTION ───────────────────────── */
+  #cta {
+    position: relative;
+    background: var(--blush);
+    padding: 120px 60px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(100px, 15vw, 200px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+  .cta-content { position: relative; z-index: 2; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .cta-title.visible { opacity: 1; transform: translateY(0); }
+  .cta-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(253,250,246,0.8);
+    margin-bottom: 48px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.15s;
+  }
+  .cta-subtitle.visible { opacity: 1; }
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    background: var(--warm-white);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+  }
+  .cta-btn:hover { background: var(--dark); color: var(--warm-white); transform: translateY(-2px); }
+
+  /* ── CONTACT ───────────────────────────── */
+  #contact {
+    padding: 120px 60px 80px;
+    background: var(--cream);
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .contact-left .section-title { margin-bottom: 24px; }
+  .contact-tagline {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 420px;
+  }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--blush);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 24px;
+    transition: color 0.3s;
+  }
+  .contact-email:hover { color: var(--text); }
+  .contact-social {
+    display: flex;
+    gap: 28px;
+    margin-top: 16px;
+  }
+  .contact-social a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-social a:hover { color: var(--blush); }
+  .contact-right {
+    padding-top: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  }
+  .contact-right.visible { opacity: 1; transform: translateY(0); }
+  .contact-detail {
+    border-top: 1px solid rgba(44,36,32,0.1);
+    padding: 20px 0;
+  }
+  .contact-detail:last-child { border-bottom: 1px solid rgba(44,36,32,0.1); }
+  .contact-detail-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .contact-detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--text);
+  }
+
+  /* ── FOOTER ────────────────────────────── */
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(253,250,246,0.06);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(253,250,246,0.6);
+  }
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(253,250,246,0.3);
+  }
+  .footer-credit {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(253,250,246,0.2);
+  }
+
+  /* ── RESPONSIVE ────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { bottom: 50px; left: 24px; right: 24px; }
+    .hero-scroll { display: none; }
+    #stats { padding: 70px 24px; }
+    .stats-grid { grid-template-columns: 1fr; gap: 40px; }
+    #gallery { padding: 80px 24px; }
+    .gallery-editorial { grid-template-columns: 1fr; }
+    .gallery-item--large { grid-row: auto; }
+    #about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+    #cta { padding: 80px 24px; }
+    #contact { padding: 80px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 50px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 30px 24px; }
+  }
+  @media (max-width: 480px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">Eddie Mae Photography</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#services">Sessions</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — Full-bleed, text pinned bottom-left -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="heroEyebrow">Newborn · Family · Maternity</p>
+    <h1 class="hero-name" id="heroName">Eddie Mae<br>Photography</h1>
+    <p class="hero-sub" id="heroSub">Northwood, North Dakota · Est. 2014</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-text">Newborn · Maternity · Family · Milestone Sessions · Studio &amp; Outdoor · Northwood, ND · Booking Now · </span>
+    <span class="marquee-text">Newborn · Maternity · Family · Milestone Sessions · Studio &amp; Outdoor · Northwood, ND · Booking Now · </span>
+    <span class="marquee-text">Newborn · Maternity · Family · Milestone Sessions · Studio &amp; Outdoor · Northwood, ND · Booking Now · </span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">11+</span>
+      <span class="stat-label">Years of Experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">455</span>
+      <span class="stat-label">Moments Captured</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">500+</span>
+      <span class="stat-label">Instagram Followers</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY — Editorial asymmetric layout -->
+<section id="gallery">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-title">A glimpse<br>into the work</h2>
+  <div class="gallery-editorial">
+    <div class="gallery-item gallery-item--large">
+      <img
+        src="https://static.wixstatic.com/media/866240_dcca126303dc4e32b64e2dbac773f2e3~mv2.jpg"
+        alt="Newborn portrait session"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item">
+      <img
+        src="https://static.wixstatic.com/media/866240_221ae6c58e91497e8e4ab31c59fff6ad~mv2.jpg"
+        alt="Family photography session"
+        loading="lazy"
+      >
+    </div>
+    <div class="gallery-item">
+      <img
+        src="https://static.wixstatic.com/media/866240_5acf94ec2e1f4a6690fb855a06606d03~mv2.jpg"
+        alt="Maternity session"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT — Magazine spread layout, dark background -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap">
+      <img
+        src="https://static.wixstatic.com/media/866240_5eb33ef0cd084b1691a50ad3c39d6925~mv2.jpg"
+        alt="Amy — Eddie Mae Photography"
+        loading="lazy"
+      >
+    </div>
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Amy &amp; the<br>art of memory</h2>
+      <p class="about-bio">
+        With over <em>eleven years behind the lens</em>, Amy has built Eddie Mae Photography on one simple truth: the smallest moments matter most. Specializing in newborn, maternity, family, and milestone sessions, she works from a home studio in Northwood, ND — and travels when the moment calls for it.
+      </p>
+      <p class="about-bio">
+        A mother of five with a grandchild on the way, Amy photographs what she knows: <em>time passes fast, and these images are how you hold it still.</em>
+      </p>
+      <p class="about-detail">Northwood, North Dakota · Home Studio &amp; Outdoor</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <p class="section-label">Sessions</p>
+    <h2 class="section-title">What we offer</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <span class="service-number">01</span>
+      <span class="service-name">Newborn</span>
+      <p class="service-desc">Posed and lifestyle newborn sessions. Scheduled within the first two weeks of life for the dreamiest results.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-number">02</span>
+      <span class="service-name">Maternity</span>
+      <p class="service-desc">Celebrating the journey. Studio and outdoor sessions, best scheduled between 28–36 weeks.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-number">03</span>
+      <span class="service-name">Family</span>
+      <p class="service-desc">Genuine, relaxed family sessions that capture the real you — not the posed version.</p>
+    </div>
+    <div class="service-item">
+      <span class="service-number">04</span>
+      <span class="service-name">Milestone</span>
+      <p class="service-desc">Cake smash, first year collections, and all the milestones worth marking along the way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg-text">Memory</div>
+  <div class="cta-content">
+    <h2 class="cta-title" id="ctaTitle">These moments<br>won't wait.</h2>
+    <p class="cta-subtitle" id="ctaSub">Newborn sessions book quickly — reach out early to hold your date.</p>
+    <a href="mailto:eddiemaephotography@gmail.com" class="cta-btn">Book Your Session</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's create<br>something lasting</h2>
+      <p class="contact-tagline">Use the contact form below or reach out directly. All inquiries are answered within 24–48 hours.</p>
+      <a href="mailto:eddiemaephotography@gmail.com" class="contact-email">eddiemaephotography@gmail.com</a>
+      <div class="contact-social">
+        <a href="https://www.instagram.com/eddiemaephotography/" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/eddiemaephotography/" target="_blank">Facebook</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-detail">
+        <span class="contact-detail-label">Location</span>
+        <span class="contact-detail-value">Northwood, North Dakota</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Studio</span>
+        <span class="contact-detail-value">Home Studio + Outdoor</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Specialties</span>
+        <span class="contact-detail-value">Newborn · Maternity · Family · Milestone</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Travel</span>
+        <span class="contact-detail-value">Available upon request</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Eddie Mae Photography</span>
+  <span class="footer-copy">&copy; 2026 · All Rights Reserved</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.backgroundPositionY = (50 + window.scrollY * 0.3) + '%';
+  }, { passive: true });
+
+  // Hero entrance animations
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroEyebrow').classList.add('visible');
+      document.getElementById('heroName').classList.add('visible');
+      document.getElementById('heroSub').classList.add('visible');
+    }, 100);
+  });
+
+  // IntersectionObserver for all scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe elements
+  document.querySelectorAll(
+    '.stat-item, .section-label, .section-title, .gallery-item, ' +
+    '.about-image-wrap, .about-text, .service-item, .contact-right, ' +
+    '.cta-title, .cta-subtitle'
+  ).forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
