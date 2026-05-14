@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurélie Four — Wedding & Lifestyle Photographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F4EFE6;
+    --warm-white: #FAF8F4;
+    --charcoal: #1E1C19;
+    --mid: #5C5650;
+    --accent: #8B6B5A;
+    --accent-light: #C9A98E;
+    --dark: #12100E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    mix-blend-mode: normal;
+  }
+
+  nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    text-decoration: none;
+  }
+
+  nav .links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  nav .links a {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    transition: color 0.3s;
+  }
+
+  nav .links a:hover { color: #fff; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/912764_b67cf8abfa0e4f21804299dff02b7d9d~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(18,16,14,0.75) 0%,
+      rgba(18,16,14,0.2) 50%,
+      rgba(18,16,14,0.05) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 64px;
+    max-width: 900px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .hero-content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 20px;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(72px, 8vw, 110px);
+    line-height: 0.95;
+    color: #fff;
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+  }
+
+  .hero-name.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .hero-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.8);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .hero-cta {
+    margin-top: 36px;
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-light);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .hero-cta:hover {
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 1s ease 1.2s;
+  }
+
+  .hero-scroll.is-visible { opacity: 1; }
+
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    writing-mode: vertical-rl;
+  }
+
+  .hero-scroll-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(255,255,255,0.3);
+    animation: scroll-line 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-line {
+    0%, 100% { transform: scaleY(1); transform-origin: top; }
+    50% { transform: scaleY(0.4); transform-origin: top; }
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--charcoal);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--accent-light);
+    padding: 0 40px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  .stats {
+    background: var(--cream);
+    padding: 80px 48px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    text-align: center;
+    border-right: 1px solid rgba(90,80,70,0.15);
+    padding: 20px 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-item:nth-child(2) { transition-delay: 0.1s; }
+  .stat-item:nth-child(3) { transition-delay: 0.2s; }
+  .stat-item:nth-child(4) { transition-delay: 0.3s; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* ─── GALLERY ─── */
+  .gallery-section {
+    padding: 120px 0;
+    background: var(--warm-white);
+  }
+
+  .section-header {
+    padding: 0 48px 60px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: rgba(30,28,25,0.06);
+    line-height: 1;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    color: var(--charcoal);
+    letter-spacing: 0.04em;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* Masonry gallery */
+  .gallery-masonry {
+    columns: 3;
+    column-gap: 6px;
+    padding: 0 48px;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 6px;
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 0.7s ease, clip-path 0.9s ease-out;
+    will-change: transform, opacity;
+  }
+
+  .gallery-item.is-visible {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.1s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.2s; }
+  .gallery-item:nth-child(6) { transition-delay: 0.3s; }
+  .gallery-item:nth-child(7) { transition-delay: 0.15s; }
+  .gallery-item:nth-child(8) { transition-delay: 0.25s; }
+
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.03);
+  }
+
+  /* ─── FEATURED WORK ─── */
+  .featured {
+    padding: 120px 48px;
+    background: var(--charcoal);
+  }
+
+  .featured .section-header { padding: 0 0 60px; }
+  .featured .section-num { color: rgba(255,255,255,0.04); }
+  .featured .section-title { color: rgba(255,255,255,0.9); }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .featured-item {
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    will-change: opacity;
+  }
+
+  .featured-item.is-visible { opacity: 1; }
+  .featured-item:nth-child(2) { transition-delay: 0.15s; }
+
+  .featured-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+    min-height: 400px;
+  }
+
+  .featured-item:hover img { transform: scale(1.02); }
+
+  .featured-caption {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .featured-caption .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    max-width: 480px;
+    line-height: 1.5;
+  }
+
+  .featured-caption .quote-attr {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    padding: 140px 48px;
+    background: var(--cream);
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image {
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: transform, opacity;
+  }
+
+  .about-image.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-image img {
+    width: 100%;
+    display: block;
+  }
+
+  .about-image::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    right: 20px;
+    bottom: -20px;
+    border: 1px solid var(--accent-light);
+    z-index: -1;
+  }
+
+  .about-text {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    will-change: transform, opacity;
+  }
+
+  .about-text.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.15;
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .about-body {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .about-pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    margin: 32px 0;
+    line-height: 1.5;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    border: 1px solid rgba(90,80,70,0.3);
+    padding: 6px 14px;
+  }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    background: var(--accent);
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'AURÉLIE';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.04);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+
+  .cta-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    letter-spacing: 0.03em;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: #fff;
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 48px;
+    font-weight: 500;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .cta-btn:hover {
+    background: var(--charcoal);
+    color: #fff;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    padding: 120px 48px;
+    background: var(--warm-white);
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left .section-header { padding: 0 0 40px; }
+  .contact-left .section-title { font-size: 38px; }
+  .contact-left .section-num { font-size: 60px; }
+
+  .contact-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--charcoal);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    transition: color 0.3s;
+  }
+
+  .contact-email:hover { color: var(--accent); }
+
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-item {
+    border-bottom: 1px solid rgba(30,28,25,0.1);
+    padding-bottom: 24px;
+  }
+
+  .contact-item-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+
+  .contact-item-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--charcoal);
+  }
+
+  .contact-item-value a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-item-value a:hover { color: var(--accent); }
+
+  .social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .social-links a {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .social-links a:hover { color: var(--accent); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .foot-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  footer .foot-copy {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.25);
+  }
+
+  footer .foot-credit {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav .links { gap: 20px; }
+
+    .hero-content { padding: 0 24px 48px; }
+    .hero-name { font-size: clamp(56px, 12vw, 80px); }
+
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { border-bottom: 1px solid rgba(90,80,70,0.15); }
+    .stat-item:nth-child(odd) { border-right: 1px solid rgba(90,80,70,0.15); }
+
+    .gallery-masonry { columns: 2; padding: 0 24px; }
+    .section-header { padding: 0 24px 40px; }
+    .featured { padding: 80px 24px; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-image::before { display: none; }
+    .cta-section { padding: 80px 24px; }
+    .contact { padding: 80px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    .stats { padding: 60px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-masonry { columns: 1; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    nav .links { display: none; }
+    .hero-name { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Aurélie Four</a>
+  <ul class="links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: Full-bleed image, text pinned bottom-left, no generic overlay -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content" id="heroContent">
+    <p class="hero-eyebrow">London · UK & EU · Bilingual EN/FR</p>
+    <h1 class="hero-name" id="heroName">Aurélie<br>Four</h1>
+    <p class="hero-sub">Relaxed, documentary wedding & lifestyle photography for people who love dogs. No stiff poses — just your real life, beautifully held.</p>
+    <a href="#gallery" class="hero-cta">View the work</a>
+  </div>
+  <div class="hero-scroll" id="heroScroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Wedding Photography</span><span>·</span>
+    <span>Lifestyle & Couples</span><span>·</span>
+    <span>London & UK</span><span>·</span>
+    <span>Destination EU</span><span>·</span>
+    <span>LGBTQ+ Affirming</span><span>·</span>
+    <span>Bilingual EN/FR</span><span>·</span>
+    <span>Wedding Photography</span><span>·</span>
+    <span>Lifestyle & Couples</span><span>·</span>
+    <span>London & UK</span><span>·</span>
+    <span>Destination EU</span><span>·</span>
+    <span>LGBTQ+ Affirming</span><span>·</span>
+    <span>Bilingual EN/FR</span><span>·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">8+</div>
+      <div class="stat-label">Years Shooting</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2K</div>
+      <div class="stat-label">Instagram Following</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Candid & Relaxed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Languages · EN / FR</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="gallery-masonry">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/912764_60c17077e3414975870da8fdc15259a7~mv2.jpg" alt="Wedding ceremony — candid moment" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/912764_c066126ea66e49bdb8415ed62d2fa35a~mv2.jpg" alt="Couple portrait — natural light" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/912764_ae35975f6997490b991af8cb39e4814f~mv2.jpg" alt="Lifestyle session" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/912764_ebe4f30354294baf93c5613acfdf777b~mv2.jpg" alt="Documentary wedding photography" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/912764_7801214eecaa43c5a4bd84cdd7c5796b~mv2.jpg" alt="Relaxed couple session" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED WORK -->
+<section class="featured" id="featured">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title" style="color: rgba(255,255,255,0.85);">As It Happened</h2>
+  </div>
+  <div class="featured-grid">
+    <div class="featured-item">
+      <img src="https://static.wixstatic.com/media/912764_b67cf8abfa0e4f21804299dff02b7d9d~mv2.jpg" alt="Featured wedding portrait" loading="lazy">
+    </div>
+    <div class="featured-item">
+      <img src="https://static.wixstatic.com/media/912764_c066126ea66e49bdb8415ed62d2fa35a~mv2.jpg" alt="Couples photography" loading="lazy">
+    </div>
+  </div>
+  <div class="featured-caption">
+    <p class="quote">"Authentic, warm, and quietly attentive — she disappears into the background and only the moments remain."</p>
+    <p class="quote-attr">Past Bride · London</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-image">
+      <img src="https://static.wixstatic.com/media/912764_60c17077e3414975870da8fdc15259a7~mv2.jpg" alt="Aurélie Four — photographer" loading="lazy">
+    </div>
+    <div class="about-text">
+      <p class="about-eyebrow">About Aurélie</p>
+      <h2 class="about-heading">A French eye<br>on London life</h2>
+      <p class="about-body">Working in a relaxed, documentary style, Aurélie Four captures weddings, couples, and lifestyle moments across London, the UK, and Europe. No stiff poses, no overly directed shots — just real emotion, real light, and real people.</p>
+      <blockquote class="about-pull">"I want you to forget I'm there — until you see the photos."</blockquote>
+      <p class="about-body">Bilingual in English and French. LGBTQ+ affirming. Complementary upgrades available for key workers and animal rescue volunteers.</p>
+      <div class="about-tags">
+        <span class="tag">Weddings</span>
+        <span class="tag">Elopements</span>
+        <span class="tag">Couples</span>
+        <span class="tag">Lifestyle</span>
+        <span class="tag">Commercial</span>
+        <span class="tag">Dog-friendly</span>
+        <span class="tag">Destination EU</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section class="cta-section">
+  <p class="cta-eyebrow">Ready to document your story?</p>
+  <h2 class="cta-heading">Let's make something<br>worth keeping.</h2>
+  <a href="mailto:hello@photobya4.com" class="cta-btn">Get In Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Inquiries</h2>
+      </div>
+      <p class="contact-body">Available for weddings, elopements, couples sessions, and commercial work across London, the UK, and Europe. Destination bookings welcome.</p>
+      <a href="mailto:hello@photobya4.com" class="contact-email">hello@photobya4.com</a>
+    </div>
+    <div class="contact-right">
+      <div class="contact-item">
+        <p class="contact-item-label">Based in</p>
+        <p class="contact-item-value">London, United Kingdom</p>
+      </div>
+      <div class="contact-item">
+        <p class="contact-item-label">Available</p>
+        <p class="contact-item-value">UK · Europe · Destination</p>
+      </div>
+      <div class="contact-item">
+        <p class="contact-item-label">Languages</p>
+        <p class="contact-item-value">English · Français</p>
+      </div>
+      <div class="contact-item">
+        <p class="contact-item-label">Follow Along</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/photobya4/" target="_blank">Instagram @photobya4</a>
+          <a href="https://www.facebook.com/PhotoByA4/" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-name">Aurélie Four — Photo by A4</span>
+  <span class="foot-copy">© 2026 All rights reserved</span>
+  <span class="foot-credit">Design concept by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero entrance animations
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('heroContent').classList.add('is-visible');
+      document.getElementById('heroName').classList.add('is-visible');
+      document.getElementById('heroScroll').classList.add('is-visible');
+    }, 200);
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.35}px)`;
+  });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(
+    '.section-title, .gallery-item, .featured-item, .about-image, .about-text, .stat-item'
+  ).forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
