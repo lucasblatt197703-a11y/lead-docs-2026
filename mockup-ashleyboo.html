@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ashley Bootier Photography — West Palm Beach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #F9F5F0;
+      --warm-off: #F2EDE6;
+      --text:     #1C1611;
+      --mid:      #6B5E52;
+      --accent:   #C4845A;
+      --light:    #A89080;
+      --dark:     #14110E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+      transition: background 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(249,245,240,0.95);
+      backdrop-filter: blur(8px);
+      padding: 16px 48px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s;
+    }
+    nav.scrolled .nav-logo { color: var(--text); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--mid); }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ===== HERO — full-bleed with text pinned bottom-left ===== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/8ace23_f7c255fa01704bb6bff631c6b23c4f45~mv2.jpg/v1/fill/w_1920,h_1280,al_c,q_90/8ace23_f7c255fa01704bb6bff631c6b23c4f45~mv2.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(20,17,14,0.72) 0%,
+        rgba(20,17,14,0.3) 40%,
+        rgba(20,17,14,0.08) 100%
+      );
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 72px;
+      left: 64px;
+      right: 64px;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+    }
+    .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 9vw, 110px);
+      font-weight: 300;
+      line-height: 0.92;
+      color: #fff;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+    .hero-name.visible { clip-path: inset(0 0% 0 0); }
+    .hero-sub {
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s 0.7s, transform 0.8s 0.7s;
+    }
+    .hero-sub.visible { opacity: 1; transform: translateY(0); }
+    .hero-cta {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      opacity: 0;
+      transition: opacity 0.8s 0.9s, color 0.3s;
+    }
+    .hero-cta.visible { opacity: 1; }
+    .hero-cta:hover { color: var(--accent); }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 72px;
+      right: 64px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 1.2s 1.2s;
+    }
+    .scroll-indicator.visible { opacity: 1; }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.5));
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ===== MARQUEE STRIP ===== */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 0;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.15em;
+      color: #fff;
+      padding: 0 32px;
+    }
+    .marquee-dot {
+      color: rgba(255,255,255,0.5);
+      padding: 0 8px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      background: var(--dark);
+      padding: 80px 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2) { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) { transition-delay: 0.3s; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ===== SECTION SHARED ===== */
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 300;
+      color: rgba(28,22,17,0.04);
+      line-height: 1;
+      position: absolute;
+      left: -20px;
+      top: -20px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-section {
+      padding: 140px 0 100px;
+      background: var(--cream);
+    }
+    .gallery-header {
+      padding: 0 64px 60px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .gallery-header-left { position: relative; }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+    .section-subtitle {
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;
+    }
+    .section-subtitle.visible { opacity: 1; transform: translateY(0); }
+    .gallery-note {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--mid);
+      max-width: 280px;
+      text-align: right;
+      line-height: 1.7;
+      opacity: 0;
+      transition: opacity 0.8s 0.4s;
+    }
+    .gallery-note.visible { opacity: 1; }
+
+    /* Editorial scroll gallery */
+    .gallery-editorial {
+      padding: 0 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .gallery-row {
+      display: grid;
+      gap: 8px;
+    }
+    .gallery-row-1 { grid-template-columns: 1fr 1fr; }
+    .gallery-row-2 { grid-template-columns: 2fr 1fr 1fr; }
+    .gallery-row-3 { grid-template-columns: 1fr 2fr; }
+    .gallery-row-4 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .gallery-item.visible { clip-path: inset(0% 0 0 0); }
+    .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+    .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .tall { height: 480px; }
+    .medium { height: 320px; }
+    .short { height: 260px; }
+
+    /* thin accent line between sections */
+    .accent-rule {
+      width: 80px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto;
+    }
+
+    /* ===== FEATURED WORK STRIP ===== */
+    .featured-strip {
+      padding: 100px 0;
+      background: var(--warm-off);
+      overflow: hidden;
+    }
+    .featured-inner {
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .featured-image-wrap {
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .featured-image-wrap.visible { clip-path: inset(0% 0 0 0); }
+    .featured-image-wrap img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      display: block;
+    }
+    .featured-image-wrap::before {
+      content: '';
+      position: absolute;
+      top: -16px;
+      left: -16px;
+      right: 16px;
+      bottom: 16px;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+    .featured-text {
+      padding: 20px 0;
+    }
+    .featured-text .section-subtitle { text-align: left; }
+    .featured-text .section-title { text-align: left; }
+    .featured-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--mid);
+      margin: 28px 0;
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s 0.3s, transform 0.8s 0.3s;
+    }
+    .featured-quote.visible { opacity: 1; transform: translateY(0); }
+    .featured-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s 0.5s, transform 0.8s 0.5s;
+    }
+    .featured-body.visible { opacity: 1; transform: translateY(0); }
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transition: opacity 0.8s 0.6s;
+    }
+    .services-list.visible { opacity: 1; }
+    .service-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .service-line::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ===== ABOUT ===== */
+    .about-section {
+      padding: 140px 64px 120px;
+      background: var(--cream);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .about-image-col {
+      position: relative;
+    }
+    .about-image-wrap {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+    .about-image-wrap.visible { clip-path: inset(0% 0 0 0); }
+    .about-image-wrap img {
+      width: 100%;
+      height: 620px;
+      object-fit: cover;
+      display: block;
+      object-position: top center;
+    }
+    .about-text-col {
+      padding-top: 60px;
+      position: relative;
+    }
+    .about-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 160px;
+      font-weight: 300;
+      color: rgba(28,22,17,0.05);
+      line-height: 1;
+      position: absolute;
+      top: -40px;
+      left: -30px;
+      user-select: none;
+    }
+    .about-bio {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+    }
+    .about-bio.visible { opacity: 1; transform: translateY(0); }
+    .about-bio strong {
+      font-weight: 500;
+      color: var(--text);
+    }
+    .about-detail {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s 0.4s, transform 0.8s 0.4s;
+    }
+    .about-detail.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== FULL-BLEED IMAGE ROW ===== */
+    .image-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      height: 460px;
+    }
+    .image-row-item {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .image-row-item.visible { clip-path: inset(0% 0 0 0); }
+    .image-row-item:nth-child(2) { transition-delay: 0.12s; }
+    .image-row-item:nth-child(3) { transition-delay: 0.24s; }
+    .image-row-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .image-row-item:hover img { transform: scale(1.04); }
+
+    /* ===== BOLD CTA ===== */
+    .cta-section {
+      background: var(--dark);
+      padding: 140px 64px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 15vw, 200px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.025);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+    .cta-eyebrow.visible { opacity: 1; }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+    }
+    .cta-title.visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto 48px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s 0.4s, transform 0.8s 0.4s;
+    }
+    .cta-sub.visible { opacity: 1; transform: translateY(0); }
+    .cta-btn {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: #fff;
+      padding: 18px 44px;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+      opacity: 0;
+      transition: opacity 0.8s 0.6s, background 0.3s, color 0.3s;
+    }
+    .cta-btn.visible { opacity: 1; }
+    .cta-btn:hover { background: var(--accent); color: #fff; }
+
+    /* ===== CONTACT ===== */
+    .contact-section {
+      padding: 120px 64px 80px;
+      background: var(--warm-off);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left .section-title { margin-bottom: 24px; }
+    .contact-blurb {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+    }
+    .contact-blurb.visible { opacity: 1; transform: translateY(0); }
+    .contact-email-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--accent);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 32px;
+      transition: color 0.3s;
+      opacity: 0;
+      transition: opacity 0.8s 0.3s, color 0.3s;
+    }
+    .contact-email-link.visible { opacity: 1; }
+    .contact-email-link:hover { color: var(--text); }
+    .contact-social {
+      display: flex;
+      gap: 24px;
+      opacity: 0;
+      transition: opacity 0.8s 0.5s;
+    }
+    .contact-social.visible { opacity: 1; }
+    .contact-social a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-social a:hover { color: var(--accent); }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-top: 16px;
+    }
+    .contact-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(28,22,17,0.1);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .contact-info-item.visible { opacity: 1; transform: translateY(0); }
+    .contact-info-item:nth-child(2) { transition-delay: 0.1s; }
+    .contact-info-item:nth-child(3) { transition-delay: 0.2s; }
+    .contact-info-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+    .contact-info-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      padding: 32px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+    .footer-credit a { color: var(--accent); text-decoration: none; opacity: 0.7; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      .nav-links { display: none; }
+      .hero-content { left: 24px; right: 24px; bottom: 48px; }
+      .hero-name { font-size: 52px; }
+      .scroll-indicator { display: none; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 48px 24px; }
+      .gallery-section { padding: 80px 0 60px; }
+      .gallery-header { padding: 0 24px 40px; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .gallery-note { text-align: left; }
+      .gallery-editorial { padding: 0 24px; }
+      .gallery-row-1, .gallery-row-2, .gallery-row-3, .gallery-row-4 { grid-template-columns: 1fr; }
+      .tall { height: 280px; }
+      .medium { height: 220px; }
+      .short { height: 200px; }
+      .featured-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
+      .featured-image-wrap::before { display: none; }
+      .featured-image-wrap img { height: 360px; }
+      .about-section { padding: 80px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-image-wrap img { height: 380px; }
+      .about-number { font-size: 100px; }
+      .image-row { grid-template-columns: 1fr; height: auto; }
+      .image-row-item { height: 260px; }
+      .cta-section { padding: 80px 24px; }
+      .contact-section { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+      .section-number { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 40px; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 0; }
+      .stat-number { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">Ashley Bootier</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow" id="hero-eyebrow">West Palm Beach, Florida</div>
+      <h1 class="hero-name" id="hero-name">Ashley<br>Bootier</h1>
+      <p class="hero-sub" id="hero-sub">Couples · Maternity · Families · Children</p>
+      <a href="#work" class="hero-cta" id="hero-cta">View Portfolio</a>
+    </div>
+    <div class="scroll-indicator" id="scroll-indicator">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Couples <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Maternity <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Families <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Children <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">West Palm Beach, FL <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Couples <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Maternity <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Families <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Children <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">West Palm Beach, FL <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Couples <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Maternity <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Families <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Children <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">West Palm Beach, FL <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Couples <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Maternity <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Families <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Children <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">West Palm Beach, FL <span class="marquee-dot">·</span></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" aria-label="Photography highlights">
+    <div class="stat-item">
+      <span class="stat-number">4+</span>
+      <span class="stat-label">Specialties</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">FL</span>
+      <span class="stat-label">South Florida</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">$175</span>
+      <span class="stat-label">Sessions from</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Memories made</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="work">
+    <div class="gallery-header">
+      <div class="gallery-header-left">
+        <p class="section-subtitle">The Portfolio</p>
+        <h2 class="section-title">Moments That Last</h2>
+      </div>
+      <p class="gallery-note">Every session is tailored to you — your personalities, your story, your light.</p>
+    </div>
+
+    <div class="gallery-editorial">
+      <div class="gallery-row gallery-row-1">
+        <div class="gallery-item tall">
+          <img src="https://static.wixstatic.com/media/8ace23_f7c255fa01704bb6bff631c6b23c4f45~mv2.jpg/v1/fill/w_900,h_1200,al_c,q_85/8ace23_f7c255fa01704bb6bff631c6b23c4f45~mv2.jpg" alt="Couple photography session" loading="lazy">
+        </div>
+        <div class="gallery-item tall">
+          <img src="https://static.wixstatic.com/media/8ace23_2e8e888aaa7e415b807c8c4668ac537c~mv2.jpg/v1/fill/w_900,h_1200,al_c,q_85/8ace23_2e8e888aaa7e415b807c8c4668ac537c~mv2.jpg" alt="Maternity portrait session" loading="lazy">
+        </div>
+      </div>
+
+      <div class="gallery-row gallery-row-2">
+        <div class="gallery-item medium">
+          <img src="https://static.wixstatic.com/media/8ace23_92f0a963301143598da07792ab56543f~mv2.jpg/v1/fill/w_900,h_600,al_c,q_85/8ace23_92f0a963301143598da07792ab56543f~mv2.jpg" alt="Family portrait" loading="lazy">
+        </div>
+        <div class="gallery-item medium">
+          <img src="https://static.wixstatic.com/media/8ace23_593dbf5c41694b70ac8952aa83d30d3e~mv2.jpg/v1/fill/w_600,h_600,al_c,q_85/8ace23_593dbf5c41694b70ac8952aa83d30d3e~mv2.jpg" alt="Children photography" loading="lazy">
+        </div>
+        <div class="gallery-item medium">
+          <img src="https://static.wixstatic.com/media/8ace23_662c512a67004f11a0797df3c63851bb~mv2.jpg/v1/fill/w_600,h_600,al_c,q_85/8ace23_662c512a67004f11a0797df3c63851bb~mv2.jpg" alt="Family session" loading="lazy">
+        </div>
+      </div>
+
+      <div class="gallery-row gallery-row-3">
+        <div class="gallery-item tall">
+          <img src="https://static.wixstatic.com/media/8ace23_d5818898e4f94716a11171e7d1cbb55b~mv2.jpg/v1/fill/w_700,h_900,al_c,q_85/8ace23_d5818898e4f94716a11171e7d1cbb55b~mv2.jpg" alt="Portrait session" loading="lazy">
+        </div>
+        <div class="gallery-item tall">
+          <img src="https://static.wixstatic.com/media/8ace23_5913c53a3873464d89461528b75e07e8~mv2.jpg/v1/fill/w_1200,h_900,al_c,q_85/8ace23_5913c53a3873464d89461528b75e07e8~mv2.jpg" alt="Engagement session" loading="lazy">
+        </div>
+      </div>
+
+      <div class="gallery-row gallery-row-4">
+        <div class="gallery-item short">
+          <img src="https://static.wixstatic.com/media/8ace23_2c48c266ca0b406ca4f46f3999cfbaca~mv2.jpg/v1/fill/w_600,h_400,al_c,q_85/8ace23_2c48c266ca0b406ca4f46f3999cfbaca~mv2.jpg" alt="Children session" loading="lazy">
+        </div>
+        <div class="gallery-item short">
+          <img src="https://static.wixstatic.com/media/8ace23_3f772f15421a4410bd8290be4bed78a2~mv2.jpg/v1/fill/w_600,h_400,al_c,q_85/8ace23_3f772f15421a4410bd8290be4bed78a2~mv2.jpg" alt="Maternity photography" loading="lazy">
+        </div>
+        <div class="gallery-item short">
+          <img src="https://static.wixstatic.com/media/8ace23_0729625f75444d23ab1b78bd8c7dc5c3~mv2.jpg/v1/fill/w_600,h_400,al_c,q_85/8ace23_0729625f75444d23ab1b78bd8c7dc5c3~mv2.jpg" alt="Family outdoors" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED / SERVICES STRIP -->
+  <section class="featured-strip" id="services">
+    <div class="featured-inner">
+      <div class="featured-image-wrap">
+        <img src="https://static.wixstatic.com/media/8ace23_875a2bac05714c1780d4ca15515dd53c~mv2.jpg/v1/fill/w_900,h_1100,al_c,q_85/8ace23_875a2bac05714c1780d4ca15515dd53c~mv2.jpg" alt="Ashley Bootier Photography session" loading="lazy">
+      </div>
+      <div class="featured-text">
+        <p class="section-subtitle">What We Offer</p>
+        <h2 class="section-title">Experiences Designed for You</h2>
+        <blockquote class="featured-quote">"Capturing that unique but also true to you image that will last a lifetime."</blockquote>
+        <p class="featured-body">Whether it's the quiet anticipation of a new baby, the joyful chaos of a family at the park, or the butterflies of a new engagement — every session is built around your story. Based in West Palm Beach, available throughout South Florida.</p>
+        <ul class="services-list" aria-label="Photography services">
+          <li class="service-line">Couples &amp; Engagement</li>
+          <li class="service-line">Maternity</li>
+          <li class="service-line">Families</li>
+          <li class="service-line">Children &amp; Newborns</li>
+        </ul>
+        <p style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color: var(--accent); font-weight:400;">Sessions from $175 · Packages from $300</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL-BLEED IMAGE ROW -->
+  <div class="image-row" aria-hidden="true">
+    <div class="image-row-item">
+      <img src="https://static.wixstatic.com/media/8ace23_9fc5a9702cc347e5bf19d83ef2a721dd~mv2.jpg/v1/fill/w_700,h_700,al_c,q_85/8ace23_9fc5a9702cc347e5bf19d83ef2a721dd~mv2.jpg" alt="" loading="lazy">
+    </div>
+    <div class="image-row-item">
+      <img src="https://static.wixstatic.com/media/8ace23_72f853e7eec04364bdbe8db125fa1242~mv2.jpg/v1/fill/w_700,h_700,al_c,q_85/8ace23_72f853e7eec04364bdbe8db125fa1242~mv2.jpg" alt="" loading="lazy">
+    </div>
+    <div class="image-row-item">
+      <img src="https://static.wixstatic.com/media/8ace23_344064bdfa18497d91b6ed9bed3e81a7~mv2.jpg/v1/fill/w_700,h_700,al_c,q_85/8ace23_344064bdfa18497d91b6ed9bed3e81a7~mv2.jpg" alt="" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-image-col">
+        <div class="about-image-wrap">
+          <img src="https://static.wixstatic.com/media/8ace23_8199bff70f6b481b986f8f4d6314cb8d~mv2.jpg/v1/fill/w_900,h_1200,al_t,q_85/8ace23_8199bff70f6b481b986f8f4d6314cb8d~mv2.jpg" alt="Ashley Bootier, photographer" loading="lazy">
+        </div>
+      </div>
+      <div class="about-text-col">
+        <div class="about-number" aria-hidden="true">03</div>
+        <p class="section-subtitle">Meet Ashley</p>
+        <h2 class="section-title" style="margin-bottom:32px;">The Person<br>Behind the Lens</h2>
+        <p class="about-bio"><strong>Ashley Bootier</strong> is a West Palm Beach-based photographer specializing in life's most intimate milestones — the glow of pregnancy, the wonder of a child's first years, the magnetic pull between two people in love.</p>
+        <p class="about-detail">Every session is an opportunity to create something that feels entirely yours. Ashley brings warmth, patience, and an eye for authentic moments to each shoot — whether it's in the comfort of your own home or at your favorite park in South Florida.</p>
+        <div class="services-list">
+          <div class="service-line">West Palm Beach, FL</div>
+          <div class="service-line">Available throughout South Florida</div>
+          <div class="service-line">Indoor &amp; Outdoor Sessions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section class="cta-section">
+    <div class="cta-bg-text" aria-hidden="true">Ashley</div>
+    <p class="cta-eyebrow">Book Your Session</p>
+    <h2 class="cta-title">Your Story Deserves<br>to Be Remembered</h2>
+    <p class="cta-sub">Life moves fast. These moments won't wait. Let's make sure you have something beautiful to hold onto.</p>
+    <a href="#contact" class="cta-btn">Get In Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <p class="section-subtitle">Inquiries</p>
+      <h2 class="section-title" style="margin-bottom:24px;">Let's Talk</h2>
+      <p class="contact-blurb">Ready to book your session or just want to chat about what you're envisioning? Send a message and Ashley will get back to you within 24 hours.</p>
+      <a href="mailto:Ashleybootierphotography@gmail.com" class="contact-email-link">Ashleybootierphotography@gmail.com</a>
+      <div class="contact-social">
+        <a href="https://www.instagram.com/ashleybootierphotography" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://ashleybootierphoto.wixsite.com/photography" target="_blank" rel="noopener">Current Site</a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-info-item">
+        <span class="contact-info-label">Location</span>
+        <span class="contact-info-value">West Palm Beach, FL</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Coverage</span>
+        <span class="contact-info-value">South Florida</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Starting Investment</span>
+        <span class="contact-info-value">Sessions from $175</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Specialties</span>
+        <span class="contact-info-value">Couples · Maternity · Families · Children</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Ashley Bootier Photography</span>
+    <span class="footer-copy">© 2026</span>
+    <span class="footer-credit">Design by <a href="mailto:lucasblatt197703@gmail.com">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // Nav scroll behavior
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
+    // Hero parallax
+    const heroBg = document.getElementById('hero-bg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.3}px)`;
+    }, { passive: true });
+
+    // Hero entrance animations (fire on load)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('hero-eyebrow').classList.add('visible');
+        document.getElementById('hero-name').classList.add('visible');
+        document.getElementById('hero-sub').classList.add('visible');
+        document.getElementById('hero-cta').classList.add('visible');
+        document.getElementById('scroll-indicator').classList.add('visible');
+      }, 200);
+    });
+
+    // IntersectionObserver for scroll animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animatable elements
+    const animatables = document.querySelectorAll(
+      '.stat-item, .section-title, .section-subtitle, .gallery-note, ' +
+      '.gallery-item, .featured-image-wrap, .featured-quote, .featured-body, ' +
+      '.services-list, .about-image-wrap, .about-bio, .about-detail, ' +
+      '.image-row-item, .cta-eyebrow, .cta-title, .cta-sub, .cta-btn, ' +
+      '.contact-blurb, .contact-email-link, .contact-social, .contact-info-item'
+    );
+    animatables.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
