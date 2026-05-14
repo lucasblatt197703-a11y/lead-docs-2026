@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jen Arney Photography — Daytona Beach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5EFE6;
+      --warm-white: #FAF7F2;
+      --dark: #1C1814;
+      --mid: #3D3530;
+      --accent: #B87B5E;
+      --muted: #8C7B72;
+      --light-rule: rgba(60,45,35,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--dark);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      background: transparent;
+      mix-blend-mode: normal;
+    }
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+    nav ul a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    nav ul a:hover { color: #fff; }
+
+    /* ── HERO — Full-bleed with text pinned bottom-left ── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/194671_5498b65b4f96445caea0582f4c522044.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_5498b65b4f96445caea0582f4c522044.jpg');
+      background-size: cover;
+      background-position: center 35%;
+      will-change: transform;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(20, 15, 12, 0.75) 0%,
+        rgba(20, 15, 12, 0.2) 50%,
+        rgba(20, 15, 12, 0.05) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 72px;
+      left: 64px;
+      z-index: 10;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(72px, 9vw, 118px);
+      line-height: 0.92;
+      color: #fff;
+      letter-spacing: 0.08em;
+      display: block;
+    }
+    .hero-name .line1, .hero-name .line2 {
+      display: block;
+      overflow: hidden;
+    }
+    .hero-name .line1 span, .hero-name .line2 span {
+      display: block;
+      transform: translateY(100%);
+      transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .hero-name.visible .line1 span { transform: translateY(0); transition-delay: 0.1s; }
+    .hero-name.visible .line2 span { transform: translateY(0); transition-delay: 0.25s; }
+
+    .hero-tagline {
+      margin-top: 24px;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.1em;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+    }
+    .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 72px;
+      right: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.8s;
+    }
+    .hero-scroll.visible { opacity: 1; }
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: rgba(255,255,255,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-strip {
+      background: var(--accent);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-track span {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 0 32px;
+    }
+    .marquee-track span::before {
+      content: '·';
+      margin-right: 32px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ── */
+    #stats {
+      background: var(--dark);
+      padding: 100px 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item.visible { opacity: 1; transform: translateY(0); }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-num em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 12px;
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      padding: 120px 48px;
+      background: var(--warm-white);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 60px;
+    }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 300;
+      color: rgba(60,45,35,0.07);
+      line-height: 1;
+      margin-right: 20px;
+      user-select: none;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 400;
+      color: var(--dark);
+      letter-spacing: 0.05em;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+    .section-subtitle {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Masonry gallery */
+    .gallery-masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    .gallery-item.visible { clip-path: inset(0 0 0 0); }
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+      loading: lazy;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    /* ── FEATURED — Editorial alternating ── */
+    #featured {
+      padding: 0 0 120px;
+      background: var(--warm-white);
+    }
+
+    .featured-row {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: 520px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .featured-row.reverse { grid-template-columns: 45% 55%; }
+    .featured-row.visible { opacity: 1; transform: translateY(0); }
+
+    .featured-img {
+      overflow: hidden;
+    }
+    .featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      transition: transform 0.8s ease;
+    }
+    .featured-row.visible .featured-img img { transform: scale(1); }
+
+    .featured-text {
+      padding: 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--cream);
+    }
+    .featured-row.reverse .featured-text {
+      padding: 80px 72px 80px 64px;
+    }
+    .featured-cat {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .featured-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+    .featured-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--mid);
+      max-width: 360px;
+    }
+    .featured-rule {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      margin-top: 32px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 140px 64px;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+    .about-img-wrap.visible { clip-path: inset(0 0 0 0); }
+    .about-img-wrap img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-accent-line {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+    }
+
+    .about-text {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .about-text.visible { opacity: 1; transform: translateY(0); }
+    .about-label {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+    .about-body {
+      font-size: 16px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 24px;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+      padding-left: 24px;
+      border-left: 2px solid var(--accent);
+      margin: 32px 0;
+    }
+
+    /* ── CTA ── */
+    #cta {
+      background: var(--accent);
+      padding: 140px 64px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 240px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .cta-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .cta-label.visible { opacity: 1; transform: translateY(0); }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 6vw, 82px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+    .cta-heading.visible { clip-path: inset(0 0% 0 0); }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      border: 1.5px solid #fff;
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      transition: background 0.3s ease, color 0.3s ease;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: background 0.3s ease, color 0.3s ease, opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+    .cta-btn.visible { opacity: 1; transform: translateY(0); }
+    .cta-btn:hover { background: #fff; color: var(--accent); }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 120px 64px;
+      background: var(--warm-white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .contact-left.visible { opacity: 1; transform: translateY(0); }
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .contact-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 40px;
+    }
+    .contact-info-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 24px;
+    }
+    .contact-info-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .contact-info-value {
+      font-size: 17px;
+      color: var(--dark);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .contact-info-value:hover { color: var(--accent); }
+
+    .contact-right {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .contact-right.visible { opacity: 1; transform: translateY(0); }
+    .contact-img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 48px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+      .hero-content { left: 24px; bottom: 48px; }
+      .hero-scroll { display: none; }
+      #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .stat-num { font-size: 56px; }
+      #gallery { padding: 80px 24px; }
+      .gallery-masonry { columns: 2; }
+      .featured-row, .featured-row.reverse { grid-template-columns: 1fr; }
+      .featured-img { height: 340px; }
+      .featured-img img { height: 100%; }
+      .featured-text { padding: 48px 32px; }
+      #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      .about-img-wrap img { height: 380px; }
+      .about-heading { font-size: 38px; }
+      #cta { padding: 100px 24px; }
+      #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-masonry { columns: 1; }
+      .hero-name { font-size: 58px; }
+      #stats { grid-template-columns: 1fr 1fr; }
+      .section-num { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">Jen Arney</a>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="heroEyebrow">Daytona Beach · Florida</p>
+      <h1 class="hero-name" id="heroName">
+        <span class="line1"><span>Jen Arney</span></span>
+        <span class="line2"><span>Photography</span></span>
+      </h1>
+      <p class="hero-tagline" id="heroTagline">Weddings · Families · Newborns · Life</p>
+    </div>
+
+    <div class="hero-scroll" id="heroScroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Weddings</span>
+      <span>Families</span>
+      <span>Newborns</span>
+      <span>Seniors</span>
+      <span>Maternity</span>
+      <span>Daytona Beach</span>
+      <span>Weddings</span>
+      <span>Families</span>
+      <span>Newborns</span>
+      <span>Seniors</span>
+      <span>Maternity</span>
+      <span>Daytona Beach</span>
+      <span>Weddings</span>
+      <span>Families</span>
+      <span>Newborns</span>
+      <span>Seniors</span>
+      <span>Maternity</span>
+      <span>Daytona Beach</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item" data-delay="0">
+      <div class="stat-num">10<em>+</em></div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item" data-delay="120">
+      <div class="stat-num">500<em>+</em></div>
+      <div class="stat-label">Sessions Captured</div>
+    </div>
+    <div class="stat-item" data-delay="240">
+      <div class="stat-num">5<em>★</em></div>
+      <div class="stat-label">Yelp Reviews</div>
+    </div>
+    <div class="stat-item" data-delay="360">
+      <div class="stat-num">FL</div>
+      <div class="stat-label">Daytona Beach · Volusia</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <div style="display:flex; align-items:baseline; gap:0">
+        <span class="section-num">01</span>
+        <h2 class="section-title" id="galleryTitle">The Work</h2>
+      </div>
+      <span class="section-subtitle">Selected Portfolio</span>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item" data-delay="0">
+        <img src="https://static.wixstatic.com/media/194671_20cb948a784247abb5674e80abe23883.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_20cb948a784247abb5674e80abe23883.jpg" alt="Portrait session" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="100">
+        <img src="https://static.wixstatic.com/media/194671_b5217b1c481142e5a2a9a20cf3e6077d.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_b5217b1c481142e5a2a9a20cf3e6077d.jpg" alt="Photography work" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="200">
+        <img src="https://static.wixstatic.com/media/194671_380a2cd3a65f469984d90e1a2177ccbb.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_380a2cd3a65f469984d90e1a2177ccbb.jpg" alt="Family photography" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="0">
+        <img src="https://static.wixstatic.com/media/194671_42ce72572b934b48be77272c9c35df52.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_42ce72572b934b48be77272c9c35df52.jpg" alt="Photography session" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="100">
+        <img src="https://static.wixstatic.com/media/194671_29b54d81a21b46069faab502159efa05.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_29b54d81a21b46069faab502159efa05.jpg" alt="Portrait work" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="200">
+        <img src="https://static.wixstatic.com/media/194671_8bd5b0729a734138a087cc4a651a19c5.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_8bd5b0729a734138a087cc4a651a19c5.jpg" alt="Photography portfolio" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="0">
+        <img src="https://static.wixstatic.com/media/194671_de7af633aaf14897890c36174de0b988.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_de7af633aaf14897890c36174de0b988.jpg" alt="Session photography" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="100">
+        <img src="https://static.wixstatic.com/media/194671_7b58befab59044efa0dd6c44cd512273.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_7b58befab59044efa0dd6c44cd512273.jpg" alt="Photography work" loading="lazy">
+      </div>
+      <div class="gallery-item" data-delay="200">
+        <img src="https://static.wixstatic.com/media/194671_7474bc79df4c488db87e723a58967bb2.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_7474bc79df4c488db87e723a58967bb2.jpg" alt="Photography" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED — Wedding -->
+  <section id="featured">
+    <div class="featured-row" id="featuredWedding">
+      <div class="featured-img">
+        <img src="https://static.wixstatic.com/media/194671_5498b65b4f96445caea0582f4c522044.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_5498b65b4f96445caea0582f4c522044.jpg" alt="Wedding photography" loading="lazy">
+      </div>
+      <div class="featured-text">
+        <p class="featured-cat">Weddings</p>
+        <h3 class="featured-heading">Your most<br>important day,<br>beautifully told.</h3>
+        <p class="featured-body">From the quiet moments before the ceremony to the last dance of the night — every frame is crafted to last a lifetime. Serving Daytona Beach, Volusia County, and all of central Florida.</p>
+        <div class="featured-rule"></div>
+      </div>
+    </div>
+
+    <div class="featured-row reverse" id="featuredFamily">
+      <div class="featured-text">
+        <p class="featured-cat">Families & Newborns</p>
+        <h3 class="featured-heading">The people<br>you love,<br>right now.</h3>
+        <p class="featured-body">Kids grow up fast. Newborns are only tiny for a moment. These sessions are unhurried, real, and made to be printed large and hung where you'll see them every day.</p>
+        <div class="featured-rule"></div>
+      </div>
+      <div class="featured-img">
+        <img src="https://static.wixstatic.com/media/194671_de973fab935946b49cc0ddde24b9d24c.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_de973fab935946b49cc0ddde24b9d24c.jpg" alt="Family photography" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img-wrap" id="aboutImg">
+      <img src="https://static.wixstatic.com/media/194671_40e75196023244bd9ade9327f40a2502.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_40e75196023244bd9ade9327f40a2502.jpg" alt="Jen Arney photographer" loading="lazy">
+      <div class="about-accent-line"></div>
+    </div>
+    <div class="about-text" id="aboutText">
+      <p class="about-label">02 — About</p>
+      <h2 class="about-heading">Hi, I'm Jen.</h2>
+      <p class="about-body">Daytona Beach photographer specializing in weddings, families, newborns, and senior portraits throughout Volusia County and central Florida.</p>
+      <blockquote class="about-quote">"She did a fabulous job getting the kids to look and smile at the camera — truly worth every penny."</blockquote>
+      <p class="about-body">With over a decade of experience capturing life's most meaningful moments, the work speaks for itself. Based at 238 Seabreeze Blvd, Daytona Beach — shooting wherever the light is right.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg-text">Book</div>
+    <p class="cta-label" id="ctaLabel">Let's make something</p>
+    <h2 class="cta-heading" id="ctaHeading">Ready to book<br>your session?</h2>
+    <a href="mailto:jenarneyp@gmail.com" class="cta-btn" id="ctaBtn">Get in touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left" id="contactLeft">
+      <h2 class="contact-heading">Let's connect.</h2>
+      <p class="contact-body">Based in Daytona Beach, available throughout Volusia County and central Florida for weddings, families, newborns, seniors, and maternity sessions.</p>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Phone</span>
+        <a href="tel:3866908928" class="contact-info-value">(386) 690-8928</a>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Location</span>
+        <span class="contact-info-value">238 Seabreeze Blvd, Daytona Beach, FL</span>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Instagram</span>
+        <a href="https://instagram.com/jenny_arney" class="contact-info-value" target="_blank">@jenny_arney</a>
+      </div>
+    </div>
+    <div class="contact-right" id="contactRight">
+      <img class="contact-img" src="https://static.wixstatic.com/media/194671_d39f9f5ba7ba4f618cb5ef2a6ecedccc.jpg/v1/fill/w_1200,h_800,al_c,q_85/194671_d39f9f5ba7ba4f618cb5ef2a6ecedccc.jpg" alt="Photography work" loading="lazy">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Jen Arney Photography</span>
+    <span class="footer-copy">© 2026 — Daytona Beach, FL</span>
+    <div class="footer-links">
+      <a href="#gallery">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="https://instagram.com/jenny_arney" target="_blank">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      heroBg.style.backgroundPositionY = (window.scrollY * 0.4) + 'px';
+    }, { passive: true });
+
+    // Hero entrance
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroEyebrow').classList.add('visible');
+        document.getElementById('heroName').classList.add('visible');
+        document.getElementById('heroTagline').classList.add('visible');
+        document.getElementById('heroScroll').classList.add('visible');
+      }, 120);
+    });
+
+    // IntersectionObserver for all other animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+          setTimeout(() => el.classList.add('visible'), delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    const animated = [
+      ...document.querySelectorAll('.stat-item'),
+      ...document.querySelectorAll('.gallery-item'),
+      ...document.querySelectorAll('.featured-row'),
+      document.getElementById('aboutImg'),
+      document.getElementById('aboutText'),
+      document.getElementById('ctaLabel'),
+      document.getElementById('ctaHeading'),
+      document.getElementById('ctaBtn'),
+      document.getElementById('contactLeft'),
+      document.getElementById('contactRight'),
+      document.getElementById('galleryTitle'),
+    ];
+    animated.forEach(el => { if (el) observer.observe(el); });
+  </script>
+</body>
+</html>
