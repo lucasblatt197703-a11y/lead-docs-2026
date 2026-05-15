@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moises Orozco — Artist & Fabricator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #111010;
+      --surface: #1a1918;
+      --text: #EDE8E0;
+      --muted: #888078;
+      --accent: #C4553A;
+      --accent2: #8B6B3D;
+      --line: rgba(237,232,224,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 60px;
+      mix-blend-mode: normal;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(17,16,16,0.85) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      position: relative;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      position: relative;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-image-panel {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      transition: transform 8s ease-out;
+      will-change: transform;
+    }
+    .hero-image-panel img.loaded { transform: scale(1.0); }
+    .hero-image-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--bg) 100%);
+    }
+    .hero-text-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 60px 80px 60px;
+      position: relative;
+    }
+    .hero-tagline {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .hero-tagline.is-visible { opacity: 1; transform: translateY(0); }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 8vw, 110px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.4s;
+    }
+    .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
+    .hero-name span {
+      display: block;
+      font-style: italic;
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+    }
+    .hero-descriptor {
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      max-width: 280px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+    }
+    .hero-descriptor.is-visible { opacity: 1; transform: translateY(0); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 50px;
+      background: var(--muted);
+      animation: lineDown 1.5s ease 2.5s infinite;
+    }
+    @keyframes lineDown {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ─── MARQUEE STRIP ───────────────────────────────── */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 12px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      padding: 0 40px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ───────────────────────────────────────── */
+    .stats {
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .stat-item {
+      padding: 40px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2) { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) { transition-delay: 0.3s; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(50px, 7vw, 90px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ─── SECTION HEADER ──────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      min-width: 30px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 300;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      margin-left: 20px;
+    }
+
+    /* ─── GALLERY — METAL FABRICATION ────────────────── */
+    #work {
+      padding: 120px 60px;
+    }
+    .gallery-intro {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      max-width: 400px;
+      line-height: 1.8;
+      margin-bottom: 60px;
+    }
+    .gallery-metal {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      grid-template-rows: 340px 340px;
+      gap: 6px;
+      margin-bottom: 80px;
+    }
+    .gallery-metal .item-lg {
+      grid-row: span 2;
+    }
+    .gallery-metal .gallery-item,
+    .gallery-metal .item-lg {
+      overflow: hidden;
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .gallery-metal .gallery-item.is-visible,
+    .gallery-metal .item-lg.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+    .gallery-metal .gallery-item:nth-child(2) { transition-delay: 0.08s; }
+    .gallery-metal .gallery-item:nth-child(3) { transition-delay: 0.16s; }
+    .gallery-metal .gallery-item:nth-child(4) { transition-delay: 0.24s; }
+    .gallery-metal .gallery-item:nth-child(5) { transition-delay: 0.32s; }
+    .gallery-metal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      will-change: transform;
+    }
+    .gallery-metal .gallery-item:hover img,
+    .gallery-metal .item-lg:hover img { transform: scale(1.04); }
+    .gallery-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      padding: 16px 0;
+    }
+
+    /* ─── GALLERY GRID — ILLUSTRATION ───────────────── */
+    #illustration {
+      padding: 0 60px 120px;
+    }
+    .gallery-illustration {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .gallery-illustration .gallery-item {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.8s ease-out;
+      will-change: clip-path;
+    }
+    .gallery-illustration .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-illustration .gallery-item:nth-child(2) { transition-delay: 0.1s; }
+    .gallery-illustration .gallery-item:nth-child(3) { transition-delay: 0.2s; }
+    .gallery-illustration .gallery-item:nth-child(4) { transition-delay: 0.3s; }
+    .gallery-illustration .gallery-item:nth-child(5) { transition-delay: 0.05s; }
+    .gallery-illustration .gallery-item:nth-child(6) { transition-delay: 0.15s; }
+    .gallery-illustration .gallery-item:nth-child(7) { transition-delay: 0.25s; }
+    .gallery-illustration .gallery-item:nth-child(8) { transition-delay: 0.35s; }
+    .gallery-illustration img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .gallery-illustration .gallery-item:hover img { transform: scale(1.04); }
+
+    /* ─── HENNA SECTION ──────────────────────────────── */
+    #henna {
+      padding: 120px 60px;
+      background: var(--surface);
+    }
+    .henna-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      gap: 4px;
+      margin-top: 60px;
+    }
+    .henna-grid .gallery-item {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.8s ease-out;
+    }
+    .henna-grid .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+    .henna-grid .gallery-item:nth-child(1) { transition-delay: 0s; }
+    .henna-grid .gallery-item:nth-child(2) { transition-delay: 0.08s; }
+    .henna-grid .gallery-item:nth-child(3) { transition-delay: 0.16s; }
+    .henna-grid .gallery-item:nth-child(4) { transition-delay: 0.24s; }
+    .henna-grid .gallery-item:nth-child(5) { transition-delay: 0.32s; }
+    .henna-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .henna-grid .gallery-item:hover img { transform: scale(1.05); }
+
+    /* ─── ABOUT ──────────────────────────────────────── */
+    #about {
+      padding: 160px 60px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .about-image img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+    .about-image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(transparent, rgba(17,16,16,0.9));
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .about-text {
+      padding-top: 40px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .about-text.is-visible { opacity: 1; transform: translateY(0); }
+    .about-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 32px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 40px;
+      padding-left: 24px;
+      border-left: 2px solid var(--accent);
+    }
+    .about-bio {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .about-tag {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(196,85,58,0.4);
+      padding: 6px 14px;
+    }
+
+    /* ─── FEATURED WORK ──────────────────────────────── */
+    .featured-strip {
+      height: 60vh;
+      min-height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+    .featured-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(17,16,16,0.55);
+      z-index: 1;
+    }
+    .featured-strip-content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .featured-strip-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .featured-strip-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 300;
+      color: var(--text);
+      max-width: 700px;
+      line-height: 1.2;
+    }
+
+    /* ─── CTA SECTION ────────────────────────────────── */
+    #contact {
+      padding: 160px 60px;
+      text-align: center;
+      position: relative;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 15vw, 200px);
+      font-weight: 600;
+      color: rgba(237,232,224,0.03);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: 0.05em;
+    }
+    .cta-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .cta-label.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
+    }
+    .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-body {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.4s;
+    }
+    .cta-body.is-visible { opacity: 1; }
+    .cta-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s;
+    }
+    .cta-links.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-email {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+    .cta-email:hover { color: var(--accent); }
+    .cta-phone {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .cta-phone:hover { color: var(--text); }
+    .cta-divider {
+      width: 1px;
+      height: 30px;
+      background: var(--line);
+    }
+    .cta-address {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: #0a0908;
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(136,128,120,0.5);
+      letter-spacing: 0.08em;
+    }
+    .footer-credit {
+      font-size: 11px;
+      color: rgba(136,128,120,0.4);
+      letter-spacing: 0.08em;
+    }
+    .footer-credit a {
+      color: rgba(136,128,120,0.6);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-credit a:hover { color: var(--muted); }
+
+    /* ─── MOBILE ─────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 24px 24px; }
+      .nav-links { gap: 24px; }
+      .hero { grid-template-columns: 1fr; height: auto; }
+      .hero-image-panel { height: 60vh; }
+      .hero-image-panel::after { background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%); }
+      .hero-text-panel { padding: 40px 24px 60px; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-right: 1px solid var(--line); }
+      #work, #illustration, #henna, #about, #contact { padding: 80px 24px; }
+      .gallery-metal { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-metal .item-lg { grid-row: span 1; height: 260px; }
+      .gallery-metal .gallery-item { height: 200px; }
+      .gallery-illustration { grid-template-columns: repeat(2, 1fr); }
+      .henna-grid { grid-template-columns: repeat(3, 1fr); }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-text { padding-top: 0; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-illustration { grid-template-columns: 1fr 1fr; }
+      .henna-grid { grid-template-columns: repeat(2, 1fr); }
+      .cta-links { flex-direction: column; }
+      .cta-divider { width: 40px; height: 1px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Moises Orozco</a>
+    <ul class="nav-links">
+      <li><a href="#work">Metal</a></li>
+      <li><a href="#illustration">Illustration</a></li>
+      <li><a href="#henna">Henna</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Asymmetric Split -->
+  <section class="hero">
+    <div class="hero-image-panel">
+      <img
+        src="https://static.wixstatic.com/media/de6058_33a44b42aba2adc56e589eb6a3c05eef.jpg"
+        alt="Moises Orozco — Metal Sculptor"
+        loading="eager"
+        id="heroImg"
+      >
+    </div>
+    <div class="hero-text-panel">
+      <p class="hero-tagline" id="heroTagline">Tucson, Arizona · Multi-Disciplinary Artist</p>
+      <h1 class="hero-name" id="heroName">
+        Moises<br>
+        <span>Orozco</span>
+      </h1>
+      <p class="hero-descriptor" id="heroDesc">
+        Metal fabricator · Illustrator · Henna artist.<br>
+        Working across materials, scales, and traditions<br>
+        to build work that exists nowhere else.
+      </p>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">Scroll</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Metal Fabrication</span>
+      <span>·</span>
+      <span>Custom Sculpture</span>
+      <span>·</span>
+      <span>Illustration</span>
+      <span>·</span>
+      <span>Henna Art</span>
+      <span>·</span>
+      <span>Blacksmithing</span>
+      <span>·</span>
+      <span>Tucson, AZ</span>
+      <span>·</span>
+      <span>Metal Fabrication</span>
+      <span>·</span>
+      <span>Custom Sculpture</span>
+      <span>·</span>
+      <span>Illustration</span>
+      <span>·</span>
+      <span>Henna Art</span>
+      <span>·</span>
+      <span>Blacksmithing</span>
+      <span>·</span>
+      <span>Tucson, AZ</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" aria-label="By the numbers">
+    <div class="stat-item">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Disciplines</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Years Creating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100+</div>
+      <div class="stat-label">Pieces Built</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">1</div>
+      <div class="stat-label">Tucson Original</div>
+    </div>
+  </section>
+
+  <!-- METAL FABRICATION -->
+  <section id="work" aria-label="Metal Fabrication">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title" data-reveal>Metal Fabrication</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="gallery-intro">
+      Custom metal sculpture, furniture, and architectural elements — forged, welded, and finished by hand in Tucson.
+    </p>
+    <div class="gallery-metal">
+      <div class="item-lg gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_6d424d436c5b4c5193c642f5f42e75fc.jpg" alt="Metal fabrication work" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_98ae09b1f6e14743b425cfd5a7a41a45.jpg" alt="Metal sculpture" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_5e32b7794d7848fb9352d839e0dc89c9.jpg" alt="Metal work detail" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_c1a9afffc01a47709d2965e2c6688d02.jpg" alt="Metal piece" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_19500f24699a4a249f64b31d3a08b07d.jpg" alt="Fabrication detail" loading="lazy">
+      </div>
+    </div>
+    <p class="gallery-label">Metal · Steel · Iron · Custom Builds</p>
+  </section>
+
+  <!-- ILLUSTRATION -->
+  <section id="illustration" aria-label="Illustration">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title" data-reveal>Illustration</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="gallery-illustration">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_497312156c5642329b2c76cc3df4b390.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_c0b0b6e098e9408b9a1d8d8bb02f2684.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_13cc9b833ff44a1eba92025cc8965c1e.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_0d4a2095852539ef113d75f859292dd0.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_c14382712042476f91c9c1cf2a471aaa.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_68658b43cac24c7ab6265ebd4777cf6d.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_45022e4e65ce472785ad95c79152fb22.jpg" alt="Illustration" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_355b42fb1032451b8551b0eb7402ffde.jpg" alt="Illustration" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED STRIP -->
+  <div class="featured-strip">
+    <img src="https://static.wixstatic.com/media/de6058_49c5b580cc20301f39eda4749b764f6a.jpg" alt="Featured work" loading="lazy">
+    <div class="featured-strip-content">
+      <p class="featured-strip-label">Craftsmanship · Material · Process</p>
+      <h3 class="featured-strip-title">Where metal meets imagination — built to last, designed to move.</h3>
+    </div>
+  </div>
+
+  <!-- HENNA -->
+  <section id="henna" aria-label="Henna">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title" data-reveal>Henna</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="gallery-intro" style="margin-bottom:40px;">
+      Intricate, flowing henna designs for events, ceremonies, and private commissions. Rooted in tradition, adapted to each individual.
+    </p>
+    <div class="henna-grid">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_938d28c894ab1c27fdd113c4e34f7ee6.jpg" alt="Henna design" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_ea6b719b570019bbb043ff76b92a5700.jpg" alt="Henna design" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_a1bcd18383b21fa2fddb47cc6b690c2b.jpg" alt="Henna design" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_569ae3bbd438368b0158038dd99d1a94.jpg" alt="Henna design" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/de6058_92538784f403f96f7e93a98ea836c75e.jpg" alt="Henna design" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" aria-label="About Moises Orozco">
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="https://static.wixstatic.com/media/de6058_0f5e4870698df1f2ea966d59bfec7f93.jpg" alt="Moises Orozco" loading="lazy">
+        <p class="about-image-caption">Tucson, Arizona</p>
+      </div>
+      <div class="about-text" id="aboutText">
+        <div class="section-header" style="margin-bottom:40px;">
+          <span class="section-number">04</span>
+          <h2 class="section-title" data-reveal>About</h2>
+          <div class="section-line"></div>
+        </div>
+        <blockquote class="about-pull-quote">
+          "Working across metal, ink, and henna — each discipline informs the others."
+        </blockquote>
+        <p class="about-bio">
+          Moises Orozco is a Tucson-based multi-disciplinary artist working across metal fabrication, illustration, and henna artistry. With roots in blacksmithing and a background spanning custom sculpture to intricate body art, his practice bridges industrial craft and fine detail work. Each piece — whether forged in steel or drawn on skin — is made to order, made by hand.
+        </p>
+        <div class="about-tags">
+          <span class="about-tag">Metal Fabrication</span>
+          <span class="about-tag">Blacksmithing</span>
+          <span class="about-tag">Illustration</span>
+          <span class="about-tag">Henna</span>
+          <span class="about-tag">Custom Builds</span>
+          <span class="about-tag">Tucson, AZ</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section id="contact" aria-label="Contact">
+    <div class="cta-bg-text" aria-hidden="true">Contact</div>
+    <p class="cta-label" data-cta-animate="label">Available for commissions</p>
+    <h2 class="cta-heading" data-cta-animate="heading">
+      Let's Build<br>Something.
+    </h2>
+    <p class="cta-body" data-cta-animate="body">
+      Custom metalwork, illustration commissions, henna for events and ceremonies. Based in Tucson — available to travel.
+    </p>
+    <div class="cta-links" data-cta-animate="links">
+      <a href="mailto:rtist1@hotmail.com" class="cta-email">rtist1@hotmail.com</a>
+      <div class="cta-divider"></div>
+      <a href="tel:5203045159" class="cta-phone">520-304-5159</a>
+      <div class="cta-divider"></div>
+      <address class="cta-address" style="font-style:normal;">
+        801 N. Main Ave<br>Tucson, AZ 85705
+      </address>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Moises Orozco</span>
+    <span class="footer-copy">© 2026 — All rights reserved</span>
+    <span class="footer-credit">Site design by <a href="mailto:lucasblatt197703@gmail.com">Lucas Blatt</a></span>
+  </footer>
+
+  <script>
+    // Hero image load animation
+    const heroImg = document.getElementById('heroImg');
+    if (heroImg.complete) {
+      heroImg.classList.add('loaded');
+    } else {
+      heroImg.addEventListener('load', () => heroImg.classList.add('loaded'));
+    }
+
+    // Trigger hero text animations
+    setTimeout(() => {
+      document.getElementById('heroTagline').classList.add('is-visible');
+      document.getElementById('heroName').classList.add('is-visible');
+      document.getElementById('heroDesc').classList.add('is-visible');
+    }, 300);
+
+    // IntersectionObserver for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe section titles
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+    // Observe gallery items
+    document.querySelectorAll('.gallery-item, .item-lg').forEach(el => observer.observe(el));
+
+    // Observe stat items
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+    // Observe about text
+    const aboutText = document.getElementById('aboutText');
+    if (aboutText) observer.observe(aboutText);
+
+    // CTA section animations
+    const ctaObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const type = entry.target.dataset.ctaAnimate;
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('[data-cta-animate]').forEach(el => ctaObserver.observe(el));
+  </script>
+</body>
+</html>
