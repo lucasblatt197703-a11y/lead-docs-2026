@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casey J Rhodes — Artist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900;1,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0C0A;
+      --surface: #161412;
+      --text: #E8E2D9;
+      --muted: #8A8278;
+      --accent: #C4553A;
+      --warm: #D4A96A;
+      --light-bg: #F2EDE7;
+      --light-text: #1A1614;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Karla', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(14,12,10,0.95) 0%, transparent 100%);
+    }
+    nav .logo {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+    nav ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    nav ul a:hover { color: var(--text); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 80px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/c4d14f_ea95cace421245bdb86aeca43c171a57.jpg');
+      background-size: cover;
+      background-position: center top;
+      transform: scale(1.08);
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(14,12,10,0.82) 0%,
+        rgba(14,12,10,0.55) 40%,
+        rgba(14,12,10,0.15) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-left: 60px;
+      max-width: 680px;
+    }
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .hero-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(64px, 8vw, 112px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+      will-change: clip-path;
+    }
+    .hero-name span {
+      display: block;
+    }
+    .hero-name .last {
+      color: var(--warm);
+      font-style: italic;
+    }
+    .hero-tagline {
+      margin-top: 28px;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s;
+    }
+    .hero-cta {
+      margin-top: 40px;
+      display: inline-block;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s, color 0.3s;
+    }
+    .hero-cta:hover { color: var(--accent); }
+
+    .hero-loaded .hero-label { opacity: 1; transform: translateY(0); }
+    .hero-loaded .hero-name { clip-path: inset(0 0% 0 0); }
+    .hero-loaded .hero-tagline { opacity: 1; transform: translateY(0); }
+    .hero-loaded .hero-cta { opacity: 1; transform: translateY(0); }
+
+    /* ─── MARQUEE STRIP ─── */
+    .marquee-strip {
+      background: var(--accent);
+      padding: 12px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 36s linear infinite;
+      will-change: transform;
+    }
+    .marquee-track span {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bg);
+      font-weight: 500;
+      padding: 0 40px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 120px 60px;
+      background: var(--bg);
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 60px;
+    }
+    .section-num {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(232, 226, 217, 0.05);
+      line-height: 1;
+      user-select: none;
+    }
+    .section-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    /* Masonry gallery grid */
+    .gallery-masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+    .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+      loading: lazy;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(14,12,10,0);
+      transition: background 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+    }
+    .gallery-item:hover .gallery-item-overlay { background: rgba(14,12,10,0.5); }
+    .gallery-item-title {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .gallery-item:hover .gallery-item-title { opacity: 1; transform: translateY(0); }
+
+    /* ─── STATS ─── */
+    #stats {
+      background: var(--surface);
+      padding: 80px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      border-top: 1px solid rgba(232,226,217,0.06);
+      border-bottom: 1px solid rgba(232,226,217,0.06);
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2) { transition-delay: 0.12s; }
+    .stat-item:nth-child(3) { transition-delay: 0.24s; }
+    .stat-item:nth-child(4) { transition-delay: 0.36s; }
+    .stat-num {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--warm);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* ─── FEATURED ─── */
+    #featured {
+      padding: 120px 60px;
+      background: var(--bg);
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px;
+      margin-top: 60px;
+    }
+    .featured-main {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+      will-change: clip-path;
+    }
+    .featured-main.is-visible { clip-path: inset(0 0 0 0); }
+    .featured-main img {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .featured-main:hover img { transform: scale(1.03); }
+    .featured-side {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+      will-change: clip-path;
+    }
+    .featured-side.is-visible { clip-path: inset(0 0 0 0); }
+    .featured-side:nth-child(3) { transition-delay: 0.15s; }
+    .featured-side:nth-child(4) { transition-delay: 0.3s; }
+    .featured-side img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .featured-side:hover img { transform: scale(1.03); }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 140px 60px;
+      background: var(--light-bg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .about-image-wrap.is-visible { opacity: 1; transform: translateX(0); }
+    .about-image-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .about-image-accent {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 60%;
+      height: 60%;
+      border: 2px solid var(--accent);
+      z-index: -1;
+    }
+    .about-text {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+    .about-text.is-visible { opacity: 1; transform: translateX(0); }
+    .about-text .section-title {
+      color: var(--light-text);
+      margin-bottom: 32px;
+    }
+    .about-bio {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #3A3530;
+      font-weight: 300;
+    }
+    .about-bio + .about-bio { margin-top: 16px; }
+    .about-pull {
+      margin: 32px 0;
+      font-family: 'Bodoni Moda', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.5;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+    }
+    .about-mediums {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .medium-tag {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 5px 14px;
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      background: var(--surface);
+      padding: 140px 60px;
+      text-align: center;
+      border-top: 1px solid rgba(232,226,217,0.06);
+    }
+    .cta-label {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .cta-label.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-heading {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--text);
+      max-width: 700px;
+      margin: 0 auto 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+    }
+    .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-heading em { color: var(--warm); font-style: italic; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 18px 48px;
+      transition: background 0.3s ease, transform 0.2s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s, background 0.3s ease;
+    }
+    .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn:hover { background: #A33C28; }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--bg);
+      padding: 100px 60px;
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left .section-title { margin-bottom: 24px; }
+    .contact-desc {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+    .contact-email {
+      display: inline-block;
+      font-family: 'Bodoni Moda', serif;
+      font-size: 22px;
+      color: var(--warm);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212, 169, 106, 0.4);
+      padding-bottom: 4px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .contact-email:hover { color: var(--accent); border-color: var(--accent); }
+    .social-links {
+      display: flex;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .social-links a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .social-links a:hover { color: var(--accent); }
+    .contact-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+    .contact-img {
+      overflow: hidden;
+    }
+    .contact-img img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .contact-img:hover img { transform: scale(1.05); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #070605;
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(232,226,217,0.06);
+    }
+    footer .foot-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    footer .foot-copy {
+      font-size: 12px;
+      color: rgba(138, 130, 120, 0.5);
+      letter-spacing: 0.08em;
+    }
+    footer .foot-credit {
+      font-size: 11px;
+      color: rgba(138, 130, 120, 0.35);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+      .hero-content { padding-left: 24px; padding-right: 24px; }
+      #gallery, #featured, #about, #cta, #contact { padding: 80px 24px; }
+      #stats { padding: 60px 24px; grid-template-columns: repeat(2, 1fr); }
+      .gallery-masonry { columns: 2; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured-main { grid-row: auto; }
+      .featured-main img { min-height: auto; }
+      #about { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-masonry { columns: 1; }
+      #stats { grid-template-columns: repeat(2, 1fr); }
+      .stat-num { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">Casey Rhodes</a>
+    <ul>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: cinematic with left text, full-bleed image right -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-label">Florida — Original Art</p>
+      <h1 class="hero-name">
+        <span>Casey</span>
+        <span class="last">Rhodes</span>
+      </h1>
+      <p class="hero-tagline">Pencil · Watercolor · Acrylic · Oil — Pop Culture & Landscapes</p>
+      <a href="#gallery" class="hero-cta">View the Work</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Original Art · Florida</span>
+      <span>Pencil Sketches</span>
+      <span>Oil Paintings</span>
+      <span>Acrylic Works</span>
+      <span>Watercolor</span>
+      <span>Pop Culture Art</span>
+      <span>Landscapes</span>
+      <span>Sports Art</span>
+      <span>Commissions Open</span>
+      <span>Original Art · Florida</span>
+      <span>Pencil Sketches</span>
+      <span>Oil Paintings</span>
+      <span>Acrylic Works</span>
+      <span>Watercolor</span>
+      <span>Pop Culture Art</span>
+      <span>Landscapes</span>
+      <span>Sports Art</span>
+      <span>Commissions Open</span>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_d441320edbee30c0c5b926cfa9acdc75.jpg" alt="Original painting" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Featured Work</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_28f6bc40142349429f8a0860a2d51702.jpg" alt="Artwork" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Mixed Media</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_45df35b0f522455095fc17327fc9bd45.jpg" alt="New work" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Recent Work</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_8109cb1bdf864a3598b1943c7890ce66.jpg" alt="Painting" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Original Painting</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_809177057a8147439764612224f8c55c.jpg" alt="Artwork" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Canvas Work</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_99747ff758248e4ecd59562c1597dd14.jpg" alt="Sports art" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Sports Series</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_8d1d2765fc62f791815a2d7e6e73c4aa.jpg" alt="Sketch" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Graphite Sketch</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_4372268986b0e596c3f171713068c490.jpg" alt="Landscape" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Landscape</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/c4d14f_f5fffb58cd952beb713f1348159b1d26.jpg" alt="Landscape painting" loading="lazy">
+        <div class="gallery-item-overlay"><span class="gallery-item-title">Landscape Study</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <span class="stat-num">10+</span>
+      <span class="stat-label">Years Creating</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Mediums Mastered</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100+</span>
+      <span class="stat-label">Original Works</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Commissions Open</span>
+    </div>
+  </section>
+
+  <!-- FEATURED WORKS -->
+  <section id="featured">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Featured Series</h2>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-main">
+        <img src="https://static.wixstatic.com/media/c4d14f_15ea200aade77177943b163101f9e956.jpg" alt="Featured large work" loading="lazy">
+      </div>
+      <div class="featured-side">
+        <img src="https://static.wixstatic.com/media/c4d14f_cd7d59e39cec40f3a9bd783bd8d23253.jpg" alt="Featured piece" loading="lazy">
+      </div>
+      <div class="featured-side">
+        <img src="https://static.wixstatic.com/media/c4d14f_fdb6b26098d6e7810b2dcc74053aa1c1.jpg" alt="Featured piece" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image-wrap">
+      <img src="https://static.wixstatic.com/media/c4d14f_2498214732fc49cba2dd3753ea973a40.jpg" alt="Casey Rhodes" loading="lazy">
+      <div class="about-image-accent"></div>
+    </div>
+    <div class="about-text">
+      <h2 class="section-title">About the Artist</h2>
+      <p class="about-bio">
+        Casey J Rhodes is a Florida-based artist working across pencil, graphite, watercolor, acrylic, and oil. Drawing from pop culture, sports, cinema, and the natural landscape, Rhodes brings a distinctive hand to every subject — from sweeping landscape studies to intricate character renderings.
+      </p>
+      <blockquote class="about-pull">"Art rooted in the things that matter — the films, the games, the landscapes, the moments."</blockquote>
+      <p class="about-bio">
+        Each piece in the collection reflects an ongoing curiosity about how light, texture, and form translate across media. Whether working in graphite or oil on canvas, the result is work that is both technically grounded and deeply personal.
+      </p>
+      <div class="about-mediums">
+        <span class="medium-tag">Pencil & Graphite</span>
+        <span class="medium-tag">Watercolor</span>
+        <span class="medium-tag">Acrylic</span>
+        <span class="medium-tag">Oil on Canvas</span>
+        <span class="medium-tag">Florida</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section id="cta">
+    <p class="cta-label">Custom Work Available</p>
+    <h2 class="cta-heading">Have a piece in mind? Let's make it <em>real.</em></h2>
+    <a href="#contact" class="cta-btn">Get In Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <h2 class="section-title">Inquiries</h2>
+        <p class="contact-desc">For commissions, original work, or general questions — reach out directly. All mediums and subjects considered.</p>
+        <a href="mailto:casey@rhodesart.com" class="contact-email">casey@rhodesart.com</a>
+        <div class="social-links">
+          <a href="http://www.pinterest.com/caseyrhodes96/pins/" target="_blank">Pinterest</a>
+          <a href="https://rhodesart.wixsite.com/casey-rhodes" target="_blank">Website</a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="contact-img">
+          <img src="https://static.wixstatic.com/media/c4d14f_7a8c2b9d16cab61c641deb9222ced8e1.jpg" alt="Artwork" loading="lazy">
+        </div>
+        <div class="contact-img">
+          <img src="https://static.wixstatic.com/media/c4d14f_92e4cafe9171cb7639e33915eff976d4.jpg" alt="Artwork" loading="lazy">
+        </div>
+        <div class="contact-img">
+          <img src="https://static.wixstatic.com/media/c4d14f_4372268986b0e596c3f171713068c490.jpg" alt="Landscape" loading="lazy">
+        </div>
+        <div class="contact-img">
+          <img src="https://static.wixstatic.com/media/c4d14f_f5fffb58cd952beb713f1348159b1d26.jpg" alt="Landscape" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="foot-name">Casey J Rhodes</span>
+    <span class="foot-copy">© 2026 All Rights Reserved</span>
+    <span class="foot-credit">Design by Lucas Blatt</span>
+  </footer>
+
+  <script>
+    // Hero entrance
+    window.addEventListener('load', () => {
+      document.getElementById('hero').classList.add('hero-loaded');
+    });
+
+    // Parallax on hero bg
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        heroBg.style.transform = `scale(1.08) translateY(${scrollY * 0.25}px)`;
+      }
+    });
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Section titles (clip-path reveal)
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+    // Gallery items with stagger
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('is-visible');
+          }, (Array.from(galleryItems).indexOf(entry.target) % 3) * 100);
+        }
+      });
+    }, { threshold: 0.05 });
+    galleryItems.forEach(el => galleryObs.observe(el));
+
+    // Stats, featured, about, cta, contact
+    document.querySelectorAll('.stat-item, .featured-main, .featured-side, .about-image-wrap, .about-text, .cta-label, .cta-heading, .cta-btn, .contact-right').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
