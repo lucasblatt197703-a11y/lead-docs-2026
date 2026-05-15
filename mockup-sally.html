@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sally Ullman Photography — Florida Vacation & Family Portraits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand:    #F5EFE4;   /* warm sand — the beach backgrounds in her photos */
+    --dusk:    #2B2018;   /* deep dusk brown — shadow tones in sunset portraits */
+    --coral:   #C4735A;   /* golden coral — the Gulf sunset hues */
+    --fog:     #EDE7DA;   /* soft fog/linen — lighter sand tone */
+    --warm-white: #FAF7F2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--dusk);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    mix-blend-mode: normal;
+    transition: background 0.4s ease, padding 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(250, 247, 242, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 16px 60px;
+    box-shadow: 0 1px 0 rgba(43,32,24,0.08);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--warm-white);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--dusk); }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(250,247,242,0.85);
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--dusk); }
+  .nav-links a:hover { color: var(--coral); }
+
+  /* ─── HERO — FULL-BLEED WITH TEXT PINNED BOTTOM-LEFT ─ */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://sallyullmanphotography.com/wp-content/uploads/2021/04/Family-Beach-Photography-Bradenton-Beach-Florida.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(43,32,24,0.72) 0%,
+      rgba(43,32,24,0.2) 50%,
+      transparent 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 72px;
+    left: 60px;
+    z-index: 2;
+    max-width: 600px;
+  }
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+  .hero-content.visible .hero-eyebrow { opacity: 1; transform: translateY(0); }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: 0.04em;
+    color: var(--warm-white);
+    display: block;
+    opacity: 0;
+    transition: opacity 1.2s ease 0.1s, letter-spacing 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+    letter-spacing: 0.22em;
+    will-change: opacity, letter-spacing;
+  }
+  .hero-content.visible .hero-name {
+    opacity: 1;
+    letter-spacing: 0.04em;
+  }
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(250,247,242,0.75);
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  }
+  .hero-content.visible .hero-tagline { opacity: 1; transform: translateY(0); }
+  .hero-cta {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 14px 32px;
+    border: 1px solid rgba(250,247,242,0.5);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    text-decoration: none;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s, background 0.3s, border-color 0.3s;
+  }
+  .hero-content.visible .hero-cta { opacity: 1; transform: translateY(0); }
+  .hero-cta:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--warm-white);
+  }
+  /* scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(250,247,242,0.5);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeInDelay 1s ease 1.4s forwards;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(250,247,242,0.4);
+  }
+  @keyframes fadeInDelay { to { opacity: 1; } }
+
+  /* ─── MARQUEE STRIP ───────────────────────────────── */
+  .marquee-strip {
+    background: var(--dusk);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 35s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.7);
+    padding: 0 48px;
+  }
+  .marquee-track span.dot {
+    color: var(--coral);
+    padding: 0;
+    letter-spacing: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ───────────────────────────────────────── */
+  .stats {
+    background: var(--fog);
+    padding: 80px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 40px 48px;
+    border-left: 1px solid rgba(43,32,24,0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: opacity, transform;
+  }
+  .stat-item:first-child { border-left: none; }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--dusk);
+    letter-spacing: -0.02em;
+  }
+  .stat-number span { color: var(--coral); font-size: 40px; vertical-align: super; }
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(43,32,24,0.55);
+    margin-top: 8px;
+  }
+
+  /* ─── SECTION SHARED ──────────────────────────────── */
+  .section-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+  }
+  .section-label.visible { clip-path: inset(0 0% 0 0); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: var(--dusk);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.15s;
+    will-change: clip-path;
+  }
+  .section-title.visible { clip-path: inset(0 0% 0 0); }
+
+  /* ─── GALLERY (EDITORIAL SCROLL) ─────────────────── */
+  .gallery-section {
+    padding: 120px 0 0;
+    background: var(--warm-white);
+  }
+  .gallery-header {
+    padding: 0 60px 64px;
+  }
+  .gallery-intro {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(43,32,24,0.65);
+    max-width: 480px;
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .gallery-intro.visible { opacity: 1; transform: translateY(0); }
+
+  /* Editorial scroll: alternating large / small */
+  .editorial-row {
+    display: grid;
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+  .editorial-row-1 {
+    grid-template-columns: 60% 40%;
+    height: 560px;
+  }
+  .editorial-row-2 {
+    grid-template-columns: 35% 65%;
+    height: 480px;
+  }
+  .editorial-row-3 {
+    grid-template-columns: 50% 50%;
+    height: 520px;
+  }
+  .editorial-row-4 {
+    grid-template-columns: 100%;
+    height: 500px;
+  }
+  .gallery-img {
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .gallery-img.visible { clip-path: inset(0 0 0 0); }
+  .gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    loading: lazy;
+    transition: transform 0.6s ease;
+    transform: scale(1.06);
+  }
+  .gallery-img.visible img { transform: scale(1.0); }
+  .gallery-img-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.7);
+    z-index: 2;
+  }
+  .gap-right { margin-left: 6px; }
+
+  /* ─── SERVICES ────────────────────────────────────── */
+  .services-section {
+    background: var(--dusk);
+    padding: 120px 60px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 64px;
+    border-top: 1px solid rgba(250,247,242,0.12);
+  }
+  .service-card {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(250,247,242,0.12);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    will-change: opacity, transform;
+  }
+  .service-card:last-child { border-right: none; }
+  .service-card.visible { opacity: 1; transform: translateY(0); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: rgba(196,115,90,0.25);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--warm-white);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .service-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(250,247,242,0.55);
+  }
+  .services-section .section-label { color: rgba(196,115,90,0.9); }
+  .services-section .section-title { color: var(--warm-white); }
+
+  /* ─── ABOUT — MAGAZINE SPREAD ────────────────────── */
+  .about-section {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    min-height: 600px;
+    background: var(--fog);
+  }
+  .about-image {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out 0.1s;
+    will-change: clip-path;
+  }
+  .about-image.visible { clip-path: inset(0 0 0 0); }
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transform: scale(1.05);
+    transition: transform 0.8s ease;
+  }
+  .about-image.visible img { transform: scale(1.0); }
+  .about-text {
+    padding: 80px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .about-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(43,32,24,0.75);
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+  }
+  .about-body.visible { opacity: 1; transform: translateY(0); }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--coral);
+    border-left: 2px solid var(--coral);
+    padding-left: 24px;
+    margin: 32px 0;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+  }
+  .about-pull-quote.visible { opacity: 1; transform: translateY(0); }
+  .about-awards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 24px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.6s;
+  }
+  .about-awards.visible { opacity: 1; }
+  .award-item {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(43,32,24,0.5);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(43,32,24,0.1);
+  }
+
+  /* ─── TESTIMONIALS ────────────────────────────────── */
+  .testimonials-section {
+    background: var(--coral);
+    padding: 100px 60px;
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 60px;
+  }
+  .testimonial-card {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .testimonial-card.visible { opacity: 1; transform: translateY(0); }
+  .testimonial-card:nth-child(2) { transition-delay: 0.15s; }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--warm-white);
+    margin-bottom: 24px;
+  }
+  .testimonial-quote::before { content: '\201C'; }
+  .testimonial-quote::after { content: '\201D'; }
+  .testimonial-attribution {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.65);
+  }
+  .testimonials-section .section-label { color: rgba(250,247,242,0.7); }
+  .testimonials-section .section-title { color: var(--warm-white); }
+
+  /* ─── CTA SECTION ─────────────────────────────────── */
+  .cta-section {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://sallyullmanphotography.com/wp-content/uploads/2021/04/maternity-beach2-with-mom.jpg');
+    background-size: cover;
+    background-position: center 35%;
+  }
+  .cta-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(43,32,24,0.6);
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    padding: 0 40px;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease 0.1s, transform 0.9s ease 0.1s;
+  }
+  .cta-title.visible { opacity: 1; transform: translateY(0); }
+  .cta-subtitle {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(250,247,242,0.7);
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .cta-subtitle.visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    background: var(--coral);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s, background 0.3s;
+  }
+  .cta-btn.visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: #b5604a; }
+
+  /* ─── CONTACT ─────────────────────────────────────── */
+  .contact-section {
+    background: var(--warm-white);
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-text .section-title { margin-bottom: 24px; }
+  .contact-body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(43,32,24,0.65);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .contact-body.visible { opacity: 1; transform: translateY(0); }
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s;
+  }
+  .contact-details.visible { opacity: 1; }
+  .contact-item-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(43,32,24,0.4);
+    margin-bottom: 6px;
+  }
+  .contact-item-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--dusk);
+    text-decoration: none;
+  }
+  .contact-item-value:hover { color: var(--coral); }
+  .contact-image-right {
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .contact-image-right.visible { clip-path: inset(0 0 0 0); }
+  .contact-image-right img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .social-links {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.6s;
+  }
+  .social-links.visible { opacity: 1; }
+  .social-link {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(43,32,24,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .social-link:hover { color: var(--coral); }
+
+  /* ─── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: var(--dusk);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.7);
+  }
+  .footer-copy {
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(250,247,242,0.3);
+    letter-spacing: 0.1em;
+  }
+  .footer-credit {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(250,247,242,0.25);
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; bottom: 56px; }
+    .scroll-indicator { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 48px 24px; }
+    .stat-item { padding: 24px 20px; }
+    .stat-number { font-size: 56px; }
+    .gallery-section { padding: 80px 0 0; }
+    .gallery-header { padding: 0 24px 48px; }
+    .editorial-row-1, .editorial-row-2, .editorial-row-3 {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+    .editorial-row-4 { height: 300px; }
+    .gallery-img { height: 280px; margin-bottom: 6px; }
+    .gap-right { margin-left: 0; }
+    .services-section { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { border-right: none; border-top: 1px solid rgba(250,247,242,0.12); padding: 32px 0; }
+    .about-section { grid-template-columns: 1fr; }
+    .about-image { height: 360px; }
+    .about-text { padding: 48px 24px; }
+    .testimonials-section { padding: 80px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+    .contact-image-right { display: none; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: 1fr 1fr; padding: 32px 16px; }
+    .stat-number { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Sally Ullman</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#services">Sessions</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Book</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content" id="heroContent">
+    <div class="hero-eyebrow">Sarasota · Siesta Key · Lido Key · Gulf of Mexico</div>
+    <span class="hero-name">Sally Ullman<br>Photography</span>
+    <p class="hero-tagline">Florida Vacation & Family Portraits — Capturing Your Family at the Water's Edge</p>
+    <a href="#contact" class="hero-cta">Book a Session</a>
+  </div>
+  <div class="scroll-indicator">
+    <span class="scroll-line"></span>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Florida Vacation Photography</span><span class="dot">·</span>
+    <span>Siesta Key Beach Portraits</span><span class="dot">·</span>
+    <span>Lido Key Sunsets</span><span class="dot">·</span>
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Maternity</span><span class="dot">·</span>
+    <span>Engagement</span><span class="dot">·</span>
+    <span>Sarasota, FL</span><span class="dot">·</span>
+    <span>Bradenton Beach</span><span class="dot">·</span>
+    <span>Anna Maria Island</span><span class="dot">·</span>
+    <span>Longboat Key</span><span class="dot">·</span>
+    <!-- duplicate for seamless loop -->
+    <span>Florida Vacation Photography</span><span class="dot">·</span>
+    <span>Siesta Key Beach Portraits</span><span class="dot">·</span>
+    <span>Lido Key Sunsets</span><span class="dot">·</span>
+    <span>Family Sessions</span><span class="dot">·</span>
+    <span>Maternity</span><span class="dot">·</span>
+    <span>Engagement</span><span class="dot">·</span>
+    <span>Sarasota, FL</span><span class="dot">·</span>
+    <span>Bradenton Beach</span><span class="dot">·</span>
+    <span>Anna Maria Island</span><span class="dot">·</span>
+    <span>Longboat Key</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="stat-item">
+    <div class="stat-number">15<span>+</span></div>
+    <div class="stat-label">Years in Florida</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">5<span>★</span></div>
+    <div class="stat-label">WeddingWire Rating</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">8</div>
+    <div class="stat-label">Gulf Beaches Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">100<span>%</span></div>
+    <div class="stat-label">Recommended by Couples</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <div class="section-label">The Work</div>
+    <h2 class="section-title">Families at the<br><em>Gulf's Edge</em></h2>
+    <p class="gallery-intro">Every session is a quiet hour of golden light — the water, your family, and nothing else that matters.</p>
+  </div>
+
+  <!-- Row 1: large left / small right -->
+  <div class="editorial-row editorial-row-1">
+    <div class="gallery-img">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/04/Family-Beach-Photography-Bradenton-Beach-Florida.jpg"
+           alt="Family beach photography at Bradenton Beach, Florida" loading="lazy">
+      <span class="gallery-img-label">Bradenton Beach</span>
+    </div>
+    <div class="gallery-img gap-right" style="transition-delay: 0.1s;">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/04/family-GH.jpg"
+           alt="Family portrait session" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Row 2: small left / large right -->
+  <div class="editorial-row editorial-row-2">
+    <div class="gallery-img" style="transition-delay: 0.05s;">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/04/beach-4.jpg"
+           alt="Beach family session" loading="lazy">
+    </div>
+    <div class="gallery-img gap-right">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/04/Family-Beach-Photography-Bradenton-Florida.jpg"
+           alt="Family beach photography Bradenton Florida" loading="lazy">
+      <span class="gallery-img-label">Bradenton, Florida</span>
+    </div>
+  </div>
+
+  <!-- Row 3: equal halves -->
+  <div class="editorial-row editorial-row-3">
+    <div class="gallery-img" style="transition-delay: 0.08s;">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/04/family-GH-1.jpg"
+           alt="Family portrait at golden hour" loading="lazy">
+    </div>
+    <div class="gallery-img gap-right" style="transition-delay: 0.16s;">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/04/beach-5.jpg"
+           alt="Beach session at sunset" loading="lazy">
+      <span class="gallery-img-label">Gulf of Mexico</span>
+    </div>
+  </div>
+
+  <!-- Row 4: full bleed -->
+  <div class="editorial-row editorial-row-4">
+    <div class="gallery-img">
+      <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/10/family-2021.jpg"
+           alt="Family 2021 portrait session" loading="lazy">
+      <span class="gallery-img-label">Sarasota · 2021</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-label">Sessions</div>
+  <h2 class="section-title">What We Offer</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Vacation Portraits</div>
+      <p class="service-desc">You're already here. Let us document it. Gulf-side sessions for families visiting Siesta Key, Lido Key, Longboat Key, and Anna Maria Island — available at sunrise or sunset.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.12s;">
+      <div class="service-num">02</div>
+      <div class="service-name">Family & Children</div>
+      <p class="service-desc">Lifestyle-driven portraits that feel natural, not posed. Studio, outdoor, or beach — wherever your family is most themselves.</p>
+    </div>
+    <div class="service-card" style="transition-delay: 0.24s;">
+      <div class="service-num">03</div>
+      <div class="service-name">Weddings & Engagements</div>
+      <p class="service-desc">Small weddings, elopements, and engagement sessions on the Gulf. Photojournalistic storytelling with warm, natural light.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-image">
+    <img src="https://sallyullmanphotography.com/wp-content/uploads/2021/10/group-photo-opener-scaled.jpg"
+         alt="Sally Ullman Photography — group portrait" loading="lazy">
+  </div>
+  <div class="about-text">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Sally Ullman</h2>
+    <p class="about-body">A Sarasota-based photographer with roots in national magazine publishing, Sally brings editorial precision to every family session on the Gulf. Philadelphia Art Directors Award recipient. Listed in Who's Who in American Photographers. After a decade in Florida, her focus has been on capturing the one thing no vacation package includes: your family, actually together, in the light.</p>
+    <blockquote class="about-pull-quote">She was right about timing. Sally captured beautiful moments and took time after ceremony for romantic sunset pictures.</blockquote>
+    <div class="about-awards">
+      <div class="award-item">Philadelphia Art Directors Award — Excellence in Photography</div>
+      <div class="award-item">Benjamin Franklin Gold Award</div>
+      <div class="award-item">Who's Who in American Photographers</div>
+      <div class="award-item">SCORE Certified Business Mentor</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-label">Testimonials</div>
+  <h2 class="section-title">What Families Say</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-quote">She was right about timing! Sally captured beautiful moments and took time after ceremony for romantic sunset pictures. Absolutely everything we hoped for.</p>
+      <div class="testimonial-attribution">— Gina · WeddingWire Review</div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-quote">Sally is enthusiastic about her work, making collaboration fun. She assured me our destination elopement would be perfect — and it was. Couldn't recommend her more.</p>
+      <div class="testimonial-attribution">— Lindsay · WeddingWire Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <h2 class="cta-title">Your Florida<br>Session Awaits</h2>
+    <p class="cta-subtitle">Sessions starting at $750 · Siesta Key, Lido Key, Bradenton Beach & beyond</p>
+    <a href="mailto:info@floridafamilyphotos.com" class="cta-btn">Book Your Session</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-text">
+    <div class="section-label">Inquiries</div>
+    <h2 class="section-title">Let's Make<br>Something Beautiful</h2>
+    <p class="contact-body">Ready to book your Florida beach session? Sally covers all of Sarasota, Bradenton, Siesta Key, Lido Key, Longboat Key, Anna Maria Island, and Venice Beach. Sunrise and sunset appointments available year-round.</p>
+    <div class="contact-details">
+      <div>
+        <div class="contact-item-label">Email</div>
+        <a href="mailto:info@floridafamilyphotos.com" class="contact-item-value">info@floridafamilyphotos.com</a>
+      </div>
+      <div>
+        <div class="contact-item-label">Phone — Sarasota</div>
+        <a href="tel:9413018926" class="contact-item-value">941-301-8926</a>
+      </div>
+      <div>
+        <div class="contact-item-label">Location</div>
+        <span class="contact-item-value">Sarasota, FL 34201</span>
+      </div>
+    </div>
+    <div class="social-links">
+      <a href="https://www.facebook.com/floridafamilyphotos/" class="social-link" target="_blank">Facebook</a>
+      <a href="https://www.facebook.com/SallyUllmanPhotographyStudio/" class="social-link" target="_blank">Studio Page</a>
+    </div>
+  </div>
+  <div class="contact-image-right">
+    <img src="https://sallyullmanphotography.com/wp-content/uploads/2020/11/lifestle-11.jpg"
+         alt="Sally Ullman Photography lifestyle session" loading="lazy">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Sally Ullman Photography</div>
+  <div class="footer-copy">© 2026 · Sarasota, Florida</div>
+  <div class="footer-credit">Design by Lucas Blatt</div>
+</footer>
+
+<script>
+  // Parallax hero
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.backgroundPositionY = (50 + window.scrollY * 0.25) + '%';
+  }, { passive: true });
+
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Hero entrance animation
+  setTimeout(() => {
+    document.getElementById('heroContent').classList.add('visible');
+  }, 100);
+
+  // IntersectionObserver for all scroll-triggered elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        imageObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Observe text elements
+  document.querySelectorAll(
+    '.section-label, .section-title, .gallery-intro, .about-body, .about-pull-quote, .about-awards, ' +
+    '.contact-body, .contact-details, .social-links, .cta-title, .cta-subtitle, .cta-btn'
+  ).forEach(el => observer.observe(el));
+
+  // Observe stats (stagger via delay styles already set)
+  document.querySelectorAll('.stat-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.1) + 's';
+    observer.observe(el);
+  });
+
+  // Observe service cards
+  document.querySelectorAll('.service-card').forEach(el => observer.observe(el));
+
+  // Observe testimonial cards
+  document.querySelectorAll('.testimonial-card').forEach(el => observer.observe(el));
+
+  // Observe images (gallery, about, contact)
+  document.querySelectorAll('.gallery-img, .about-image, .contact-image-right').forEach(el => imageObserver.observe(el));
+
+  // Stagger gallery image delays
+  document.querySelectorAll('.gallery-img').forEach((el, i) => {
+    if (!el.style.transitionDelay) {
+      el.style.transitionDelay = (i * 0.1) + 's';
+    }
+  });
+</script>
+</body>
+</html>
