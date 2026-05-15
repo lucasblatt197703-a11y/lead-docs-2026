@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joseph Anzalone — Headshot Photographer · Jacksonville, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F2EFE9;
+    --text-dark: #1A1814;
+    --text-mid: #4A4540;
+    --text-light: #9A9088;
+    --accent: #8B6F47;
+    --accent-light: #C4A882;
+    --dark: #111009;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+    transition: background 0.4s ease, padding 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(242,239,233,0.95);
+    backdrop-filter: blur(8px);
+    padding: 16px 60px;
+    border-bottom: 1px solid rgba(139,111,71,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--text-dark); }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    transition: color 0.2s;
+  }
+  nav.scrolled .nav-links a { color: var(--text-mid); }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: sticky; top: 0; z-index: 1;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    overflow: hidden;
+  }
+  .hero-image-side {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+    will-change: transform;
+  }
+  .hero-bg.loaded { transform: scale(1.0); }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(17,16,9,0.35) 0%, rgba(17,16,9,0.05) 100%);
+  }
+
+  .hero-text-side {
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 56px;
+    position: relative;
+  }
+  .hero-text-side::before {
+    content: 'JA';
+    position: absolute;
+    top: -20px; right: -10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px;
+    font-weight: 300;
+    color: rgba(139,111,71,0.07);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: #fff;
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+  }
+  .hero-name em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent-light);
+  }
+  .hero-tagline {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+    max-width: 280px;
+    margin-bottom: 48px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.65s, transform 0.7s ease 0.65s;
+  }
+  .hero-cta {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.85s, transform 0.7s ease 0.85s;
+  }
+  .hero-cta:hover { color: #fff; border-color: #fff; }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  .hero-loaded .hero-eyebrow,
+  .hero-loaded .hero-name,
+  .hero-loaded .hero-tagline,
+  .hero-loaded .hero-cta {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip {
+    background: var(--accent);
+    padding: 14px 0;
+    overflow: hidden;
+    position: relative; z-index: 10;
+  }
+  .marquee-inner {
+    display: flex; white-space: nowrap;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+  .marquee-inner span {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0 40px;
+  }
+  .marquee-inner span.dot { padding: 0; opacity: 0.6; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--dark);
+    padding: 80px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    position: relative; z-index: 10;
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--accent-light);
+    line-height: 1;
+    display: block;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stat-number.is-visible { opacity: 1; transform: translateY(0); }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* ─── SECTION HEADINGS ─── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-dark);
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .clip-reveal {
+    display: block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .clip-reveal.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* ─── PORTFOLIO GRID ─── */
+  #portfolio {
+    padding: 120px 60px;
+    background: var(--bg);
+  }
+  .portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .portfolio-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-mid);
+    max-width: 320px;
+    line-height: 1.7;
+    text-align: right;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 200px;
+    gap: 10px;
+  }
+  .grid-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+  .grid-item.is-visible { clip-path: inset(0 0 0 0); }
+  .grid-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .grid-item:hover img { transform: scale(1.04); }
+  .grid-item-overlay {
+    position: absolute; inset: 0;
+    background: rgba(17,16,9,0);
+    transition: background 0.3s ease;
+    display: flex; align-items: flex-end; padding: 16px;
+  }
+  .grid-item:hover .grid-item-overlay { background: rgba(17,16,9,0.45); }
+  .grid-item-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .grid-item:hover .grid-item-label { opacity: 1; transform: translateY(0); }
+
+  /* Grid layout: staggered editorial arrangement */
+  .grid-item:nth-child(1)  { grid-column: 1 / 5;   grid-row: 1 / 3; }
+  .grid-item:nth-child(2)  { grid-column: 5 / 8;   grid-row: 1 / 2; }
+  .grid-item:nth-child(3)  { grid-column: 8 / 13;  grid-row: 1 / 3; }
+  .grid-item:nth-child(4)  { grid-column: 5 / 8;   grid-row: 2 / 3; }
+  .grid-item:nth-child(5)  { grid-column: 1 / 4;   grid-row: 3 / 5; }
+  .grid-item:nth-child(6)  { grid-column: 4 / 8;   grid-row: 3 / 4; }
+  .grid-item:nth-child(7)  { grid-column: 8 / 10;  grid-row: 3 / 5; }
+  .grid-item:nth-child(8)  { grid-column: 10 / 13; grid-row: 3 / 4; }
+  .grid-item:nth-child(9)  { grid-column: 4 / 8;   grid-row: 4 / 5; }
+  .grid-item:nth-child(10) { grid-column: 10 / 13; grid-row: 4 / 5; }
+
+  /* ─── SERVICES ─── */
+  #services {
+    background: var(--text-dark);
+    padding: 120px 60px;
+  }
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+  .services-header .section-title { color: #fff; }
+  .services-intro {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    padding-bottom: 8px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.04);
+    padding: 48px 40px;
+    border: 1px solid rgba(255,255,255,0.07);
+    opacity: 0; transform: translateY(25px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    will-change: opacity, transform;
+  }
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+  .service-card:hover { background: rgba(139,111,71,0.12); border-color: rgba(139,111,71,0.3); }
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+  .service-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    min-height: 640px;
+  }
+  .about-image {
+    overflow: hidden;
+    position: relative;
+  }
+  .about-image img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    will-change: opacity;
+  }
+  .about-image img.is-visible { opacity: 1; }
+  .about-content {
+    background: var(--bg);
+    padding: 100px 72px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .about-content::before {
+    content: '';
+    position: absolute;
+    top: 60px; left: 0;
+    width: 40%; height: 1px;
+    background: var(--accent);
+  }
+  .about-text {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin: 32px 0 40px;
+  }
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1.55;
+    border-left: 2px solid var(--accent-light);
+    padding-left: 24px;
+    margin-bottom: 40px;
+  }
+  .about-credentials {
+    display: flex; gap: 40px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .about-credentials span { color: var(--accent); margin-right: 8px; font-size: 14px; }
+
+  /* ─── TESTIMONIAL ─── */
+  #testimonials {
+    background: var(--accent);
+    padding: 100px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #testimonials::before {
+    content: '"';
+    position: absolute;
+    top: -40px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 400px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: #fff;
+    max-width: 800px;
+    margin: 0 auto 32px;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: opacity, transform;
+  }
+  .testimonial-quote.is-visible { opacity: 1; transform: translateY(0); }
+  .testimonial-author {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ─── CTA SECTION ─── */
+  #cta {
+    background: var(--dark);
+    padding: 140px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::after {
+    content: 'BOOK';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 260px;
+    font-weight: 300;
+    color: rgba(139,111,71,0.05);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+  }
+  .cta-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .cta-label.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5.5vw, 80px);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    opacity: 0; transform: translateY(25px);
+    transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+  }
+  .cta-heading.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 56px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px 52px;
+    transition: background 0.25s ease, transform 0.2s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.45s, transform 0.7s ease 0.45s, background 0.25s ease;
+  }
+  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: var(--accent-light); transform: translateY(-2px); }
+  .cta-phone {
+    display: block;
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+  }
+  .cta-phone:hover { color: var(--accent-light); }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 100px 60px;
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .contact-left .section-title { margin-bottom: 32px; }
+  .contact-detail {
+    margin-bottom: 24px;
+  }
+  .contact-detail-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .contact-detail-value {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+  .contact-detail-value:hover { color: var(--accent); }
+  .contact-social-links {
+    display: flex; gap: 24px; margin-top: 40px;
+  }
+  .social-link {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .social-link:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-right {
+    padding-top: 72px;
+  }
+  .contact-right p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 32px;
+  }
+  .contact-areas {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-light);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(139,111,71,0.2);
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    nav { padding: 24px 40px; }
+    nav.scrolled { padding: 14px 40px; }
+    #hero { grid-template-columns: 55% 45%; }
+    .hero-text-side { padding: 60px 44px; }
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 60px 40px; }
+    #portfolio { padding: 80px 40px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    #contact { grid-template-columns: 1fr; gap: 60px; padding: 80px 40px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; }
+
+    #hero { grid-template-columns: 1fr; grid-template-rows: 50vh auto; height: auto; }
+    .hero-image-side { height: 50vh; }
+    .hero-text-side { padding: 48px 28px; }
+    .hero-text-side::before { font-size: 120px; }
+    .hero-name { font-size: 44px; }
+
+    #stats { grid-template-columns: repeat(2, 1fr); padding: 48px 24px; }
+    .stat-number { font-size: 52px; }
+
+    #portfolio { padding: 60px 20px; }
+    .portfolio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .portfolio-subtitle { text-align: left; }
+    .portfolio-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 160px;
+    }
+    .grid-item { grid-column: auto !important; grid-row: auto !important; }
+
+    #services { padding: 60px 24px; }
+    .services-header { grid-template-columns: 1fr; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+
+    #about { grid-template-columns: 1fr; }
+    .about-image { height: 400px; }
+    .about-content { padding: 60px 28px; }
+
+    #testimonials { padding: 60px 24px; }
+
+    #cta { padding: 80px 24px; }
+
+    #contact { padding: 60px 24px; gap: 40px; }
+
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 36px; }
+    .portfolio-grid { grid-auto-rows: 130px; }
+    .stat-number { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Joseph Anzalone</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: Asymmetric split — image left 60%, text panel right 40% -->
+<section id="hero">
+  <div class="hero-image-side">
+    <img class="hero-bg" src="https://josephanzalone.com/galley/images/bhs/1.jpg" alt="Joseph Anzalone Headshot Photography" loading="eager">
+    <div class="hero-overlay"></div>
+    <div class="hero-scroll-hint">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+  <div class="hero-text-side">
+    <p class="hero-eyebrow">Jacksonville · NE Florida</p>
+    <h1 class="hero-name">Joseph<br><em>Anzalone</em></h1>
+    <p class="hero-tagline">Premier headshot & personal branding photographer. 30+ years. Trusted by Fortune 500 executives, actors, and creative professionals across Northeast Florida.</p>
+    <a href="#portfolio" class="hero-cta">View Portfolio</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Business Headshots</span><span class="dot">·</span>
+    <span>Actor Headshots</span><span class="dot">·</span>
+    <span>Personal Branding</span><span class="dot">·</span>
+    <span>Modeling Portfolios</span><span class="dot">·</span>
+    <span>Sports Portraits</span><span class="dot">·</span>
+    <span>500+ Five-Star Reviews</span><span class="dot">·</span>
+    <span>Jacksonville, FL</span><span class="dot">·</span>
+    <span>Business Headshots</span><span class="dot">·</span>
+    <span>Actor Headshots</span><span class="dot">·</span>
+    <span>Personal Branding</span><span class="dot">·</span>
+    <span>Modeling Portfolios</span><span class="dot">·</span>
+    <span>Sports Portraits</span><span class="dot">·</span>
+    <span>500+ Five-Star Reviews</span><span class="dot">·</span>
+    <span>Jacksonville, FL</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <span class="stat-number">30+</span>
+    <span class="stat-label">Years Experience</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Five-Star Reviews</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">10K+</span>
+    <span class="stat-label">Headshots Created</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">F500</span>
+    <span class="stat-label">Corporate Clients</span>
+  </div>
+</section>
+
+<!-- PORTFOLIO GRID -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2 class="section-title">
+        <span class="clip-reveal">The Art of the</span>
+        <span class="clip-reveal" style="transition-delay: 0.12s">First <em>Impression</em></span>
+      </h2>
+    </div>
+    <p class="portfolio-subtitle">Each session is tailored to capture your authentic presence — the expression that connects at first sight.</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="grid-item">
+      <img src="https://josephanzalone.com/galley/images/bhs/2.jpg" alt="Executive business headshot" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Business Headshots</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://greatheadshotsjacksonvillefl.weebly.com/uploads/2/4/5/4/24542066/hsc-4028_orig.jpg" alt="Professional portrait" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Executive Portraits</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://josephanzalone.com/galley/images/bhs/6.jpg" alt="Personal branding" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Personal Branding</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://greatheadshotsjacksonvillefl.weebly.com/uploads/2/4/5/4/24542066/highresolution-3390_orig.jpg" alt="Portrait headshot" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Actor Headshots</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://josephanzalone.com/galley/images/bhs/9.jpg" alt="Corporate headshot" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Corporate</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://greatheadshotsjacksonvillefl.weebly.com/uploads/2/4/5/4/24542066/insta-329_orig.jpg" alt="Studio portrait" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Studio Portraits</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://josephanzalone.com/galley/images/bhs/12.jpg" alt="Professional headshot" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Headshots</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://greatheadshotsjacksonvillefl.weebly.com/uploads/2/4/5/4/24542066/highresolution-4542_orig.jpg" alt="Fashion portrait" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Fashion & Modeling</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://josephanzalone.com/galley/images/bhs/14.jpg" alt="Business portrait" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">LinkedIn Portraits</span></div>
+    </div>
+    <div class="grid-item">
+      <img src="https://greatheadshotsjacksonvillefl.weebly.com/uploads/2/4/5/4/24542066/insta-041_orig.jpg" alt="Social media headshot" loading="lazy">
+      <div class="grid-item-overlay"><span class="grid-item-label">Social Media</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <p class="section-label" style="color: var(--accent-light)">What I Offer</p>
+      <h2 class="section-title" style="color: #fff">
+        <span class="clip-reveal">Every Session,</span>
+        <span class="clip-reveal" style="transition-delay: 0.12s"><em>Purpose-Built</em></span>
+      </h2>
+    </div>
+    <p class="services-intro">From C-suite executives to Broadway talent, I've spent thirty years learning that great headshots aren't just photographs — they're the start of every professional relationship.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-number">01</span>
+      <p class="service-name">Business & Executive Headshots</p>
+      <p class="service-desc">Corporate team photos, LinkedIn portraits, and executive images that project authority and approachability. Trusted by Fortune 500 firms and local businesses alike.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">02</span>
+      <p class="service-name">Actor & Talent Headshots</p>
+      <p class="service-desc">Industry-standard actor headshots that capture range and personality. Started in NYC working with Broadway and film talent — that expertise now serves Florida's creative scene.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">03</span>
+      <p class="service-name">Personal Branding & Lifestyle</p>
+      <p class="service-desc">Images that tell your professional story — for entrepreneurs, coaches, speakers, and anyone building a personal brand that needs to stand out online.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">04</span>
+      <p class="service-name">Modeling Portfolios</p>
+      <p class="service-desc">Editorial, fashion, fitness, and beauty photography. Strong modeling book images that open doors with agencies and casting directors.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">05</span>
+      <p class="service-name">Sports & Fitness Portraits</p>
+      <p class="service-desc">Dynamic sports portraits and fitness photography. Athletes, trainers, and coaches trust Joe to capture power, focus, and character in every frame.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">06</span>
+      <p class="service-name">Commercial Photography</p>
+      <p class="service-desc">Product, food, and lifestyle commercial work for brands. Published nationally in print and digital — the same standard applied to every commercial project.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image">
+    <img src="https://josephanzalone.com/galley/images/bhs/18.jpg" alt="Joseph Anzalone" loading="lazy">
+  </div>
+  <div class="about-content">
+    <p class="section-label">About</p>
+    <h2 class="section-title">
+      <span class="clip-reveal">The Photographer</span>
+      <span class="clip-reveal" style="transition-delay: 0.1s">Behind <em>the Lens</em></span>
+    </h2>
+    <p class="about-text">Joe Anzalone is Northeast Florida's premier headshot photographer, bringing over three decades of New York City commercial photography experience to Jacksonville. His career began in Manhattan — creating portraits for Broadway actors, Fortune 500 executives, national magazines, and major advertising campaigns.</p>
+    <blockquote class="about-pull-quote">"I create headshots that effectively connect you to your audience at first sight."</blockquote>
+    <div class="about-credentials">
+      <div><span>30+</span><br>Years NYC<br>& Florida</div>
+      <div><span>F500</span><br>Corporate<br>Clients</div>
+      <div><span>500+</span><br>Google<br>5-Star Reviews</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonials">
+  <blockquote class="testimonial-quote">"Joe made me feel completely at ease and the results were outstanding. My new LinkedIn headshot has gotten more profile views and connection requests in two weeks than the past two years combined."</blockquote>
+  <p class="testimonial-author">— Jacksonville Business Executive · Google Review</p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-label">Ready to Book?</p>
+  <h2 class="cta-heading">Your First Impression<br>Starts Here</h2>
+  <p class="cta-sub">Serving Jacksonville, Orange Park, Fleming Island, Clay County, and NE Florida</p>
+  <a href="tel:9044255135" class="cta-btn">Call to Book · (904) 425-5135</a>
+  <a href="mailto:jaxvillephotographer@gmail.com" class="cta-phone">jaxvillephotographer@gmail.com</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's Create<br><em>Something Great</em></h2>
+    <div style="margin-top: 40px">
+      <div class="contact-detail">
+        <span class="contact-detail-label">Phone</span>
+        <a href="tel:9044255135" class="contact-detail-value">(904) 425-5135</a>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Email</span>
+        <a href="mailto:jaxvillephotographer@gmail.com" class="contact-detail-value">jaxvillephotographer@gmail.com</a>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Studio</span>
+        <span class="contact-detail-value">6015 Chester Circle, Jacksonville, FL</span>
+      </div>
+    </div>
+    <div class="contact-social-links">
+      <a href="https://instagram.com/jacksonvilleheadshots" class="social-link" target="_blank">Instagram</a>
+      <a href="https://linkedin.com/in/josephanzalone" class="social-link" target="_blank">LinkedIn</a>
+      <a href="https://www.yelp.com/biz/joseph-anzalone-headshot-photographer-jacksonville" class="social-link" target="_blank">Yelp</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <p>Available for sessions throughout Northeast Florida — Jacksonville, Orange Park, Middleburg, Fleming Island, Green Cove Springs, St. Augustine, Ponte Vedra Beach, and St. Johns County.</p>
+    <p>On-location sessions available at your office or preferred venue. Fastest turnaround in the region.</p>
+    <div class="contact-areas">
+      Clay County · Duval County · St. Johns County<br>
+      Orange Park · Ponte Vedra · St. Augustine
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Joseph Anzalone Photography</span>
+  <span class="footer-copy">© 2026 All Rights Reserved</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // NAV scroll behavior
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Hero entrance animation
+  window.addEventListener('load', () => {
+    const heroSection = document.querySelector('#hero .hero-text-side');
+    heroSection.classList.add('hero-loaded');
+
+    // Hero bg scale animation
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) heroBg.classList.add('loaded');
+  });
+
+  // IntersectionObserver for all animated elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  // Stats numbers
+  document.querySelectorAll('.stat-number').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 120}ms`;
+    observer.observe(el);
+  });
+
+  // Clip-path reveals
+  document.querySelectorAll('.clip-reveal').forEach(el => observer.observe(el));
+
+  // Service cards with stagger
+  document.querySelectorAll('.service-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80}ms`;
+    observer.observe(el);
+  });
+
+  // Grid items with stagger
+  document.querySelectorAll('.grid-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80}ms`;
+    observer.observe(el);
+  });
+
+  // About image
+  document.querySelectorAll('.about-image img').forEach(el => observer.observe(el));
+
+  // Testimonial
+  document.querySelectorAll('.testimonial-quote').forEach(el => observer.observe(el));
+
+  // CTA elements
+  document.querySelectorAll('.cta-label, .cta-heading, .cta-sub, .cta-btn').forEach(el => observer.observe(el));
+
+  // Parallax on hero image
+  const heroBgImg = document.querySelector('.hero-bg');
+  if (heroBgImg) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      heroBgImg.style.transform = `scale(1.0) translateY(${scrolled * 0.3}px)`;
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
