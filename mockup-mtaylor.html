@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milisa Taylor-Hicks — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0e0c0b;
+      --bg-warm: #141210;
+      --cream: #e8e0d4;
+      --warm-white: #f2ede6;
+      --accent: #b87c5a;
+      --text-mid: #9a9087;
+      --text-light: #c8bfb4;
+      --border: rgba(232, 224, 212, 0.12);
+    }
+
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      color: var(--cream);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 60px;
+      background: linear-gradient(to bottom, rgba(14,12,11,0.95) 0%, transparent 100%);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--cream); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1920&q=85');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+      will-change: transform;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(14,12,11,0.85) 0%,
+        rgba(14,12,11,0.4) 50%,
+        rgba(14,12,11,0.15) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 60px 80px;
+      max-width: 700px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+
+    .hero-content.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(64px, 8vw, 108px);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--warm-white);
+      margin-bottom: 32px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+      will-change: clip-path;
+    }
+
+    .hero-name.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 48px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232, 224, 212, 0.35);
+      padding-bottom: 6px;
+      transition: border-color 0.3s ease, gap 0.3s ease;
+    }
+
+    .hero-cta:hover { border-color: var(--accent); gap: 22px; }
+    .hero-cta-arrow { font-size: 18px; color: var(--accent); }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      background: var(--bg-warm);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 35s linear infinite;
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    .marquee-text {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      padding-right: 80px;
+    }
+
+    .marquee-text span { color: var(--accent); margin: 0 12px; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item {
+      padding: 60px 40px;
+      border-right: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item:last-child { border-right: none; }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--warm-white);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery-section {
+      padding: 120px 60px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 42px;
+      color: var(--warm-white);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .gallery-series-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 24px;
+    }
+
+    /* Editorial gallery layout */
+    .gallery-editorial {
+      display: grid;
+      gap: 4px;
+    }
+
+    .gallery-row {
+      display: grid;
+      gap: 4px;
+    }
+
+    .gallery-row-1 { grid-template-columns: 1.6fr 1fr 1fr; }
+    .gallery-row-2 { grid-template-columns: 1fr 1.6fr; margin-top: 4px; }
+    .gallery-row-3 { grid-template-columns: 1fr 1fr 1.6fr; margin-top: 4px; }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      background: #1a1614;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+      will-change: clip-path;
+    }
+
+    .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+      loading: lazy;
+    }
+
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    .gallery-item-tall { aspect-ratio: 2/3; }
+    .gallery-item-sq { aspect-ratio: 1/1; }
+    .gallery-item-wide { aspect-ratio: 4/3; }
+    .gallery-item-port { aspect-ratio: 3/4; }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 16px 20px;
+      background: linear-gradient(to top, rgba(14,12,11,0.85) 0%, transparent 100%);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+    /* ─── FEATURED WORK ─── */
+    .featured-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+      border-top: 1px solid var(--border);
+    }
+
+    .featured-image {
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: clip-path;
+    }
+
+    .featured-image.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .featured-content {
+      padding: 80px 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--border);
+      background: var(--bg-warm);
+    }
+
+    .featured-series-tag {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .featured-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 48px;
+      line-height: 1.1;
+      color: var(--warm-white);
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .featured-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-light);
+      max-width: 420px;
+      margin-bottom: 48px;
+    }
+
+    .pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--cream);
+      padding-left: 24px;
+      border-left: 2px solid var(--accent);
+      margin: 40px 0;
+    }
+
+    /* ─── ABOUT ─── */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-image-wrap {
+      position: relative;
+      overflow: hidden;
+      min-height: 600px;
+      opacity: 0;
+      transform: scale(0.97);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+      will-change: opacity, transform;
+    }
+
+    .about-image-wrap.is-visible { opacity: 1; transform: scale(1); }
+
+    .about-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-image-overlay {
+      position: absolute;
+      bottom: 40px; right: -1px;
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-right: none;
+      padding: 28px 36px;
+      max-width: 280px;
+    }
+
+    .about-overlay-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+    }
+
+    .about-overlay-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-top: 6px;
+    }
+
+    .about-content {
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 36px;
+      line-height: 1.3;
+      color: var(--warm-white);
+      margin-bottom: 36px;
+    }
+
+    .about-body {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+
+    .about-credentials {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .credential-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .credential-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: var(--accent);
+      min-width: 50px;
+      margin-top: 1px;
+    }
+
+    .credential-text { color: var(--text-light); line-height: 1.5; }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      padding: 160px 60px;
+      text-align: center;
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 240px;
+      font-weight: 300;
+      color: rgba(232, 224, 212, 0.025);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+
+    .cta-section .section-title {
+      font-size: 64px;
+      margin-bottom: 24px;
+    }
+
+    .cta-sub {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-light);
+      max-width: 480px;
+      margin: 0 auto 56px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 56px;
+      background: transparent;
+      border: 1px solid var(--cream);
+      color: var(--cream);
+      font-family: 'Work Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .cta-btn:hover { background: var(--cream); color: var(--bg); }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      padding: 100px 60px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 48px;
+      line-height: 1.1;
+      color: var(--warm-white);
+      margin-bottom: 28px;
+    }
+
+    .contact-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-light);
+      margin-bottom: 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 15px;
+      color: var(--cream);
+      text-decoration: none;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.3s ease;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      min-width: 80px;
+    }
+
+    .contact-availability {
+      padding-top: 60px;
+    }
+
+    .availability-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--warm-white);
+      margin-bottom: 20px;
+    }
+
+    .availability-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .availability-list li {
+      font-size: 13px;
+      color: var(--text-light);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .availability-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080706;
+      border-top: 1px solid var(--border);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: var(--text-mid);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-mid);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 28px;
+    }
+
+    .footer-social a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-social a:hover { color: var(--cream); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 60px; }
+      .hero-name { font-size: 56px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat-item { padding: 40px 24px; }
+      .gallery-section { padding: 60px 24px; }
+      .gallery-row-1, .gallery-row-2, .gallery-row-3 { grid-template-columns: 1fr; }
+      .gallery-item-tall, .gallery-item-sq, .gallery-item-wide, .gallery-item-port { aspect-ratio: 4/3; }
+      .featured-section { grid-template-columns: 1fr; }
+      .featured-content { padding: 48px 32px; }
+      .featured-title { font-size: 36px; }
+      .about-section { grid-template-columns: 1fr; }
+      .about-content { padding: 60px 32px; }
+      .about-image-wrap { min-height: 400px; }
+      .cta-section { padding: 80px 32px; }
+      .cta-section .section-title { font-size: 40px; }
+      .contact-section { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 20px; text-align: center; }
+      .footer-social { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 44px; }
+      .stats { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    /* ─── THIN LINE DETAIL ─── */
+    .section-line {
+      width: 30%;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 60px 80px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-line.is-visible { opacity: 0.6; transform: scaleX(1); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-name">Milisa Taylor-Hicks</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#series">Series</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: Full-bleed image, text pinned bottom-left, no overlay -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content" id="heroContent">
+      <span class="hero-eyebrow">Fine Art Photography · Fleming Island, FL</span>
+      <h1 class="hero-name" id="heroName">Milisa<br>Taylor-Hicks</h1>
+      <p class="hero-subtitle">
+        MFA Photography, SCAD · Exploring feminine identity,<br>
+        power, and the Victorian gaze through pictorial photography.
+      </p>
+      <a href="#work" class="hero-cta">
+        View Portfolio <span class="hero-cta-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-text">Fine Art Photography <span>·</span> Behind the Door Series <span>·</span> MFA SCAD 2015 <span>·</span> Pictorial Aesthetic <span>·</span> Fleming Island, FL <span>·</span> Victorian &amp; Feminist Dialogue <span>·</span> Available for Commissions <span>·</span></span>
+      <span class="marquee-text">Fine Art Photography <span>·</span> Behind the Door Series <span>·</span> MFA SCAD 2015 <span>·</span> Pictorial Aesthetic <span>·</span> Fleming Island, FL <span>·</span> Victorian &amp; Feminist Dialogue <span>·</span> Available for Commissions <span>·</span></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item" data-delay="0">
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Years of Practice</div>
+    </div>
+    <div class="stat-item" data-delay="1">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Named Series</div>
+    </div>
+    <div class="stat-item" data-delay="2">
+      <div class="stat-num">MFA</div>
+      <div class="stat-label">SCAD Photography</div>
+    </div>
+    <div class="stat-item" data-delay="3">
+      <div class="stat-num">BFA</div>
+      <div class="stat-label">Atlanta College of Art</div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="work">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+
+    <p class="gallery-series-label">Behind the Door &nbsp;·&nbsp; Medical Series &nbsp;·&nbsp; Rembrandt Series &nbsp;·&nbsp; Constellations</p>
+
+    <div class="gallery-editorial">
+      <div class="gallery-row gallery-row-1">
+        <div class="gallery-item gallery-item-tall" data-delay="0">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=85" alt="Behind the Door Series" loading="lazy">
+          <div class="gallery-caption">Behind the Door, No. 1</div>
+        </div>
+        <div class="gallery-item gallery-item-tall" data-delay="1">
+          <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=700&q=85" alt="Medical Series" loading="lazy">
+          <div class="gallery-caption">Medical Series, No. 3</div>
+        </div>
+        <div class="gallery-item gallery-item-tall" data-delay="2">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=700&q=85" alt="Rembrandt Series" loading="lazy">
+          <div class="gallery-caption">Rembrandt Series, No. 2</div>
+        </div>
+      </div>
+
+      <div class="gallery-row gallery-row-2">
+        <div class="gallery-item gallery-item-wide" data-delay="3">
+          <img src="https://images.unsplash.com/photo-1552673597-e3cd6747a996?w=1000&q=85" alt="Strength Chapter" loading="lazy">
+          <div class="gallery-caption">Strength, Chapter 2</div>
+        </div>
+        <div class="gallery-item gallery-item-wide" data-delay="4">
+          <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=1200&q=85" alt="Interlude Series" loading="lazy">
+          <div class="gallery-caption">Interlude Series, No. 4</div>
+        </div>
+      </div>
+
+      <div class="gallery-row gallery-row-3">
+        <div class="gallery-item gallery-item-port" data-delay="5">
+          <img src="https://images.unsplash.com/photo-1550064824-8f993041ffd3?w=700&q=85" alt="Constellations" loading="lazy">
+          <div class="gallery-caption">Constellations, No. 1</div>
+        </div>
+        <div class="gallery-item gallery-item-port" data-delay="6">
+          <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?w=700&q=85" alt="Behind the Door" loading="lazy">
+          <div class="gallery-caption">Behind the Door, No. 5</div>
+        </div>
+        <div class="gallery-item gallery-item-tall" data-delay="7">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&q=85" alt="Collections Emerging" loading="lazy">
+          <div class="gallery-caption">Collections (Emerging), No. 2</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION LINE -->
+  <div class="section-line"></div>
+
+  <!-- FEATURED SERIES -->
+  <section class="featured-section" id="series">
+    <div class="featured-image">
+      <img src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=1200&q=85" alt="Behind the Door MFA Thesis" loading="lazy">
+    </div>
+    <div class="featured-content">
+      <span class="featured-series-tag">MFA Thesis Series · SCAD 2015</span>
+      <h3 class="featured-title">Behind the Door</h3>
+      <div class="pull-quote">
+        "Challenging patriarchal norms through a Victorian and Pictorial aesthetic — exploring sexuality, power, death of self, and feminine rebirth."
+      </div>
+      <p class="featured-body">
+        Taylor-Hicks's thesis work draws on her own experiences within the suffocating confines of a failing marriage, using references to the cultural restrictions imposed on Victorian women. Binary oppositions — light versus dark, life versus death, birth and rebirth — form the structural and conceptual backbone of the series.
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-image-wrap">
+      <img src="https://static.wixstatic.com/media/df4859_bddc9ec36f274f018f1d24009494cd54.jpg/v1/fill/w_800,h_1100,al_c,q_85,enc_auto/df4859_bddc9ec36f274f018f1d24009494cd54.jpg" alt="Milisa Taylor-Hicks" loading="lazy">
+      <div class="about-image-overlay">
+        <span class="about-overlay-num">GPA</span>
+        <div class="about-overlay-label">4.0 · MFA &amp; MAE · SCAD &amp; UF</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">About</h2>
+      </div>
+      <p class="about-tagline">Thirty years behind the lens. A practice rooted in the body, memory, and power.</p>
+      <p class="about-body">
+        Working in fine art photography with a concentration in pictorial and Victorian aesthetics, Milisa Taylor-Hicks earned her MFA from Savannah College of Art and Design in 2015. Her practice spans conceptual portraiture, alternative process, and experimental digital art.
+      </p>
+      <p class="about-body">
+        Currently teaching Advanced Placement and AICE Photography at Clay County School District, Fleming Island, FL. Adjunct faculty alumni, University of Florida. Member, Society for Photographic Education.
+      </p>
+      <div class="about-credentials">
+        <div class="credential-item">
+          <span class="credential-year">2015</span>
+          <span class="credential-text">MFA Photography — Savannah College of Art and Design. Educators Scholarship &amp; Alumni Grant recipient. GPA 4.0.</span>
+        </div>
+        <div class="credential-item">
+          <span class="credential-year">2007</span>
+          <span class="credential-text">MAE Art Education — University of Florida, Gainesville. GPA 4.0. Adjunct Faculty, Art Education Dept.</span>
+        </div>
+        <div class="credential-item">
+          <span class="credential-year">1994</span>
+          <span class="credential-text">BFA Photography — Atlanta College of Art / SCAD, Atlanta, GA.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg-text">Inquiry</div>
+    <div class="section-header" style="justify-content: center; margin-bottom: 28px;">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Commission a Work</h2>
+    </div>
+    <p class="cta-sub">
+      Available for fine art portrait commissions, editorial projects, and exhibition prints. All work produced with studio-grade lighting and archival media.
+    </p>
+    <a href="mailto:mthicks70@gmail.com" class="cta-btn">Get in Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div>
+      <h3 class="contact-title">Inquiries &amp; Studio</h3>
+      <p class="contact-text">
+        Based in Fleming Island, FL. Available for commissions, editorial photography, and fine art prints. Response within 48 hours.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:mthicks70@gmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          mthicks70@gmail.com
+        </a>
+        <a href="https://www.instagram.com/photographybymilisa/" target="_blank" class="contact-link">
+          <span class="contact-link-label">Instagram</span>
+          @photographybymilisa
+        </a>
+        <a href="https://www.facebook.com/PhotographybyMilisa/" target="_blank" class="contact-link">
+          <span class="contact-link-label">Facebook</span>
+          Photography by Milisa
+        </a>
+      </div>
+    </div>
+    <div class="contact-availability">
+      <h4 class="availability-title">Available For</h4>
+      <ul class="availability-list">
+        <li>Fine art portrait commissions</li>
+        <li>Conceptual editorial photography</li>
+        <li>Archival exhibition prints</li>
+        <li>Alternative process projects</li>
+        <li>Private &amp; commercial portraiture</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Milisa Taylor-Hicks Photography</span>
+    <span class="footer-copy">© 2026 Milisa C. Taylor-Hicks · Fleming Island, FL</span>
+    <nav class="footer-social">
+      <a href="https://www.instagram.com/photographybymilisa/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/PhotographybyMilisa/" target="_blank">Facebook</a>
+      <a href="mailto:mthicks70@gmail.com">Email</a>
+    </nav>
+  </footer>
+
+  <script>
+    // Hero entrance
+    window.addEventListener('load', () => {
+      const bg = document.getElementById('heroBg');
+      const content = document.getElementById('heroContent');
+      const name = document.getElementById('heroName');
+
+      setTimeout(() => {
+        content.classList.add('is-visible');
+        name.classList.add('is-visible');
+        if (bg) bg.style.transform = 'scale(1.0)';
+      }, 200);
+    });
+
+    // Parallax on hero
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      if (heroBg) {
+        heroBg.style.transform = `scale(1.0) translateY(${window.scrollY * 0.3}px)`;
+      }
+    });
+
+    // Intersection Observer for all animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || 0) * 120;
+          setTimeout(() => el.classList.add('is-visible'), delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    // Observe all animated elements
+    document.querySelectorAll(
+      '.section-title, .stat-item, .gallery-item, .featured-image, .about-image-wrap, .section-line'
+    ).forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
