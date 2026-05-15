@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sara Hollingsworth Photography — Tampa, FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F3EE;
+    --warm-white: #FDFAF6;
+    --charcoal: #1C1917;
+    --warm-gray: #6B6560;
+    --accent: #B5896A;
+    --accent-light: #D4AA88;
+    --dark: #0F0D0C;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ===========================
+     NAV
+  =========================== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+    transition: background 0.4s ease, padding 0.3s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(247, 243, 238, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 18px 60px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: white;
+    text-decoration: none;
+    transition: color 0.4s;
+  }
+
+  nav.scrolled .nav-logo { color: var(--charcoal); }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: color 0.3s, opacity 0.3s;
+  }
+
+  .nav-links a:hover { color: white; opacity: 1; }
+
+  nav.scrolled .nav-links a { color: var(--warm-gray); }
+  nav.scrolled .nav-links a:hover { color: var(--accent); }
+
+  /* ===========================
+     HERO — Full-bleed with text pinned bottom-left
+  =========================== */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/bded1f_30033cd2e9c84ddb8c7ba5b6496c456b~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    will-change: transform;
+    transform: scale(1.05);
+    transition: transform 0.1s linear;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(12, 10, 9, 0.72) 0%,
+      rgba(12, 10, 9, 0.18) 50%,
+      rgba(12, 10, 9, 0.08) 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(58px, 8vw, 100px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0.08em;
+    color: white;
+    display: block;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.4s, opacity 0.1s ease 0.4s;
+  }
+
+  .hero-name.loaded {
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .hero-eyebrow.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.72);
+    margin-top: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+  }
+
+  .hero-tagline.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 14px 36px;
+    border: 1px solid rgba(255,255,255,0.45);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: background 0.3s, border-color 0.3s, color 0.3s, opacity 0.8s ease 1.3s, transform 0.8s ease 1.3s;
+  }
+
+  .hero-cta.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-cta:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .hero-scroll-hint::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* ===========================
+     STATS SECTION
+  =========================== */
+  #stats {
+    background: var(--dark);
+    padding: 60px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .stat-item {
+    text-align: center;
+    flex: 1;
+  }
+
+  .stat-item + .stat-item {
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 300;
+    color: white;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .stat-number.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-top: 8px;
+  }
+
+  /* ===========================
+     MARQUEE STRIP
+  =========================== */
+  .marquee-strip {
+    overflow: hidden;
+    background: var(--accent);
+    padding: 14px 0;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 35s linear infinite;
+  }
+
+  .marquee-text {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: white;
+    padding: 0 40px;
+  }
+
+  .marquee-dot {
+    color: rgba(255,255,255,0.5);
+    padding: 0 4px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ===========================
+     GALLERY SECTION — Editorial scroll
+  =========================== */
+  #gallery {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+  }
+
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: rgba(28, 25, 23, 0.06);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+
+  .section-title-block { flex: 1; }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: var(--charcoal);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .section-subtitle {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--warm-gray);
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  /* Editorial gallery — alternating large/small */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 10px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .gallery-item.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+  .gallery-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+  .gallery-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+  .gallery-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+  .gallery-item:nth-child(5) { grid-column: span 1; grid-row: span 1; }
+  .gallery-item:nth-child(6) { grid-column: span 2; grid-row: span 1; }
+
+  .gallery-item img {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+  }
+
+  .gallery-item:nth-child(1) img,
+  .gallery-item:nth-child(6) img { height: 420px; }
+
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    background: linear-gradient(to top, rgba(12,10,9,0.6) 0%, transparent 100%);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .gallery-item:hover .gallery-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===========================
+     FEATURED WORK / WEDDINGS
+  =========================== */
+  #weddings {
+    padding: 0;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .weddings-image {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .weddings-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 500px;
+    transition: transform 0.8s ease;
+  }
+
+  .weddings-image:hover img { transform: scale(1.03); }
+
+  .weddings-content {
+    padding: 100px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .weddings-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .weddings-eyebrow.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .weddings-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 3.5vw, 52px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  }
+
+  .weddings-title.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .weddings-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--warm-gray);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .weddings-desc.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .packages-list {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+
+  .packages-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    color: var(--charcoal);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .packages-list li.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .package-name { font-weight: 400; }
+  .package-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--charcoal);
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    align-self: flex-start;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* ===========================
+     ABOUT — Magazine spread
+  =========================== */
+  #about {
+    padding: 140px 60px;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+  }
+
+  .about-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid var(--accent-light);
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .about-image {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    display: block;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+  }
+
+  .about-image img.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .about-content {
+    padding-left: 20px;
+  }
+
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 2.5vw, 38px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--charcoal);
+    margin-bottom: 32px;
+    padding-left: 28px;
+    border-left: 2px solid var(--accent);
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .about-pull-quote.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-text {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--warm-gray);
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+  }
+
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-signature {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+  }
+
+  .about-signature.is-visible { opacity: 1; }
+
+  /* ===========================
+     CTA SECTION
+  =========================== */
+  #cta {
+    padding: 120px 60px;
+    background: var(--charcoal);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: 'SARA';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.02);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 24px;
+  }
+
+  .cta-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .cta-heading.is-visible {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .cta-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 50px;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+
+  .cta-sub.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .btn-cta {
+    display: inline-block;
+    padding: 20px 60px;
+    background: var(--accent);
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-cta:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+  }
+
+  /* ===========================
+     CONTACT
+  =========================== */
+  #contact {
+    padding: 120px 60px;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-heading-block {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .contact-heading-block.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+  }
+
+  .contact-text {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--warm-gray);
+  }
+
+  .contact-info {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  }
+
+  .contact-info.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contact-item {
+    margin-bottom: 32px;
+  }
+
+  .contact-item-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 6px;
+  }
+
+  .contact-item-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--charcoal);
+  }
+
+  .contact-item-value a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-light);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-item-value a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ===========================
+     FOOTER
+  =========================== */
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .footer-copy {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-credit {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2);
+  }
+
+  .footer-credit a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-credit a:hover { color: var(--accent-light); }
+
+  /* ===========================
+     THIN DIVIDER LINE
+  =========================== */
+  .accent-divider {
+    width: 30%;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 60px;
+  }
+
+  /* ===========================
+     RESPONSIVE
+  =========================== */
+  @media (max-width: 768px) {
+    nav { padding: 22px 24px; }
+    nav.scrolled { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.15em; }
+
+    .hero-content { bottom: 60px; left: 24px; right: 24px; }
+    .hero-scroll-hint { display: none; }
+
+    #stats {
+      padding: 40px 24px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .stat-item { flex: 1 1 40%; }
+    .stat-item + .stat-item { border-left: none; }
+
+    #gallery { padding: 80px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(1) { grid-column: span 2; }
+    .gallery-item:nth-child(6) { grid-column: span 2; }
+
+    #weddings { grid-template-columns: 1fr; }
+    .weddings-content { padding: 60px 24px; }
+
+    #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+    .about-content { padding-left: 0; }
+    .about-image-wrap::before { display: none; }
+
+    #cta { padding: 80px 24px; }
+
+    #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+
+    footer {
+      flex-direction: column;
+      gap: 12px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .accent-divider { width: 60%; margin: 0 24px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .section-number { font-size: 48px; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:nth-child(n) { grid-column: span 1; }
+    nav .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Sara Hollingsworth</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#weddings">Weddings</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Inquire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="hero-eyebrow">Tampa, Florida · Lifestyle Photography</p>
+    <span class="hero-name" id="hero-name">Sara<br>Hollingsworth</span>
+    <p class="hero-tagline" id="hero-tagline">Authentic moments. Real light. Your story, beautifully told.</p>
+    <a href="#gallery" class="hero-cta" id="hero-cta">View Portfolio</a>
+  </div>
+  <div class="hero-scroll-hint">Scroll</div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-number" data-target="250">250+</div>
+    <div class="stat-label">Sessions Delivered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="60">60</div>
+    <div class="stat-label">Images Per Session</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="500">500+</div>
+    <div class="stat-label">Wedding Photos</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="100">100%</div>
+    <div class="stat-label">Digital Delivery</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-text">Families <span class="marquee-dot">·</span> Couples <span class="marquee-dot">·</span> Weddings <span class="marquee-dot">·</span> Seniors &amp; Grads <span class="marquee-dot">·</span> Tampa, Florida <span class="marquee-dot">·</span> Authentic &amp; Natural <span class="marquee-dot">·</span> 2026 <span class="marquee-dot">·</span></span>
+    <span class="marquee-text">Families <span class="marquee-dot">·</span> Couples <span class="marquee-dot">·</span> Weddings <span class="marquee-dot">·</span> Seniors &amp; Grads <span class="marquee-dot">·</span> Tampa, Florida <span class="marquee-dot">·</span> Authentic &amp; Natural <span class="marquee-dot">·</span> 2026 <span class="marquee-dot">·</span></span>
+    <span class="marquee-text">Families <span class="marquee-dot">·</span> Couples <span class="marquee-dot">·</span> Weddings <span class="marquee-dot">·</span> Seniors &amp; Grads <span class="marquee-dot">·</span> Tampa, Florida <span class="marquee-dot">·</span> Authentic &amp; Natural <span class="marquee-dot">·</span> 2026 <span class="marquee-dot">·</span></span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <div class="section-title-block">
+      <h2 class="section-title">The Work</h2>
+      <p class="section-subtitle">Portrait · Family · Lifestyle</p>
+    </div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bded1f_da861ae9ce384a31a09efab566a30f38~mv2.jpg" alt="Lifestyle portrait session" loading="lazy">
+      <div class="gallery-caption">Lifestyle Session</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bded1f_ec19b36f51b14df2b8985d8a505d6bf2~mv2.jpg" alt="Portrait session" loading="lazy">
+      <div class="gallery-caption">Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bded1f_9176db5a911b4b2d9938204f7cc6262c~mv2.jpg" alt="Family photography" loading="lazy">
+      <div class="gallery-caption">Family</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bded1f_e97d3a8646ed49fd9801050b6d481bca~mv2.jpg" alt="Couples session" loading="lazy">
+      <div class="gallery-caption">Couples</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bded1f_88f363ecd610495988999bf2d7d3932b~mv2.jpg" alt="Grad photography" loading="lazy">
+      <div class="gallery-caption">Senior / Grad</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.wixstatic.com/media/bded1f_5d5d13e2369e4051aea6be8409612d07~mv2.jpg" alt="Outdoor session" loading="lazy">
+      <div class="gallery-caption">Outdoor Session</div>
+    </div>
+  </div>
+</section>
+
+<div class="accent-divider"></div>
+
+<!-- WEDDINGS -->
+<section id="weddings">
+  <div class="weddings-image">
+    <img src="https://static.wixstatic.com/media/bded1f_8499e529fc644993a8362afca3db1116~mv2.jpg" alt="Wedding photography Tampa" loading="lazy">
+  </div>
+  <div class="weddings-content">
+    <p class="weddings-eyebrow">02 — Wedding Photography</p>
+    <h2 class="weddings-title">Your Day,<br>Honestly Captured</h2>
+    <p class="weddings-desc">Every wedding is its own story — the nervous glances, the real laughs, the quiet moments no one else notices. Sara's approach is unhurried and documentary, letting you relive it all exactly as it happened.</p>
+
+    <ul class="packages-list">
+      <li>
+        <span class="package-name">Portraits · Families · Grads · Couples</span>
+        <span class="package-price">$250</span>
+      </li>
+      <li>
+        <span class="package-name">Full Wedding Coverage — 8 hrs + 2nd shooter</span>
+        <span class="package-price">$2,600</span>
+      </li>
+    </ul>
+
+    <a href="#contact" class="btn-primary">Book a Session</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-wrap">
+    <div class="about-image">
+      <img src="https://static.wixstatic.com/media/bded1f_a642baf52bb645bea84a3991f2639bf3~mv2.jpg" alt="Sara Hollingsworth photographer" loading="lazy">
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="weddings-eyebrow" style="color: var(--accent); font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 24px;">03 — About Sara</p>
+    <blockquote class="about-pull-quote">"I specialize in capturing authentic and natural images — the kind you actually want to look at for the next twenty years."</blockquote>
+    <p class="about-text">Tampa-based lifestyle photographer Sara Hollingsworth works with families, couples, seniors, and wedding clients across the Bay Area. Her approach is relaxed and genuine — a pre-session consultation ensures every shoot feels comfortable and intentional, not posed.</p>
+    <p class="about-text">With a 60-image digital delivery for portrait sessions and 500+ photos for weddings, every client receives a complete, beautifully edited gallery within weeks.</p>
+    <div class="about-signature">Sara</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="cta-eyebrow">Let's Work Together</p>
+  <h2 class="cta-heading">Ready to Book<br>Your Session?</h2>
+  <p class="cta-sub">1-hour portrait sessions starting at $250 · Tampa Bay Area &amp; Beyond</p>
+  <a href="mailto:sarahollingsworthphoto@gmail.com" class="btn-cta">Get In Touch</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-heading-block">
+    <p class="contact-eyebrow">04 — Contact</p>
+    <h2 class="contact-heading">Inquiries &amp;<br>Bookings</h2>
+    <p class="contact-text">Ready to get started? Reach out to check availability, ask questions about packages, or book your session. Sara typically responds within 24 hours.</p>
+  </div>
+  <div class="contact-info">
+    <div class="contact-item">
+      <p class="contact-item-label">Email</p>
+      <p class="contact-item-value"><a href="mailto:sarahollingsworthphoto@gmail.com">sarahollingsworthphoto@gmail.com</a></p>
+    </div>
+    <div class="contact-item">
+      <p class="contact-item-label">Location</p>
+      <p class="contact-item-value">Tampa Bay Area, Florida</p>
+    </div>
+    <div class="contact-item">
+      <p class="contact-item-label">Services</p>
+      <p class="contact-item-value">Families · Couples · Grads · Weddings</p>
+    </div>
+    <div class="contact-item">
+      <p class="contact-item-label">Booking Deposit</p>
+      <p class="contact-item-value">50% due at time of booking</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Sara Hollingsworth Photography</div>
+  <div class="footer-copy">&copy; 2026 · Tampa, Florida</div>
+  <div class="footer-credit">Design by <a href="#">Lucas Blatt</a></div>
+</footer>
+
+<script>
+  // Hero entrance animations
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('hero-eyebrow').classList.add('loaded');
+      document.getElementById('hero-name').classList.add('loaded');
+      document.getElementById('hero-tagline').classList.add('loaded');
+      document.getElementById('hero-cta').classList.add('loaded');
+    }, 100);
+  });
+
+  // Nav scroll behavior
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+
+    // Hero parallax
+    const heroBg = document.getElementById('hero-bg');
+    if (heroBg) {
+      heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+    }
+  }, { passive: true });
+
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  const lazyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        lazyObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  // Observe all animated elements
+  document.querySelectorAll('.section-title').forEach(el => lazyObserver.observe(el));
+  document.querySelectorAll('.gallery-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80}ms`;
+    lazyObserver.observe(el);
+  });
+  document.querySelectorAll('.stat-number').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 100}ms`;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.weddings-eyebrow, .weddings-title, .weddings-desc').forEach(el => observer.observe(el));
+  document.querySelectorAll('.packages-list li').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 80 + 200}ms`;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.about-pull-quote, .about-text, .about-signature').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 120}ms`;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.about-image img').forEach(el => lazyObserver.observe(el));
+  document.querySelectorAll('.cta-heading, .cta-sub').forEach(el => observer.observe(el));
+  document.querySelectorAll('.contact-heading-block, .contact-info').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
