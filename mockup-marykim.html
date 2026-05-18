@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary Kim — Photographer & Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --off-white: #F7F4F0;
+      --dark: #1A1714;
+      --warm-mid: #8A7B6E;
+      --accent: #C4956A;
+      --light-rule: #E2DDD8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--off-white);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    nav ul a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(247,244,240,0.75);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav ul a:hover { color: var(--off-white); }
+
+    /* ── HERO — Full-bleed image, text pinned bottom-left ──── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://static.wixstatic.com/media/5a1170_949c511d16074f7bbc2667e13bbbe166~mv2.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      background-attachment: fixed;
+      transform: scale(1.05);
+      transition: transform 0.1s linear;
+    }
+
+    /* Dark vignette at bottom for text legibility */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26,23,20,0.82) 0%,
+        rgba(26,23,20,0.35) 45%,
+        rgba(26,23,20,0.08) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 64px;
+      left: 64px;
+      right: 64px;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 10vw, 120px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: 0.06em;
+      color: var(--off-white);
+      opacity: 0;
+      letter-spacing: 0.3em;
+      transition: letter-spacing 1.4s cubic-bezier(0.25,0.46,0.45,0.94) 0.1s,
+                  opacity 0.8s ease 0.1s;
+    }
+
+    .hero-name.is-visible {
+      opacity: 1;
+      letter-spacing: 0.06em;
+    }
+
+    .hero-eyebrow.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(247,244,240,0.7);
+      margin-top: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+    }
+
+    .hero-sub.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 64px;
+      right: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+    }
+
+    .scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: var(--off-white);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.6); transform-origin: top; }
+    }
+
+    /* ── MARQUEE STRIP ──────────────────────────────────── */
+    .marquee-strip {
+      background: var(--dark);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 40s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(247,244,240,0.45);
+      padding-right: 48px;
+    }
+
+    .marquee-inner span.accent { color: var(--accent); }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ──────────────────────────────────────────── */
+    #stats {
+      background: var(--off-white);
+      padding: 100px 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-bottom: 1px solid var(--light-rule);
+    }
+
+    .stat-item {
+      padding: 0 40px;
+      border-right: 1px solid var(--light-rule);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .stat-item:first-child { padding-left: 0; }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2).is-visible { transition-delay: 0.12s; }
+    .stat-item:nth-child(3).is-visible { transition-delay: 0.24s; }
+    .stat-item:nth-child(4).is-visible { transition-delay: 0.36s; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 88px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--dark);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-top: 8px;
+    }
+
+    /* ── GALLERY ────────────────────────────────────────── */
+    #gallery {
+      padding: 120px 64px;
+      background: var(--off-white);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--dark);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 300;
+      color: rgba(26,23,20,0.04);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Masonry-style gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 280px;
+      gap: 6px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      background: #D9D4CE;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+
+    .gallery-item.is-visible { clip-path: inset(0 0 0 0); }
+    .gallery-item:nth-child(2).is-visible { transition-delay: 0.10s; }
+    .gallery-item:nth-child(3).is-visible { transition-delay: 0.20s; }
+    .gallery-item:nth-child(4).is-visible { transition-delay: 0.05s; }
+    .gallery-item:nth-child(5).is-visible { transition-delay: 0.15s; }
+    .gallery-item:nth-child(6).is-visible { transition-delay: 0.25s; }
+
+    /* Span some items for variety */
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+      loading: lazy;
+    }
+
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* Gallery placeholder for unavailable images */
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #E8E3DC 0%, #D4CEC7 100%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--warm-mid);
+      text-align: center;
+      padding: 16px;
+    }
+
+    /* ── ABOUT ──────────────────────────────────────────── */
+    #about {
+      padding: 120px 64px;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-portrait {
+      position: relative;
+    }
+
+    .about-portrait img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Accent line detail */
+    .about-portrait::before {
+      content: '';
+      position: absolute;
+      top: -20px; left: -20px;
+      width: 60%;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .about-text {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .about-text.is-visible { opacity: 1; transform: translateY(0); }
+
+    .about-eyebrow {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--off-white);
+      margin-bottom: 32px;
+    }
+
+    .about-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(247,244,240,0.65);
+      margin-bottom: 32px;
+    }
+
+    .about-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247,244,240,0.4);
+    }
+
+    .about-detail-item::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── SERVICES ───────────────────────────────────────── */
+    #services {
+      padding: 120px 64px;
+      background: var(--off-white);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .service-card {
+      padding: 48px 40px;
+      background: #EDEBE7;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .service-card.is-visible { opacity: 1; transform: translateY(0); }
+    .service-card:nth-child(2).is-visible { transition-delay: 0.12s; }
+    .service-card:nth-child(3).is-visible { transition-delay: 0.24s; }
+
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--warm-mid);
+    }
+
+    /* ── CTA ────────────────────────────────────────────── */
+    #cta {
+      background: var(--dark);
+      padding: 140px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Faint watermark */
+    #cta::before {
+      content: 'MARY KIM';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 14vw, 180px);
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: rgba(247,244,240,0.025);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .cta-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--off-white);
+      margin-bottom: 20px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+    }
+
+    .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .cta-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(247,244,240,0.5);
+      margin-bottom: 48px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.4s;
+    }
+
+    .cta-sub.is-visible { opacity: 1; }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      border: 1px solid var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .cta-btn:hover { background: var(--accent); color: var(--dark); }
+
+    /* ── CONTACT / FOOTER ───────────────────────────────── */
+    #contact {
+      padding: 80px 64px 60px;
+      background: #100E0C;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .contact-col h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,244,240,0.3);
+      margin-bottom: 16px;
+    }
+
+    .contact-col a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--off-white);
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .contact-col a:hover { color: var(--accent); }
+
+    .contact-col p {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(247,244,240,0.4);
+      line-height: 1.7;
+    }
+
+    .contact-copy {
+      text-align: right;
+    }
+
+    .copy-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--off-white);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .copy-line {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: rgba(247,244,240,0.2);
+    }
+
+    .footer-bar {
+      padding: 20px 64px;
+      background: #100E0C;
+      border-top: 1px solid rgba(247,244,240,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bar p {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(247,244,240,0.2);
+    }
+
+    .footer-bar a {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(247,244,240,0.2);
+      text-decoration: none;
+    }
+
+    .footer-bar a:hover { color: var(--accent); }
+
+    /* ── MOBILE RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+
+      .hero-content { left: 24px; right: 24px; bottom: 40px; }
+      .scroll-hint { display: none; }
+
+      #stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        padding: 60px 24px;
+      }
+      .stat-item { border-right: none; padding: 0; }
+      .stat-number { font-size: 64px; }
+
+      #gallery { padding: 80px 24px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
+      .gallery-item.wide { grid-column: span 1; }
+
+      #about {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 80px 24px;
+      }
+
+      .services-grid { grid-template-columns: 1fr; }
+
+      #services, #cta { padding: 80px 24px; }
+
+      #contact {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 24px 40px;
+      }
+      .contact-copy { text-align: left; }
+
+      .footer-bar { padding: 16px 24px; flex-direction: column; gap: 8px; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 0; }
+      .section-number { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { font-size: 52px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.tall { grid-row: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">MK</a>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — Full-bleed, text pinned bottom-left -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="heroEyebrow">Pensacola, Florida</p>
+      <h1 class="hero-name" id="heroName">Mary<br>Kim</h1>
+      <p class="hero-sub" id="heroSub">Photographer &amp; Visual Designer</p>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Photography</span>
+      <span class="accent">·</span>
+      <span>Graphic Design</span>
+      <span class="accent">·</span>
+      <span>Visual Storytelling</span>
+      <span class="accent">·</span>
+      <span>Pensacola FL</span>
+      <span class="accent">·</span>
+      <span>Available for Commissions</span>
+      <span class="accent">·</span>
+      <span>Photography</span>
+      <span class="accent">·</span>
+      <span>Graphic Design</span>
+      <span class="accent">·</span>
+      <span>Visual Storytelling</span>
+      <span class="accent">·</span>
+      <span>Pensacola FL</span>
+      <span class="accent">·</span>
+      <span>Available for Commissions</span>
+      <span class="accent">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <div class="stat-number">3+</div>
+      <div class="stat-label">Years of Practice</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Disciplines Mastered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">BA</div>
+      <div class="stat-label">Sewanee University</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Stories to Tell</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <h2 class="section-title">Selected Work</h2>
+      <span class="section-number">01</span>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Real image: profile/portrait -->
+      <div class="gallery-item tall">
+        <img src="https://static.wixstatic.com/media/5a1170_949c511d16074f7bbc2667e13bbbe166~mv2.jpg"
+             alt="Mary Kim Portrait"
+             loading="lazy">
+      </div>
+
+      <!-- Graphic design work -->
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/5a1170_e0fa668354474516b1906106285fc13d~mv2.jpg"
+             alt="Design Work"
+             loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=gallery-placeholder>Design Portfolio</div>'">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/5a1170_24f476147d5d42dfbf936b80d5ac7d7f~mv2.jpg"
+             alt="Design Work"
+             loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=gallery-placeholder>Visual Design</div>'">
+      </div>
+
+      <div class="gallery-item wide">
+        <img src="https://static.wixstatic.com/media/5a1170_34505b573e114444b74bde41f6a517fe~mv2.jpg"
+             alt="Photography"
+             loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=gallery-placeholder>Photography</div>'">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/5a1170_0f21612328524c36ac2730d77e7150e6~mv2.jpg"
+             alt="Creative Work"
+             loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=gallery-placeholder>Creative Direction</div>'">
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-placeholder">
+          Photography<br><span style="font-size:11px;opacity:.6">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT — Magazine split, dark background -->
+  <section id="about">
+    <div class="about-portrait">
+      <img src="https://static.wixstatic.com/media/5a1170_949c511d16074f7bbc2667e13bbbe166~mv2.jpg"
+           alt="Mary Kim"
+           loading="lazy">
+    </div>
+    <div class="about-text">
+      <p class="about-eyebrow">About</p>
+      <h2 class="about-heading">Visual Artist<br>&amp; Storyteller</h2>
+      <p class="about-body">
+        Based in Pensacola, Florida, Mary Kim is a photographer and designer whose work bridges documentary observation with considered visual craft. A graduate of the University of the South at Sewanee, she brings both academic rigor and an eye honed through years of practice to every project.
+      </p>
+      <p class="about-body">
+        Working across photography and graphic design, her practice explores how images and visual systems can carry emotional weight — whether through a single frame or a complete brand identity.
+      </p>
+      <div class="about-detail">
+        <div class="about-detail-item">Pensacola, Florida</div>
+        <div class="about-detail-item">Photography · Graphic Design · Web Design</div>
+        <div class="about-detail-item">Sewanee, BA Anthropology</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header">
+      <h2 class="section-title">What I Do</h2>
+      <span class="section-number">02</span>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3 class="service-title">Photography</h3>
+        <p class="service-desc">Documentary and portrait photography. Images that hold attention and communicate without explanation.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3 class="service-title">Graphic Design</h3>
+        <p class="service-desc">Brand identity, print, and digital collateral built on clear visual logic and expressive typography.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3 class="service-title">Web Design</h3>
+        <p class="service-desc">Portfolio and brand websites with considered layout, honest hierarchy, and clean interaction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLD CTA -->
+  <section id="cta">
+    <p class="cta-eyebrow" id="ctaEyebrow">Let's Work Together</p>
+    <h2 class="cta-heading" id="ctaHeading">Your work deserves<br>a site that keeps up.</h2>
+    <p class="cta-sub" id="ctaSub">Open for freelance photography and design commissions — Pensacola and beyond.</p>
+    <a href="mailto:marykim0618@gmail.com" class="cta-btn">Get In Touch</a>
+  </section>
+
+  <!-- CONTACT / FOOTER -->
+  <footer id="contact">
+    <div class="contact-col">
+      <h4>Email</h4>
+      <a href="mailto:marykim0618@gmail.com">marykim0618@gmail.com</a>
+    </div>
+    <div class="contact-col">
+      <h4>Based In</h4>
+      <p>Pensacola, Florida<br>Available for travel</p>
+    </div>
+    <div class="contact-col contact-copy">
+      <div class="copy-brand">Mary Kim</div>
+      <div class="copy-line">Photographer &amp; Designer · 2026</div>
+    </div>
+  </footer>
+
+  <div class="footer-bar">
+    <p>© 2026 Mary Kim. All rights reserved.</p>
+    <a href="https://lucasblatt.com">Design by Lucas Blatt</a>
+  </div>
+
+  <script>
+    // ── HERO ANIMATIONS ──────────────────────────────────
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroName').classList.add('is-visible');
+      }, 100);
+      setTimeout(() => {
+        document.getElementById('heroEyebrow').classList.add('is-visible');
+        document.getElementById('heroSub').classList.add('is-visible');
+      }, 300);
+    });
+
+    // ── PARALLAX HERO ────────────────────────────────────
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      heroBg.style.backgroundPositionY = `calc(20% + ${scrollY * 0.35}px)`;
+    }, { passive: true });
+
+    // ── INTERSECTION OBSERVER ────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Observe all animated elements
+    document.querySelectorAll(
+      '.stat-item, .gallery-item, .section-title, .about-text, ' +
+      '.service-card, .cta-eyebrow, .cta-heading, .cta-sub'
+    ).forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
