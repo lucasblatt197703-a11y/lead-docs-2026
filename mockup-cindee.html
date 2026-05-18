@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cindee Tabares — Artist & Photographer, Miami FL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Work Sans', sans-serif;
+  background: #F7F3EE;
+  color: #1A1410;
+  overflow-x: hidden;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+body { cursor: none; }
+.cursor {
+  width: 8px; height: 8px;
+  background: #C4553A;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(196, 85, 58, 0.5);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 48px;
+  mix-blend-mode: multiply;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.nav-links a:hover { opacity: 1; }
+
+/* ===== HERO — ASYMMETRIC SPLIT ===== */
+#hero {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.hero-image-side {
+  position: relative;
+  overflow: hidden;
+}
+.hero-image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  transition: transform 6s ease;
+}
+.hero-image-side img.loaded { transform: scale(1.0); }
+
+.hero-text-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 56px 80px 56px;
+  background: #1A1410;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background large faded name */
+.hero-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 180px;
+  font-weight: 600;
+  color: rgba(247, 243, 238, 0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #C4553A;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+.hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 88px;
+  font-weight: 300;
+  line-height: 0.92;
+  color: #F7F3EE;
+  letter-spacing: 0.15em;
+  margin-bottom: 40px;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+}
+.hero-name.visible { clip-path: inset(0 0% 0 0); }
+
+.hero-divider {
+  width: 48px;
+  height: 1px;
+  background: #C4553A;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: opacity 0.5s ease 0.8s, transform 0.6s ease 0.8s;
+}
+.hero-divider.visible { opacity: 1; transform: scaleX(1); }
+
+.hero-desc {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(247, 243, 238, 0.65);
+  letter-spacing: 0.04em;
+  max-width: 280px;
+  margin-bottom: 52px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 1.0s, transform 0.7s ease 1.0s;
+}
+.hero-desc.visible { opacity: 1; transform: translateY(0); }
+
+.hero-cta {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C4553A;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 85, 58, 0.4);
+  padding-bottom: 6px;
+  opacity: 0;
+  transition: opacity 0.7s ease 1.3s, border-color 0.3s ease;
+}
+.hero-cta:hover { border-color: #C4553A; }
+.hero-cta.visible { opacity: 1; }
+
+/* Vertical label on left edge */
+.hero-vertical-label {
+  position: absolute;
+  left: 28px;
+  bottom: 80px;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 238, 0.4);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.5s ease 2s;
+}
+.scroll-indicator.visible { opacity: 1; }
+.scroll-line {
+  width: 40px;
+  height: 1px;
+  background: rgba(247, 243, 238, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: #C4553A;
+  animation: scrollLine 2s ease-in-out 2.5s infinite;
+}
+@keyframes scrollLine {
+  0% { left: -100%; }
+  50% { left: 0%; }
+  100% { left: 100%; }
+}
+.scroll-text {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 238, 0.4);
+}
+
+/* ===== MARQUEE STRIP ===== */
+.marquee-strip {
+  background: #C4553A;
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 35s linear infinite;
+}
+.marquee-inner span {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F7F3EE;
+  padding: 0 48px;
+}
+.marquee-inner span::before {
+  content: '·';
+  margin-right: 48px;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== STATS SECTION ===== */
+#stats {
+  padding: 120px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid rgba(26, 20, 16, 0.1);
+}
+.stat-item {
+  padding: 0 40px;
+  border-right: 1px solid rgba(26, 20, 16, 0.1);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.stat-item:first-child { padding-left: 0; }
+.stat-item:last-child { border-right: none; }
+.stat-item.visible { opacity: 1; transform: translateY(0); }
+.stat-item:nth-child(2) { transition-delay: 0.12s; }
+.stat-item:nth-child(3) { transition-delay: 0.24s; }
+.stat-item:nth-child(4) { transition-delay: 0.36s; }
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 96px;
+  font-weight: 300;
+  line-height: 1;
+  color: #1A1410;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(26, 20, 16, 0.5);
+  margin-top: 12px;
+}
+
+/* ===== GALLERY SECTION ===== */
+#gallery {
+  padding: 120px 0;
+}
+.gallery-header {
+  padding: 0 48px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+.section-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 96px;
+  font-weight: 300;
+  color: rgba(26, 20, 16, 0.06);
+  line-height: 1;
+  margin-right: 24px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 300;
+  color: #1A1410;
+  letter-spacing: 0.06em;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.section-title.visible { clip-path: inset(0 0% 0 0); }
+
+.gallery-view-all {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C4553A;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 85, 58, 0.3);
+  padding-bottom: 4px;
+  transition: border-color 0.2s ease;
+}
+.gallery-view-all:hover { border-color: #C4553A; }
+
+/* Editorial gallery — alternating layout */
+.gallery-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.gallery-row {
+  display: grid;
+  gap: 4px;
+}
+.gallery-row-1 { grid-template-columns: 60% 40%; }
+.gallery-row-2 { grid-template-columns: 30% 40% 30%; }
+.gallery-row-3 { grid-template-columns: 45% 55%; }
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.9s ease;
+}
+.gallery-item.visible { clip-path: inset(0 0 0 0); }
+.gallery-item:nth-child(2) { transition-delay: 0.1s; }
+.gallery-item:nth-child(3) { transition-delay: 0.2s; }
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.05);
+  transition: transform 0.8s ease;
+}
+.gallery-item:hover img { transform: scale(1.0); }
+
+.gallery-item-tall { height: 520px; }
+.gallery-item-medium { height: 360px; }
+.gallery-item-short { height: 280px; }
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 24px;
+  background: linear-gradient(transparent, rgba(26, 20, 16, 0.7));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 300;
+  color: #F7F3EE;
+  letter-spacing: 0.06em;
+  font-style: italic;
+}
+
+/* ===== ABOUT SECTION ===== */
+#about {
+  padding: 160px 48px;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: 0;
+  align-items: start;
+}
+.about-image-col {
+  position: relative;
+  padding-right: 80px;
+}
+.about-image-wrapper {
+  position: relative;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.0s ease;
+}
+.about-image-wrapper.visible { clip-path: inset(0 0 0 0); }
+.about-image-wrapper img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.about-year-tag {
+  position: absolute;
+  bottom: -20px;
+  right: 60px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  font-weight: 600;
+  color: rgba(26, 20, 16, 0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.about-text-col {
+  padding-top: 60px;
+  padding-left: 20px;
+}
+.about-section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4553A;
+  margin-bottom: 40px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.about-section-num.visible { opacity: 1; }
+
+.about-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #1A1410;
+  margin-bottom: 48px;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+}
+.about-title.visible { clip-path: inset(0 0% 0 0); }
+
+.about-bio {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(26, 20, 16, 0.72);
+  margin-bottom: 40px;
+  max-width: 480px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+}
+.about-bio.visible { opacity: 1; transform: translateY(0); }
+
+.about-pullquote {
+  border-left: 2px solid #C4553A;
+  padding-left: 28px;
+  margin: 48px 0;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+}
+.about-pullquote.visible { opacity: 1; transform: translateY(0); }
+.about-pullquote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: #1A1410;
+}
+
+.about-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.7s, transform 0.7s ease 0.7s;
+}
+.about-details.visible { opacity: 1; transform: translateY(0); }
+.about-detail {
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+}
+.detail-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(26, 20, 16, 0.4);
+  min-width: 80px;
+}
+.detail-value {
+  font-size: 15px;
+  font-weight: 300;
+  color: #1A1410;
+}
+
+/* ===== FEATURED WORK ===== */
+#featured {
+  padding: 0 0 160px 0;
+  background: #F7F3EE;
+}
+.featured-header {
+  padding: 0 48px 64px 48px;
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+.featured-large {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 600px;
+}
+.featured-item {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.0s ease;
+}
+.featured-item.visible { clip-path: inset(0 0 0 0); }
+.featured-item:nth-child(2) { transition-delay: 0.15s; }
+.featured-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 0.9s ease;
+}
+.featured-item:hover img { transform: scale(1.0); }
+.featured-caption {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+}
+.featured-caption-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: #F7F3EE;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+.featured-caption-sub {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 238, 0.65);
+  margin-top: 8px;
+}
+
+/* ===== BOLD CTA ===== */
+#cta {
+  background: #1A1410;
+  padding: 140px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-bg-element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 360px;
+  font-weight: 600;
+  color: rgba(247, 243, 238, 0.025);
+  line-height: 1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.cta-eyebrow {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #C4553A;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.cta-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+.cta-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 1.05;
+  color: #F7F3EE;
+  letter-spacing: 0.05em;
+  margin-bottom: 48px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.0s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+}
+.cta-heading.visible { clip-path: inset(0 0% 0 0); }
+
+.cta-sub {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(247, 243, 238, 0.55);
+  max-width: 480px;
+  margin: 0 auto 56px auto;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+}
+.cta-sub.visible { opacity: 1; transform: translateY(0); }
+
+.cta-button {
+  display: inline-block;
+  padding: 18px 52px;
+  border: 1px solid #C4553A;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C4553A;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.6s, transform 0.6s ease 0.6s, color 0.4s ease;
+}
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: #C4553A;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+.cta-button:hover::before { left: 0; }
+.cta-button:hover { color: #F7F3EE; }
+.cta-button.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== CONTACT ===== */
+#contact {
+  padding: 120px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-left .section-title {
+  font-size: 52px;
+  margin-bottom: 32px;
+}
+.contact-text {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(26, 20, 16, 0.65);
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+.contact-text.visible { opacity: 1; transform: translateY(0); }
+.contact-email-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: #1A1410;
+  text-decoration: none;
+  font-style: italic;
+  border-bottom: 1px solid rgba(26, 20, 16, 0.2);
+  padding-bottom: 8px;
+  display: inline-block;
+  transition: border-color 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.7s ease 0.4s, border-color 0.3s ease;
+}
+.contact-email-link.visible { opacity: 1; }
+.contact-email-link:hover { border-color: #C4553A; color: #C4553A; }
+
+.contact-right {
+  padding-top: 20px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+}
+.contact-right.visible { opacity: 1; transform: translateY(0); }
+.contact-detail-group {
+  margin-bottom: 40px;
+}
+.contact-detail-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(26, 20, 16, 0.4);
+  margin-bottom: 12px;
+}
+.contact-detail-value {
+  font-size: 16px;
+  font-weight: 300;
+  color: #1A1410;
+  line-height: 1.6;
+}
+.contact-social-links {
+  display: flex;
+  gap: 32px;
+  margin-top: 48px;
+}
+.social-link {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(26, 20, 16, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.social-link:hover { color: #C4553A; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: #1A1410;
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(247, 243, 238, 0.08);
+}
+.footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 238, 0.5);
+}
+.footer-copy {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: rgba(247, 243, 238, 0.3);
+}
+.footer-credit {
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(247, 243, 238, 0.25);
+  letter-spacing: 0.1em;
+}
+
+/* ===== THIN ACCENT LINE ===== */
+.accent-line {
+  display: block;
+  width: 30%;
+  height: 1px;
+  background: #C4553A;
+  margin: 0 auto;
+  opacity: 0.35;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { gap: 24px; }
+  #hero { grid-template-columns: 1fr; grid-template-rows: 50vh auto; }
+  .hero-text-side { padding: 48px 24px; }
+  .hero-name { font-size: 56px; letter-spacing: 0.1em; }
+  #stats { grid-template-columns: 1fr 1fr; padding: 80px 24px; gap: 48px; }
+  .stat-item { padding: 0; border-right: none; }
+  .gallery-row-1, .gallery-row-2, .gallery-row-3 { grid-template-columns: 1fr; }
+  .gallery-item-tall, .gallery-item-medium, .gallery-item-short { height: 260px; }
+  #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+  .about-image-col { padding-right: 0; }
+  .about-title { font-size: 40px; }
+  #featured .featured-large { grid-template-columns: 1fr; height: auto; }
+  .featured-item { height: 300px; }
+  #cta { padding: 100px 24px; }
+  .cta-heading { font-size: 44px; }
+  #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+  .gallery-header, .featured-header { padding: 0 24px 48px 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 44px; }
+  .stat-number { font-size: 72px; }
+  .section-number { font-size: 72px; }
+  .cta-heading { font-size: 36px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Cindee Tabares</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — ASYMMETRIC SPLIT -->
+<section id="hero">
+  <div class="hero-image-side">
+    <img
+      src="https://static.wixstatic.com/media/e352d3_9ce6b1e82a274856a9366b854ce00ffa.jpg/v1/fill/w_1400,h_1050,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_9ce6b1e82a274856a9366b854ce00ffa.jpg"
+      alt="Cindee Tabares artwork"
+      loading="eager"
+      id="heroImg"
+    >
+  </div>
+
+  <div class="hero-text-side">
+    <div class="hero-bg-text">CT</div>
+    <div class="hero-vertical-label">Miami · Coral Gables · 2026</div>
+
+    <p class="hero-eyebrow" id="heroEyebrow">Visual Artist &amp; Photographer</p>
+    <h1 class="hero-name" id="heroName">Cindee<br>Tabares</h1>
+    <div class="hero-divider" id="heroDivider"></div>
+    <p class="hero-desc" id="heroDesc">
+      Painting and photography rooted in Miami — work that moves between the personal and the public, the still and the alive.
+    </p>
+    <a href="#gallery" class="hero-cta" id="heroCta">View the work</a>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Miami FL</span>
+    <span>Painting &amp; Photography</span>
+    <span>Coral Gables</span>
+    <span>Visual Artist</span>
+    <span>Available for Commissions</span>
+    <span>Miami FL</span>
+    <span>Painting &amp; Photography</span>
+    <span>Coral Gables</span>
+    <span>Visual Artist</span>
+    <span>Available for Commissions</span>
+    <!-- duplicate for seamless loop -->
+    <span>Miami FL</span>
+    <span>Painting &amp; Photography</span>
+    <span>Coral Gables</span>
+    <span>Visual Artist</span>
+    <span>Available for Commissions</span>
+    <span>Miami FL</span>
+    <span>Painting &amp; Photography</span>
+    <span>Coral Gables</span>
+    <span>Visual Artist</span>
+    <span>Available for Commissions</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat-item">
+    <div class="stat-number">10+</div>
+    <div class="stat-label">Years Creating</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">2</div>
+    <div class="stat-label">Mediums</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">MIA</div>
+    <div class="stat-label">Based in Miami</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">∞</div>
+    <div class="stat-label">Commissions Open</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Selected Work</h2>
+    <a href="#contact" class="gallery-view-all" style="margin-left:auto">Commission inquiry</a>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Row 1: large left, medium right -->
+    <div class="gallery-row gallery-row-1">
+      <div class="gallery-item gallery-item-tall">
+        <img src="https://static.wixstatic.com/media/e352d3_6f026aba9266433a8074c62e68122e81.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_6f026aba9266433a8074c62e68122e81.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Study I</div></div>
+      </div>
+      <div class="gallery-item gallery-item-tall">
+        <img src="https://static.wixstatic.com/media/e352d3_d5c8549dbf334a0ba91403f0f551e984.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_d5c8549dbf334a0ba91403f0f551e984.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Study II</div></div>
+      </div>
+    </div>
+
+    <!-- Row 2: three columns -->
+    <div class="gallery-row gallery-row-2">
+      <div class="gallery-item gallery-item-medium">
+        <img src="https://static.wixstatic.com/media/e352d3_8bc64088398b4c7cbcf2c67de0c6c004.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_8bc64088398b4c7cbcf2c67de0c6c004.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Series III</div></div>
+      </div>
+      <div class="gallery-item gallery-item-medium">
+        <img src="https://static.wixstatic.com/media/e352d3_80f47f4dac714ce6b391c15e27589a03.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_80f47f4dac714ce6b391c15e27589a03.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Untitled</div></div>
+      </div>
+      <div class="gallery-item gallery-item-medium">
+        <img src="https://static.wixstatic.com/media/e352d3_e4930d2913e14d67acd75a65a11c6acc.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_e4930d2913e14d67acd75a65a11c6acc.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Light Study</div></div>
+      </div>
+    </div>
+
+    <!-- Row 3: medium left, large right -->
+    <div class="gallery-row gallery-row-3">
+      <div class="gallery-item gallery-item-short">
+        <img src="https://static.wixstatic.com/media/e352d3_70cf5f5552854fd8a42599dbe3e05c6c.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_70cf5f5552854fd8a42599dbe3e05c6c.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Miami, 2024</div></div>
+      </div>
+      <div class="gallery-item gallery-item-short">
+        <img src="https://static.wixstatic.com/media/e352d3_5f4ae5d2fcf548aabfebfa2c63b35097.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_5f4ae5d2fcf548aabfebfa2c63b35097.jpg" alt="Portfolio work" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-title">Composition</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<span class="accent-line"></span>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-image-col">
+    <div class="about-image-wrapper">
+      <img
+        src="https://static.wixstatic.com/media/e352d3_9ce6b1e82a274856a9366b854ce00ffa.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_9ce6b1e82a274856a9366b854ce00ffa.jpg"
+        alt="Cindee Tabares"
+        loading="lazy"
+      >
+    </div>
+    <div class="about-year-tag">26</div>
+  </div>
+
+  <div class="about-text-col">
+    <p class="about-section-num">02 — About</p>
+    <h2 class="about-title">The artist<br>behind the work</h2>
+    <p class="about-bio">
+      Cindee Tabares works across painting and photography from her base in Coral Gables, Miami. Her practice draws on the textures of South Florida life — light off water, the geometry of urban space, the intimacy of portraiture. By day a communications and marketing professional; by night and weekend, a maker of images that need no brief.
+    </p>
+
+    <div class="about-pullquote">
+      <p>"My free time is spent chasing what can't be scheduled — the painting, the photograph, the unrepeatable moment."</p>
+    </div>
+
+    <div class="about-details">
+      <div class="about-detail">
+        <span class="detail-label">Based</span>
+        <span class="detail-value">Coral Gables / Miami Beach, FL</span>
+      </div>
+      <div class="about-detail">
+        <span class="detail-label">Medium</span>
+        <span class="detail-value">Painting &amp; Photography</span>
+      </div>
+      <div class="about-detail">
+        <span class="detail-label">Available</span>
+        <span class="detail-value">Commissions &amp; Collaborations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED WORK -->
+<section id="featured">
+  <div class="featured-header">
+    <span class="section-number">03</span>
+    <h2 class="section-title">Featured</h2>
+  </div>
+  <div class="featured-large">
+    <div class="featured-item">
+      <img src="https://static.wixstatic.com/media/e352d3_8bc64088398b4c7cbcf2c67de0c6c004.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_8bc64088398b4c7cbcf2c67de0c6c004.jpg" alt="Featured work" loading="lazy">
+      <div class="featured-caption">
+        <div class="featured-caption-title">Paintings</div>
+        <div class="featured-caption-sub">Oil &amp; Acrylic · Miami</div>
+      </div>
+    </div>
+    <div class="featured-item">
+      <img src="https://static.wixstatic.com/media/e352d3_d5c8549dbf334a0ba91403f0f551e984.jpg/v1/fill/w_1200,h_900,fp_0.50_0.50,q_90,enc_avif,quality_auto/e352d3_d5c8549dbf334a0ba91403f0f551e984.jpg" alt="Featured photography" loading="lazy">
+      <div class="featured-caption">
+        <div class="featured-caption-title">Photography</div>
+        <div class="featured-caption-sub">Digital &amp; Film · 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOLD CTA -->
+<section id="cta">
+  <div class="cta-bg-element">CT</div>
+  <p class="cta-eyebrow">Open for commissions</p>
+  <h2 class="cta-heading">Your space deserves original art</h2>
+  <p class="cta-sub">
+    Commission a painting or photograph made specifically for you — your home, your office, your story. Miami-based. Ships nationwide.
+  </p>
+  <a href="mailto:cindee.tabares@gmail.com" class="cta-button">Start a conversation</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;margin-bottom:32px;">Get in touch</h2>
+    <p class="contact-text">
+      Whether it's a commission, a collaboration, or just wanting to see more work — the inbox is always open.
+    </p>
+    <a href="mailto:cindee.tabares@gmail.com" class="contact-email-link">cindee.tabares@gmail.com</a>
+  </div>
+  <div class="contact-right">
+    <div class="contact-detail-group">
+      <div class="contact-detail-label">Location</div>
+      <div class="contact-detail-value">Coral Gables · Miami Beach<br>Miami, Florida</div>
+    </div>
+    <div class="contact-detail-group">
+      <div class="contact-detail-label">Availability</div>
+      <div class="contact-detail-value">Commissions open<br>Exhibitions on request</div>
+    </div>
+    <div class="contact-detail-group">
+      <div class="contact-detail-label">Medium</div>
+      <div class="contact-detail-value">Painting · Photography</div>
+    </div>
+    <div class="contact-social-links">
+      <a href="https://www.instagram.com/cindee.tabares" target="_blank" class="social-link">Instagram</a>
+      <a href="https://cindeet.wixsite.com/cindeetabares" target="_blank" class="social-link">Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Cindee Tabares</div>
+  <div class="footer-copy">© 2026 · All Rights Reserved</div>
+  <div class="footer-credit">Design concept by Lucas Blatt</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
+});
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Hero entrance animations
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('heroEyebrow').classList.add('visible');
+    document.getElementById('heroName').classList.add('visible');
+    document.getElementById('heroDivider').classList.add('visible');
+    document.getElementById('heroDesc').classList.add('visible');
+    document.getElementById('heroCta').classList.add('visible');
+    document.getElementById('scrollIndicator').classList.add('visible');
+  }, 100);
+
+  const heroImg = document.getElementById('heroImg');
+  heroImg.addEventListener('load', () => heroImg.classList.add('loaded'));
+  if (heroImg.complete) heroImg.classList.add('loaded');
+});
+
+// IntersectionObserver for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+// Observe all animated elements
+const animatedEls = document.querySelectorAll(
+  '.stat-item, .section-title, .gallery-item, .about-image-wrapper, ' +
+  '.about-section-num, .about-title, .about-bio, .about-pullquote, .about-details, ' +
+  '.featured-item, .cta-eyebrow, .cta-heading, .cta-sub, .cta-button, ' +
+  '.contact-text, .contact-email-link, .contact-right'
+);
+animatedEls.forEach(el => observer.observe(el));
+
+// Hero parallax
+const heroSection = document.getElementById('hero');
+const heroImageSide = heroSection.querySelector('.hero-image-side img');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight * 1.5) {
+    heroImageSide.style.transform = `scale(1.0) translateY(${scrollY * 0.25}px)`;
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
