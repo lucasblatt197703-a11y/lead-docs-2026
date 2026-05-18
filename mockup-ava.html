@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captured by Ava Lahner — Tampa Photographer & Videographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream:   #F4EFE8;
+      --warm-white: #FAF8F5;
+      --charcoal: #1C1C1A;
+      --muted:    #6B6560;
+      --accent:   #B8906A;
+      --dark:     #111110;
+      --border:   rgba(28,28,26,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      text-decoration: none;
+    }
+    nav ul { list-style: none; display: flex; gap: 40px; }
+    nav ul a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav ul a:hover { color: var(--warm-white); }
+
+    /* ─── HERO — MOSAIC LAYOUT ─── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease;
+      filter: brightness(0.82);
+    }
+    #hero:hover .hero-img img { transform: scale(1.04); }
+
+    .hero-img:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 2; }
+    .hero-img:nth-child(2) { grid-column: 3 / 4; grid-row: 1 / 3; }
+    .hero-img:nth-child(3) { grid-column: 1 / 2; grid-row: 2 / 3; }
+    .hero-img:nth-child(4) { grid-column: 2 / 3; grid-row: 2 / 3; }
+
+    .hero-text {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 10;
+      padding: 0 0 52px 56px;
+      background: linear-gradient(to top, rgba(17,17,16,0.72) 0%, transparent 100%);
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(72px, 10vw, 128px);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      color: var(--warm-white);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .hero-name.is-visible { opacity: 1; transform: translateY(0); }
+    .hero-name span {
+      display: block;
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      margin-top: 16px;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.7);
+      opacity: 0;
+      transition: opacity 1.2s ease 0.4s;
+    }
+    .hero-sub.is-visible { opacity: 1; }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 52px; right: 56px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0;
+      transition: opacity 1.4s ease 0.8s;
+    }
+    .scroll-hint.is-visible { opacity: 0.5; }
+    .scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-white);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 60px;
+      background: var(--warm-white);
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown {
+      0%,100% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-section {
+      background: var(--charcoal);
+      overflow: hidden;
+      padding: 18px 0;
+      border-top: 1px solid rgba(250,248,245,0.08);
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 35s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.45);
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+    .marquee-item .dot {
+      color: var(--accent);
+      margin: 0 48px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      background: var(--cream);
+      padding: 100px 56px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat {
+      padding: 0 40px;
+      border-left: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat:first-child { border-left: none; padding-left: 0; }
+    .stat.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 88px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--charcoal);
+    }
+    .stat-label {
+      margin-top: 12px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 120px 56px;
+      background: var(--warm-white);
+    }
+    .gallery-header {
+      margin-bottom: 64px;
+      overflow: hidden;
+    }
+    .gallery-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 5vw, 60px);
+      font-weight: 300;
+      line-height: 1.1;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .gallery-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    .masonry {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease;
+    }
+    .masonry-item.is-visible { clip-path: inset(0 0 0 0); }
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      filter: brightness(0.92) saturate(0.95);
+      transition: filter 0.5s ease, transform 0.5s ease;
+      loading: lazy;
+    }
+    .masonry-item:hover img {
+      filter: brightness(1) saturate(1.05);
+      transform: scale(1.025);
+    }
+    .masonry-item .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 40px 20px 18px;
+      background: linear-gradient(to top, rgba(17,17,16,0.65), transparent);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.85);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .masonry-item:hover .caption { opacity: 1; transform: translateY(0); }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--charcoal);
+      padding: 140px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .about-image {
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease;
+    }
+    .about-image.is-visible { clip-path: inset(0 0 0 0); }
+    .about-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) saturate(0.85);
+    }
+    .about-text {
+      padding: 80px 80px 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-text .section-label { color: var(--accent); }
+    .about-text .section-label::after { background: var(--accent); }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--warm-white);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .about-heading.is-visible { opacity: 1; transform: translateY(0); }
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--accent);
+      margin-bottom: 32px;
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.4s;
+    }
+    .about-pull.is-visible { opacity: 1; }
+    .about-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(250,248,245,0.7);
+      opacity: 0;
+      transition: opacity 0.8s ease 0.6s;
+    }
+    .about-body.is-visible { opacity: 1; }
+    .about-cta {
+      margin-top: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.8s, gap 0.3s;
+    }
+    .about-cta.is-visible { opacity: 1; }
+    .about-cta:hover { gap: 20px; }
+    .about-cta::after {
+      content: '→';
+      font-size: 14px;
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      background: var(--dark);
+      padding: 160px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: 'BOOK';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 400px;
+      font-weight: 300;
+      color: rgba(250,248,245,0.02);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+    .cta-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+    }
+    .cta-label::before, .cta-label::after {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--accent);
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--warm-white);
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-heading.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(250,248,245,0.55);
+      margin-bottom: 56px;
+      letter-spacing: 0.05em;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 56px;
+      border: 1px solid var(--accent);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: background 0.35s, color 0.35s;
+    }
+    .cta-btn:hover {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--cream);
+      padding: 120px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .contact-left p {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .contact-email {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--charcoal);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .contact-email:hover { color: var(--accent); border-color: var(--accent); }
+    .contact-right {
+      padding-top: 8px;
+    }
+    .contact-detail {
+      margin-bottom: 32px;
+    }
+    .detail-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .detail-value {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--charcoal);
+    }
+    .social-links {
+      display: flex;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .social-links a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .social-links a:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 40px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.5);
+    }
+    footer .footer-copy {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(250,248,245,0.3);
+    }
+    footer .footer-credit {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(250,248,245,0.2);
+    }
+
+    /* ─── SIGNATURE DETAIL — vertical site label ─── */
+    .vertical-label {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(28,28,26,0.25);
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 20px; }
+      #hero { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+      .hero-img:nth-child(1) { grid-column: 1/3; grid-row: 1/2; }
+      .hero-img:nth-child(2) { grid-column: 1/2; grid-row: 2/4; }
+      .hero-img:nth-child(3) { grid-column: 2/3; grid-row: 2/3; }
+      .hero-img:nth-child(4) { grid-column: 2/3; grid-row: 3/4; }
+      .hero-text { padding: 0 0 40px 24px; }
+      #stats { grid-template-columns: 1fr 1fr; padding: 60px 24px; gap: 40px; }
+      .stat { border-left: none; padding-left: 0; }
+      #gallery { padding: 80px 24px; }
+      .masonry { columns: 2; }
+      #about { grid-template-columns: 1fr; padding: 80px 0 0; }
+      .about-image { height: 400px; }
+      .about-text { padding: 60px 24px; }
+      #cta { padding: 100px 24px; }
+      #contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+      .vertical-label { display: none; }
+    }
+    @media (max-width: 480px) {
+      .masonry { columns: 1; }
+      .stat-number { font-size: 64px; }
+      .hero-name { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="vertical-label">Tampa · Photography · 2026</div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">CBAL</a>
+    <ul>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — MOSAIC GRID -->
+  <section id="hero">
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1400&q=85" alt="Portrait session" loading="eager">
+    </div>
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=800&q=85" alt="Natural light portrait" loading="eager">
+    </div>
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=85" alt="Couples session" loading="eager">
+    </div>
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?w=800&q=85" alt="Senior portraits" loading="eager">
+    </div>
+    <div class="hero-text">
+      <h1 class="hero-name">
+        Captured<span>by Ava Lahner</span>
+      </h1>
+      <p class="hero-sub">Photography &amp; Videography · Tampa, Florida</p>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Portraits<span class="dot">·</span></span>
+      <span class="marquee-item">Couples<span class="dot">·</span></span>
+      <span class="marquee-item">Seniors<span class="dot">·</span></span>
+      <span class="marquee-item">Events<span class="dot">·</span></span>
+      <span class="marquee-item">Videography<span class="dot">·</span></span>
+      <span class="marquee-item">Tampa, Florida<span class="dot">·</span></span>
+      <span class="marquee-item">Available for Bookings<span class="dot">·</span></span>
+      <span class="marquee-item">Portraits<span class="dot">·</span></span>
+      <span class="marquee-item">Couples<span class="dot">·</span></span>
+      <span class="marquee-item">Seniors<span class="dot">·</span></span>
+      <span class="marquee-item">Events<span class="dot">·</span></span>
+      <span class="marquee-item">Videography<span class="dot">·</span></span>
+      <span class="marquee-item">Tampa, Florida<span class="dot">·</span></span>
+      <span class="marquee-item">Available for Bookings<span class="dot">·</span></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat">
+      <div class="stat-number">4+</div>
+      <div class="stat-label">Years Behind the Lens</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">240+</div>
+      <div class="stat-label">Sessions Delivered</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">1.8K</div>
+      <div class="stat-label">Instagram Followers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Moments Preserved</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <div class="section-label">Selected Work</div>
+      <h2 class="gallery-title">Every Frame,<br>Intentional</h2>
+    </div>
+    <div class="masonry">
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&q=80" alt="Editorial portrait" loading="lazy">
+        <div class="caption">Portraits</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Natural light" loading="lazy">
+        <div class="caption">Natural Light</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=80" alt="Lifestyle session" loading="lazy">
+        <div class="caption">Lifestyle</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800&q=80" alt="Golden hour" loading="lazy">
+        <div class="caption">Golden Hour</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1500840216050-6ffa99d75160?w=800&q=80" alt="Couples session" loading="lazy">
+        <div class="caption">Couples</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800&q=80" alt="Senior portraits" loading="lazy">
+        <div class="caption">Seniors</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=80" alt="Studio portrait" loading="lazy">
+        <div class="caption">Studio</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80" alt="Candid portrait" loading="lazy">
+        <div class="caption">Candid</div>
+      </div>
+      <div class="masonry-item">
+        <img src="https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=800&q=80" alt="Outdoor session" loading="lazy">
+        <div class="caption">Outdoor</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1495231916356-a86217efff12?w=900&q=80" alt="Ava Lahner at work" loading="lazy">
+    </div>
+    <div class="about-text">
+      <div class="section-label">About</div>
+      <h2 class="about-heading">The person<br>behind the lens</h2>
+      <blockquote class="about-pull">
+        "I believe every moment deserves to be frozen in time — beautifully, honestly, and forever."
+      </blockquote>
+      <p class="about-body">
+        Ava Lahner is a Tampa-based photographer and videographer who picked up her first camera in 2020 and turned a deep passion into a full creative business by 2021. Specializing in portraits, seniors, couples, and events, she brings a natural, unhurried approach to every session — creating imagery that feels true to the people in front of her lens.
+      </p>
+      <a class="about-cta" href="#contact">Work with Ava</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-label">Book a Session</div>
+    <h2 class="cta-heading">Let's make<br>something beautiful.</h2>
+    <p class="cta-sub">Portraits · Seniors · Couples · Events · Videography</p>
+    <a class="cta-btn" href="mailto:capturedbyavalahner@gmail.com">Get in Touch</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <div class="section-label">Contact</div>
+      <h2 class="contact-left h2" style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;line-height:1.1;margin-bottom:24px;">
+        Ready when<br>you are.
+      </h2>
+      <p>Based in Tampa, FL — available for local sessions, destination work, and events across Florida.</p>
+      <a class="contact-email" href="mailto:capturedbyavalahner@gmail.com">capturedbyavalahner@gmail.com</a>
+    </div>
+    <div class="contact-right">
+      <div class="contact-detail">
+        <div class="detail-label">Location</div>
+        <div class="detail-value">Tampa, Florida</div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-label">Availability</div>
+        <div class="detail-value">Booking sessions now — 2026</div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-label">Services</div>
+        <div class="detail-value">Portraits · Seniors · Couples<br>Events · Videography</div>
+      </div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/capturedbyavalahner/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://capturedbyavalahne.wixsite.com/captured-by-ava-lahn" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Captured by Ava Lahner</div>
+    <div class="footer-copy">© 2026 Ava Lahner Photography · Tampa, FL</div>
+    <div class="footer-credit">Design concept by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // ─── HERO ENTRANCE ───
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.hero-name').classList.add('is-visible');
+        document.querySelector('.hero-sub').classList.add('is-visible');
+        document.querySelector('.scroll-hint').classList.add('is-visible');
+      }, 100);
+    });
+
+    // ─── INTERSECTION OBSERVER ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    // Stats — stagger
+    document.querySelectorAll('.stat').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 100}ms`;
+      observer.observe(el);
+    });
+
+    // Gallery title clip-path
+    document.querySelectorAll('.gallery-title').forEach(el => observer.observe(el));
+
+    // Gallery items — stagger
+    document.querySelectorAll('.masonry-item').forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 3) * 120}ms`;
+      observer.observe(el);
+    });
+
+    // About section
+    document.querySelectorAll('.about-image, .about-heading, .about-pull, .about-body, .about-cta').forEach(el => observer.observe(el));
+
+    // CTA heading
+    document.querySelectorAll('.cta-heading').forEach(el => observer.observe(el));
+
+    // ─── HERO PARALLAX ───
+    const heroImgs = document.querySelectorAll('.hero-img img');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      heroImgs.forEach(img => {
+        img.style.transform = `translateY(${scrollY * 0.2}px) scale(1.04)`;
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>
