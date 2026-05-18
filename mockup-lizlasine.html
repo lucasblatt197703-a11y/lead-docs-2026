@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liz Lasine — Artist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F0EDE8;   /* warm linen — from photography backgrounds */
+      --dark:      #1A1714;   /* near-black — from shadows in intermedia work */
+      --text:      #2D2926;   /* warm dark brown */
+      --accent:    #9B6F52;   /* burnt sienna — from mordançage piece tones */
+      --mid:       #C4B8AA;   /* warm ash — from print paper tones */
+      --light:     #F7F4F0;   /* offwhite */
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVIGATION ────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 60px;
+      mix-blend-mode: normal;
+    }
+    nav .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--light);
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+    nav ul a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--light);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    nav ul a:hover { opacity: 1; }
+
+    /* ── HERO — MOSAIC ─────────────────────────────── */
+    .hero {
+      height: 100vh;
+      min-height: 700px;
+      position: relative;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .hero-mosaic {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+    }
+    .hero-mosaic .cell {
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-mosaic .cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.08);
+      transition: transform 8s ease;
+      filter: brightness(0.72) saturate(0.85);
+    }
+    .hero-mosaic .cell-1 { grid-column: 1; grid-row: 1 / 3; }
+    .hero-mosaic .cell-2 { grid-column: 2; grid-row: 1; }
+    .hero-mosaic .cell-3 { grid-column: 3; grid-row: 1; }
+    .hero-mosaic .cell-4 { grid-column: 2 / 4; grid-row: 2; }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,23,20,0.55) 0%, rgba(26,23,20,0.1) 60%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 80px;
+      left: 60px;
+      right: 60px;
+      z-index: 10;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(72px, 10vw, 120px);
+      line-height: 0.88;
+      letter-spacing: 0.12em;
+      color: var(--light);
+      display: block;
+      will-change: letter-spacing, opacity;
+      opacity: 0;
+      transition: opacity 0.8s ease, letter-spacing 1.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .hero-name.loaded {
+      opacity: 1;
+      letter-spacing: 0.05em;
+    }
+    .hero-sub {
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s;
+    }
+    .hero-sub.loaded { opacity: 1; transform: translateY(0); }
+    .hero-sub span { opacity: 0.5; }
+
+    /* ── MARQUEE STRIP ─────────────────────────────── */
+    .marquee-wrap {
+      overflow: hidden;
+      background: var(--accent);
+      padding: 14px 0;
+    }
+    .marquee-inner {
+      display: flex;
+      width: max-content;
+      animation: marquee 38s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--light);
+      padding: 0 40px;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ─────────────────────────────────────── */
+    .stats {
+      background: var(--dark);
+      padding: 80px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      border-top: 1px solid rgba(196,184,170,0.15);
+    }
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-item:nth-child(2) { transition-delay: 0.1s; }
+    .stat-item:nth-child(3) { transition-delay: 0.2s; }
+    .stat-item:nth-child(4) { transition-delay: 0.3s; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 88px;
+      line-height: 1;
+      color: var(--light);
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 10px;
+    }
+
+    /* ── SECTION TITLES ────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      min-width: 36px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 38px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+    /* ── GALLERY ───────────────────────────────────── */
+    .gallery-section {
+      padding: 120px 60px;
+      background: var(--light);
+    }
+    .gallery-grid {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.9s ease-out, transform 0.6s ease;
+      will-change: clip-path, transform;
+    }
+    .gallery-item.is-visible img { clip-path: inset(0 0 0 0); }
+    .gallery-item:hover img { transform: scale(1.02); }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(26,23,20,0.8) 0%, transparent 100%);
+      padding: 30px 16px 14px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+    .gallery-caption span {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+
+    /* ── FEATURED WORK / INTERMEDIA ────────────────── */
+    .featured-section {
+      padding: 120px 60px;
+      background: var(--bg);
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .featured-large {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s ease-out;
+    }
+    .featured-large.is-visible { clip-path: inset(0 0 0 0); }
+    .featured-large img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 4/5;
+    }
+    .featured-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 40px;
+    }
+    .featured-stack .small-img {
+      overflow: hidden;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.8s ease-out;
+    }
+    .featured-stack .small-img:nth-child(2) { transition-delay: 0.15s; }
+    .featured-stack .small-img:nth-child(3) { transition-delay: 0.3s; }
+    .featured-stack .small-img.is-visible { clip-path: inset(0 0 0 0); }
+    .featured-stack .small-img img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 3/2;
+    }
+    .featured-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-top: 40px;
+    }
+    .featured-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+    .medium-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .medium-tag {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────── */
+    .about-section {
+      padding: 0 0 0 0;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .about-image {
+      overflow: hidden;
+      position: relative;
+    }
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) saturate(0.7);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .about-image:hover img { transform: scale(1.0); }
+    .about-content {
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .about-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(38px, 4vw, 52px);
+      color: var(--light);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+    }
+    .about-title.is-visible { opacity: 1; transform: translateY(0); }
+    .about-body {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--mid);
+      max-width: 460px;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .about-body.is-visible { opacity: 1; transform: translateY(0); }
+    .about-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 32px 0;
+      opacity: 0;
+      transition: opacity 0.7s ease 0.3s, width 0.8s ease 0.3s;
+    }
+    .about-divider.is-visible { opacity: 1; width: 80px; }
+
+    /* ── BOLD CTA ───────────────────────────────────── */
+    .cta-section {
+      padding: 160px 60px;
+      background: var(--accent);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(100px, 18vw, 220px);
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .cta-section .section-title {
+      color: var(--light);
+      font-size: clamp(40px, 6vw, 72px);
+      margin-bottom: 24px;
+      display: block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .cta-section .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .cta-sub {
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      color: rgba(247,244,240,0.75);
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn {
+      display: inline-block;
+      border: 1.5px solid var(--light);
+      color: var(--light);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 20px 52px;
+      transition: background 0.35s ease, color 0.35s ease;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: background 0.35s, color 0.35s, opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+    }
+    .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn:hover { background: var(--light); color: var(--accent); }
+
+    /* ── CONTACT ───────────────────────────────────── */
+    .contact-section {
+      padding: 120px 60px;
+      background: var(--light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(38px, 4vw, 54px);
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .contact-left h2.is-visible { clip-path: inset(0 0% 0 0); }
+    .contact-left p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    }
+    .contact-left p.is-visible { opacity: 0.7; transform: translateY(0); }
+    .contact-email {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      display: inline-block;
+      transition: color 0.3s;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: color 0.3s, opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+    }
+    .contact-email.is-visible { opacity: 1; transform: translateY(0); }
+    .contact-email:hover { color: var(--text); }
+    .contact-right {
+      padding-top: 20px;
+    }
+    .contact-detail {
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .contact-detail.is-visible { opacity: 1; transform: translateY(0); }
+    .contact-detail:nth-child(2) { transition-delay: 0.1s; }
+    .contact-detail:nth-child(3) { transition-delay: 0.2s; }
+    .contact-detail-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .contact-detail-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--text);
+    }
+    .contact-detail-value a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-detail-value a:hover { color: var(--accent); }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(196,184,170,0.12);
+    }
+    footer .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+    }
+    footer .footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: rgba(196,184,170,0.45);
+    }
+    footer .footer-credit {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: rgba(196,184,170,0.3);
+    }
+
+    /* ── VERTICAL ACCENT LINE ───────────────────────── */
+    .vert-rule {
+      position: fixed;
+      left: 28px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: rgba(155,111,82,0.25);
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* ── MEDIA QUERIES ─────────────────────────────── */
+    @media (max-width: 1024px) {
+      .gallery-grid { columns: 2; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .featured-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-section { grid-template-columns: 1fr; }
+      .about-image { height: 400px; }
+      .contact-section { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav ul { gap: 24px; }
+      .hero-text { left: 24px; right: 24px; bottom: 50px; }
+      .hero-name { font-size: clamp(52px, 14vw, 80px); }
+      .gallery-section, .featured-section, .contact-section { padding: 80px 24px; }
+      .stats { padding: 60px 24px; gap: 24px; }
+      .gallery-grid { columns: 1; }
+      .stat-num { font-size: 64px; }
+      .cta-section { padding: 100px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+      .about-content { padding: 60px 32px; }
+    }
+
+    @media (max-width: 480px) {
+      nav ul { display: none; }
+      .hero-name { font-size: 52px; }
+      .hero-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+      .hero-mosaic .cell-1 { grid-column: 1; grid-row: 1 / 3; }
+      .hero-mosaic .cell-4 { grid-column: 1 / 3; grid-row: 3; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Vertical accent rule -->
+  <div class="vert-rule"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="brand">Liz Lasine</a>
+    <ul>
+      <li><a href="#gallery">Photography</a></li>
+      <li><a href="#intermedia">Intermedia</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero — Mosaic with name overlapping grid -->
+  <section class="hero">
+    <div class="hero-mosaic">
+      <div class="cell cell-1">
+        <img src="https://static.wixstatic.com/media/7fdb91_cefcbdae52644b6c9abd59210105544e~mv2.jpg" alt="Photography" loading="eager">
+      </div>
+      <div class="cell cell-2">
+        <img src="https://static.wixstatic.com/media/7fdb91_cc9e75fa84b041e4bd3b4caab7bbd830~mv2.jpg" alt="Intermedia Work" loading="eager">
+      </div>
+      <div class="cell cell-3">
+        <img src="https://static.wixstatic.com/media/7fdb91_07cf115552e74373ba2bbb1916952704~mv2.jpg" alt="Graphic Design" loading="eager">
+      </div>
+      <div class="cell cell-4">
+        <img src="https://static.wixstatic.com/media/7fdb91_c9b5939326154eac9003b7a4d20d9932~mv2.jpg" alt="Photography" loading="eager">
+      </div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <span class="hero-name" id="heroName">Liz Lasine</span>
+      <div class="hero-sub" id="heroSub">
+        <span>Photographer</span>
+        <span>·</span>
+        <span>Intermedia Artist</span>
+        <span>·</span>
+        <span>Gainesville, FL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <span>Photography</span><span>·</span>
+      <span>Intermedia</span><span>·</span>
+      <span>Graphic Design</span><span>·</span>
+      <span>Mordançage</span><span>·</span>
+      <span>Photo Composites</span><span>·</span>
+      <span>Gainesville, FL</span><span>·</span>
+      <span>Available for Commissions</span><span>·</span>
+      <span>Photography</span><span>·</span>
+      <span>Intermedia</span><span>·</span>
+      <span>Graphic Design</span><span>·</span>
+      <span>Mordançage</span><span>·</span>
+      <span>Photo Composites</span><span>·</span>
+      <span>Gainesville, FL</span><span>·</span>
+      <span>Available for Commissions</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <section class="stats" id="stats">
+    <div class="stat-item">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Years Active</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Disciplines</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">Works in Portfolio</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Mediums Explored</div>
+    </div>
+  </section>
+
+  <!-- Gallery — Photography -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Photography</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_710a21dc58234cc5bcb42789e2b5f472~mv2.jpg" alt="Digital Photograph 2022" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2022</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_5b85b98c620e42599b46cf68171c4d5e~mv2.jpg" alt="Digital Photograph 2023" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2023</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_ec0e9256ae914e1297ce87185bb14732~mv2.jpg" alt="Digital Photograph 2023" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2023</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_c9b5939326154eac9003b7a4d20d9932~mv2.jpg" alt="Digital Photograph 2023" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2023</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_677cc97070c14cb5a17ef43b667afb2e~mv2.jpg" alt="Digital Photograph 2023" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2023</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_6645ad8775544bb78b6cd1a35ae515cb~mv2.jpg" alt="Digital Photograph 2022" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2022</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_42babe81f9904e7381e7224dd2f62721~mv2.jpg" alt="Digital Photograph 2023" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2023</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://static.wixstatic.com/media/7fdb91_f176b4d2980c4f0db696d75c45e93e5d~mv2.jpg" alt="Digital Photograph 2023" loading="lazy">
+        <div class="gallery-caption"><span>Digital photograph, 2023</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured — Intermedia Work -->
+  <section class="featured-section" id="intermedia">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Intermedia Work</h2>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-large" id="featuredLarge">
+        <img src="https://static.wixstatic.com/media/7fdb91_cc9e75fa84b041e4bd3b4caab7bbd830~mv2.jpg" alt="Intermedia work" loading="lazy">
+      </div>
+      <div>
+        <p class="featured-label">Mixed Media &amp; Photo-Based Art</p>
+        <p class="featured-desc">"Working across photography, printmaking, and collage — probing the boundaries between image, object, and memory."</p>
+        <p style="font-size:15px;line-height:1.8;color:#5a5248;margin-bottom:24px;">Techniques include mordançage, chromoskedasic Sabattier, photo compositing, and acrylic on photograph. Each piece treats the photographic surface as a site of intervention rather than mere documentation.</p>
+        <div class="medium-tags">
+          <span class="medium-tag">Mordançage</span>
+          <span class="medium-tag">Photo Composite</span>
+          <span class="medium-tag">Collage</span>
+          <span class="medium-tag">Acrylic on Photo</span>
+          <span class="medium-tag">Printmaking</span>
+        </div>
+        <div class="featured-stack" style="margin-top:32px;">
+          <div class="small-img" id="smallImg1">
+            <img src="https://static.wixstatic.com/media/7fdb91_d19a634ddd6f4c3aacf75f4bf4fa14a5~mv2.jpg" alt="Found image collage 2023" loading="lazy">
+          </div>
+          <div class="small-img" id="smallImg2">
+            <img src="https://static.wixstatic.com/media/7fdb91_03982681f09b450db89a6822f57cb6c8~mv2.jpg" alt="Acrylic on photo 2022" loading="lazy">
+          </div>
+          <div class="small-img" id="smallImg3">
+            <img src="https://static.wixstatic.com/media/7fdb91_deff40fdc2fc455689c27ef739aeec0e~mv2.jpg" alt="Photo composite 2022" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About — Dark split layout -->
+  <section class="about-section" id="about">
+    <div class="about-image">
+      <img src="https://static.wixstatic.com/media/7fdb91_566cfa76c7704c61b1471c147a1f0517~mv2.jpg" alt="Liz Lasine" loading="lazy">
+    </div>
+    <div class="about-content">
+      <p class="about-eyebrow" id="aboutEyebrow">About the Artist</p>
+      <h2 class="about-title" id="aboutTitle">Photographer &amp;<br>Intermedia Artist</h2>
+      <div class="about-divider" id="aboutDivider"></div>
+      <p class="about-body" id="aboutBody">North Carolina native Liz Lasine is a photographer, intermedia artist, and graphic designer based in Gainesville, Florida. Her practice spans digital photography, experimental darkroom processes, mixed-media collage, and graphic design — each discipline informing the others. Her intermedia work interrogates the photographic image through techniques such as mordançage, chromoskedasic Sabattier, and acrylic intervention. Select works available for purchase.</p>
+    </div>
+  </section>
+
+  <!-- Bold CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-bg-text">Commission</div>
+    <h2 class="section-title" id="ctaTitle">Let's Work Together</h2>
+    <p class="cta-sub" id="ctaSub">Photography · Graphic Design · Custom Prints · Commissions</p>
+    <a href="mailto:lizlasine@gmail.com" class="cta-btn" id="ctaBtn">Get in Touch</a>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <h2 id="contactTitle">Inquiries</h2>
+      <p id="contactP">Available for photography commissions, graphic design projects, and custom framed prints. Based in Gainesville, FL — open to remote work.</p>
+      <a href="mailto:lizlasine@gmail.com" class="contact-email" id="contactEmail">lizlasine@gmail.com</a>
+    </div>
+    <div class="contact-right">
+      <div class="contact-detail" id="cd1">
+        <div class="contact-detail-label">Location</div>
+        <div class="contact-detail-value">Gainesville, Florida</div>
+      </div>
+      <div class="contact-detail" id="cd2">
+        <div class="contact-detail-label">Disciplines</div>
+        <div class="contact-detail-value">Photography · Intermedia · Graphic Design</div>
+      </div>
+      <div class="contact-detail" id="cd3">
+        <div class="contact-detail-label">Prints Available</div>
+        <div class="contact-detail-value"><a href="mailto:lizlasine@gmail.com">Shop framed works</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-name">Liz Lasine</div>
+    <div class="footer-copy">&copy; 2026 — Gainesville, FL</div>
+    <div class="footer-credit">Design by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // Hero name animate on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroName').classList.add('loaded');
+        document.getElementById('heroSub').classList.add('loaded');
+      }, 100);
+    });
+
+    // IntersectionObserver for scroll animations
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const ioEarly = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          ioEarly.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    // Observe all animated elements
+    document.querySelectorAll('.section-title').forEach(el => io.observe(el));
+    document.querySelectorAll('.stat-item').forEach(el => io.observe(el));
+    document.querySelectorAll('.gallery-item').forEach(el => ioEarly.observe(el));
+    document.querySelectorAll('.featured-large, .small-img').forEach(el => ioEarly.observe(el));
+
+    const ids = ['aboutEyebrow','aboutTitle','aboutBody','aboutDivider','ctaTitle','ctaSub','ctaBtn','contactTitle','contactP','contactEmail','cd1','cd2','cd3'];
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  </script>
+</body>
+</html>
