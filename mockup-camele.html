@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camele Photography — Architectural & Commercial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F2EDE8;
+    --dark: #1A1714;
+    --mid: #4A4440;
+    --accent: #8B6E5A;
+    --light-text: #9C8E87;
+    --white: #FAF8F5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO — FULL BLEED, TEXT PINNED BOTTOM-LEFT ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/b8b664_eb1e3a0440f34902a438825c7cfe06e8~mv2_d_5000_3333_s_4_2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    transition: transform 12s ease-out;
+    will-change: transform;
+  }
+
+  .hero-bg.loaded { transform: scale(1.0); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(26,23,20,0.85) 0%,
+      rgba(26,23,20,0.3) 50%,
+      rgba(26,23,20,0.1) 100%
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    right: 60px;
+    color: var(--white);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.6);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 9vw, 120px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .hero-name.revealed { clip-path: inset(0 0% 0 0); }
+
+  .hero-sub {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+  }
+
+  .hero-sub-line {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-sub-text {
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.75);
+  }
+
+  .hero-eyebrow.visible,
+  .hero-sub.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-wrap {
+    background: var(--dark);
+    overflow: hidden;
+    padding: 16px 0;
+    border-top: 1px solid rgba(250,248,245,0.08);
+    border-bottom: 1px solid rgba(250,248,245,0.08);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-text {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.4);
+    padding: 0 48px;
+    white-space: nowrap;
+  }
+
+  .marquee-text span {
+    color: var(--accent);
+    margin: 0 16px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── STATS SECTION ── */
+  .stats {
+    background: var(--white);
+    padding: 100px 60px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    padding: 0 40px;
+    border-right: 1px solid rgba(26,23,20,0.1);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 90px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    margin-top: 12px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--dark);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  /* ── GALLERY ── */
+  .gallery {
+    padding: 120px 60px;
+    background: var(--bg);
+  }
+
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gallery-header-left { flex: 1; }
+  .gallery-header-right {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--light-text);
+    letter-spacing: 0.05em;
+    max-width: 260px;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  /* Editorial masonry grid */
+  .gallery-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 8px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+
+  .gallery-item.is-visible { clip-path: inset(0% 0 0 0); }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+    loading: lazy;
+  }
+
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  /* Layout assignments */
+  .g1 { grid-column: 1 / 8; grid-row: 1; height: 520px; transition-delay: 0ms; }
+  .g2 { grid-column: 8 / 13; grid-row: 1; height: 520px; transition-delay: 100ms; }
+  .g3 { grid-column: 1 / 5; grid-row: 2; height: 400px; transition-delay: 200ms; }
+  .g4 { grid-column: 5 / 9; grid-row: 2; height: 400px; transition-delay: 300ms; }
+  .g5 { grid-column: 9 / 13; grid-row: 2; height: 400px; transition-delay: 400ms; }
+  .g6 { grid-column: 1 / 6; grid-row: 3; height: 460px; transition-delay: 100ms; }
+  .g7 { grid-column: 6 / 13; grid-row: 3; height: 460px; transition-delay: 200ms; }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--dark);
+    padding: 140px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Faded watermark name */
+  .about::before {
+    content: 'CAMELE';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 18vw, 240px);
+    font-weight: 300;
+    color: rgba(250,248,245,0.03);
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.9s ease-out;
+    will-change: clip-path;
+  }
+
+  .about-image-wrap.is-visible { clip-path: inset(0% 0 0 0); }
+
+  .about-image-wrap img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-content {
+    color: var(--white);
+  }
+
+  .about-content .section-number {
+    color: var(--accent);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .about-content .section-number.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-content .section-title { color: var(--white); }
+
+  .about-pull-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(250,248,245,0.85);
+    margin: 32px 0;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  }
+
+  .about-pull-quote.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(250,248,245,0.65);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+  }
+
+  .about-body.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s;
+  }
+
+  .about-details.is-visible { opacity: 1; transform: translateY(0); }
+
+  .about-detail-item {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+  }
+
+  .detail-label {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 11px;
+    min-width: 100px;
+  }
+
+  .detail-value { color: rgba(250,248,245,0.7); }
+
+  /* ── SERVICES ── */
+  .services {
+    background: var(--white);
+    padding: 140px 60px;
+  }
+
+  .services-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .services-header {
+    margin-bottom: 80px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 52px 44px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .service-card.is-visible { opacity: 1; transform: translateY(0); }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: rgba(26,23,20,0.06);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--mid);
+  }
+
+  .service-detail {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(26,23,20,0.1);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ── CTA SECTION ── */
+  .cta {
+    background: var(--dark);
+    padding: 160px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139,110,90,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .cta-eyebrow.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.1;
+    max-width: 800px;
+    margin: 0 auto 48px;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+  }
+
+  .cta-title.is-visible { clip-path: inset(0 0% 0 0); }
+
+  .cta-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(250,248,245,0.55);
+    margin-bottom: 52px;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+
+  .cta-sub.is-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 52px;
+    background: transparent;
+    border: 1px solid rgba(250,248,245,0.3);
+    color: var(--white);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s, background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+  .cta-btn:hover { background: rgba(250,248,245,0.08); border-color: rgba(250,248,245,0.6); }
+
+  /* ── CONTACT/FOOTER ── */
+  .contact {
+    background: var(--bg);
+    padding: 120px 60px 60px;
+  }
+
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    padding-top: 60px;
+    border-top: 1px solid rgba(26,23,20,0.12);
+  }
+
+  .contact-col-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--light-text);
+    margin-bottom: 20px;
+  }
+
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    display: inline-block;
+    transition: color 0.3s ease;
+  }
+
+  .contact-email:hover { color: var(--accent); }
+
+  .contact-text {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .social-link {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .social-link:hover { color: var(--accent); }
+
+  footer {
+    background: var(--bg);
+    padding: 40px 60px;
+    border-top: 1px solid rgba(26,23,20,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light-text);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--light-text);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-credit {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(156,142,135,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── VERTICAL SIDE TEXT ── */
+  .side-text {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(26,23,20,0.2);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 50;
+    font-weight: 400;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; right: 24px; bottom: 60px; }
+    .stats { padding: 60px 24px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .stat-item { border-right: none; padding: 0; }
+    .stat-item:nth-child(odd) { border-right: 1px solid rgba(26,23,20,0.1); padding-right: 20px; }
+    .gallery { padding: 80px 16px; }
+    .gallery-header { flex-direction: column; gap: 20px; text-align: left; }
+    .gallery-header-right { text-align: left; max-width: 100%; }
+    .gallery-grid { grid-template-columns: 1fr; gap: 6px; }
+    .g1,.g2,.g3,.g4,.g5,.g6,.g7 { grid-column: 1; grid-row: auto; height: 300px; }
+    .about { padding: 80px 24px; }
+    .about-inner { grid-template-columns: 1fr; gap: 60px; }
+    .about-image-wrap img { height: 400px; }
+    .services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 2px; }
+    .cta { padding: 100px 24px; }
+    .contact { padding: 80px 24px 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .side-text { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: 60px; }
+    .stat-number { font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Vertical side text -->
+<div class="side-text">Tampa · Florida · 2026</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">Camele Photography</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">Studio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Inquiries</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="heroEyebrow">Architectural &amp; Commercial Photography</p>
+    <h1 class="hero-name" id="heroName">Camele<br>Photography</h1>
+    <div class="hero-sub" id="heroSub">
+      <div class="hero-sub-line"></div>
+      <span class="hero-sub-text">Tampa, Florida</span>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-text">Architectural Photography <span>·</span> Commercial Photography <span>·</span> Tampa, FL <span>·</span> Magazine Quality <span>·</span> 48hr Delivery <span>·</span> Custom Solutions <span>·</span></span>
+    <span class="marquee-text">Architectural Photography <span>·</span> Commercial Photography <span>·</span> Tampa, FL <span>·</span> Magazine Quality <span>·</span> 48hr Delivery <span>·</span> Custom Solutions <span>·</span></span>
+  </div>
+</div>
+
+<!-- Stats -->
+<section class="stats" id="stats">
+  <div class="stats-grid">
+    <div class="stat-item" data-delay="0">
+      <div class="stat-number">8+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item" data-delay="100">
+      <div class="stat-number">48h</div>
+      <div class="stat-label">Image Delivery</div>
+    </div>
+    <div class="stat-item" data-delay="200">
+      <div class="stat-number">5K</div>
+      <div class="stat-label">Business Days Video</div>
+    </div>
+    <div class="stat-item" data-delay="300">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Disciplines Mastered</div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <div class="gallery-header-left">
+      <p class="section-number">01 — Portfolio</p>
+      <h2 class="section-title" id="galleryTitle">Selected<br>Work</h2>
+    </div>
+    <div class="gallery-header-right">
+      Combining traditional and contemporary techniques to produce magazine-quality results for architectural and commercial clients throughout Tampa Bay.
+    </div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item g1">
+      <img src="https://static.wixstatic.com/media/b8b664_eb1e3a0440f34902a438825c7cfe06e8~mv2_d_5000_3333_s_4_2.jpg" alt="Architectural Interior" loading="lazy">
+    </div>
+    <div class="gallery-item g2">
+      <img src="https://static.wixstatic.com/media/b8b664_6a1cca7045334e0baa00dfbae8f37401~mv2_d_5000_3333_s_4_2.jpg" alt="Commercial Space" loading="lazy">
+    </div>
+    <div class="gallery-item g3">
+      <img src="https://static.wixstatic.com/media/b8b664_07955f82e9d94975a8a9ba0ee66ae6fe~mv2_d_5000_3455_s_4_2.jpg" alt="Architecture Detail" loading="lazy">
+    </div>
+    <div class="gallery-item g4">
+      <img src="https://static.wixstatic.com/media/b8b664_cdaba55bddd14d3f9433768e86d0ef7d~mv2_d_5000_3333_s_4_2.jpg" alt="Structural Photography" loading="lazy">
+    </div>
+    <div class="gallery-item g5">
+      <img src="https://static.wixstatic.com/media/b8b664_1d0103609a7b441284cea9f2189025d6~mv2_d_5000_4751_s_4_2.jpg" alt="Interior Space" loading="lazy">
+    </div>
+    <div class="gallery-item g6">
+      <img src="https://static.wixstatic.com/media/b8b664_810559a87b954d3a9628068a3f2c5f94~mv2_d_5000_4272_s_4_2.jpg" alt="Commercial Detail" loading="lazy">
+    </div>
+    <div class="gallery-item g7">
+      <img src="https://static.wixstatic.com/media/b8b664_d8752eac42c3415e85d13d9f84af82d0~mv2_d_5000_3674_s_4_2.jpg" alt="Architectural Exterior" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap" id="aboutImg">
+      <img src="https://static.wixstatic.com/media/b8b664_5145cafdec6c4874a6e75428da951cb8~mv2_d_3097_5000_s_4_2.jpg" alt="Camele Photography Studio" loading="lazy">
+    </div>
+    <div class="about-content">
+      <p class="section-number" id="aboutNum">02 — Studio</p>
+      <h2 class="section-title" id="aboutTitle">The<br>Studio</h2>
+      <blockquote class="about-pull-quote" id="aboutQuote">
+        "A true passion for architectural and commercial photography combined with unique, talented skills."
+      </blockquote>
+      <p class="about-body" id="aboutBody">
+        Camele Photography is an independent studio based in Tampa, Florida, specializing in architectural and commercial imagery. Combining traditional and contemporary techniques, the studio delivers magazine-quality photographs that communicate the built environment with clarity and intention.
+        <br><br>
+        Standard image delivery within 48 hours. Video production delivered within 5 business days.
+      </p>
+      <div class="about-details" id="aboutDetails">
+        <div class="about-detail-item">
+          <span class="detail-label">Location</span>
+          <span class="detail-value">Tampa, Florida</span>
+        </div>
+        <div class="about-detail-item">
+          <span class="detail-label">Specialty</span>
+          <span class="detail-value">Architectural &amp; Commercial</span>
+        </div>
+        <div class="about-detail-item">
+          <span class="detail-label">Delivery</span>
+          <span class="detail-value">48 hours (images) · 5 days (video)</span>
+        </div>
+        <div class="about-detail-item">
+          <span class="detail-label">Approach</span>
+          <span class="detail-value">Traditional &amp; Contemporary</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="services-header">
+      <p class="section-number">03 — Services</p>
+      <h2 class="section-title" id="servicesTitle">What We<br>Offer</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" data-delay="0">
+        <div class="service-number">01</div>
+        <h3 class="service-title">Architectural Photography</h3>
+        <p class="service-desc">Documenting the built environment with precision and artistry. From residential to commercial structures, we capture space the way architects and developers intend it to be seen.</p>
+        <div class="service-detail">Interior · Exterior · Detail</div>
+      </div>
+      <div class="service-card" data-delay="120">
+        <div class="service-number">02</div>
+        <h3 class="service-title">Commercial Photography</h3>
+        <p class="service-desc">Magazine-quality product and commercial imagery for businesses launching new products or refreshing their visual identity. Shot with intention, delivered fast.</p>
+        <div class="service-detail">Product · Brand · Launch</div>
+      </div>
+      <div class="service-card" data-delay="240">
+        <div class="service-number">03</div>
+        <h3 class="service-title">Video Production</h3>
+        <p class="service-desc">Cinematic video content that brings architectural and commercial subjects to life. From walkthroughs to product showcases, delivered within 5 business days.</p>
+        <div class="service-detail">Architecture · Commercial · Walkthroughs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <p class="cta-eyebrow" id="ctaEyebrow">Let's Work Together</p>
+  <h2 class="cta-title" id="ctaTitle">Your Space Deserves<br>to Be Seen Properly</h2>
+  <p class="cta-sub" id="ctaSub">Magazine-quality imagery. 48-hour delivery. Based in Tampa, available throughout Florida.</p>
+  <a href="mailto:contact@camelephotography.com" class="cta-btn" id="ctaBtn">Start a Project</a>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <p class="section-number">04 — Inquiries</p>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-col-label">Get in touch</p>
+        <a href="mailto:contact@camelephotography.com" class="contact-email">contact@camelephotography.com</a>
+      </div>
+      <div>
+        <p class="contact-col-label">Studio</p>
+        <p class="contact-text">Tampa, Florida<br>Available throughout the Tampa Bay Area and South Florida.</p>
+      </div>
+      <div>
+        <p class="contact-col-label">Follow</p>
+        <div class="social-links">
+          <a href="https://instagram.com/camelephotography" class="social-link" target="_blank">Instagram</a>
+          <a href="https://facebook.com/camelephotography" class="social-link" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Camele Photography</span>
+  <span class="footer-copy">© 2026 Camele Photography. All rights reserved.</span>
+  <span class="footer-credit">Design by Lucas Blatt</span>
+</footer>
+
+<script>
+  // Hero animations on load
+  window.addEventListener('load', () => {
+    const heroBg = document.getElementById('heroBg');
+    heroBg.classList.add('loaded');
+
+    setTimeout(() => {
+      document.getElementById('heroEyebrow').classList.add('visible');
+    }, 200);
+
+    setTimeout(() => {
+      document.getElementById('heroName').classList.add('revealed');
+    }, 300);
+
+    setTimeout(() => {
+      document.getElementById('heroSub').classList.add('visible');
+    }, 900);
+  });
+
+  // Hero parallax on scroll
+  window.addEventListener('scroll', () => {
+    const heroBg = document.getElementById('heroBg');
+    const scrollY = window.pageYOffset;
+    heroBg.style.transform = `scale(1.0) translateY(${scrollY * 0.4}px)`;
+  }, { passive: true });
+
+  // IntersectionObserver for all scroll-triggered animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.delay || 0;
+        setTimeout(() => {
+          el.classList.add('is-visible');
+        }, parseInt(delay));
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  // Gallery items
+  document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+
+  // Stats
+  document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+  // Section titles
+  document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+  // About section elements
+  ['aboutImg', 'aboutNum', 'aboutTitle', 'aboutQuote', 'aboutBody', 'aboutDetails'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Services cards
+  document.querySelectorAll('.service-card').forEach(el => observer.observe(el));
+
+  // CTA elements
+  ['ctaEyebrow', 'ctaTitle', 'ctaSub', 'ctaBtn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
