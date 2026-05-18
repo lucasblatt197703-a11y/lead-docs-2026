@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabriella Olivas — Photography & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F2EDE6;
+      --bg-dark: #1A1612;
+      --text: #1A1612;
+      --text-light: #6B5E52;
+      --accent: #C4553A;
+      --warm-mid: #8C7A6B;
+      --cream: #FAF7F3;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    nav .links {
+      display: flex;
+      gap: 36px;
+    }
+    nav .links a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav .links a:hover { color: #fff; }
+
+    /* ── HERO — Full-bleed image, text pinned bottom-left ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/fc88a2_89cd1e852fdd45e291098b122bd9eb8a~mv2_d_4608_3072_s_4_2.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      will-change: transform;
+      transition: transform 0.1s linear;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26,22,18,0.72) 0%,
+        rgba(26,22,18,0.25) 40%,
+        rgba(26,22,18,0.05) 100%
+      );
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 60px;
+      left: 64px;
+      right: 64px;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 9vw, 112px);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+      opacity: 0;
+      will-change: letter-spacing, opacity;
+      transition: letter-spacing 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  opacity 0.8s ease;
+    }
+    .hero-name.loaded {
+      letter-spacing: 0.06em;
+      opacity: 1;
+    }
+    .hero-tagline {
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+    }
+    .hero-tagline.loaded { opacity: 1; transform: translateY(0); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 60px;
+      right: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 1s ease 1s;
+    }
+    .hero-scroll.loaded { opacity: 1; }
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: rgba(255,255,255,0.3);
+      transform-origin: top;
+      animation: scrollLine 2s ease-in-out infinite 1.5s;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); opacity: 0; }
+      50% { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+    }
+
+    /* ── MARQUEE STRIP ── */
+    .marquee-strip {
+      background: var(--bg-dark);
+      padding: 16px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+    .marquee-inner span {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      padding: 0 32px;
+    }
+    .marquee-inner .dot {
+      color: var(--accent);
+      padding: 0;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--cream);
+      padding: 80px 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .stat-item {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat-item.is-visible { opacity: 1; transform: translateY(0); }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(60px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--text);
+    }
+    .stat-num .accent { color: var(--accent); }
+    .stat-label {
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: rgba(26,22,18,0.06);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 46px);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      clip-path: inset(0 100% 0 0);
+      will-change: clip-path;
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .section-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin-top: 12px;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section {
+      padding: 100px 64px;
+      background: var(--bg);
+    }
+    .gallery-grid {
+      columns: 3;
+      column-gap: 8px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 8px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      clip-path: inset(100% 0 0 0);
+      will-change: clip-path, opacity;
+      transition: clip-path 0.9s ease-out, opacity 0.5s ease;
+    }
+    .gallery-item.is-visible {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transform: scale(1.03);
+      transition: transform 0.6s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.0); }
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 16px 14px;
+      background: linear-gradient(to top, rgba(26,22,18,0.7) 0%, transparent 100%);
+      color: rgba(255,255,255,0.85);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-item:hover .caption { opacity: 1; transform: translateY(0); }
+
+    /* ── ABOUT ── */
+    .about-section {
+      background: var(--bg-dark);
+      padding: 120px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-portrait {
+      position: relative;
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .about-portrait.is-visible { opacity: 1; transform: translateX(0); }
+    .about-portrait img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      max-height: 580px;
+    }
+    .about-portrait::before {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      right: 16px; bottom: 16px;
+      border: 1px solid rgba(196,85,58,0.3);
+      z-index: -1;
+    }
+    .about-text {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+    }
+    .about-text.is-visible { opacity: 1; transform: translateX(0); }
+    .about-text .section-title { color: #fff; clip-path: inset(0 100% 0 0); }
+    .about-text .section-title.is-visible { clip-path: inset(0 0% 0 0); }
+    .about-bio {
+      margin-top: 32px;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+    }
+    .about-bio p + p { margin-top: 18px; }
+    .about-pull-quote {
+      margin-top: 36px;
+      padding-left: 24px;
+      border-left: 2px solid var(--accent);
+    }
+    .about-pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+
+    /* ── SERVICES STRIP ── */
+    .services-section {
+      background: var(--cream);
+      padding: 100px 64px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid rgba(26,22,18,0.1);
+    }
+    .service-card {
+      padding: 48px 40px;
+      border-right: 1px solid rgba(26,22,18,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .service-card:last-child { border-right: none; }
+    .service-card.is-visible { opacity: 1; transform: translateY(0); }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+    .service-card .price {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .service-card p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--warm-mid);
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: var(--bg-dark);
+      padding: 140px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 18vw, 240px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.02);
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 76px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+      max-width: 760px;
+      margin: 0 auto 20px;
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s;
+    }
+    .cta-section h2.is-visible { clip-path: inset(0 0% 0 0); opacity: 1; }
+    .cta-section .sub {
+      position: relative;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+    .cta-section .sub.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn {
+      position: relative;
+      display: inline-block;
+      padding: 18px 52px;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      transition: background 0.3s, border-color 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s, background 0.3s, border-color 0.3s;
+    }
+    .cta-btn.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      padding: 100px 64px;
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4.5vw, 56px);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s;
+    }
+    .contact-left h2.is-visible { clip-path: inset(0 0% 0 0); opacity: 1; }
+    .contact-left p {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--warm-mid);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .contact-left p.is-visible { opacity: 1; transform: translateY(0); }
+    .contact-right {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+    .contact-right.is-visible { opacity: 1; transform: translateY(0); }
+    .contact-item {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(26,22,18,0.1);
+    }
+    .contact-item:first-child { border-top: 1px solid rgba(26,22,18,0.1); }
+    .contact-item .label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 8px;
+    }
+    .contact-item a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-item a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-dark);
+      padding: 32px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer .foot-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    footer .foot-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+    }
+    footer .foot-credit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav .logo { font-size: 13px; }
+      nav .links { gap: 20px; }
+      nav .links a { font-size: 10px; }
+      .hero-content { left: 24px; right: 24px; bottom: 40px; }
+      .hero-scroll { right: 24px; bottom: 40px; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 24px; }
+      .gallery-section { padding: 60px 24px; }
+      .gallery-grid { columns: 2; }
+      .about-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      .services-section { padding: 60px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid rgba(26,22,18,0.1); }
+      .cta-section { padding: 100px 24px; }
+      .contact-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { columns: 1; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat-num { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">Olivas Photography</a>
+    <div class="links">
+      <a href="#gallery">Portfolio</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content">
+      <h1 class="hero-name" id="heroName">Gabriella<br>Olivas</h1>
+      <p class="hero-tagline" id="heroTagline">Photography & Design &nbsp;·&nbsp; El Paso, Texas</p>
+    </div>
+    <div class="hero-scroll" id="heroScroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Portraits</span><span class="dot">·</span>
+      <span>Engagements</span><span class="dot">·</span>
+      <span>Maternity</span><span class="dot">·</span>
+      <span>Family Sessions</span><span class="dot">·</span>
+      <span>Graduations</span><span class="dot">·</span>
+      <span>Headshots</span><span class="dot">·</span>
+      <span>El Paso, TX</span><span class="dot">·</span>
+      <span>Portraits</span><span class="dot">·</span>
+      <span>Engagements</span><span class="dot">·</span>
+      <span>Maternity</span><span class="dot">·</span>
+      <span>Family Sessions</span><span class="dot">·</span>
+      <span>Graduations</span><span class="dot">·</span>
+      <span>Headshots</span><span class="dot">·</span>
+      <span>El Paso, TX</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" id="stats">
+    <div class="stat-item" style="transition-delay: 0ms;">
+      <div class="stat-num">10<span class="accent">+</span></div>
+      <div class="stat-label">Years Behind the Lens</div>
+    </div>
+    <div class="stat-item" style="transition-delay: 120ms;">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Session Types</div>
+    </div>
+    <div class="stat-item" style="transition-delay: 240ms;">
+      <div class="stat-num">6<span class="accent">K</span></div>
+      <div class="stat-label">Instagram Followers</div>
+    </div>
+    <div class="stat-item" style="transition-delay: 360ms;">
+      <div class="stat-num">$<span style="font-size:0.7em">100</span></div>
+      <div class="stat-label">Sessions from</div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <h2 class="section-title">Portfolio</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="transition-delay: 0ms;">
+        <img src="https://static.wixstatic.com/media/fc88a2_89cd1e852fdd45e291098b122bd9eb8a~mv2_d_4608_3072_s_4_2.jpg" alt="Portrait Session" loading="lazy">
+        <div class="caption">Portraits</div>
+      </div>
+      <div class="gallery-item" style="transition-delay: 100ms;">
+        <img src="https://static.wixstatic.com/media/fc88a2_b052725a69c74a5fa3b3f9b91e3f81fe~mv2_d_3072_4608_s_4_2.jpg" alt="Client Session" loading="lazy">
+        <div class="caption">Client Work</div>
+      </div>
+      <div class="gallery-item" style="transition-delay: 200ms;">
+        <img src="https://static.wixstatic.com/media/fc88a2_5f19ea58f80342de947b298815b667e7~mv2_d_4608_3072_s_4_2.jpg" alt="Lifestyle" loading="lazy">
+        <div class="caption">Lifestyle</div>
+      </div>
+      <div class="gallery-item" style="transition-delay: 300ms;">
+        <img src="https://static.wixstatic.com/media/fc88a2_ea9819ea2f9a4f5eb22668f4d19cd912~mv2_d_4608_3072_s_4_2.jpg" alt="Creative Session" loading="lazy">
+        <div class="caption">Creative</div>
+      </div>
+      <div class="gallery-item" style="transition-delay: 400ms;">
+        <img src="https://static.wixstatic.com/media/fc88a2_99f7d28e2e374c3d802453e6c34e1baa~mv2_d_4608_3072_s_4_2.jpg" alt="Natural Light" loading="lazy">
+        <div class="caption">Natural Light</div>
+      </div>
+      <div class="gallery-item" style="transition-delay: 500ms;">
+        <img src="https://static.wixstatic.com/media/fc88a2_0f1a7a0a97ce4388b9893e3c74ed1b63%7Emv2_d_4608_3072_s_4_2.jpg" alt="Outdoor" loading="lazy">
+        <div class="caption">Outdoor</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-portrait">
+      <img src="https://static.wixstatic.com/media/fc88a2_cc4e4d3b3d354ce48f9a5e56c7a7219a~mv2.jpg" alt="Gabriella Olivas" loading="lazy">
+    </div>
+    <div class="about-text">
+      <h2 class="section-title" style="color: #fff;">About</h2>
+      <div class="section-line"></div>
+      <div class="about-bio">
+        <p>Gabriella Nicole has been making photographs since age ten — from a silver point-and-shoot to a full professional kit, the impulse to turn life into art has never wavered. Based in El Paso, Texas, she works across portraits, engagements, maternity, and family sessions.</p>
+        <p>Owner and operator of Olivas Photography & Design, Gabriella brings an artist's eye to every booking — treating each session as its own visual story, not a formula.</p>
+      </div>
+      <div class="about-pull-quote">
+        <p>"I wanted to create art through photography for the rest of my life."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <h2 class="section-title">Services</h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" style="transition-delay: 0ms;">
+        <h3>Portraits & Headshots</h3>
+        <div class="price">from $100 · 1 hour</div>
+        <p>Individual portraits and professional headshots. Ideal for creatives, professionals, and modeling portfolios.</p>
+      </div>
+      <div class="service-card" style="transition-delay: 120ms;">
+        <h3>Engagements & Maternity</h3>
+        <div class="price">from $200 · 1–2 hours</div>
+        <p>Engagement sessions, solo maternity, and family maternity. Capturing these milestones with warmth and intention.</p>
+      </div>
+      <div class="service-card" style="transition-delay: 240ms;">
+        <h3>Family & Graduation</h3>
+        <div class="price">from $100 · 1–2 hours</div>
+        <p>Family sessions, graduation packages, and still life work. Documenting the moments that become the memories.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-bg-text">OLIVAS</div>
+    <h2 id="ctaHeading">Ready to book<br>your session?</h2>
+    <p class="sub" id="ctaSub">Sessions are open year-round in El Paso and surrounding areas. Let's create something together.</p>
+    <a href="mailto:olivas.pd@example.com" class="cta-btn" id="ctaBtn">Book a Session</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <h2>Get in Touch</h2>
+      <p>Whether you're planning a session or just have a question, reach out. Response within 24 hours.</p>
+    </div>
+    <div class="contact-right">
+      <div class="contact-item">
+        <div class="label">Instagram</div>
+        <a href="https://www.instagram.com/olivas_pd/" target="_blank">@olivas_pd</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Location</div>
+        <a href="#">El Paso, Texas</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Booking</div>
+        <a href="https://gabriellaolivas.wixsite.com/olivasphotography/book-online" target="_blank">View All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-logo">Olivas Photography</div>
+    <div class="foot-copy">© 2026 Gabriella Olivas. All rights reserved.</div>
+    <div class="foot-credit">Design by Lucas Blatt</div>
+  </footer>
+
+  <script>
+    // Hero entrance animations
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('heroName').classList.add('loaded');
+        document.getElementById('heroTagline').classList.add('loaded');
+        document.getElementById('heroScroll').classList.add('loaded');
+      }, 100);
+    });
+
+    // Hero parallax
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      heroBg.style.transform = `translateY(${scrollY * 0.4}px)`;
+    }, { passive: true });
+
+    // IntersectionObserver for all animated elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Observe section titles
+    document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+    // Observe stats
+    document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+    // Observe gallery items
+    document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+
+    // Observe about sections
+    document.querySelectorAll('.about-portrait, .about-text').forEach(el => observer.observe(el));
+
+    // Observe service cards
+    document.querySelectorAll('.service-card').forEach(el => observer.observe(el));
+
+    // Observe CTA elements
+    const ctaObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          ['ctaHeading', 'ctaSub', 'ctaBtn'].forEach(id => {
+            document.getElementById(id)?.classList.add('is-visible');
+          });
+        }
+      });
+    }, { threshold: 0.15 });
+    const ctaSection = document.querySelector('.cta-section');
+    if (ctaSection) ctaObserver.observe(ctaSection);
+
+    // Observe contact
+    document.querySelectorAll('.contact-left h2, .contact-left p, .contact-right').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
