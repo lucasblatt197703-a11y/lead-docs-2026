@@ -1,0 +1,40 @@
+# docker-compose.hermes.yml — TEMPLATE for the Hermes agent container.
+#
+# Fill in every TODO with your real values. I scaffolded this generically
+# because this cloud session can't read your Mac mini's existing setup.
+# If you paste me your current NanoClaw compose/run command + the Hermes
+# image details, I'll replace these placeholders precisely.
+
+services:
+  hermes:
+    container_name: hermes
+    image: TODO_HERMES_IMAGE:latest        # e.g. ghcr.io/you/hermes:latest
+    restart: unless-stopped
+
+    # Environment the Hermes agent needs. Keep secrets in a .env file next to
+    # this compose file (NOT committed) and reference them here.
+    env_file:
+      - .env                                # TODO: create .env (gitignored)
+    environment:
+      - TZ=America/New_York                 # TODO: adjust if needed
+      # - MODEL=...                         # TODO: Hermes model / endpoint config
+      # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+
+    # Ports Hermes exposes (host:container). Match whatever NanoClaw used so
+    # the rest of your setup keeps pointing at the same address.
+    ports:
+      - "TODO_HOST_PORT:TODO_CONTAINER_PORT"   # e.g. "8080:8080"
+
+    # Persistent data / config volumes.
+    volumes:
+      - hermes_data:/data                   # TODO: confirm container path
+      # - /path/on/macmini/config:/config:ro
+
+    healthcheck:                            # optional but recommended
+      test: ["CMD", "true"]                 # TODO: real check, e.g. curl localhost:PORT/health
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  hermes_data:
